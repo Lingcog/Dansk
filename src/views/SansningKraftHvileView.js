@@ -26,7 +26,7 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
     const contrastPairs = [
         {
             key: 'bog',
-            title: 'Bogen & Bordet (Lægge / Ligge)',
+            title: 'Bogen og bordet (lægge / ligge)',
             icon: '📖',
             left: {
                 x: 30,
@@ -46,7 +46,7 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
         },
         {
             key: 'kop',
-            title: 'Koppen & Hylden (Stille / Stå)',
+            title: 'Koppen og hylden (stille / stå)',
             icon: '☕',
             left: {
                 x: 75,
@@ -66,7 +66,7 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
         },
         {
             key: 'bamse',
-            title: 'Bamsen i Sofaen (Sætte / Sidde)',
+            title: 'Bamsen i sofaen (sætte / sidde)',
             icon: '🧸',
             left: {
                 x: 52,
@@ -86,7 +86,7 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
         },
         {
             key: 'vase',
-            title: 'Katten & Blomstervasen (Vælte)',
+            title: 'Katten og blomstervasen (vælte)',
             icon: '🏺',
             left: {
                 x: 82,
@@ -641,7 +641,7 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
 
     const backBtn = document.createElement('button');
     backBtn.className = 'ss-back-btn';
-    backBtn.innerHTML = (extraData && extraData.from === 'overview') ? `← Tilbage til Sansningsoversigten` : `← Tilbage til Hovedflade 1`;
+    backBtn.innerHTML = (extraData && extraData.from === 'overview') ? `← Tilbage til sansningsoversigten` : `← Tilbage til hovedflade 1`;
     backBtn.onclick = () => {
         if (extraData && extraData.from === 'overview') {
             navigateFn('grammatik_sansning');
@@ -653,7 +653,7 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
 
     const badge = document.createElement('span');
     badge.className = 'ss-station-badge';
-    badge.innerHTML = `Station 1.2 • Kroppens Kraft vs. Tingens Hvile`;
+    badge.innerHTML = `Station 1.2 • Kroppens kraft vs. tingens hvile`;
     topBar.appendChild(badge);
 
     viewContainer.appendChild(topBar);
@@ -662,7 +662,7 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
     const hero = document.createElement('div');
     hero.className = 'ss-hero';
     hero.innerHTML = `
-        <h1>Kroppens Kraft (lægge) vs. Tingens Hvile (ligge)</h1>
+        <h1>Kroppens kraft (lægge) vs. tingens hvile (ligge)</h1>
         <p>
             Oplev kausative par side om side: 
             <strong>Venstre side</strong> viser håndens aktive kraft (<em>"lægger, sætter, stiller"</em>), 
@@ -676,13 +676,13 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
     tabsNav.className = 'ss-tabs-nav';
     tabsNav.innerHTML = `
         <button class="ss-tab-btn active" data-tab="tab_kontrast">
-            ⚖️ 1. Diktomisk Vrimlebillede
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Træningsbane: Kraft eller Hvile?
+            2. Træningsbane: kraft eller hvile?
         </button>
         <button class="ss-tab-btn" data-tab="tab_engine">
-            🔬 3. De Originale Grammatikflader
+            3. De originale grammatikflader
         </button>
     `;
     viewContainer.appendChild(tabsNav);
@@ -700,24 +700,24 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
         <div class="contrast-canvas-card">
             <div class="contrast-control-bar">
                 <div class="contrast-instruction">
-                    💡 <em>Klik på et motiv på venstre side (Kraft) for at se dets modpol på højre side (Hvile).</em>
+                    <em>Klik på et motiv på venstre side (kraft) for at se dets modpol på højre side (hvile).</em>
                 </div>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    🖼️ Ren visning: <strong id="pure-status-label">FRA</strong>
+                    Ren visning: <strong id="pure-status-label">FRA</strong>
                 </button>
             </div>
 
             <div class="contrast-split-stage" id="split-stage">
                 <!-- VENSTRE HALVDEL: KROPPENS KRAFT (LÆGGE, SÆTTE, STILLE) -->
                 <div class="stage-half left-half">
-                    <div class="stage-half-header warm">🟠 KROPPENS KRAFT — Hånden flytter tingen</div>
+                    <div class="stage-half-header warm">Venstre: Kroppens kraft — hånden flytter tingen</div>
                     <img src="assets/sansning_kraft_hvile_venstre.jpg" alt="Kroppens kraft - Lægger, sætter, stiller" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: TINGENS HVILE (LIGGE, SIDDE, STÅ) -->
                 <div class="stage-half right-half">
-                    <div class="stage-half-header cool">🔵 TINGENS HVILE — Tingen hviler i ro</div>
+                    <div class="stage-half-header cool">Højre: Tingens hvile — tingen hviler i ro</div>
                     <img src="assets/sansning_kraft_hvile_hoejre.jpg" alt="Tingens hvile - Ligger, sidder, står" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
@@ -778,10 +778,10 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
 
                 <div class="ss-quiz-options">
                     <button class="ss-quiz-opt-btn" data-val="${q.options[0]}">
-                        🟠 ${q.options[0]} (Kroppens kraft)
+                        ${q.options[0]} (kroppens kraft)
                     </button>
                     <button class="ss-quiz-opt-btn" data-val="${q.options[1]}">
-                        🔵 ${q.options[1]} (Tingens hvile)
+                        ${q.options[1]} (tingens hvile)
                     </button>
                 </div>
 
@@ -834,20 +834,20 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
     panelEngine.innerHTML = `
         <div class="ss-embedded-wrapper">
             <div style="text-align: center; margin-bottom: 1.2rem;">
-                <span style="font-size: 0.85rem; font-weight: 800; color: #f472b6; text-transform: uppercase;">
-                    De Originale Moduler (100% Bevaret)
+                <span style="font-size: 0.85rem; font-weight: 800; color: #f472b6; letter-spacing: 0.04em;">
+                    De originale moduler
                 </span>
                 <h2 style="font-size: 1.6rem; margin: 0.3rem 0; color: #ffffff;">
-                    Kausative Verber & Krops-Rammen
+                    Kausative verber og kropsrammen
                 </h2>
-                <p style="color: #cbd5e1; font-size: 0.95rem; max-width: 720px; margin: 0 auto;">
-                    Skift mellem modulet for Lægge/ligge (Kausative par) og modulet for Krops-rammen ("Ligger og læser").
+                <p style="color: #FFC9CD; font-size: 0.95rem; max-width: 720px; margin: 0 auto;">
+                    Skift mellem modulet for lægge/ligge (kausative par) og modulet for kropsrammen ("ligger og læser").
                 </p>
             </div>
             
             <div class="ss-embedded-subnav">
                 <button class="ss-strip-btn active" id="btn-sub-krafthvile">
-                    ⚡ Kausative Par (Lægge/ligge, Sætte/sidde, Stille/stå)
+                    Kausative par (lægge/ligge, sætte/sidde, stille/stå)
                 </button>
                 <button class="ss-strip-btn" id="btn-sub-liggerlaeser">
                     🧘 Krops-Rammen ("Ligger og læser" vs. "Læser")
@@ -928,19 +928,18 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
         detailCard.innerHTML = `
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.6rem;">${pair.icon}</span>
                     <span class="adj-main-word">${pair.title}</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at skifte fokus">
-                    <span>${triggerSide === 'left' ? 'Skift til Hvile' : 'Skift til Kraft'}</span>
+                    <span>${triggerSide === 'left' ? 'Skift til hvile' : 'Skift til kraft'}</span>
                     <strong>${triggerSide === 'left' ? pair.right.word + ' ➔' : pair.left.word + ' ➔'}</strong>
                 </div>
             </div>
 
             <div class="adj-congruence-grid">
-                <!-- 🟠 Venstre: Håndens kraft -->
+                <!-- Venstre: Håndens kraft -->
                 <div class="ss-contrast-box kraft">
-                    <span class="ss-box-badge">🟠 Venstre: Kroppens Kraft (${pair.left.word})</span>
+                    <span class="ss-box-badge">Venstre: Kroppens kraft (${pair.left.word})</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${pair.left.sent.replace(pair.left.word, `<span class="ss-box-verb-highlight">${pair.left.word}</span>`)}
@@ -949,9 +948,9 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
                     <div class="ss-box-exp">${pair.left.exp}</div>
                 </div>
 
-                <!-- 🔵 Højre: Tingens hvile -->
+                <!-- Højre: Tingens hvile -->
                 <div class="ss-contrast-box hvile">
-                    <span class="ss-box-badge">🔵 Højre: Tingens Hvile (${pair.right.word})</span>
+                    <span class="ss-box-badge">Højre: Tingens hvile (${pair.right.word})</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${pair.right.sent.replace(pair.right.word, `<span class="ss-box-verb-highlight">${pair.right.word}</span>`)}
@@ -962,7 +961,6 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
             </div>
 
             <div class="ss-insp-aha">
-                <span style="font-size: 1.3rem;">💡</span>
                 <span><strong>Sanse-nøglen:</strong> ${pair.aha}</span>
             </div>
         `;

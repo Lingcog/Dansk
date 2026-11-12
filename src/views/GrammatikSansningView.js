@@ -36,9 +36,9 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
         }
 
         .gs-back-btn {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1.5px solid rgba(148, 163, 184, 0.25);
-            color: #f8fafc;
+            background: #5C0812;
+            border: 1.5px solid #851825;
+            color: #ffffff;
             padding: 0.55rem 1.1rem;
             border-radius: 12px;
             font-weight: 700;
@@ -50,8 +50,8 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             gap: 0.4rem;
         }
         .gs-back-btn:hover {
-            border-color: #38bdf8;
-            background: rgba(30, 41, 59, 0.9);
+            border-color: #FFC9CD;
+            background: #73101C;
             transform: translateX(-2px);
         }
 
@@ -65,15 +65,14 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(249, 115, 22, 0.18));
-            border: 1px solid rgba(251, 191, 36, 0.4);
+            background: rgba(92, 8, 18, 0.85);
+            border: 1px solid #851825;
             border-radius: 999px;
             padding: 0.35rem 1rem;
             font-size: 0.82rem;
             font-weight: 800;
-            color: #fde68a;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
+            color: #FFC9CD;
+            letter-spacing: 0.04em;
             margin-bottom: 0.75rem;
         }
         .gs-hero h1 {
@@ -81,12 +80,10 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             font-weight: 900;
             margin: 0 0 0.5rem;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #ffffff 40%, #fde68a 85%, #fb923c 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
         }
         .gs-hero p {
-            color: #cbd5e1;
+            color: #FFC9CD;
             font-size: 1.05rem;
             max-width: 820px;
             margin: 0 auto;
@@ -95,8 +92,8 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
 
         /* Pedagogical Guide (Accordion) */
         .gs-guide-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
-            border: 1.5px solid rgba(251, 191, 36, 0.4);
+            background: #5C0812;
+            border: 1.5px solid #851825;
             border-radius: 20px;
             padding: 1.3rem 1.5rem;
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
@@ -108,16 +105,16 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             justify-content: space-between;
             align-items: center;
             gap: 1rem;
-            font-weight: 900;
-            font-size: 1.12rem;
-            color: #fde68a;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #ffffff;
         }
         .gs-guide-summary::-webkit-details-marker { display: none; }
         .gs-guide-content {
             margin-top: 1.1rem;
             padding-top: 1.1rem;
-            border-top: 1px solid rgba(251, 191, 36, 0.25);
-            color: #cbd5e1;
+            border-top: 1px solid #851825;
+            color: #FFC9CD;
             font-size: 0.95rem;
             line-height: 1.6;
         }
@@ -128,10 +125,10 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             margin-top: 1rem;
         }
         .gs-guide-col {
-            background: rgba(15, 23, 42, 0.65);
+            background: #4A040B;
             border-radius: 14px;
             padding: 1rem 1.1rem;
-            border: 1px solid rgba(148, 163, 184, 0.18);
+            border: 1px solid #851825;
         }
         .gs-guide-col h3 {
             margin: 0 0 0.5rem;
@@ -166,7 +163,7 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
         }
         .gs-section-header p {
             margin: 0.25rem 0 0;
-            color: #94a3b8;
+            color: #FFC9CD;
             font-size: 0.88rem;
         }
         .gs-hovedflader-grid {
@@ -182,13 +179,13 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             justify-content: space-between;
             transition: all 0.25s ease;
             position: relative;
-            background: linear-gradient(165deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
-            border: 1.5px solid rgba(148, 163, 184, 0.25);
+            background: #5C0812;
+            border: 1.5px solid #851825;
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
         }
         .gs-hovedflade-card.active-flade {
             border-color: #38bdf8;
-            background: linear-gradient(165deg, rgba(14, 116, 144, 0.3) 0%, rgba(15, 23, 42, 0.95) 100%);
+            background: linear-gradient(165deg, rgba(14, 116, 144, 0.35) 0%, #5C0812 100%);
             box-shadow: 0 12px 30px rgba(56, 189, 248, 0.22);
             cursor: pointer;
         }
@@ -199,11 +196,10 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
         }
         .gs-hf-tag {
             font-size: 0.72rem;
-            font-weight: 900;
+            font-weight: 800;
             padding: 0.22rem 0.55rem;
             border-radius: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
             display: inline-block;
             margin-bottom: 0.6rem;
             align-self: flex-start;
@@ -214,9 +210,9 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             border: 1px solid rgba(34, 197, 94, 0.4);
         }
         .gs-hf-tag.planned {
-            background: rgba(148, 163, 184, 0.15);
-            color: #94a3b8;
-            border: 1px solid rgba(148, 163, 184, 0.3);
+            background: rgba(255, 201, 205, 0.12);
+            color: #FFC9CD;
+            border: 1px solid #851825;
         }
         .gs-hf-title {
             font-size: 1.15rem;
@@ -226,7 +222,7 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
         }
         .gs-hf-sub {
             font-size: 0.84rem;
-            color: #cbd5e1;
+            color: #FFC9CD;
             margin: 0 0 0.8rem;
             line-height: 1.45;
         }
@@ -235,7 +231,7 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             padding: 0;
             margin: 0 0 1rem;
             font-size: 0.8rem;
-            color: #94a3b8;
+            color: #FFC9CD;
             display: flex;
             flex-direction: column;
             gap: 0.3rem;
@@ -246,12 +242,12 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             font-weight: bold;
         }
         .gs-hf-btn {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
+            background: #FF4D5E;
             color: #ffffff;
             border: none;
             padding: 0.6rem 1rem;
             border-radius: 10px;
-            font-weight: 800;
+            font-weight: 700;
             font-size: 0.86rem;
             display: inline-flex;
             align-items: center;
@@ -261,7 +257,7 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             transition: all 0.2s ease;
         }
         .gs-hf-btn:hover {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            background: #ff6b7a;
             transform: scale(1.02);
         }
     `;
@@ -279,7 +275,7 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
 
     const langBadge = document.createElement('span');
     langBadge.className = 'gs-hero-badge';
-    langBadge.innerHTML = `🧭 Sanse-Grammatik • DU1 & DU2`;
+    langBadge.innerHTML = `Sansegrammatik • DU1 og DU2`;
     topBar.appendChild(langBadge);
 
     viewContainer.appendChild(topBar);
@@ -288,7 +284,7 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
     const hero = document.createElement('div');
     hero.className = 'gs-hero';
     hero.innerHTML = `
-        <div class="gs-hero-badge">🧭 Fænomenologisk & Sanselig Grammatik</div>
+        <div class="gs-hero-badge">Fænomenologisk og sanselig grammatik</div>
         <h1>Grammatik og min sansning af verden</h1>
         <p>
             Udforsk det danske sprog gennem kroppens fire fundamentale måder at sanse virkeligheden på.
@@ -303,68 +299,68 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
     realmsSection.innerHTML = `
         <div class="gs-section-header">
             <div>
-                <h2>🏛️ Appens 4 Kropslige Hovedflader</h2>
+                <h2>Appens 4 kropslige hovedflader</h2>
                 <p>Udforsk grammatikken gennem kroppens fire primære sansninger af virkeligheden.</p>
             </div>
         </div>
         <div class="gs-hovedflader-grid">
             <div class="gs-hovedflade-card active-flade" id="btn-open-flade1">
                 <div>
-                    <span class="gs-hf-tag ready">✨ 100% Færdig & Aktiv</span>
-                    <h3 class="gs-hf-title">Flade 1: Dynamik & Form</h3>
-                    <p class="gs-hf-sub">Inde i tingen og kroppen: Stilstand vs. Forvandling.</p>
+                    <span class="gs-hf-tag ready">Aktiv</span>
+                    <h3 class="gs-hf-title">Flade 1: Dynamik og form</h3>
+                    <p class="gs-hf-sub">Inde i tingen og kroppen: Stilstand vs. forvandling.</p>
                     <ul class="gs-hf-bullets">
-                        <li>Være vs. Blive (verbernes grundkerne)</li>
-                        <li>Ligge vs. Lægge (positionsverber)</li>
-                        <li>Form & Masse (utællelig vs. tællelig)</li>
-                        <li>Har vs. Er i førnutid (motoren vs. døren)</li>
-                        <li>Aspekt, Måde & Diatese (dvælen vs. fart)</li>
+                        <li>Være vs. blive (verbernes grundkerne)</li>
+                        <li>Ligge vs. lægge (positionsverber)</li>
+                        <li>Form og masse (utællelig vs. tællelig)</li>
+                        <li>Har vs. er i førnutid (motoren vs. døren)</li>
+                        <li>Aspekt, måde og diatese (dvælen vs. fart)</li>
                     </ul>
                 </div>
                 <button class="gs-hf-btn">
-                    Åbn Hovedflade 1 Portal →
+                    Åbn hovedflade 1 →
                 </button>
             </div>
 
             <div class="gs-hovedflade-card">
                 <div>
-                    <span class="gs-hf-tag planned">🚧 Næste Fase</span>
-                    <h3 class="gs-hf-title">Flade 2: Rum, Tid & Relationer</h3>
-                    <p class="gs-hf-sub">Hvor står mit kamera? Nærhed i hånden vs. Afstand i kikkerten.</p>
+                    <span class="gs-hf-tag planned">Næste fase</span>
+                    <h3 class="gs-hf-title">Flade 2: Rum, tid og relationer</h3>
+                    <p class="gs-hf-sub">Hvor står mit kamera? Nærhed i hånden vs. afstand i kikkerten.</p>
                     <ul class="gs-hf-bullets">
-                        <li>I vs. På (hulen vs. fladen)</li>
-                        <li>Denne vs. Den (hånden vs. pegefingeren)</li>
-                        <li>Nutid vs. Datid (scenen vs. kikkerten)</li>
-                        <li>Hjemme vs. Hjem (zonen vs. tærsklen)</li>
-                        <li>Sin vs. Hans (kroppens intime sfære)</li>
+                        <li>I vs. på (hulen vs. fladen)</li>
+                        <li>Denne vs. den (hånden vs. pegefingeren)</li>
+                        <li>Nutid vs. datid (scenen vs. kikkerten)</li>
+                        <li>Hjemme vs. hjem (zonen vs. tærsklen)</li>
+                        <li>Sin vs. hans (kroppens intime sfære)</li>
                     </ul>
                 </div>
             </div>
 
             <div class="gs-hovedflade-card">
                 <div>
-                    <span class="gs-hf-tag planned">📋 Planlagt</span>
-                    <h3 class="gs-hf-title">Flade 3: Modalitet & Evidens</h3>
-                    <p class="gs-hf-sub">Hvor fast er grunden under mine fødder? Vished vs. Tvivl.</p>
+                    <span class="gs-hf-tag planned">Planlagt</span>
+                    <h3 class="gs-hf-title">Flade 3: Modalitet og evidens</h3>
+                    <p class="gs-hf-sub">Hvor fast er grunden under mine fødder? Vished vs. tvivl.</p>
                     <ul class="gs-hf-bullets">
-                        <li>Klippegrund vs. Tynd is (sikkert, måske)</li>
-                        <li>Evidensens kilde: Nok, Jo, Vel, Vist</li>
-                        <li>Kroppens mærken: Synes vs. Tror</li>
-                        <li>Modalverbernes pres: Skal, vil, må, kan</li>
+                        <li>Klippegrund vs. tynd is (sikkert, måske)</li>
+                        <li>Evidensens kilde: nok, jo, vel, vist</li>
+                        <li>Kroppens mærken: synes vs. tror</li>
+                        <li>Modalverbernes pres: skal, vil, må, kan</li>
                     </ul>
                 </div>
             </div>
 
             <div class="gs-hovedflade-card">
                 <div>
-                    <span class="gs-hf-tag planned">📋 Planlagt</span>
-                    <h3 class="gs-hf-title">Flade 4: Kraft & Tekstflow</h3>
+                    <span class="gs-hf-tag planned">Planlagt</span>
+                    <h3 class="gs-hf-title">Flade 4: Kraft og tekstflow</h3>
                     <p class="gs-hf-sub">Hængslerne mellem scenerne. Kausalitet og sætningsdans.</p>
                     <ul class="gs-hf-bullets">
-                        <li>Fri bane: Fordi (kilde) vs. Derfor (fremdrift)</li>
-                        <li>Modstand: Selvom (muren) vs. Alligevel (gennembrud)</li>
-                        <li>Betingelser: Hvis (springbræt) vs. Eller</li>
-                        <li>Sætningsdansen & Inversion (felt 1 & 2)</li>
+                        <li>Fri bane: fordi (kilde) vs. derfor (fremdrift)</li>
+                        <li>Modstand: selvom (muren) vs. alligevel (gennembrud)</li>
+                        <li>Betingelser: hvis (springbræt) vs. eller</li>
+                        <li>Sætningsdansen og inversion (felt 1 og 2)</li>
                     </ul>
                 </div>
             </div>
@@ -382,7 +378,7 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
     guide.className = 'gs-guide-card';
     guide.innerHTML = `
         <summary class="gs-guide-summary">
-            <span>🧘 Lærerens & Kursistens Sanseguide: Sådan sanses grammatikken</span>
+            <span>Lærerens og kursistens sanseguide: sådan sanses grammatikken</span>
             <span>▼</span>
         </summary>
         <div class="gs-guide-content">
@@ -394,21 +390,21 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             </p>
             <div class="gs-guide-grid">
                 <div class="gs-guide-col">
-                    <h3>🤚 1. Kropssprogets Fagter</h3>
+                    <h3>1. Kropssprogets fagter</h3>
                     <p>
-                        Brug hænderne i undervisningen: En flad, rolig håndflade mod bordet symboliserer <strong>Tilstand (ligger / er / hjemme)</strong>. 
-                        En gribende eller skubbende hånd i fart symboliserer <strong>Forvandling (lægger / bliver / hjem)</strong>.
+                        Brug hænderne i undervisningen: En flad, rolig håndflade mod bordet symboliserer <strong>tilstand (ligger / er / hjemme)</strong>. 
+                        En gribende eller skubbende hånd i fart symboliserer <strong>forvandling (lægger / bliver / hjem)</strong>.
                     </p>
                 </div>
                 <div class="gs-guide-col">
-                    <h3>🚪 2. Tærsklens Grænse</h3>
+                    <h3>2. Tærsklens grænse</h3>
                     <p>
                         Vis dørtrinet: Står kursisten inden for døren, er det en lukket ro med <strong>-e</strong> (inde, oppe, hjemme). 
                         Så snart foden løftes og krydser tærsklen, forsvinder <strong>-e</strong>'et (ind, op, hjem).
                     </p>
                 </div>
                 <div class="gs-guide-col">
-                    <h3>👅 3. Tunge vs. Pande</h3>
+                    <h3>3. Tunge vs. pande</h3>
                     <p>
                         Hvor sidder verbet? <strong>"Jeg synes"</strong> sidder i smagsløgene, i maven og på huden (sanseindtryk). 
                         <strong>"Jeg tror"</strong> sidder i panden foran (hovedets gæt uden sansning her og nu).

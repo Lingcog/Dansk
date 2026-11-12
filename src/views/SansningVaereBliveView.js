@@ -258,9 +258,9 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
         }
 
         .ss-back-btn {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1.5px solid rgba(148, 163, 184, 0.25);
-            color: #f8fafc;
+            background: #5C0812;
+            border: 1.5px solid #851825;
+            color: #ffffff;
             padding: 0.55rem 1.1rem;
             border-radius: 12px;
             font-weight: 700;
@@ -272,8 +272,8 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
             gap: 0.4rem;
         }
         .ss-back-btn:hover {
-            border-color: #38bdf8;
-            background: rgba(30, 41, 59, 0.9);
+            border-color: #FFC9CD;
+            background: #73101C;
             transform: translateX(-2px);
         }
 
@@ -281,15 +281,14 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
             display: inline-flex;
             align-items: center;
             gap: 0.45rem;
-            background: rgba(56, 189, 248, 0.15);
-            border: 1px solid rgba(56, 189, 248, 0.45);
+            background: rgba(92, 8, 18, 0.85);
+            border: 1px solid #851825;
             border-radius: 999px;
             padding: 0.35rem 0.85rem;
             font-size: 0.8rem;
             font-weight: 800;
-            color: #7dd3fc;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            color: #FFC9CD;
+            letter-spacing: 0.04em;
         }
 
         .ss-hero {
@@ -301,12 +300,10 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
             font-weight: 900;
             margin: 0 0 0.4rem;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #38bdf8 20%, #ffffff 60%, #fb923c 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
         }
         .ss-hero p {
-            color: #cbd5e1;
+            color: #FFC9CD;
             font-size: 1.02rem;
             max-width: 820px;
             margin: 0 auto;
@@ -320,19 +317,19 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
             flex-wrap: wrap;
             gap: 0.6rem;
             margin-bottom: 1.8rem;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1.5px solid rgba(148, 163, 184, 0.22);
+            background: #4A040B;
+            border: 1.5px solid #851825;
             padding: 0.45rem;
             border-radius: 16px;
         }
         .ss-tab-btn {
             background: transparent;
             border: none;
-            color: #94a3b8;
+            color: #FFC9CD;
             padding: 0.6rem 1.15rem;
             border-radius: 12px;
             font-size: 0.88rem;
-            font-weight: 800;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
             display: inline-flex;
@@ -344,9 +341,8 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
             background: rgba(255, 255, 255, 0.06);
         }
         .ss-tab-btn.active {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
+            background: #FF4D5E;
             color: #ffffff;
-            box-shadow: 0 0 16px rgba(2, 132, 199, 0.4);
         }
 
         .ss-tab-panel {
@@ -849,7 +845,7 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
 
     const backBtn = document.createElement('button');
     backBtn.className = 'ss-back-btn';
-    backBtn.innerHTML = (extraData && extraData.from === 'overview') ? `← Tilbage til Sansningsoversigten` : `← Tilbage til Hovedflade 1`;
+    backBtn.innerHTML = (extraData && extraData.from === 'overview') ? `← Tilbage til sansningsoversigten` : `← Tilbage til hovedflade 1`;
     backBtn.onclick = () => {
         if (extraData && extraData.from === 'overview') {
             navigateFn('grammatik_sansning');
@@ -861,7 +857,7 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
 
     const badge = document.createElement('span');
     badge.className = 'ss-station-badge';
-    badge.innerHTML = `Station 1.1 • Væren & Tilblivelse`;
+    badge.innerHTML = `Station 1.1 • Væren og tilblivelse`;
     topBar.appendChild(badge);
 
     viewContainer.appendChild(topBar);
@@ -870,12 +866,12 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
     const hero = document.createElement('div');
     hero.className = 'ss-hero';
     hero.innerHTML = `
-        <h1>Væren (Er) vs. Tilblivelse (Bliver)</h1>
+        <h1>Væren (er) vs. tilblivelse (bliver)</h1>
         <p>
             Se de to verdener side om side: 
             <strong>Venstre side</strong> viser tilstanden i ro (<em>"Kaffen er kold"</em>), 
             mens <strong>højre side</strong> viser selve forvandlingen (<em>"Kaffen bliver kold"</em>).
-            Klik på et motiv for at se modpolen lyse op!
+            Klik på et motiv for at se modpolen lyse op.
         </p>
     `;
     viewContainer.appendChild(hero);
@@ -885,10 +881,10 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
     tabsNav.className = 'ss-tabs-nav';
     tabsNav.innerHTML = `
         <button class="ss-tab-btn active" data-tab="tab_kontrast">
-            ⚖️ 1. Diktomisk Vrimlebillede
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Træningsbane: Er eller Bliver?
+            2. Træningsbane: er eller bliver?
         </button>
     `;
     viewContainer.appendChild(tabsNav);
@@ -907,10 +903,10 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
             <!-- Control bar -->
             <div class="contrast-control-bar">
                 <div class="contrast-instruction">
-                    💡 <em>Klik på et motiv på venstre side (Væren) for at se dets spejlbillede på højre side (Tilblivelse).</em>
+                    <em>Klik på et motiv på venstre side (væren) for at se dets spejlbillede på højre side (tilblivelse).</em>
                 </div>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    🖼️ Ren visning: <strong id="pure-status-label">FRA</strong>
+                    Ren visning: <strong id="pure-status-label">FRA</strong>
                 </button>
             </div>
 
@@ -918,7 +914,7 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
             <div class="contrast-split-stage" id="split-stage">
                 <!-- VENSTRE HALVDEL: VÆREN (ER / RO) -->
                 <div class="stage-half left-half">
-                    <div class="stage-half-header cool">🔵 VÆREN (At være / Er) — Verden i Ro</div>
+                    <div class="stage-half-header cool">Venstre: Væren (er) — verden i ro</div>
                     <img src="assets/sansning_vaere_venstre.jpg" alt="Væren og ro i havnebyen" class="stage-half-img" />
 
                     <!-- Hotspots Venstre -->
@@ -927,7 +923,7 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
 
                 <!-- HØJRE HALVDEL: TILBLIVELSE (BLIVER / FORVANDLING) -->
                 <div class="stage-half right-half">
-                    <div class="stage-half-header warm">🟠 TILBLIVELSE (At blive / Bliver) — Forvandling</div>
+                    <div class="stage-half-header warm">Højre: Tilblivelse (bliver) — forvandling</div>
                     <img src="assets/sansning_blive_hoejre.jpg" alt="Tilblivelse og forvandling i havnebyen" class="stage-half-img" />
 
                     <!-- Hotspots Højre -->
@@ -992,10 +988,10 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
 
                 <div class="ss-quiz-options">
                     <button class="ss-quiz-opt-btn" data-val="er">
-                        🔵 er (Tilstand i ro)
+                        er (tilstand i ro)
                     </button>
                     <button class="ss-quiz-opt-btn" data-val="bliver">
-                        🟠 bliver (Forvandling / omslag)
+                        bliver (forvandling / omslag)
                     </button>
                 </div>
 
@@ -1089,19 +1085,18 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
         detailCard.innerHTML = `
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.6rem;">${pair.icon}</span>
                     <span class="adj-main-word">${pair.title}</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at skifte fokus">
-                    <span>${triggerSide === 'left' ? 'Skift til Forvandling' : 'Skift til Væren'}</span>
+                    <span>${triggerSide === 'left' ? 'Skift til forvandling' : 'Skift til væren'}</span>
                     <strong>${triggerSide === 'left' ? 'bliver ➔' : 'er ➔'}</strong>
                 </div>
             </div>
 
             <div class="adj-congruence-grid">
-                <!-- 🔵 Venstre Halvdel: Væren (er) -->
+                <!-- Venstre Halvdel: Væren (er) -->
                 <div class="ss-contrast-box tilstand">
-                    <span class="ss-box-badge">🔵 Venstre: Væren i Ro (er)</span>
+                    <span class="ss-box-badge">Venstre: Væren i ro (er)</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${pair.left.sent.replace('er', '<span class="ss-box-verb-highlight">er</span>')}
@@ -1110,9 +1105,9 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
                     <div class="ss-box-exp">${pair.left.exp}</div>
                 </div>
 
-                <!-- 🟠 Højre Halvdel: Tilblivelse (bliver) -->
+                <!-- Højre Halvdel: Tilblivelse (bliver) -->
                 <div class="ss-contrast-box forvandling">
-                    <span class="ss-box-badge">🟠 Højre: Forvandling i Bevægelse (bliver)</span>
+                    <span class="ss-box-badge">Højre: Forvandling i bevægelse (bliver)</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${pair.right.sent.replace('bliver', '<span class="ss-box-verb-highlight">bliver</span>')}
@@ -1123,14 +1118,13 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
             </div>
 
             <div class="ss-insp-aha">
-                <span style="font-size: 1.3rem;">💡</span>
                 <span><strong>Aha-oplevelsen:</strong> ${pair.aha}</span>
             </div>
 
             <div class="ss-insp-languages">
-                <div class="ss-lang-item">🇬🇧 <strong>Engelsk:</strong> ${pair.lang.en}</div>
-                <div class="ss-lang-item">🇸🇦 <strong>Arabisk:</strong> ${pair.lang.ar}</div>
-                <div class="ss-lang-item">🇨🇳 <strong>Kinesisk:</strong> ${pair.lang.zh}</div>
+                <div class="ss-lang-item"><strong>Engelsk:</strong> ${pair.lang.en}</div>
+                <div class="ss-lang-item"><strong>Arabisk:</strong> ${pair.lang.ar}</div>
+                <div class="ss-lang-item"><strong>Kinesisk:</strong> ${pair.lang.zh}</div>
             </div>
         `;
 

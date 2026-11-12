@@ -26,7 +26,7 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
     const contrastPairs = [
         {
             key: 'vejr_bil',
-            title: 'Vejret & Bilen i Indkørslen',
+            title: 'Vejret og bilen i indkørslen',
             icon: '🚗',
             left: {
                 x: 35,
@@ -646,13 +646,21 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
 
     const backBtn = document.createElement('button');
     backBtn.className = 'ss-back-btn';
-    backBtn.innerHTML = `← Tilbage til Sansningsoversigten`;
-    backBtn.onclick = () => navigateFn('grammatik_sansning');
+    backBtn.innerHTML = (extraData && extraData.from === 'overview')
+        ? '← Tilbage til sansningsoversigten'
+        : '← Tilbage til hovedflade 1';
+    backBtn.onclick = () => {
+        if (extraData && extraData.from === 'overview') {
+            navigateFn('grammatik_sansning');
+        } else {
+            navigateFn('sansning_flade_1');
+        }
+    };
     topBar.appendChild(backBtn);
 
     const badge = document.createElement('span');
     badge.className = 'ss-station-badge';
-    badge.innerHTML = `Station 2 • Tidens Sansning`;
+    badge.innerHTML = `Station 2 • Tidens sansning`;
     topBar.appendChild(badge);
 
     viewContainer.appendChild(topBar);
@@ -661,7 +669,7 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
     const hero = document.createElement('div');
     hero.className = 'ss-hero';
     hero.innerHTML = `
-        <h1>Tidens Sansning: "Havde været" vs. "Var blevet"</h1>
+        <h1>Tidens sansning: "havde været" vs. "var blevet"</h1>
         <p>
             Oplev tidernes kontrast side om side: 
             <strong>Venstre side</strong> viser tilstanden der herskede i ro (<em>"Vejret havde været koldt i et stykke tid"</em>), 
@@ -675,13 +683,13 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
     tabsNav.className = 'ss-tabs-nav';
     tabsNav.innerHTML = `
         <button class="ss-tab-btn active" data-tab="tab_kontrast">
-            ⚖️ 1. Diktomisk Vrimlebillede
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Træningsbane: Havde været vs. Var blevet
+            2. Træningsbane: havde været vs. var blevet
         </button>
         <button class="ss-tab-btn" data-tab="tab_engine">
-            🔬 3. Det Store Tidslinje-Værksted (Originale Flader)
+            3. Det store tidslinje-værksted
         </button>
     `;
     viewContainer.appendChild(tabsNav);
@@ -699,24 +707,24 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
         <div class="contrast-canvas-card">
             <div class="contrast-control-bar">
                 <div class="contrast-instruction">
-                    💡 <em>Klik på et motiv på venstre side (Havde været) for at se dets spejlbillede på højre side (Var blevet).</em>
+                    Klik på et motiv på venstre side (havde været) for at se dets spejlbillede på højre side (var blevet).
                 </div>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    🖼️ Ren visning: <strong id="pure-status-label">FRA</strong>
+                    Ren visning: <strong id="pure-status-label">Fra</strong>
                 </button>
             </div>
 
             <div class="contrast-split-stage" id="split-stage">
                 <!-- VENSTRE HALVDEL: HAVDE VÆRET (STILSTAND I FORTID) -->
                 <div class="stage-half left-half">
-                    <div class="stage-half-header cool">🔵 HAVDE VÆRET (Uforandret Fortid i Ro)</div>
+                    <div class="stage-half-header cool">Venstre: Havde været (uforandret fortid i ro)</div>
                     <img src="assets/sansning_verber_tider_venstre.jpg" alt="Vinterhuset og bilen i stabil kulde (havde været)" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: VAR BLEVET (FORVANDLINGEN DER INDTRÆFFER) -->
                 <div class="stage-half right-half">
-                    <div class="stage-half-header warm">🟠 VAR BLEVET (Selve Forvandlingen/Omslaget)</div>
+                    <div class="stage-half-header warm">Højre: Var blevet (selve forvandlingen/omslaget)</div>
                     <img src="assets/sansning_verber_tider_hoejre.jpg" alt="Vejret skifter og kulden sætter ind da bilen ankommer (var blevet)" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
@@ -777,10 +785,10 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
 
                 <div class="ss-quiz-options">
                     <button class="ss-quiz-opt-btn" data-val="havde været">
-                        🔵 havde været (Stabil tilstand i fortid)
+                        havde været (stabil tilstand i fortid)
                     </button>
                     <button class="ss-quiz-opt-btn" data-val="var blevet">
-                        🟠 var blevet (Selve forvandlingen/omslaget)
+                        var blevet (selve forvandlingen/omslaget)
                     </button>
                 </div>
 
@@ -834,10 +842,10 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
         <div class="ss-embedded-wrapper">
             <div style="text-align: center; margin-bottom: 1.2rem;">
                 <span style="font-size: 0.85rem; font-weight: 800; color: #fde68a; text-transform: uppercase;">
-                    Det Komplette Grammatik-Værksted (100% Bevaret)
+                    Det komplette grammatik-værksted (100% bevaret)
                 </span>
                 <h2 style="font-size: 1.6rem; margin: 0.3rem 0; color: #ffffff;">
-                    De 4 Tider & Interaktive Tidslinjer
+                    De 4 tider og interaktive tidslinjer
                 </h2>
                 <p style="color: #cbd5e1; font-size: 0.95rem; max-width: 720px; margin: 0 auto;">
                     Herunder finder du alle vores detaljerede diagrammer, sporhunde-øvelser og kameravinkler.
@@ -846,10 +854,10 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
             
             <div class="ss-embedded-subnav">
                 <button class="ss-strip-btn active" id="btn-sub-tider4">
-                    ⏱️ De 4 Tider (Nutid, Datid, Førnutid, Førdatid)
+                    De 4 tider (nutid, datid, førnutid, førdatid)
                 </button>
                 <button class="ss-strip-btn" id="btn-sub-hub">
-                    🎛️ Verber Grammatik-Hub (Statisk linje vs. Animerede scener)
+                    Verber grammatik-hub (statisk linje vs. animerede scener)
                 </button>
             </div>
 
@@ -929,19 +937,18 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
         detailCard.innerHTML = `
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.6rem;">${pair.icon}</span>
                     <span class="adj-main-word">${pair.title}</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at skifte fokus">
-                    <span>${triggerSide === 'left' ? 'Skift til Forvandling' : 'Skift til Tilstand'}</span>
+                    <span>${triggerSide === 'left' ? 'Skift til forvandling' : 'Skift til tilstand'}</span>
                     <strong>${triggerSide === 'left' ? 'var blevet ➔' : 'havde været ➔'}</strong>
                 </div>
             </div>
 
             <div class="adj-congruence-grid">
-                <!-- 🔵 Venstre Halvdel: Hadde været (Stabil fortid) -->
+                <!-- Venstre halvdel: havde været (stabil fortid) -->
                 <div class="ss-contrast-box tilstand">
-                    <span class="ss-box-badge">🔵 Venstre: Uforandret Tilstand i Ro</span>
+                    <span class="ss-box-badge">Venstre: Uforandret tilstand i ro</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${pair.left.sent.replace('havde været', '<span class="ss-box-verb-highlight">havde været</span>')}
@@ -950,9 +957,9 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
                     <div class="ss-box-exp">${pair.left.exp}</div>
                 </div>
 
-                <!-- 🟠 Højre Halvdel: Var blevet (Omslaget) -->
+                <!-- Højre halvdel: var blevet (omslaget) -->
                 <div class="ss-contrast-box forvandling">
-                    <span class="ss-box-badge">🟠 Højre: Forvandlingen / Omslaget</span>
+                    <span class="ss-box-badge">Højre: Forvandlingen / omslaget</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${pair.right.sent.replace('var blevet', '<span class="ss-box-verb-highlight">var blevet</span>')}
@@ -963,7 +970,6 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
             </div>
 
             <div class="ss-insp-aha">
-                <span style="font-size: 1.3rem;">💡</span>
                 <span><strong>Sanse-nøglen:</strong> ${pair.aha}</span>
             </div>
         `;

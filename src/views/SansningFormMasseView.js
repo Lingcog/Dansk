@@ -800,13 +800,19 @@ export function renderSansningFormMasseView(container, navigateFn, extraData = {
 
     const backBtn = document.createElement('button');
     backBtn.className = 'ss-back-btn';
-    backBtn.innerHTML = `← Tilbage til Hovedflade 1`;
-    backBtn.onclick = () => navigateFn('sansning_flade1');
+    backBtn.innerHTML = (extraData && extraData.from === 'overview') ? `← Tilbage til sansningsoversigten` : `← Tilbage til hovedflade 1`;
+    backBtn.onclick = () => {
+        if (extraData && extraData.from === 'overview') {
+            navigateFn('grammatik_sansning');
+        } else {
+            navigateFn('sansning_flade1');
+        }
+    };
     topBar.appendChild(backBtn);
 
     const badge = document.createElement('span');
     badge.className = 'ss-station-badge';
-    badge.innerHTML = `Station 1.3 • Form & Masse`;
+    badge.innerHTML = `Station 1.3 • Form og masse`;
     topBar.appendChild(badge);
 
     viewContainer.appendChild(topBar);
@@ -815,12 +821,12 @@ export function renderSansningFormMasseView(container, navigateFn, extraData = {
     const hero = document.createElement('div');
     hero.className = 'ss-hero';
     hero.innerHTML = `
-        <h1>Form & Masse: Utællelig vs. Tællelig</h1>
+        <h1>Form og masse: utællelig vs. tællelig</h1>
         <p>
             På dansk har substansen to tilstande: 
             <strong>Venstre side</strong> viser den flydende, uafgrænsede masse (<em>"vand", "kaffe", "mel"</em>), 
             mens <strong>højre side</strong> viser den afgrænsede form (<em>"en flaske vand", "en kop kaffe", "tre boller"</em>).
-            Klik på et motiv for at se modpolen lyse op!
+            Klik på et motiv for at se modpolen lyse op.
         </p>
     `;
     viewContainer.appendChild(hero);
@@ -830,10 +836,10 @@ export function renderSansningFormMasseView(container, navigateFn, extraData = {
     tabsNav.className = 'ss-tabs-nav';
     tabsNav.innerHTML = `
         <button class="ss-tab-btn active" data-tab="tab_kontrast">
-            ⚖️ 1. Diktomisk Vrimlebillede
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Træningsbane: Masse eller Form?
+            2. Træningsbane: masse eller form?
         </button>
     `;
     viewContainer.appendChild(tabsNav);
@@ -850,10 +856,10 @@ export function renderSansningFormMasseView(container, navigateFn, extraData = {
             <!-- Control bar -->
             <div class="contrast-control-bar">
                 <div class="contrast-instruction">
-                    💡 <em>Klik på et motiv på venstre side (Masse) for at se dets spejlbillede på højre side (Form).</em>
+                    <em>Klik på et motiv på venstre side (masse) for at se dets spejlbillede på højre side (form).</em>
                 </div>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    🖼️ Ren visning: <strong id="pure-status-label">FRA</strong>
+                    Ren visning: <strong id="pure-status-label">FRA</strong>
                 </button>
             </div>
 
@@ -861,14 +867,14 @@ export function renderSansningFormMasseView(container, navigateFn, extraData = {
             <div class="contrast-split-stage" id="split-stage">
                 <!-- VENSTRE HALVDEL: UTÆLLELIG MASSE -->
                 <div class="stage-half left-half">
-                    <div class="stage-half-header cool">🔵 UTÆLLELIG MASSE — Uafgrænset substans</div>
+                    <div class="stage-half-header cool">Venstre: Utællelig masse — uafgrænset substans</div>
                     <img src="assets/sansning_masse_venstre.jpg" alt="Utællelig masse i køkkenet" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: TÆLLELIG FORM -->
                 <div class="stage-half right-half">
-                    <div class="stage-half-header warm">🟠 TÆLLELIG FORM — Afgrænset genstand</div>
+                    <div class="stage-half-header warm">Højre: Tællelig form — afgrænset genstand</div>
                     <img src="assets/sansning_form_hoejre.jpg" alt="Tællelige genstande med form" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
@@ -1018,11 +1024,10 @@ export function renderSansningFormMasseView(container, navigateFn, extraData = {
         detailCard.innerHTML = `
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.8rem;">${pair.icon}</span>
                     <span class="adj-main-word">${pair.title}</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at skifte fokus">
-                    <span>${triggerSide === 'left' ? 'Skift til Tællelig Form' : 'Skift til Utællelig Masse'}</span>
+                    <span>${triggerSide === 'left' ? 'Skift til tællelig form' : 'Skift til utællelig masse'}</span>
                     <strong>${triggerSide === 'left' ? pair.right.word + ' ➔' : pair.left.word + ' ➔'}</strong>
                 </div>
             </div>
@@ -1030,7 +1035,7 @@ export function renderSansningFormMasseView(container, navigateFn, extraData = {
             <div class="adj-congruence-grid">
                 <!-- Venstre Halvdel: Masse -->
                 <div class="ss-contrast-box tilstand">
-                    <span class="ss-box-badge">🔵 Venstre: Utællelig Masse</span>
+                    <span class="ss-box-badge">Venstre: Utællelig masse</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${pair.left.sent.replace(pair.left.word, `<span class="ss-box-verb-highlight">${pair.left.word}</span>`)}
@@ -1041,7 +1046,7 @@ export function renderSansningFormMasseView(container, navigateFn, extraData = {
 
                 <!-- Højre Halvdel: Form -->
                 <div class="ss-contrast-box forvandling">
-                    <span class="ss-box-badge">🟠 Højre: Tællelig Form</span>
+                    <span class="ss-box-badge">Højre: Tællelig form</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${pair.right.sent.replace(pair.right.word, `<span class="ss-box-verb-highlight">${pair.right.word}</span>`)}
@@ -1052,14 +1057,13 @@ export function renderSansningFormMasseView(container, navigateFn, extraData = {
             </div>
 
             <div class="ss-insp-aha">
-                <span style="font-size: 1.3rem;">💡</span>
                 <span><strong>Aha-oplevelsen:</strong> ${pair.aha}</span>
             </div>
 
             <div class="ss-insp-languages">
-                <div class="ss-lang-item">🇬🇧 <strong>Engelsk:</strong> ${pair.lang.en}</div>
-                <div class="ss-lang-item">🇸🇦 <strong>Arabisk:</strong> ${pair.lang.ar}</div>
-                <div class="ss-lang-item">🇨🇳 <strong>Kinesisk:</strong> ${pair.lang.zh}</div>
+                <div class="ss-lang-item"><strong>Engelsk:</strong> ${pair.lang.en}</div>
+                <div class="ss-lang-item"><strong>Arabisk:</strong> ${pair.lang.ar}</div>
+                <div class="ss-lang-item"><strong>Kinesisk:</strong> ${pair.lang.zh}</div>
             </div>
         `;
 

@@ -24,7 +24,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
     const contrastPairs = [
         {
             key: 'hjem',
-            title: 'Bopælen & Vejen Hjem',
+            title: 'Bopælen og vejen hjem',
             icon: '🏡',
             left: {
                 x: 50,
@@ -40,11 +40,11 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
                 sent: 'Vi cykler hjem efter arbejde.',
                 exp: 'Kroppen er i bevægelse på vej mod bopælen og skal til at krydse indgangstærsklen.'
             },
-            aha: '-e på hjemmE = du er der alleredE i ro. Hjem uden e = du er på vej og krydser tærsklen.'
+            aha: '-e på hjemme = du er der allerede i ro. Hjem uden e = du er på vej og krydser tærsklen.'
         },
         {
             key: 'ind',
-            title: 'Døren & Dørtrinet (Inde vs. Ind)',
+            title: 'Døren og dørtrinnet (inde vs. ind)',
             icon: '🚪',
             left: {
                 x: 35,
@@ -60,11 +60,11 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
                 sent: 'Børnene løber ind, da regnen begynder.',
                 exp: 'Fødderne krydser det fysiske dørtrin fra udendørs til indendørs.'
             },
-            aha: 'IndE = ro i stuen. Ind = foden krydser dørtrinet.'
+            aha: 'Inde = ro i stuen. Ind = foden krydser dørtrinnet.'
         },
         {
             key: 'op',
-            title: 'Trappen til 1. Sal (Oppe vs. Op)',
+            title: 'Trappen til 1. sal (oppe vs. op)',
             icon: '🪜',
             left: {
                 x: 68,
@@ -80,11 +80,11 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
                 sent: 'Han går op ad trappen for at gå i seng.',
                 exp: 'Kroppen bevæger sig trin for trin i lodret retning opad.'
             },
-            aha: 'OppE = på etagen i ro. Op = retningen mod toppen af trappen.'
+            aha: 'Oppe = på etagen i ro. Op = retningen mod toppen af trappen.'
         },
         {
             key: 'ud',
-            title: 'Terrassen & Haven (Ude vs. Ud)',
+            title: 'Terrassen og haven (ude vs. ud)',
             icon: '🌳',
             left: {
                 x: 20,
@@ -100,11 +100,11 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
                 sent: 'Vi går ud på terrassen med kaffekanden.',
                 exp: 'Man træder ud gennem havedøren og forlader stuen.'
             },
-            aha: 'UdE = du sidder i havestolen. Ud = du åbner døren og træder frem.'
+            aha: 'Ude = du sidder i havestolen. Ud = du åbner døren og træder frem.'
         },
         {
             key: 'ned',
-            title: 'Kældertrappen (Nede vs. Ned)',
+            title: 'Kældertrappen (nede vs. ned)',
             icon: '📦',
             left: {
                 x: 82,
@@ -760,13 +760,21 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
 
     const backBtn = document.createElement('button');
     backBtn.className = 'ss-back-btn';
-    backBtn.innerHTML = `← Tilbage til Sansningsoversigten`;
-    backBtn.onclick = () => navigateFn('grammatik_sansning');
+    backBtn.innerHTML = (extraData && extraData.from === 'overview')
+        ? '← Tilbage til sansningsoversigten'
+        : '← Tilbage til hovedflade 1';
+    backBtn.onclick = () => {
+        if (extraData && extraData.from === 'overview') {
+            navigateFn('grammatik_sansning');
+        } else {
+            navigateFn('sansning_flade_1');
+        }
+    };
     topBar.appendChild(backBtn);
 
     const badge = document.createElement('span');
     badge.className = 'ss-station-badge';
-    badge.innerHTML = `Station 5 • Rummet & Tærsklen`;
+    badge.innerHTML = `Station 5 • Rummet og tærsklen`;
     topBar.appendChild(badge);
 
     viewContainer.appendChild(topBar);
@@ -775,7 +783,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
     const hero = document.createElement('div');
     hero.className = 'ss-hero';
     hero.innerHTML = `
-        <h1>Rummet & Tærsklen: Hjemme vs. Hjem / Inde vs. Ind</h1>
+        <h1>Rummet og tærsklen: hjemme vs. hjem / inde vs. ind</h1>
         <p>
             På dansk afslører det lille bogstav <strong>-e</strong>, om du er i ro i rummet 
             (<strong>hjemme, inde, ude, oppe, nede</strong>), eller om din krop krydser tærsklen 
@@ -789,13 +797,13 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
     tabsNav.className = 'ss-tabs-nav';
     tabsNav.innerHTML = `
         <button class="ss-tab-btn active" data-tab="tab_vrimmel">
-            🖼️ 1. Diktomisk Vrimlebillede (Split-Scene)
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Sanse-Træner: Med eller uden -e?
+            2. Sanse-træner: med eller uden -e?
         </button>
         <button class="ss-tab-btn" data-tab="tab_dimensions">
-            🧭 3. De 5 Rumlige Dimensioner
+            3. De 5 rumlige dimensioner
         </button>
     `;
     viewContainer.appendChild(tabsNav);
@@ -813,10 +821,10 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
         <div class="contrast-canvas-card">
             <div class="contrast-control-bar">
                 <span class="contrast-instruction">
-                    👉 Klik på motiverne i venstre eller højre side for at se modsætningen lyse op!
+                    Klik på motiverne i venstre eller højre side for at se modsætningen lyse op!
                 </span>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    👁️ Vis rent billede
+                    Ren visning: <strong id="pure-status-label">Fra</strong>
                 </button>
             </div>
 
@@ -824,7 +832,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
                 <!-- VENSTRE HALVDEL: RO I RUMMET (Stilstand / -e) -->
                 <div class="stage-half left-half" id="stage-left">
                     <div class="stage-half-header cool">
-                        🔵 Stilstand: Ro i rummet (hjemme, inde, ude, oppe, nede)
+                        Venstre: Stilstand i rummet (hjemme, inde, ude, oppe, nede)
                     </div>
                     <img src="assets/sansning_rummet_venstre.jpg" alt="Ro i rummet - Hjemme, inde, ude, oppe, nede" class="stage-half-img" />
                     <div id="hotspots-left"></div>
@@ -833,7 +841,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
                 <!-- HØJRE HALVDEL: KRYDSER TÆRSKLEN (Forvandling / Uden -e) -->
                 <div class="stage-half right-half" id="stage-right">
                     <div class="stage-half-header warm">
-                        🟠 Forvandling: Krydser tærsklen (hjem, ind, ud, op, ned)
+                        Højre: Forvandling og retning (hjem, ind, ud, op, ned)
                     </div>
                     <img src="assets/sansning_rummet_hoejre.jpg" alt="Krydser tærsklen - Hjem, ind, ud, op, ned" class="stage-half-img" />
                     <div id="hotspots-right"></div>
@@ -955,7 +963,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
         <div style="background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(139, 92, 246, 0.35); border-radius: 20px; padding: 1.8rem; box-shadow: 0 12px 32px rgba(0,0,0,0.4);">
             <div style="text-align: center; margin-bottom: 1.5rem;">
                 <h2 style="font-size: 1.6rem; color: #ffffff; margin: 0 0 0.4rem;">
-                    🧭 Tærskel-Reglen: Det Magiske Bogstav -e
+                    Tærskel-reglen: det magiske bogstav -e
                 </h2>
                 <p style="color: #cbd5e1; max-width: 720px; margin: 0 auto; line-height: 1.5;">
                     Når danskere taler om rum og bevægelse, afgøres hele sætningens betydning af, 
@@ -965,25 +973,25 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
 
             <div class="ss-dimensions-grid">
                 <div class="ss-dim-card">
-                    <div class="ss-dim-head">🏡 1. Bopælen</div>
+                    <div class="ss-dim-head">1. Bopælen</div>
                     <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0.5rem;">
                         <strong>Hjemme:</strong> Vi spiser aftensmad <em>hjemme</em> (ro på matriklen).<br>
                         <strong>Hjem:</strong> Vi kører <em>hjem</em> nu (på farten mod tærsklen).
                     </p>
-                    <div style="font-size: 0.8rem; color: #c4b5fd;">Hjemm<strong>E</strong> = du er d<strong>E</strong>r allered<strong>E</strong>!</div>
+                    <div style="font-size: 0.8rem; color: #c4b5fd;">Hjemme = du er der allerede!</div>
                 </div>
 
                 <div class="ss-dim-card">
-                    <div class="ss-dim-head">🚪 2. Huset & Værelset</div>
+                    <div class="ss-dim-head">2. Huset og værelset</div>
                     <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0.5rem;">
                         <strong>Inde:</strong> Børnene er <em>inde</em> i varmen (afskærmet af vægge).<br>
                         <strong>Ind:</strong> Kom <em>ind</em> og få en kop kaffe (kryds døren).
                     </p>
-                    <div style="font-size: 0.8rem; color: #c4b5fd;">Ind = foden løftes og træder over dørtrinet.</div>
+                    <div style="font-size: 0.8rem; color: #c4b5fd;">Ind = foden løftes og træder over dørtrinnet.</div>
                 </div>
 
                 <div class="ss-dim-card">
-                    <div class="ss-dim-head">🌳 3. Den Fri Natur</div>
+                    <div class="ss-dim-head">3. Den fri natur</div>
                     <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0.5rem;">
                         <strong>Ude:</strong> Vi sidder <em>ude</em> på terrassen (opholde sig i luften).<br>
                         <strong>Ud:</strong> Gå <em>ud</em> med skraldeposen (forlade stuen).
@@ -992,7 +1000,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
                 </div>
 
                 <div class="ss-dim-card">
-                    <div class="ss-dim-head">🪜 4. Den Lodrette Akse (Op)</div>
+                    <div class="ss-dim-head">4. Den lodrette akse (op)</div>
                     <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0.5rem;">
                         <strong>Oppe:</strong> Kontoret er <em>oppe</em> på 2. sal (befinder sig højt).<br>
                         <strong>Op:</strong> Han løber <em>op</em> ad trappen (bevægelse mod toppen).
@@ -1001,10 +1009,13 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
                 </div>
 
                 <div class="ss-dim-card">
-                    <div class="ss-dim-head">📦 5. Den Lodrette Akse (Ned)</div>
+                    <div class="ss-dim-head">5. Den lodrette akse (ned)</div>
                     <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0.5rem;">
                         <strong>Nede:</strong> Kartoflerne ligger <em>nede</em> i kælderen (i hvile).<br>
                         <strong>Ned:</strong> Gå <em>ned</em> i gården med cyklen (bevægelse mod bunden).
+                    </p>
+                    <div style="font-size: 0.8rem; color: #c4b5fd;">Ned = retningen ned mod jorden.</div>
+                </div>
                     </p>
                     <div style="font-size: 0.8rem; color: #c4b5fd;">Ned = retningen ned mod jorden.</div>
                 </div>
@@ -1027,14 +1038,15 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
 
     pureToggleBtn.onclick = () => {
         isPureMode = !isPureMode;
+        const statusLabel = panelVrimmel.querySelector('#pure-status-label');
         if (isPureMode) {
             splitStage.classList.add('pure-mode');
             pureToggleBtn.classList.add('active');
-            pureToggleBtn.innerHTML = `👁️ Vis hotspots`;
+            if (statusLabel) statusLabel.textContent = 'Til';
         } else {
             splitStage.classList.remove('pure-mode');
             pureToggleBtn.classList.remove('active');
-            pureToggleBtn.innerHTML = `👁️ Vis rent billede`;
+            if (statusLabel) statusLabel.textContent = 'Fra';
         }
     };
 
@@ -1098,13 +1110,12 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
         const currentData = activeSide === 'left' ? pair.left : pair.right;
         const otherSide = activeSide === 'left' ? 'right' : 'left';
         const otherData = activeSide === 'left' ? pair.right : pair.left;
-        const otherLabel = activeSide === 'left' ? `Byt til: ${pair.right.word} (Forvandling / Retning)` : `Byt til: ${pair.left.word} (Stilstand / Ro)`;
+        const otherLabel = activeSide === 'left' ? `Skift til: ${pair.right.word} (forvandling / retning)` : `Skift til: ${pair.left.word} (stilstand / ro)`;
 
         detailCard.innerHTML = `
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.8rem;">${pair.icon}</span>
-                    <span class="adj-main-word">${currentData.word.toUpperCase()}</span>
+                    <span class="adj-main-word">${currentData.word}</span>
                     <span style="color: #94a3b8; font-size: 0.9rem;">(${pair.title})</span>
                 </div>
                 <button class="adj-modpol-pill" id="card-swap-btn">
@@ -1115,7 +1126,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
 
             <div class="adj-congruence-grid">
                 <div class="adj-box left ${activeSide === 'left' ? 'active-side' : ''}">
-                    <span class="adj-box-badge">🔵 Stilstand: Ro i rummet (-e)</span>
+                    <span class="adj-box-badge">Venstre: Stilstand i rummet (-e)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${pair.left.sent.replace(pair.left.word, `<span class="adj-highlight">${pair.left.word}</span>`)}"
@@ -1125,7 +1136,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
                 </div>
 
                 <div class="adj-box right ${activeSide === 'right' ? 'active-side' : ''}">
-                    <span class="adj-box-badge">🟠 Forvandling: Krydser tærsklen (uden -e)</span>
+                    <span class="adj-box-badge">Højre: Forvandling og retning (uden -e)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${pair.right.sent.replace(pair.right.word, `<span class="adj-highlight">${pair.right.word}</span>`)}"
@@ -1136,8 +1147,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
             </div>
 
             <div class="adj-aha-bar">
-                <span style="font-size: 1.3rem;">💡</span>
-                <span><strong>Aha-oplevelse:</strong> ${pair.aha}</span>
+                <span><strong>Sanse-nøglen:</strong> ${pair.aha}</span>
             </div>
         `;
 

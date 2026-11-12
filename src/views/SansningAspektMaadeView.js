@@ -748,13 +748,19 @@ export function renderSansningAspektMaadeView(container, navigateFn, extraData =
 
     const backBtn = document.createElement('button');
     backBtn.className = 'ss-back-btn';
-    backBtn.innerHTML = `← Tilbage til Hovedflade 1`;
-    backBtn.onclick = () => navigateFn('sansning_flade1');
+    backBtn.innerHTML = (extraData && extraData.from === 'overview') ? `← Tilbage til sansningsoversigten` : `← Tilbage til hovedflade 1`;
+    backBtn.onclick = () => {
+        if (extraData && extraData.from === 'overview') {
+            navigateFn('grammatik_sansning');
+        } else {
+            navigateFn('sansning_flade1');
+        }
+    };
     topBar.appendChild(backBtn);
 
     const badge = document.createElement('span');
     badge.className = 'ss-station-badge';
-    badge.innerHTML = `Station 1.5 • Aspekt & Måde`;
+    badge.innerHTML = `Station 1.5 • Aspekt og måde`;
     topBar.appendChild(badge);
 
     viewContainer.appendChild(topBar);
@@ -763,12 +769,12 @@ export function renderSansningAspektMaadeView(container, navigateFn, extraData =
     const hero = document.createElement('div');
     hero.className = 'ss-hero';
     hero.innerHTML = `
-        <h1>Aspekt & Bevægelse: Dvælen vs. Retningsskift</h1>
+        <h1>Aspekt og bevægelse: dvælen vs. retningsskift</h1>
         <p>
             Oplev kroppens sansning af handlinger i tid: 
             <strong>Venstre side</strong> viser den rolige dvælen (<em>"ligger og læser", "går langsomt", "åbnes"</em>), 
             mens <strong>højre side</strong> viser det pludselige skift i retning og fart (<em>"sætter sig til at læse", "løber hurtigt", "åbner"</em>).
-            Klik på et motiv for at se modpolen lyse op!
+            Klik på et motiv for at se modpolen lyse op.
         </p>
     `;
     viewContainer.appendChild(hero);
@@ -778,10 +784,10 @@ export function renderSansningAspektMaadeView(container, navigateFn, extraData =
     tabsNav.className = 'ss-tabs-nav';
     tabsNav.innerHTML = `
         <button class="ss-tab-btn active" data-tab="tab_kontrast">
-            ⚖️ 1. Diktomisk Vrimlebillede
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Træningsbane: Dvælen eller Retningsskift?
+            2. Træningsbane: dvælen eller retningsskift?
         </button>
     `;
     viewContainer.appendChild(tabsNav);
@@ -797,24 +803,24 @@ export function renderSansningAspektMaadeView(container, navigateFn, extraData =
         <div class="contrast-canvas-card">
             <div class="contrast-control-bar">
                 <div class="contrast-instruction">
-                    💡 <em>Klik på et motiv på venstre side (Dvælen) for at se dets spejlbillede på højre side (Retningsskift).</em>
+                    <em>Klik på et motiv på venstre side (dvælen) for at se dets spejlbillede på højre side (retningsskift).</em>
                 </div>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    🖼️ Ren visning: <strong id="pure-status-label">FRA</strong>
+                    Ren visning: <strong id="pure-status-label">FRA</strong>
                 </button>
             </div>
 
             <div class="contrast-split-stage" id="split-stage">
                 <!-- VENSTRE HALVDEL: DVÆLEN & STILSTAND -->
                 <div class="stage-half left-half">
-                    <div class="stage-half-header cool">🔵 DVÆLEN — Uafgrænset ro over tid</div>
+                    <div class="stage-half-header cool">Venstre: Dvælen — uafgrænset ro over tid</div>
                     <img src="assets/sansning_aspekt_venstre.jpg" alt="Rolig dvælen i stuen" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: RETNINGSSKIFT & FART -->
                 <div class="stage-half right-half">
-                    <div class="stage-half-header warm">🟠 RETNINGSSKIFT — Fart og ny impuls</div>
+                    <div class="stage-half-header warm">Højre: Retningsskift — fart og ny impuls</div>
                     <img src="assets/sansning_aspekt_hoejre.jpg" alt="Retningsskift og fart" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
@@ -961,18 +967,17 @@ export function renderSansningAspektMaadeView(container, navigateFn, extraData =
         detailCard.innerHTML = `
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.8rem;">${pair.icon}</span>
                     <span class="adj-main-word">${pair.title}</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at skifte fokus">
-                    <span>${triggerSide === 'left' ? 'Skift til Retningsskift' : 'Skift til Dvælen'}</span>
+                    <span>${triggerSide === 'left' ? 'Skift til retningsskift' : 'Skift til dvælen'}</span>
                     <strong>${triggerSide === 'left' ? pair.right.word + ' ➔' : pair.left.word + ' ➔'}</strong>
                 </div>
             </div>
 
             <div class="adj-congruence-grid">
                 <div class="ss-contrast-box tilstand">
-                    <span class="ss-box-badge">🔵 Venstre: Dvælen i Ro</span>
+                    <span class="ss-box-badge">Venstre: Dvælen i ro</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${pair.left.sent.replace(pair.left.word, `<span class="ss-box-verb-highlight">${pair.left.word}</span>`)}
@@ -982,7 +987,7 @@ export function renderSansningAspektMaadeView(container, navigateFn, extraData =
                 </div>
 
                 <div class="ss-contrast-box forvandling">
-                    <span class="ss-box-badge">🟠 Højre: Retningsskift & Fart</span>
+                    <span class="ss-box-badge">Højre: Retningsskift og fart</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${pair.right.sent.replace(pair.right.word, `<span class="ss-box-verb-highlight">${pair.right.word}</span>`)}
@@ -993,14 +998,13 @@ export function renderSansningAspektMaadeView(container, navigateFn, extraData =
             </div>
 
             <div class="ss-insp-aha">
-                <span style="font-size: 1.3rem;">💡</span>
                 <span><strong>Aha-oplevelsen:</strong> ${pair.aha}</span>
             </div>
 
             <div class="ss-insp-languages">
-                <div class="ss-lang-item">🇬🇧 <strong>Engelsk:</strong> ${pair.lang.en}</div>
-                <div class="ss-lang-item">🇸🇦 <strong>Arabisk:</strong> ${pair.lang.ar}</div>
-                <div class="ss-lang-item">🇨🇳 <strong>Kinesisk:</strong> ${pair.lang.zh}</div>
+                <div class="ss-lang-item"><strong>Engelsk:</strong> ${pair.lang.en}</div>
+                <div class="ss-lang-item"><strong>Arabisk:</strong> ${pair.lang.ar}</div>
+                <div class="ss-lang-item"><strong>Kinesisk:</strong> ${pair.lang.zh}</div>
             </div>
         `;
 

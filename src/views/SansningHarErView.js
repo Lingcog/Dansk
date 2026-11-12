@@ -45,7 +45,7 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
         },
         {
             key: 'maler',
-            title: 'Malerne & Huset',
+            title: 'Malerne og huset',
             icon: '🎨',
             left: {
                 x: 75,
@@ -85,7 +85,7 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
         },
         {
             key: 'kage',
-            title: 'Bageriet & Kagen',
+            title: 'Bageriet og kagen',
             icon: '🥐',
             left: {
                 x: 20,
@@ -633,7 +633,7 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
 
     const backBtn = document.createElement('button');
     backBtn.className = 'ss-back-btn';
-    backBtn.innerHTML = (extraData && extraData.from === 'overview') ? `← Tilbage til Sansningsoversigten` : `← Tilbage til Hovedflade 1`;
+    backBtn.innerHTML = (extraData && extraData.from === 'overview') ? `← Tilbage til sansningsoversigten` : `← Tilbage til hovedflade 1`;
     backBtn.onclick = () => {
         if (extraData && extraData.from === 'overview') {
             navigateFn('grammatik_sansning');
@@ -645,7 +645,7 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
 
     const badge = document.createElement('span');
     badge.className = 'ss-station-badge';
-    badge.innerHTML = `Station 1.4 • Aktivitet vs. Resultat (Har vs. Er)`;
+    badge.innerHTML = `Station 1.4 • Aktivitet vs. resultat (har vs. er)`;
     topBar.appendChild(badge);
 
     viewContainer.appendChild(topBar);
@@ -654,7 +654,7 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
     const hero = document.createElement('div');
     hero.className = 'ss-hero';
     hero.innerHTML = `
-        <h1>Aktivitet (Har) vs. Tilstandsskift (Er)</h1>
+        <h1>Aktivitet (har) vs. tilstandsskift (er)</h1>
         <p>
             Se modpolerne side om side: 
             <strong>Venstre side</strong> viser motoren der arbejder (<em>"Hun har cyklet i skoven"</em>), 
@@ -668,13 +668,13 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
     tabsNav.className = 'ss-tabs-nav';
     tabsNav.innerHTML = `
         <button class="ss-tab-btn active" data-tab="tab_kontrast">
-            ⚖️ 1. Diktomisk Vrimlebillede
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Træningsbane: Har eller Er?
+            2. Træningsbane: har eller er?
         </button>
         <button class="ss-tab-btn" data-tab="tab_engine">
-            🔬 3. Det Originale Har/Er Værksted
+            3. Det originale har/er-værksted
         </button>
     `;
     viewContainer.appendChild(tabsNav);
@@ -692,24 +692,24 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
         <div class="contrast-canvas-card">
             <div class="contrast-control-bar">
                 <div class="contrast-instruction">
-                    💡 <em>Klik på et motiv på venstre side (Har) for at se dets modpol på højre side (Er).</em>
+                    <em>Klik på et motiv på venstre side (har) for at se dets modpol på højre side (er).</em>
                 </div>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    🖼️ Ren visning: <strong id="pure-status-label">FRA</strong>
+                    Ren visning: <strong id="pure-status-label">FRA</strong>
                 </button>
             </div>
 
             <div class="contrast-split-stage" id="split-stage">
                 <!-- VENSTRE HALVDEL: HAR (MOTOREN / AKTIVITET) -->
                 <div class="stage-half left-half">
-                    <div class="stage-half-header warm">🟠 MOTOREN (Har) — Aktiviteten i Arbejde</div>
+                    <div class="stage-half-header warm">Venstre: Motoren (har) — aktiviteten i arbejde</div>
                     <img src="assets/sansning_har_er_venstre.jpg" alt="Har - Motoren og aktiviteten i gang" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: ER (DØREN / RESULTATET) -->
                 <div class="stage-half right-half">
-                    <div class="stage-half-header cool">🔵 DØREN / SKIFTET (Er) — Ny Tilstand / Sted</div>
+                    <div class="stage-half-header cool">Højre: Døren og skiftet (er) — ny tilstand og sted</div>
                     <img src="assets/sansning_har_er_hoejre.jpg" alt="Er - Resultatet og det nye sted" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
@@ -770,10 +770,10 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
 
                 <div class="ss-quiz-options">
                     <button class="ss-quiz-opt-btn" data-val="har">
-                        🟠 har (Motoren i arbejde)
+                        har (motoren i arbejde)
                     </button>
                     <button class="ss-quiz-opt-btn" data-val="er">
-                        🔵 er (Tilstandsskift / ny placering)
+                        er (tilstandsskift / ny placering)
                     </button>
                 </div>
 
@@ -826,14 +826,14 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
     panelEngine.innerHTML = `
         <div class="ss-embedded-wrapper">
             <div style="text-align: center; margin-bottom: 1.2rem;">
-                <span style="font-size: 0.85rem; font-weight: 800; color: #a7f3d0; text-transform: uppercase;">
-                    Det Komplette Har/Er Værksted (100% Bevaret)
+                <span style="font-size: 0.85rem; font-weight: 800; color: #a7f3d0; letter-spacing: 0.04em;">
+                    Det komplette har/er-værksted
                 </span>
                 <h2 style="font-size: 1.6rem; margin: 0.3rem 0; color: #ffffff;">
-                    De 3 Stadier: Proces <-> Tilstand <-> Adjektiv
+                    De 3 stadier: proces <-> tilstand <-> adjektiv
                 </h2>
-                <p style="color: #cbd5e1; font-size: 0.95rem; max-width: 720px; margin: 0 auto;">
-                    Herunder finder du det fulde originale Har/Er modul med Aha-værksted og de 3 træningsbaner.
+                <p style="color: #FFC9CD; font-size: 0.95rem; max-width: 720px; margin: 0 auto;">
+                    Herunder finder du det fulde originale har/er-modul med aha-værksted og de 3 træningsbaner.
                 </p>
             </div>
             <div id="embedded-harer-mount"></div>
@@ -890,19 +890,18 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
         detailCard.innerHTML = `
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.6rem;">${pair.icon}</span>
                     <span class="adj-main-word">${pair.title}</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at skifte fokus">
-                    <span>${triggerSide === 'left' ? 'Skift til Skiftet' : 'Skift til Motoren'}</span>
+                    <span>${triggerSide === 'left' ? 'Skift til skiftet' : 'Skift til motoren'}</span>
                     <strong>${triggerSide === 'left' ? 'er ➔' : 'har ➔'}</strong>
                 </div>
             </div>
 
             <div class="adj-congruence-grid">
-                <!-- 🟠 Venstre: Motoren (har) -->
+                <!-- Venstre: Motoren (har) -->
                 <div class="ss-contrast-box motoren">
-                    <span class="ss-box-badge">🟠 Venstre: Motoren i Arbejde (Har)</span>
+                    <span class="ss-box-badge">Venstre: Motoren i arbejde (har)</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${pair.left.sent.replace(pair.left.word, `<span class="ss-box-verb-highlight">${pair.left.word}</span>`)}
@@ -911,9 +910,9 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
                     <div class="ss-box-exp">${pair.left.exp}</div>
                 </div>
 
-                <!-- 🔵 Højre: Døren (er) -->
+                <!-- Højre: Døren (er) -->
                 <div class="ss-contrast-box doeren">
-                    <span class="ss-box-badge">🔵 Højre: Skiftet til Ny Tilstand (Er)</span>
+                    <span class="ss-box-badge">Højre: Skiftet til ny tilstand (er)</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${pair.right.sent.replace(pair.right.word, `<span class="ss-box-verb-highlight">${pair.right.word}</span>`)}
@@ -924,7 +923,6 @@ export function renderSansningHarErView(container, navigateFn, extraData = {}) {
             </div>
 
             <div class="ss-insp-aha">
-                <span style="font-size: 1.3rem;">💡</span>
                 <span><strong>Sanse-nøglen:</strong> ${pair.aha}</span>
             </div>
         `;

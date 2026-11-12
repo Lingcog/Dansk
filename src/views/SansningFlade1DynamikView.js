@@ -38,9 +38,9 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
         }
 
         .gs-back-btn {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1.5px solid rgba(148, 163, 184, 0.25);
-            color: #f8fafc;
+            background: #5C0812;
+            border: 1.5px solid #851825;
+            color: #ffffff;
             padding: 0.55rem 1.1rem;
             border-radius: 12px;
             font-weight: 700;
@@ -52,8 +52,8 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             gap: 0.4rem;
         }
         .gs-back-btn:hover {
-            border-color: #38bdf8;
-            background: rgba(30, 41, 59, 0.9);
+            border-color: #FFC9CD;
+            background: #73101C;
             transform: translateX(-2px);
         }
 
@@ -65,15 +65,14 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(249, 115, 22, 0.18));
-            border: 1px solid rgba(251, 191, 36, 0.4);
+            background: rgba(92, 8, 18, 0.85);
+            border: 1px solid #851825;
             border-radius: 999px;
             padding: 0.35rem 1rem;
             font-size: 0.82rem;
             font-weight: 800;
-            color: #fde68a;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
+            color: #FFC9CD;
+            letter-spacing: 0.04em;
             margin-bottom: 0.75rem;
         }
         .gs-hero h1 {
@@ -81,12 +80,10 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             font-weight: 900;
             margin: 0 0 0.5rem;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #ffffff 40%, #fde68a 85%, #fb923c 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
         }
         .gs-hero p {
-            color: #cbd5e1;
+            color: #FFC9CD;
             font-size: 1.05rem;
             max-width: 840px;
             margin: 0 auto;
@@ -107,14 +104,16 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             padding: 1.35rem 1.45rem;
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
             transition: all 0.25s ease;
+            background: #5C0812;
+            border: 1.5px solid #851825;
         }
         .gs-realm-card.tilstand {
-            background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(12, 74, 110, 0.3));
-            border: 1.5px solid rgba(56, 189, 248, 0.4);
+            border-color: #38bdf8;
+            background: linear-gradient(145deg, #5C0812 0%, rgba(14, 116, 144, 0.25) 100%);
         }
         .gs-realm-card.forvandling {
-            background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(154, 52, 18, 0.3));
-            border: 1.5px solid rgba(251, 146, 60, 0.45);
+            border-color: #fb923c;
+            background: linear-gradient(145deg, #5C0812 0%, rgba(194, 65, 12, 0.25) 100%);
         }
         .gs-realm-head {
             display: flex;
@@ -124,11 +123,10 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
         }
         .gs-realm-badge {
             font-size: 0.78rem;
-            font-weight: 900;
+            font-weight: 800;
             padding: 0.25rem 0.65rem;
             border-radius: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
         }
         .gs-realm-card.tilstand .gs-realm-badge {
             background: rgba(56, 189, 248, 0.2);
@@ -140,7 +138,7 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             color: #fdba74;
             border: 1px solid rgba(251, 146, 60, 0.4);
         }
-        .gs-realm-symbol { font-size: 1.8rem; }
+        .gs-realm-symbol { font-size: 1.4rem; }
         .gs-realm-title {
             font-size: 1.35rem;
             font-weight: 800;
@@ -148,19 +146,19 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             color: #ffffff;
         }
         .gs-realm-desc {
-            color: #cbd5e1;
+            color: #FFC9CD;
             font-size: 0.92rem;
             line-height: 1.5;
             margin: 0 0 0.9rem;
         }
         .gs-realm-examples {
-            background: rgba(15, 23, 42, 0.6);
+            background: #4A040B;
             border-radius: 12px;
             padding: 0.75rem 0.9rem;
             display: flex;
             flex-direction: column;
             gap: 0.4rem;
-            border: 1px dashed rgba(148, 163, 184, 0.2);
+            border: 1px dashed #851825;
         }
         .gs-realm-ex-item {
             font-size: 0.88rem;
@@ -168,6 +166,7 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             align-items: center;
             justify-content: space-between;
             gap: 0.5rem;
+            color: #FFC9CD;
         }
         .gs-realm-ex-word { font-weight: 800; }
         .gs-realm-card.tilstand .gs-realm-ex-word { color: #38bdf8; }
@@ -175,8 +174,8 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
 
         /* Simulator */
         .gs-simulator-box {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.95));
-            border: 1.5px solid rgba(251, 191, 36, 0.35);
+            background: #5C0812;
+            border: 1.5px solid #851825;
             border-radius: 18px;
             padding: 1.2rem 1.4rem;
             margin-bottom: 2.2rem;
@@ -193,15 +192,15 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
         .gs-sim-title {
             font-weight: 800;
             font-size: 1.05rem;
-            color: #fde68a;
+            color: #ffffff;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
         .gs-sim-toggle-group {
             display: inline-flex;
-            background: rgba(15, 23, 42, 0.85);
-            border: 1.5px solid rgba(148, 163, 184, 0.25);
+            background: #4A040B;
+            border: 1.5px solid #851825;
             border-radius: 12px;
             padding: 0.25rem;
             gap: 0.25rem;
@@ -209,11 +208,11 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
         .gs-sim-toggle-btn {
             background: transparent;
             border: none;
-            color: #94a3b8;
+            color: #FFC9CD;
             padding: 0.45rem 0.9rem;
             border-radius: 8px;
             font-size: 0.84rem;
-            font-weight: 800;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
         }
@@ -233,20 +232,19 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             gap: 0.75rem;
         }
         .gs-sim-chip {
-            background: rgba(15, 23, 42, 0.65);
+            background: #4A040B;
             border-radius: 12px;
             padding: 0.65rem 0.85rem;
             display: flex;
             flex-direction: column;
             gap: 0.2rem;
-            border: 1px solid rgba(148, 163, 184, 0.12);
+            border: 1px solid #851825;
         }
         .gs-sim-chip-topic {
             font-size: 0.74rem;
-            text-transform: uppercase;
             font-weight: 800;
-            letter-spacing: 0.05em;
-            color: #94a3b8;
+            letter-spacing: 0.04em;
+            color: #FFC9CD;
         }
         .gs-sim-chip-sentence {
             font-size: 0.95rem;
@@ -256,28 +254,11 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             align-items: center;
             justify-content: space-between;
         }
-        .gs-sim-tts-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: none;
-            color: #e2e8f0;
-            border-radius: 8px;
-            width: 28px;
-            height: 28px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.95rem;
-            transition: background 0.15s ease;
-        }
-        .gs-sim-tts-btn:hover {
-            background: rgba(56, 189, 248, 0.3);
-        }
 
         /* Large Split-Stage Showcase */
         .gs-showcase-box {
-            background: linear-gradient(145deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
-            border: 1.5px solid rgba(56, 189, 248, 0.4);
+            background: #5C0812;
+            border: 1.5px solid #851825;
             border-radius: 22px;
             padding: 1.3rem 1.4rem;
             margin-bottom: 2.5rem;
@@ -303,36 +284,35 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
         .gs-showcase-title-wrap p {
             margin: 0;
             font-size: 0.85rem;
-            color: #94a3b8;
+            color: #FFC9CD;
         }
         .gs-showcase-nav {
             display: flex;
             flex-wrap: wrap;
             gap: 0.35rem;
-            background: rgba(15, 23, 42, 0.8);
+            background: #4A040B;
             padding: 0.3rem;
             border-radius: 12px;
-            border: 1px solid rgba(148, 163, 184, 0.2);
+            border: 1px solid #851825;
         }
         .gs-showcase-tab {
             background: transparent;
             border: none;
-            color: #94a3b8;
+            color: #FFC9CD;
             padding: 0.45rem 0.8rem;
             border-radius: 8px;
             font-size: 0.82rem;
-            font-weight: 800;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
         }
         .gs-showcase-tab:hover {
-            color: #f8fafc;
+            color: #ffffff;
             background: rgba(255, 255, 255, 0.08);
         }
         .gs-showcase-tab.active {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
+            background: #FF4D5E;
             color: #ffffff;
-            box-shadow: 0 2px 10px rgba(2, 132, 199, 0.4);
         }
         .gs-showcase-stage {
             display: grid;
@@ -433,24 +413,22 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             font-size: 0.88rem;
         }
         .gs-showcase-cta-btn {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
+            background: #FF4D5E;
             color: #ffffff;
             border: none;
             padding: 0.7rem 1.4rem;
             border-radius: 12px;
-            font-weight: 800;
+            font-weight: 700;
             font-size: 0.92rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
         }
         .gs-showcase-cta-btn:hover {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            background: #ff6b7a;
             transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.5);
         }
 
         /* Section Separator */
@@ -474,7 +452,7 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
         .gs-section-divider p {
             margin: 0;
             font-size: 0.85rem;
-            color: #94a3b8;
+            color: #FFC9CD;
         }
 
         /* Stations Grid with Dual-Thumbnails */
@@ -485,8 +463,8 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             margin-bottom: 2.5rem;
         }
         .gs-station-card {
-            background: linear-gradient(165deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
-            border: 1.5px solid rgba(148, 163, 184, 0.22);
+            background: #5C0812;
+            border: 1.5px solid #851825;
             border-radius: 20px;
             padding: 1.2rem;
             cursor: pointer;
@@ -528,8 +506,8 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             display: flex;
             position: relative;
             margin-bottom: 1rem;
-            border: 1px solid rgba(148, 163, 184, 0.25);
-            background: #0f172a;
+            border: 1px solid #851825;
+            background: #4A040B;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
         }
         .gs-card-preview-half {
@@ -551,24 +529,22 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             position: absolute;
             bottom: 6px;
             font-size: 0.68rem;
-            font-weight: 900;
+            font-weight: 800;
             padding: 2px 7px;
             border-radius: 6px;
             letter-spacing: 0.04em;
-            text-transform: uppercase;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
             z-index: 1;
         }
         .gs-card-preview-half.left .gs-card-preview-label {
             left: 6px;
-            background: rgba(14, 116, 144, 0.88);
+            background: rgba(14, 116, 144, 0.9);
             color: #7dd3fc;
             border: 1px solid rgba(56, 189, 248, 0.4);
         }
         .gs-card-preview-half.right .gs-card-preview-label {
             right: 6px;
-            background: rgba(194, 65, 12, 0.88);
+            background: rgba(194, 65, 12, 0.9);
             color: #fed7aa;
             border: 1px solid rgba(251, 146, 60, 0.4);
         }
@@ -586,11 +562,11 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             justify-content: center;
         }
         .gs-card-preview-badge {
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(251, 191, 36, 0.5);
-            color: #fde68a;
+            background: #5C0812;
+            border: 1px solid #851825;
+            color: #FFC9CD;
             font-size: 0.65rem;
-            font-weight: 900;
+            font-weight: 800;
             border-radius: 999px;
             padding: 2px 5px;
             line-height: 1;
@@ -605,18 +581,17 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
         }
         .gs-station-number {
             font-size: 0.85rem;
-            font-weight: 900;
-            color: #94a3b8;
-            background: rgba(15, 23, 42, 0.8);
+            font-weight: 800;
+            color: #FFC9CD;
+            background: #4A040B;
             padding: 0.25rem 0.6rem;
             border-radius: 8px;
-            border: 1px solid rgba(148, 163, 184, 0.2);
+            border: 1px solid #851825;
         }
         .gs-station-tag {
             font-size: 0.74rem;
             font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
             color: var(--station-accent, #38bdf8);
         }
         .gs-station-title {
@@ -626,19 +601,19 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             margin: 0 0 0.35rem;
         }
         .gs-station-sub {
-            color: #cbd5e1;
+            color: #FFC9CD;
             font-size: 0.86rem;
             line-height: 1.45;
             margin: 0 0 0.9rem;
         }
         .gs-station-contrast-box {
-            background: rgba(15, 23, 42, 0.6);
+            background: #4A040B;
             border-radius: 12px;
             padding: 0.7rem 0.85rem;
             display: flex;
             flex-direction: column;
             gap: 0.45rem;
-            border: 1px solid rgba(148, 163, 184, 0.12);
+            border: 1px solid #851825;
             margin-bottom: 1rem;
         }
         .gs-contrast-row {
@@ -650,7 +625,7 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
         }
         .gs-contrast-label.tilstand { color: #38bdf8; font-weight: 700; font-size: 0.78rem; }
         .gs-contrast-label.forvandling { color: #fb923c; font-weight: 700; font-size: 0.78rem; }
-        .gs-contrast-sent { font-weight: 700; color: #f8fafc; }
+        .gs-contrast-sent { font-weight: 700; color: #ffffff; }
 
         .gs-station-footer {
             display: flex;
@@ -658,12 +633,12 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             align-items: center;
             margin-top: auto;
             padding-top: 0.5rem;
-            border-top: 1px solid rgba(148, 163, 184, 0.12);
+            border-top: 1px solid #851825;
         }
         .gs-station-badge-vrimmel {
             font-size: 0.75rem;
             font-weight: 800;
-            color: #fde68a;
+            color: #FFC9CD;
         }
         .gs-station-enter-btn {
             background: transparent;
@@ -689,13 +664,13 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
 
     const backBtn = document.createElement('button');
     backBtn.className = 'gs-back-btn';
-    backBtn.innerHTML = `← Tilbage til Sansningsoversigten`;
+    backBtn.innerHTML = `← Tilbage til sansningsoversigten`;
     backBtn.onclick = () => navigateFn('grammatik_sansning');
     topBar.appendChild(backBtn);
 
     const fladeBadge = document.createElement('span');
     fladeBadge.className = 'gs-hero-badge';
-    fladeBadge.innerHTML = `⚡ Hovedflade 1 • Kropslig Fysik`;
+    fladeBadge.innerHTML = `Hovedflade 1 • Kropslig fysik`;
     topBar.appendChild(fladeBadge);
 
     viewContainer.appendChild(topBar);
@@ -704,12 +679,12 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
     const hero = document.createElement('div');
     hero.className = 'gs-hero';
     hero.innerHTML = `
-        <div class="gs-hero-badge">⚡ HOVEDFLADE 1 • DYNAMIK & FORM</div>
-        <h1>Dynamik & Form – (Væren og tilblivelse)</h1>
+        <div class="gs-hero-badge">Hovedflade 1 • Dynamik og form</div>
+        <h1>Dynamik og form – (væren og tilblivelse)</h1>
         <p>
             På dansk afslører dine verber og ord, om universet befinder sig i en <strong>stabil, uforandret tilstand</strong> 
-            (Det Blå Rige), eller om der overføres <strong>muskulær kraft, bevægelse og forvandling</strong> (Det Gyldne Rige).
-            Se de diktomiske vrimlebilleder og udforsk de 5 sanse-stationer nedenunder.
+            (Det blå rige), eller om der overføres <strong>muskulær kraft, bevægelse og forvandling</strong> (Det gyldne rige).
+            Se de diktomiske vrimlebilleder og udforsk de 5 sansestationer nedenunder.
         </p>
     `;
     viewContainer.appendChild(hero);
@@ -720,10 +695,9 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
     compass.innerHTML = `
         <div class="gs-realm-card tilstand">
             <div class="gs-realm-head">
-                <span class="gs-realm-badge">🔵 Det Blå Rige</span>
-                <span class="gs-realm-symbol">🌊</span>
+                <span class="gs-realm-badge">Det blå rige</span>
             </div>
-            <h2 class="gs-realm-title">Væren & Stilstand (Tilstand i Ro)</h2>
+            <h2 class="gs-realm-title">Væren og stilstand (tilstand i ro)</h2>
             <p class="gs-realm-desc">
                 Når verden hviler. Tingen befinder sig et sted, tilstanden er uforandret, kroppen sanser smagen indefra, og handlingen er stabil.
             </p>
@@ -753,10 +727,9 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
 
         <div class="gs-realm-card forvandling">
             <div class="gs-realm-head">
-                <span class="gs-realm-badge">🟠 Det Gyldne Rige</span>
-                <span class="gs-realm-symbol">🔥</span>
+                <span class="gs-realm-badge">Det gyldne rige</span>
             </div>
-            <h2 class="gs-realm-title">Tilblivelse & Forvandling (Bevægelse & Kraft)</h2>
+            <h2 class="gs-realm-title">Tilblivelse og forvandling (bevægelse og kraft)</h2>
             <p class="gs-realm-desc">
                 Når verden er i bevægelse. Der sker et omslag, en overgang, en kraft anbringer en genstand, tærsklen krydses, eller tanken gætter fremad.
             </p>
@@ -794,32 +767,32 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
 
     const simData = [
         {
-            topic: '1. VÆREN VS. TILBLIVELSE',
+            topic: '1. Væren vs. tilblivelse',
             tilstand: 'Kaffen er kold.',
             forvandling: 'Kaffen bliver kold.'
         },
         {
-            topic: '2. TIDENS SANSNING',
+            topic: '2. Tidens sansning',
             tilstand: 'Vejret havde været koldt længe.',
             forvandling: 'Vejret var blevet koldt, da bilen ankom.'
         },
         {
-            topic: '3. AKTIVITET VS. RESULTAT',
+            topic: '3. Aktivitet vs. resultat',
             tilstand: 'Huset er malet nu.',
             forvandling: 'Malerne har malet facaden.'
         },
         {
-            topic: '4. TINGENS HVILE VS. KRAFT',
+            topic: '4. Tingens hvile vs. kraft',
             tilstand: 'Nøglerne ligger på bordet.',
             forvandling: 'Hun lægger nøglerne på bordet.'
         },
         {
-            topic: '5. RUMMET & TÆRSKLEN',
+            topic: '5. Rummet og tærsklen',
             tilstand: 'Børnene leger inde i stuen.',
             forvandling: 'Børnene løber ind i stuen.'
         },
         {
-            topic: '6. SINDETS SANSNING',
+            topic: '6. Sindets sansning',
             tilstand: 'Jeg synes, kagen er lækker.',
             forvandling: 'Jeg tror, kagen smager sødt.'
         }
@@ -828,13 +801,13 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
     function renderSimulatorContent() {
         simulator.innerHTML = `
             <div class="gs-sim-header">
-                <span class="gs-sim-title">⚡ Sanse-Simulatoren: Oplev forvandlingen i 1 klik</span>
+                <span class="gs-sim-title">Sanse-simulatoren: Oplev forvandlingen i 1 klik</span>
                 <div class="gs-sim-toggle-group">
                     <button class="gs-sim-toggle-btn tilstand ${simState.activeMode === 'tilstand' ? 'active' : ''}" id="btn-sim-tilstand">
-                        🔵 Væren & Stilstand
+                        Væren og stilstand
                     </button>
                     <button class="gs-sim-toggle-btn forvandling ${simState.activeMode === 'forvandling' ? 'active' : ''}" id="btn-sim-forvandling">
-                        🟠 Tilblivelse & Forvandling
+                        Tilblivelse og forvandling
                     </button>
                 </div>
             </div>
@@ -892,14 +865,14 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             route: 'sansning_kraft_hvile',
             num: '1.2',
             tag: 'Positionsverber',
-            title: 'Tingens Hvile vs. Kroppens Kraft (Ligge vs. Lægge)',
+            title: 'Tingens hvile vs. kroppens kraft (ligge vs. lægge)',
             sub: 'Lægge/ligge, sætte/sidde, stille/stå. Hånden der flytter over for tingen der hviler i ro.',
             accent: '#ec4899',
             tilstandLabel: 'Tingens hvile',
             tilstandSent: 'Bogen ligger på bordet.',
             forvandlingLabel: 'Kroppens kraft',
             forvandlingSent: 'Jeg lægger bogen på bordet.',
-            vrimmel: 'Stuen & Arbejdsværelset',
+            vrimmel: 'Stuen og arbejdsværelset',
             leftImg: 'assets/sansning_kraft_hvile_venstre.jpg',
             rightImg: 'assets/sansning_kraft_hvile_hoejre.jpg',
             leftCaption: 'Bogen ligger / Vasen står på hylden',
@@ -909,15 +882,15 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             id: 'form_masse',
             route: 'sansning_form_masse',
             num: '1.3',
-            tag: 'Form & Masse',
-            title: 'Utællelig Masse vs. Tællelig Form',
+            tag: 'Form og masse',
+            title: 'Utællelig masse vs. tællelig form',
             sub: 'Den uafgrænsede masse (vand, kaffe, mel) over for genstanden med klar form (en kop, to æbler, tre boller).',
             accent: '#10b981',
             tilstandLabel: 'Utællelig masse',
             tilstandSent: 'Der er koldt vand og mel.',
             forvandlingLabel: 'Tællelig form',
             forvandlingSent: 'Hun køber en flaske og to æbler.',
-            vrimmel: 'Bageriet & Køkkenbordet',
+            vrimmel: 'Bageriet og køkkenbordet',
             leftImg: 'assets/sansning_masse_venstre.jpg',
             rightImg: 'assets/sansning_form_hoejre.jpg',
             leftCaption: 'Uafgrænset flydende masse: vand, kaffe og mel',
@@ -928,14 +901,14 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             route: 'sansning_har_er',
             num: '1.4',
             tag: 'Førnutid',
-            title: 'Aktivitet vs. Resultat (Har vs. Er)',
+            title: 'Aktivitet vs. resultat (har vs. er)',
             sub: 'Har (motoren der arbejder forud) vs. Er (den nye tilstand og flyttede grænse).',
             accent: '#f59e0b',
             tilstandLabel: 'Motoren (Har)',
             tilstandSent: 'Malerne har malet facaden.',
             forvandlingLabel: 'Resultatet (Er)',
             forvandlingSent: 'Huset er malet / Hun er cyklet på arbejde.',
-            vrimmel: 'Bykvarteret & Gaden',
+            vrimmel: 'Bykvarteret og gaden',
             leftImg: 'assets/sansning_har_er_venstre.jpg',
             rightImg: 'assets/sansning_har_er_hoejre.jpg',
             leftCaption: 'Malerne har malet facaden (processen)',
@@ -945,15 +918,15 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             id: 'aspekt_maade',
             route: 'sansning_aspekt_maade',
             num: '1.5',
-            tag: 'Aspekt & Fart',
-            title: 'Kroppens Dvælen vs. Retningsskift & Fart',
+            tag: 'Aspekt og fart',
+            title: 'Kroppens dvælen vs. retningsskift og fart',
             sub: 'Uafgrænset dvælen ("ligger og læser") og roligt tempo vs. bevidst retningsskift ("sætter sig til") og høj fart.',
             accent: '#8b5cf6',
-            tilstandLabel: 'Dvælen & Roligt',
+            tilstandLabel: 'Dvælen og roligt',
             tilstandSent: 'Mads ligger og læser / går langsomt.',
-            forvandlingLabel: 'Retningsskift & Fart',
+            forvandlingLabel: 'Retningsskift og fart',
             forvandlingSent: 'Mads sætter sig til at læse / løber hurtigt.',
-            vrimmel: 'Havestuen & Terrassen',
+            vrimmel: 'Havestuen og terrassen',
             leftImg: 'assets/sansning_aspekt_venstre.jpg',
             rightImg: 'assets/sansning_aspekt_hoejre.jpg',
             leftCaption: 'Mads ligger og læser i ro / går langsomt',
@@ -972,7 +945,7 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
         showcaseBox.innerHTML = `
             <div class="gs-showcase-header">
                 <div class="gs-showcase-title-wrap">
-                    <h2>🖼️ Vrimlebilleder: Oplev modsætningerne i billeder</h2>
+                    <h2>Vrimlebilleder: Oplev modsætningerne i billeder</h2>
                     <p>Klik på fanerne nedenfor for at udforske scenerne for hver station direkte på forsiden.</p>
                 </div>
                 <div class="gs-showcase-nav">
@@ -988,7 +961,7 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
                 <!-- Venstre side: Væren & Stilstand -->
                 <div class="gs-showcase-pane left">
                     <div class="gs-showcase-pane-head">
-                        <span>🔵 Væren & Stilstand (Tilstand)</span>
+                        <span>Væren og stilstand (tilstand)</span>
                         <span>${curSt.tilstandLabel}</span>
                     </div>
                     <div class="gs-showcase-img-wrap" title="Klik for at åbne ${curSt.title}">
@@ -1002,7 +975,7 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
                 <!-- Højre side: Tilblivelse & Forvandling -->
                 <div class="gs-showcase-pane right">
                     <div class="gs-showcase-pane-head">
-                        <span>🟠 Tilblivelse & Forvandling (Kraft)</span>
+                        <span>Tilblivelse og forvandling (kraft)</span>
                         <span>${curSt.forvandlingLabel}</span>
                     </div>
                     <div class="gs-showcase-img-wrap" title="Klik for at åbne ${curSt.title}">
@@ -1016,10 +989,10 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
 
             <div class="gs-showcase-footer">
                 <div class="gs-showcase-hint">
-                    📍 Vrimlebillede-scene: <strong>${curSt.vrimmel}</strong>
+                    Vrimlebillede-scene: <strong>${curSt.vrimmel}</strong>
                 </div>
                 <button class="gs-showcase-cta-btn" id="btn-open-active-station">
-                    Åbn Station ${curSt.num} træningsbane & opgaver →
+                    Åbn station ${curSt.num} træningsbane og opgaver →
                 </button>
             </div>
         `;
@@ -1053,7 +1026,7 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
     sectionDivider.className = 'gs-section-divider';
     sectionDivider.innerHTML = `
         <div>
-            <h2>🧭 Alle 5 Sanse-Stationer i Hovedflade 1</h2>
+            <h2>Alle 5 sansestationer i hovedflade 1</h2>
             <p>Hver station har sit eget interaktive vrimlebillede, didaktiske aha-boks og træningsbane.</p>
         </div>
     `;
@@ -1074,14 +1047,14 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
                 <div class="gs-card-split-preview" title="Klik for at åbne ${st.title}">
                     <div class="gs-card-preview-half left">
                         <img src="${st.leftImg}" alt="Væren" class="gs-card-preview-img" />
-                        <span class="gs-card-preview-label">🔵 Tilstand</span>
+                        <span class="gs-card-preview-label">Tilstand</span>
                     </div>
                     <div class="gs-card-preview-divider">
                         <span class="gs-card-preview-badge">VS</span>
                     </div>
                     <div class="gs-card-preview-half right">
                         <img src="${st.rightImg}" alt="Forvandling" class="gs-card-preview-img" />
-                        <span class="gs-card-preview-label">🟠 Forvandling</span>
+                        <span class="gs-card-preview-label">Forvandling</span>
                     </div>
                 </div>
 
@@ -1094,18 +1067,18 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
                 
                 <div class="gs-station-contrast-box">
                     <div class="gs-contrast-row">
-                        <span class="gs-contrast-label tilstand">🔵 ${st.tilstandLabel}:</span>
+                        <span class="gs-contrast-label tilstand">${st.tilstandLabel}:</span>
                         <span class="gs-contrast-sent">${st.tilstandSent}</span>
                     </div>
                     <div class="gs-contrast-row">
-                        <span class="gs-contrast-label forvandling">🟠 ${st.forvandlingLabel}:</span>
+                        <span class="gs-contrast-label forvandling">${st.forvandlingLabel}:</span>
                         <span class="gs-contrast-sent">${st.forvandlingSent}</span>
                     </div>
                 </div>
             </div>
 
             <div class="gs-station-footer">
-                <span class="gs-station-badge-vrimmel">🖼️ ${st.vrimmel}</span>
+                <span class="gs-station-badge-vrimmel">${st.vrimmel}</span>
                 <button class="gs-station-enter-btn">
                     Gå til station →
                 </button>

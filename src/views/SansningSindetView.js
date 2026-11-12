@@ -28,7 +28,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
     const contrastPairs = [
         {
             key: 'suppe',
-            title: 'Middagsbordet & Suppen',
+            title: 'Middagsbordet og suppen',
             icon: '🍲',
             left: {
                 x: 35,
@@ -48,7 +48,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
         },
         {
             key: 'vejr',
-            title: 'Vinduet & Uvejret',
+            title: 'Vinduet og uvejret',
             icon: '🌧️',
             left: {
                 x: 75,
@@ -68,7 +68,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
         },
         {
             key: 'kaffe',
-            title: 'Kaffekoppen & Bitterhed',
+            title: 'Kaffekoppen og bitterhed',
             icon: '☕',
             left: {
                 x: 20,
@@ -88,7 +88,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
         },
         {
             key: 'debat',
-            title: 'Avisen & Debatten',
+            title: 'Avisen og debatten',
             icon: '📰',
             left: {
                 x: 52,
@@ -108,7 +108,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
         },
         {
             key: 'fakta',
-            title: 'Uret & Køreplanen',
+            title: 'Uret og køreplanen',
             icon: '⌚',
             left: {
                 x: 82,
@@ -742,13 +742,21 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
 
     const backBtn = document.createElement('button');
     backBtn.className = 'ss-back-btn';
-    backBtn.innerHTML = `← Tilbage til Sansningsoversigten`;
-    backBtn.onclick = () => navigateFn('grammatik_sansning');
+    backBtn.innerHTML = (extraData && extraData.from === 'overview')
+        ? '← Tilbage til sansningsoversigten'
+        : '← Tilbage til hovedflade 1';
+    backBtn.onclick = () => {
+        if (extraData && extraData.from === 'overview') {
+            navigateFn('grammatik_sansning');
+        } else {
+            navigateFn('sansning_flade_1');
+        }
+    };
     topBar.appendChild(backBtn);
 
     const badge = document.createElement('span');
     badge.className = 'ss-station-badge';
-    badge.innerHTML = `Station 6 • Sindets Sansning`;
+    badge.innerHTML = `Station 6 • Sindets sansning`;
     topBar.appendChild(badge);
 
     viewContainer.appendChild(topBar);
@@ -757,7 +765,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
     const hero = document.createElement('div');
     hero.className = 'ss-hero';
     hero.innerHTML = `
-        <h1>Sindets Sansning: Synes vs. Tror vs. Mener vs. Ved</h1>
+        <h1>Sindets sansning: synes vs. tror vs. mener vs. ved</h1>
         <p>
             På dansk afslører verbet sindets kilde: <strong>Synes</strong> udspringer direkte af kroppens 
             smagsløg, hud og sanser her og nu. <strong>Tror</strong> er hovedets gæt om en uvis fremtid. 
@@ -771,13 +779,13 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
     tabsNav.className = 'ss-tabs-nav';
     tabsNav.innerHTML = `
         <button class="ss-tab-btn active" data-tab="tab_vrimmel">
-            🖼️ 1. Diktomisk Vrimlebillede (Split-Scene)
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Sanse-Træner: Synes, Tror eller Mener?
+            2. Sanse-træner: synes, tror eller mener?
         </button>
         <button class="ss-tab-btn" data-tab="tab_original">
-            🧠 3. Det Komplette Værksted (Tror/Synes/Mener)
+            3. Det komplette værksted (tror, synes, mener og ved)
         </button>
     `;
     viewContainer.appendChild(tabsNav);
@@ -795,10 +803,10 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
         <div class="contrast-canvas-card">
             <div class="contrast-control-bar">
                 <span class="contrast-instruction">
-                    👉 Klik på motiverne i venstre eller højre side for at se modsætningen lyse op!
+                    Klik på motiverne i venstre eller højre side for at se modsætningen lyse op!
                 </span>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    👁️ Vis rent billede
+                    Ren visning: <strong id="pure-status-label">Fra</strong>
                 </button>
             </div>
 
@@ -806,16 +814,16 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
                 <!-- VENSTRE HALVDEL: KROPPENS SANSE-SANDHED (Væren / Synes) -->
                 <div class="stage-half left-half" id="stage-left">
                     <div class="stage-half-header cool">
-                        🔵 Væren: Kroppens sanse-sandhed (Synes)
+                        Venstre: Kroppens sanse-sandhed (synes)
                     </div>
                     <img src="assets/sansning_sindet_venstre.jpg" alt="Kroppens sansning - Synes" class="stage-half-img" />
                     <div id="hotspots-left"></div>
                 </div>
 
-                <!-- HØJRE HALVDEL: HOVEDETS TANKER & VURDERING (Forvandling / Tror & Mener) -->
+                <!-- HØJRE HALVDEL: HOVEDETS TANKER OG VURDERING (Forvandling / Tror, mener og ved) -->
                 <div class="stage-half right-half" id="stage-right">
                     <div class="stage-half-header warm">
-                        🟠 Forvandling: Hovedets tanker & debat (Tror / Mener / Ved)
+                        Højre: Hovedets tanker og debat (tror, mener og ved)
                     </div>
                     <img src="assets/sansning_sindet_hoejre.jpg" alt="Hovedets tanker - Tror, mener, ved" class="stage-half-img" />
                     <div id="hotspots-right"></div>
@@ -937,10 +945,10 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
         <div class="ss-embedded-wrapper" style="background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(6, 182, 212, 0.35); border-radius: 20px; padding: 1.5rem; box-shadow: 0 12px 32px rgba(0,0,0,0.4);">
             <div style="text-align: center; margin-bottom: 1.2rem;">
                 <span style="font-size: 0.85rem; font-weight: 800; color: #67e8f9; text-transform: uppercase;">
-                    Det Komplette Sindets Værksted (100% Bevaret)
+                    Det komplette sindets værksted (100% bevaret)
                 </span>
                 <h2 style="font-size: 1.6rem; margin: 0.3rem 0; color: #ffffff;">
-                    Tror, Synes, Mener & Ved
+                    Tror, synes, mener og ved
                 </h2>
                 <p style="color: #cbd5e1; font-size: 0.95rem; max-width: 720px; margin: 0 auto;">
                     Herunder finder du det fulde originale modul med interaktiv quiz og dybdegående teori.
@@ -969,14 +977,15 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
 
     pureToggleBtn.onclick = () => {
         isPureMode = !isPureMode;
+        const statusLabel = panelVrimmel.querySelector('#pure-status-label');
         if (isPureMode) {
             splitStage.classList.add('pure-mode');
             pureToggleBtn.classList.add('active');
-            pureToggleBtn.innerHTML = `👁️ Vis hotspots`;
+            if (statusLabel) statusLabel.textContent = 'Til';
         } else {
             splitStage.classList.remove('pure-mode');
             pureToggleBtn.classList.remove('active');
-            pureToggleBtn.innerHTML = `👁️ Vis rent billede`;
+            if (statusLabel) statusLabel.textContent = 'Fra';
         }
     };
 
@@ -1040,13 +1049,12 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
         const currentData = activeSide === 'left' ? pair.left : pair.right;
         const otherSide = activeSide === 'left' ? 'right' : 'left';
         const otherData = activeSide === 'left' ? pair.right : pair.left;
-        const otherLabel = activeSide === 'left' ? `Byt til: ${pair.right.word} (Forvandling / Hovedet)` : `Byt til: ${pair.left.word} (Væren / Kroppen)`;
+        const otherLabel = activeSide === 'left' ? `Skift til: ${pair.right.word} (forvandling / hovedet)` : `Skift til: ${pair.left.word} (væren / kroppen)`;
 
         detailCard.innerHTML = `
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.8rem;">${pair.icon}</span>
-                    <span class="adj-main-word">${currentData.word.toUpperCase()}</span>
+                    <span class="adj-main-word">${currentData.word}</span>
                     <span style="color: #94a3b8; font-size: 0.9rem;">(${pair.title})</span>
                 </div>
                 <button class="adj-modpol-pill" id="card-swap-btn">
@@ -1057,7 +1065,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
 
             <div class="adj-congruence-grid">
                 <div class="adj-box left ${activeSide === 'left' ? 'active-side' : ''}">
-                    <span class="adj-box-badge">🔵 Væren: Kroppens sanse-sandhed (Synes)</span>
+                    <span class="adj-box-badge">Venstre: Kroppens sanse-sandhed (synes)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${pair.left.sent.replace(pair.left.word, `<span class="adj-highlight">${pair.left.word}</span>`)}"
@@ -1067,7 +1075,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
                 </div>
 
                 <div class="adj-box right ${activeSide === 'right' ? 'active-side' : ''}">
-                    <span class="adj-box-badge">🟠 Forvandling: Hovedets tanker (Tror / Mener / Ved)</span>
+                    <span class="adj-box-badge">Højre: Hovedets tanker (tror, mener og ved)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${pair.right.sent.replace(pair.right.word, `<span class="adj-highlight">${pair.right.word}</span>`)}"
@@ -1078,8 +1086,7 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
             </div>
 
             <div class="adj-aha-bar">
-                <span style="font-size: 1.3rem;">💡</span>
-                <span><strong>Aha-oplevelse:</strong> ${pair.aha}</span>
+                <span><strong>Sanse-nøglen:</strong> ${pair.aha}</span>
             </div>
         `;
 

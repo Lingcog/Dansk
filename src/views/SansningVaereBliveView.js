@@ -858,13 +858,19 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
 
     const backBtn = document.createElement('button');
     backBtn.className = 'ss-back-btn';
-    backBtn.innerHTML = `← Tilbage til Sansningsoversigten`;
-    backBtn.onclick = () => navigateFn('grammatik_sansning');
+    backBtn.innerHTML = (extraData && extraData.from === 'overview') ? `← Tilbage til Sansningsoversigten` : `← Tilbage til Hovedflade 1`;
+    backBtn.onclick = () => {
+        if (extraData && extraData.from === 'overview') {
+            navigateFn('grammatik_sansning');
+        } else {
+            navigateFn('sansning_flade1');
+        }
+    };
     topBar.appendChild(backBtn);
 
     const badge = document.createElement('span');
     badge.className = 'ss-station-badge';
-    badge.innerHTML = `Station 1 • Diktomisk Kontrast`;
+    badge.innerHTML = `Station 1.1 • Væren & Tilblivelse`;
     topBar.appendChild(badge);
 
     viewContainer.appendChild(topBar);

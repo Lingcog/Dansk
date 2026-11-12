@@ -650,13 +650,19 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
 
     const backBtn = document.createElement('button');
     backBtn.className = 'ss-back-btn';
-    backBtn.innerHTML = `← Tilbage til Sansningsoversigten`;
-    backBtn.onclick = () => navigateFn('grammatik_sansning');
+    backBtn.innerHTML = (extraData && extraData.from === 'overview') ? `← Tilbage til Sansningsoversigten` : `← Tilbage til Hovedflade 1`;
+    backBtn.onclick = () => {
+        if (extraData && extraData.from === 'overview') {
+            navigateFn('grammatik_sansning');
+        } else {
+            navigateFn('sansning_flade1');
+        }
+    };
     topBar.appendChild(backBtn);
 
     const badge = document.createElement('span');
     badge.className = 'ss-station-badge';
-    badge.innerHTML = `Station 4 • Diktomisk Kontrast`;
+    badge.innerHTML = `Station 1.2 • Kroppens Kraft vs. Tingens Hvile`;
     topBar.appendChild(badge);
 
     viewContainer.appendChild(topBar);

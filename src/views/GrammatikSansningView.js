@@ -549,6 +549,128 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             align-items: center;
             gap: 0.45rem;
         }
+
+        /* 4 Bodily Realms / Hovedflader Grid */
+        .gs-realms-section {
+            margin-bottom: 2.2rem;
+        }
+        .gs-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .gs-section-header h2 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin: 0;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .gs-section-header p {
+            margin: 0.25rem 0 0;
+            color: #94a3b8;
+            font-size: 0.88rem;
+        }
+        .gs-hovedflader-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.1rem;
+        }
+        .gs-hovedflade-card {
+            border-radius: 18px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+            position: relative;
+            background: linear-gradient(165deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1.5px solid rgba(148, 163, 184, 0.25);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+        }
+        .gs-hovedflade-card.active-flade {
+            border-color: #38bdf8;
+            background: linear-gradient(165deg, rgba(14, 116, 144, 0.3) 0%, rgba(15, 23, 42, 0.95) 100%);
+            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.22);
+            cursor: pointer;
+        }
+        .gs-hovedflade-card.active-flade:hover {
+            transform: translateY(-4px);
+            border-color: #7dd3fc;
+            box-shadow: 0 16px 36px rgba(56, 189, 248, 0.35);
+        }
+        .gs-hf-tag {
+            font-size: 0.72rem;
+            font-weight: 900;
+            padding: 0.22rem 0.55rem;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: inline-block;
+            margin-bottom: 0.6rem;
+            align-self: flex-start;
+        }
+        .gs-hf-tag.ready {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+        }
+        .gs-hf-tag.planned {
+            background: rgba(148, 163, 184, 0.15);
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+        .gs-hf-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 0.35rem;
+        }
+        .gs-hf-sub {
+            font-size: 0.84rem;
+            color: #cbd5e1;
+            margin: 0 0 0.8rem;
+            line-height: 1.45;
+        }
+        .gs-hf-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .gs-hf-bullets li::before {
+            content: "• ";
+            color: #38bdf8;
+            font-weight: bold;
+        }
+        .gs-hf-btn {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: #ffffff;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.86rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .gs-hf-btn:hover {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            transform: scale(1.02);
+        }
     `;
     viewContainer.appendChild(style);
 
@@ -751,90 +873,198 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
     renderSimulatorContent();
     viewContainer.appendChild(simulator);
 
-    // 5. Stations Data
+    // 5. De 4 Kropslige Hovedflader (Det store arkitektur-overblik)
+    const realmsSection = document.createElement('div');
+    realmsSection.className = 'gs-realms-section';
+    realmsSection.innerHTML = `
+        <div class="gs-section-header">
+            <div>
+                <h2>🏛️ Appens 4 Kropslige Hovedflader</h2>
+                <p>Udforsk grammatikken gennem kroppens fire primære sansninger af virkeligheden.</p>
+            </div>
+        </div>
+        <div class="gs-hovedflader-grid">
+            <div class="gs-hovedflade-card active-flade" id="btn-open-flade1">
+                <div>
+                    <span class="gs-hf-tag ready">✨ 100% Færdig & Aktiv</span>
+                    <h3 class="gs-hf-title">Flade 1: Dynamik & Form</h3>
+                    <p class="gs-hf-sub">Inde i tingen og kroppen: Stilstand vs. Forvandling.</p>
+                    <ul class="gs-hf-bullets">
+                        <li>Være vs. Blive (verbernes grundkerne)</li>
+                        <li>Ligge vs. Lægge (positionsverber)</li>
+                        <li>Form & Masse (utællelig vs. tællelig)</li>
+                        <li>Har vs. Er i førnutid (motoren vs. døren)</li>
+                        <li>Aspekt, Måde & Diatese (dvælen vs. fart)</li>
+                    </ul>
+                </div>
+                <button class="gs-hf-btn">
+                    Åbn Hovedflade 1 Portal →
+                </button>
+            </div>
+
+            <div class="gs-hovedflade-card">
+                <div>
+                    <span class="gs-hf-tag planned">🚧 Næste Fase</span>
+                    <h3 class="gs-hf-title">Flade 2: Rum, Tid & Relationer</h3>
+                    <p class="gs-hf-sub">Hvor står mit kamera? Nærhed i hånden vs. Afstand i kikkerten.</p>
+                    <ul class="gs-hf-bullets">
+                        <li>I vs. På (hulen vs. fladen)</li>
+                        <li>Denne vs. Den (hånden vs. pegefingeren)</li>
+                        <li>Nutid vs. Datid (scenen vs. kikkerten)</li>
+                        <li>Hjemme vs. Hjem (zonen vs. tærsklen)</li>
+                        <li>Sin vs. Hans (kroppens intime sfære)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="gs-hovedflade-card">
+                <div>
+                    <span class="gs-hf-tag planned">📋 Planlagt</span>
+                    <h3 class="gs-hf-title">Flade 3: Modalitet & Evidens</h3>
+                    <p class="gs-hf-sub">Hvor fast er grunden under mine fødder? Vished vs. Tvivl.</p>
+                    <ul class="gs-hf-bullets">
+                        <li>Klippegrund vs. Tynd is (sikkert, måske)</li>
+                        <li>Evidensens kilde: Nok, Jo, Vel, Vist</li>
+                        <li>Kroppens mærken: Synes vs. Tror</li>
+                        <li>Modalverbernes pres: Skal, vil, må, kan</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="gs-hovedflade-card">
+                <div>
+                    <span class="gs-hf-tag planned">📋 Planlagt</span>
+                    <h3 class="gs-hf-title">Flade 4: Kraft & Tekstflow</h3>
+                    <p class="gs-hf-sub">Hængslerne mellem scenerne. Kausalitet og sætningsdans.</p>
+                    <ul class="gs-hf-bullets">
+                        <li>Fri bane: Fordi (kilde) vs. Derfor (fremdrift)</li>
+                        <li>Modstand: Selvom (muren) vs. Alligevel (gennembrud)</li>
+                        <li>Betingelser: Hvis (springbræt) vs. Eller</li>
+                        <li>Sætningsdansen & Inversion (felt 1 & 2)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const openFlade1Btn = realmsSection.querySelector('#btn-open-flade1');
+    if (openFlade1Btn) {
+        openFlade1Btn.onclick = () => navigateFn('sansning_flade1');
+    }
+    viewContainer.appendChild(realmsSection);
+
+    // 6. Stations Data (Nu med alle Hovedflade 1 & 2 stationer)
     const stations = [
         {
             id: 'vaere_blive',
             route: 'sansning_vaere_blive',
-            num: '1',
+            num: '1.1',
             tag: 'Grundbegreberne',
-            title: 'Væren & Tilblivelse',
+            title: 'Væren vs. Tilblivelse',
             sub: 'At være vs. At blive i ren form. Vandet i ro vs. vandet der fryser.',
             accent: '#38bdf8',
-            yinLabel: 'Tilstand',
-            yinSent: 'Kaffen er kold.',
-            yangLabel: 'Forvandling',
-            yangSent: 'Kaffen bliver kold.',
+            tilstandLabel: 'Tilstand',
+            tilstandSent: 'Kaffen er kold.',
+            forvandlingLabel: 'Forvandling',
+            forvandlingSent: 'Kaffen bliver kold.',
             vrimmel: 'Hverdagsstuen & Terrassen'
-        },
-        {
-            id: 'verbernes_tider',
-            route: 'sansning_verber_tider',
-            num: '2',
-            tag: 'Tidens Kikkert',
-            title: 'Tidens Sansning (Verbernes tider)',
-            sub: 'Forskellen på "hadde været" (uforandret tilstand) og "var blevet" (omslaget der fandt sted).',
-            accent: '#f59e0b',
-            yinLabel: 'Havde været',
-            yinSent: 'Vejret havde været koldt længe.',
-            yangLabel: 'Var blevet',
-            yangSent: 'Vejret var blevet koldt, da bilen ankom.',
-            vrimmel: 'Vinterhuset & Indkørslen'
-        },
-        {
-            id: 'har_er',
-            route: 'sansning_har_er',
-            num: '3',
-            tag: 'Førnutid & Resultat',
-            title: 'Aktivitet vs. Tilstandsskift',
-            sub: 'Har (motoren der arbejder) vs. Er (den nye tilstand og flyttede grænse).',
-            accent: '#10b981',
-            yinLabel: 'Tilstand / Er',
-            yinSent: 'Huset er malet / Hun er cyklet på arbejde.',
-            yangLabel: 'Aktivitet / Har',
-            yangSent: 'Malerne har malet / Hun har cyklet i skoven.',
-            vrimmel: 'Det Travle Kvarter & Gaden'
         },
         {
             id: 'kraft_hvile',
             route: 'sansning_kraft_hvile',
-            num: '4',
-            tag: 'Kausative Verber',
+            num: '1.2',
+            tag: 'Positionsverber',
             title: 'Kroppens Kraft vs. Tingens Hvile',
             sub: 'Lægge/ligge, sætte/sidde, stille/stå. Hånden der flytter vs. tingen der hviler.',
             accent: '#ec4899',
-            yinLabel: 'Tingens hvile',
-            yinSent: 'Bogen ligger / Vasen står på hylden.',
-            yangLabel: 'Håndens kraft',
-            yangSent: 'Jeg lægger bogen / stiller vasen.',
+            tilstandLabel: 'Tingens hvile',
+            tilstandSent: 'Bogen ligger / Vasen står på hylden.',
+            forvandlingLabel: 'Håndens kraft',
+            forvandlingSent: 'Jeg lægger bogen / stiller vasen.',
             vrimmel: 'Stuen & Arbejdsværelset'
+        },
+        {
+            id: 'form_masse',
+            route: 'sansning_form_masse',
+            num: '1.3',
+            tag: 'Form & Masse',
+            title: 'Utællelig Masse vs. Tællelig Form',
+            sub: 'Det flydende og uafgrænsede (vand, mel) over for genstanden med klar kontur (en kop, to æbler).',
+            accent: '#10b981',
+            tilstandLabel: 'Utællelig masse',
+            tilstandSent: 'Der er koldt vand og mel.',
+            forvandlingLabel: 'Tællelig form',
+            forvandlingSent: 'Hun køber en flaske og to æbler.',
+            vrimmel: 'Bageriet & Køkkenbordet'
+        },
+        {
+            id: 'har_er',
+            route: 'sansning_har_er',
+            num: '1.4',
+            tag: 'Førnutid & Resultat',
+            title: 'Aktivitet vs. Tilstandsskift (Har vs. Er)',
+            sub: 'Har (motoren der arbejder) vs. Er (den nye tilstand og flyttede grænse).',
+            accent: '#f59e0b',
+            tilstandLabel: 'Tilstand / Er',
+            tilstandSent: 'Huset er malet / Hun er cyklet på arbejde.',
+            forvandlingLabel: 'Aktivitet / Har',
+            forvandlingSent: 'Malerne har malet / Hun har cyklet i skoven.',
+            vrimmel: 'Det Travle Kvarter & Gaden'
+        },
+        {
+            id: 'aspekt_maade',
+            route: 'sansning_aspekt_maade',
+            num: '1.5',
+            tag: 'Aspekt & Måde',
+            title: 'Kroppens Dvælen vs. Retningsskift & Fart',
+            sub: 'Uafgrænset dvælen ("ligger og læser") og roligt tempo vs. bevidst retningsskift og høj fart.',
+            accent: '#8b5cf6',
+            tilstandLabel: 'Dvælen & Roligt',
+            tilstandSent: 'Mads ligger og læser / går langsomt.',
+            forvandlingLabel: 'Retningsskift & Fart',
+            forvandlingSent: 'Mads sætter sig til at læse / løber hurtigt.',
+            vrimmel: 'Havestuen & Terrassen'
         },
         {
             id: 'rummet_taersklen',
             route: 'sansning_rummet_taersklen',
-            num: '5',
+            num: '2.1',
             tag: 'Sted vs. Retning',
             title: 'Rummet & Tærsklen',
             sub: 'Hjemme vs. Hjem, Inde vs. Ind, Oppe vs. Op. Ro i rummet vs. krydsning af dørtrinet.',
-            accent: '#8b5cf6',
-            yinLabel: 'Ro i rummet (-e)',
-            yinSent: 'Vi hygger os hjemme / inde i varmen.',
-            yangLabel: 'Krydser tærsklen',
-            yangSent: 'Vi tager hjem / går ind i stuen.',
+            accent: '#3b82f6',
+            tilstandLabel: 'Ro i rummet (-e)',
+            tilstandSent: 'Vi hygger os hjemme / inde i varmen.',
+            forvandlingLabel: 'Krydser tærsklen',
+            forvandlingSent: 'Vi tager hjem / går ind i stuen.',
             vrimmel: 'Huset, Døren & Haven'
+        },
+        {
+            id: 'verbernes_tider',
+            route: 'sansning_verber_tider',
+            num: '2.3',
+            tag: 'Tidens Kikkert',
+            title: 'Tidens Sansning (Verbernes tider)',
+            sub: 'Forskellen på "havde været" (uforandret tilstand) og "var blevet" (omslaget der fandt sted).',
+            accent: '#d97706',
+            tilstandLabel: 'Havde været',
+            tilstandSent: 'Vejret havde været koldt længe.',
+            forvandlingLabel: 'Var blevet',
+            forvandlingSent: 'Vejret var blevet koldt, da bilen ankom.',
+            vrimmel: 'Vinterhuset & Indkørslen'
         },
         {
             id: 'sindets_sansning',
             route: 'sansning_sindet',
-            num: '6',
+            num: '3.3',
             tag: 'Krop vs. Tanke',
             title: 'Sindets Sansning',
             sub: 'Synes (mærket med kroppen og smagsløgene) vs. Tror (uvis formodning i hovedet).',
             accent: '#06b6d4',
-            yinLabel: 'Kroppen mærker',
-            yinSent: 'Jeg synes, kaffen smager bittert.',
-            yangLabel: 'Hjernen gætter',
-            yangSent: 'Jeg tror, kaffen er økologisk.',
+            tilstandLabel: 'Kroppen mærker',
+            tilstandSent: 'Jeg synes, kaffen smager bittert.',
+            forvandlingLabel: 'Hjernen gætter',
+            forvandlingSent: 'Jeg tror, kaffen er økologisk.',
             vrimmel: 'Middagsbordet & Samtalen'
         }
     ];
@@ -844,10 +1074,10 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
     filterBar.className = 'gs-filter-bar';
     filterBar.innerHTML = `
         <div class="gs-filter-title">
-            <span>🗺️ De 6 Sanse-Stationer</span>
+            <span>🗺️ De 8 Sanse-Stationer</span>
         </div>
         <div class="gs-filter-pills">
-            <button class="gs-filter-pill active" data-filter="all">Vis alle (6)</button>
+            <button class="gs-filter-pill active" data-filter="all">Vis alle (8)</button>
             <button class="gs-filter-pill" data-filter="tilstand">🔵 Kun Væren & Stilstand</button>
             <button class="gs-filter-pill" data-filter="forvandling">🟠 Kun Tilblivelse & Forvandling</button>
         </div>
@@ -876,12 +1106,12 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
                     
                     <div class="gs-station-contrast-box">
                         <div class="gs-contrast-row" style="display: ${filter === 'forvandling' ? 'none' : 'flex'}">
-                            <span class="gs-contrast-label tilstand">🔵 ${st.yinLabel}:</span>
-                            <span class="gs-contrast-sent">${st.yinSent}</span>
+                            <span class="gs-contrast-label tilstand">🔵 ${st.tilstandLabel}:</span>
+                            <span class="gs-contrast-sent">${st.tilstandSent}</span>
                         </div>
                         <div class="gs-contrast-row" style="display: ${filter === 'tilstand' ? 'none' : 'flex'}">
-                            <span class="gs-contrast-label forvandling">🟠 ${st.yangLabel}:</span>
-                            <span class="gs-contrast-sent">${st.yangSent}</span>
+                            <span class="gs-contrast-label forvandling">🟠 ${st.forvandlingLabel}:</span>
+                            <span class="gs-contrast-sent">${st.forvandlingSent}</span>
                         </div>
                     </div>
                 </div>

@@ -16,15 +16,6 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container grammatik-sansning-view';
 
-    function speakDanish(text) {
-        if (!('speechSynthesis' in window) || !text) return;
-        window.speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(text);
-        u.lang = 'da-DK';
-        u.rate = 0.92;
-        window.speechSynthesis.speak(u);
-    }
-
     const style = document.createElement('style');
     style.textContent = `
         .grammatik-sansning-view {

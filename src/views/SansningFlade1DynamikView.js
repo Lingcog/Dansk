@@ -18,15 +18,6 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container grammatik-sansning-view';
 
-    function speakDanish(text) {
-        if (!('speechSynthesis' in window) || !text) return;
-        window.speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(text);
-        u.lang = 'da-DK';
-        u.rate = 0.92;
-        window.speechSynthesis.speak(u);
-    }
-
     const style = document.createElement('style');
     style.textContent = `
         .grammatik-sansning-view {
@@ -856,9 +847,6 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
                             <span class="gs-sim-chip-topic">${item.topic}</span>
                             <div class="gs-sim-chip-sentence">
                                 <span>${text}</span>
-                                <button class="gs-sim-tts-btn" title="Lyt på dansk" data-speak="${text}">
-                                    🔊
-                                </button>
                             </div>
                         </div>
                     `;
@@ -874,12 +862,6 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             simState.activeMode = 'forvandling';
             renderSimulatorContent();
         };
-        simulator.querySelectorAll('.gs-sim-tts-btn').forEach(btn => {
-            btn.onclick = (e) => {
-                e.stopPropagation();
-                speakDanish(btn.getAttribute('data-speak'));
-            };
-        });
     }
 
     renderSimulatorContent();
@@ -1014,9 +996,6 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
                     </div>
                     <div class="gs-showcase-caption">
                         <span>${curSt.leftCaption}</span>
-                        <button class="gs-sim-tts-btn" title="Lyt på dansk" data-speak="${curSt.tilstandSent}">
-                            🔊
-                        </button>
                     </div>
                 </div>
 
@@ -1031,9 +1010,6 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
                     </div>
                     <div class="gs-showcase-caption">
                         <span>${curSt.rightCaption}</span>
-                        <button class="gs-sim-tts-btn" title="Lyt på dansk" data-speak="${curSt.forvandlingSent}">
-                            🔊
-                        </button>
                     </div>
                 </div>
             </div>
@@ -1058,13 +1034,6 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
         showcaseBox.querySelectorAll('.gs-showcase-img-wrap').forEach(wrap => {
             wrap.onclick = () => {
                 navigateFn(curSt.route);
-            };
-        });
-
-        showcaseBox.querySelectorAll('.gs-sim-tts-btn').forEach(btn => {
-            btn.onclick = (e) => {
-                e.stopPropagation();
-                speakDanish(btn.getAttribute('data-speak'));
             };
         });
 

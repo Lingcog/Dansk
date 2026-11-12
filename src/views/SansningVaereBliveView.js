@@ -16,15 +16,6 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container sansning-station-view';
 
-    function speakDanish(text) {
-        if (!('speechSynthesis' in window) || !text) return;
-        window.speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(text);
-        u.lang = 'da-DK';
-        u.rate = 0.92;
-        window.speechSynthesis.speak(u);
-    }
-
     let activeItemKey = 'kaffe';
     let isPureMode = false;
 
@@ -1071,9 +1062,6 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
         const pair = contrastPairs.find(p => p.key === key);
         if (!pair) return;
 
-        // TTS på det valgte ord
-        speakDanish(triggerSide === 'left' ? pair.left.sent : pair.right.sent);
-
         // Opdater venstre hotspots
         leftContainer.querySelectorAll('.ss-hotspot').forEach(dot => {
             dot.classList.remove('active', 'partner-active');
@@ -1118,7 +1106,6 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
                         <span class="ss-box-sent">
                             ${pair.left.sent.replace('er', '<span class="ss-box-verb-highlight">er</span>')}
                         </span>
-                        <button class="ss-tts-audio-btn" data-tts="${pair.left.sent}" title="Lyt">🔊</button>
                     </div>
                     <div class="ss-box-exp">${pair.left.exp}</div>
                 </div>
@@ -1130,7 +1117,6 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
                         <span class="ss-box-sent">
                             ${pair.right.sent.replace('bliver', '<span class="ss-box-verb-highlight">bliver</span>')}
                         </span>
-                        <button class="ss-tts-audio-btn" data-tts="${pair.right.sent}" title="Lyt">🔊</button>
                     </div>
                     <div class="ss-box-exp">${pair.right.exp}</div>
                 </div>
@@ -1151,10 +1137,6 @@ export function renderSansningVaereBliveView(container, navigateFn, extraData = 
         detailCard.querySelector('#card-swap-btn').onclick = () => {
             selectPair(key, triggerSide === 'left' ? 'right' : 'left');
         };
-
-        detailCard.querySelectorAll('.ss-tts-audio-btn').forEach(btn => {
-            btn.onclick = () => speakDanish(btn.getAttribute('data-tts'));
-        });
     }
 
     function renderHotspotsUI() {

@@ -21,15 +21,6 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container sansning-station-view';
 
-    function speakDanish(text) {
-        if (!('speechSynthesis' in window) || !text) return;
-        window.speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(text);
-        u.lang = 'da-DK';
-        u.rate = 0.92;
-        window.speechSynthesis.speak(u);
-    }
-
     let activePairIndex = 0;
     let activeSide = 'left'; // 'left' = kroppen (synes), 'right' = hovedet (tror/mener/ved)
     let isPureMode = false;
@@ -1071,7 +1062,6 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
                         <div class="adj-box-sent">
                             "${pair.left.sent.replace(pair.left.word, `<span class="adj-highlight">${pair.left.word}</span>`)}"
                         </div>
-                        <button class="adj-tts-btn" id="tts-left" title="Lyt på dansk">🔊</button>
                     </div>
                     <div class="adj-box-exp">${pair.left.exp}</div>
                 </div>
@@ -1082,7 +1072,6 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
                         <div class="adj-box-sent">
                             "${pair.right.sent.replace(pair.right.word, `<span class="adj-highlight">${pair.right.word}</span>`)}"
                         </div>
-                        <button class="adj-tts-btn" id="tts-right" title="Lyt på dansk">🔊</button>
                     </div>
                     <div class="adj-box-exp">${pair.right.exp}</div>
                 </div>
@@ -1094,8 +1083,6 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
             </div>
         `;
 
-        detailCard.querySelector('#tts-left').onclick = () => speakDanish(pair.left.sent);
-        detailCard.querySelector('#tts-right').onclick = () => speakDanish(pair.right.sent);
         detailCard.querySelector('#card-swap-btn').onclick = () => {
             activeSide = otherSide;
             renderHotspotsUI();

@@ -76301,15 +76301,14 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         <div class="adj-detail-card" id="detail-card"></div>
     `,W.appendChild(ne);const I=document.createElement("div");I.className="ss-tab-panel",I.id="panel-quiz";let ee=0,te=0;function V(){const f=x[ee];if(ee>=x.length){I.innerHTML=`
                 <div class="ss-quiz-card" style="text-align: center;">
-                    <span style="font-size: 3rem;">🎉</span>
                     <h2 style="font-size: 1.8rem; margin: 0.5rem 0 1rem; color: #fde68a;">
-                        Træningsbane Gennemført!
+                        Træningsbane gennemført!
                     </h2>
                     <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                         Du fik <strong>${te} af ${x.length}</strong> rigtige!
                     </p>
                     <button class="ss-back-btn" id="btn-restart-quiz" style="margin: 0 auto; background: #0284c7;">
-                        🔄 Tag træningsbanen igen
+                        Tag træningsbanen igen
                     </button>
                 </div>
             `,I.querySelector("#btn-restart-quiz").onclick=()=>{ee=0,te=0,V()};return}I.innerHTML=`
@@ -77015,15 +77014,14 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         <div class="adj-detail-card" id="detail-card"></div>
     `,E.appendChild(P);const W=document.createElement("div");W.className="ss-tab-panel",W.id="panel-quiz";let ne=0,I=0;function ee(){const f=i[ne];if(ne>=i.length){W.innerHTML=`
                 <div class="ss-quiz-card" style="text-align: center;">
-                    <span style="font-size: 3rem;">🎉</span>
                     <h2 style="font-size: 1.8rem; margin: 0.5rem 0 1rem; color: #38bdf8;">
-                        Træningsbane Gennemført!
+                        Træningsbane gennemført!
                     </h2>
                     <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                         Du fik <strong>${I}</strong> ud af <strong>${i.length}</strong> rigtige!
                     </p>
                     <button class="ss-quiz-opt-btn" id="restart-quiz-btn" style="display: inline-block; width: auto; padding: 0.8rem 2rem;">
-                        🔄 Prøv igen
+                        Prøv igen
                     </button>
                 </div>
             `,W.querySelector("#restart-quiz-btn").onclick=()=>{ne=0,I=0,ee()};return}W.innerHTML=`
@@ -77085,7 +77083,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 <div class="ss-lang-item"><strong>Arabisk:</strong> ${o.lang.ar}</div>
                 <div class="ss-lang-item"><strong>Kinesisk:</strong> ${o.lang.zh}</div>
             </div>
-        `,C.querySelector("#card-swap-btn").onclick=()=>{z(f,_==="left"?"right":"left")})}function y(){te.innerHTML="",V.innerHTML="",S.innerHTML="",d.forEach(f=>{const _=document.createElement("button");_.className="ss-hotspot",_.style.left=`${f.left.x}%`,_.style.top=`${f.left.y}%`,_.dataset.key=f.key,_.innerHTML=f.icon,_.title=`${f.title} (Masse: ${f.left.word})`,_.onclick=()=>z(f.key,"left"),te.appendChild(_);const o=document.createElement("button");o.className="ss-hotspot",o.style.left=`${f.right.x}%`,o.style.top=`${f.right.y}%`,o.dataset.key=f.key,o.innerHTML=f.icon,o.title=`${f.title} (Form: ${f.right.word})`,o.onclick=()=>z(f.key,"right"),V.appendChild(o);const n=document.createElement("button");n.className="ss-strip-btn",n.dataset.key=f.key,n.innerHTML=`${f.icon} ${f.title.split(" ")[0]}`,n.onclick=()=>z(f.key,"left"),S.appendChild(n)}),z(p,"left")}y(),k.querySelectorAll(".ss-tab-btn").forEach(f=>{f.onclick=()=>{k.querySelectorAll(".ss-tab-btn").forEach(n=>n.classList.remove("active")),E.querySelectorAll(".ss-tab-panel").forEach(n=>n.classList.remove("active")),f.classList.add("active");const _=f.dataset.tab==="tab_kontrast"?"panel-kontrast":"panel-quiz",o=E.querySelector(`#${_}`);o&&o.classList.add("active")}}),c.appendChild(t)}function Xa(c,m,r={}){c.innerHTML="",Ut(Qt());const t=document.createElement("div");t.className="view-container sansning-station-view";const d=[{key:"laeser",title:"Læsning i stuen",icon:"📖",left:{x:35,y:55,word:"ligger og læser",sent:"Mads ligger og læser avisen i sofaen.",exp:'Dobbeltverbet "ligger og..." viser en uafgrænset, fredfyldt dvælen over tid. Kroppen er i total hvile.'},right:{x:35,y:55,word:"sætter sig til at læse",sent:"Mads sætter sig til at læse ved skrivebordet.",exp:'"Sætter sig til at..." markerer et bevidst skift i kroppens retning og handling. En ny proces sættes i gang med vilje.'},aha:'Uafgrænset dvælen ("ligger og læser") vs. retningsskift ("sætter sig til at læse").',lang:{en:"lies reading vs. sits down to read",ar:"مستلقٍ يقرأ vs. يجلس ليبدأ القراءة",zh:"躺着看报 vs. 坐下来开始阅读"}},{key:"fart",title:"Kroppens tempo og fart",icon:"🏃",left:{x:18,y:40,word:"går langsomt",sent:"Bedstefar går langsomt gennem haven og tænker.",exp:'Mådesadverbiet "langsomt" dæmper muskelkraften. Kroppen bevæger sig i lavt gear i stilhed.'},right:{x:18,y:40,word:"løber hurtigt",sent:"Drengen løber hurtigt hen over stien.",exp:'Adverbiet "hurtigt" pumper fart og dynamisk energi ind i verbet. Hvert skridt kræver kraft.'},aha:"Mådesadverbier afkoder kroppens muskelspænding: roligt og langsomt vs. eksplosivt og hurtigt.",lang:{en:"walks slowly vs. runs quickly",ar:"يمشي ببطء vs. يركض بسرعة",zh:"慢慢走 vs. 快速跑"}},{key:"doer",title:"Dørens åbning (Diatese)",icon:"🚪",left:{x:72,y:30,word:"døren åbnes",sent:"Døren åbnes automatisk kl. 8.",exp:"S-passiv lader handlingen ske som et roligt naturfænomen uden en synlig menneskelig person bag."},right:{x:72,y:30,word:"manden åbner døren",sent:"Manden åbner døren med håndtaget.",exp:"Aktiv diatese viser agentens muskulære arm og kropslige indgreb, der skubber døren op."},aha:'Selvvirkende naturfænomen ("åbnes") vs. menneskets muskulære kraft ("åbner").',lang:{en:"the door opens vs. the man opens the door",ar:"الباب يُفتح vs. الرجل يفتح الباب",zh:"门打开了（被动） vs. 男人开门"}},{key:"hus",title:"Husets natur vs. aftryk",icon:"🏡",left:{x:82,y:65,word:"et rødt hus",sent:"Familien bor i et rødt murstenshus.",exp:"Et rent adjektiv beskriver tingen som den er i sin iboende, hvilende natur."},right:{x:82,y:65,word:"et malet hus",sent:"Huset står som et nymalet hus efter sommerferien.",exp:"Kort tillægsform (participium) bærer arret og aftrykket af en forvandling: nogen har malet det!"},aha:'Iboende natur ("rødt") vs. historisk aftryk af et menneskeligt indgreb ("malet").',lang:{en:"a red house vs. a painted house",ar:"بيت أحمر vs. بيت مدهون / مطلي",zh:"红色的房子 vs. 粉刷过的房子"}},{key:"stille",title:"Katten og stilheden",icon:"🐾",left:{x:52,y:72,word:"sover roligt",sent:"Katten sover roligt på det varme gulvtæppe.",exp:"Ingen uventede ryk. Kroppens vejrtrækning er dyb og uforstyrret."},right:{x:52,y:72,word:"springer pludselig op",sent:"Katten springer pludselig op efter en flue.",exp:"Hvilen brydes af et eksplosivt retningsskift i et splitsekund."},aha:'Rolig dvælen ("sover roligt") vs. pludselig impuls ("springer pludselig op").',lang:{en:"sleeps calmly vs. leaps suddenly",ar:"تنام بهدوء vs. تقفز فجأة",zh:"安静地睡觉 vs. 突然跳起来"}}],i=[{prompt:"Mads er træt og har fri i dag. Han ... på sofaen.",options:["ligger og slapper af","sætter sig til at slappe af"],correct:"ligger og slapper af",expl:'"Ligger og..." beskriver den vedvarende, uafgrænsede dvælen i ro over tid.'},{prompt:"Klokken er 09:00, og eksamen starter nu. Mads ... skrive.",options:["ligger og","sætter sig til at"],correct:"sætter sig til at",expl:'"Sætter sig til at..." markerer det bevidste skift i kroppens fokus og start på en ny handling.'},{prompt:"Gaden er glat af is, så vi må køre ...",options:["forsigtigt","forsigtig"],correct:"forsigtigt",expl:"Når vi beskriver verbet (hvordan vi kører), tilføjer mådesadverbiet et -t."},{prompt:"Biblioteket er et offentligt sted. Dørene ... kl. 10.",options:["åbner","åbnes"],correct:"åbnes",expl:"S-passiv bruges, når institutionen eller reglen gælder uden en specifik person nævnt."},{prompt:"Bordet bærer tydeligt præg af håndværkerens arbejde. Det er et ... bord.",options:["slebet","rundt"],correct:"slebet",expl:'"Slebet" (participium) bærer aftrykket af handlingen: nogen har aktivt slebet bordet.'}],s=document.createElement("style");s.textContent=`
+        `,C.querySelector("#card-swap-btn").onclick=()=>{z(f,_==="left"?"right":"left")})}function y(){te.innerHTML="",V.innerHTML="",S.innerHTML="",d.forEach(f=>{const _=document.createElement("button");_.className="ss-hotspot",_.style.left=`${f.left.x}%`,_.style.top=`${f.left.y}%`,_.dataset.key=f.key,_.innerHTML=f.icon,_.title=`${f.title} (Masse: ${f.left.word})`,_.onclick=()=>z(f.key,"left"),te.appendChild(_);const o=document.createElement("button");o.className="ss-hotspot",o.style.left=`${f.right.x}%`,o.style.top=`${f.right.y}%`,o.dataset.key=f.key,o.innerHTML=f.icon,o.title=`${f.title} (Form: ${f.right.word})`,o.onclick=()=>z(f.key,"right"),V.appendChild(o);const n=document.createElement("button");n.className="ss-strip-btn",n.dataset.key=f.key,n.innerHTML=`${f.icon} ${f.title.split(" ")[0]}`,n.onclick=()=>z(f.key,"left"),S.appendChild(n)}),z(p,"left")}y(),k.querySelectorAll(".ss-tab-btn").forEach(f=>{f.onclick=()=>{k.querySelectorAll(".ss-tab-btn").forEach(n=>n.classList.remove("active")),E.querySelectorAll(".ss-tab-panel").forEach(n=>n.classList.remove("active")),f.classList.add("active");const _=f.dataset.tab==="tab_kontrast"?"panel-kontrast":"panel-quiz",o=E.querySelector(`#${_}`);o&&o.classList.add("active")}}),c.appendChild(t)}function Xa(c,m,r={}){c.innerHTML="",Ut(Qt());const t=document.createElement("div");t.className="view-container sansning-station-view";const d=[{key:"laeser",title:"Læsning i stuen",icon:"📖",left:{x:24,y:50,word:"ligger og læser",sent:"Mads ligger og læser avisen i sofaen.",exp:'Dobbeltverbet "ligger og..." viser en uafgrænset, fredfyldt dvælen over tid. Kroppen er i total hvile.'},right:{x:43,y:37,word:"sætter sig til at læse",sent:"Mads sætter sig til at læse ved skrivebordet.",exp:'"Sætter sig til at..." markerer et bevidst skift i kroppens retning og handling. En ny proces sættes i gang med vilje.'},aha:'Uafgrænset dvælen ("ligger og læser") vs. retningsskift ("sætter sig til at læse").',lang:{en:"lies reading vs. sits down to read",ar:"مستلقٍ يقرأ vs. يجلس ليبدأ القراءة",zh:"躺着看报 vs. 坐下来开始阅读"}},{key:"fart",title:"Kroppens tempo og fart",icon:"🏃",left:{x:80,y:60,word:"går langsomt",sent:"Bedstefar går langsomt gennem haven og tænker.",exp:'Mådesadverbiet "langsomt" dæmper muskelkraften. Kroppen bevæger sig i lavt gear i stilhed.'},right:{x:81,y:71,word:"løber hurtigt",sent:"Drengen løber hurtigt hen over stien.",exp:'Adverbiet "hurtigt" pumper fart og dynamisk energi ind i verbet. Hvert skridt kræver kraft.'},aha:"Mådesadverbier afkoder kroppens muskelspænding: roligt og langsomt vs. eksplosivt og hurtigt.",lang:{en:"walks slowly vs. runs quickly",ar:"يمشي ببطء vs. يركض بسرعة",zh:"慢慢走 vs. 快速跑"}},{key:"doer",title:"Dørens åbning (diatese)",icon:"🚪",left:{x:60,y:49,word:"døren åbnes",sent:"Døren åbnes automatisk kl. 8.",exp:"S-passiv lader handlingen ske som et roligt naturfænomen uden en synlig menneskelig person bag."},right:{x:61,y:49,word:"manden åbner døren",sent:"Manden åbner døren med håndtaget.",exp:"Aktiv diatese viser agentens muskulære arm og kropslige indgreb, der skubber døren op."},aha:'Selvvirkende naturfænomen ("åbnes") vs. menneskets muskulære kraft ("åbner").',lang:{en:"the door opens vs. the man opens the door",ar:"الباب يُفتح vs. الرجل يفتح الباب",zh:"门打开了（被动） vs. 男人开门"}},{key:"hus",title:"Husets natur vs. aftryk",icon:"🏡",left:{x:72,y:28,word:"et rødt hus",sent:"Familien bor i et rødt murstenshus.",exp:"Et rent adjektiv beskriver tingen som den er i sin iboende, hvilende natur."},right:{x:72,y:28,word:"et malet hus",sent:"Huset står som et nymalet hus efter sommerferien.",exp:"Kort tillægsform (participium) bærer arret og aftrykket af en forvandling: nogen har malet det!"},aha:'Iboende natur ("rødt") vs. historisk aftryk af et menneskeligt indgreb ("malet").',lang:{en:"a red house vs. a painted house",ar:"بيت أحمر vs. بيت مدهون / مطلي",zh:"红色的房子 vs. 粉刷过的房子"}},{key:"stille",title:"Katten og stilheden",icon:"🐾",left:{x:27,y:73,word:"sover roligt",sent:"Katten sover roligt på det varme gulvtæppe.",exp:"Ingen uventede ryk. Kroppens vejrtrækning er dyb og uforstyrret."},right:{x:27,y:58,word:"springer pludselig op",sent:"Katten springer pludselig op efter en flue.",exp:"Hvilen brydes af et eksplosivt retningsskift i et splitsekund."},aha:'Rolig dvælen ("sover roligt") vs. pludselig impuls ("springer pludselig op").',lang:{en:"sleeps calmly vs. leaps suddenly",ar:"تنام بهدوء vs. تقفز فجأة",zh:"安静地睡觉 vs. 突然跳起来"}}],i=[{prompt:"Mads er træt og har fri i dag. Han ... på sofaen.",options:["ligger og slapper af","sætter sig til at slappe af"],correct:"ligger og slapper af",expl:'"Ligger og..." beskriver den vedvarende, uafgrænsede dvælen i ro over tid.'},{prompt:"Klokken er 09:00, og eksamen starter nu. Mads ... skrive.",options:["ligger og","sætter sig til at"],correct:"sætter sig til at",expl:'"Sætter sig til at..." markerer det bevidste skift i kroppens fokus og start på en ny handling.'},{prompt:"Gaden er glat af is, så vi må køre ...",options:["forsigtigt","forsigtig"],correct:"forsigtigt",expl:"Når vi beskriver verbet (hvordan vi kører), tilføjer mådesadverbiet et -t."},{prompt:"Biblioteket er et offentligt sted. Dørene ... kl. 10.",options:["åbner","åbnes"],correct:"åbnes",expl:"S-passiv bruges, når institutionen eller reglen gælder uden en specifik person nævnt."},{prompt:"Bordet bærer tydeligt præg af håndværkerens arbejde. Det er et ... bord.",options:["slebet","rundt"],correct:"slebet",expl:'"Slebet" (participium) bærer aftrykket af handlingen: nogen har aktivt slebet bordet.'}],s=document.createElement("style");s.textContent=`
         .sansning-station-view {
             max-width: 1200px;
             margin: 0 auto;
@@ -77694,15 +77692,14 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         <div class="adj-detail-card" id="detail-card"></div>
     `,E.appendChild(P);const W=document.createElement("div");W.className="ss-tab-panel",W.id="panel-quiz";let ne=0,I=0;function ee(){const f=i[ne];if(ne>=i.length){W.innerHTML=`
                 <div class="ss-quiz-card" style="text-align: center;">
-                    <span style="font-size: 3rem;">🎉</span>
                     <h2 style="font-size: 1.8rem; margin: 0.5rem 0 1rem; color: #38bdf8;">
-                        Træningsbane Gennemført!
+                        Træningsbane gennemført!
                     </h2>
                     <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                         Du fik <strong>${I}</strong> ud af <strong>${i.length}</strong> rigtige!
                     </p>
                     <button class="ss-quiz-opt-btn" id="restart-quiz-btn" style="display: inline-block; width: auto; padding: 0.8rem 2rem;">
-                        🔄 Prøv igen
+                        Prøv igen
                     </button>
                 </div>
             `,W.querySelector("#restart-quiz-btn").onclick=()=>{ne=0,I=0,ee()};return}W.innerHTML=`
@@ -78245,7 +78242,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             justify-content: center;
             flex-wrap: wrap;
         }
-    `,t.appendChild(M);const F=document.createElement("div");F.className="ss-top-bar";const N=document.createElement("button");N.className="ss-back-btn",N.innerHTML=r&&r.from==="overview"?"← Tilbage til sansningsoversigten":"← Tilbage til hovedflade 1",N.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade_1")},F.appendChild(N);const k=document.createElement("span");k.className="ss-station-badge",k.innerHTML="Station 2 • Tidens sansning",F.appendChild(k),t.appendChild(F);const E=document.createElement("div");E.className="ss-hero",E.innerHTML=`
+    `,t.appendChild(M);const F=document.createElement("div");F.className="ss-top-bar";const N=document.createElement("button");N.className="ss-back-btn",N.innerHTML=r&&r.from==="overview"?"← Tilbage til sansningsoversigten":"← Tilbage til hovedflade 1",N.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade1")},F.appendChild(N);const k=document.createElement("span");k.className="ss-station-badge",k.innerHTML="Station 2 • Tidens sansning",F.appendChild(k),t.appendChild(F);const E=document.createElement("div");E.className="ss-hero",E.innerHTML=`
         <h1>Tidens sansning: "havde været" vs. "var blevet"</h1>
         <p>
             Oplev tidernes kontrast side om side: 
@@ -78295,15 +78292,14 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         <div class="adj-detail-card" id="detail-card"></div>
     `,W.appendChild(ne);const I=document.createElement("div");I.className="ss-tab-panel",I.id="panel-quiz";let ee=0,te=0;function V(){const n=x[ee];if(ee>=x.length){I.innerHTML=`
                 <div class="ss-quiz-card" style="text-align: center;">
-                    <span style="font-size: 3rem;">🎉</span>
                     <h2 style="font-size: 1.8rem; margin: 0.5rem 0 1rem; color: #fde68a;">
-                        Træningsbane Gennemført!
+                        Træningsbane gennemført!
                     </h2>
                     <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                         Du fik <strong>${te} af ${x.length}</strong> rigtige!
                     </p>
                     <button class="ss-back-btn" id="btn-restart-quiz" style="margin: 0 auto; background: #d97706;">
-                        🔄 Tag træningsbanen igen
+                        Tag træningsbanen igen
                     </button>
                 </div>
             `,I.querySelector("#btn-restart-quiz").onclick=()=>{ee=0,te=0,V()};return}I.innerHTML=`
@@ -78916,15 +78912,14 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         <div class="adj-detail-card" id="detail-card"></div>
     `,W.appendChild(ne);const I=document.createElement("div");I.className="ss-tab-panel",I.id="panel-quiz";let ee=0,te=0;function V(){const o=x[ee];if(ee>=x.length){I.innerHTML=`
                 <div class="ss-quiz-card" style="text-align: center;">
-                    <span style="font-size: 3rem;">🎉</span>
                     <h2 style="font-size: 1.8rem; margin: 0.5rem 0 1rem; color: #a7f3d0;">
-                        Træningsbane Gennemført!
+                        Træningsbane gennemført!
                     </h2>
                     <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                         Du fik <strong>${te} af ${x.length}</strong> rigtige!
                     </p>
                     <button class="ss-back-btn" id="btn-restart-quiz" style="margin: 0 auto; background: #059669;">
-                        🔄 Tag træningsbanen igen
+                        Tag træningsbanen igen
                     </button>
                 </div>
             `,I.querySelector("#btn-restart-quiz").onclick=()=>{ee=0,te=0,V()};return}I.innerHTML=`
@@ -80220,7 +80215,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             align-items: center;
             gap: 0.45rem;
         }
-    `,t.appendChild(F);const N=document.createElement("div");N.className="ss-top-bar";const k=document.createElement("button");k.className="ss-back-btn",k.innerHTML=r&&r.from==="overview"?"← Tilbage til sansningsoversigten":"← Tilbage til hovedflade 1",k.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade_1")},N.appendChild(k);const E=document.createElement("span");E.className="ss-station-badge",E.innerHTML="Station 5 • Rummet og tærsklen",N.appendChild(E),t.appendChild(N);const P=document.createElement("div");P.className="ss-hero",P.innerHTML=`
+    `,t.appendChild(F);const N=document.createElement("div");N.className="ss-top-bar";const k=document.createElement("button");k.className="ss-back-btn",k.innerHTML=r&&r.from==="overview"?"← Tilbage til sansningsoversigten":"← Tilbage til hovedflade 1",k.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade1")},N.appendChild(k);const E=document.createElement("span");E.className="ss-station-badge",E.innerHTML="Station 5 • Rummet og tærsklen",N.appendChild(E),t.appendChild(N);const P=document.createElement("div");P.className="ss-hero",P.innerHTML=`
         <h1>Rummet og tærsklen: hjemme vs. hjem / inde vs. ind</h1>
         <p>
             På dansk afslører det lille bogstav <strong>-e</strong>, om du er i ro i rummet 
@@ -80276,15 +80271,14 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         <div class="adj-detail-card" id="detail-card"></div>
     `,ne.appendChild(I);const ee=document.createElement("div");ee.className="ss-tab-panel",ee.id="panel-quiz";let te=0,V=0;function S(){const _=M[te];if(te>=M.length){ee.innerHTML=`
                 <div class="ss-quiz-card" style="text-align: center;">
-                    <span style="font-size: 3rem;">🎉</span>
                     <h2 style="font-size: 1.8rem; margin: 0.5rem 0 1rem; color: #a78bfa;">
-                        Træningsbane Gennemført!
+                        Træningsbane gennemført!
                     </h2>
                     <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                         Du fik <strong>${V} af ${M.length}</strong> rigtige!
                     </p>
                     <button class="ss-back-btn" id="btn-restart-quiz" style="margin: 0 auto; background: #7c3aed;">
-                        🔄 Tag træningsbanen igen
+                        Tag træningsbanen igen
                     </button>
                 </div>
             `,ee.querySelector("#btn-restart-quiz").onclick=()=>{te=0,V=0,S()};return}ee.innerHTML=`
@@ -80977,7 +80971,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             margin-left: auto;
             transition: all 0.2s ease;
         }
-    `,t.appendChild(F);const N=document.createElement("div");N.className="ss-top-bar";const k=document.createElement("button");k.className="ss-back-btn",k.innerHTML=r&&r.from==="overview"?"← Tilbage til sansningsoversigten":"← Tilbage til hovedflade 1",k.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade_1")},N.appendChild(k);const E=document.createElement("span");E.className="ss-station-badge",E.innerHTML="Station 6 • Sindets sansning",N.appendChild(E),t.appendChild(N);const P=document.createElement("div");P.className="ss-hero",P.innerHTML=`
+    `,t.appendChild(F);const N=document.createElement("div");N.className="ss-top-bar";const k=document.createElement("button");k.className="ss-back-btn",k.innerHTML=r&&r.from==="overview"?"← Tilbage til sansningsoversigten":"← Tilbage til hovedflade 1",k.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade1")},N.appendChild(k);const E=document.createElement("span");E.className="ss-station-badge",E.innerHTML="Station 6 • Sindets sansning",N.appendChild(E),t.appendChild(N);const P=document.createElement("div");P.className="ss-hero",P.innerHTML=`
         <h1>Sindets sansning: synes vs. tror vs. mener vs. ved</h1>
         <p>
             På dansk afslører verbet sindets kilde: <strong>Synes</strong> udspringer direkte af kroppens 
@@ -81033,15 +81027,14 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         <div class="adj-detail-card" id="detail-card"></div>
     `,ne.appendChild(I);const ee=document.createElement("div");ee.className="ss-tab-panel",ee.id="panel-quiz";let te=0,V=0;function S(){const o=M[te];if(te>=M.length){ee.innerHTML=`
                 <div class="ss-quiz-card" style="text-align: center;">
-                    <span style="font-size: 3rem;">🎉</span>
                     <h2 style="font-size: 1.8rem; margin: 0.5rem 0 1rem; color: #67e8f9;">
-                        Træningsbane Gennemført!
+                        Træningsbane gennemført!
                     </h2>
                     <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                         Du fik <strong>${V} af ${M.length}</strong> rigtige!
                     </p>
                     <button class="ss-back-btn" id="btn-restart-quiz" style="margin: 0 auto; background: #0891b2;">
-                        🔄 Tag træningsbanen igen
+                        Tag træningsbanen igen
                     </button>
                 </div>
             `,ee.querySelector("#btn-restart-quiz").onclick=()=>{te=0,V=0,S()};return}ee.innerHTML=`

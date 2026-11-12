@@ -29,15 +29,15 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
             title: 'Bogen og bordet (lægge / ligge)',
             icon: '📖',
             left: {
-                x: 30,
-                y: 65,
+                x: 49,
+                y: 78,
                 word: 'lægger',
                 sent: 'Hun lægger bogen på bordet.',
                 exp: 'Hånden griber om bogen, fører den gennem luften og anbringer den (kroppens kraft).'
             },
             right: {
-                x: 30,
-                y: 65,
+                x: 50,
+                y: 78,
                 word: 'ligger',
                 sent: 'Bogen ligger på bordet.',
                 exp: 'Bogen hviler vandret i fuldstændig ro uden menneskelig berøring.'
@@ -49,15 +49,15 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
             title: 'Koppen og hylden (stille / stå)',
             icon: '☕',
             left: {
-                x: 75,
-                y: 40,
+                x: 16,
+                y: 38,
                 word: 'stiller',
                 sent: 'Han stiller koppen op på hylden.',
                 exp: 'Armen løfter koppen opad og placerer den oprejst på hylden.'
             },
             right: {
-                x: 75,
-                y: 40,
+                x: 16,
+                y: 37,
                 word: 'står',
                 sent: 'Koppen står på hylden.',
                 exp: 'Koppen befinder sig lodret i ro på hylden.'
@@ -69,15 +69,15 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
             title: 'Bamsen i sofaen (sætte / sidde)',
             icon: '🧸',
             left: {
-                x: 52,
-                y: 55,
+                x: 80,
+                y: 73,
                 word: 'sætter',
                 sent: 'Pigen sætter bamsen til rette i sofaen.',
                 exp: 'Barnets hænder flytter bamsen og anbringer den i sofahjørnet.'
             },
             right: {
-                x: 52,
-                y: 55,
+                x: 80,
+                y: 72,
                 word: 'sidder',
                 sent: 'Bamsen sidder i sofaen.',
                 exp: 'Bamsen hviler med bunden i puden i ro.'
@@ -89,15 +89,15 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
             title: 'Katten og blomstervasen (vælte)',
             icon: '🏺',
             left: {
-                x: 82,
-                y: 68,
+                x: 69,
+                y: 49,
                 word: 'væltede',
                 sent: 'Katten væltede vasen med halen.',
                 exp: 'Kattens krop udøvede en ydre kraft på vasen, der fik den til at falde.'
             },
             right: {
-                x: 82,
-                y: 68,
+                x: 38,
+                y: 74,
                 word: 'ligger væltet',
                 sent: 'Vasen væltede og ligger nu på gulvet.',
                 exp: 'Vasen hviler nu vandret på gulvtæppet.'
@@ -106,18 +106,18 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
         },
         {
             key: 'avis',
-            title: 'Mads med avisen (Kropsrammen)',
+            title: 'Mads med avisen (kropsrammen)',
             icon: '📰',
             left: {
-                x: 20,
-                y: 45,
+                x: 89,
+                y: 44,
                 word: 'sætter sig',
                 sent: 'Han sætter sig i lænestolen.',
                 exp: 'Kroppen udfører bevægelsen ned i stolen.'
             },
             right: {
-                x: 20,
-                y: 45,
+                x: 88,
+                y: 46,
                 word: 'sidder og læser',
                 sent: 'Han sidder og læser dagens avis.',
                 exp: 'Kroppen danner en stabil fysisk ramme om læsningen.'
@@ -745,15 +745,14 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
         if (currentQuestionIdx >= quizQuestions.length) {
             panelQuiz.innerHTML = `
                 <div class="ss-quiz-card" style="text-align: center;">
-                    <span style="font-size: 3rem;">🎉</span>
                     <h2 style="font-size: 1.8rem; margin: 0.5rem 0 1rem; color: #f472b6;">
-                        Træningsbane Gennemført!
+                        Træningsbane gennemført!
                     </h2>
                     <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                         Du fik <strong>${quizScore} af ${quizQuestions.length}</strong> rigtige!
                     </p>
                     <button class="ss-back-btn" id="btn-restart-quiz" style="margin: 0 auto; background: #db2777;">
-                        🔄 Tag træningsbanen igen
+                        Tag træningsbanen igen
                     </button>
                 </div>
             `;
@@ -850,7 +849,7 @@ export function renderSansningKraftHvileView(container, navigateFn, extraData = 
                     Kausative par (lægge/ligge, sætte/sidde, stille/stå)
                 </button>
                 <button class="ss-strip-btn" id="btn-sub-liggerlaeser">
-                    🧘 Krops-Rammen ("Ligger og læser" vs. "Læser")
+                    Kropsrammen ("ligger og læser" vs. "læser")
                 </button>
             </div>
 

@@ -74482,9 +74482,9 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         }
 
         .gs-back-btn {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1.5px solid rgba(148, 163, 184, 0.25);
-            color: #f8fafc;
+            background: #5C0812;
+            border: 1.5px solid #851825;
+            color: #ffffff;
             padding: 0.55rem 1.1rem;
             border-radius: 12px;
             font-weight: 700;
@@ -74496,8 +74496,8 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             gap: 0.4rem;
         }
         .gs-back-btn:hover {
-            border-color: #38bdf8;
-            background: rgba(30, 41, 59, 0.9);
+            border-color: #FFC9CD;
+            background: #73101C;
             transform: translateX(-2px);
         }
 
@@ -74511,15 +74511,14 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(249, 115, 22, 0.18));
-            border: 1px solid rgba(251, 191, 36, 0.4);
+            background: rgba(92, 8, 18, 0.85);
+            border: 1px solid #851825;
             border-radius: 999px;
             padding: 0.35rem 1rem;
             font-size: 0.82rem;
             font-weight: 800;
-            color: #fde68a;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
+            color: #FFC9CD;
+            letter-spacing: 0.04em;
             margin-bottom: 0.75rem;
         }
         .gs-hero h1 {
@@ -74527,12 +74526,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             font-weight: 900;
             margin: 0 0 0.5rem;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #ffffff 40%, #fde68a 85%, #fb923c 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
         }
         .gs-hero p {
-            color: #cbd5e1;
+            color: #FFC9CD;
             font-size: 1.05rem;
             max-width: 820px;
             margin: 0 auto;
@@ -74541,8 +74538,8 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
 
         /* Pedagogical Guide (Accordion) */
         .gs-guide-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
-            border: 1.5px solid rgba(251, 191, 36, 0.4);
+            background: #5C0812;
+            border: 1.5px solid #851825;
             border-radius: 20px;
             padding: 1.3rem 1.5rem;
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
@@ -74554,16 +74551,16 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             justify-content: space-between;
             align-items: center;
             gap: 1rem;
-            font-weight: 900;
-            font-size: 1.12rem;
-            color: #fde68a;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #ffffff;
         }
         .gs-guide-summary::-webkit-details-marker { display: none; }
         .gs-guide-content {
             margin-top: 1.1rem;
             padding-top: 1.1rem;
-            border-top: 1px solid rgba(251, 191, 36, 0.25);
-            color: #cbd5e1;
+            border-top: 1px solid #851825;
+            color: #FFC9CD;
             font-size: 0.95rem;
             line-height: 1.6;
         }
@@ -74574,10 +74571,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             margin-top: 1rem;
         }
         .gs-guide-col {
-            background: rgba(15, 23, 42, 0.65);
+            background: #4A040B;
             border-radius: 14px;
             padding: 1rem 1.1rem;
-            border: 1px solid rgba(148, 163, 184, 0.18);
+            border: 1px solid #851825;
         }
         .gs-guide-col h3 {
             margin: 0 0 0.5rem;
@@ -74612,7 +74609,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         }
         .gs-section-header p {
             margin: 0.25rem 0 0;
-            color: #94a3b8;
+            color: #FFC9CD;
             font-size: 0.88rem;
         }
         .gs-hovedflader-grid {
@@ -74628,13 +74625,13 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             justify-content: space-between;
             transition: all 0.25s ease;
             position: relative;
-            background: linear-gradient(165deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
-            border: 1.5px solid rgba(148, 163, 184, 0.25);
+            background: #5C0812;
+            border: 1.5px solid #851825;
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
         }
         .gs-hovedflade-card.active-flade {
             border-color: #38bdf8;
-            background: linear-gradient(165deg, rgba(14, 116, 144, 0.3) 0%, rgba(15, 23, 42, 0.95) 100%);
+            background: linear-gradient(165deg, rgba(14, 116, 144, 0.35) 0%, #5C0812 100%);
             box-shadow: 0 12px 30px rgba(56, 189, 248, 0.22);
             cursor: pointer;
         }
@@ -74645,11 +74642,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         }
         .gs-hf-tag {
             font-size: 0.72rem;
-            font-weight: 900;
+            font-weight: 800;
             padding: 0.22rem 0.55rem;
             border-radius: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
             display: inline-block;
             margin-bottom: 0.6rem;
             align-self: flex-start;
@@ -74660,9 +74656,9 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             border: 1px solid rgba(34, 197, 94, 0.4);
         }
         .gs-hf-tag.planned {
-            background: rgba(148, 163, 184, 0.15);
-            color: #94a3b8;
-            border: 1px solid rgba(148, 163, 184, 0.3);
+            background: rgba(255, 201, 205, 0.12);
+            color: #FFC9CD;
+            border: 1px solid #851825;
         }
         .gs-hf-title {
             font-size: 1.15rem;
@@ -74672,7 +74668,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         }
         .gs-hf-sub {
             font-size: 0.84rem;
-            color: #cbd5e1;
+            color: #FFC9CD;
             margin: 0 0 0.8rem;
             line-height: 1.45;
         }
@@ -74681,7 +74677,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             padding: 0;
             margin: 0 0 1rem;
             font-size: 0.8rem;
-            color: #94a3b8;
+            color: #FFC9CD;
             display: flex;
             flex-direction: column;
             gap: 0.3rem;
@@ -74692,12 +74688,12 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             font-weight: bold;
         }
         .gs-hf-btn {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
+            background: #FF4D5E;
             color: #ffffff;
             border: none;
             padding: 0.6rem 1rem;
             border-radius: 10px;
-            font-weight: 800;
+            font-weight: 700;
             font-size: 0.86rem;
             display: inline-flex;
             align-items: center;
@@ -74707,11 +74703,11 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             transition: all 0.2s ease;
         }
         .gs-hf-btn:hover {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            background: #ff6b7a;
             transform: scale(1.02);
         }
-    `,t.appendChild(d);const i=document.createElement("div");i.className="gs-top-bar";const s=document.createElement("button");s.className="gs-back-btn",s.innerHTML=`← ${e("back")||"Tilbage til forsiden"}`,s.onclick=()=>m("dagens_opgave"),i.appendChild(s);const x=document.createElement("span");x.className="gs-hero-badge",x.innerHTML="🧭 Sanse-Grammatik • DU1 & DU2",i.appendChild(x),t.appendChild(i);const M=document.createElement("div");M.className="gs-hero",M.innerHTML=`
-        <div class="gs-hero-badge">🧭 Fænomenologisk & Sanselig Grammatik</div>
+    `,t.appendChild(d);const i=document.createElement("div");i.className="gs-top-bar";const s=document.createElement("button");s.className="gs-back-btn",s.innerHTML=`← ${e("back")||"Tilbage til forsiden"}`,s.onclick=()=>m("dagens_opgave"),i.appendChild(s);const x=document.createElement("span");x.className="gs-hero-badge",x.innerHTML="Sansegrammatik • DU1 og DU2",i.appendChild(x),t.appendChild(i);const M=document.createElement("div");M.className="gs-hero",M.innerHTML=`
+        <div class="gs-hero-badge">Fænomenologisk og sanselig grammatik</div>
         <h1>Grammatik og min sansning af verden</h1>
         <p>
             Udforsk det danske sprog gennem kroppens fire fundamentale måder at sanse virkeligheden på.
@@ -74720,75 +74716,75 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
     `,t.appendChild(M);const F=document.createElement("div");F.className="gs-realms-section",F.innerHTML=`
         <div class="gs-section-header">
             <div>
-                <h2>🏛️ Appens 4 Kropslige Hovedflader</h2>
+                <h2>Appens 4 kropslige hovedflader</h2>
                 <p>Udforsk grammatikken gennem kroppens fire primære sansninger af virkeligheden.</p>
             </div>
         </div>
         <div class="gs-hovedflader-grid">
             <div class="gs-hovedflade-card active-flade" id="btn-open-flade1">
                 <div>
-                    <span class="gs-hf-tag ready">✨ 100% Færdig & Aktiv</span>
-                    <h3 class="gs-hf-title">Flade 1: Dynamik & Form</h3>
-                    <p class="gs-hf-sub">Inde i tingen og kroppen: Stilstand vs. Forvandling.</p>
+                    <span class="gs-hf-tag ready">Aktiv</span>
+                    <h3 class="gs-hf-title">Flade 1: Dynamik og form</h3>
+                    <p class="gs-hf-sub">Inde i tingen og kroppen: Stilstand vs. forvandling.</p>
                     <ul class="gs-hf-bullets">
-                        <li>Være vs. Blive (verbernes grundkerne)</li>
-                        <li>Ligge vs. Lægge (positionsverber)</li>
-                        <li>Form & Masse (utællelig vs. tællelig)</li>
-                        <li>Har vs. Er i førnutid (motoren vs. døren)</li>
-                        <li>Aspekt, Måde & Diatese (dvælen vs. fart)</li>
+                        <li>Være vs. blive (verbernes grundkerne)</li>
+                        <li>Ligge vs. lægge (positionsverber)</li>
+                        <li>Form og masse (utællelig vs. tællelig)</li>
+                        <li>Har vs. er i førnutid (motoren vs. døren)</li>
+                        <li>Aspekt, måde og diatese (dvælen vs. fart)</li>
                     </ul>
                 </div>
                 <button class="gs-hf-btn">
-                    Åbn Hovedflade 1 Portal →
+                    Åbn hovedflade 1 →
                 </button>
             </div>
 
             <div class="gs-hovedflade-card">
                 <div>
-                    <span class="gs-hf-tag planned">🚧 Næste Fase</span>
-                    <h3 class="gs-hf-title">Flade 2: Rum, Tid & Relationer</h3>
-                    <p class="gs-hf-sub">Hvor står mit kamera? Nærhed i hånden vs. Afstand i kikkerten.</p>
+                    <span class="gs-hf-tag planned">Næste fase</span>
+                    <h3 class="gs-hf-title">Flade 2: Rum, tid og relationer</h3>
+                    <p class="gs-hf-sub">Hvor står mit kamera? Nærhed i hånden vs. afstand i kikkerten.</p>
                     <ul class="gs-hf-bullets">
-                        <li>I vs. På (hulen vs. fladen)</li>
-                        <li>Denne vs. Den (hånden vs. pegefingeren)</li>
-                        <li>Nutid vs. Datid (scenen vs. kikkerten)</li>
-                        <li>Hjemme vs. Hjem (zonen vs. tærsklen)</li>
-                        <li>Sin vs. Hans (kroppens intime sfære)</li>
+                        <li>I vs. på (hulen vs. fladen)</li>
+                        <li>Denne vs. den (hånden vs. pegefingeren)</li>
+                        <li>Nutid vs. datid (scenen vs. kikkerten)</li>
+                        <li>Hjemme vs. hjem (zonen vs. tærsklen)</li>
+                        <li>Sin vs. hans (kroppens intime sfære)</li>
                     </ul>
                 </div>
             </div>
 
             <div class="gs-hovedflade-card">
                 <div>
-                    <span class="gs-hf-tag planned">📋 Planlagt</span>
-                    <h3 class="gs-hf-title">Flade 3: Modalitet & Evidens</h3>
-                    <p class="gs-hf-sub">Hvor fast er grunden under mine fødder? Vished vs. Tvivl.</p>
+                    <span class="gs-hf-tag planned">Planlagt</span>
+                    <h3 class="gs-hf-title">Flade 3: Modalitet og evidens</h3>
+                    <p class="gs-hf-sub">Hvor fast er grunden under mine fødder? Vished vs. tvivl.</p>
                     <ul class="gs-hf-bullets">
-                        <li>Klippegrund vs. Tynd is (sikkert, måske)</li>
-                        <li>Evidensens kilde: Nok, Jo, Vel, Vist</li>
-                        <li>Kroppens mærken: Synes vs. Tror</li>
-                        <li>Modalverbernes pres: Skal, vil, må, kan</li>
+                        <li>Klippegrund vs. tynd is (sikkert, måske)</li>
+                        <li>Evidensens kilde: nok, jo, vel, vist</li>
+                        <li>Kroppens mærken: synes vs. tror</li>
+                        <li>Modalverbernes pres: skal, vil, må, kan</li>
                     </ul>
                 </div>
             </div>
 
             <div class="gs-hovedflade-card">
                 <div>
-                    <span class="gs-hf-tag planned">📋 Planlagt</span>
-                    <h3 class="gs-hf-title">Flade 4: Kraft & Tekstflow</h3>
+                    <span class="gs-hf-tag planned">Planlagt</span>
+                    <h3 class="gs-hf-title">Flade 4: Kraft og tekstflow</h3>
                     <p class="gs-hf-sub">Hængslerne mellem scenerne. Kausalitet og sætningsdans.</p>
                     <ul class="gs-hf-bullets">
-                        <li>Fri bane: Fordi (kilde) vs. Derfor (fremdrift)</li>
-                        <li>Modstand: Selvom (muren) vs. Alligevel (gennembrud)</li>
-                        <li>Betingelser: Hvis (springbræt) vs. Eller</li>
-                        <li>Sætningsdansen & Inversion (felt 1 & 2)</li>
+                        <li>Fri bane: fordi (kilde) vs. derfor (fremdrift)</li>
+                        <li>Modstand: selvom (muren) vs. alligevel (gennembrud)</li>
+                        <li>Betingelser: hvis (springbræt) vs. eller</li>
+                        <li>Sætningsdansen og inversion (felt 1 og 2)</li>
                     </ul>
                 </div>
             </div>
         </div>
     `;const N=F.querySelector("#btn-open-flade1");N&&(N.onclick=()=>m("sansning_flade1")),t.appendChild(F);const k=document.createElement("details");k.className="gs-guide-card",k.innerHTML=`
         <summary class="gs-guide-summary">
-            <span>🧘 Lærerens & Kursistens Sanseguide: Sådan sanses grammatikken</span>
+            <span>Lærerens og kursistens sanseguide: sådan sanses grammatikken</span>
             <span>▼</span>
         </summary>
         <div class="gs-guide-content">
@@ -74800,21 +74796,21 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             </p>
             <div class="gs-guide-grid">
                 <div class="gs-guide-col">
-                    <h3>🤚 1. Kropssprogets Fagter</h3>
+                    <h3>1. Kropssprogets fagter</h3>
                     <p>
-                        Brug hænderne i undervisningen: En flad, rolig håndflade mod bordet symboliserer <strong>Tilstand (ligger / er / hjemme)</strong>. 
-                        En gribende eller skubbende hånd i fart symboliserer <strong>Forvandling (lægger / bliver / hjem)</strong>.
+                        Brug hænderne i undervisningen: En flad, rolig håndflade mod bordet symboliserer <strong>tilstand (ligger / er / hjemme)</strong>. 
+                        En gribende eller skubbende hånd i fart symboliserer <strong>forvandling (lægger / bliver / hjem)</strong>.
                     </p>
                 </div>
                 <div class="gs-guide-col">
-                    <h3>🚪 2. Tærsklens Grænse</h3>
+                    <h3>2. Tærsklens grænse</h3>
                     <p>
                         Vis dørtrinet: Står kursisten inden for døren, er det en lukket ro med <strong>-e</strong> (inde, oppe, hjemme). 
                         Så snart foden løftes og krydser tærsklen, forsvinder <strong>-e</strong>'et (ind, op, hjem).
                     </p>
                 </div>
                 <div class="gs-guide-col">
-                    <h3>👅 3. Tunge vs. Pande</h3>
+                    <h3>3. Tunge vs. pande</h3>
                     <p>
                         Hvor sidder verbet? <strong>"Jeg synes"</strong> sidder i smagsløgene, i maven og på huden (sanseindtryk). 
                         <strong>"Jeg tror"</strong> sidder i panden foran (hovedets gæt uden sansning her og nu).
@@ -74841,9 +74837,9 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         }
 
         .gs-back-btn {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1.5px solid rgba(148, 163, 184, 0.25);
-            color: #f8fafc;
+            background: #5C0812;
+            border: 1.5px solid #851825;
+            color: #ffffff;
             padding: 0.55rem 1.1rem;
             border-radius: 12px;
             font-weight: 700;
@@ -74855,8 +74851,8 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             gap: 0.4rem;
         }
         .gs-back-btn:hover {
-            border-color: #38bdf8;
-            background: rgba(30, 41, 59, 0.9);
+            border-color: #FFC9CD;
+            background: #73101C;
             transform: translateX(-2px);
         }
 
@@ -74868,15 +74864,14 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(249, 115, 22, 0.18));
-            border: 1px solid rgba(251, 191, 36, 0.4);
+            background: rgba(92, 8, 18, 0.85);
+            border: 1px solid #851825;
             border-radius: 999px;
             padding: 0.35rem 1rem;
             font-size: 0.82rem;
             font-weight: 800;
-            color: #fde68a;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
+            color: #FFC9CD;
+            letter-spacing: 0.04em;
             margin-bottom: 0.75rem;
         }
         .gs-hero h1 {
@@ -74884,12 +74879,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             font-weight: 900;
             margin: 0 0 0.5rem;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #ffffff 40%, #fde68a 85%, #fb923c 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
         }
         .gs-hero p {
-            color: #cbd5e1;
+            color: #FFC9CD;
             font-size: 1.05rem;
             max-width: 840px;
             margin: 0 auto;
@@ -74910,14 +74903,16 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             padding: 1.35rem 1.45rem;
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
             transition: all 0.25s ease;
+            background: #5C0812;
+            border: 1.5px solid #851825;
         }
         .gs-realm-card.tilstand {
-            background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(12, 74, 110, 0.3));
-            border: 1.5px solid rgba(56, 189, 248, 0.4);
+            border-color: #38bdf8;
+            background: linear-gradient(145deg, #5C0812 0%, rgba(14, 116, 144, 0.25) 100%);
         }
         .gs-realm-card.forvandling {
-            background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(154, 52, 18, 0.3));
-            border: 1.5px solid rgba(251, 146, 60, 0.45);
+            border-color: #fb923c;
+            background: linear-gradient(145deg, #5C0812 0%, rgba(194, 65, 12, 0.25) 100%);
         }
         .gs-realm-head {
             display: flex;
@@ -74927,11 +74922,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         }
         .gs-realm-badge {
             font-size: 0.78rem;
-            font-weight: 900;
+            font-weight: 800;
             padding: 0.25rem 0.65rem;
             border-radius: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
         }
         .gs-realm-card.tilstand .gs-realm-badge {
             background: rgba(56, 189, 248, 0.2);
@@ -74943,7 +74937,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             color: #fdba74;
             border: 1px solid rgba(251, 146, 60, 0.4);
         }
-        .gs-realm-symbol { font-size: 1.8rem; }
+        .gs-realm-symbol { font-size: 1.4rem; }
         .gs-realm-title {
             font-size: 1.35rem;
             font-weight: 800;
@@ -74951,19 +74945,19 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             color: #ffffff;
         }
         .gs-realm-desc {
-            color: #cbd5e1;
+            color: #FFC9CD;
             font-size: 0.92rem;
             line-height: 1.5;
             margin: 0 0 0.9rem;
         }
         .gs-realm-examples {
-            background: rgba(15, 23, 42, 0.6);
+            background: #4A040B;
             border-radius: 12px;
             padding: 0.75rem 0.9rem;
             display: flex;
             flex-direction: column;
             gap: 0.4rem;
-            border: 1px dashed rgba(148, 163, 184, 0.2);
+            border: 1px dashed #851825;
         }
         .gs-realm-ex-item {
             font-size: 0.88rem;
@@ -74971,6 +74965,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             align-items: center;
             justify-content: space-between;
             gap: 0.5rem;
+            color: #FFC9CD;
         }
         .gs-realm-ex-word { font-weight: 800; }
         .gs-realm-card.tilstand .gs-realm-ex-word { color: #38bdf8; }
@@ -74978,8 +74973,8 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
 
         /* Simulator */
         .gs-simulator-box {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.95));
-            border: 1.5px solid rgba(251, 191, 36, 0.35);
+            background: #5C0812;
+            border: 1.5px solid #851825;
             border-radius: 18px;
             padding: 1.2rem 1.4rem;
             margin-bottom: 2.2rem;
@@ -74996,15 +74991,15 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         .gs-sim-title {
             font-weight: 800;
             font-size: 1.05rem;
-            color: #fde68a;
+            color: #ffffff;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
         .gs-sim-toggle-group {
             display: inline-flex;
-            background: rgba(15, 23, 42, 0.85);
-            border: 1.5px solid rgba(148, 163, 184, 0.25);
+            background: #4A040B;
+            border: 1.5px solid #851825;
             border-radius: 12px;
             padding: 0.25rem;
             gap: 0.25rem;
@@ -75012,11 +75007,11 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         .gs-sim-toggle-btn {
             background: transparent;
             border: none;
-            color: #94a3b8;
+            color: #FFC9CD;
             padding: 0.45rem 0.9rem;
             border-radius: 8px;
             font-size: 0.84rem;
-            font-weight: 800;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
         }
@@ -75036,20 +75031,19 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             gap: 0.75rem;
         }
         .gs-sim-chip {
-            background: rgba(15, 23, 42, 0.65);
+            background: #4A040B;
             border-radius: 12px;
             padding: 0.65rem 0.85rem;
             display: flex;
             flex-direction: column;
             gap: 0.2rem;
-            border: 1px solid rgba(148, 163, 184, 0.12);
+            border: 1px solid #851825;
         }
         .gs-sim-chip-topic {
             font-size: 0.74rem;
-            text-transform: uppercase;
             font-weight: 800;
-            letter-spacing: 0.05em;
-            color: #94a3b8;
+            letter-spacing: 0.04em;
+            color: #FFC9CD;
         }
         .gs-sim-chip-sentence {
             font-size: 0.95rem;
@@ -75059,28 +75053,11 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             align-items: center;
             justify-content: space-between;
         }
-        .gs-sim-tts-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: none;
-            color: #e2e8f0;
-            border-radius: 8px;
-            width: 28px;
-            height: 28px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.95rem;
-            transition: background 0.15s ease;
-        }
-        .gs-sim-tts-btn:hover {
-            background: rgba(56, 189, 248, 0.3);
-        }
 
         /* Large Split-Stage Showcase */
         .gs-showcase-box {
-            background: linear-gradient(145deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
-            border: 1.5px solid rgba(56, 189, 248, 0.4);
+            background: #5C0812;
+            border: 1.5px solid #851825;
             border-radius: 22px;
             padding: 1.3rem 1.4rem;
             margin-bottom: 2.5rem;
@@ -75106,36 +75083,35 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         .gs-showcase-title-wrap p {
             margin: 0;
             font-size: 0.85rem;
-            color: #94a3b8;
+            color: #FFC9CD;
         }
         .gs-showcase-nav {
             display: flex;
             flex-wrap: wrap;
             gap: 0.35rem;
-            background: rgba(15, 23, 42, 0.8);
+            background: #4A040B;
             padding: 0.3rem;
             border-radius: 12px;
-            border: 1px solid rgba(148, 163, 184, 0.2);
+            border: 1px solid #851825;
         }
         .gs-showcase-tab {
             background: transparent;
             border: none;
-            color: #94a3b8;
+            color: #FFC9CD;
             padding: 0.45rem 0.8rem;
             border-radius: 8px;
             font-size: 0.82rem;
-            font-weight: 800;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
         }
         .gs-showcase-tab:hover {
-            color: #f8fafc;
+            color: #ffffff;
             background: rgba(255, 255, 255, 0.08);
         }
         .gs-showcase-tab.active {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
+            background: #FF4D5E;
             color: #ffffff;
-            box-shadow: 0 2px 10px rgba(2, 132, 199, 0.4);
         }
         .gs-showcase-stage {
             display: grid;
@@ -75236,24 +75212,22 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             font-size: 0.88rem;
         }
         .gs-showcase-cta-btn {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
+            background: #FF4D5E;
             color: #ffffff;
             border: none;
             padding: 0.7rem 1.4rem;
             border-radius: 12px;
-            font-weight: 800;
+            font-weight: 700;
             font-size: 0.92rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
         }
         .gs-showcase-cta-btn:hover {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            background: #ff6b7a;
             transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.5);
         }
 
         /* Section Separator */
@@ -75277,7 +75251,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         .gs-section-divider p {
             margin: 0;
             font-size: 0.85rem;
-            color: #94a3b8;
+            color: #FFC9CD;
         }
 
         /* Stations Grid with Dual-Thumbnails */
@@ -75288,8 +75262,8 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             margin-bottom: 2.5rem;
         }
         .gs-station-card {
-            background: linear-gradient(165deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
-            border: 1.5px solid rgba(148, 163, 184, 0.22);
+            background: #5C0812;
+            border: 1.5px solid #851825;
             border-radius: 20px;
             padding: 1.2rem;
             cursor: pointer;
@@ -75331,8 +75305,8 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             display: flex;
             position: relative;
             margin-bottom: 1rem;
-            border: 1px solid rgba(148, 163, 184, 0.25);
-            background: #0f172a;
+            border: 1px solid #851825;
+            background: #4A040B;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
         }
         .gs-card-preview-half {
@@ -75354,24 +75328,22 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             position: absolute;
             bottom: 6px;
             font-size: 0.68rem;
-            font-weight: 900;
+            font-weight: 800;
             padding: 2px 7px;
             border-radius: 6px;
             letter-spacing: 0.04em;
-            text-transform: uppercase;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
             z-index: 1;
         }
         .gs-card-preview-half.left .gs-card-preview-label {
             left: 6px;
-            background: rgba(14, 116, 144, 0.88);
+            background: rgba(14, 116, 144, 0.9);
             color: #7dd3fc;
             border: 1px solid rgba(56, 189, 248, 0.4);
         }
         .gs-card-preview-half.right .gs-card-preview-label {
             right: 6px;
-            background: rgba(194, 65, 12, 0.88);
+            background: rgba(194, 65, 12, 0.9);
             color: #fed7aa;
             border: 1px solid rgba(251, 146, 60, 0.4);
         }
@@ -75389,11 +75361,11 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             justify-content: center;
         }
         .gs-card-preview-badge {
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(251, 191, 36, 0.5);
-            color: #fde68a;
+            background: #5C0812;
+            border: 1px solid #851825;
+            color: #FFC9CD;
             font-size: 0.65rem;
-            font-weight: 900;
+            font-weight: 800;
             border-radius: 999px;
             padding: 2px 5px;
             line-height: 1;
@@ -75408,18 +75380,17 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         }
         .gs-station-number {
             font-size: 0.85rem;
-            font-weight: 900;
-            color: #94a3b8;
-            background: rgba(15, 23, 42, 0.8);
+            font-weight: 800;
+            color: #FFC9CD;
+            background: #4A040B;
             padding: 0.25rem 0.6rem;
             border-radius: 8px;
-            border: 1px solid rgba(148, 163, 184, 0.2);
+            border: 1px solid #851825;
         }
         .gs-station-tag {
             font-size: 0.74rem;
             font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
             color: var(--station-accent, #38bdf8);
         }
         .gs-station-title {
@@ -75429,19 +75400,19 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             margin: 0 0 0.35rem;
         }
         .gs-station-sub {
-            color: #cbd5e1;
+            color: #FFC9CD;
             font-size: 0.86rem;
             line-height: 1.45;
             margin: 0 0 0.9rem;
         }
         .gs-station-contrast-box {
-            background: rgba(15, 23, 42, 0.6);
+            background: #4A040B;
             border-radius: 12px;
             padding: 0.7rem 0.85rem;
             display: flex;
             flex-direction: column;
             gap: 0.45rem;
-            border: 1px solid rgba(148, 163, 184, 0.12);
+            border: 1px solid #851825;
             margin-bottom: 1rem;
         }
         .gs-contrast-row {
@@ -75453,7 +75424,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         }
         .gs-contrast-label.tilstand { color: #38bdf8; font-weight: 700; font-size: 0.78rem; }
         .gs-contrast-label.forvandling { color: #fb923c; font-weight: 700; font-size: 0.78rem; }
-        .gs-contrast-sent { font-weight: 700; color: #f8fafc; }
+        .gs-contrast-sent { font-weight: 700; color: #ffffff; }
 
         .gs-station-footer {
             display: flex;
@@ -75461,12 +75432,12 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             align-items: center;
             margin-top: auto;
             padding-top: 0.5rem;
-            border-top: 1px solid rgba(148, 163, 184, 0.12);
+            border-top: 1px solid #851825;
         }
         .gs-station-badge-vrimmel {
             font-size: 0.75rem;
             font-weight: 800;
-            color: #fde68a;
+            color: #FFC9CD;
         }
         .gs-station-enter-btn {
             background: transparent;
@@ -75483,21 +75454,20 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             transform: translateX(3px);
             color: #ffffff;
         }
-    `,t.appendChild(d);const i=document.createElement("div");i.className="gs-top-bar";const s=document.createElement("button");s.className="gs-back-btn",s.innerHTML="← Tilbage til Sansningsoversigten",s.onclick=()=>m("grammatik_sansning"),i.appendChild(s);const x=document.createElement("span");x.className="gs-hero-badge",x.innerHTML="⚡ Hovedflade 1 • Kropslig Fysik",i.appendChild(x),t.appendChild(i);const M=document.createElement("div");M.className="gs-hero",M.innerHTML=`
-        <div class="gs-hero-badge">⚡ HOVEDFLADE 1 • DYNAMIK & FORM</div>
-        <h1>Dynamik & Form – (Væren og tilblivelse)</h1>
+    `,t.appendChild(d);const i=document.createElement("div");i.className="gs-top-bar";const s=document.createElement("button");s.className="gs-back-btn",s.innerHTML="← Tilbage til sansningsoversigten",s.onclick=()=>m("grammatik_sansning"),i.appendChild(s);const x=document.createElement("span");x.className="gs-hero-badge",x.innerHTML="Hovedflade 1 • Kropslig fysik",i.appendChild(x),t.appendChild(i);const M=document.createElement("div");M.className="gs-hero",M.innerHTML=`
+        <div class="gs-hero-badge">Hovedflade 1 • Dynamik og form</div>
+        <h1>Dynamik og form – (væren og tilblivelse)</h1>
         <p>
             På dansk afslører dine verber og ord, om universet befinder sig i en <strong>stabil, uforandret tilstand</strong> 
-            (Det Blå Rige), eller om der overføres <strong>muskulær kraft, bevægelse og forvandling</strong> (Det Gyldne Rige).
-            Se de diktomiske vrimlebilleder og udforsk de 5 sanse-stationer nedenunder.
+            (Det blå rige), eller om der overføres <strong>muskulær kraft, bevægelse og forvandling</strong> (Det gyldne rige).
+            Se de diktomiske vrimlebilleder og udforsk de 5 sansestationer nedenunder.
         </p>
     `,t.appendChild(M);const F=document.createElement("div");F.className="gs-compass-wrapper",F.innerHTML=`
         <div class="gs-realm-card tilstand">
             <div class="gs-realm-head">
-                <span class="gs-realm-badge">🔵 Det Blå Rige</span>
-                <span class="gs-realm-symbol">🌊</span>
+                <span class="gs-realm-badge">Det blå rige</span>
             </div>
-            <h2 class="gs-realm-title">Væren & Stilstand (Tilstand i Ro)</h2>
+            <h2 class="gs-realm-title">Væren og stilstand (tilstand i ro)</h2>
             <p class="gs-realm-desc">
                 Når verden hviler. Tingen befinder sig et sted, tilstanden er uforandret, kroppen sanser smagen indefra, og handlingen er stabil.
             </p>
@@ -75527,10 +75497,9 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
 
         <div class="gs-realm-card forvandling">
             <div class="gs-realm-head">
-                <span class="gs-realm-badge">🟠 Det Gyldne Rige</span>
-                <span class="gs-realm-symbol">🔥</span>
+                <span class="gs-realm-badge">Det gyldne rige</span>
             </div>
-            <h2 class="gs-realm-title">Tilblivelse & Forvandling (Bevægelse & Kraft)</h2>
+            <h2 class="gs-realm-title">Tilblivelse og forvandling (bevægelse og kraft)</h2>
             <p class="gs-realm-desc">
                 Når verden er i bevægelse. Der sker et omslag, en overgang, en kraft anbringer en genstand, tærsklen krydses, eller tanken gætter fremad.
             </p>
@@ -75557,15 +75526,15 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 </div>
             </div>
         </div>
-    `,t.appendChild(F);const N=document.createElement("div");N.className="gs-simulator-box";const k={activeMode:"tilstand"},E=[{topic:"1. VÆREN VS. TILBLIVELSE",tilstand:"Kaffen er kold.",forvandling:"Kaffen bliver kold."},{topic:"2. TIDENS SANSNING",tilstand:"Vejret havde været koldt længe.",forvandling:"Vejret var blevet koldt, da bilen ankom."},{topic:"3. AKTIVITET VS. RESULTAT",tilstand:"Huset er malet nu.",forvandling:"Malerne har malet facaden."},{topic:"4. TINGENS HVILE VS. KRAFT",tilstand:"Nøglerne ligger på bordet.",forvandling:"Hun lægger nøglerne på bordet."},{topic:"5. RUMMET & TÆRSKLEN",tilstand:"Børnene leger inde i stuen.",forvandling:"Børnene løber ind i stuen."},{topic:"6. SINDETS SANSNING",tilstand:"Jeg synes, kagen er lækker.",forvandling:"Jeg tror, kagen smager sødt."}];function P(){N.innerHTML=`
+    `,t.appendChild(F);const N=document.createElement("div");N.className="gs-simulator-box";const k={activeMode:"tilstand"},E=[{topic:"1. Væren vs. tilblivelse",tilstand:"Kaffen er kold.",forvandling:"Kaffen bliver kold."},{topic:"2. Tidens sansning",tilstand:"Vejret havde været koldt længe.",forvandling:"Vejret var blevet koldt, da bilen ankom."},{topic:"3. Aktivitet vs. resultat",tilstand:"Huset er malet nu.",forvandling:"Malerne har malet facaden."},{topic:"4. Tingens hvile vs. kraft",tilstand:"Nøglerne ligger på bordet.",forvandling:"Hun lægger nøglerne på bordet."},{topic:"5. Rummet og tærsklen",tilstand:"Børnene leger inde i stuen.",forvandling:"Børnene løber ind i stuen."},{topic:"6. Sindets sansning",tilstand:"Jeg synes, kagen er lækker.",forvandling:"Jeg tror, kagen smager sødt."}];function P(){N.innerHTML=`
             <div class="gs-sim-header">
-                <span class="gs-sim-title">⚡ Sanse-Simulatoren: Oplev forvandlingen i 1 klik</span>
+                <span class="gs-sim-title">Sanse-simulatoren: Oplev forvandlingen i 1 klik</span>
                 <div class="gs-sim-toggle-group">
                     <button class="gs-sim-toggle-btn tilstand ${k.activeMode==="tilstand"?"active":""}" id="btn-sim-tilstand">
-                        🔵 Væren & Stilstand
+                        Væren og stilstand
                     </button>
                     <button class="gs-sim-toggle-btn forvandling ${k.activeMode==="forvandling"?"active":""}" id="btn-sim-forvandling">
-                        🟠 Tilblivelse & Forvandling
+                        Tilblivelse og forvandling
                     </button>
                 </div>
             </div>
@@ -75579,10 +75548,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                         </div>
                     `}).join("")}
             </div>
-        `,N.querySelector("#btn-sim-tilstand").onclick=()=>{k.activeMode="tilstand",P()},N.querySelector("#btn-sim-forvandling").onclick=()=>{k.activeMode="forvandling",P()}}P(),t.appendChild(N);const W=[{id:"vaere_blive",route:"sansning_vaere_blive",num:"1.1",tag:"Verbernes Kerne",title:"Væren vs. Tilblivelse (Er vs. Bliver)",sub:"At være vs. At blive i ren form. Roen i havnebyen over for morgensolens forvandling.",accent:"#38bdf8",tilstandLabel:"Væren (Er)",tilstandSent:"Kaffen er kold.",forvandlingLabel:"Tilblivelse (Bliver)",forvandlingSent:"Kaffen bliver kold.",vrimmel:"Havnebyen & Hverdagsstuen",leftImg:"assets/sansning_vaere_venstre.jpg",rightImg:"assets/sansning_blive_hoejre.jpg",leftCaption:"Kaffen er kold • Havnebyen hviler i ro",rightCaption:"Kaffen bliver kold • Morgensolen bryder frem"},{id:"kraft_hvile",route:"sansning_kraft_hvile",num:"1.2",tag:"Positionsverber",title:"Tingens Hvile vs. Kroppens Kraft (Ligge vs. Lægge)",sub:"Lægge/ligge, sætte/sidde, stille/stå. Hånden der flytter over for tingen der hviler i ro.",accent:"#ec4899",tilstandLabel:"Tingens hvile",tilstandSent:"Bogen ligger på bordet.",forvandlingLabel:"Kroppens kraft",forvandlingSent:"Jeg lægger bogen på bordet.",vrimmel:"Stuen & Arbejdsværelset",leftImg:"assets/sansning_kraft_hvile_venstre.jpg",rightImg:"assets/sansning_kraft_hvile_hoejre.jpg",leftCaption:"Bogen ligger / Vasen står på hylden",rightCaption:"Jeg lægger bogen / stiller vasen med håndkraft"},{id:"form_masse",route:"sansning_form_masse",num:"1.3",tag:"Form & Masse",title:"Utællelig Masse vs. Tællelig Form",sub:"Den uafgrænsede masse (vand, kaffe, mel) over for genstanden med klar form (en kop, to æbler, tre boller).",accent:"#10b981",tilstandLabel:"Utællelig masse",tilstandSent:"Der er koldt vand og mel.",forvandlingLabel:"Tællelig form",forvandlingSent:"Hun køber en flaske og to æbler.",vrimmel:"Bageriet & Køkkenbordet",leftImg:"assets/sansning_masse_venstre.jpg",rightImg:"assets/sansning_form_hoejre.jpg",leftCaption:"Uafgrænset flydende masse: vand, kaffe og mel",rightCaption:"Formstøbte genstande: en flaske, to kopper, tre boller"},{id:"har_er",route:"sansning_har_er",num:"1.4",tag:"Førnutid",title:"Aktivitet vs. Resultat (Har vs. Er)",sub:"Har (motoren der arbejder forud) vs. Er (den nye tilstand og flyttede grænse).",accent:"#f59e0b",tilstandLabel:"Motoren (Har)",tilstandSent:"Malerne har malet facaden.",forvandlingLabel:"Resultatet (Er)",forvandlingSent:"Huset er malet / Hun er cyklet på arbejde.",vrimmel:"Bykvarteret & Gaden",leftImg:"assets/sansning_har_er_venstre.jpg",rightImg:"assets/sansning_har_er_hoejre.jpg",leftCaption:"Malerne har malet facaden (processen)",rightCaption:"Huset er nymalet nu (det færdige resultat)"},{id:"aspekt_maade",route:"sansning_aspekt_maade",num:"1.5",tag:"Aspekt & Fart",title:"Kroppens Dvælen vs. Retningsskift & Fart",sub:'Uafgrænset dvælen ("ligger og læser") og roligt tempo vs. bevidst retningsskift ("sætter sig til") og høj fart.',accent:"#8b5cf6",tilstandLabel:"Dvælen & Roligt",tilstandSent:"Mads ligger og læser / går langsomt.",forvandlingLabel:"Retningsskift & Fart",forvandlingSent:"Mads sætter sig til at læse / løber hurtigt.",vrimmel:"Havestuen & Terrassen",leftImg:"assets/sansning_aspekt_venstre.jpg",rightImg:"assets/sansning_aspekt_hoejre.jpg",leftCaption:"Mads ligger og læser i ro / går langsomt",rightCaption:"Mads sætter sig til at læse / løber hurtigt"}],ne=document.createElement("div");ne.className="gs-showcase-box";let I=0;function ee(){const S=W[I];ne.innerHTML=`
+        `,N.querySelector("#btn-sim-tilstand").onclick=()=>{k.activeMode="tilstand",P()},N.querySelector("#btn-sim-forvandling").onclick=()=>{k.activeMode="forvandling",P()}}P(),t.appendChild(N);const W=[{id:"vaere_blive",route:"sansning_vaere_blive",num:"1.1",tag:"Verbernes Kerne",title:"Væren vs. Tilblivelse (Er vs. Bliver)",sub:"At være vs. At blive i ren form. Roen i havnebyen over for morgensolens forvandling.",accent:"#38bdf8",tilstandLabel:"Væren (Er)",tilstandSent:"Kaffen er kold.",forvandlingLabel:"Tilblivelse (Bliver)",forvandlingSent:"Kaffen bliver kold.",vrimmel:"Havnebyen & Hverdagsstuen",leftImg:"assets/sansning_vaere_venstre.jpg",rightImg:"assets/sansning_blive_hoejre.jpg",leftCaption:"Kaffen er kold • Havnebyen hviler i ro",rightCaption:"Kaffen bliver kold • Morgensolen bryder frem"},{id:"kraft_hvile",route:"sansning_kraft_hvile",num:"1.2",tag:"Positionsverber",title:"Tingens hvile vs. kroppens kraft (ligge vs. lægge)",sub:"Lægge/ligge, sætte/sidde, stille/stå. Hånden der flytter over for tingen der hviler i ro.",accent:"#ec4899",tilstandLabel:"Tingens hvile",tilstandSent:"Bogen ligger på bordet.",forvandlingLabel:"Kroppens kraft",forvandlingSent:"Jeg lægger bogen på bordet.",vrimmel:"Stuen og arbejdsværelset",leftImg:"assets/sansning_kraft_hvile_venstre.jpg",rightImg:"assets/sansning_kraft_hvile_hoejre.jpg",leftCaption:"Bogen ligger / Vasen står på hylden",rightCaption:"Jeg lægger bogen / stiller vasen med håndkraft"},{id:"form_masse",route:"sansning_form_masse",num:"1.3",tag:"Form og masse",title:"Utællelig masse vs. tællelig form",sub:"Den uafgrænsede masse (vand, kaffe, mel) over for genstanden med klar form (en kop, to æbler, tre boller).",accent:"#10b981",tilstandLabel:"Utællelig masse",tilstandSent:"Der er koldt vand og mel.",forvandlingLabel:"Tællelig form",forvandlingSent:"Hun køber en flaske og to æbler.",vrimmel:"Bageriet og køkkenbordet",leftImg:"assets/sansning_masse_venstre.jpg",rightImg:"assets/sansning_form_hoejre.jpg",leftCaption:"Uafgrænset flydende masse: vand, kaffe og mel",rightCaption:"Formstøbte genstande: en flaske, to kopper, tre boller"},{id:"har_er",route:"sansning_har_er",num:"1.4",tag:"Førnutid",title:"Aktivitet vs. resultat (har vs. er)",sub:"Har (motoren der arbejder forud) vs. Er (den nye tilstand og flyttede grænse).",accent:"#f59e0b",tilstandLabel:"Motoren (Har)",tilstandSent:"Malerne har malet facaden.",forvandlingLabel:"Resultatet (Er)",forvandlingSent:"Huset er malet / Hun er cyklet på arbejde.",vrimmel:"Bykvarteret og gaden",leftImg:"assets/sansning_har_er_venstre.jpg",rightImg:"assets/sansning_har_er_hoejre.jpg",leftCaption:"Malerne har malet facaden (processen)",rightCaption:"Huset er nymalet nu (det færdige resultat)"},{id:"aspekt_maade",route:"sansning_aspekt_maade",num:"1.5",tag:"Aspekt og fart",title:"Kroppens dvælen vs. retningsskift og fart",sub:'Uafgrænset dvælen ("ligger og læser") og roligt tempo vs. bevidst retningsskift ("sætter sig til") og høj fart.',accent:"#8b5cf6",tilstandLabel:"Dvælen og roligt",tilstandSent:"Mads ligger og læser / går langsomt.",forvandlingLabel:"Retningsskift og fart",forvandlingSent:"Mads sætter sig til at læse / løber hurtigt.",vrimmel:"Havestuen og terrassen",leftImg:"assets/sansning_aspekt_venstre.jpg",rightImg:"assets/sansning_aspekt_hoejre.jpg",leftCaption:"Mads ligger og læser i ro / går langsomt",rightCaption:"Mads sætter sig til at læse / løber hurtigt"}],ne=document.createElement("div");ne.className="gs-showcase-box";let I=0;function ee(){const S=W[I];ne.innerHTML=`
             <div class="gs-showcase-header">
                 <div class="gs-showcase-title-wrap">
-                    <h2>🖼️ Vrimlebilleder: Oplev modsætningerne i billeder</h2>
+                    <h2>Vrimlebilleder: Oplev modsætningerne i billeder</h2>
                     <p>Klik på fanerne nedenfor for at udforske scenerne for hver station direkte på forsiden.</p>
                 </div>
                 <div class="gs-showcase-nav">
@@ -75598,7 +75567,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 <!-- Venstre side: Væren & Stilstand -->
                 <div class="gs-showcase-pane left">
                     <div class="gs-showcase-pane-head">
-                        <span>🔵 Væren & Stilstand (Tilstand)</span>
+                        <span>Væren og stilstand (tilstand)</span>
                         <span>${S.tilstandLabel}</span>
                     </div>
                     <div class="gs-showcase-img-wrap" title="Klik for at åbne ${S.title}">
@@ -75612,7 +75581,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 <!-- Højre side: Tilblivelse & Forvandling -->
                 <div class="gs-showcase-pane right">
                     <div class="gs-showcase-pane-head">
-                        <span>🟠 Tilblivelse & Forvandling (Kraft)</span>
+                        <span>Tilblivelse og forvandling (kraft)</span>
                         <span>${S.forvandlingLabel}</span>
                     </div>
                     <div class="gs-showcase-img-wrap" title="Klik for at åbne ${S.title}">
@@ -75626,15 +75595,15 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
 
             <div class="gs-showcase-footer">
                 <div class="gs-showcase-hint">
-                    📍 Vrimlebillede-scene: <strong>${S.vrimmel}</strong>
+                    Vrimlebillede-scene: <strong>${S.vrimmel}</strong>
                 </div>
                 <button class="gs-showcase-cta-btn" id="btn-open-active-station">
-                    Åbn Station ${S.num} træningsbane & opgaver →
+                    Åbn station ${S.num} træningsbane og opgaver →
                 </button>
             </div>
         `,ne.querySelectorAll(".gs-showcase-tab").forEach(w=>{w.onclick=()=>{I=parseInt(w.getAttribute("data-idx"),10),ee()}}),ne.querySelectorAll(".gs-showcase-img-wrap").forEach(w=>{w.onclick=()=>{m(S.route)}});const C=ne.querySelector("#btn-open-active-station");C&&(C.onclick=()=>{m(S.route)})}ee(),t.appendChild(ne);const te=document.createElement("div");te.className="gs-section-divider",te.innerHTML=`
         <div>
-            <h2>🧭 Alle 5 Sanse-Stationer i Hovedflade 1</h2>
+            <h2>Alle 5 sansestationer i hovedflade 1</h2>
             <p>Hver station har sit eget interaktive vrimlebillede, didaktiske aha-boks og træningsbane.</p>
         </div>
     `,t.appendChild(te);const V=document.createElement("div");V.className="gs-stations-grid",W.forEach(S=>{const C=document.createElement("div");C.className="gs-station-card",C.style.setProperty("--station-accent",S.accent),C.innerHTML=`
@@ -75643,14 +75612,14 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 <div class="gs-card-split-preview" title="Klik for at åbne ${S.title}">
                     <div class="gs-card-preview-half left">
                         <img src="${S.leftImg}" alt="Væren" class="gs-card-preview-img" />
-                        <span class="gs-card-preview-label">🔵 Tilstand</span>
+                        <span class="gs-card-preview-label">Tilstand</span>
                     </div>
                     <div class="gs-card-preview-divider">
                         <span class="gs-card-preview-badge">VS</span>
                     </div>
                     <div class="gs-card-preview-half right">
                         <img src="${S.rightImg}" alt="Forvandling" class="gs-card-preview-img" />
-                        <span class="gs-card-preview-label">🟠 Forvandling</span>
+                        <span class="gs-card-preview-label">Forvandling</span>
                     </div>
                 </div>
 
@@ -75663,18 +75632,18 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 
                 <div class="gs-station-contrast-box">
                     <div class="gs-contrast-row">
-                        <span class="gs-contrast-label tilstand">🔵 ${S.tilstandLabel}:</span>
+                        <span class="gs-contrast-label tilstand">${S.tilstandLabel}:</span>
                         <span class="gs-contrast-sent">${S.tilstandSent}</span>
                     </div>
                     <div class="gs-contrast-row">
-                        <span class="gs-contrast-label forvandling">🟠 ${S.forvandlingLabel}:</span>
+                        <span class="gs-contrast-label forvandling">${S.forvandlingLabel}:</span>
                         <span class="gs-contrast-sent">${S.forvandlingSent}</span>
                     </div>
                 </div>
             </div>
 
             <div class="gs-station-footer">
-                <span class="gs-station-badge-vrimmel">🖼️ ${S.vrimmel}</span>
+                <span class="gs-station-badge-vrimmel">${S.vrimmel}</span>
                 <button class="gs-station-enter-btn">
                     Gå til station →
                 </button>
@@ -75698,9 +75667,9 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         }
 
         .ss-back-btn {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1.5px solid rgba(148, 163, 184, 0.25);
-            color: #f8fafc;
+            background: #5C0812;
+            border: 1.5px solid #851825;
+            color: #ffffff;
             padding: 0.55rem 1.1rem;
             border-radius: 12px;
             font-weight: 700;
@@ -75712,8 +75681,8 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             gap: 0.4rem;
         }
         .ss-back-btn:hover {
-            border-color: #38bdf8;
-            background: rgba(30, 41, 59, 0.9);
+            border-color: #FFC9CD;
+            background: #73101C;
             transform: translateX(-2px);
         }
 
@@ -75721,15 +75690,14 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             display: inline-flex;
             align-items: center;
             gap: 0.45rem;
-            background: rgba(56, 189, 248, 0.15);
-            border: 1px solid rgba(56, 189, 248, 0.45);
+            background: rgba(92, 8, 18, 0.85);
+            border: 1px solid #851825;
             border-radius: 999px;
             padding: 0.35rem 0.85rem;
             font-size: 0.8rem;
             font-weight: 800;
-            color: #7dd3fc;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            color: #FFC9CD;
+            letter-spacing: 0.04em;
         }
 
         .ss-hero {
@@ -75741,12 +75709,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             font-weight: 900;
             margin: 0 0 0.4rem;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #38bdf8 20%, #ffffff 60%, #fb923c 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
         }
         .ss-hero p {
-            color: #cbd5e1;
+            color: #FFC9CD;
             font-size: 1.02rem;
             max-width: 820px;
             margin: 0 auto;
@@ -75760,19 +75726,19 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             flex-wrap: wrap;
             gap: 0.6rem;
             margin-bottom: 1.8rem;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1.5px solid rgba(148, 163, 184, 0.22);
+            background: #4A040B;
+            border: 1.5px solid #851825;
             padding: 0.45rem;
             border-radius: 16px;
         }
         .ss-tab-btn {
             background: transparent;
             border: none;
-            color: #94a3b8;
+            color: #FFC9CD;
             padding: 0.6rem 1.15rem;
             border-radius: 12px;
             font-size: 0.88rem;
-            font-weight: 800;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
             display: inline-flex;
@@ -75784,9 +75750,8 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             background: rgba(255, 255, 255, 0.06);
         }
         .ss-tab-btn.active {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
+            background: #FF4D5E;
             color: #ffffff;
-            box-shadow: 0 0 16px rgba(2, 132, 199, 0.4);
         }
 
         .ss-tab-panel {
@@ -76280,30 +76245,30 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             margin-left: auto;
             transition: all 0.2s ease;
         }
-    `,t.appendChild(M);const F=document.createElement("div");F.className="ss-top-bar";const N=document.createElement("button");N.className="ss-back-btn",N.innerHTML=r&&r.from==="overview"?"← Tilbage til Sansningsoversigten":"← Tilbage til Hovedflade 1",N.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade1")},F.appendChild(N);const k=document.createElement("span");k.className="ss-station-badge",k.innerHTML="Station 1.1 • Væren & Tilblivelse",F.appendChild(k),t.appendChild(F);const E=document.createElement("div");E.className="ss-hero",E.innerHTML=`
-        <h1>Væren (Er) vs. Tilblivelse (Bliver)</h1>
+    `,t.appendChild(M);const F=document.createElement("div");F.className="ss-top-bar";const N=document.createElement("button");N.className="ss-back-btn",N.innerHTML=r&&r.from==="overview"?"← Tilbage til sansningsoversigten":"← Tilbage til hovedflade 1",N.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade1")},F.appendChild(N);const k=document.createElement("span");k.className="ss-station-badge",k.innerHTML="Station 1.1 • Væren og tilblivelse",F.appendChild(k),t.appendChild(F);const E=document.createElement("div");E.className="ss-hero",E.innerHTML=`
+        <h1>Væren (er) vs. tilblivelse (bliver)</h1>
         <p>
             Se de to verdener side om side: 
             <strong>Venstre side</strong> viser tilstanden i ro (<em>"Kaffen er kold"</em>), 
             mens <strong>højre side</strong> viser selve forvandlingen (<em>"Kaffen bliver kold"</em>).
-            Klik på et motiv for at se modpolen lyse op!
+            Klik på et motiv for at se modpolen lyse op.
         </p>
     `,t.appendChild(E);const P=document.createElement("div");P.className="ss-tabs-nav",P.innerHTML=`
         <button class="ss-tab-btn active" data-tab="tab_kontrast">
-            ⚖️ 1. Diktomisk Vrimlebillede
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Træningsbane: Er eller Bliver?
+            2. Træningsbane: er eller bliver?
         </button>
     `,t.appendChild(P);const W=document.createElement("div"),ne=document.createElement("div");ne.className="ss-tab-panel active",ne.id="panel-kontrast",ne.innerHTML=`
         <div class="contrast-canvas-card">
             <!-- Control bar -->
             <div class="contrast-control-bar">
                 <div class="contrast-instruction">
-                    💡 <em>Klik på et motiv på venstre side (Væren) for at se dets spejlbillede på højre side (Tilblivelse).</em>
+                    <em>Klik på et motiv på venstre side (væren) for at se dets spejlbillede på højre side (tilblivelse).</em>
                 </div>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    🖼️ Ren visning: <strong id="pure-status-label">FRA</strong>
+                    Ren visning: <strong id="pure-status-label">FRA</strong>
                 </button>
             </div>
 
@@ -76311,7 +76276,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             <div class="contrast-split-stage" id="split-stage">
                 <!-- VENSTRE HALVDEL: VÆREN (ER / RO) -->
                 <div class="stage-half left-half">
-                    <div class="stage-half-header cool">🔵 VÆREN (At være / Er) — Verden i Ro</div>
+                    <div class="stage-half-header cool">Venstre: Væren (er) — verden i ro</div>
                     <img src="assets/sansning_vaere_venstre.jpg" alt="Væren og ro i havnebyen" class="stage-half-img" />
 
                     <!-- Hotspots Venstre -->
@@ -76320,7 +76285,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
 
                 <!-- HØJRE HALVDEL: TILBLIVELSE (BLIVER / FORVANDLING) -->
                 <div class="stage-half right-half">
-                    <div class="stage-half-header warm">🟠 TILBLIVELSE (At blive / Bliver) — Forvandling</div>
+                    <div class="stage-half-header warm">Højre: Tilblivelse (bliver) — forvandling</div>
                     <img src="assets/sansning_blive_hoejre.jpg" alt="Tilblivelse og forvandling i havnebyen" class="stage-half-img" />
 
                     <!-- Hotspots Højre -->
@@ -76360,10 +76325,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
 
                 <div class="ss-quiz-options">
                     <button class="ss-quiz-opt-btn" data-val="er">
-                        🔵 er (Tilstand i ro)
+                        er (tilstand i ro)
                     </button>
                     <button class="ss-quiz-opt-btn" data-val="bliver">
-                        🟠 bliver (Forvandling / omslag)
+                        bliver (forvandling / omslag)
                     </button>
                 </div>
 
@@ -76376,19 +76341,18 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         `;const _=I.querySelector("#quiz-feedback"),o=I.querySelector("#quiz-next-btn");I.querySelectorAll(".ss-quiz-opt-btn").forEach(n=>{n.onclick=()=>{I.querySelectorAll(".ss-quiz-opt-btn").forEach(a=>a.disabled=!0),n.getAttribute("data-val")===f.correct?(te++,n.classList.add("correct"),_.className="ss-quiz-feedback show correct",_.innerHTML=`<strong>Rigtigt!</strong> ${f.expl}`):(n.classList.add("wrong"),I.querySelector(`[data-val="${f.correct}"]`).classList.add("correct"),_.className="ss-quiz-feedback show wrong",_.innerHTML=`<strong>Prøv igen:</strong> Det rigtige er <em>"${f.correct}"</em>. ${f.expl}`),o.style.display="inline-flex"}}),o.onclick=()=>{ee++,V()}}V(),W.appendChild(I),t.appendChild(W);const S=ne.querySelector("#left-hotspots-container"),C=ne.querySelector("#right-hotspots-container"),w=ne.querySelector("#hotspots-strip"),T=ne.querySelector("#detail-card"),p=ne.querySelector("#pure-toggle-btn"),l=ne.querySelector("#split-stage");p.onclick=()=>{i=!i,l.classList.toggle("pure-mode",i),p.classList.toggle("active",i),p.querySelector("#pure-status-label").textContent=i?"TIL":"FRA"};function z(f,_="left"){d=f;const o=s.find(n=>n.key===f);o&&(S.querySelectorAll(".ss-hotspot").forEach(n=>{n.classList.remove("active","partner-active"),n.dataset.key===f&&(_==="left"?n.classList.add("active"):n.classList.add("partner-active"))}),C.querySelectorAll(".ss-hotspot").forEach(n=>{n.classList.remove("active","partner-active"),n.dataset.key===f&&(_==="right"?n.classList.add("active"):n.classList.add("partner-active"))}),w.querySelectorAll(".ss-strip-btn").forEach(n=>{n.classList.toggle("active",n.dataset.key===f)}),T.innerHTML=`
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.6rem;">${o.icon}</span>
                     <span class="adj-main-word">${o.title}</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at skifte fokus">
-                    <span>${_==="left"?"Skift til Forvandling":"Skift til Væren"}</span>
+                    <span>${_==="left"?"Skift til forvandling":"Skift til væren"}</span>
                     <strong>${_==="left"?"bliver ➔":"er ➔"}</strong>
                 </div>
             </div>
 
             <div class="adj-congruence-grid">
-                <!-- 🔵 Venstre Halvdel: Væren (er) -->
+                <!-- Venstre Halvdel: Væren (er) -->
                 <div class="ss-contrast-box tilstand">
-                    <span class="ss-box-badge">🔵 Venstre: Væren i Ro (er)</span>
+                    <span class="ss-box-badge">Venstre: Væren i ro (er)</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${o.left.sent.replace("er",'<span class="ss-box-verb-highlight">er</span>')}
@@ -76397,9 +76361,9 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                     <div class="ss-box-exp">${o.left.exp}</div>
                 </div>
 
-                <!-- 🟠 Højre Halvdel: Tilblivelse (bliver) -->
+                <!-- Højre Halvdel: Tilblivelse (bliver) -->
                 <div class="ss-contrast-box forvandling">
-                    <span class="ss-box-badge">🟠 Højre: Forvandling i Bevægelse (bliver)</span>
+                    <span class="ss-box-badge">Højre: Forvandling i bevægelse (bliver)</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${o.right.sent.replace("bliver",'<span class="ss-box-verb-highlight">bliver</span>')}
@@ -76410,14 +76374,13 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             </div>
 
             <div class="ss-insp-aha">
-                <span style="font-size: 1.3rem;">💡</span>
                 <span><strong>Aha-oplevelsen:</strong> ${o.aha}</span>
             </div>
 
             <div class="ss-insp-languages">
-                <div class="ss-lang-item">🇬🇧 <strong>Engelsk:</strong> ${o.lang.en}</div>
-                <div class="ss-lang-item">🇸🇦 <strong>Arabisk:</strong> ${o.lang.ar}</div>
-                <div class="ss-lang-item">🇨🇳 <strong>Kinesisk:</strong> ${o.lang.zh}</div>
+                <div class="ss-lang-item"><strong>Engelsk:</strong> ${o.lang.en}</div>
+                <div class="ss-lang-item"><strong>Arabisk:</strong> ${o.lang.ar}</div>
+                <div class="ss-lang-item"><strong>Kinesisk:</strong> ${o.lang.zh}</div>
             </div>
         `,T.querySelector("#card-swap-btn").onclick=()=>{z(f,_==="left"?"right":"left")})}function y(){S.innerHTML="",C.innerHTML="",w.innerHTML="",s.forEach(f=>{const _=document.createElement("button");_.className="ss-hotspot",_.style.left=`${f.left.x}%`,_.style.top=`${f.left.y}%`,_.dataset.key=f.key,_.innerHTML=f.icon,_.title=`${f.title} (Væren: ${f.left.word})`,_.onclick=()=>z(f.key,"left"),S.appendChild(_);const o=document.createElement("button");o.className="ss-hotspot",o.style.left=`${f.right.x}%`,o.style.top=`${f.right.y}%`,o.dataset.key=f.key,o.innerHTML=f.icon,o.title=`${f.title} (Tilblivelse: ${f.right.word})`,o.onclick=()=>z(f.key,"right"),C.appendChild(o);const n=document.createElement("button");n.className="ss-strip-btn",n.dataset.key=f.key,n.innerHTML=`${f.icon} ${f.title.split(" ")[0]}`,n.onclick=()=>z(f.key,"left"),w.appendChild(n)}),z(d,"left")}y(),P.querySelectorAll(".ss-tab-btn").forEach(f=>{f.onclick=()=>{P.querySelectorAll(".ss-tab-btn").forEach(o=>o.classList.remove("active")),f.classList.add("active");const _=f.getAttribute("data-tab");W.querySelectorAll(".ss-tab-panel").forEach(o=>o.classList.remove("active")),_==="tab_kontrast"?ne.classList.add("active"):_==="tab_quiz"&&I.classList.add("active")}}),c.appendChild(t)}function Qa(c,m,r={}){c.innerHTML="",Ut(Qt());const t=document.createElement("div");t.className="view-container sansning-station-view";const d=[{key:"vand",title:"Vandet i køkkenet",icon:"💧",left:{x:20,y:42,word:"vand",sent:"Vandet i hanen er frisk og koldt.",exp:'Vand er en flydende, uafgrænset masse. Man kan ikke tælle det direkte eller sige "to vande".'},right:{x:20,y:42,word:"en flaske vand",sent:"Hun åbner en flaske koldt vand.",exp:"Flasken omslutter vandet og skaber en klar, afgrænset genstand. Nu kan vi tælle: én flaske vand, to flasker vand."},aha:"Vand flyder uendeligt. Beholderen (flasken/glasset) giver massen form, så den kan tælles.",lang:{en:"water vs. a bottle of water",ar:"ماء vs. زجاجة ماء",zh:"水 vs. 一瓶水"}},{key:"kaffe",title:"Kaffen på bordet",icon:"☕",left:{x:78,y:52,word:"kaffe",sent:"Han elsker at drikke varm kaffe om morgenen.",exp:'Kaffe er den mørke, duftende væske og bønnerne som masse. Vi bruger ikke "en" foran ("en kaffe" er uformelt for en kop).'},right:{x:78,y:52,word:"en kop kaffe",sent:"Tjeneren serverer en kop kaffe med underkop.",exp:"Koppen danner en skarp ydre form for den varme væske: én kop, to kopper, tre kopper kaffe."},aha:'Uden beholder: "Vil du have kaffe?" / Med beholder: "Vil du have en kop kaffe?"',lang:{en:"coffee vs. a cup of coffee",ar:"قهوة vs. فنجان قهوة",zh:"咖啡 vs. 一杯咖啡"}},{key:"mel_boller",title:"Melet og de nybagte boller",icon:"🥖",left:{x:50,y:48,word:"mel",sent:"Bageren hælder hvedemel ud på bordet.",exp:'Mel er et fint pulver i løs masse. Du kan have "meget mel" eller "lidt mel", men aldrig "tre mele".'},right:{x:50,y:48,word:"tre boller",sent:"I kurven ligger der tre lune boller.",exp:"Bagerens hænder og ovnens varme forvandler melet til tre faste, afgrænsede genstande med skorpe."},aha:"Melet er massen der æltes. Bollen er den færdige form med fast omkreds.",lang:{en:"flour vs. three buns",ar:"طحين vs. ثلاث خبزات / فطائر",zh:"面粉 vs. 三个面包"}},{key:"sukker",title:"Sukkeret og sødmen",icon:"🍬",left:{x:62,y:35,word:"sukker",sent:"Der er meget sukker i marmeladen.",exp:'Sukker er utælleligt som substans. Vi måler det i kilo eller skeer: "lidt sukker", "mere sukker".'},right:{x:62,y:35,word:"to sukkerknalde",sent:"Hun putter to sukkerknalde i sin te.",exp:"Fabrikken har presset sukkeret sammen i to terninger. Nu har massen fået en tællelig enhed."},aha:"Sukker = uformelig masse / Sukkerknald = fast formstøbt terning.",lang:{en:"sugar vs. two sugar cubes",ar:"سكر vs. قطعتين من السكر",zh:"糖 vs. 两块方糖"}},{key:"maelk",title:"Mælken i kanden",icon:"🥛",left:{x:35,y:60,word:"mælk",sent:"Katten drikker kold mælk af skålen.",exp:'Mælk er en uafbrudt hvid væske. Vi spørger: "Hvor meget mælk har vi tilbage?"'},right:{x:35,y:60,word:"en karton mælk",sent:"Han stiller en hel karton mælk på køkkenbordet.",exp:"Kartonens pap og geometri låser mælken inde i en afgrænset pakke: to kartoner mælk."},aha:'Uendelig væske ("mælk") vs. afgrænset container ("en karton mælk").',lang:{en:"milk vs. a carton of milk",ar:"حليب vs. علبة حليب",zh:"牛奶 vs. 一盒牛奶"}},{key:"frugt_aeble",title:"Frugten og det enkelte æble",icon:"🍎",left:{x:88,y:38,word:"frugt",sent:"Vi spiser masser af frisk frugt til frokost.",exp:'"Frugt" kan fungere som en samlet kategori og masse. "Der er masser af frugt i kurven."'},right:{x:88,y:38,word:"to æbler",sent:"Der ligger to røde æbler ved siden af kniven.",exp:"Æbler er skabt af naturen med en individuel skræl og form. De tælles direkte: et æble, to æbler."},aha:"Frugt = samlet masse og kategori / Æble = individuel genstand med egen kontur.",lang:{en:"fruit vs. two apples",ar:"فاكهة vs. تفاحتان",zh:"水果 vs. 两个苹果"}}],i=[{prompt:"Vil du have ... sukker i din kaffe?",options:["lidt","en"],correct:"lidt",expl:'Sukker er en utællelig masse, så vi bruger "lidt", ikke det ubestemte kendeord "en".'},{prompt:"Gæsterne er tørstige. Vi skal åbne ... vand.",options:["en flaske","et"],correct:"en flaske",expl:'For at tælle vand skal vi bruge en container: "en flaske vand" eller "et glas vand".'},{prompt:"Bageren har bagt ... i nat.",options:["ti sprøde boller","ti sprødt mel"],correct:"ti sprøde boller",expl:'Boller har fast form og kan tælles i flertal. Mel kan ikke tælles med tal som "ti".'},{prompt:"Hvor ... mælk skal der i pandekagedejen?",options:["meget","mange"],correct:"meget",expl:'Til utællelige masser (mælk, vand, tid, mel) spørger vi med "hvor meget", ikke "hvor mange".'},{prompt:"Drengen spiste ... på vej hjem fra skole.",options:["to æbler","to frugt"],correct:"to æbler",expl:'Æbler har fast form og tælles i flertal ("to æbler"). "Frugt" tælles ikke med talord direkte.'},{prompt:"Mangler vi ... kaffe på hylden?",options:["mere","flere"],correct:"mere",expl:'Utællelige masser tager "mere" (mere kaffe, mere vand), mens tællelige genstande tager "flere" (flere kopper).'}],s=document.createElement("style");s.textContent=`
         .sansning-station-view {
@@ -77000,30 +76963,30 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             transform: translateY(-2px);
             box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
         }
-    `,t.appendChild(s);const x=document.createElement("div");x.className="ss-top-bar";const M=document.createElement("button");M.className="ss-back-btn",M.innerHTML="← Tilbage til Hovedflade 1",M.onclick=()=>m("sansning_flade1"),x.appendChild(M);const F=document.createElement("span");F.className="ss-station-badge",F.innerHTML="Station 1.3 • Form & Masse",x.appendChild(F),t.appendChild(x);const N=document.createElement("div");N.className="ss-hero",N.innerHTML=`
-        <h1>Form & Masse: Utællelig vs. Tællelig</h1>
+    `,t.appendChild(s);const x=document.createElement("div");x.className="ss-top-bar";const M=document.createElement("button");M.className="ss-back-btn",M.innerHTML=r&&r.from==="overview"?"← Tilbage til sansningsoversigten":"← Tilbage til hovedflade 1",M.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade1")},x.appendChild(M);const F=document.createElement("span");F.className="ss-station-badge",F.innerHTML="Station 1.3 • Form og masse",x.appendChild(F),t.appendChild(x);const N=document.createElement("div");N.className="ss-hero",N.innerHTML=`
+        <h1>Form og masse: utællelig vs. tællelig</h1>
         <p>
             På dansk har substansen to tilstande: 
             <strong>Venstre side</strong> viser den flydende, uafgrænsede masse (<em>"vand", "kaffe", "mel"</em>), 
             mens <strong>højre side</strong> viser den afgrænsede form (<em>"en flaske vand", "en kop kaffe", "tre boller"</em>).
-            Klik på et motiv for at se modpolen lyse op!
+            Klik på et motiv for at se modpolen lyse op.
         </p>
     `,t.appendChild(N);const k=document.createElement("div");k.className="ss-tabs-nav",k.innerHTML=`
         <button class="ss-tab-btn active" data-tab="tab_kontrast">
-            ⚖️ 1. Diktomisk Vrimlebillede
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Træningsbane: Masse eller Form?
+            2. Træningsbane: masse eller form?
         </button>
     `,t.appendChild(k);const E=document.createElement("div"),P=document.createElement("div");P.className="ss-tab-panel active",P.id="panel-kontrast",P.innerHTML=`
         <div class="contrast-canvas-card">
             <!-- Control bar -->
             <div class="contrast-control-bar">
                 <div class="contrast-instruction">
-                    💡 <em>Klik på et motiv på venstre side (Masse) for at se dets spejlbillede på højre side (Form).</em>
+                    <em>Klik på et motiv på venstre side (masse) for at se dets spejlbillede på højre side (form).</em>
                 </div>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    🖼️ Ren visning: <strong id="pure-status-label">FRA</strong>
+                    Ren visning: <strong id="pure-status-label">FRA</strong>
                 </button>
             </div>
 
@@ -77031,14 +76994,14 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             <div class="contrast-split-stage" id="split-stage">
                 <!-- VENSTRE HALVDEL: UTÆLLELIG MASSE -->
                 <div class="stage-half left-half">
-                    <div class="stage-half-header cool">🔵 UTÆLLELIG MASSE — Uafgrænset substans</div>
+                    <div class="stage-half-header cool">Venstre: Utællelig masse — uafgrænset substans</div>
                     <img src="assets/sansning_masse_venstre.jpg" alt="Utællelig masse i køkkenet" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: TÆLLELIG FORM -->
                 <div class="stage-half right-half">
-                    <div class="stage-half-header warm">🟠 TÆLLELIG FORM — Afgrænset genstand</div>
+                    <div class="stage-half-header warm">Højre: Tællelig form — afgrænset genstand</div>
                     <img src="assets/sansning_form_hoejre.jpg" alt="Tællelige genstande med form" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
@@ -77081,11 +77044,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         `;const _=W.querySelectorAll(".ss-quiz-opt-btn"),o=W.querySelector("#quiz-feedback"),n=W.querySelector("#quiz-next-btn");_.forEach(b=>{b.onclick=()=>{_.forEach(v=>v.disabled=!0),b.dataset.val===f.correct?(b.classList.add("correct"),o.className="ss-quiz-feedback show correct",o.innerHTML=`<strong>Rigtigt!</strong> ${f.expl}`,I++):(b.classList.add("wrong"),o.className="ss-quiz-feedback show wrong",o.innerHTML=`<strong>Ikke helt:</strong> Det rigtige svar er <em>${f.correct}</em>. ${f.expl}`,_.forEach(v=>{v.dataset.val===f.correct&&v.classList.add("correct")})),n.style.display="block"}}),n.onclick=()=>{ne++,ee()}}ee(),E.appendChild(W),t.appendChild(E);const te=P.querySelector("#left-hotspots-container"),V=P.querySelector("#right-hotspots-container"),S=P.querySelector("#hotspots-strip"),C=P.querySelector("#detail-card"),w=P.querySelector("#pure-toggle-btn"),T=P.querySelector("#split-stage");let p=d[0].key,l=!1;w.onclick=()=>{l=!l,T.classList.toggle("pure-mode",l),w.classList.toggle("active",l),w.querySelector("#pure-status-label").textContent=l?"TIL":"FRA"};function z(f,_="left"){p=f;const o=d.find(n=>n.key===f);o&&(te.querySelectorAll(".ss-hotspot").forEach(n=>{n.classList.remove("active","partner-active"),n.dataset.key===f&&(_==="left"?n.classList.add("active"):n.classList.add("partner-active"))}),V.querySelectorAll(".ss-hotspot").forEach(n=>{n.classList.remove("active","partner-active"),n.dataset.key===f&&(_==="right"?n.classList.add("active"):n.classList.add("partner-active"))}),S.querySelectorAll(".ss-strip-btn").forEach(n=>{n.classList.toggle("active",n.dataset.key===f)}),C.innerHTML=`
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.8rem;">${o.icon}</span>
                     <span class="adj-main-word">${o.title}</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at skifte fokus">
-                    <span>${_==="left"?"Skift til Tællelig Form":"Skift til Utællelig Masse"}</span>
+                    <span>${_==="left"?"Skift til tællelig form":"Skift til utællelig masse"}</span>
                     <strong>${_==="left"?o.right.word+" ➔":o.left.word+" ➔"}</strong>
                 </div>
             </div>
@@ -77093,7 +77055,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             <div class="adj-congruence-grid">
                 <!-- Venstre Halvdel: Masse -->
                 <div class="ss-contrast-box tilstand">
-                    <span class="ss-box-badge">🔵 Venstre: Utællelig Masse</span>
+                    <span class="ss-box-badge">Venstre: Utællelig masse</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${o.left.sent.replace(o.left.word,`<span class="ss-box-verb-highlight">${o.left.word}</span>`)}
@@ -77104,7 +77066,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
 
                 <!-- Højre Halvdel: Form -->
                 <div class="ss-contrast-box forvandling">
-                    <span class="ss-box-badge">🟠 Højre: Tællelig Form</span>
+                    <span class="ss-box-badge">Højre: Tællelig form</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${o.right.sent.replace(o.right.word,`<span class="ss-box-verb-highlight">${o.right.word}</span>`)}
@@ -77115,14 +77077,13 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             </div>
 
             <div class="ss-insp-aha">
-                <span style="font-size: 1.3rem;">💡</span>
                 <span><strong>Aha-oplevelsen:</strong> ${o.aha}</span>
             </div>
 
             <div class="ss-insp-languages">
-                <div class="ss-lang-item">🇬🇧 <strong>Engelsk:</strong> ${o.lang.en}</div>
-                <div class="ss-lang-item">🇸🇦 <strong>Arabisk:</strong> ${o.lang.ar}</div>
-                <div class="ss-lang-item">🇨🇳 <strong>Kinesisk:</strong> ${o.lang.zh}</div>
+                <div class="ss-lang-item"><strong>Engelsk:</strong> ${o.lang.en}</div>
+                <div class="ss-lang-item"><strong>Arabisk:</strong> ${o.lang.ar}</div>
+                <div class="ss-lang-item"><strong>Kinesisk:</strong> ${o.lang.zh}</div>
             </div>
         `,C.querySelector("#card-swap-btn").onclick=()=>{z(f,_==="left"?"right":"left")})}function y(){te.innerHTML="",V.innerHTML="",S.innerHTML="",d.forEach(f=>{const _=document.createElement("button");_.className="ss-hotspot",_.style.left=`${f.left.x}%`,_.style.top=`${f.left.y}%`,_.dataset.key=f.key,_.innerHTML=f.icon,_.title=`${f.title} (Masse: ${f.left.word})`,_.onclick=()=>z(f.key,"left"),te.appendChild(_);const o=document.createElement("button");o.className="ss-hotspot",o.style.left=`${f.right.x}%`,o.style.top=`${f.right.y}%`,o.dataset.key=f.key,o.innerHTML=f.icon,o.title=`${f.title} (Form: ${f.right.word})`,o.onclick=()=>z(f.key,"right"),V.appendChild(o);const n=document.createElement("button");n.className="ss-strip-btn",n.dataset.key=f.key,n.innerHTML=`${f.icon} ${f.title.split(" ")[0]}`,n.onclick=()=>z(f.key,"left"),S.appendChild(n)}),z(p,"left")}y(),k.querySelectorAll(".ss-tab-btn").forEach(f=>{f.onclick=()=>{k.querySelectorAll(".ss-tab-btn").forEach(n=>n.classList.remove("active")),E.querySelectorAll(".ss-tab-panel").forEach(n=>n.classList.remove("active")),f.classList.add("active");const _=f.dataset.tab==="tab_kontrast"?"panel-kontrast":"panel-quiz",o=E.querySelector(`#${_}`);o&&o.classList.add("active")}}),c.appendChild(t)}function Xa(c,m,r={}){c.innerHTML="",Ut(Qt());const t=document.createElement("div");t.className="view-container sansning-station-view";const d=[{key:"laeser",title:"Læsning i stuen",icon:"📖",left:{x:35,y:55,word:"ligger og læser",sent:"Mads ligger og læser avisen i sofaen.",exp:'Dobbeltverbet "ligger og..." viser en uafgrænset, fredfyldt dvælen over tid. Kroppen er i total hvile.'},right:{x:35,y:55,word:"sætter sig til at læse",sent:"Mads sætter sig til at læse ved skrivebordet.",exp:'"Sætter sig til at..." markerer et bevidst skift i kroppens retning og handling. En ny proces sættes i gang med vilje.'},aha:'Uafgrænset dvælen ("ligger og læser") vs. retningsskift ("sætter sig til at læse").',lang:{en:"lies reading vs. sits down to read",ar:"مستلقٍ يقرأ vs. يجلس ليبدأ القراءة",zh:"躺着看报 vs. 坐下来开始阅读"}},{key:"fart",title:"Kroppens tempo og fart",icon:"🏃",left:{x:18,y:40,word:"går langsomt",sent:"Bedstefar går langsomt gennem haven og tænker.",exp:'Mådesadverbiet "langsomt" dæmper muskelkraften. Kroppen bevæger sig i lavt gear i stilhed.'},right:{x:18,y:40,word:"løber hurtigt",sent:"Drengen løber hurtigt hen over stien.",exp:'Adverbiet "hurtigt" pumper fart og dynamisk energi ind i verbet. Hvert skridt kræver kraft.'},aha:"Mådesadverbier afkoder kroppens muskelspænding: roligt og langsomt vs. eksplosivt og hurtigt.",lang:{en:"walks slowly vs. runs quickly",ar:"يمشي ببطء vs. يركض بسرعة",zh:"慢慢走 vs. 快速跑"}},{key:"doer",title:"Dørens åbning (Diatese)",icon:"🚪",left:{x:72,y:30,word:"døren åbnes",sent:"Døren åbnes automatisk kl. 8.",exp:"S-passiv lader handlingen ske som et roligt naturfænomen uden en synlig menneskelig person bag."},right:{x:72,y:30,word:"manden åbner døren",sent:"Manden åbner døren med håndtaget.",exp:"Aktiv diatese viser agentens muskulære arm og kropslige indgreb, der skubber døren op."},aha:'Selvvirkende naturfænomen ("åbnes") vs. menneskets muskulære kraft ("åbner").',lang:{en:"the door opens vs. the man opens the door",ar:"الباب يُفتح vs. الرجل يفتح الباب",zh:"门打开了（被动） vs. 男人开门"}},{key:"hus",title:"Husets natur vs. aftryk",icon:"🏡",left:{x:82,y:65,word:"et rødt hus",sent:"Familien bor i et rødt murstenshus.",exp:"Et rent adjektiv beskriver tingen som den er i sin iboende, hvilende natur."},right:{x:82,y:65,word:"et malet hus",sent:"Huset står som et nymalet hus efter sommerferien.",exp:"Kort tillægsform (participium) bærer arret og aftrykket af en forvandling: nogen har malet det!"},aha:'Iboende natur ("rødt") vs. historisk aftryk af et menneskeligt indgreb ("malet").',lang:{en:"a red house vs. a painted house",ar:"بيت أحمر vs. بيت مدهون / مطلي",zh:"红色的房子 vs. 粉刷过的房子"}},{key:"stille",title:"Katten og stilheden",icon:"🐾",left:{x:52,y:72,word:"sover roligt",sent:"Katten sover roligt på det varme gulvtæppe.",exp:"Ingen uventede ryk. Kroppens vejrtrækning er dyb og uforstyrret."},right:{x:52,y:72,word:"springer pludselig op",sent:"Katten springer pludselig op efter en flue.",exp:"Hvilen brydes af et eksplosivt retningsskift i et splitsekund."},aha:'Rolig dvælen ("sover roligt") vs. pludselig impuls ("springer pludselig op").',lang:{en:"sleeps calmly vs. leaps suddenly",ar:"تنام بهدوء vs. تقفز فجأة",zh:"安静地睡觉 vs. 突然跳起来"}}],i=[{prompt:"Mads er træt og har fri i dag. Han ... på sofaen.",options:["ligger og slapper af","sætter sig til at slappe af"],correct:"ligger og slapper af",expl:'"Ligger og..." beskriver den vedvarende, uafgrænsede dvælen i ro over tid.'},{prompt:"Klokken er 09:00, og eksamen starter nu. Mads ... skrive.",options:["ligger og","sætter sig til at"],correct:"sætter sig til at",expl:'"Sætter sig til at..." markerer det bevidste skift i kroppens fokus og start på en ny handling.'},{prompt:"Gaden er glat af is, så vi må køre ...",options:["forsigtigt","forsigtig"],correct:"forsigtigt",expl:"Når vi beskriver verbet (hvordan vi kører), tilføjer mådesadverbiet et -t."},{prompt:"Biblioteket er et offentligt sted. Dørene ... kl. 10.",options:["åbner","åbnes"],correct:"åbnes",expl:"S-passiv bruges, når institutionen eller reglen gælder uden en specifik person nævnt."},{prompt:"Bordet bærer tydeligt præg af håndværkerens arbejde. Det er et ... bord.",options:["slebet","rundt"],correct:"slebet",expl:'"Slebet" (participium) bærer aftrykket af handlingen: nogen har aktivt slebet bordet.'}],s=document.createElement("style");s.textContent=`
         .sansning-station-view {
@@ -77685,43 +77646,43 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             transform: translateY(-2px);
             box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
         }
-    `,t.appendChild(s);const x=document.createElement("div");x.className="ss-top-bar";const M=document.createElement("button");M.className="ss-back-btn",M.innerHTML="← Tilbage til Hovedflade 1",M.onclick=()=>m("sansning_flade1"),x.appendChild(M);const F=document.createElement("span");F.className="ss-station-badge",F.innerHTML="Station 1.5 • Aspekt & Måde",x.appendChild(F),t.appendChild(x);const N=document.createElement("div");N.className="ss-hero",N.innerHTML=`
-        <h1>Aspekt & Bevægelse: Dvælen vs. Retningsskift</h1>
+    `,t.appendChild(s);const x=document.createElement("div");x.className="ss-top-bar";const M=document.createElement("button");M.className="ss-back-btn",M.innerHTML=r&&r.from==="overview"?"← Tilbage til sansningsoversigten":"← Tilbage til hovedflade 1",M.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade1")},x.appendChild(M);const F=document.createElement("span");F.className="ss-station-badge",F.innerHTML="Station 1.5 • Aspekt og måde",x.appendChild(F),t.appendChild(x);const N=document.createElement("div");N.className="ss-hero",N.innerHTML=`
+        <h1>Aspekt og bevægelse: dvælen vs. retningsskift</h1>
         <p>
             Oplev kroppens sansning af handlinger i tid: 
             <strong>Venstre side</strong> viser den rolige dvælen (<em>"ligger og læser", "går langsomt", "åbnes"</em>), 
             mens <strong>højre side</strong> viser det pludselige skift i retning og fart (<em>"sætter sig til at læse", "løber hurtigt", "åbner"</em>).
-            Klik på et motiv for at se modpolen lyse op!
+            Klik på et motiv for at se modpolen lyse op.
         </p>
     `,t.appendChild(N);const k=document.createElement("div");k.className="ss-tabs-nav",k.innerHTML=`
         <button class="ss-tab-btn active" data-tab="tab_kontrast">
-            ⚖️ 1. Diktomisk Vrimlebillede
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Træningsbane: Dvælen eller Retningsskift?
+            2. Træningsbane: dvælen eller retningsskift?
         </button>
     `,t.appendChild(k);const E=document.createElement("div"),P=document.createElement("div");P.className="ss-tab-panel active",P.id="panel-kontrast",P.innerHTML=`
         <div class="contrast-canvas-card">
             <div class="contrast-control-bar">
                 <div class="contrast-instruction">
-                    💡 <em>Klik på et motiv på venstre side (Dvælen) for at se dets spejlbillede på højre side (Retningsskift).</em>
+                    <em>Klik på et motiv på venstre side (dvælen) for at se dets spejlbillede på højre side (retningsskift).</em>
                 </div>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    🖼️ Ren visning: <strong id="pure-status-label">FRA</strong>
+                    Ren visning: <strong id="pure-status-label">FRA</strong>
                 </button>
             </div>
 
             <div class="contrast-split-stage" id="split-stage">
                 <!-- VENSTRE HALVDEL: DVÆLEN & STILSTAND -->
                 <div class="stage-half left-half">
-                    <div class="stage-half-header cool">🔵 DVÆLEN — Uafgrænset ro over tid</div>
+                    <div class="stage-half-header cool">Venstre: Dvælen — uafgrænset ro over tid</div>
                     <img src="assets/sansning_aspekt_venstre.jpg" alt="Rolig dvælen i stuen" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: RETNINGSSKIFT & FART -->
                 <div class="stage-half right-half">
-                    <div class="stage-half-header warm">🟠 RETNINGSSKIFT — Fart og ny impuls</div>
+                    <div class="stage-half-header warm">Højre: Retningsskift — fart og ny impuls</div>
                     <img src="assets/sansning_aspekt_hoejre.jpg" alt="Retningsskift og fart" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
@@ -77762,18 +77723,17 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         `;const _=W.querySelectorAll(".ss-quiz-opt-btn"),o=W.querySelector("#quiz-feedback"),n=W.querySelector("#quiz-next-btn");_.forEach(b=>{b.onclick=()=>{_.forEach(v=>v.disabled=!0),b.dataset.val===f.correct?(b.classList.add("correct"),o.className="ss-quiz-feedback show correct",o.innerHTML=`<strong>Rigtigt!</strong> ${f.expl}`,I++):(b.classList.add("wrong"),o.className="ss-quiz-feedback show wrong",o.innerHTML=`<strong>Ikke helt:</strong> Det rigtige svar er <em>${f.correct}</em>. ${f.expl}`,_.forEach(v=>{v.dataset.val===f.correct&&v.classList.add("correct")})),n.style.display="block"}}),n.onclick=()=>{ne++,ee()}}ee(),E.appendChild(W),t.appendChild(E);const te=P.querySelector("#left-hotspots-container"),V=P.querySelector("#right-hotspots-container"),S=P.querySelector("#hotspots-strip"),C=P.querySelector("#detail-card"),w=P.querySelector("#pure-toggle-btn"),T=P.querySelector("#split-stage");let p=d[0].key,l=!1;w.onclick=()=>{l=!l,T.classList.toggle("pure-mode",l),w.classList.toggle("active",l),w.querySelector("#pure-status-label").textContent=l?"TIL":"FRA"};function z(f,_="left"){p=f;const o=d.find(n=>n.key===f);o&&(te.querySelectorAll(".ss-hotspot").forEach(n=>{n.classList.remove("active","partner-active"),n.dataset.key===f&&(_==="left"?n.classList.add("active"):n.classList.add("partner-active"))}),V.querySelectorAll(".ss-hotspot").forEach(n=>{n.classList.remove("active","partner-active"),n.dataset.key===f&&(_==="right"?n.classList.add("active"):n.classList.add("partner-active"))}),S.querySelectorAll(".ss-strip-btn").forEach(n=>{n.classList.toggle("active",n.dataset.key===f)}),C.innerHTML=`
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.8rem;">${o.icon}</span>
                     <span class="adj-main-word">${o.title}</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at skifte fokus">
-                    <span>${_==="left"?"Skift til Retningsskift":"Skift til Dvælen"}</span>
+                    <span>${_==="left"?"Skift til retningsskift":"Skift til dvælen"}</span>
                     <strong>${_==="left"?o.right.word+" ➔":o.left.word+" ➔"}</strong>
                 </div>
             </div>
 
             <div class="adj-congruence-grid">
                 <div class="ss-contrast-box tilstand">
-                    <span class="ss-box-badge">🔵 Venstre: Dvælen i Ro</span>
+                    <span class="ss-box-badge">Venstre: Dvælen i ro</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${o.left.sent.replace(o.left.word,`<span class="ss-box-verb-highlight">${o.left.word}</span>`)}
@@ -77783,7 +77743,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 </div>
 
                 <div class="ss-contrast-box forvandling">
-                    <span class="ss-box-badge">🟠 Højre: Retningsskift & Fart</span>
+                    <span class="ss-box-badge">Højre: Retningsskift og fart</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${o.right.sent.replace(o.right.word,`<span class="ss-box-verb-highlight">${o.right.word}</span>`)}
@@ -77794,16 +77754,15 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             </div>
 
             <div class="ss-insp-aha">
-                <span style="font-size: 1.3rem;">💡</span>
                 <span><strong>Aha-oplevelsen:</strong> ${o.aha}</span>
             </div>
 
             <div class="ss-insp-languages">
-                <div class="ss-lang-item">🇬🇧 <strong>Engelsk:</strong> ${o.lang.en}</div>
-                <div class="ss-lang-item">🇸🇦 <strong>Arabisk:</strong> ${o.lang.ar}</div>
-                <div class="ss-lang-item">🇨🇳 <strong>Kinesisk:</strong> ${o.lang.zh}</div>
+                <div class="ss-lang-item"><strong>Engelsk:</strong> ${o.lang.en}</div>
+                <div class="ss-lang-item"><strong>Arabisk:</strong> ${o.lang.ar}</div>
+                <div class="ss-lang-item"><strong>Kinesisk:</strong> ${o.lang.zh}</div>
             </div>
-        `,C.querySelector("#card-swap-btn").onclick=()=>{z(f,_==="left"?"right":"left")})}function y(){te.innerHTML="",V.innerHTML="",S.innerHTML="",d.forEach(f=>{const _=document.createElement("button");_.className="ss-hotspot",_.style.left=`${f.left.x}%`,_.style.top=`${f.left.y}%`,_.dataset.key=f.key,_.innerHTML=f.icon,_.title=`${f.title} (Dvælen: ${f.left.word})`,_.onclick=()=>z(f.key,"left"),te.appendChild(_);const o=document.createElement("button");o.className="ss-hotspot",o.style.left=`${f.right.x}%`,o.style.top=`${f.right.y}%`,o.dataset.key=f.key,o.innerHTML=f.icon,o.title=`${f.title} (Retningsskift: ${f.right.word})`,o.onclick=()=>z(f.key,"right"),V.appendChild(o);const n=document.createElement("button");n.className="ss-strip-btn",n.dataset.key=f.key,n.innerHTML=`${f.icon} ${f.title.split(" ")[0]}`,n.onclick=()=>z(f.key,"left"),S.appendChild(n)}),z(p,"left")}y(),k.querySelectorAll(".ss-tab-btn").forEach(f=>{f.onclick=()=>{k.querySelectorAll(".ss-tab-btn").forEach(n=>n.classList.remove("active")),E.querySelectorAll(".ss-tab-panel").forEach(n=>n.classList.remove("active")),f.classList.add("active");const _=f.dataset.tab==="tab_kontrast"?"panel-kontrast":"panel-quiz",o=E.querySelector(`#${_}`);o&&o.classList.add("active")}}),c.appendChild(t)}function Za(c,m,r={}){c.innerHTML="",Ut(Qt());const t=document.createElement("div");t.className="view-container sansning-station-view";let d="vejr_bil",i=!1;const s=[{key:"vejr_bil",title:"Vejret & Bilen i Indkørslen",icon:"🚗",left:{x:35,y:65,word:"havde været koldt",sent:"Vejret havde været koldt i et stykke tid, da bilen pludselig kørte ind i indkørslen.",exp:"Frostluften lå uforandret og fastfrosset som en stabil baggrundskulisse, før bilen ankom."},right:{x:35,y:65,word:"var blevet koldt",sent:"Vejret var blevet koldt, da bilen pludselig kørte ind i indkørslen.",exp:"Selve kuldeomslaget indtraf i det præcise øjeblik og ramte dem som et chok."},aha:"Havde været koldt = stabil baggrund i ro. Var blevet koldt = selve temperaturskiftet der skete."},{key:"billygter",title:"Bilens Lygter",icon:"💡",left:{x:22,y:54,word:"havde lyst",sent:"Lygterne havde lyst i flere timer på motorvejen.",exp:"En ubrudt, vedvarende tilstand på hele turen frem til huset."},right:{x:22,y:54,word:"var blevet tændt",sent:"Lygterne var blevet tændt, netop da mørket faldt på.",exp:"Kontakten blev drejet, og pærerne skiftede fra slukket til tændt (forvandlingen)."},aha:"Havde lyst = stabil tilstand. Var blevet tændt = selve tændingen/skiftet."},{key:"teen",title:"Teen på spisebordet",icon:"🫖",left:{x:75,y:60,word:"havde været kold",sent:"Teen havde været kold længe, da de satte sig ved bordet.",exp:"Den stod ubevægelig og kold i koppen længe før aftensmaden."},right:{x:75,y:60,word:"var blevet kold",sent:"Teen var blevet kold, fordi havedøren pludselig blæste op.",exp:"Vintervinden strømmede ind og forårsagede afkølingen."},aha:"Havde været kold = tingen var kold. Var blevet kold = processen der kølede den ned."},{key:"sneen",title:"Sneen på taget og stien",icon:"❄️",left:{x:65,y:28,word:"havde ligget",sent:"Sneen havde ligget urørt på taget i en hel uge.",exp:"Det frosne vinterlandskab lå i total hvile."},right:{x:65,y:28,word:"var blevet ryddet",sent:"Sneen var blevet ryddet af vejen, inden gæsterne kom.",exp:"Skovlens arbejde forvandlede indkørslen fra lukket til fri."},aha:"Havde ligget = tingens hvile. Var blevet ryddet = den aktive forvandling."},{key:"chauffoer",title:"Mads bag bilens rat",icon:"🧑‍✈️",left:{x:45,y:48,word:"havde ventet",sent:"Mads havde ventet tålmodigt på, at porten åbnede.",exp:"Han sad stille i sædet i en stabil venteposition."},right:{x:45,y:48,word:"var blevet træt",sent:"Mads var blevet træt af at køre gennem snestormen.",exp:"Trætheden havde overmandet hans krop undervejs (tilstandsskift)."},aha:"Havde ventet = vedvarende handling. Var blevet træt = et indre skift i kroppen."}],x=[{prompt:"Gæsterne ankom kl. 18. Middagen ... færdig i over 20 minutter forinden.",options:["havde været","var blevet"],correct:"havde været",expl:"Maden stod allerede klar og ventede i ro — en stabil tilstand i fortiden."},{prompt:"Vinduet stod åbent hele natten, og vandrørene ... frosne til is.",options:["havde været","var blevet"],correct:"var blevet",expl:"Kulden gennemførte en forvandling af vandet til is (en tilstandsændring)."},{prompt:"Da han endelig ringede, ... vi bekymrede i flere timer.",options:["havde været","var blevet"],correct:"havde været",expl:"Bekymringen lå som en vedvarende tilstand i sindet over tid."},{prompt:"Da nyheden kom i radioen, ... stemningen i rummet pludselig trykket.",options:["havde været","var blevet"],correct:"var blevet",expl:"Nyheden udløste et øjeblikkeligt omslag i stemningen."}],M=document.createElement("style");M.textContent=`
+        `,C.querySelector("#card-swap-btn").onclick=()=>{z(f,_==="left"?"right":"left")})}function y(){te.innerHTML="",V.innerHTML="",S.innerHTML="",d.forEach(f=>{const _=document.createElement("button");_.className="ss-hotspot",_.style.left=`${f.left.x}%`,_.style.top=`${f.left.y}%`,_.dataset.key=f.key,_.innerHTML=f.icon,_.title=`${f.title} (Dvælen: ${f.left.word})`,_.onclick=()=>z(f.key,"left"),te.appendChild(_);const o=document.createElement("button");o.className="ss-hotspot",o.style.left=`${f.right.x}%`,o.style.top=`${f.right.y}%`,o.dataset.key=f.key,o.innerHTML=f.icon,o.title=`${f.title} (Retningsskift: ${f.right.word})`,o.onclick=()=>z(f.key,"right"),V.appendChild(o);const n=document.createElement("button");n.className="ss-strip-btn",n.dataset.key=f.key,n.innerHTML=`${f.icon} ${f.title.split(" ")[0]}`,n.onclick=()=>z(f.key,"left"),S.appendChild(n)}),z(p,"left")}y(),k.querySelectorAll(".ss-tab-btn").forEach(f=>{f.onclick=()=>{k.querySelectorAll(".ss-tab-btn").forEach(n=>n.classList.remove("active")),E.querySelectorAll(".ss-tab-panel").forEach(n=>n.classList.remove("active")),f.classList.add("active");const _=f.dataset.tab==="tab_kontrast"?"panel-kontrast":"panel-quiz",o=E.querySelector(`#${_}`);o&&o.classList.add("active")}}),c.appendChild(t)}function Za(c,m,r={}){c.innerHTML="",Ut(Qt());const t=document.createElement("div");t.className="view-container sansning-station-view";let d="vejr_bil",i=!1;const s=[{key:"vejr_bil",title:"Vejret og bilen i indkørslen",icon:"🚗",left:{x:35,y:65,word:"havde været koldt",sent:"Vejret havde været koldt i et stykke tid, da bilen pludselig kørte ind i indkørslen.",exp:"Frostluften lå uforandret og fastfrosset som en stabil baggrundskulisse, før bilen ankom."},right:{x:35,y:65,word:"var blevet koldt",sent:"Vejret var blevet koldt, da bilen pludselig kørte ind i indkørslen.",exp:"Selve kuldeomslaget indtraf i det præcise øjeblik og ramte dem som et chok."},aha:"Havde været koldt = stabil baggrund i ro. Var blevet koldt = selve temperaturskiftet der skete."},{key:"billygter",title:"Bilens Lygter",icon:"💡",left:{x:22,y:54,word:"havde lyst",sent:"Lygterne havde lyst i flere timer på motorvejen.",exp:"En ubrudt, vedvarende tilstand på hele turen frem til huset."},right:{x:22,y:54,word:"var blevet tændt",sent:"Lygterne var blevet tændt, netop da mørket faldt på.",exp:"Kontakten blev drejet, og pærerne skiftede fra slukket til tændt (forvandlingen)."},aha:"Havde lyst = stabil tilstand. Var blevet tændt = selve tændingen/skiftet."},{key:"teen",title:"Teen på spisebordet",icon:"🫖",left:{x:75,y:60,word:"havde været kold",sent:"Teen havde været kold længe, da de satte sig ved bordet.",exp:"Den stod ubevægelig og kold i koppen længe før aftensmaden."},right:{x:75,y:60,word:"var blevet kold",sent:"Teen var blevet kold, fordi havedøren pludselig blæste op.",exp:"Vintervinden strømmede ind og forårsagede afkølingen."},aha:"Havde været kold = tingen var kold. Var blevet kold = processen der kølede den ned."},{key:"sneen",title:"Sneen på taget og stien",icon:"❄️",left:{x:65,y:28,word:"havde ligget",sent:"Sneen havde ligget urørt på taget i en hel uge.",exp:"Det frosne vinterlandskab lå i total hvile."},right:{x:65,y:28,word:"var blevet ryddet",sent:"Sneen var blevet ryddet af vejen, inden gæsterne kom.",exp:"Skovlens arbejde forvandlede indkørslen fra lukket til fri."},aha:"Havde ligget = tingens hvile. Var blevet ryddet = den aktive forvandling."},{key:"chauffoer",title:"Mads bag bilens rat",icon:"🧑‍✈️",left:{x:45,y:48,word:"havde ventet",sent:"Mads havde ventet tålmodigt på, at porten åbnede.",exp:"Han sad stille i sædet i en stabil venteposition."},right:{x:45,y:48,word:"var blevet træt",sent:"Mads var blevet træt af at køre gennem snestormen.",exp:"Trætheden havde overmandet hans krop undervejs (tilstandsskift)."},aha:"Havde ventet = vedvarende handling. Var blevet træt = et indre skift i kroppen."}],x=[{prompt:"Gæsterne ankom kl. 18. Middagen ... færdig i over 20 minutter forinden.",options:["havde været","var blevet"],correct:"havde været",expl:"Maden stod allerede klar og ventede i ro — en stabil tilstand i fortiden."},{prompt:"Vinduet stod åbent hele natten, og vandrørene ... frosne til is.",options:["havde været","var blevet"],correct:"var blevet",expl:"Kulden gennemførte en forvandling af vandet til is (en tilstandsændring)."},{prompt:"Da han endelig ringede, ... vi bekymrede i flere timer.",options:["havde været","var blevet"],correct:"havde været",expl:"Bekymringen lå som en vedvarende tilstand i sindet over tid."},{prompt:"Da nyheden kom i radioen, ... stemningen i rummet pludselig trykket.",options:["havde været","var blevet"],correct:"var blevet",expl:"Nyheden udløste et øjeblikkeligt omslag i stemningen."}],M=document.createElement("style");M.textContent=`
         .sansning-station-view {
             max-width: 1200px;
             margin: 0 auto;
@@ -78286,8 +78245,8 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             justify-content: center;
             flex-wrap: wrap;
         }
-    `,t.appendChild(M);const F=document.createElement("div");F.className="ss-top-bar";const N=document.createElement("button");N.className="ss-back-btn",N.innerHTML="← Tilbage til Sansningsoversigten",N.onclick=()=>m("grammatik_sansning"),F.appendChild(N);const k=document.createElement("span");k.className="ss-station-badge",k.innerHTML="Station 2 • Tidens Sansning",F.appendChild(k),t.appendChild(F);const E=document.createElement("div");E.className="ss-hero",E.innerHTML=`
-        <h1>Tidens Sansning: "Havde været" vs. "Var blevet"</h1>
+    `,t.appendChild(M);const F=document.createElement("div");F.className="ss-top-bar";const N=document.createElement("button");N.className="ss-back-btn",N.innerHTML=r&&r.from==="overview"?"← Tilbage til sansningsoversigten":"← Tilbage til hovedflade 1",N.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade_1")},F.appendChild(N);const k=document.createElement("span");k.className="ss-station-badge",k.innerHTML="Station 2 • Tidens sansning",F.appendChild(k),t.appendChild(F);const E=document.createElement("div");E.className="ss-hero",E.innerHTML=`
+        <h1>Tidens sansning: "havde været" vs. "var blevet"</h1>
         <p>
             Oplev tidernes kontrast side om side: 
             <strong>Venstre side</strong> viser tilstanden der herskede i ro (<em>"Vejret havde været koldt i et stykke tid"</em>), 
@@ -78295,36 +78254,36 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         </p>
     `,t.appendChild(E);const P=document.createElement("div");P.className="ss-tabs-nav",P.innerHTML=`
         <button class="ss-tab-btn active" data-tab="tab_kontrast">
-            ⚖️ 1. Diktomisk Vrimlebillede
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Træningsbane: Havde været vs. Var blevet
+            2. Træningsbane: havde været vs. var blevet
         </button>
         <button class="ss-tab-btn" data-tab="tab_engine">
-            🔬 3. Det Store Tidslinje-Værksted (Originale Flader)
+            3. Det store tidslinje-værksted
         </button>
     `,t.appendChild(P);const W=document.createElement("div"),ne=document.createElement("div");ne.className="ss-tab-panel active",ne.id="panel-kontrast",ne.innerHTML=`
         <div class="contrast-canvas-card">
             <div class="contrast-control-bar">
                 <div class="contrast-instruction">
-                    💡 <em>Klik på et motiv på venstre side (Havde været) for at se dets spejlbillede på højre side (Var blevet).</em>
+                    Klik på et motiv på venstre side (havde været) for at se dets spejlbillede på højre side (var blevet).
                 </div>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    🖼️ Ren visning: <strong id="pure-status-label">FRA</strong>
+                    Ren visning: <strong id="pure-status-label">Fra</strong>
                 </button>
             </div>
 
             <div class="contrast-split-stage" id="split-stage">
                 <!-- VENSTRE HALVDEL: HAVDE VÆRET (STILSTAND I FORTID) -->
                 <div class="stage-half left-half">
-                    <div class="stage-half-header cool">🔵 HAVDE VÆRET (Uforandret Fortid i Ro)</div>
+                    <div class="stage-half-header cool">Venstre: Havde været (uforandret fortid i ro)</div>
                     <img src="assets/sansning_verber_tider_venstre.jpg" alt="Vinterhuset og bilen i stabil kulde (havde været)" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: VAR BLEVET (FORVANDLINGEN DER INDTRÆFFER) -->
                 <div class="stage-half right-half">
-                    <div class="stage-half-header warm">🟠 VAR BLEVET (Selve Forvandlingen/Omslaget)</div>
+                    <div class="stage-half-header warm">Højre: Var blevet (selve forvandlingen/omslaget)</div>
                     <img src="assets/sansning_verber_tider_hoejre.jpg" alt="Vejret skifter og kulden sætter ind da bilen ankommer (var blevet)" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
@@ -78360,10 +78319,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
 
                 <div class="ss-quiz-options">
                     <button class="ss-quiz-opt-btn" data-val="havde været">
-                        🔵 havde været (Stabil tilstand i fortid)
+                        havde været (stabil tilstand i fortid)
                     </button>
                     <button class="ss-quiz-opt-btn" data-val="var blevet">
-                        🟠 var blevet (Selve forvandlingen/omslaget)
+                        var blevet (selve forvandlingen/omslaget)
                     </button>
                 </div>
 
@@ -78377,10 +78336,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         <div class="ss-embedded-wrapper">
             <div style="text-align: center; margin-bottom: 1.2rem;">
                 <span style="font-size: 0.85rem; font-weight: 800; color: #fde68a; text-transform: uppercase;">
-                    Det Komplette Grammatik-Værksted (100% Bevaret)
+                    Det komplette grammatik-værksted (100% bevaret)
                 </span>
                 <h2 style="font-size: 1.6rem; margin: 0.3rem 0; color: #ffffff;">
-                    De 4 Tider & Interaktive Tidslinjer
+                    De 4 tider og interaktive tidslinjer
                 </h2>
                 <p style="color: #cbd5e1; font-size: 0.95rem; max-width: 720px; margin: 0 auto;">
                     Herunder finder du alle vores detaljerede diagrammer, sporhunde-øvelser og kameravinkler.
@@ -78389,10 +78348,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             
             <div class="ss-embedded-subnav">
                 <button class="ss-strip-btn active" id="btn-sub-tider4">
-                    ⏱️ De 4 Tider (Nutid, Datid, Førnutid, Førdatid)
+                    De 4 tider (nutid, datid, førnutid, førdatid)
                 </button>
                 <button class="ss-strip-btn" id="btn-sub-hub">
-                    🎛️ Verber Grammatik-Hub (Statisk linje vs. Animerede scener)
+                    Verber grammatik-hub (statisk linje vs. animerede scener)
                 </button>
             </div>
 
@@ -78401,19 +78360,18 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
     `;const C=S.querySelector("#embedded-module-mount");function w(n){C.innerHTML="",n==="tider4"?jo(C,m,{}):_o(C,m,{})}S.querySelector("#btn-sub-tider4").onclick=n=>{S.querySelectorAll(".ss-embedded-subnav .ss-strip-btn").forEach(b=>b.classList.remove("active")),n.target.classList.add("active"),w("tider4")},S.querySelector("#btn-sub-hub").onclick=n=>{S.querySelectorAll(".ss-embedded-subnav .ss-strip-btn").forEach(b=>b.classList.remove("active")),n.target.classList.add("active"),w("hub")},w("tider4"),W.appendChild(S),t.appendChild(W);const T=ne.querySelector("#left-hotspots-container"),p=ne.querySelector("#right-hotspots-container"),l=ne.querySelector("#hotspots-strip"),z=ne.querySelector("#detail-card"),y=ne.querySelector("#pure-toggle-btn"),f=ne.querySelector("#split-stage");y.onclick=()=>{i=!i,f.classList.toggle("pure-mode",i),y.classList.toggle("active",i),y.querySelector("#pure-status-label").textContent=i?"TIL":"FRA"};function _(n,b="left"){d=n;const a=s.find(g=>g.key===n);a&&(T.querySelectorAll(".ss-hotspot").forEach(g=>{g.classList.remove("active","partner-active"),g.dataset.key===n&&(b==="left"?g.classList.add("active"):g.classList.add("partner-active"))}),p.querySelectorAll(".ss-hotspot").forEach(g=>{g.classList.remove("active","partner-active"),g.dataset.key===n&&(b==="right"?g.classList.add("active"):g.classList.add("partner-active"))}),l.querySelectorAll(".ss-strip-btn").forEach(g=>{g.classList.toggle("active",g.dataset.key===n)}),z.innerHTML=`
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.6rem;">${a.icon}</span>
                     <span class="adj-main-word">${a.title}</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at skifte fokus">
-                    <span>${b==="left"?"Skift til Forvandling":"Skift til Tilstand"}</span>
+                    <span>${b==="left"?"Skift til forvandling":"Skift til tilstand"}</span>
                     <strong>${b==="left"?"var blevet ➔":"havde været ➔"}</strong>
                 </div>
             </div>
 
             <div class="adj-congruence-grid">
-                <!-- 🔵 Venstre Halvdel: Hadde været (Stabil fortid) -->
+                <!-- Venstre halvdel: havde været (stabil fortid) -->
                 <div class="ss-contrast-box tilstand">
-                    <span class="ss-box-badge">🔵 Venstre: Uforandret Tilstand i Ro</span>
+                    <span class="ss-box-badge">Venstre: Uforandret tilstand i ro</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${a.left.sent.replace("havde været",'<span class="ss-box-verb-highlight">havde været</span>')}
@@ -78422,9 +78380,9 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                     <div class="ss-box-exp">${a.left.exp}</div>
                 </div>
 
-                <!-- 🟠 Højre Halvdel: Var blevet (Omslaget) -->
+                <!-- Højre halvdel: var blevet (omslaget) -->
                 <div class="ss-contrast-box forvandling">
-                    <span class="ss-box-badge">🟠 Højre: Forvandlingen / Omslaget</span>
+                    <span class="ss-box-badge">Højre: Forvandlingen / omslaget</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${a.right.sent.replace("var blevet",'<span class="ss-box-verb-highlight">var blevet</span>')}
@@ -78435,10 +78393,9 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             </div>
 
             <div class="ss-insp-aha">
-                <span style="font-size: 1.3rem;">💡</span>
                 <span><strong>Sanse-nøglen:</strong> ${a.aha}</span>
             </div>
-        `,z.querySelector("#card-swap-btn").onclick=()=>{_(n,b==="left"?"right":"left")})}function o(){T.innerHTML="",p.innerHTML="",l.innerHTML="",s.forEach(n=>{const b=document.createElement("button");b.className="ss-hotspot",b.style.left=`${n.left.x}%`,b.style.top=`${n.left.y}%`,b.dataset.key=n.key,b.innerHTML=n.icon,b.title=`${n.title} (Tilstand: ${n.left.word})`,b.onclick=()=>_(n.key,"left"),T.appendChild(b);const a=document.createElement("button");a.className="ss-hotspot",a.style.left=`${n.right.x}%`,a.style.top=`${n.right.y}%`,a.dataset.key=n.key,a.innerHTML=n.icon,a.title=`${n.title} (Forvandling: ${n.right.word})`,a.onclick=()=>_(n.key,"right"),p.appendChild(a);const g=document.createElement("button");g.className="ss-strip-btn",g.dataset.key=n.key,g.innerHTML=`${n.icon} ${n.title.split(" ")[0]}`,g.onclick=()=>_(n.key,"left"),l.appendChild(g)}),_(d,"left")}o(),P.querySelectorAll(".ss-tab-btn").forEach(n=>{n.onclick=()=>{P.querySelectorAll(".ss-tab-btn").forEach(a=>a.classList.remove("active")),n.classList.add("active");const b=n.getAttribute("data-tab");W.querySelectorAll(".ss-tab-panel").forEach(a=>a.classList.remove("active")),b==="tab_kontrast"?ne.classList.add("active"):b==="tab_quiz"?I.classList.add("active"):b==="tab_engine"&&S.classList.add("active")}}),c.appendChild(t)}function eo(c,m,r={}){c.innerHTML="",Ut(Qt());const t=document.createElement("div");t.className="view-container sansning-station-view";let d="cykel",i=!1;const s=[{key:"cykel",title:"Cyklisten (I skoven vs. På arbejde)",icon:"🚴",left:{x:35,y:65,word:"har cyklet",sent:"Hun har cyklet i skoven i 2 timer.",exp:"Motoren i benene kørte rundt i cirkler. Ren fysisk aktivitet uden skift fra A til B."},right:{x:35,y:65,word:"er cyklet",sent:"Hun er cyklet på arbejde.",exp:"Hun krydsede bygrænsen og flyttede sin fysiske position fra hjemmet til kontoret."},aha:"Cyklet rundt på stien = HAR (motoren kører). Cyklet hen til et nyt sted = ER (skift af sted)."},{key:"maler",title:"Malerne & Huset",icon:"🎨",left:{x:75,y:35,word:"har malet",sent:"Malerne har malet facaden i dag.",exp:"Fokus på håndværkerne og deres arbejde med pensler og malerspande."},right:{x:75,y:35,word:"er malet",sent:"Huset er malet nu.",exp:"Arbejdet er fuldført, og huset står i en ny, flot tilstand."},aha:"Handlingen der udføres = HAR malet. Den nye egenskab ved tingen = ER malet."},{key:"tog",title:"Toget ved stationen",icon:"🚆",left:{x:52,y:50,word:"har kørt",sent:"Toget har kørt 120 km/t.",exp:"Fokus på togets motorkraft og fart igennem landskabet."},right:{x:52,y:50,word:"er kørt",sent:"Toget er kørt fra perronen.",exp:"Perronen er nu tom! Toget har forladt stedet og er ikke længere til stede."},aha:"Har kørt stærkt = motoren. Er kørt = toget er væk fra perronen."},{key:"kage",title:"Bageriet & Kagen",icon:"🥐",left:{x:20,y:40,word:"har bagt",sent:"Bageren har bagt kanelsnegle i morges.",exp:"Mennesket der æltede dejen og arbejdede ved den varme ovn."},right:{x:20,y:40,word:"er bagt",sent:"Kagen er bagt og klar til kaffen.",exp:"Kagen er færdig forvandlet og står som et sprødt resultat."},aha:"Bageren HAR bagt (aktivitet) -> Kagen ER bagt (tilstand/resultat)."},{key:"blomst",title:"Blomsterne i krukken",icon:"🌸",left:{x:82,y:65,word:"har vandet",sent:"Gartneren har vandet blomsterne.",exp:"Den aktive pleje og handling udført af gartneren."},right:{x:82,y:65,word:"er sprunget ud",sent:"Blomsterne er sprunget ud i fuldt flor.",exp:"Blomsterne gennemgik den biologiske forvandling til en ny tilstand."},aha:"Aktiv handling (har vandet) vs. biologisk tilstandsændring (er sprunget ud)."}],x=[{prompt:"Mads er ikke på kontoret længere. Han ... gået hjem.",options:["har","er"],correct:"er",expl:"Han har flyttet sig fra kontoret til hjemmet — et stedskift."},{prompt:"Vi trænede i fitness i dag. Vi ... svømmet 1000 meter.",options:["har","er"],correct:"har",expl:"Svømning frem og tilbage i bassinet er en ren fysisk aktivitet."},{prompt:"Maden dufter fantastisk! Mor ... lavet lasagne.",options:["har","er"],correct:"har",expl:"Mor er motoren, der udførte madlavningen."},{prompt:"Vinteren er slut, og sneen på plænen ... smeltet.",options:["har","er"],correct:"er",expl:"Sneen gennemgik en forvandling fra fast form til vand — tilstandsændring!"}],M=document.createElement("style");M.textContent=`
+        `,z.querySelector("#card-swap-btn").onclick=()=>{_(n,b==="left"?"right":"left")})}function o(){T.innerHTML="",p.innerHTML="",l.innerHTML="",s.forEach(n=>{const b=document.createElement("button");b.className="ss-hotspot",b.style.left=`${n.left.x}%`,b.style.top=`${n.left.y}%`,b.dataset.key=n.key,b.innerHTML=n.icon,b.title=`${n.title} (Tilstand: ${n.left.word})`,b.onclick=()=>_(n.key,"left"),T.appendChild(b);const a=document.createElement("button");a.className="ss-hotspot",a.style.left=`${n.right.x}%`,a.style.top=`${n.right.y}%`,a.dataset.key=n.key,a.innerHTML=n.icon,a.title=`${n.title} (Forvandling: ${n.right.word})`,a.onclick=()=>_(n.key,"right"),p.appendChild(a);const g=document.createElement("button");g.className="ss-strip-btn",g.dataset.key=n.key,g.innerHTML=`${n.icon} ${n.title.split(" ")[0]}`,g.onclick=()=>_(n.key,"left"),l.appendChild(g)}),_(d,"left")}o(),P.querySelectorAll(".ss-tab-btn").forEach(n=>{n.onclick=()=>{P.querySelectorAll(".ss-tab-btn").forEach(a=>a.classList.remove("active")),n.classList.add("active");const b=n.getAttribute("data-tab");W.querySelectorAll(".ss-tab-panel").forEach(a=>a.classList.remove("active")),b==="tab_kontrast"?ne.classList.add("active"):b==="tab_quiz"?I.classList.add("active"):b==="tab_engine"&&S.classList.add("active")}}),c.appendChild(t)}function eo(c,m,r={}){c.innerHTML="",Ut(Qt());const t=document.createElement("div");t.className="view-container sansning-station-view";let d="cykel",i=!1;const s=[{key:"cykel",title:"Cyklisten (I skoven vs. På arbejde)",icon:"🚴",left:{x:35,y:65,word:"har cyklet",sent:"Hun har cyklet i skoven i 2 timer.",exp:"Motoren i benene kørte rundt i cirkler. Ren fysisk aktivitet uden skift fra A til B."},right:{x:35,y:65,word:"er cyklet",sent:"Hun er cyklet på arbejde.",exp:"Hun krydsede bygrænsen og flyttede sin fysiske position fra hjemmet til kontoret."},aha:"Cyklet rundt på stien = HAR (motoren kører). Cyklet hen til et nyt sted = ER (skift af sted)."},{key:"maler",title:"Malerne og huset",icon:"🎨",left:{x:75,y:35,word:"har malet",sent:"Malerne har malet facaden i dag.",exp:"Fokus på håndværkerne og deres arbejde med pensler og malerspande."},right:{x:75,y:35,word:"er malet",sent:"Huset er malet nu.",exp:"Arbejdet er fuldført, og huset står i en ny, flot tilstand."},aha:"Handlingen der udføres = HAR malet. Den nye egenskab ved tingen = ER malet."},{key:"tog",title:"Toget ved stationen",icon:"🚆",left:{x:52,y:50,word:"har kørt",sent:"Toget har kørt 120 km/t.",exp:"Fokus på togets motorkraft og fart igennem landskabet."},right:{x:52,y:50,word:"er kørt",sent:"Toget er kørt fra perronen.",exp:"Perronen er nu tom! Toget har forladt stedet og er ikke længere til stede."},aha:"Har kørt stærkt = motoren. Er kørt = toget er væk fra perronen."},{key:"kage",title:"Bageriet og kagen",icon:"🥐",left:{x:20,y:40,word:"har bagt",sent:"Bageren har bagt kanelsnegle i morges.",exp:"Mennesket der æltede dejen og arbejdede ved den varme ovn."},right:{x:20,y:40,word:"er bagt",sent:"Kagen er bagt og klar til kaffen.",exp:"Kagen er færdig forvandlet og står som et sprødt resultat."},aha:"Bageren HAR bagt (aktivitet) -> Kagen ER bagt (tilstand/resultat)."},{key:"blomst",title:"Blomsterne i krukken",icon:"🌸",left:{x:82,y:65,word:"har vandet",sent:"Gartneren har vandet blomsterne.",exp:"Den aktive pleje og handling udført af gartneren."},right:{x:82,y:65,word:"er sprunget ud",sent:"Blomsterne er sprunget ud i fuldt flor.",exp:"Blomsterne gennemgik den biologiske forvandling til en ny tilstand."},aha:"Aktiv handling (har vandet) vs. biologisk tilstandsændring (er sprunget ud)."}],x=[{prompt:"Mads er ikke på kontoret længere. Han ... gået hjem.",options:["har","er"],correct:"er",expl:"Han har flyttet sig fra kontoret til hjemmet — et stedskift."},{prompt:"Vi trænede i fitness i dag. Vi ... svømmet 1000 meter.",options:["har","er"],correct:"har",expl:"Svømning frem og tilbage i bassinet er en ren fysisk aktivitet."},{prompt:"Maden dufter fantastisk! Mor ... lavet lasagne.",options:["har","er"],correct:"har",expl:"Mor er motoren, der udførte madlavningen."},{prompt:"Vinteren er slut, og sneen på plænen ... smeltet.",options:["har","er"],correct:"er",expl:"Sneen gennemgik en forvandling fra fast form til vand — tilstandsændring!"}],M=document.createElement("style");M.textContent=`
         .sansning-station-view {
             max-width: 1200px;
             margin: 0 auto;
@@ -78909,8 +78866,8 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             padding: 1rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
-    `,t.appendChild(M);const F=document.createElement("div");F.className="ss-top-bar";const N=document.createElement("button");N.className="ss-back-btn",N.innerHTML=r&&r.from==="overview"?"← Tilbage til Sansningsoversigten":"← Tilbage til Hovedflade 1",N.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade1")},F.appendChild(N);const k=document.createElement("span");k.className="ss-station-badge",k.innerHTML="Station 1.4 • Aktivitet vs. Resultat (Har vs. Er)",F.appendChild(k),t.appendChild(F);const E=document.createElement("div");E.className="ss-hero",E.innerHTML=`
-        <h1>Aktivitet (Har) vs. Tilstandsskift (Er)</h1>
+    `,t.appendChild(M);const F=document.createElement("div");F.className="ss-top-bar";const N=document.createElement("button");N.className="ss-back-btn",N.innerHTML=r&&r.from==="overview"?"← Tilbage til sansningsoversigten":"← Tilbage til hovedflade 1",N.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade1")},F.appendChild(N);const k=document.createElement("span");k.className="ss-station-badge",k.innerHTML="Station 1.4 • Aktivitet vs. resultat (har vs. er)",F.appendChild(k),t.appendChild(F);const E=document.createElement("div");E.className="ss-hero",E.innerHTML=`
+        <h1>Aktivitet (har) vs. tilstandsskift (er)</h1>
         <p>
             Se modpolerne side om side: 
             <strong>Venstre side</strong> viser motoren der arbejder (<em>"Hun har cyklet i skoven"</em>), 
@@ -78918,36 +78875,36 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         </p>
     `,t.appendChild(E);const P=document.createElement("div");P.className="ss-tabs-nav",P.innerHTML=`
         <button class="ss-tab-btn active" data-tab="tab_kontrast">
-            ⚖️ 1. Diktomisk Vrimlebillede
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Træningsbane: Har eller Er?
+            2. Træningsbane: har eller er?
         </button>
         <button class="ss-tab-btn" data-tab="tab_engine">
-            🔬 3. Det Originale Har/Er Værksted
+            3. Det originale har/er-værksted
         </button>
     `,t.appendChild(P);const W=document.createElement("div"),ne=document.createElement("div");ne.className="ss-tab-panel active",ne.id="panel-kontrast",ne.innerHTML=`
         <div class="contrast-canvas-card">
             <div class="contrast-control-bar">
                 <div class="contrast-instruction">
-                    💡 <em>Klik på et motiv på venstre side (Har) for at se dets modpol på højre side (Er).</em>
+                    <em>Klik på et motiv på venstre side (har) for at se dets modpol på højre side (er).</em>
                 </div>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    🖼️ Ren visning: <strong id="pure-status-label">FRA</strong>
+                    Ren visning: <strong id="pure-status-label">FRA</strong>
                 </button>
             </div>
 
             <div class="contrast-split-stage" id="split-stage">
                 <!-- VENSTRE HALVDEL: HAR (MOTOREN / AKTIVITET) -->
                 <div class="stage-half left-half">
-                    <div class="stage-half-header warm">🟠 MOTOREN (Har) — Aktiviteten i Arbejde</div>
+                    <div class="stage-half-header warm">Venstre: Motoren (har) — aktiviteten i arbejde</div>
                     <img src="assets/sansning_har_er_venstre.jpg" alt="Har - Motoren og aktiviteten i gang" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: ER (DØREN / RESULTATET) -->
                 <div class="stage-half right-half">
-                    <div class="stage-half-header cool">🔵 DØREN / SKIFTET (Er) — Ny Tilstand / Sted</div>
+                    <div class="stage-half-header cool">Højre: Døren og skiftet (er) — ny tilstand og sted</div>
                     <img src="assets/sansning_har_er_hoejre.jpg" alt="Er - Resultatet og det nye sted" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
@@ -78983,10 +78940,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
 
                 <div class="ss-quiz-options">
                     <button class="ss-quiz-opt-btn" data-val="har">
-                        🟠 har (Motoren i arbejde)
+                        har (motoren i arbejde)
                     </button>
                     <button class="ss-quiz-opt-btn" data-val="er">
-                        🔵 er (Tilstandsskift / ny placering)
+                        er (tilstandsskift / ny placering)
                     </button>
                 </div>
 
@@ -78999,14 +78956,14 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         `;const n=I.querySelector("#quiz-feedback"),b=I.querySelector("#quiz-next-btn");I.querySelectorAll(".ss-quiz-opt-btn").forEach(a=>{a.onclick=()=>{I.querySelectorAll(".ss-quiz-opt-btn").forEach(v=>v.disabled=!0),a.getAttribute("data-val")===o.correct?(te++,a.classList.add("correct"),n.className="ss-quiz-feedback show correct",n.innerHTML=`<strong>Rigtigt!</strong> ${o.expl}`):(a.classList.add("wrong"),I.querySelector(`[data-val="${o.correct}"]`).classList.add("correct"),n.className="ss-quiz-feedback show wrong",n.innerHTML=`<strong>Prøv igen:</strong> Det rigtige er <em>"${o.correct}"</em>. ${o.expl}`),b.style.display="inline-flex"}}),b.onclick=()=>{ee++,V()}}V(),W.appendChild(I);const S=document.createElement("div");S.className="ss-tab-panel",S.id="panel-engine",S.innerHTML=`
         <div class="ss-embedded-wrapper">
             <div style="text-align: center; margin-bottom: 1.2rem;">
-                <span style="font-size: 0.85rem; font-weight: 800; color: #a7f3d0; text-transform: uppercase;">
-                    Det Komplette Har/Er Værksted (100% Bevaret)
+                <span style="font-size: 0.85rem; font-weight: 800; color: #a7f3d0; letter-spacing: 0.04em;">
+                    Det komplette har/er-værksted
                 </span>
                 <h2 style="font-size: 1.6rem; margin: 0.3rem 0; color: #ffffff;">
-                    De 3 Stadier: Proces <-> Tilstand <-> Adjektiv
+                    De 3 stadier: proces <-> tilstand <-> adjektiv
                 </h2>
-                <p style="color: #cbd5e1; font-size: 0.95rem; max-width: 720px; margin: 0 auto;">
-                    Herunder finder du det fulde originale Har/Er modul med Aha-værksted og de 3 træningsbaner.
+                <p style="color: #FFC9CD; font-size: 0.95rem; max-width: 720px; margin: 0 auto;">
+                    Herunder finder du det fulde originale har/er-modul med aha-værksted og de 3 træningsbaner.
                 </p>
             </div>
             <div id="embedded-harer-mount"></div>
@@ -79014,19 +78971,18 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
     `;const C=S.querySelector("#embedded-harer-mount");zo(C,m,{}),W.appendChild(S),t.appendChild(W);const w=ne.querySelector("#left-hotspots-container"),T=ne.querySelector("#right-hotspots-container"),p=ne.querySelector("#hotspots-strip"),l=ne.querySelector("#detail-card"),z=ne.querySelector("#pure-toggle-btn"),y=ne.querySelector("#split-stage");z.onclick=()=>{i=!i,y.classList.toggle("pure-mode",i),z.classList.toggle("active",i),z.querySelector("#pure-status-label").textContent=i?"TIL":"FRA"};function f(o,n="left"){d=o;const b=s.find(a=>a.key===o);b&&(w.querySelectorAll(".ss-hotspot").forEach(a=>{a.classList.remove("active","partner-active"),a.dataset.key===o&&(n==="left"?a.classList.add("active"):a.classList.add("partner-active"))}),T.querySelectorAll(".ss-hotspot").forEach(a=>{a.classList.remove("active","partner-active"),a.dataset.key===o&&(n==="right"?a.classList.add("active"):a.classList.add("partner-active"))}),p.querySelectorAll(".ss-strip-btn").forEach(a=>{a.classList.toggle("active",a.dataset.key===o)}),l.innerHTML=`
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.6rem;">${b.icon}</span>
                     <span class="adj-main-word">${b.title}</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at skifte fokus">
-                    <span>${n==="left"?"Skift til Skiftet":"Skift til Motoren"}</span>
+                    <span>${n==="left"?"Skift til skiftet":"Skift til motoren"}</span>
                     <strong>${n==="left"?"er ➔":"har ➔"}</strong>
                 </div>
             </div>
 
             <div class="adj-congruence-grid">
-                <!-- 🟠 Venstre: Motoren (har) -->
+                <!-- Venstre: Motoren (har) -->
                 <div class="ss-contrast-box motoren">
-                    <span class="ss-box-badge">🟠 Venstre: Motoren i Arbejde (Har)</span>
+                    <span class="ss-box-badge">Venstre: Motoren i arbejde (har)</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${b.left.sent.replace(b.left.word,`<span class="ss-box-verb-highlight">${b.left.word}</span>`)}
@@ -79035,9 +78991,9 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                     <div class="ss-box-exp">${b.left.exp}</div>
                 </div>
 
-                <!-- 🔵 Højre: Døren (er) -->
+                <!-- Højre: Døren (er) -->
                 <div class="ss-contrast-box doeren">
-                    <span class="ss-box-badge">🔵 Højre: Skiftet til Ny Tilstand (Er)</span>
+                    <span class="ss-box-badge">Højre: Skiftet til ny tilstand (er)</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${b.right.sent.replace(b.right.word,`<span class="ss-box-verb-highlight">${b.right.word}</span>`)}
@@ -79048,10 +79004,9 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             </div>
 
             <div class="ss-insp-aha">
-                <span style="font-size: 1.3rem;">💡</span>
                 <span><strong>Sanse-nøglen:</strong> ${b.aha}</span>
             </div>
-        `,l.querySelector("#card-swap-btn").onclick=()=>{f(o,n==="left"?"right":"left")})}function _(){w.innerHTML="",T.innerHTML="",p.innerHTML="",s.forEach(o=>{const n=document.createElement("button");n.className="ss-hotspot",n.style.left=`${o.left.x}%`,n.style.top=`${o.left.y}%`,n.dataset.key=o.key,n.innerHTML=o.icon,n.title=`${o.title} (Motoren: ${o.left.word})`,n.onclick=()=>f(o.key,"left"),w.appendChild(n);const b=document.createElement("button");b.className="ss-hotspot",b.style.left=`${o.right.x}%`,b.style.top=`${o.right.y}%`,b.dataset.key=o.key,b.innerHTML=o.icon,b.title=`${o.title} (Skiftet: ${o.right.word})`,b.onclick=()=>f(o.key,"right"),T.appendChild(b);const a=document.createElement("button");a.className="ss-strip-btn",a.dataset.key=o.key,a.innerHTML=`${o.icon} ${o.title.split(" ")[0]}`,a.onclick=()=>f(o.key,"left"),p.appendChild(a)}),f(d,"left")}_(),P.querySelectorAll(".ss-tab-btn").forEach(o=>{o.onclick=()=>{P.querySelectorAll(".ss-tab-btn").forEach(b=>b.classList.remove("active")),o.classList.add("active");const n=o.getAttribute("data-tab");W.querySelectorAll(".ss-tab-panel").forEach(b=>b.classList.remove("active")),n==="tab_kontrast"?ne.classList.add("active"):n==="tab_quiz"?I.classList.add("active"):n==="tab_engine"&&S.classList.add("active")}}),c.appendChild(t)}function to(c,m,r={}){c.innerHTML="",Ut(Qt());const t=document.createElement("div");t.className="view-container sansning-station-view";let d="bog",i=!1;const s=[{key:"bog",title:"Bogen & Bordet (Lægge / Ligge)",icon:"📖",left:{x:30,y:65,word:"lægger",sent:"Hun lægger bogen på bordet.",exp:"Hånden griber om bogen, fører den gennem luften og anbringer den (kroppens kraft)."},right:{x:30,y:65,word:"ligger",sent:"Bogen ligger på bordet.",exp:"Bogen hviler vandret i fuldstændig ro uden menneskelig berøring."},aha:"Æ i lÆgge = bevÆgelse/håndkraft. I i lIgge = stIlstand/hvIle."},{key:"kop",title:"Koppen & Hylden (Stille / Stå)",icon:"☕",left:{x:75,y:40,word:"stiller",sent:"Han stiller koppen op på hylden.",exp:"Armen løfter koppen opad og placerer den oprejst på hylden."},right:{x:75,y:40,word:"står",sent:"Koppen står på hylden.",exp:"Koppen befinder sig lodret i ro på hylden."},aha:"Stiller = hånden anbringer tingen oprejst. Står = tingen hviler lodret."},{key:"bamse",title:"Bamsen i Sofaen (Sætte / Sidde)",icon:"🧸",left:{x:52,y:55,word:"sætter",sent:"Pigen sætter bamsen til rette i sofaen.",exp:"Barnets hænder flytter bamsen og anbringer den i sofahjørnet."},right:{x:52,y:55,word:"sidder",sent:"Bamsen sidder i sofaen.",exp:"Bamsen hviler med bunden i puden i ro."},aha:"Sætter = bevæger mod en stilling. Sidder = hviler i stillingen."},{key:"vase",title:"Katten & Blomstervasen (Vælte)",icon:"🏺",left:{x:82,y:68,word:"væltede",sent:"Katten væltede vasen med halen.",exp:"Kattens krop udøvede en ydre kraft på vasen, der fik den til at falde."},right:{x:82,y:68,word:"ligger væltet",sent:"Vasen væltede og ligger nu på gulvet.",exp:"Vasen hviler nu vandret på gulvtæppet."},aha:"Nogen vælter tingen (kraft) vs. tingen vælter af sig selv (hændelse)."},{key:"avis",title:"Mads med avisen (Kropsrammen)",icon:"📰",left:{x:20,y:45,word:"sætter sig",sent:"Han sætter sig i lænestolen.",exp:"Kroppen udfører bevægelsen ned i stolen."},right:{x:20,y:45,word:"sidder og læser",sent:"Han sidder og læser dagens avis.",exp:"Kroppen danner en stabil fysisk ramme om læsningen."},aha:"Sætter sig = selve bevægelsen. Sidder og læser = den rolige kropsramme."}],x=[{prompt:"Jeg er træt i armene, så jeg ... tasken på gulvet.",options:["lægger","ligger"],correct:"lægger",expl:"Hånden og armen udfører en aktiv bevægelse for at anbringe tasken."},{prompt:"Hvor er mine nøgler? De ... henne på køkkenbordet.",options:["lægger","ligger"],correct:"ligger",expl:"Nøglerne befinder sig i ro på bordet uden nogen, der rører ved dem."},{prompt:"Kom indenfor og ... dig i den bløde stol.",options:["sæt","sid"],correct:"sæt",expl:"Du skal flytte din krop ned i stolen (aktiv handling: sæt dig)."},{prompt:"Gæsterne ... allerede ved bordet og venter på maden.",options:["sætter","sidder"],correct:"sidder",expl:"Gæsterne befinder sig i hvilestillingen på stolene."}],M=document.createElement("style");M.textContent=`
+        `,l.querySelector("#card-swap-btn").onclick=()=>{f(o,n==="left"?"right":"left")})}function _(){w.innerHTML="",T.innerHTML="",p.innerHTML="",s.forEach(o=>{const n=document.createElement("button");n.className="ss-hotspot",n.style.left=`${o.left.x}%`,n.style.top=`${o.left.y}%`,n.dataset.key=o.key,n.innerHTML=o.icon,n.title=`${o.title} (Motoren: ${o.left.word})`,n.onclick=()=>f(o.key,"left"),w.appendChild(n);const b=document.createElement("button");b.className="ss-hotspot",b.style.left=`${o.right.x}%`,b.style.top=`${o.right.y}%`,b.dataset.key=o.key,b.innerHTML=o.icon,b.title=`${o.title} (Skiftet: ${o.right.word})`,b.onclick=()=>f(o.key,"right"),T.appendChild(b);const a=document.createElement("button");a.className="ss-strip-btn",a.dataset.key=o.key,a.innerHTML=`${o.icon} ${o.title.split(" ")[0]}`,a.onclick=()=>f(o.key,"left"),p.appendChild(a)}),f(d,"left")}_(),P.querySelectorAll(".ss-tab-btn").forEach(o=>{o.onclick=()=>{P.querySelectorAll(".ss-tab-btn").forEach(b=>b.classList.remove("active")),o.classList.add("active");const n=o.getAttribute("data-tab");W.querySelectorAll(".ss-tab-panel").forEach(b=>b.classList.remove("active")),n==="tab_kontrast"?ne.classList.add("active"):n==="tab_quiz"?I.classList.add("active"):n==="tab_engine"&&S.classList.add("active")}}),c.appendChild(t)}function to(c,m,r={}){c.innerHTML="",Ut(Qt());const t=document.createElement("div");t.className="view-container sansning-station-view";let d="bog",i=!1;const s=[{key:"bog",title:"Bogen og bordet (lægge / ligge)",icon:"📖",left:{x:30,y:65,word:"lægger",sent:"Hun lægger bogen på bordet.",exp:"Hånden griber om bogen, fører den gennem luften og anbringer den (kroppens kraft)."},right:{x:30,y:65,word:"ligger",sent:"Bogen ligger på bordet.",exp:"Bogen hviler vandret i fuldstændig ro uden menneskelig berøring."},aha:"Æ i lÆgge = bevÆgelse/håndkraft. I i lIgge = stIlstand/hvIle."},{key:"kop",title:"Koppen og hylden (stille / stå)",icon:"☕",left:{x:75,y:40,word:"stiller",sent:"Han stiller koppen op på hylden.",exp:"Armen løfter koppen opad og placerer den oprejst på hylden."},right:{x:75,y:40,word:"står",sent:"Koppen står på hylden.",exp:"Koppen befinder sig lodret i ro på hylden."},aha:"Stiller = hånden anbringer tingen oprejst. Står = tingen hviler lodret."},{key:"bamse",title:"Bamsen i sofaen (sætte / sidde)",icon:"🧸",left:{x:52,y:55,word:"sætter",sent:"Pigen sætter bamsen til rette i sofaen.",exp:"Barnets hænder flytter bamsen og anbringer den i sofahjørnet."},right:{x:52,y:55,word:"sidder",sent:"Bamsen sidder i sofaen.",exp:"Bamsen hviler med bunden i puden i ro."},aha:"Sætter = bevæger mod en stilling. Sidder = hviler i stillingen."},{key:"vase",title:"Katten og blomstervasen (vælte)",icon:"🏺",left:{x:82,y:68,word:"væltede",sent:"Katten væltede vasen med halen.",exp:"Kattens krop udøvede en ydre kraft på vasen, der fik den til at falde."},right:{x:82,y:68,word:"ligger væltet",sent:"Vasen væltede og ligger nu på gulvet.",exp:"Vasen hviler nu vandret på gulvtæppet."},aha:"Nogen vælter tingen (kraft) vs. tingen vælter af sig selv (hændelse)."},{key:"avis",title:"Mads med avisen (Kropsrammen)",icon:"📰",left:{x:20,y:45,word:"sætter sig",sent:"Han sætter sig i lænestolen.",exp:"Kroppen udfører bevægelsen ned i stolen."},right:{x:20,y:45,word:"sidder og læser",sent:"Han sidder og læser dagens avis.",exp:"Kroppen danner en stabil fysisk ramme om læsningen."},aha:"Sætter sig = selve bevægelsen. Sidder og læser = den rolige kropsramme."}],x=[{prompt:"Jeg er træt i armene, så jeg ... tasken på gulvet.",options:["lægger","ligger"],correct:"lægger",expl:"Hånden og armen udfører en aktiv bevægelse for at anbringe tasken."},{prompt:"Hvor er mine nøgler? De ... henne på køkkenbordet.",options:["lægger","ligger"],correct:"ligger",expl:"Nøglerne befinder sig i ro på bordet uden nogen, der rører ved dem."},{prompt:"Kom indenfor og ... dig i den bløde stol.",options:["sæt","sid"],correct:"sæt",expl:"Du skal flytte din krop ned i stolen (aktiv handling: sæt dig)."},{prompt:"Gæsterne ... allerede ved bordet og venter på maden.",options:["sætter","sidder"],correct:"sidder",expl:"Gæsterne befinder sig i hvilestillingen på stolene."}],M=document.createElement("style");M.textContent=`
         .sansning-station-view {
             max-width: 1200px;
             margin: 0 auto;
@@ -79529,8 +79484,8 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             justify-content: center;
             flex-wrap: wrap;
         }
-    `,t.appendChild(M);const F=document.createElement("div");F.className="ss-top-bar";const N=document.createElement("button");N.className="ss-back-btn",N.innerHTML=r&&r.from==="overview"?"← Tilbage til Sansningsoversigten":"← Tilbage til Hovedflade 1",N.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade1")},F.appendChild(N);const k=document.createElement("span");k.className="ss-station-badge",k.innerHTML="Station 1.2 • Kroppens Kraft vs. Tingens Hvile",F.appendChild(k),t.appendChild(F);const E=document.createElement("div");E.className="ss-hero",E.innerHTML=`
-        <h1>Kroppens Kraft (lægge) vs. Tingens Hvile (ligge)</h1>
+    `,t.appendChild(M);const F=document.createElement("div");F.className="ss-top-bar";const N=document.createElement("button");N.className="ss-back-btn",N.innerHTML=r&&r.from==="overview"?"← Tilbage til sansningsoversigten":"← Tilbage til hovedflade 1",N.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade1")},F.appendChild(N);const k=document.createElement("span");k.className="ss-station-badge",k.innerHTML="Station 1.2 • Kroppens kraft vs. tingens hvile",F.appendChild(k),t.appendChild(F);const E=document.createElement("div");E.className="ss-hero",E.innerHTML=`
+        <h1>Kroppens kraft (lægge) vs. tingens hvile (ligge)</h1>
         <p>
             Oplev kausative par side om side: 
             <strong>Venstre side</strong> viser håndens aktive kraft (<em>"lægger, sætter, stiller"</em>), 
@@ -79538,36 +79493,36 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         </p>
     `,t.appendChild(E);const P=document.createElement("div");P.className="ss-tabs-nav",P.innerHTML=`
         <button class="ss-tab-btn active" data-tab="tab_kontrast">
-            ⚖️ 1. Diktomisk Vrimlebillede
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Træningsbane: Kraft eller Hvile?
+            2. Træningsbane: kraft eller hvile?
         </button>
         <button class="ss-tab-btn" data-tab="tab_engine">
-            🔬 3. De Originale Grammatikflader
+            3. De originale grammatikflader
         </button>
     `,t.appendChild(P);const W=document.createElement("div"),ne=document.createElement("div");ne.className="ss-tab-panel active",ne.id="panel-kontrast",ne.innerHTML=`
         <div class="contrast-canvas-card">
             <div class="contrast-control-bar">
                 <div class="contrast-instruction">
-                    💡 <em>Klik på et motiv på venstre side (Kraft) for at se dets modpol på højre side (Hvile).</em>
+                    <em>Klik på et motiv på venstre side (kraft) for at se dets modpol på højre side (hvile).</em>
                 </div>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    🖼️ Ren visning: <strong id="pure-status-label">FRA</strong>
+                    Ren visning: <strong id="pure-status-label">FRA</strong>
                 </button>
             </div>
 
             <div class="contrast-split-stage" id="split-stage">
                 <!-- VENSTRE HALVDEL: KROPPENS KRAFT (LÆGGE, SÆTTE, STILLE) -->
                 <div class="stage-half left-half">
-                    <div class="stage-half-header warm">🟠 KROPPENS KRAFT — Hånden flytter tingen</div>
+                    <div class="stage-half-header warm">Venstre: Kroppens kraft — hånden flytter tingen</div>
                     <img src="assets/sansning_kraft_hvile_venstre.jpg" alt="Kroppens kraft - Lægger, sætter, stiller" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: TINGENS HVILE (LIGGE, SIDDE, STÅ) -->
                 <div class="stage-half right-half">
-                    <div class="stage-half-header cool">🔵 TINGENS HVILE — Tingen hviler i ro</div>
+                    <div class="stage-half-header cool">Højre: Tingens hvile — tingen hviler i ro</div>
                     <img src="assets/sansning_kraft_hvile_hoejre.jpg" alt="Tingens hvile - Ligger, sidder, står" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
@@ -79603,10 +79558,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
 
                 <div class="ss-quiz-options">
                     <button class="ss-quiz-opt-btn" data-val="${n.options[0]}">
-                        🟠 ${n.options[0]} (Kroppens kraft)
+                        ${n.options[0]} (kroppens kraft)
                     </button>
                     <button class="ss-quiz-opt-btn" data-val="${n.options[1]}">
-                        🔵 ${n.options[1]} (Tingens hvile)
+                        ${n.options[1]} (tingens hvile)
                     </button>
                 </div>
 
@@ -79619,20 +79574,20 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         `;const b=I.querySelector("#quiz-feedback"),a=I.querySelector("#quiz-next-btn");I.querySelectorAll(".ss-quiz-opt-btn").forEach(g=>{g.onclick=()=>{I.querySelectorAll(".ss-quiz-opt-btn").forEach(j=>j.disabled=!0),g.getAttribute("data-val")===n.correct?(te++,g.classList.add("correct"),b.className="ss-quiz-feedback show correct",b.innerHTML=`<strong>Rigtigt!</strong> ${n.expl}`):(g.classList.add("wrong"),I.querySelector(`[data-val="${n.correct}"]`).classList.add("correct"),b.className="ss-quiz-feedback show wrong",b.innerHTML=`<strong>Prøv igen:</strong> Det rigtige er <em>"${n.correct}"</em>. ${n.expl}`),a.style.display="inline-flex"}}),a.onclick=()=>{ee++,V()}}V(),W.appendChild(I);const S=document.createElement("div");S.className="ss-tab-panel",S.id="panel-engine",S.innerHTML=`
         <div class="ss-embedded-wrapper">
             <div style="text-align: center; margin-bottom: 1.2rem;">
-                <span style="font-size: 0.85rem; font-weight: 800; color: #f472b6; text-transform: uppercase;">
-                    De Originale Moduler (100% Bevaret)
+                <span style="font-size: 0.85rem; font-weight: 800; color: #f472b6; letter-spacing: 0.04em;">
+                    De originale moduler
                 </span>
                 <h2 style="font-size: 1.6rem; margin: 0.3rem 0; color: #ffffff;">
-                    Kausative Verber & Krops-Rammen
+                    Kausative verber og kropsrammen
                 </h2>
-                <p style="color: #cbd5e1; font-size: 0.95rem; max-width: 720px; margin: 0 auto;">
-                    Skift mellem modulet for Lægge/ligge (Kausative par) og modulet for Krops-rammen ("Ligger og læser").
+                <p style="color: #FFC9CD; font-size: 0.95rem; max-width: 720px; margin: 0 auto;">
+                    Skift mellem modulet for lægge/ligge (kausative par) og modulet for kropsrammen ("ligger og læser").
                 </p>
             </div>
             
             <div class="ss-embedded-subnav">
                 <button class="ss-strip-btn active" id="btn-sub-krafthvile">
-                    ⚡ Kausative Par (Lægge/ligge, Sætte/sidde, Stille/stå)
+                    Kausative par (lægge/ligge, sætte/sidde, stille/stå)
                 </button>
                 <button class="ss-strip-btn" id="btn-sub-liggerlaeser">
                     🧘 Krops-Rammen ("Ligger og læser" vs. "Læser")
@@ -79644,19 +79599,18 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
     `;const C=S.querySelector("#embedded-module-mount");function w(n){C.innerHTML="",n==="krafthvile"?Eo(C,m,{}):Co(C,m,{})}S.querySelector("#btn-sub-krafthvile").onclick=n=>{S.querySelectorAll(".ss-embedded-subnav .ss-strip-btn").forEach(b=>b.classList.remove("active")),n.target.classList.add("active"),w("krafthvile")},S.querySelector("#btn-sub-liggerlaeser").onclick=n=>{S.querySelectorAll(".ss-embedded-subnav .ss-strip-btn").forEach(b=>b.classList.remove("active")),n.target.classList.add("active"),w("liggerlaeser")},w("krafthvile"),W.appendChild(S),t.appendChild(W);const T=ne.querySelector("#left-hotspots-container"),p=ne.querySelector("#right-hotspots-container"),l=ne.querySelector("#hotspots-strip"),z=ne.querySelector("#detail-card"),y=ne.querySelector("#pure-toggle-btn"),f=ne.querySelector("#split-stage");y.onclick=()=>{i=!i,f.classList.toggle("pure-mode",i),y.classList.toggle("active",i),y.querySelector("#pure-status-label").textContent=i?"TIL":"FRA"};function _(n,b="left"){d=n;const a=s.find(g=>g.key===n);a&&(T.querySelectorAll(".ss-hotspot").forEach(g=>{g.classList.remove("active","partner-active"),g.dataset.key===n&&(b==="left"?g.classList.add("active"):g.classList.add("partner-active"))}),p.querySelectorAll(".ss-hotspot").forEach(g=>{g.classList.remove("active","partner-active"),g.dataset.key===n&&(b==="right"?g.classList.add("active"):g.classList.add("partner-active"))}),l.querySelectorAll(".ss-strip-btn").forEach(g=>{g.classList.toggle("active",g.dataset.key===n)}),z.innerHTML=`
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.6rem;">${a.icon}</span>
                     <span class="adj-main-word">${a.title}</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at skifte fokus">
-                    <span>${b==="left"?"Skift til Hvile":"Skift til Kraft"}</span>
+                    <span>${b==="left"?"Skift til hvile":"Skift til kraft"}</span>
                     <strong>${b==="left"?a.right.word+" ➔":a.left.word+" ➔"}</strong>
                 </div>
             </div>
 
             <div class="adj-congruence-grid">
-                <!-- 🟠 Venstre: Håndens kraft -->
+                <!-- Venstre: Håndens kraft -->
                 <div class="ss-contrast-box kraft">
-                    <span class="ss-box-badge">🟠 Venstre: Kroppens Kraft (${a.left.word})</span>
+                    <span class="ss-box-badge">Venstre: Kroppens kraft (${a.left.word})</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${a.left.sent.replace(a.left.word,`<span class="ss-box-verb-highlight">${a.left.word}</span>`)}
@@ -79665,9 +79619,9 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                     <div class="ss-box-exp">${a.left.exp}</div>
                 </div>
 
-                <!-- 🔵 Højre: Tingens hvile -->
+                <!-- Højre: Tingens hvile -->
                 <div class="ss-contrast-box hvile">
-                    <span class="ss-box-badge">🔵 Højre: Tingens Hvile (${a.right.word})</span>
+                    <span class="ss-box-badge">Højre: Tingens hvile (${a.right.word})</span>
                     <div class="ss-box-sent-row">
                         <span class="ss-box-sent">
                             ${a.right.sent.replace(a.right.word,`<span class="ss-box-verb-highlight">${a.right.word}</span>`)}
@@ -79678,10 +79632,9 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             </div>
 
             <div class="ss-insp-aha">
-                <span style="font-size: 1.3rem;">💡</span>
                 <span><strong>Sanse-nøglen:</strong> ${a.aha}</span>
             </div>
-        `,z.querySelector("#card-swap-btn").onclick=()=>{_(n,b==="left"?"right":"left")})}function o(){T.innerHTML="",p.innerHTML="",l.innerHTML="",s.forEach(n=>{const b=document.createElement("button");b.className="ss-hotspot",b.style.left=`${n.left.x}%`,b.style.top=`${n.left.y}%`,b.dataset.key=n.key,b.innerHTML=n.icon,b.title=`${n.title} (Kraft: ${n.left.word})`,b.onclick=()=>_(n.key,"left"),T.appendChild(b);const a=document.createElement("button");a.className="ss-hotspot",a.style.left=`${n.right.x}%`,a.style.top=`${n.right.y}%`,a.dataset.key=n.key,a.innerHTML=n.icon,a.title=`${n.title} (Hvile: ${n.right.word})`,a.onclick=()=>_(n.key,"right"),p.appendChild(a);const g=document.createElement("button");g.className="ss-strip-btn",g.dataset.key=n.key,g.innerHTML=`${n.icon} ${n.title.split(" ")[0]}`,g.onclick=()=>_(n.key,"left"),l.appendChild(g)}),_(d,"left")}o(),P.querySelectorAll(".ss-tab-btn").forEach(n=>{n.onclick=()=>{P.querySelectorAll(".ss-tab-btn").forEach(a=>a.classList.remove("active")),n.classList.add("active");const b=n.getAttribute("data-tab");W.querySelectorAll(".ss-tab-panel").forEach(a=>a.classList.remove("active")),b==="tab_kontrast"?ne.classList.add("active"):b==="tab_quiz"?I.classList.add("active"):b==="tab_engine"&&S.classList.add("active")}}),c.appendChild(t)}function ro(c,m,r={}){c.innerHTML="",Ut(Qt());const t=document.createElement("div");t.className="view-container sansning-station-view";let d=0,i="left",s=!1;const x=[{key:"hjem",title:"Bopælen & Vejen Hjem",icon:"🏡",left:{x:50,y:52,word:"hjemme",sent:"Vi hygger os hjemme i sofaen.",exp:"Kroppen befinder sig i ro inden for hjemmets fire vægge. Ingen dørtrin krydses."},right:{x:50,y:52,word:"hjem",sent:"Vi cykler hjem efter arbejde.",exp:"Kroppen er i bevægelse på vej mod bopælen og skal til at krydse indgangstærsklen."},aha:"-e på hjemmE = du er der alleredE i ro. Hjem uden e = du er på vej og krydser tærsklen."},{key:"ind",title:"Døren & Dørtrinet (Inde vs. Ind)",icon:"🚪",left:{x:35,y:60,word:"inde",sent:"Børnene leger inde i stuen, for det regner.",exp:"Børnene er afskærmet af murene. De opholder sig stabilt i rummet."},right:{x:35,y:60,word:"ind",sent:"Børnene løber ind, da regnen begynder.",exp:"Fødderne krydser det fysiske dørtrin fra udendørs til indendørs."},aha:"IndE = ro i stuen. Ind = foden krydser dørtrinet."},{key:"op",title:"Trappen til 1. Sal (Oppe vs. Op)",icon:"🪜",left:{x:68,y:35,word:"oppe",sent:"Sengen står oppe på 1. sal under skråvæggen.",exp:"Møblet hviler ubevægeligt på overetagen."},right:{x:68,y:35,word:"op",sent:"Han går op ad trappen for at gå i seng.",exp:"Kroppen bevæger sig trin for trin i lodret retning opad."},aha:"OppE = på etagen i ro. Op = retningen mod toppen af trappen."},{key:"ud",title:"Terrassen & Haven (Ude vs. Ud)",icon:"🌳",left:{x:20,y:65,word:"ude",sent:"Vi spiser frokost ude i det gode vejr.",exp:"Maden og personerne befinder sig i den friske luft under åben himmel."},right:{x:20,y:65,word:"ud",sent:"Vi går ud på terrassen med kaffekanden.",exp:"Man træder ud gennem havedøren og forlader stuen."},aha:"UdE = du sidder i havestolen. Ud = du åbner døren og træder frem."},{key:"ned",title:"Kældertrappen (Nede vs. Ned)",icon:"📦",left:{x:82,y:70,word:"nede",sent:"Vaskemaskinen står nede i vaskekælderen.",exp:"Maskinen hviler på kælderens betongulv."},right:{x:82,y:70,word:"ned",sent:"Hun bærer vasketøjskurven ned ad kældertrappen.",exp:"Kroppen transporterer vasketøjet nedad mod kælderen."},aha:"NedE = under jorden i ro. Ned = retningen mod bunden."}],M=[{prompt:"Det er koldt i dag, så jeg bliver ... i varmen.",options:["inde","ind"],correct:"inde",expl:"Du bliver på stedet i ro (-e angiver stilstand)."},{prompt:"Luk hunden ... i haven, så den kan tisse.",options:["ude","ud"],correct:"ud",expl:"Hunden skal krydse døren og bevæge sig ud i haven (retning uden -e)."},{prompt:"Jeg er træt efter en lang dag. Jeg vil bare ... og slappe af.",options:["hjemme","hjem"],correct:"hjem",expl:"Du er på farten og bevæger dig i retning af dit hjem (uden -e)."},{prompt:"Er du stadig på arbejde? Nej, jeg er ... nu og laver mad.",options:["hjemme","hjem"],correct:"hjemme",expl:"Du befinder dig i huset og er holdt op med at transportere dig (tilstand med -e)."},{prompt:"Vil du hente min trøje? Den ligger ... på skrivebordet.",options:["oppe","op"],correct:"oppe",expl:"Trøjen hviler ubevægeligt på 1. sal (tilstand med -e)."},{prompt:"Børnene leger ... i haven hele eftermiddagen.",options:["ude","ud"],correct:"ude",expl:"Legen foregår i haven over tid (tilstand med -e)."}],F=document.createElement("style");F.textContent=`
+        `,z.querySelector("#card-swap-btn").onclick=()=>{_(n,b==="left"?"right":"left")})}function o(){T.innerHTML="",p.innerHTML="",l.innerHTML="",s.forEach(n=>{const b=document.createElement("button");b.className="ss-hotspot",b.style.left=`${n.left.x}%`,b.style.top=`${n.left.y}%`,b.dataset.key=n.key,b.innerHTML=n.icon,b.title=`${n.title} (Kraft: ${n.left.word})`,b.onclick=()=>_(n.key,"left"),T.appendChild(b);const a=document.createElement("button");a.className="ss-hotspot",a.style.left=`${n.right.x}%`,a.style.top=`${n.right.y}%`,a.dataset.key=n.key,a.innerHTML=n.icon,a.title=`${n.title} (Hvile: ${n.right.word})`,a.onclick=()=>_(n.key,"right"),p.appendChild(a);const g=document.createElement("button");g.className="ss-strip-btn",g.dataset.key=n.key,g.innerHTML=`${n.icon} ${n.title.split(" ")[0]}`,g.onclick=()=>_(n.key,"left"),l.appendChild(g)}),_(d,"left")}o(),P.querySelectorAll(".ss-tab-btn").forEach(n=>{n.onclick=()=>{P.querySelectorAll(".ss-tab-btn").forEach(a=>a.classList.remove("active")),n.classList.add("active");const b=n.getAttribute("data-tab");W.querySelectorAll(".ss-tab-panel").forEach(a=>a.classList.remove("active")),b==="tab_kontrast"?ne.classList.add("active"):b==="tab_quiz"?I.classList.add("active"):b==="tab_engine"&&S.classList.add("active")}}),c.appendChild(t)}function ro(c,m,r={}){c.innerHTML="",Ut(Qt());const t=document.createElement("div");t.className="view-container sansning-station-view";let d=0,i="left",s=!1;const x=[{key:"hjem",title:"Bopælen og vejen hjem",icon:"🏡",left:{x:50,y:52,word:"hjemme",sent:"Vi hygger os hjemme i sofaen.",exp:"Kroppen befinder sig i ro inden for hjemmets fire vægge. Ingen dørtrin krydses."},right:{x:50,y:52,word:"hjem",sent:"Vi cykler hjem efter arbejde.",exp:"Kroppen er i bevægelse på vej mod bopælen og skal til at krydse indgangstærsklen."},aha:"-e på hjemme = du er der allerede i ro. Hjem uden e = du er på vej og krydser tærsklen."},{key:"ind",title:"Døren og dørtrinnet (inde vs. ind)",icon:"🚪",left:{x:35,y:60,word:"inde",sent:"Børnene leger inde i stuen, for det regner.",exp:"Børnene er afskærmet af murene. De opholder sig stabilt i rummet."},right:{x:35,y:60,word:"ind",sent:"Børnene løber ind, da regnen begynder.",exp:"Fødderne krydser det fysiske dørtrin fra udendørs til indendørs."},aha:"Inde = ro i stuen. Ind = foden krydser dørtrinnet."},{key:"op",title:"Trappen til 1. sal (oppe vs. op)",icon:"🪜",left:{x:68,y:35,word:"oppe",sent:"Sengen står oppe på 1. sal under skråvæggen.",exp:"Møblet hviler ubevægeligt på overetagen."},right:{x:68,y:35,word:"op",sent:"Han går op ad trappen for at gå i seng.",exp:"Kroppen bevæger sig trin for trin i lodret retning opad."},aha:"Oppe = på etagen i ro. Op = retningen mod toppen af trappen."},{key:"ud",title:"Terrassen og haven (ude vs. ud)",icon:"🌳",left:{x:20,y:65,word:"ude",sent:"Vi spiser frokost ude i det gode vejr.",exp:"Maden og personerne befinder sig i den friske luft under åben himmel."},right:{x:20,y:65,word:"ud",sent:"Vi går ud på terrassen med kaffekanden.",exp:"Man træder ud gennem havedøren og forlader stuen."},aha:"Ude = du sidder i havestolen. Ud = du åbner døren og træder frem."},{key:"ned",title:"Kældertrappen (nede vs. ned)",icon:"📦",left:{x:82,y:70,word:"nede",sent:"Vaskemaskinen står nede i vaskekælderen.",exp:"Maskinen hviler på kælderens betongulv."},right:{x:82,y:70,word:"ned",sent:"Hun bærer vasketøjskurven ned ad kældertrappen.",exp:"Kroppen transporterer vasketøjet nedad mod kælderen."},aha:"NedE = under jorden i ro. Ned = retningen mod bunden."}],M=[{prompt:"Det er koldt i dag, så jeg bliver ... i varmen.",options:["inde","ind"],correct:"inde",expl:"Du bliver på stedet i ro (-e angiver stilstand)."},{prompt:"Luk hunden ... i haven, så den kan tisse.",options:["ude","ud"],correct:"ud",expl:"Hunden skal krydse døren og bevæge sig ud i haven (retning uden -e)."},{prompt:"Jeg er træt efter en lang dag. Jeg vil bare ... og slappe af.",options:["hjemme","hjem"],correct:"hjem",expl:"Du er på farten og bevæger dig i retning af dit hjem (uden -e)."},{prompt:"Er du stadig på arbejde? Nej, jeg er ... nu og laver mad.",options:["hjemme","hjem"],correct:"hjemme",expl:"Du befinder dig i huset og er holdt op med at transportere dig (tilstand med -e)."},{prompt:"Vil du hente min trøje? Den ligger ... på skrivebordet.",options:["oppe","op"],correct:"oppe",expl:"Trøjen hviler ubevægeligt på 1. sal (tilstand med -e)."},{prompt:"Børnene leger ... i haven hele eftermiddagen.",options:["ude","ud"],correct:"ude",expl:"Legen foregår i haven over tid (tilstand med -e)."}],F=document.createElement("style");F.textContent=`
         .sansning-station-view {
             max-width: 1180px;
             margin: 0 auto;
@@ -80268,8 +80221,8 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             align-items: center;
             gap: 0.45rem;
         }
-    `,t.appendChild(F);const N=document.createElement("div");N.className="ss-top-bar";const k=document.createElement("button");k.className="ss-back-btn",k.innerHTML="← Tilbage til Sansningsoversigten",k.onclick=()=>m("grammatik_sansning"),N.appendChild(k);const E=document.createElement("span");E.className="ss-station-badge",E.innerHTML="Station 5 • Rummet & Tærsklen",N.appendChild(E),t.appendChild(N);const P=document.createElement("div");P.className="ss-hero",P.innerHTML=`
-        <h1>Rummet & Tærsklen: Hjemme vs. Hjem / Inde vs. Ind</h1>
+    `,t.appendChild(F);const N=document.createElement("div");N.className="ss-top-bar";const k=document.createElement("button");k.className="ss-back-btn",k.innerHTML=r&&r.from==="overview"?"← Tilbage til sansningsoversigten":"← Tilbage til hovedflade 1",k.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade_1")},N.appendChild(k);const E=document.createElement("span");E.className="ss-station-badge",E.innerHTML="Station 5 • Rummet og tærsklen",N.appendChild(E),t.appendChild(N);const P=document.createElement("div");P.className="ss-hero",P.innerHTML=`
+        <h1>Rummet og tærsklen: hjemme vs. hjem / inde vs. ind</h1>
         <p>
             På dansk afslører det lille bogstav <strong>-e</strong>, om du er i ro i rummet 
             (<strong>hjemme, inde, ude, oppe, nede</strong>), eller om din krop krydser tærsklen 
@@ -80277,22 +80230,22 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         </p>
     `,t.appendChild(P);const W=document.createElement("div");W.className="ss-tabs-nav",W.innerHTML=`
         <button class="ss-tab-btn active" data-tab="tab_vrimmel">
-            🖼️ 1. Diktomisk Vrimlebillede (Split-Scene)
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Sanse-Træner: Med eller uden -e?
+            2. Sanse-træner: med eller uden -e?
         </button>
         <button class="ss-tab-btn" data-tab="tab_dimensions">
-            🧭 3. De 5 Rumlige Dimensioner
+            3. De 5 rumlige dimensioner
         </button>
     `,t.appendChild(W);const ne=document.createElement("div"),I=document.createElement("div");I.className="ss-tab-panel active",I.id="panel-vrimmel",I.innerHTML=`
         <div class="contrast-canvas-card">
             <div class="contrast-control-bar">
                 <span class="contrast-instruction">
-                    👉 Klik på motiverne i venstre eller højre side for at se modsætningen lyse op!
+                    Klik på motiverne i venstre eller højre side for at se modsætningen lyse op!
                 </span>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    👁️ Vis rent billede
+                    Ren visning: <strong id="pure-status-label">Fra</strong>
                 </button>
             </div>
 
@@ -80300,7 +80253,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 <!-- VENSTRE HALVDEL: RO I RUMMET (Stilstand / -e) -->
                 <div class="stage-half left-half" id="stage-left">
                     <div class="stage-half-header cool">
-                        🔵 Stilstand: Ro i rummet (hjemme, inde, ude, oppe, nede)
+                        Venstre: Stilstand i rummet (hjemme, inde, ude, oppe, nede)
                     </div>
                     <img src="assets/sansning_rummet_venstre.jpg" alt="Ro i rummet - Hjemme, inde, ude, oppe, nede" class="stage-half-img" />
                     <div id="hotspots-left"></div>
@@ -80309,7 +80262,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 <!-- HØJRE HALVDEL: KRYDSER TÆRSKLEN (Forvandling / Uden -e) -->
                 <div class="stage-half right-half" id="stage-right">
                     <div class="stage-half-header warm">
-                        🟠 Forvandling: Krydser tærsklen (hjem, ind, ud, op, ned)
+                        Højre: Forvandling og retning (hjem, ind, ud, op, ned)
                     </div>
                     <img src="assets/sansning_rummet_hoejre.jpg" alt="Krydser tærsklen - Hjem, ind, ud, op, ned" class="stage-half-img" />
                     <div id="hotspots-right"></div>
@@ -80365,7 +80318,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         <div style="background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(139, 92, 246, 0.35); border-radius: 20px; padding: 1.8rem; box-shadow: 0 12px 32px rgba(0,0,0,0.4);">
             <div style="text-align: center; margin-bottom: 1.5rem;">
                 <h2 style="font-size: 1.6rem; color: #ffffff; margin: 0 0 0.4rem;">
-                    🧭 Tærskel-Reglen: Det Magiske Bogstav -e
+                    Tærskel-reglen: det magiske bogstav -e
                 </h2>
                 <p style="color: #cbd5e1; max-width: 720px; margin: 0 auto; line-height: 1.5;">
                     Når danskere taler om rum og bevægelse, afgøres hele sætningens betydning af, 
@@ -80375,25 +80328,25 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
 
             <div class="ss-dimensions-grid">
                 <div class="ss-dim-card">
-                    <div class="ss-dim-head">🏡 1. Bopælen</div>
+                    <div class="ss-dim-head">1. Bopælen</div>
                     <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0.5rem;">
                         <strong>Hjemme:</strong> Vi spiser aftensmad <em>hjemme</em> (ro på matriklen).<br>
                         <strong>Hjem:</strong> Vi kører <em>hjem</em> nu (på farten mod tærsklen).
                     </p>
-                    <div style="font-size: 0.8rem; color: #c4b5fd;">Hjemm<strong>E</strong> = du er d<strong>E</strong>r allered<strong>E</strong>!</div>
+                    <div style="font-size: 0.8rem; color: #c4b5fd;">Hjemme = du er der allerede!</div>
                 </div>
 
                 <div class="ss-dim-card">
-                    <div class="ss-dim-head">🚪 2. Huset & Værelset</div>
+                    <div class="ss-dim-head">2. Huset og værelset</div>
                     <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0.5rem;">
                         <strong>Inde:</strong> Børnene er <em>inde</em> i varmen (afskærmet af vægge).<br>
                         <strong>Ind:</strong> Kom <em>ind</em> og få en kop kaffe (kryds døren).
                     </p>
-                    <div style="font-size: 0.8rem; color: #c4b5fd;">Ind = foden løftes og træder over dørtrinet.</div>
+                    <div style="font-size: 0.8rem; color: #c4b5fd;">Ind = foden løftes og træder over dørtrinnet.</div>
                 </div>
 
                 <div class="ss-dim-card">
-                    <div class="ss-dim-head">🌳 3. Den Fri Natur</div>
+                    <div class="ss-dim-head">3. Den fri natur</div>
                     <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0.5rem;">
                         <strong>Ude:</strong> Vi sidder <em>ude</em> på terrassen (opholde sig i luften).<br>
                         <strong>Ud:</strong> Gå <em>ud</em> med skraldeposen (forlade stuen).
@@ -80402,7 +80355,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 </div>
 
                 <div class="ss-dim-card">
-                    <div class="ss-dim-head">🪜 4. Den Lodrette Akse (Op)</div>
+                    <div class="ss-dim-head">4. Den lodrette akse (op)</div>
                     <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0.5rem;">
                         <strong>Oppe:</strong> Kontoret er <em>oppe</em> på 2. sal (befinder sig højt).<br>
                         <strong>Op:</strong> Han løber <em>op</em> ad trappen (bevægelse mod toppen).
@@ -80411,20 +80364,22 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 </div>
 
                 <div class="ss-dim-card">
-                    <div class="ss-dim-head">📦 5. Den Lodrette Akse (Ned)</div>
+                    <div class="ss-dim-head">5. Den lodrette akse (ned)</div>
                     <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0.5rem;">
                         <strong>Nede:</strong> Kartoflerne ligger <em>nede</em> i kælderen (i hvile).<br>
                         <strong>Ned:</strong> Gå <em>ned</em> i gården med cyklen (bevægelse mod bunden).
                     </p>
                     <div style="font-size: 0.8rem; color: #c4b5fd;">Ned = retningen ned mod jorden.</div>
                 </div>
+                    </p>
+                    <div style="font-size: 0.8rem; color: #c4b5fd;">Ned = retningen ned mod jorden.</div>
+                </div>
             </div>
         </div>
-    `,ne.appendChild(C),t.appendChild(ne);const w=I.querySelector("#split-stage"),T=I.querySelector("#hotspots-left"),p=I.querySelector("#hotspots-right"),l=I.querySelector("#hotspots-strip"),z=I.querySelector("#detail-card"),y=I.querySelector("#pure-toggle-btn");y.onclick=()=>{s=!s,s?(w.classList.add("pure-mode"),y.classList.add("active"),y.innerHTML="👁️ Vis hotspots"):(w.classList.remove("pure-mode"),y.classList.remove("active"),y.innerHTML="👁️ Vis rent billede")};function f(){T.innerHTML="",p.innerHTML="",x.forEach((a,g)=>{const v=g===d,j=document.createElement("button");j.className="ss-hotspot",v&&i==="left"&&j.classList.add("active"),v&&i==="right"&&j.classList.add("partner-active"),j.style.left=`${a.left.x}%`,j.style.top=`${a.left.y}%`,j.innerHTML=a.icon,j.title=`${a.left.word} (${a.title})`,j.onclick=R=>{R.stopPropagation(),d=g,i="left",f()},T.appendChild(j);const H=document.createElement("button");H.className="ss-hotspot",v&&i==="right"&&H.classList.add("active"),v&&i==="left"&&H.classList.add("partner-active"),H.style.left=`${a.right.x}%`,H.style.top=`${a.right.y}%`,H.innerHTML=a.icon,H.title=`${a.right.word} (${a.title})`,H.onclick=R=>{R.stopPropagation(),d=g,i="right",f()},p.appendChild(H)}),l.innerHTML="",x.forEach((a,g)=>{const v=document.createElement("button");v.className=`ss-strip-btn ${g===d?"active":""}`,v.innerHTML=`${a.icon} ${a.left.word} / ${a.right.word}`,v.onclick=()=>{d=g,f()},l.appendChild(v)});const _=x[d],o=i==="left"?_.left:_.right,n=i==="left"?"right":"left";i==="left"?_.right:_.left;const b=i==="left"?`Byt til: ${_.right.word} (Forvandling / Retning)`:`Byt til: ${_.left.word} (Stilstand / Ro)`;z.innerHTML=`
+    `,ne.appendChild(C),t.appendChild(ne);const w=I.querySelector("#split-stage"),T=I.querySelector("#hotspots-left"),p=I.querySelector("#hotspots-right"),l=I.querySelector("#hotspots-strip"),z=I.querySelector("#detail-card"),y=I.querySelector("#pure-toggle-btn");y.onclick=()=>{s=!s;const _=I.querySelector("#pure-status-label");s?(w.classList.add("pure-mode"),y.classList.add("active"),_&&(_.textContent="Til")):(w.classList.remove("pure-mode"),y.classList.remove("active"),_&&(_.textContent="Fra"))};function f(){T.innerHTML="",p.innerHTML="",x.forEach((a,g)=>{const v=g===d,j=document.createElement("button");j.className="ss-hotspot",v&&i==="left"&&j.classList.add("active"),v&&i==="right"&&j.classList.add("partner-active"),j.style.left=`${a.left.x}%`,j.style.top=`${a.left.y}%`,j.innerHTML=a.icon,j.title=`${a.left.word} (${a.title})`,j.onclick=R=>{R.stopPropagation(),d=g,i="left",f()},T.appendChild(j);const H=document.createElement("button");H.className="ss-hotspot",v&&i==="right"&&H.classList.add("active"),v&&i==="left"&&H.classList.add("partner-active"),H.style.left=`${a.right.x}%`,H.style.top=`${a.right.y}%`,H.innerHTML=a.icon,H.title=`${a.right.word} (${a.title})`,H.onclick=R=>{R.stopPropagation(),d=g,i="right",f()},p.appendChild(H)}),l.innerHTML="",x.forEach((a,g)=>{const v=document.createElement("button");v.className=`ss-strip-btn ${g===d?"active":""}`,v.innerHTML=`${a.icon} ${a.left.word} / ${a.right.word}`,v.onclick=()=>{d=g,f()},l.appendChild(v)});const _=x[d],o=i==="left"?_.left:_.right,n=i==="left"?"right":"left";i==="left"?_.right:_.left;const b=i==="left"?`Skift til: ${_.right.word} (forvandling / retning)`:`Skift til: ${_.left.word} (stilstand / ro)`;z.innerHTML=`
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.8rem;">${_.icon}</span>
-                    <span class="adj-main-word">${o.word.toUpperCase()}</span>
+                    <span class="adj-main-word">${o.word}</span>
                     <span style="color: #94a3b8; font-size: 0.9rem;">(${_.title})</span>
                 </div>
                 <button class="adj-modpol-pill" id="card-swap-btn">
@@ -80435,7 +80390,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
 
             <div class="adj-congruence-grid">
                 <div class="adj-box left ${i==="left"?"active-side":""}">
-                    <span class="adj-box-badge">🔵 Stilstand: Ro i rummet (-e)</span>
+                    <span class="adj-box-badge">Venstre: Stilstand i rummet (-e)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${_.left.sent.replace(_.left.word,`<span class="adj-highlight">${_.left.word}</span>`)}"
@@ -80445,7 +80400,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 </div>
 
                 <div class="adj-box right ${i==="right"?"active-side":""}">
-                    <span class="adj-box-badge">🟠 Forvandling: Krydser tærsklen (uden -e)</span>
+                    <span class="adj-box-badge">Højre: Forvandling og retning (uden -e)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${_.right.sent.replace(_.right.word,`<span class="adj-highlight">${_.right.word}</span>`)}"
@@ -80456,10 +80411,9 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             </div>
 
             <div class="adj-aha-bar">
-                <span style="font-size: 1.3rem;">💡</span>
-                <span><strong>Aha-oplevelse:</strong> ${_.aha}</span>
+                <span><strong>Sanse-nøglen:</strong> ${_.aha}</span>
             </div>
-        `,z.querySelector("#card-swap-btn").onclick=()=>{i=n,f()}}f(),W.querySelectorAll(".ss-tab-btn").forEach(_=>{_.onclick=()=>{W.querySelectorAll(".ss-tab-btn").forEach(n=>n.classList.remove("active")),_.classList.add("active");const o=_.getAttribute("data-tab");ne.querySelectorAll(".ss-tab-panel").forEach(n=>n.classList.remove("active")),o==="tab_vrimmel"&&I.classList.add("active"),o==="tab_quiz"&&ee.classList.add("active"),o==="tab_dimensions"&&C.classList.add("active")}}),c.appendChild(t)}function no(c,m,r={}){c.innerHTML="",Ut(Qt());const t=document.createElement("div");t.className="view-container sansning-station-view";let d=0,i="left",s=!1;const x=[{key:"suppe",title:"Middagsbordet & Suppen",icon:"🍲",left:{x:35,y:60,word:"synes",sent:"Jeg synes, suppen smager fantastisk af ingefær og chili.",exp:"Kroppen mærker det direkte på tungen og i munden. Det er din helt egen kropslige sanseoplevelse, som ingen kan bestride."},right:{x:35,y:60,word:"tror",sent:"Jeg tror, der er chili i suppen (inden jeg smager).",exp:"Et gæt i hovedet før sanserne har mærket det. Hovedet forestiller sig noget om fremtiden eller det ukendte."},aha:"Synes bor på tungen og i sanserne. Tror bor i panden som et gæt."},{key:"vejr",title:"Vinduet & Uvejret",icon:"🌧️",left:{x:75,y:35,word:"synes",sent:"Jeg synes, det trækker koldt her ved vinduet.",exp:"Huden mærker kuldegyset og trækket direkte på kroppen lige her og nu."},right:{x:75,y:35,word:"tror",sent:"Jeg tror, det begynder at regne lige om lidt.",exp:"Du kigger på de mørke skyer og spår om fremtiden. Du kan ikke mærke dråberne på huden endnu."},aha:"Synes = mærkes på huden nu. Tror = formodning om fremtiden."},{key:"kaffe",title:"Kaffekoppen & Bitterhed",icon:"☕",left:{x:20,y:45,word:"synes",sent:"Jeg synes, kaffen er alt for stærk uden mælk.",exp:"Personlig smag og kropslig behag/ubehag er altid SYNES på dansk!"},right:{x:20,y:45,word:"tror",sent:"Jeg tror, kaffen er økologiske bønner fra Colombia.",exp:"En hypotese om oprindelsen, som du ikke kan smage dig til med 100% vished."},aha:"Smag og behag = altid SYNES! Oprindelse/fakta = TROR eller VED."},{key:"debat",title:"Avisen & Debatten",icon:"📰",left:{x:52,y:55,word:"synes",sent:"Jeg synes, det er anstrengende at sidde i den propfyldte bus.",exp:"Den kropslige oplevelse af larm, trængsel og mangel på siddepladser."},right:{x:52,y:55,word:"mener",sent:"Jeg mener, vi bør investere mere i offentlig transport.",exp:"En principiel, politisk og intellektuel holdning baseret på argumenter og værdier."},aha:'Synes = kropslig oplevelse. Mener = holdning i en debat (kræver ofte et "fordi...").'},{key:"fakta",title:"Uret & Køreplanen",icon:"⌚",left:{x:82,y:65,word:"synes",sent:"Jeg synes, bussen altid kommer for sent.",exp:"En følelsesmæssig og subjektiv frustration over ventetiden."},right:{x:82,y:65,word:"ved",sent:"Jeg ved, at bussen kører præcis klokken 20:15 ifølge køreplanen.",exp:"En objektiv kendsgerning, der kan bevises og verificeres sort på hvidt."},aha:"Synes = din subjektive oplevelse. Ved = objektiv, beviselig virkelighed."}],M=[{prompt:"Mmm, den her kage er fantastisk! Hvad ... du?",options:["synes","tror"],correct:"synes",expl:"I spiser begge af kagen og mærker smagen direkte på tungen."},{prompt:"Kommer Mads til festen i aften? Jeg ... det, for han sagde han ville prøve.",options:["synes","tror"],correct:"tror",expl:"Det handler om fremtiden og en uvis formodning."},{prompt:"Jeg har ondt i ryggen. Jeg ... den her stol er for hård.",options:["synes","tror"],correct:"synes",expl:"Kroppen mærker hårdheden direkte mod ryggen."},{prompt:'Politikeren sagde i tv: "Vi ... at skatten skal sænkes for de unge."',options:["mener","synes"],correct:"mener",expl:"Det er en politisk og principiel holdning i samfundsdebatten."},{prompt:"Hvad er klokken? Jeg ... den er cirka 14:30.",options:["tror","ved"],correct:"tror",expl:"Du har ikke kigget på uret endnu, så det er et skøn/gæt."},{prompt:"Hvor mange bor der i Danmark? Jeg ..., der bor omkring 6 millioner.",options:["ved","synes"],correct:"ved",expl:"Befolkningstallet er et objektivt faktum."}],F=document.createElement("style");F.textContent=`
+        `,z.querySelector("#card-swap-btn").onclick=()=>{i=n,f()}}f(),W.querySelectorAll(".ss-tab-btn").forEach(_=>{_.onclick=()=>{W.querySelectorAll(".ss-tab-btn").forEach(n=>n.classList.remove("active")),_.classList.add("active");const o=_.getAttribute("data-tab");ne.querySelectorAll(".ss-tab-panel").forEach(n=>n.classList.remove("active")),o==="tab_vrimmel"&&I.classList.add("active"),o==="tab_quiz"&&ee.classList.add("active"),o==="tab_dimensions"&&C.classList.add("active")}}),c.appendChild(t)}function no(c,m,r={}){c.innerHTML="",Ut(Qt());const t=document.createElement("div");t.className="view-container sansning-station-view";let d=0,i="left",s=!1;const x=[{key:"suppe",title:"Middagsbordet og suppen",icon:"🍲",left:{x:35,y:60,word:"synes",sent:"Jeg synes, suppen smager fantastisk af ingefær og chili.",exp:"Kroppen mærker det direkte på tungen og i munden. Det er din helt egen kropslige sanseoplevelse, som ingen kan bestride."},right:{x:35,y:60,word:"tror",sent:"Jeg tror, der er chili i suppen (inden jeg smager).",exp:"Et gæt i hovedet før sanserne har mærket det. Hovedet forestiller sig noget om fremtiden eller det ukendte."},aha:"Synes bor på tungen og i sanserne. Tror bor i panden som et gæt."},{key:"vejr",title:"Vinduet og uvejret",icon:"🌧️",left:{x:75,y:35,word:"synes",sent:"Jeg synes, det trækker koldt her ved vinduet.",exp:"Huden mærker kuldegyset og trækket direkte på kroppen lige her og nu."},right:{x:75,y:35,word:"tror",sent:"Jeg tror, det begynder at regne lige om lidt.",exp:"Du kigger på de mørke skyer og spår om fremtiden. Du kan ikke mærke dråberne på huden endnu."},aha:"Synes = mærkes på huden nu. Tror = formodning om fremtiden."},{key:"kaffe",title:"Kaffekoppen og bitterhed",icon:"☕",left:{x:20,y:45,word:"synes",sent:"Jeg synes, kaffen er alt for stærk uden mælk.",exp:"Personlig smag og kropslig behag/ubehag er altid SYNES på dansk!"},right:{x:20,y:45,word:"tror",sent:"Jeg tror, kaffen er økologiske bønner fra Colombia.",exp:"En hypotese om oprindelsen, som du ikke kan smage dig til med 100% vished."},aha:"Smag og behag = altid SYNES! Oprindelse/fakta = TROR eller VED."},{key:"debat",title:"Avisen og debatten",icon:"📰",left:{x:52,y:55,word:"synes",sent:"Jeg synes, det er anstrengende at sidde i den propfyldte bus.",exp:"Den kropslige oplevelse af larm, trængsel og mangel på siddepladser."},right:{x:52,y:55,word:"mener",sent:"Jeg mener, vi bør investere mere i offentlig transport.",exp:"En principiel, politisk og intellektuel holdning baseret på argumenter og værdier."},aha:'Synes = kropslig oplevelse. Mener = holdning i en debat (kræver ofte et "fordi...").'},{key:"fakta",title:"Uret og køreplanen",icon:"⌚",left:{x:82,y:65,word:"synes",sent:"Jeg synes, bussen altid kommer for sent.",exp:"En følelsesmæssig og subjektiv frustration over ventetiden."},right:{x:82,y:65,word:"ved",sent:"Jeg ved, at bussen kører præcis klokken 20:15 ifølge køreplanen.",exp:"En objektiv kendsgerning, der kan bevises og verificeres sort på hvidt."},aha:"Synes = din subjektive oplevelse. Ved = objektiv, beviselig virkelighed."}],M=[{prompt:"Mmm, den her kage er fantastisk! Hvad ... du?",options:["synes","tror"],correct:"synes",expl:"I spiser begge af kagen og mærker smagen direkte på tungen."},{prompt:"Kommer Mads til festen i aften? Jeg ... det, for han sagde han ville prøve.",options:["synes","tror"],correct:"tror",expl:"Det handler om fremtiden og en uvis formodning."},{prompt:"Jeg har ondt i ryggen. Jeg ... den her stol er for hård.",options:["synes","tror"],correct:"synes",expl:"Kroppen mærker hårdheden direkte mod ryggen."},{prompt:'Politikeren sagde i tv: "Vi ... at skatten skal sænkes for de unge."',options:["mener","synes"],correct:"mener",expl:"Det er en politisk og principiel holdning i samfundsdebatten."},{prompt:"Hvad er klokken? Jeg ... den er cirka 14:30.",options:["tror","ved"],correct:"tror",expl:"Du har ikke kigget på uret endnu, så det er et skøn/gæt."},{prompt:"Hvor mange bor der i Danmark? Jeg ..., der bor omkring 6 millioner.",options:["ved","synes"],correct:"ved",expl:"Befolkningstallet er et objektivt faktum."}],F=document.createElement("style");F.textContent=`
         .sansning-station-view {
             max-width: 1180px;
             margin: 0 auto;
@@ -81024,8 +80978,8 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             margin-left: auto;
             transition: all 0.2s ease;
         }
-    `,t.appendChild(F);const N=document.createElement("div");N.className="ss-top-bar";const k=document.createElement("button");k.className="ss-back-btn",k.innerHTML="← Tilbage til Sansningsoversigten",k.onclick=()=>m("grammatik_sansning"),N.appendChild(k);const E=document.createElement("span");E.className="ss-station-badge",E.innerHTML="Station 6 • Sindets Sansning",N.appendChild(E),t.appendChild(N);const P=document.createElement("div");P.className="ss-hero",P.innerHTML=`
-        <h1>Sindets Sansning: Synes vs. Tror vs. Mener vs. Ved</h1>
+    `,t.appendChild(F);const N=document.createElement("div");N.className="ss-top-bar";const k=document.createElement("button");k.className="ss-back-btn",k.innerHTML=r&&r.from==="overview"?"← Tilbage til sansningsoversigten":"← Tilbage til hovedflade 1",k.onclick=()=>{r&&r.from==="overview"?m("grammatik_sansning"):m("sansning_flade_1")},N.appendChild(k);const E=document.createElement("span");E.className="ss-station-badge",E.innerHTML="Station 6 • Sindets sansning",N.appendChild(E),t.appendChild(N);const P=document.createElement("div");P.className="ss-hero",P.innerHTML=`
+        <h1>Sindets sansning: synes vs. tror vs. mener vs. ved</h1>
         <p>
             På dansk afslører verbet sindets kilde: <strong>Synes</strong> udspringer direkte af kroppens 
             smagsløg, hud og sanser her og nu. <strong>Tror</strong> er hovedets gæt om en uvis fremtid. 
@@ -81033,22 +80987,22 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         </p>
     `,t.appendChild(P);const W=document.createElement("div");W.className="ss-tabs-nav",W.innerHTML=`
         <button class="ss-tab-btn active" data-tab="tab_vrimmel">
-            🖼️ 1. Diktomisk Vrimlebillede (Split-Scene)
+            1. Diktomisk vrimlebillede
         </button>
         <button class="ss-tab-btn" data-tab="tab_quiz">
-            🎯 2. Sanse-Træner: Synes, Tror eller Mener?
+            2. Sanse-træner: synes, tror eller mener?
         </button>
         <button class="ss-tab-btn" data-tab="tab_original">
-            🧠 3. Det Komplette Værksted (Tror/Synes/Mener)
+            3. Det komplette værksted (tror, synes, mener og ved)
         </button>
     `,t.appendChild(W);const ne=document.createElement("div"),I=document.createElement("div");I.className="ss-tab-panel active",I.id="panel-vrimmel",I.innerHTML=`
         <div class="contrast-canvas-card">
             <div class="contrast-control-bar">
                 <span class="contrast-instruction">
-                    👉 Klik på motiverne i venstre eller højre side for at se modsætningen lyse op!
+                    Klik på motiverne i venstre eller højre side for at se modsætningen lyse op!
                 </span>
                 <button class="pure-toggle-btn" id="pure-toggle-btn">
-                    👁️ Vis rent billede
+                    Ren visning: <strong id="pure-status-label">Fra</strong>
                 </button>
             </div>
 
@@ -81056,16 +81010,16 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 <!-- VENSTRE HALVDEL: KROPPENS SANSE-SANDHED (Væren / Synes) -->
                 <div class="stage-half left-half" id="stage-left">
                     <div class="stage-half-header cool">
-                        🔵 Væren: Kroppens sanse-sandhed (Synes)
+                        Venstre: Kroppens sanse-sandhed (synes)
                     </div>
                     <img src="assets/sansning_sindet_venstre.jpg" alt="Kroppens sansning - Synes" class="stage-half-img" />
                     <div id="hotspots-left"></div>
                 </div>
 
-                <!-- HØJRE HALVDEL: HOVEDETS TANKER & VURDERING (Forvandling / Tror & Mener) -->
+                <!-- HØJRE HALVDEL: HOVEDETS TANKER OG VURDERING (Forvandling / Tror, mener og ved) -->
                 <div class="stage-half right-half" id="stage-right">
                     <div class="stage-half-header warm">
-                        🟠 Forvandling: Hovedets tanker & debat (Tror / Mener / Ved)
+                        Højre: Hovedets tanker og debat (tror, mener og ved)
                     </div>
                     <img src="assets/sansning_sindet_hoejre.jpg" alt="Hovedets tanker - Tror, mener, ved" class="stage-half-img" />
                     <div id="hotspots-right"></div>
@@ -81121,10 +81075,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
         <div class="ss-embedded-wrapper" style="background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(6, 182, 212, 0.35); border-radius: 20px; padding: 1.5rem; box-shadow: 0 12px 32px rgba(0,0,0,0.4);">
             <div style="text-align: center; margin-bottom: 1.2rem;">
                 <span style="font-size: 0.85rem; font-weight: 800; color: #67e8f9; text-transform: uppercase;">
-                    Det Komplette Sindets Værksted (100% Bevaret)
+                    Det komplette sindets værksted (100% bevaret)
                 </span>
                 <h2 style="font-size: 1.6rem; margin: 0.3rem 0; color: #ffffff;">
-                    Tror, Synes, Mener & Ved
+                    Tror, synes, mener og ved
                 </h2>
                 <p style="color: #cbd5e1; font-size: 0.95rem; max-width: 720px; margin: 0 auto;">
                     Herunder finder du det fulde originale modul med interaktiv quiz og dybdegående teori.
@@ -81132,11 +81086,10 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             </div>
             <div id="embedded-trorsynes-mount"></div>
         </div>
-    `;const w=C.querySelector("#embedded-trorsynes-mount");wo(w,m,{}),ne.appendChild(C),t.appendChild(ne);const T=I.querySelector("#split-stage"),p=I.querySelector("#hotspots-left"),l=I.querySelector("#hotspots-right"),z=I.querySelector("#hotspots-strip"),y=I.querySelector("#detail-card"),f=I.querySelector("#pure-toggle-btn");f.onclick=()=>{s=!s,s?(T.classList.add("pure-mode"),f.classList.add("active"),f.innerHTML="👁️ Vis hotspots"):(T.classList.remove("pure-mode"),f.classList.remove("active"),f.innerHTML="👁️ Vis rent billede")};function _(){p.innerHTML="",l.innerHTML="",x.forEach((g,v)=>{const j=v===d,H=document.createElement("button");H.className="ss-hotspot",j&&i==="left"&&H.classList.add("active"),j&&i==="right"&&H.classList.add("partner-active"),H.style.left=`${g.left.x}%`,H.style.top=`${g.left.y}%`,H.innerHTML=g.icon,H.title=`${g.left.word} (${g.title})`,H.onclick=Q=>{Q.stopPropagation(),d=v,i="left",_()},p.appendChild(H);const R=document.createElement("button");R.className="ss-hotspot",j&&i==="right"&&R.classList.add("active"),j&&i==="left"&&R.classList.add("partner-active"),R.style.left=`${g.right.x}%`,R.style.top=`${g.right.y}%`,R.innerHTML=g.icon,R.title=`${g.right.word} (${g.title})`,R.onclick=Q=>{Q.stopPropagation(),d=v,i="right",_()},l.appendChild(R)}),z.innerHTML="",x.forEach((g,v)=>{const j=document.createElement("button");j.className=`ss-strip-btn ${v===d?"active":""}`,j.innerHTML=`${g.icon} ${g.left.word} / ${g.right.word}`,j.onclick=()=>{d=v,_()},z.appendChild(j)});const o=x[d],n=i==="left"?o.left:o.right,b=i==="left"?"right":"left";i==="left"?o.right:o.left;const a=i==="left"?`Byt til: ${o.right.word} (Forvandling / Hovedet)`:`Byt til: ${o.left.word} (Væren / Kroppen)`;y.innerHTML=`
+    `;const w=C.querySelector("#embedded-trorsynes-mount");wo(w,m,{}),ne.appendChild(C),t.appendChild(ne);const T=I.querySelector("#split-stage"),p=I.querySelector("#hotspots-left"),l=I.querySelector("#hotspots-right"),z=I.querySelector("#hotspots-strip"),y=I.querySelector("#detail-card"),f=I.querySelector("#pure-toggle-btn");f.onclick=()=>{s=!s;const o=I.querySelector("#pure-status-label");s?(T.classList.add("pure-mode"),f.classList.add("active"),o&&(o.textContent="Til")):(T.classList.remove("pure-mode"),f.classList.remove("active"),o&&(o.textContent="Fra"))};function _(){p.innerHTML="",l.innerHTML="",x.forEach((g,v)=>{const j=v===d,H=document.createElement("button");H.className="ss-hotspot",j&&i==="left"&&H.classList.add("active"),j&&i==="right"&&H.classList.add("partner-active"),H.style.left=`${g.left.x}%`,H.style.top=`${g.left.y}%`,H.innerHTML=g.icon,H.title=`${g.left.word} (${g.title})`,H.onclick=Q=>{Q.stopPropagation(),d=v,i="left",_()},p.appendChild(H);const R=document.createElement("button");R.className="ss-hotspot",j&&i==="right"&&R.classList.add("active"),j&&i==="left"&&R.classList.add("partner-active"),R.style.left=`${g.right.x}%`,R.style.top=`${g.right.y}%`,R.innerHTML=g.icon,R.title=`${g.right.word} (${g.title})`,R.onclick=Q=>{Q.stopPropagation(),d=v,i="right",_()},l.appendChild(R)}),z.innerHTML="",x.forEach((g,v)=>{const j=document.createElement("button");j.className=`ss-strip-btn ${v===d?"active":""}`,j.innerHTML=`${g.icon} ${g.left.word} / ${g.right.word}`,j.onclick=()=>{d=v,_()},z.appendChild(j)});const o=x[d],n=i==="left"?o.left:o.right,b=i==="left"?"right":"left";i==="left"?o.right:o.left;const a=i==="left"?`Skift til: ${o.right.word} (forvandling / hovedet)`:`Skift til: ${o.left.word} (væren / kroppen)`;y.innerHTML=`
             <div class="adj-detail-header">
                 <div class="adj-title-group">
-                    <span style="font-size: 1.8rem;">${o.icon}</span>
-                    <span class="adj-main-word">${n.word.toUpperCase()}</span>
+                    <span class="adj-main-word">${n.word}</span>
                     <span style="color: #94a3b8; font-size: 0.9rem;">(${o.title})</span>
                 </div>
                 <button class="adj-modpol-pill" id="card-swap-btn">
@@ -81147,7 +81100,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
 
             <div class="adj-congruence-grid">
                 <div class="adj-box left ${i==="left"?"active-side":""}">
-                    <span class="adj-box-badge">🔵 Væren: Kroppens sanse-sandhed (Synes)</span>
+                    <span class="adj-box-badge">Venstre: Kroppens sanse-sandhed (synes)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${o.left.sent.replace(o.left.word,`<span class="adj-highlight">${o.left.word}</span>`)}"
@@ -81157,7 +81110,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 </div>
 
                 <div class="adj-box right ${i==="right"?"active-side":""}">
-                    <span class="adj-box-badge">🟠 Forvandling: Hovedets tanker (Tror / Mener / Ved)</span>
+                    <span class="adj-box-badge">Højre: Hovedets tanker (tror, mener og ved)</span>
                     <div class="adj-box-sent-row">
                         <div class="adj-box-sent">
                             "${o.right.sent.replace(o.right.word,`<span class="adj-highlight">${o.right.word}</span>`)}"
@@ -81168,8 +81121,7 @@ import{g as e,a as De,b as oo,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             </div>
 
             <div class="adj-aha-bar">
-                <span style="font-size: 1.3rem;">💡</span>
-                <span><strong>Aha-oplevelse:</strong> ${o.aha}</span>
+                <span><strong>Sanse-nøglen:</strong> ${o.aha}</span>
             </div>
         `,y.querySelector("#card-swap-btn").onclick=()=>{i=b,_()}}_(),W.querySelectorAll(".ss-tab-btn").forEach(o=>{o.onclick=()=>{W.querySelectorAll(".ss-tab-btn").forEach(b=>b.classList.remove("active")),o.classList.add("active");const n=o.getAttribute("data-tab");ne.querySelectorAll(".ss-tab-panel").forEach(b=>b.classList.remove("active")),n==="tab_vrimmel"&&I.classList.add("active"),n==="tab_quiz"&&ee.classList.add("active"),n==="tab_original"&&C.classList.add("active")}}),c.appendChild(t)}function yl(c,m,r={}){const t=document.createElement("div");t.className="view-container mit-sprog-sammenlignet-view";const d=document.createElement("style");d.textContent=`
         .mit-sprog-sammenlignet-view {

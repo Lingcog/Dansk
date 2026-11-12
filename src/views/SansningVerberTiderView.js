@@ -150,6 +150,18 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
             options: ['havde været', 'var blevet'],
             correct: 'var blevet',
             expl: 'Nyheden udløste et øjeblikkeligt omslag i stemningen.'
+        },
+        {
+            prompt: 'Kik på billedet af vores stue lige nu: Jeg ... allerede en stor portion aftensmad og er mæt nu.',
+            options: ['har spist (nærhed/nu)', 'spiste (lukket fortid i kikkerten)'],
+            correct: 'har spist (nærhed/nu)',
+            expl: 'Førnutid ("har spist") har direkte relevans for situationen her og nu: du står mæt foran kameraet.'
+        },
+        {
+            prompt: 'Når du fortæller om din barndom sidste sommerferie på Bornholm: Vi ... gode venner dengang i 2018.',
+            options: ['har været (nærhed/nu)', 'var (lukket kikkert på afstand)'],
+            correct: 'var (lukket kikkert på afstand)',
+            expl: 'Datid ("var") lukker kameraets kikkert omkring et afsluttet historisk tidspunkt på afstand.'
         }
     ];
 
@@ -648,19 +660,23 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
     backBtn.className = 'ss-back-btn';
     backBtn.innerHTML = (extraData && extraData.from === 'overview')
         ? '← Tilbage til sansningsoversigten'
-        : '← Tilbage til hovedflade 1';
+        : (extraData && extraData.from === 'flade1')
+            ? '← Tilbage til hovedflade 1'
+            : '← Tilbage til hovedflade 2';
     backBtn.onclick = () => {
         if (extraData && extraData.from === 'overview') {
             navigateFn('grammatik_sansning');
-        } else {
+        } else if (extraData && extraData.from === 'flade1') {
             navigateFn('sansning_flade1');
+        } else {
+            navigateFn('sansning_flade2');
         }
     };
     topBar.appendChild(backBtn);
 
     const badge = document.createElement('span');
     badge.className = 'ss-station-badge';
-    badge.innerHTML = `Station 2 • Tidens sansning`;
+    badge.innerHTML = `Station 2.3 • Tempus og tidens rum`;
     topBar.appendChild(badge);
 
     viewContainer.appendChild(topBar);
@@ -669,12 +685,24 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
     const hero = document.createElement('div');
     hero.className = 'ss-hero';
     hero.innerHTML = `
-        <h1>Tidens sansning: "havde været" vs. "var blevet"</h1>
+        <h1>Tempus og tidens rum: nærhed (nu) vs. kikkerten (datid)</h1>
         <p>
-            Oplev tidernes kontrast side om side: 
-            <strong>Venstre side</strong> viser tilstanden der herskede i ro (<em>"Vejret havde været koldt i et stykke tid"</em>), 
-            mens <strong>højre side</strong> viser selve forvandlingen da bilen kørte ind (<em>"Vejret var blevet koldt"</em>).
+            <strong>Nutid og førnutid</strong> placerer kameraet lige foran dig her og nu, mens <strong>datid og førdatid</strong>
+            lukker et historisk univers inde i kikkerten på afstand. På vrimlebilledet ser du desuden den fine kontrast mellem
+            tilstanden der herskede i ro (<em>"havde været koldt"</em>) og omslaget der indtraf (<em>"var blevet koldt"</em>).
         </p>
+        <div style="max-width: 860px; margin: 1rem auto 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.85rem; text-align: left;">
+            <div style="background: #5C0812; border: 1.5px solid #38bdf8; border-radius: 14px; padding: 0.9rem 1.1rem;">
+                <div style="font-size: 0.78rem; font-weight: 800; color: #38bdf8; text-transform: uppercase; margin-bottom: 0.25rem;">Nærhed: Kameraet her og nu</div>
+                <div style="color: #ffffff; font-weight: 700; font-size: 0.96rem;">Nutid og førnutid ("Jeg spiser" / "Jeg har spist")</div>
+                <div style="color: #FFC9CD; font-size: 0.84rem; margin-top: 0.25rem;">Scenen lever lige foran dig, eller fortidens resultat rækker direkte ind i dit nu.</div>
+            </div>
+            <div style="background: #5C0812; border: 1.5px solid #fb923c; border-radius: 14px; padding: 0.9rem 1.1rem;">
+                <div style="font-size: 0.78rem; font-weight: 800; color: #fb923c; text-transform: uppercase; margin-bottom: 0.25rem;">Afstand: Den lukkede kikkert</div>
+                <div style="color: #ffffff; font-weight: 700; font-size: 0.96rem;">Datid og førdatid ("Jeg spiste" / "Vejret havde været koldt")</div>
+                <div style="color: #FFC9CD; font-size: 0.84rem; margin-top: 0.25rem;">Tidsklokken er lukket. Du kigger gennem kikkerten ind i et afsluttet rum i fortiden.</div>
+            </div>
+        </div>
     `;
     viewContainer.appendChild(hero);
 
@@ -783,12 +811,12 @@ export function renderSansningVerberTiderView(container, navigateFn, extraData =
                 </div>
 
                 <div class="ss-quiz-options">
-                    <button class="ss-quiz-opt-btn" data-val="havde været">
-                        havde været (stabil tilstand i fortid)
-                    </button>
-                    <button class="ss-quiz-opt-btn" data-val="var blevet">
-                        var blevet (selve forvandlingen/omslaget)
-                    </button>
+                    ${q.options.map(opt => {
+                        let label = opt;
+                        if (opt === 'havde været') label = 'havde været (stabil tilstand i fortid)';
+                        if (opt === 'var blevet') label = 'var blevet (selve forvandlingen/omslaget)';
+                        return `<button class="ss-quiz-opt-btn" data-val="${opt}">${label}</button>`;
+                    }).join('')}
                 </div>
 
                 <div class="ss-quiz-feedback" id="quiz-feedback"></div>

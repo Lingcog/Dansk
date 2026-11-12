@@ -121,6 +121,11 @@ import { renderVerberKraftHvileView } from './views/VerberKraftHvileView.js';
 import { renderVerberLiggerLaeserView } from './views/VerberLiggerLaeserView.js';
 import { renderGrammatikSansningView } from './views/GrammatikSansningView.js';
 import { renderSansningFlade1DynamikView } from './views/SansningFlade1DynamikView.js';
+import { renderSansningFlade2RumTidView } from './views/SansningFlade2RumTidView.js';
+import { renderSansningIPaaView } from './views/SansningIPaaView.js';
+import { renderSansningDenneDenView } from './views/SansningDenneDenView.js';
+import { renderSansningSinHansView } from './views/SansningSinHansView.js';
+import { renderSansningSocialDeiksisView } from './views/SansningSocialDeiksisView.js';
 import { renderSansningVaereBliveView } from './views/SansningVaereBliveView.js';
 import { renderSansningFormMasseView } from './views/SansningFormMasseView.js';
 import { renderSansningAspektMaadeView } from './views/SansningAspektMaadeView.js';
@@ -565,6 +570,16 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
       renderSansningVaereBliveView(appDiv, navigate, extraData);
     } else if (sub === 'flade1' || sub === 'dynamik') {
       renderSansningFlade1DynamikView(appDiv, navigate, extraData);
+    } else if (sub === 'flade2' || sub === 'rum_tid') {
+      renderSansningFlade2RumTidView(appDiv, navigate, extraData);
+    } else if (sub === 'i_paa' || sub === 'station2_1') {
+      renderSansningIPaaView(appDiv, navigate, extraData);
+    } else if (sub === 'denne_den' || sub === 'station2_2') {
+      renderSansningDenneDenView(appDiv, navigate, extraData);
+    } else if (sub === 'sin_hans' || sub === 'station2_5') {
+      renderSansningSinHansView(appDiv, navigate, extraData);
+    } else if (sub === 'social_deiksis' || sub === 'station2_6') {
+      renderSansningSocialDeiksisView(appDiv, navigate, extraData);
     } else if (sub === 'form_masse' || sub === 'masse' || sub === 'station1_3') {
       renderSansningFormMasseView(appDiv, navigate, extraData);
     } else if (sub === 'aspekt_maade' || sub === 'aspekt' || sub === 'station1_5') {
@@ -595,6 +610,71 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     }
     appState.currentView = 'sansning_flade1';
     renderSansningFlade1DynamikView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_flade2' || viewTarget === 'flade2_rum_tid') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = 'sansning_flade2';
+    renderSansningFlade2RumTidView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_i_paa' || viewTarget === 'i_paa') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = 'sansning_i_paa';
+    renderSansningIPaaView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_denne_den' || viewTarget === 'denne_den') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = 'sansning_denne_den';
+    renderSansningDenneDenView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_sin_hans' || viewTarget === 'sin_hans') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = 'sansning_sin_hans';
+    renderSansningSinHansView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_social_deiksis' || viewTarget === 'social_deiksis') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = 'sansning_social_deiksis';
+    renderSansningSocialDeiksisView(appDiv, navigate, extraData);
   } else if (viewTarget === 'sansning_form_masse' || viewTarget === 'form_masse') {
     const isLocalhost = typeof window !== 'undefined' && (
       window.location.hostname === 'localhost' ||

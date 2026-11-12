@@ -322,9 +322,9 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
                 </button>
             </div>
 
-            <div class="gs-hovedflade-card">
+            <div class="gs-hovedflade-card active-flade" id="btn-open-flade2">
                 <div>
-                    <span class="gs-hf-tag planned">Næste fase</span>
+                    <span class="gs-hf-tag ready">Aktiv</span>
                     <h3 class="gs-hf-title">Flade 2: Rum, tid og relationer</h3>
                     <p class="gs-hf-sub">Hvor står mit kamera? Nærhed i hånden vs. afstand i kikkerten.</p>
                     <ul class="gs-hf-bullets">
@@ -333,8 +333,12 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
                         <li>Nutid vs. datid (scenen vs. kikkerten)</li>
                         <li>Hjemme vs. hjem (zonen vs. tærsklen)</li>
                         <li>Sin vs. hans (kroppens intime sfære)</li>
+                        <li>Social deiksis (nærhed vs. høflighedsbuffer)</li>
                     </ul>
                 </div>
+                <button class="gs-hf-btn">
+                    Åbn hovedflade 2 →
+                </button>
             </div>
 
             <div class="gs-hovedflade-card">
@@ -370,6 +374,10 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
     const openFlade1Btn = realmsSection.querySelector('#btn-open-flade1');
     if (openFlade1Btn) {
         openFlade1Btn.onclick = () => navigateFn('sansning_flade1');
+    }
+    const openFlade2Btn = realmsSection.querySelector('#btn-open-flade2');
+    if (openFlade2Btn) {
+        openFlade2Btn.onclick = () => navigateFn('sansning_flade2');
     }
     viewContainer.appendChild(realmsSection);
 

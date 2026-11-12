@@ -762,19 +762,23 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
     backBtn.className = 'ss-back-btn';
     backBtn.innerHTML = (extraData && extraData.from === 'overview')
         ? '← Tilbage til sansningsoversigten'
-        : '← Tilbage til hovedflade 1';
+        : (extraData && extraData.from === 'flade1')
+            ? '← Tilbage til hovedflade 1'
+            : '← Tilbage til hovedflade 2';
     backBtn.onclick = () => {
         if (extraData && extraData.from === 'overview') {
             navigateFn('grammatik_sansning');
-        } else {
+        } else if (extraData && extraData.from === 'flade1') {
             navigateFn('sansning_flade1');
+        } else {
+            navigateFn('sansning_flade2');
         }
     };
     topBar.appendChild(backBtn);
 
     const badge = document.createElement('span');
     badge.className = 'ss-station-badge';
-    badge.innerHTML = `Station 5 • Rummet og tærsklen`;
+    badge.innerHTML = `Station 2.4 • Rummet og tærsklen`;
     topBar.appendChild(badge);
 
     viewContainer.appendChild(topBar);

@@ -22,15 +22,15 @@ export function renderSansningAspektMaadeView(container, navigateFn, extraData =
             title: 'Læsning i stuen',
             icon: '📖',
             left: {
-                x: 35,
-                y: 55,
+                x: 24,
+                y: 50,
                 word: 'ligger og læser',
                 sent: 'Mads ligger og læser avisen i sofaen.',
                 exp: 'Dobbeltverbet "ligger og..." viser en uafgrænset, fredfyldt dvælen over tid. Kroppen er i total hvile.'
             },
             right: {
-                x: 35,
-                y: 55,
+                x: 43,
+                y: 37,
                 word: 'sætter sig til at læse',
                 sent: 'Mads sætter sig til at læse ved skrivebordet.',
                 exp: '"Sætter sig til at..." markerer et bevidst skift i kroppens retning og handling. En ny proces sættes i gang med vilje.'
@@ -47,15 +47,15 @@ export function renderSansningAspektMaadeView(container, navigateFn, extraData =
             title: 'Kroppens tempo og fart',
             icon: '🏃',
             left: {
-                x: 18,
-                y: 40,
+                x: 80,
+                y: 60,
                 word: 'går langsomt',
                 sent: 'Bedstefar går langsomt gennem haven og tænker.',
                 exp: 'Mådesadverbiet "langsomt" dæmper muskelkraften. Kroppen bevæger sig i lavt gear i stilhed.'
             },
             right: {
-                x: 18,
-                y: 40,
+                x: 81,
+                y: 71,
                 word: 'løber hurtigt',
                 sent: 'Drengen løber hurtigt hen over stien.',
                 exp: 'Adverbiet "hurtigt" pumper fart og dynamisk energi ind i verbet. Hvert skridt kræver kraft.'
@@ -69,18 +69,18 @@ export function renderSansningAspektMaadeView(container, navigateFn, extraData =
         },
         {
             key: 'doer',
-            title: 'Dørens åbning (Diatese)',
+            title: 'Dørens åbning (diatese)',
             icon: '🚪',
             left: {
-                x: 72,
-                y: 30,
+                x: 60,
+                y: 49,
                 word: 'døren åbnes',
                 sent: 'Døren åbnes automatisk kl. 8.',
                 exp: 'S-passiv lader handlingen ske som et roligt naturfænomen uden en synlig menneskelig person bag.'
             },
             right: {
-                x: 72,
-                y: 30,
+                x: 61,
+                y: 49,
                 word: 'manden åbner døren',
                 sent: 'Manden åbner døren med håndtaget.',
                 exp: 'Aktiv diatese viser agentens muskulære arm og kropslige indgreb, der skubber døren op.'
@@ -97,15 +97,15 @@ export function renderSansningAspektMaadeView(container, navigateFn, extraData =
             title: 'Husets natur vs. aftryk',
             icon: '🏡',
             left: {
-                x: 82,
-                y: 65,
+                x: 72,
+                y: 28,
                 word: 'et rødt hus',
                 sent: 'Familien bor i et rødt murstenshus.',
                 exp: 'Et rent adjektiv beskriver tingen som den er i sin iboende, hvilende natur.'
             },
             right: {
-                x: 82,
-                y: 65,
+                x: 72,
+                y: 28,
                 word: 'et malet hus',
                 sent: 'Huset står som et nymalet hus efter sommerferien.',
                 exp: 'Kort tillægsform (participium) bærer arret og aftrykket af en forvandling: nogen har malet det!'
@@ -122,15 +122,15 @@ export function renderSansningAspektMaadeView(container, navigateFn, extraData =
             title: 'Katten og stilheden',
             icon: '🐾',
             left: {
-                x: 52,
-                y: 72,
+                x: 27,
+                y: 73,
                 word: 'sover roligt',
                 sent: 'Katten sover roligt på det varme gulvtæppe.',
                 exp: 'Ingen uventede ryk. Kroppens vejrtrækning er dyb og uforstyrret.'
             },
             right: {
-                x: 52,
-                y: 72,
+                x: 27,
+                y: 58,
                 word: 'springer pludselig op',
                 sent: 'Katten springer pludselig op efter en flue.',
                 exp: 'Hvilen brydes af et eksplosivt retningsskift i et splitsekund.'
@@ -846,15 +846,14 @@ export function renderSansningAspektMaadeView(container, navigateFn, extraData =
         if (currentQuestionIdx >= quizQuestions.length) {
             panelQuiz.innerHTML = `
                 <div class="ss-quiz-card" style="text-align: center;">
-                    <span style="font-size: 3rem;">🎉</span>
                     <h2 style="font-size: 1.8rem; margin: 0.5rem 0 1rem; color: #38bdf8;">
-                        Træningsbane Gennemført!
+                        Træningsbane gennemført!
                     </h2>
                     <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                         Du fik <strong>${quizScore}</strong> ud af <strong>${quizQuestions.length}</strong> rigtige!
                     </p>
                     <button class="ss-quiz-opt-btn" id="restart-quiz-btn" style="display: inline-block; width: auto; padding: 0.8rem 2rem;">
-                        🔄 Prøv igen
+                        Prøv igen
                     </button>
                 </div>
             `;

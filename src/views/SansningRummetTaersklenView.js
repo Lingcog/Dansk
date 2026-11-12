@@ -767,7 +767,7 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
         if (extraData && extraData.from === 'overview') {
             navigateFn('grammatik_sansning');
         } else {
-            navigateFn('sansning_flade_1');
+            navigateFn('sansning_flade1');
         }
     };
     topBar.appendChild(backBtn);
@@ -873,15 +873,14 @@ export function renderSansningRummetTaersklenView(container, navigateFn, extraDa
         if (currentQuestionIdx >= quizQuestions.length) {
             panelQuiz.innerHTML = `
                 <div class="ss-quiz-card" style="text-align: center;">
-                    <span style="font-size: 3rem;">🎉</span>
                     <h2 style="font-size: 1.8rem; margin: 0.5rem 0 1rem; color: #a78bfa;">
-                        Træningsbane Gennemført!
+                        Træningsbane gennemført!
                     </h2>
                     <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                         Du fik <strong>${quizScore} af ${quizQuestions.length}</strong> rigtige!
                     </p>
                     <button class="ss-back-btn" id="btn-restart-quiz" style="margin: 0 auto; background: #7c3aed;">
-                        🔄 Tag træningsbanen igen
+                        Tag træningsbanen igen
                     </button>
                 </div>
             `;

@@ -902,15 +902,14 @@ export function renderSansningFormMasseView(container, navigateFn, extraData = {
         if (currentQuestionIdx >= quizQuestions.length) {
             panelQuiz.innerHTML = `
                 <div class="ss-quiz-card" style="text-align: center;">
-                    <span style="font-size: 3rem;">🎉</span>
                     <h2 style="font-size: 1.8rem; margin: 0.5rem 0 1rem; color: #38bdf8;">
-                        Træningsbane Gennemført!
+                        Træningsbane gennemført!
                     </h2>
                     <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                         Du fik <strong>${quizScore}</strong> ud af <strong>${quizQuestions.length}</strong> rigtige!
                     </p>
                     <button class="ss-quiz-opt-btn" id="restart-quiz-btn" style="display: inline-block; width: auto; padding: 0.8rem 2rem;">
-                        🔄 Prøv igen
+                        Prøv igen
                     </button>
                 </div>
             `;

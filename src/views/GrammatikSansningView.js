@@ -392,6 +392,83 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             width: 8px;
             opacity: 1;
         }
+
+        /* Dual-Thumbnail Split Image on Cards */
+        .gs-card-split-preview {
+            width: 100%;
+            height: 140px;
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            position: relative;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            background: #0f172a;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        }
+        .gs-card-preview-half {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        .gs-card-preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.35s ease;
+        }
+        .gs-station-card:hover .gs-card-preview-img {
+            transform: scale(1.06);
+        }
+        .gs-card-preview-label {
+            position: absolute;
+            bottom: 6px;
+            font-size: 0.68rem;
+            font-weight: 900;
+            padding: 2px 7px;
+            border-radius: 6px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1;
+        }
+        .gs-card-preview-half.left .gs-card-preview-label {
+            left: 6px;
+            background: rgba(14, 116, 144, 0.88);
+            color: #7dd3fc;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+        }
+        .gs-card-preview-half.right .gs-card-preview-label {
+            right: 6px;
+            background: rgba(194, 65, 12, 0.88);
+            color: #fed7aa;
+            border: 1px solid rgba(251, 146, 60, 0.4);
+        }
+        .gs-card-preview-divider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.35);
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gs-card-preview-badge {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            color: #fde68a;
+            font-size: 0.65rem;
+            font-weight: 900;
+            border-radius: 999px;
+            padding: 2px 5px;
+            line-height: 1;
+        }
         .gs-station-head {
             display: flex;
             justify-content: space-between;
@@ -967,7 +1044,9 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             tilstandSent: 'Kaffen er kold.',
             forvandlingLabel: 'Forvandling',
             forvandlingSent: 'Kaffen bliver kold.',
-            vrimmel: 'Hverdagsstuen & Terrassen'
+            vrimmel: 'Hverdagsstuen & Terrassen',
+            leftImg: 'assets/sansning_vaere_venstre.jpg',
+            rightImg: 'assets/sansning_blive_hoejre.jpg'
         },
         {
             id: 'kraft_hvile',
@@ -981,7 +1060,9 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             tilstandSent: 'Bogen ligger / Vasen står på hylden.',
             forvandlingLabel: 'Håndens kraft',
             forvandlingSent: 'Jeg lægger bogen / stiller vasen.',
-            vrimmel: 'Stuen & Arbejdsværelset'
+            vrimmel: 'Stuen & Arbejdsværelset',
+            leftImg: 'assets/sansning_kraft_hvile_venstre.jpg',
+            rightImg: 'assets/sansning_kraft_hvile_hoejre.jpg'
         },
         {
             id: 'form_masse',
@@ -995,7 +1076,9 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             tilstandSent: 'Der er koldt vand og mel.',
             forvandlingLabel: 'Tællelig form',
             forvandlingSent: 'Hun køber en flaske og to æbler.',
-            vrimmel: 'Bageriet & Køkkenbordet'
+            vrimmel: 'Bageriet & Køkkenbordet',
+            leftImg: 'assets/sansning_masse_venstre.jpg',
+            rightImg: 'assets/sansning_form_hoejre.jpg'
         },
         {
             id: 'har_er',
@@ -1009,7 +1092,9 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             tilstandSent: 'Huset er malet / Hun er cyklet på arbejde.',
             forvandlingLabel: 'Aktivitet / Har',
             forvandlingSent: 'Malerne har malet / Hun har cyklet i skoven.',
-            vrimmel: 'Det Travle Kvarter & Gaden'
+            vrimmel: 'Det Travle Kvarter & Gaden',
+            leftImg: 'assets/sansning_har_er_venstre.jpg',
+            rightImg: 'assets/sansning_har_er_hoejre.jpg'
         },
         {
             id: 'aspekt_maade',
@@ -1023,7 +1108,9 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             tilstandSent: 'Mads ligger og læser / går langsomt.',
             forvandlingLabel: 'Retningsskift & Fart',
             forvandlingSent: 'Mads sætter sig til at læse / løber hurtigt.',
-            vrimmel: 'Havestuen & Terrassen'
+            vrimmel: 'Havestuen & Terrassen',
+            leftImg: 'assets/sansning_aspekt_venstre.jpg',
+            rightImg: 'assets/sansning_aspekt_hoejre.jpg'
         },
         {
             id: 'rummet_taersklen',
@@ -1037,7 +1124,9 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             tilstandSent: 'Vi hygger os hjemme / inde i varmen.',
             forvandlingLabel: 'Krydser tærsklen',
             forvandlingSent: 'Vi tager hjem / går ind i stuen.',
-            vrimmel: 'Huset, Døren & Haven'
+            vrimmel: 'Huset, Døren & Haven',
+            leftImg: 'assets/sansning_rummet_venstre.jpg',
+            rightImg: 'assets/sansning_rummet_hoejre.jpg'
         },
         {
             id: 'verbernes_tider',
@@ -1051,7 +1140,9 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             tilstandSent: 'Vejret havde været koldt længe.',
             forvandlingLabel: 'Var blevet',
             forvandlingSent: 'Vejret var blevet koldt, da bilen ankom.',
-            vrimmel: 'Vinterhuset & Indkørslen'
+            vrimmel: 'Vinterhuset & Indkørslen',
+            leftImg: 'assets/sansning_verber_tider_venstre.jpg',
+            rightImg: 'assets/sansning_verber_tider_hoejre.jpg'
         },
         {
             id: 'sindets_sansning',
@@ -1065,7 +1156,9 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             tilstandSent: 'Jeg synes, kaffen smager bittert.',
             forvandlingLabel: 'Hjernen gætter',
             forvandlingSent: 'Jeg tror, kaffen er økologisk.',
-            vrimmel: 'Middagsbordet & Samtalen'
+            vrimmel: 'Middagsbordet & Samtalen',
+            leftImg: 'assets/sansning_sindet_venstre.jpg',
+            rightImg: 'assets/sansning_sindet_hoejre.jpg'
         }
     ];
 
@@ -1097,6 +1190,21 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
 
             card.innerHTML = `
                 <div>
+                    <!-- Split Thumbnail Vrimlebillede direkte på kortet -->
+                    <div class="gs-card-split-preview" title="Klik for at åbne ${st.title}">
+                        <div class="gs-card-preview-half left">
+                            <img src="${st.leftImg}" alt="Væren" class="gs-card-preview-img" />
+                            <span class="gs-card-preview-label">🔵 Tilstand</span>
+                        </div>
+                        <div class="gs-card-preview-divider">
+                            <span class="gs-card-preview-badge">VS</span>
+                        </div>
+                        <div class="gs-card-preview-half right">
+                            <img src="${st.rightImg}" alt="Forvandling" class="gs-card-preview-img" />
+                            <span class="gs-card-preview-label">🟠 Forvandling</span>
+                        </div>
+                    </div>
+
                     <div class="gs-station-head">
                         <div class="gs-station-number">${st.num}</div>
                         <div class="gs-station-tag">${st.tag}</div>

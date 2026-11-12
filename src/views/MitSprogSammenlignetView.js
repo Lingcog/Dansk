@@ -306,12 +306,12 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
     `;
     viewContainer.appendChild(style);
 
-    // Languages for comparison (Dansk, Kinesisk og Arabisk fuldt understøttet)
+    // Languages for comparison (Dansk, Arabisk, Kinesisk og Engelsk fuldt understøttet)
     const LANGUAGES = [
         { code: 'da', name: 'Dansk', flag: '🇩🇰' },
+        { code: 'en', name: 'Engelsk (English)', flag: '🇬🇧' },
         { code: 'ar', name: 'Arabisk (العربية)', flag: '🇸🇦' },
         { code: 'zh', name: 'Kinesisk (中文)', flag: '🇨🇳' },
-        { code: 'en', name: 'Engelsk (English)', flag: '🇬🇧' },
         { code: 'tr', name: 'Tyrkisk (Türkçe)', flag: '🇹🇷' },
         { code: 'uk', name: 'Ukrainsk (Українська)', flag: '🇺🇦' },
         { code: 'de', name: 'Tysk (Deutsch)', flag: '🇩🇪' },
@@ -321,7 +321,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
     ];
 
     const appLang = getLang();
-    let selectedLang = localStorage.getItem('mss_selected_lang') || (appLang === 'ar' ? 'ar' : (appLang === 'zh' ? 'zh' : 'da'));
+    let selectedLang = localStorage.getItem('mss_selected_lang') || (appLang === 'ar' ? 'ar' : (appLang === 'zh' ? 'zh' : (appLang === 'en' ? 'en' : 'da')));
 
     // Parse step and language from extraData.subPath or window.location.hash
     let initialStepIdx = null;
@@ -335,7 +335,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
     try {
         const rawHash = window.location.hash.replace(/^#\/?/, '').split('?')[0];
         const segs = rawHash.split('/');
-        if (segs[0] === 'ar' || segs[0] === 'zh' || segs[0] === 'da') {
+        if (segs[0] === 'ar' || segs[0] === 'zh' || segs[0] === 'da' || segs[0] === 'en') {
             selectedLang = segs[0];
         }
         const idx = segs.findIndex(s => s === 'mit_sprog_sammenlignet');
@@ -357,16 +357,19 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title: 'Lille lydforskel',
             title_zh: '微小的发音细节 (Lille lydforskel)',
             title_ar: 'فارق صوتي دقيق يغير المعنى (Lille lydforskel)',
+            title_en: 'Subtle Sound Shifts (Lille lydforskel)',
             subtitle: 'En lille ændring i munden eller et lille stop i stemmen, der ændrer hele ordets betydning',
             subtitle_zh: '改变意思的微小动作（嘴唇是圆是扁 / 喉咙踩刹车 stød / 语调高低）',
             subtitle_ar: 'حركة صغيرة في الشفاه أو فرملة سريعة في الحنجرة تقلب معنى الكلمة بالكامل',
+            subtitle_en: 'A tiny shift in lip shape or vocal brake that flips the whole word’s meaning',
             color: '#38bdf8',
             widthPct: 38,
             daLine: `Læberne spidses som til et kys + lille stop i stemmen i <span class="mss-hl-da">brøʼd</span> vs. <span class="mss-hl-da">bred</span> (smilende flade læber)`,
             daLine_zh: 'brøʼd（嘴唇向前嘟圆 + 喉咙像打嗝般短暂停顿，面包）vs. bred（嘴角拉平微笑，宽阔）',
             daLine_ar: 'brøʼd (ضم الشفتين للأمام كأنك تقبّل + فرملة صوتية قصيرة في الحلق) مقابل bred (ابتسامة عريضة مع بسط الشفتين)',
+            daLine_en: 'brøʼd (lips rounded firmly forward into a kiss + vocal brake / stød) vs. bred (smiling flat lips, wide)',
             myLines: {
-                en: `<span class="mss-hl-my">bread [bɹɛd]</span> — Engelsk har hverken runde læbevokaler som y/ø eller det danske stød.`,
+                en: `<span class="mss-hl-my">bread [bɹɛd]</span> — English has standard vowels and no stød. Danish has 20+ distinct vowel sounds with strict lip positions: round kissy lips (<strong>ø, y</strong>) vs. wide smiling lips (<strong>e, i</strong>), plus the quick throat brake (<strong>stød</strong>) that separates words like <em>hun</em> (she) from <em>hundʼ</em> (dog).`,
                 ar: `<span class="mss-hl-my">خبز (khubz)</span> — في العربية توجد 3 حركات أساسية فقط (فتحة، ضمة، كسرة)، ولا توجد حركات تزم فيها الشفتين وتدفعهما بقوة للأمام كأنك تقبّل مثل <strong>ø و y</strong>؛ كما لا توجد فرملة الصوت السريعة (stød) التي توقف الكلمة فجأة في الحلق.`,
                 tr: `<span class="mss-hl-my">ekmek (ø findes: ö/ü)</span> — Tyrkisk har ö og ü ligesom dansk ø/y, men intet stød.`,
                 uk: `<span class="mss-hl-my">хліб (khlib)</span> — Ukrainsk har ikke rundede læbevokaler (ø/y) eller dansk stød.`,
@@ -377,19 +380,21 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 zh: `<span class="mss-hl-my">面包 (miànbāo)</span> — 汉语是用<strong>四声声调</strong>（一声到四声）区分意思，没有丹麦语那种“喉咙突然刹车”（stød）；而且汉语普通话缺少像丹麦语 <strong>ø 和 y</strong> 这样把嘴唇用力向前嘟圆的母音。`
             },
             myLines_da: {
+                en: `Engelsk skelner ikke med stød (bruger tryk og intonation) og mangler stramt læberundede forvokaler som <strong>ø og y</strong>.`,
                 zh: `Kinesisk skelner betydning med <strong>toner</strong> frem for stød, og mangler vokaler med stramt spidsede læber som <strong>ø og y</strong>.`,
                 ar: `Arabisk har 3 grundvokaler (a, i, u) og mangler helt runde læbevokaler som <strong>ø og y</strong> samt det danske stød (den hurtige stemmebremse i halsen).`
             },
             detailExplain: `<strong>Lille lydforskel:</strong> Den allermindste detalje i munden kan forandre hele ordets betydning — f.eks. om du spidser læberne som til et kys (<em>brød</em>) eller trækker mundvigene til et smil (<em>bred</em>), om lyden holdes kort eller trækkes ud, eller om der er <strong>stød</strong> (et lille stop i stemmen, som et mini-hik: <em>hun</em> vs. <em>hundʼ</em>).`,
             detailExplain_zh: `<strong>微小的发音细节（Lille lydforskel）：</strong>嘴里哪怕只有一丁点动作不同，整个词的意思就彻底变了！比如：嘴唇是像要亲吻一样用力嘟圆（<em>brød</em> 面包），还是嘴角向两边拉开微笑（<em>bred</em> 宽阔）；或者声音有没有<strong>突然被踩了一脚刹车（stød，像轻微打嗝一样短暂停顿）</strong>：<em>hun</em>（她，平顺滑出）vs. <em>hundʼ</em>（狗，有短促刹车）。汉语则是用四个声调的高低升降来区分字词。`,
             detailExplain_ar: `<strong>فارق صوتي دقيق يغير المعنى (Lille lydforskel):</strong> في الدنماركية، حركة صغيرة جداً في شفتيك أو لسانك تقلب معنى الكلمة 180 درجة! على سبيل المثال: هل تزم شفتيك وتدفعهما بقوة للأمام كأنك تقبّل (<em>brød</em> خبز)، أم تبسط شفتيك كأنك تبتسم (<em>bred</em> عريض)؟ وهل تدع الصوت ينساب براحة، أم تضغط فرملة مفاجئة في الحلق مثل شهقة خفيفة سريعة (<strong>stød</strong>)؟ مثل الفرق بين <em>hun</em> (هي - بانسياب) و <em>hundʼ</em> (كلب - مع فرملة صوتية سريعة). في العربية، الفروق تعتمد على الحركات الثلاث والمد بالألف والواو والياء.`,
+            detailExplain_en: `<strong>Subtle Sound Shifts (Lille lydforskel):</strong> In Danish, the tiniest mouth gesture flips the entire meaning of a word! English speakers face two key phonetic tools they aren't used to:<br><br>1) <strong>Lip Posture (Kissy Lips vs. Smiles):</strong> Danish strictly distinguishes whether your lips are tightly pushed forward like giving a kiss (<em>brød</em> bread, <em>lys</em> light) or pulled back in a relaxed smile (<em>bred</em> wide, <em>lis</em>). Flattening your lips turns "candle/light" (<em>lys</em>) into a girl's name (<em>Lis</em>)!<br><br>2) <strong>The Danish Stød (The Vocal Brake):</strong> A sudden, gentle brake in your vocal cords — like a mini-hiccup or stepping on the brakes mid-syllable. It differentiates words like <em>hun</em> (she, smooth) from <em>hundʼ</em> (dog, with brake), or <em>bønner</em> (beans) from <em>bønderʼ</em> (farmers). English uses tone and stress, but never cuts vowels with a stød.`,
             morePairs: [
-                { da: 'lys (spidsede læber som til et kys) vs. lis (smilende flade læber)', note: 'Kun læbernes form adskiller ordet "lys" fra pigenavnet "Lis".', note_zh: '仅靠嘴唇是嘟圆还是展平，就能区分“光”和一个女孩的名字。', note_ar: 'مجرد ضم الشفتين للأمام أو بسطهما يفرق بين كلمة "ضوء" (lys) واسم الفتاة "Lis".' },
-                { da: 'måler (uden stød) vs. målʼer (med stød)', note: 'Det lille stop i stemmen (stødet) kan skelne mellem ord og bøjninger.', note_zh: '喉咙里那个短促的小刹车（stød），是丹麦语区分单复数和词性的神奇小开关。', note_ar: 'فرملة الصوت السريعة في الحلق (stød) هي مفتاح سحري في الدنماركية للتفريق بين الكلمات المفردة والجمع والمشتقات.' }
+                { da: 'lys (spidsede læber som til et kys) vs. lis (smilende flade læber)', note: 'Kun læbernes form adskiller ordet "lys" fra pigenavnet "Lis".', note_zh: '仅靠嘴唇是嘟圆还是展平，就能区分“光”和一个女孩的名字。', note_ar: 'مجرد ضم الشفتين للأمام أو بسطهما يفرق بين كلمة "ضوء" (lys) واسم الفتاة "Lis".', note_en: 'Only the shape of your lips separates the word "light" (lys) from the girl\'s name "Lis".' },
+                { da: 'måler (uden stød) vs. målʼer (med stød)', note: 'Det lille stop i stemmen (stødet) kan skelne mellem ord og bøjninger.', note_zh: '喉咙里那个短促的小刹车（stød），是丹麦语区分单复数和词性的神奇小开关。', note_ar: 'فرملة الصوت السريعة في الحلق (stød) هي مفتاح سحري في الدنماركية للتفريق بين الكلمات المفردة والجمع والمشتقات.', note_en: 'The quick vocal brake (stød) acts as an essential switch between word forms and meanings.' }
             ],
             links: [
-                { label: '🎵 Leg med vokaler', label_zh: '🎵 趣味元音辨析 (Leg med vokaler)', label_ar: '🎵 تمييز حركات الفم والأصوات (Leg med vokaler)', route: 'leg_med_vokaler' },
-                { label: '⚡ Det danske stød', label_zh: '⚡ 丹麦语发音小停顿 (Det danske stød)', label_ar: '⚡ فرملة الصوت السريعة الدنماركية (Det danske stød)', route: 'det_danske_stoed' }
+                { label: '🎵 Leg med vokaler', label_zh: '🎵 趣味元音辨析 (Leg med vokaler)', label_ar: '🎵 تمييز حركات الفم والأصوات (Leg med vokaler)', label_en: '🎵 Play with vowels (Leg med vokaler)', route: 'leg_med_vokaler' },
+                { label: '⚡ Det danske stød', label_zh: '⚡ 丹麦语发音小停顿 (Det danske stød)', label_ar: '⚡ فرملة الصوت السريعة الدنماركية (Det danske stød)', label_en: '⚡ The Danish Stød (Det danske stød)', route: 'det_danske_stoed' }
             ]
         },
         {
@@ -397,16 +402,19 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title: 'Sproglyden',
             title_zh: '具体的发音动作 (Sproglyden)',
             title_ar: 'حركة الفم ومخرج الصوت (Sproglyden)',
+            title_en: 'Mouth Position & Sound Physics (Sproglyden)',
             subtitle: 'Hvor tungen er og hvordan luften slipper ud (f.eks. blødt d og L vs. N)',
             subtitle_zh: '舌头具体放在哪、空气从哪边溜出（如擦眼镜哈气发软 d，以及 L 与 N 的区别）',
             subtitle_ar: 'أين يرتاح اللسان وكيف يهرب الهواء (مثل حرف d الناعم وحرف r من قاع الحلق)',
+            subtitle_en: 'Where the tongue rests and how air escapes: soft d (breath on glasses) & the deep throat r',
             color: '#60a5fa',
             widthPct: 44,
             daLine: `brø<span class="mss-hl-da">d</span> — Tungespidsen hviler fladt mod undertænderne (ånde på brillerne)`,
             daLine_zh: 'brød（舌尖平平贴在下门牙背面，像擦眼镜轻轻哈气一样发出软 d 音）',
             daLine_ar: 'brød (اللسان يرتاح مسطحاً خلف الأسنان السفلية مع إخراج هواء دافئ مثل مسح نظاراتك)',
+            daLine_en: 'brød (tongue rests flat against bottom teeth — breathing on glasses) vs. dag (hard d tapping front teeth)',
             myLines: {
-                en: `brea<span class="mss-hl-my">d [d]</span> — Engelsk har lyden i "the/brother", men skriver den som th, ikke d.`,
+                en: `brea<span class="mss-hl-my">d [d]</span> — English has a hard d at the end of "bread", and uses the tongue between the teeth for "the/weather" [ð]. Danish soft d (<strong>blødt d</strong>) is completely different: never stick your tongue out! Keep it flat behind your lower front teeth and blow warm air like misting a pair of glasses (<em>brø...d, ma...d</em>). And Danish <strong>r</strong> comes deep from the throat like a crow’s call (<em>rød, ris</em>) — never curling the tip of the tongue!`,
                 ar: `<span class="mss-hl-my">خبز</span> — في الدنماركية حرف <strong>d الناعم</strong> ليس حرف الذال (ذ) ولا يخرج بين الأسنان أبداً! دعه يرتاح مسطحاً خلف الأسنان السفلية واخرج هواءً دافئاً كأنك تمسح نظاراتك. وحرف <strong>r الدنماركي</strong> يخرج عميقاً من قاع الحلق مثل صوت الغراب (قاع الحلق كالغين) وليس بدحرجة طرف اللسان كالراء العربية.`,
                 tr: `ekmek — Tyrkisk udtaler altid d som fast [d]; det bløde danske d skal trænes særskilt.`,
                 uk: `хліб — Ukrainsk har kun fast [d]; det bløde danske d findes ikke.`,
@@ -417,6 +425,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 zh: `<span class="mss-hl-my">面包 (miànbāo)</span> — 汉语没有丹麦语特有的软 d（就像擦眼镜轻轻哈一口热气，舌头平躺在下牙背，千万别碰上颚！）。此外，发 <strong>L</strong> 时舌尖顶住上牙后但两边嘴角漏风；发 <strong>N</strong> 时嘴巴彻底关门，所有空气全从鼻孔挤出来！`
             },
             myLines_da: {
+                en: `Engelsktalende bruger ofte hårdt d i udlyd (som i "bread") eller stikker tungen mellem tænderne som i "weather". Dansk blødt d laves med tungen fladt mod undertænderne (ånde på brillerne). Dansk r laves i svælget frem for med krøllet tungespids.`,
                 zh: `Kinesisk mangler blødt d (ånde på brillerne), og har en stor udfordring med at skelne <strong>L</strong> (mundvigeluft) og <strong>N</strong> (næseluft).`,
                 ar: `Arabisk ذ (dhāl) laves mellem tænderne, men dansk blødt d laves ved at ånde lunt på brillerne med tungen mod undertænderne. Dansk r er dybt i halsen (som en krages kraa eller غ) modsat arabisk tungespids-r.`
             },
@@ -426,13 +435,14 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
 1) <strong>حرف d الناعم (Blødt d):</strong> أكبر فخ للناطقين بالعربية هو نطقه مثل الذال (ذ) بإخراج اللسان بين الأسنان! الطريقة الصحيحة: افعل تماماً كما تفعل عندما تنفخ هواءً دافئاً على عدسات نظاراتك لتنظيفها، مع ترك طرف اللسان مسترخياً ومسطحاً خلف الأسنان السفلية، ودع الهواء ينساب بكسل: <em>ma...d</em>، <em>brø...d</em> دون أن يلمس سقف الحلق إطلاقاً!<br><br>
 2) <strong>حرف r الدنماركي:</strong> لا يُنطق بدحرجة طرف اللسان كالراء العربية (ر)، بل يخرج من قاع الحلق كصوت غراب ينادي "كراا"، وهو قريب جداً من مخرج حرف الغين (غ) في كلمة "غراب".<br><br>
 3) <strong>الفرق بين P و B:</strong> حرف P الدنماركي يخرج مع انفجار قوي للهواء يحرك ورقة أمام فمك (<em>pære</em> كمثرى)، بينما B هادئ وناعم (<em>bære</em> يحمل).`,
+            detailExplain_en: `<strong>Mouth Position & Sound Physics (Sproglyden):</strong> The exact placement of your tongue, lips, and airflow. In Danish, letters change their physical sound completely depending on where they sit in a word:<br><br>1) <strong>The Soft d (Det bløde d):</strong> The #1 trap for English speakers! Many either pronounce it as a hard d (like in English "bread") or stick their tongue between their teeth like in English "the" or "weather". Don’t do either! Keep your tongue tip resting flat and relaxed against the back of your bottom front teeth. Let warm air glide lazily over the tongue without touching the roof of your mouth: <em>ma...d</em>, <em>brø...d</em>. Do exactly what you do when blowing warm breath onto your glasses before wiping them clean!<br><br>2) <strong>The Danish Throat r:</strong> English r curls the tip of the tongue backwards without touching the palate. Danish r is produced deep in the back of your throat, like a crow calling "kraa" (similar to a French or German gargled r: <em>rød, ris</em>). At the end of words (<em>mor, lærer</em>), the consonant vanishes into an open, relaxed vowel.<br><br>3) <strong>The Paper Test (P vs. B):</strong> Hold a sheet of paper before your lips: when saying Danish <em>pære</em>, a sharp burst of air blows the paper forward; with <em>bære</em>, the paper stays calm.`,
             morePairs: [
-                { da: 'dag (hårdt d i starten) ↔ brød / mad (blødt d som at ånde på briller)', note: 'Samme bogstav, to vidt forskellige måder at bevæge munden på.', note_zh: '同一个字母 d，在词首是舌尖轻点，在词尾则是像擦眼镜哈气一样的软 d！', note_ar: 'حرف d في بداية الكلمة (dag) ينطق بطرقة طرف اللسان، أما في آخر الكلمة (brød) فهو ناعم كالنفخ على النظارات!' },
-                { da: 'pære (kraftig p-eksplosion) ↔ bære (blid b-lyd)', note: 'Hold et papir foran munden: ved p flyver papiret, ved b står det helt stille.', note_zh: '拿张纸放在嘴前：发 p 时纸片被气流吹飞，发 b 时纸片保持不动。', note_ar: 'ضع ورقة أمام فمك: مع p الدنماركية تطير الورقة باندفاع الهواء، ومع b تبقى ثابتة.' }
+                { da: 'dag (hårdt d i starten) ↔ brød / mad (blødt d som at ånde på briller)', note: 'Samme bogstav, to vidt forskellige måder at bevæge munden på.', note_zh: '同一个字母 d，在词首是舌尖轻点，在词尾则是像擦眼镜哈气一样的软 d！', note_ar: 'حرف d في بداية الكلمة (dag) ينطق بطرقة طرف اللسان، أما في آخر الكلمة (brød) فهو ناعم كالنفخ على النظارات!', note_en: 'The same letter "d", two totally different ways to move your mouth: sharp tap in front, warm lazy breath at the end.' },
+                { da: 'pære (kraftig p-eksplosion) ↔ bære (blid b-lyd)', note: 'Hold et papir foran munden: ved p flyver papiret, ved b står det helt stille.', note_zh: '拿张纸放在嘴前：发 p 时纸片被气流吹飞，发 b 时纸片保持不动。', note_ar: 'ضع ورقة أمام فمك: مع p الدنماركية تطير الورقة باندفاع الهواء، ومع b تبقى ثابتة.', note_en: 'Hold a piece of paper in front of your mouth: at "p" the paper flies; at "b" it stands still.' }
             ],
             links: [
-                { label: '🔤 Træn bogstaver & lyde', label_zh: '🔤 字母与发音训练 (Træn bogstaver)', label_ar: '🔤 تدريب الحروف والأصوات (Træn bogstaver)', route: 'traen_bogstaver' },
-                { label: '🎙️ Leg med udtale', label_zh: '🎙️ 趣味口语发音 (Leg med udtale)', label_ar: '🎙️ تدريب النطق التفاعلي (Leg med udtale)', route: 'leg_med_udtale' }
+                { label: '🔤 Træn bogstaver & lyde', label_zh: '🔤 字母与发音训练 (Træn bogstaver)', label_ar: '🔤 تدريب الحروف والأصوات (Træn bogstaver)', label_en: '🔤 Practice letters & sounds (Træn bogstaver)', route: 'traen_bogstaver' },
+                { label: '🎙️ Leg med udtale', label_zh: '🎙️ 趣味口语发音 (Leg med udtale)', label_ar: '🎙️ تدريب النطق التفاعلي (Leg med udtale)', label_en: '🎙️ Pronunciation challenges (Leg med udtale)', route: 'leg_med_udtale' }
             ]
         },
         {
@@ -440,16 +450,19 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title: 'Stavelsen & rytmen',
             title_zh: '音节与节奏打拍 (Stavelsen & rytmen)',
             title_ar: 'نبض الكلمة وإيقاع الخبط والبلع (Stavelsen & rytmen)',
+            title_en: 'Syllable Pulse & Swallowed Endings (Stavelsen & rytmen)',
             subtitle: 'Ordets puls, hovedtrykket og de dovne, slugte endelser',
             subtitle_zh: '前重后轻的敲击节奏，与嘴巴懒得动的“轻快吞音”',
             subtitle_ar: 'خبطة قوية في البداية، وبقية المقاطع تُبلع برقة وسرعة',
+            subtitle_en: 'Punching the first beat and mumbling or swallowing unstressed endings',
             color: '#818cf8',
             widthPct: 51,
             daLine: `<span class="mss-hl-da">køk</span>-ke-net ➔ Udtales i 2 hurtige slag: første stavelse slås fast, resten mumles`,
             daLine_zh: 'køkkenet（日常快速口语只打 2 拍：词头用力敲，后面像滑滑梯一样轻轻滑过）',
             daLine_ar: 'køkkenet (في الكلام السريع تسمع خبطتين فقط: køk-net؛ المقطع الأوسط يبتلعه اللسان)',
+            daLine_en: 'køkkenet ➔ Spoken in only 2 swift beats: heavy stomp on "køk-", trailing off into "-net"',
             myLines: {
-                en: `<span class="mss-hl-my">kit-chen</span> — Engelsk svækker også tryksvage stavelser ligesom dansk.`,
+                en: `<span class="mss-hl-my">kit-chen</span> — English also reduces unstressed syllables to schwa, but Danish goes much further: it punches the first stressed syllable with maximum energy and lazily swallows unstressed endings (-e, -et, -er), turning a 3-syllable written word like <em>køkkenet</em> into two swift beats (<em>køk-net</em>).`,
                 ar: `<span class="mss-hl-my">الْـمَـطْـبَـخ (al-mat-bakh)</span> — في العربية كل حرف ومقطع صوتي ينال حقه كاملاً من النطق الواضح دون بلع للنهايات. أما الدنماركي فيضرب ضربة قوية في بداية الكلمة، ثم يبتلع النهاية بتكاسل. واحذر من إضافة كسرة خفيفة بين الحروف الساكنة في النهاية (قل: koldt مثل قفل الباب بحزم، ولا تقل kold-te).`,
                 tr: `<span class="mss-hl-my">mut-fak-ta</span> — Tyrkisk giver næsten lige meget plads til hver stavelse med vokalharmoni.`,
                 uk: `<span class="mss-hl-my">на кух-ні (na kukh-ni)</span> — Alle vokaler i stavelserne udtales klart og tydeligt.`,
@@ -460,6 +473,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 zh: `<span class="mss-hl-my">厨-房 (chú-fáng)</span> — 汉字字字清晰、每个字都有饱满的音调；但丹麦语说话像打节拍，力量全砸在第一个主要重音上，后面的小尾巴（如 -e, -et, -er）会像滑滑梯一样懒洋洋含糊带过，甚至直接被吞掉！`
             },
             myLines_da: {
+                en: `Engelsk svækker også tryksvage stavelser, men dansk sluger ofte hele endelser og smelter konsonanter sammen i hurtig tale.`,
                 zh: `Hvert kinesisk tegn står som en fast kile med sin egen tone; dansk banker til på første stavelse og lader resten smuldre dovent eller blive slugt.`,
                 ar: `I arabisk udtales alle stavelser med fuld vægt. På dansk trampes der hårdt på første stavelse, mens endelser sluges. Pas på ikke at indsætte små ekstra vokaler mellem konsonanter (sig koldt, ikke kold-te).`
             },
@@ -467,13 +481,14 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             detailExplain_zh: `<strong>节奏与音节（Stavelsen & rytmen）：</strong>丹麦语说话有强烈的<strong>节奏敲击感</strong>：说话人会把浑身力气重重砸在词头（如 <strong>køk-</strong>），而后面的 <em>-e-</em> 弱音节就像嘴巴懒得动一样，变成一声轻飘飘、含糊的小短音，甚至跟后面的辅音粘在一起直接吞掉。初学丹麦语的中国人最容易习惯性把每个字音节都读得饱满，但要想说得地道，就必须学会“前重后轻、大胆吞音”！`,
             detailExplain_ar: `<strong>نبض الكلمة وإيقاع الخبط والبلع (Stavelsen & rytmen):</strong> الدنماركية لغة إيقاعية تعتمد على نبضات متباعدة: المتحدث يفرغ طاقته في خبطة قوية في بداية الكلمة (<strong>køk-</strong>)، أما المقاطع اللاحقة مثل <em>-e-</em> أو <em>-et</em> فيتعامل معها الفم بكسل شديد ويبلعها حتى تختفي تقريباً (فتبدو كلمة <em>køkkenet</em> في الكلام السريع كأنها خطوتان وليست ثلاث خطوات).<br><br>
 نصيحة ذهبية للناطقين بالعربية: لا تضع حركات قصيرة مساعدة بين الحروف الساكنة المتتالية في آخر الكلمة، بل اقفل الكلمة بحزم كأنك تغلق باباً (قل <em>koldt</em> بضربة واحدة حازمة، ولا تقل <em>kold-te</em>).`,
+            detailExplain_en: `<strong>Syllable Pulse & Rhythm (Stavelsen & rytmen):</strong> When speaking Danish, words are grouped into rhythmic beats. Danes unload their energy into a firm, heavy stomp on the first stressed syllable (<strong>køk-</strong>). The rest of the word (<em>-e-, -et, -er</em>) is mumbled so lazily and effortlessly that vowels often vanish in everyday conversation (making <em>køkkenet</em> feel like two quick steps rather than three). While English speakers naturally try to pronounce each syllable distinctly, natural Danish sounds much more authentic when you hit the first beat and let the endings slide away.`,
             morePairs: [
-                { da: 'spi-ser → [ˈsbisɐ] (r smelter sammen med e)', note: 'Endelsen -er udtales som én kort, åben lyd uden modstand.', note_zh: '写出来是两个音节，实际说话时 -er 融合成一口气轻轻带过。', note_ar: 'كلمة spiser تُكتب بمقطعين، لكنها تُنطق عملياً بنَفَس واحد مستمر دون دحرجة الراء.' },
-                { da: 'køk-ke-net → 3 skrevne stavelser, men kun 2 talte slag', note: 'Det midterste -e- forsvinder helt i hverdagssproget.', note_zh: '书面上是三个音节，快速日常说话时中间的 -e- 直接被吞掉，变成两个节拍！', note_ar: 'في الكتابة køk-ke-net ثلاث مقاطع، لكن في الحديث السريع تُبلع الـ -e- الوسطى كلياً وتتحول إلى خبطتين!' }
+                { da: 'spi-ser → [ˈsbisɐ] (r smelter sammen med e)', note: 'Endelsen -er udtales som én kort, åben lyd uden modstand.', note_zh: '写出来是两个音节，实际说话时 -er 融合成一口气轻轻带过。', note_ar: 'كلمة spiser تُكتب بمقطعين، لكنها تُنطق عملياً بنَفَس واحد مستمر دون دحرجة الراء.', note_en: 'Written as two syllables, spoken as one smooth breath where -er melts into an open vowel.' },
+                { da: 'køk-ke-net → 3 skrevne stavelser, men kun 2 talte slag', note: 'Det midterste -e- forsvinder helt i hverdagssproget.', note_zh: '书面上是三个音节，快速日常说话时中间的 -e- 直接被吞掉，变成两个节拍！', note_ar: 'في الكتابة køk-ke-net ثلاث مقاطع، لكن في الحديث السريع تُبلع الـ -e- الوسطى كلياً وتتحول إلى خبطتين!', note_en: 'Three written syllables, but only two spoken beats in everyday Danish as the middle -e- vanishes.' }
             ],
             links: [
-                { label: '📖 Læsetræning & rytme', label_zh: '📖 语流节奏与朗读训练 (Læsetræning)', label_ar: '📖 تدريب القراءة وإيقاع الكلام (Læsetræning)', route: 'laesetraening' },
-                { label: '🎙️ Træn udtale', label_zh: '🎙️ 口语发音训练 (Træn udtale)', label_ar: '🎙️ تدريب النطق الشفهي (Træn udtale)', route: 'traen_udtale' }
+                { label: '📖 Læsetræning & rytme', label_zh: '📖 语流节奏与朗读训练 (Læsetræning)', label_ar: '📖 تدريب القراءة وإيقاع الكلام (Læsetræning)', label_en: '📖 Reading practice & rhythm (Læsetræning)', route: 'laesetraening' },
+                { label: '🎙️ Træn udtale', label_zh: '🎙️ 口语发音训练 (Træn udtale)', label_ar: '🎙️ تدريب النطق الشفهي (Træn udtale)', label_en: '🎙️ Spoken pronunciation (Træn udtale)', route: 'traen_udtale' }
             ]
         },
         {
@@ -481,16 +496,19 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title: 'Ordets byggesten',
             title_zh: '拼装积木与小尾巴 (Ordets byggesten)',
             title_ar: 'قطع الليغو والذيل الملتصق بالكلمة (Ordets byggesten)',
+            title_en: 'Word Building Blocks & The Definite Tail (Ordets byggesten)',
             subtitle: 'Stammen og endelsen (f.eks. brød + et = brødet, spise + r = spiser)',
             subtitle_zh: '主干核心词 + 粘在屁股后面的功能小尾巴（如 brød + et = brødet）',
             subtitle_ar: 'جذر الكلمة وذيول التعريف التي تلتصق بآخره (مثل: køkken + et = køkkenet)',
+            subtitle_en: 'Core stems and attached endings (e.g. brød + et = brødet, spise + r = spiser)',
             color: '#a78bfa',
             widthPct: 58,
             daLine: `køkken + <span class="mss-hl-da">-et</span> (den bestemte hale limes bag på ordet)`,
             daLine_zh: 'køkken + -et（想指“特定的那个厨房”，丹麦语把小尾巴 -et 牢牢粘在词尾）',
             daLine_ar: 'køkken + -et (ذيل التعريف يلتصق بظهر الكلمة مباشرة)',
+            daLine_en: 'køkken + -et (the definite article "the" is a magnetic tail clamped onto the back of the word)',
             myLines: {
-                en: `<span class="mss-hl-my">the</span> + kitchen — Bestemthed er et selvstændigt ord foran navneordet.`,
+                en: `<span class="mss-hl-my">the + kitchen</span> — In English, "the" is always an independent word placed in FRONT of the noun. In Danish, definiteness ("the") is a little magnetic tail (<strong>-en</strong> or <strong>-et</strong>) clamped directly onto the BACK of the noun: <em>et køkken</em> (a kitchen) ➔ <em>køkken<strong>et</strong></em> (the kitchen).`,
                 ar: `<span class="mss-hl-my">الـ + مطبخ</span> — في العربية أداة التعريف "الـ" توضع دائماً في <em>مقدمة</em> الكلمة (المطبخ). أما في الدنماركية، فأداة التعريف ليست كلمة منفصلة في البداية، بل هي <strong>ذيل صغير (-en أو -et)</strong> يلتصق كالمغناطيس في مؤخرة الكلمة!`,
                 tr: `mutfak + <span class="mss-hl-my">-ta</span> (i køkkenet) — Tyrkisk sætter sted-endelsen (-da/-ta) bag på ordet, men har ingen bestemt artikel.`,
                 uk: `<span class="mss-hl-my">кухні (ingen artikel)</span> — Ukrainsk har slet ikke bestemte artikler.`,
@@ -501,19 +519,21 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 zh: `<span class="mss-hl-my">厨房（不用在词尾贴尾巴）</span> — 汉语不需要在词尾贴额外的小尾巴来表示“这一个”或“复数”，而是直接用“这/那”或者大家心里明白的上下文；丹麦语则把 <strong>-en / -et / -ne</strong> 像磁铁一样直接吸在单词屁股后面！`
             },
             myLines_da: {
+                en: `Engelsk sætter "the" foran navneordet; dansk limer bestemthed som en hale (-en/-et) bag på ordet.`,
                 zh: `Kinesisk klistrer ikke små haler bag på ordet for "den bestemte" eller "flere", men bruger ord som "denne/dette" eller lader sammenhængen klare det.`,
                 ar: `Arabisk sætter bestemthed foran ordet som "al-", mens dansk klistrer en lille hale (-en/-et) bag på navneordet.`
             },
             detailExplain: `<strong>Ordets byggesten:</strong> Ord er samlet som legoklodser: en grundstamme (ordets kerne) plus små haler, der klikkes på. På dansk viser man for eksempel, at man taler om en helt bestemt ting ved at lime en lille hale (<strong>-en</strong> eller <strong>-et</strong>) bag på navneordet: <em>et køkken → køkken<strong>et</strong></em> (køkken + et).`,
             detailExplain_zh: `<strong>单词的小积木（Ordets byggesten）：</strong>单词就像可以拆装的乐高积木：一块是核心主干，后面插上各种功能性的小尾巴。丹麦语最特别的习惯就是<strong>把“这一个（定指）”做成小尾巴直接粘在屁股上</strong>：比如 <em>et køkken（一个厨房）→ køkken<strong>et</strong>（这个特定的厨房）</em>，把 <strong>-en / -et / -ne</strong> 像小尾巴一样吸上去。汉语没有这种粘尾巴的习惯，都是独立说“这个厨房”或直接看语境。`,
             detailExplain_ar: `<strong>قطع الليغو وذيول الكلمات (Ordets byggesten):</strong> الكلمات تُبنى كقطع الليغو: جذر أساسي وقطع صغيرة تلتصق به لتغير وظيفته. في الدنماركية، الطريقة المعتادة لقول "هذا الشيء المحدد والمعروف" ليست وضع "الـ" في البداية كما في العربية، بل لصق ذيل صغير (<strong>-en</strong> أو <strong>-et</strong>) في آخر الكلمة مباشرة: <em>et køkken (مطبخ ما) ← køkken<strong>et</strong> (المطبخ بعينه)</em>، أو <em>et brød (خبز) ← brød<strong>et</strong> (الخبز المحدد)</em>.`,
+            detailExplain_en: `<strong>Word Building Blocks (Ordets byggesten):</strong> Words are assembled like Lego blocks: a core stem plus functional tails snapped into place. On Danish nouns, showing that you are talking about a specific, known object is done by gluing a tail (<strong>-en</strong> or <strong>-et</strong>) to the back:<br><br>• <strong>Indefinite (a/an):</strong> <em>et køkken</em> (a kitchen) / <em>et brød</em> (a loaf of bread)<br>• <strong>Definite (the):</strong> <em>køkken<strong>et</strong></em> (the kitchen) / <em>brød<strong>et</strong></em> (the bread)<br>• <strong>Plural (the ...s):</strong> <em>køkken<strong>erne</strong></em> (the kitchens) / <em>brød<strong>ene</strong></em> (the breads).<br><br>English speakers must resist the urge to invent a separate "the" in front: always look for the tail on the back!`,
             morePairs: [
-                { da: 'et køkken ➔ køkkenet (endelsen -et limes på bagtil)', note: 'Bestemthed på dansk laves med en hale (-en/-et) i stedet for et foranstillet ord.', note_zh: '丹麦语把“这一个（定指）”做成小尾巴 -en/-et 粘在词尾，而不是像中文一样放在前面。', note_ar: 'التعريف في الدنماركية يلتصق كذيل (-en/-et) في آخر الكلمة بدلاً من وضعه في المقدمة كـ "الـ" في العربية.' },
-                { da: 'køkkener (flere) ➔ køkkenerne (de bestemte køkkener)', note: 'I flertal limes flertals-halen på først (-er), og derefter bestemtheds-halen (-ne).', note_zh: '复数时先贴复数小积木 (-er)，再贴定指小尾巴 (-ne)。', note_ar: 'في صيغة الجمع تلتصق علامة الجمع أولاً (-er)، ثم يلتصق ذيل التعريف (-ne).' }
+                { da: 'et køkken ➔ køkkenet (endelsen -et limes på bagtil)', note: 'Bestemthed på dansk laves med en hale (-en/-et) i stedet for et foranstillet ord.', note_zh: '丹麦语把“这一个（定指）”做成小尾巴 -en/-et 粘在词尾，而不是像中文一样放在前面。', note_ar: 'التعريف في الدنماركية يلتصق كذيل (-en/-et) في آخر الكلمة بدلاً من وضعه في المقدمة كـ "الـ" في العربية.', note_en: 'Definiteness in Danish is an attached tail (-en/-et) rather than a separate word in front.' },
+                { da: 'køkkener (flere) ➔ køkkenerne (de bestemte køkkener)', note: 'I flertal limes flertals-halen på først (-er), og derefter bestemtheds-halen (-ne).', note_zh: '复数时先贴复数小积木 (-er)，再贴定指小尾巴 (-ne)。', note_ar: 'في صيغة الجمع تلتصق علامة الجمع أولاً (-er)، ثم يلتصق ذيل التعريف (-ne).', note_en: 'In the plural, the plural brick (-er) attaches first, followed by the definite tail (-ne).' }
             ],
             links: [
-                { label: '🏷️ Navneord & bestemthed', label_zh: '🏷️ 名词与定指尾巴 (Bestemthed)', label_ar: '🏷️ الأسماء وذيول التعريف (Bestemthed)', route: 'bestemthed' },
-                { label: '📦 Top 100 Substantiver', label_zh: '📦 常用前100个名词 (Top 100 Substantiver)', label_ar: '📦 أهم 100 اسم في الدنماركية (Substantiver)', route: 'top100_substantiver' }
+                { label: '🏷️ Navneord & bestemthed', label_zh: '🏷️ 名词与定指尾巴 (Bestemthed)', label_ar: '🏷️ الأسماء وذيول التعريف (Bestemthed)', label_en: '🏷️ Nouns & the definite tail (Bestemthed)', route: 'bestemthed' },
+                { label: '📦 Top 100 Substantiver', label_zh: '📦 常用前100个名词 (Top 100 Substantiver)', label_ar: '📦 أهم 100 اسم في الدنماركية (Substantiver)', label_en: '📦 Top 100 Danish Nouns (Substantiver)', route: 'top100_substantiver' }
             ]
         },
         {
@@ -521,16 +541,19 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title: 'Hele ordet',
             title_zh: '完整单词与词语分工 (Hele ordet)',
             title_ar: 'الكلمة الكاملة وعملها (Hele ordet)',
+            title_en: 'The Whole Word: Verbs & Welded Compounds (Hele ordet)',
             subtitle: 'Hvad ordet gør, sammensatte ord og hvorfor handlinger er så enkle',
             subtitle_zh: '动作词、名字词，以及两个词像电焊一样焊在一起的长词',
             subtitle_ar: 'الفعل البسيط المريح الذي لا يتغير مع الضمائر، والكلمات الملحومة معاً',
+            subtitle_en: 'No verb endings for person (spiser for everyone!), but compounds are welded with zero spaces',
             color: '#c084fc',
             widthPct: 65,
             daLine: `jeg / du / han / vi <span class="mss-hl-da">spiser</span> (Præcis samme form til ALLE personer!)`,
             daLine_zh: 'jeg / du / han / vi spiser（不管是“我、你、他、我们”，动作词的样子完全一样，超级省心！）',
             daLine_ar: 'jeg / du / han / vi / de spiser (نفس شكل الفعل تماماً مع كل الضمائر، مريح للغاية!)',
+            daLine_en: 'jeg / du / han / vi / de spiser (Exact same verb form for EVERY person!)',
             myLines: {
-                en: `I <span class="mss-hl-my">eat</span> / she <span class="mss-hl-my">eats</span> — Skifter stadig ved 3. person ental (-s).`,
+                en: `I <span class="mss-hl-my">eat</span> / she <span class="mss-hl-my">eats</span> — English still adds an -s for 3rd person singular ("he eats"). In Danish, present tense verbs are identical for EVERY pronoun (<em>spiser</em> for all!). However: Danish has NO continuous -ing form ("I am eating" is NOT *Jeg er spiser), and Danish welds compound nouns together into single words with zero spaces (<em>rug + brød = rugbrød</em>).`,
                 ar: `<span class="mss-hl-my">آكلُ / تأكلُ / يأكلُ / نأكلُ</span> — في العربية يتغير شكل الفعل مع كل ضمير حسب المفرد والمثنى والجمع والمذكر والمؤنث. أما في الدنماركية، فالفعل واحد ولا يتغير أبداً مع أي شخص (spiser للجميع)! لكن تذكر دائماً ألا تنسى الضمير (jeg/vi)، ولا تنسَ فعل الكينونة "er" (قل: Jeg er træt، ولا تقل Jeg træt كما في جملة "أنا متعب").`,
                 tr: `<span class="mss-hl-my">yiyorum / yiyorsun / yiyor</span> — Person-endelsen sidder direkte på verbet.`,
                 uk: `<span class="mss-hl-my">я їм / ти їси / він їсть</span> — Handlingen skifter form for hver eneste person.`,
@@ -541,6 +564,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 zh: `我 / 你 / 他 / 我们 <strong>吃 (chī)</strong> — 这一点中文和丹麦语简直是孪生兄弟：不管是谁在做动作，动词的样子从头到尾绝不改变，完全不用记麻烦的“我吃你吃他吃各不同”！`
             },
             myLines_da: {
+                en: `Engelsk bøjer verbet i 3. person (he eats); på dansk hedder det spiser for ALLE. Til gengæld mangler dansk den engelske -ing form, og sammensatte ord SKAL svejses sammen uden mellemrum (rugbrød).`,
                 zh: `Ligesom på dansk ændrer kinesiske verber sig aldrig efter personen!`,
                 ar: `Arabiske verber ændrer form efter person, køn og tal. På dansk hedder det spiser for ALLE. Til gengæld må man aldrig glemme kopulaverbet "er" i nutid (Jeg er træt).`
             },
@@ -551,14 +575,15 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
 1) لأن الفعل لا يتغير، لا يمكنك حذف الضمير؛ يجب أن تذكر دائماً الفاعل (<em>jeg</em>, <em>vi</em> إلخ).<br>
 2) لا توجد في الدنماركية جملة اسمية بدون فعل! في العربية نقول ببساطة: "أنا جائع" أو "الطقس جميل"؛ في الدنماركية إياك أن تنسى فعل الكينونة (<strong>er</strong>): <em>Jeg <strong>er</strong> sulten</em> و <em>Vejret <strong>er</strong> godt</em>.<br><br>
 وأخيراً، الدنماركية تعشق لحام الكلمات معاً في كلمة واحدة طويلة بدون مسافة: <em>rug + brød = rugbrød</em> (خبز الجاودار).`,
+            detailExplain_en: `<strong>The Whole Word (Hele ordet):</strong> Looking at the completed word. In Danish, present tense verbs are a wonderful relief: <em><strong>spiser</strong></em> stays 100% identical whether the subject is <em>jeg</em> (I), <em>du</em> (you), <em>han</em> (he), <em>hun</em> (she), <em>vi</em> (we), <em>I</em> (you all), or <em>de</em> (they)! There is no "-s" ending for he/she.<br><br>⚠️ <strong>Two Vital Traps for English Speakers:</strong><br>1) <strong>No "-ing" form:</strong> English speakers often translate "I am eating" word-for-word into *\*Jeg er spiser*. This is completely ungrammatical in Danish! Simply say: <em>"Jeg spiser brød"</em> (or <em>"Jeg sidder og spiser brød"</em> if you want to stress the ongoing activity).<br>2) <strong>Welded Compound Words:</strong> English writes compound nouns as separate words: <em>rye bread, bus stop, kitchen table</em>. Danish welds them tightly together with no spaces: <em>rugbrød, busstoppested, køkkenbord</em>. Splitting words with a space often changes the meaning completely!`,
             morePairs: [
-                { da: 'rug + brød = rugbrød (ét sammensat ord)', note: 'Dansk limer ord sammen uden mellemrum – med mellemrum betyder det noget helt andet!', note_zh: '丹麦语极其喜欢把两个词紧紧焊接在一起，中间绝不留空格！', note_ar: 'الدنماركية تلحم كلمتين معاً كالقطعة الواحدة بدون فراغ: rugbrød (خبز أسمر). وضع مسافة يغير المعنى تماماً!' },
-                { da: 'spiser (nutid) ↔ spiste (datid) ↔ har spist (førnutid)', note: 'Kun tiden ændrer verbets form — aldrig hvem der gør det.', note_zh: '只有时间（现在还是过去）会改变动词样子，谁来做动作绝不影响它！', note_ar: 'الزمن فقط هو ما يغير الفعل (spiser في الحاضر، spiste في الماضي)، وليس من قام بالفعل.' }
+                { da: 'rug + brød = rugbrød (ét sammensat ord)', note: 'Dansk limer ord sammen uden mellemrum – med mellemrum betyder det noget helt andet!', note_zh: '丹麦语极其喜欢把两个词紧紧焊接在一起，中间绝不留空格！', note_ar: 'الدنماركية تلحم كلمتين معاً كالقطعة الواحدة بدون فراغ: rugbrød (خبز أسمر). وضع مسافة يغير المعنى تماماً!', note_en: 'Danish glues compound nouns together without spaces — adding a space changes the meaning or creates an error!' },
+                { da: 'spiser (nutid) ↔ spiste (datid) ↔ har spist (førnutid)', note: 'Kun tiden ændrer verbets form — aldrig hvem der gør det.', note_zh: '只有时间（现在还是过去）会改变动词样子，谁来做动作绝不影响它！', note_ar: 'الزمن فقط هو ما يغير الفعل (spiser في الحاضر، spiste في الماضي)، وليس من قام بالفعل.', note_en: 'Only tense (present, past) changes the verb — never the person who performs the action.' }
             ],
             links: [
-                { label: '⚡ Verbernes tider', label_zh: '⚡ 动词时态规律 (Verbernes tider)', label_ar: '⚡ أزمنة الأفعال وقواعدها (Verbernes tider)', route: 'verber_grammatik' },
-                { label: '🏃 Top 100 Verber', label_zh: '🏃 常用前100个动词 (Top 100 Verber)', label_ar: '🏃 أهم 100 فعل في الدنماركية (Top 100 Verber)', route: 'top100_verber' },
-                { label: '📦 Top 100 Substantiver', label_zh: '📦 常用前100个名词 (Top 100 Substantiver)', label_ar: '📦 أهم 100 اسم في الدنماركية (Top 100 Substantiver)', route: 'top100_substantiver' }
+                { label: '⚡ Verbernes tider', label_zh: '⚡ 动词时态规律 (Verbernes tider)', label_ar: '⚡ أزمنة الأفعال وقواعدها (Verbernes tider)', label_en: '⚡ Verb tenses & patterns (Verber)', route: 'verber_grammatik' },
+                { label: '🏃 Top 100 Verber', label_zh: '🏃 常用前100个动词 (Top 100 Verber)', label_ar: '🏃 أهم 100 فعل في الدنماركية (Top 100 Verber)', label_en: '🏃 Top 100 Danish Verbs (Verber)', route: 'top100_verber' },
+                { label: '📦 Top 100 Substantiver', label_zh: '📦 常用前100个名词 (Top 100 Substantiver)', label_ar: '📦 أهم 100 اسم في الدنماركية (Top 100 Substantiver)', label_en: '📦 Top 100 Danish Nouns (Substantiver)', route: 'top100_substantiver' }
             ]
         },
         {
@@ -566,16 +591,19 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title: 'Ordgruppen',
             title_zh: '紧紧抱团的词语小模块 (Ordgruppen)',
             title_ar: 'المكعب المتماسك من الكلمات (Ordgruppen)',
+            title_en: 'Word Bundles & The Adjective Jump (Ordgruppen)',
             subtitle: 'Flere ord der hører sammen og flytter som én samlet kasse (f.eks. "i køkkenet", "i dag")',
             subtitle_zh: '在句子里共同进退的小方块（在厨房里 / 在那个大厨房里）',
             subtitle_ar: 'كلمات تسير معاً كصندوق واحد، وحركة الوصف السحرية ("في المطبخ الكبير")',
+            subtitle_en: 'Words moving together as a fixed box, and how adding an adjective makes the definite tail jump out front',
             color: '#f472b6',
             widthPct: 72,
             daLine: `<span class="mss-hl-da">i det store køkken</span> (Forholdsord + det + tillægsord-e + navneord)`,
             daLine_zh: 'i det store køkken（小词 i + 蹦到前面的 det + 形容词拖着 -e + 名词）',
             daLine_ar: 'i det store køkken (الصفة تقف أمام الاسم، وذيل التعريف يقفز للأمام ككلمة det مستقلة)',
+            daLine_en: 'i det store køkken (preposition + det + adjective-e + noun)',
             myLines: {
-                en: `<span class="mss-hl-my">in the big kitchen</span> — Samme rækkefølge som dansk, men tillægsordet får ingen -e-hale.`,
+                en: `<span class="mss-hl-my">in the big kitchen</span> — Same word order as English, but in Danish the definite tail (-et) gets startled by the adjective, jumps out front as an independent word "<strong>det</strong>", and the adjective gets an <strong>-e</strong> ending: <em>køkkenet ➔ det store køkken</em>!`,
                 ar: `<span class="mss-hl-my">في المطبخِ الكبيرِ (fī al-matbakh al-kabīr)</span> — في العربية الصفة تأتي <em>بعد</em> الاسم ("المطبخ الكبير"). أما في الدنماركية، فالصفة تقف دائماً <em>أمام</em> الاسم، وذيل التعريف (-et) يقفز فجأة إلى الأمام ليتحول إلى <strong>det</strong> مستقل مع إضافة -e للصفة: <em>det store køkken</em>!`,
                 tr: `<span class="mss-hl-my">büyük mutfak-ta</span> — Tillægsordet står forrest, men "i" (-ta) sidder allerbagest som endelse.`,
                 uk: `<span class="mss-hl-my">у великій кухні</span> — Ordene ændrer form efter ordet "у".`,
@@ -586,6 +614,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 zh: `<span class="mss-hl-my">在大厨房里</span> — 汉语说“在大厨房里”，形容词“大”直接放在“厨房”前面；但在丹麦语里，只要在厨房前加了形容词，原本粘在屁股后面的小尾巴 -et 就会立刻受到惊吓，蹦到最前面变成独立的 <strong>det</strong>，而且形容词屁股必须加上一个小 -e：<em><strong>det</strong> stor<strong>e</strong> køkken</em>！`
             },
             myLines_da: {
+                en: `Engelsk har samme rækkefølge som dansk (in the big kitchen), men ændrer ikke artikelform. På dansk hopper bestemtheden frem som en selvstændig artikel (køkkenet ➔ det store køkken) og adjektivet får -e.`,
                 zh: `Kinesisk sætter sted og tid foran handlingen, og lader tillægsordet stå direkte ved navneordet uden at flytte rundt på artikler.`,
                 ar: `Arabisk sætter tillægsordet bag efter navneordet ("køkkenet det store"). På dansk står det foran, og bestemtheden hopper ud foran som "det" (det store køkken).`
             },
@@ -593,13 +622,14 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             detailExplain_zh: `<strong>抱团的词组小积木（Ordgruppen）：</strong>好几个词紧紧抱在一起，在句子里像一个固定箱子一样一起移动（比如 <em>i køkkenet</em> 在厨房里）。丹麦语这里有一个非常顽皮的规则：如果光说厨房，尾巴是粘在后面的（<em>køkken<strong>et</strong></em>）；但只要中间塞进一个形容词（比如大 store），后面的尾巴就会立刻像弹簧一样蹦到最前面变成 <strong>det</strong>，形容词后面还要跟一个 -e：<em><strong>det</strong> stor<strong>e</strong> køkken</em>！`,
             detailExplain_ar: `<strong>المكعب المتماسك من الكلمات (Ordgruppen):</strong> مجموعة كلمات مترابطة تتحرك في الجملة ككتلة واحدة مثل: <em>i køkkenet</em> (في المطبخ) أو <em>i det store køkken</em> (في المطبخ الكبير).<br><br>
 لاحظ الحيلة الدنماركية الشهيرة: عندما تقول "المطبخ" بمفرده، يلتصق الذيل في آخره (<em>køkken<strong>et</strong></em>). لكن بمجرد أن تضع صفة مثل "الكبير" (<em>store</em>) أمامه، يقفز هذا الذيل فوراً إلى الأمام ليصبح كلمة مستقلة <strong>det</strong>، وتأخذ الصفة نهاية <strong>-e</strong>: <em><strong>det</strong> stor<strong>e</strong> køkken</em>! وتذكر دائماً أن الصفة تسبق الاسم، على عكس الترتيب العربي المعتاد.`,
+            detailExplain_en: `<strong>Word Bundles (Ordgruppen):</strong> Words group together into tight bundles that travel as a single box in the sentence (e.g., <em>[i køkkenet]</em>, <em>[i dag]</em>).<br><br>Notice the famous Danish <strong>"Article Jump"</strong>:<br>• When talking about "the kitchen" alone, the tail sits at the back: <em>køkken<strong>et</strong></em>.<br>• But as soon as you insert an adjective like "big" (<em>stor</em>), the tail jumps all the way to the front as an independent word <strong>det</strong>, and the adjective takes an <strong>-e</strong> ending: <em><strong>det</strong> stor<strong>e</strong> køkken</em>!<br>(For "en"-words: <em>en bil ➔ bilen ➔ <strong>den</strong> stor<strong>e</strong> bil</em>).`,
             morePairs: [
-                { da: 'køkken-et (uden tillægsord) ➔ det store køkken (med tillægsord)', note: 'Endelsen -et flytter frem foran tillægsordet som et selvstændigt "det".', note_zh: '原本在后面的尾巴 -et，一碰到形容词就立刻蹦到前面变成独立的 det！', note_ar: 'køkkenet (بدون صفة، الذيل بالخلف) ➔ det store køkken (مع صفة، التعريف يقفز للأمام).' },
-                { da: '[i køkkenet] = én samlet steds-kasse', note: 'Hele ordgruppen flytter samlet rundt i sætningen uden at skilles ad.', note_zh: '“在厨房里”是一整块紧抱的积木，在句子里移动时谁也不能拆散它。', note_ar: 'عبارة [i køkkenet] كتلة مكانية واحدة؛ تتحرك معاً ولا يمكن تفريق كلماتها في الجملة.' }
+                { da: 'køkken-et (uden tillægsord) ➔ det store køkken (med tillægsord)', note: 'Endelsen -et flytter frem foran tillægsordet som et selvstændigt "det".', note_zh: '原本在后面的尾巴 -et，一碰到形容词就立刻蹦到前面变成独立的 det！', note_ar: 'køkkenet (بدون صفة، الذيل بالخلف) ➔ det store køkken (مع صفة، التعريف يقفز للأمام).', note_en: 'The ending -et jumps out front as an independent "det" when an adjective steps in.' },
+                { da: '[i køkkenet] = én samlet steds-kasse', note: 'Hele ordgruppen flytter samlet rundt i sætningen uden at skilles ad.', note_zh: '“在厨房里”是一整块紧抱的积木，在句子里移动时谁也不能拆散它。', note_ar: 'عبارة [i køkkenet] كتلة مكانية واحدة؛ تتحرك معاً ولا يمكن تفريق كلماتها في الجملة.', note_en: 'The whole prepositional phrase travels as a single indivisible block in the sentence.' }
             ],
             links: [
-                { label: '🎨 Adjektiver & bøjning', label_zh: '🎨 形容词变尾规则 (Adjektiver)', label_ar: '🎨 الصفات وقواعد تصريفها (Adjektiver)', route: 'top100_adjektiver' },
-                { label: '🏷️ Bestemthed foran ord', label_zh: '🏷️ “这一个”蹦到前面的奥秘 (Bestemthed)', label_ar: '🏷️ قفز أداة التعريف للأمام مع الصفة (Bestemthed)', route: 'bestemthed' }
+                { label: '🎨 Adjektiver & bøjning', label_zh: '🎨 形容词变尾规则 (Adjektiver)', label_ar: '🎨 الصفات وقواعد تصريفها (Adjektiver)', label_en: '🎨 Adjectives & endings (Adjektiver)', route: 'top100_adjektiver' },
+                { label: '🏷️ Bestemthed foran ord', label_zh: '🏷️ “这一个”蹦到前面的奥秘 (Bestemthed)', label_ar: '🏷️ قفز أداة التعريف للأمام مع الصفة (Bestemthed)', label_en: '🏷️ The jumping article (Bestemthed)', route: 'bestemthed' }
             ]
         },
         {
@@ -607,16 +637,19 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title: 'Sætningen & ordstillingen',
             title_zh: '整句排队规矩与第二位法则 (Sætningen & ordstillingen)',
             title_ar: 'ترتيب الجملة وقاعدة الفعل في المركز الثاني (Sætningen & ordstillingen)',
+            title_en: 'Sentence Structure & The Iron V2 Rule (Sætningen & ordstillingen)',
             subtitle: 'Hvem gør hvad, og reglen om at handlingen altid skal stå på Plads 2',
             subtitle_zh: '正常排队顺序，与“时间地点放开头，动作立刻抢占第2位（V2 铁律）”',
             subtitle_ar: 'من يفعل ماذا، وقاعدة V2 الصارمة: إذا بدأت بالوقت أو المكان، الفعل يسبق الفاعل!',
+            subtitle_en: 'Who does what, and why the verb MUST stay on Seat #2 (Inversion after Time & Place)',
             color: '#fb923c',
             widthPct: 79,
             daLine: `1) <span class="mss-hl-da">Jeg spiser</span> brød i køkkenet i dag • 2) I dag <span class="mss-hl-da">spiser jeg</span> brød i køkkenet`,
             daLine_zh: '1) Jeg spiser brød i dag（我做动作：我 吃 面包）• 2) I dag spiser jeg brød（今天一开头，吃 抢占第2位，我 只能退到第3位！）',
             daLine_ar: '1) Jeg spiser brød i dag • 2) I dag spiser jeg brød (إذا بدأت بـ "اليوم"، الفعل spiser يحتل المركز 2 فوراً، و"jeg" تتراجع للمركز 3!)',
+            daLine_en: '1) Jeg spiser brød i dag • 2) I dag spiser jeg brød (Time in Seat 1 pushes the verb to Seat 2, bumping "jeg" to Seat 3!)',
             myLines: {
-                en: `1) <span class="mss-hl-my">I eat</span> bread today • 2) Today <span class="mss-hl-my">I eat</span> bread... (Engelsk bytter ikke om!)`,
+                en: `1) <span class="mss-hl-my">I eat</span> bread today • 2) Today <span class="mss-hl-my">I eat</span> bread... — English NEVER inverts! English keeps Subject + Verb regardless. Danish has an unbreakable iron rule: <strong>THE VERB MUST ALWAYS BE IN SEAT #2 (V2 rule)</strong>. If you start with "I dag" (Seat 1), the verb "spiser" claims Seat 2, forcing "jeg" to Seat 3: <em>"I dag <strong>spiser jeg</strong> brød"</em>!`,
                 ar: `<span class="mss-hl-my">اليوم آكل الخبز / آكل الخبز اليوم</span> — في العربية يمكنك تقديم الوقت أو تأخيره دون أن تتأثر بقية الجملة. أما الدنماركية فلديها قاعدة حديدية لا تتزحزح: <strong>الفعل يجب أن يكون دائماً في المركز الثاني (قاعدة V2)</strong>! إذا بدأت بكلمة "اليوم" (I dag)، يقفز الفعل فوراً للمركز 2 وتتراجع "أنا" (jeg) إلى المركز 3: <em>"I dag <strong>spiser jeg</strong>..."</em>.`,
                 tr: `Bugün mutfakta ekmek <span class="mss-hl-my">yiyorum</span> — Handlingen står altid allerbagerst.`,
                 uk: `Сьогодні <span class="mss-hl-my">я їм</span> хліб — Personen bliver stående foran handlingen, selv når "I dag" står forrest.`,
@@ -627,6 +660,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 zh: `<span class="mss-hl-my">今天我吃面包</span> — 汉语说“今天我吃面包”，排队顺序依然是“今天 + 我 + 吃 + 面包”；但丹麦语有一条不可动摇的铁律——<strong>动作词必须永远抢占第 2 个位置（V2 规则）</strong>！如果你把“今天 (I dag)”放到最前面第 1 位，做动作的“吃 (spiser)”就必须马上抢占第 2 位，原本的主角“我 (jeg)”被挤到第 3 位：<em>"I dag <strong>spiser jeg</strong> brød..."</em>！`
             },
             myLines_da: {
+                en: `Engelsk bytter aldrig om efter tidsudtryk ("Today I eat"). Dansk har en ubrydelig V2-jernregel: Handlingen SKAL stå på Plads 2. Starter du med "I dag", bytter handling og person plads: <em>"I dag spiser jeg..."</em>. Dette er den suverænt hyppigste fejl for engelsktalende.`,
                 zh: `Kinesisk beholder samme rækkefølge som altid ("I dag jeg spiser..."), mens dansk har en jernregel: <strong>Handlingen skal altid stå på Plads 2</strong>. Starter du med "I dag", bytter "spiser" og "jeg" plads: <em>"I dag spiser jeg..."</em>.`,
                 ar: `Arabisk har mere fri ordstilling. Dansk har en ubrydelig jernregel: <strong>Handlingen skal stå på Plads 2</strong>. Sætter du "I dag" forrest, SKAL handlingen komme lige efter: <em>I dag spiser jeg...</em>`
             },
@@ -635,14 +669,15 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             detailExplain_ar: `<strong>ترتيب الجملة وقاعدة المركز الثاني (Sætningen & ordstillingen):</strong> الترتيب المعتاد للجملة الدنماركية هو:<br><br>
 <strong>من (Jeg) + يفعل (spiser) + ماذا (brød) + أين (i køkkenet) + متى (i dag)</strong> (لاحظ أن المكان يسبق الزمان في نهاية الجملة).<br><br>
 لكن أهم قاعدة تُميز الدنماركية وتوقع الكثيرين في الخطأ هي <strong>قاعدة الفعل في المركز الثاني (V2)</strong>: إذا أردت إبراز الوقت أو المكان ووضعته في بداية الجملة في المركز 1 (مثل: <em>I dag...</em>)، يلتزم الفعل بالبقاء في المركز 2، ويُجبر الفاعل (<em>jeg</em>) على الانتقال خلفه إلى المركز 3: <em>"I dag <strong>spiser jeg</strong> brød..."</em>. إياك أن تقول بالترتيب العربي المباشر: *I dag jeg spiser*!`,
+            detailExplain_en: `<strong>Sentence Structure & Word Order (Sætningen & ordstillingen):</strong> How words queue up to express a complete thought. The standard baseline order is:<br><br><strong>Subject (Jeg) + Verb (spiser) + Object (brød) + Place (i køkkenet) + Time (i dag)</strong><br>(Notice: in Danish, Place generally comes before Time at the end of the sentence!).<br><br>⚠️ <strong>The #1 Habit to Break for English Speakers — The V2 Rule:</strong><br>In English, you can place a time or place at the beginning of a sentence without altering the rest: <em>"Today I eat bread"</em>. In Danish, this is an immediate error. Danish follows an unbreakable law: <strong>the verb must occupy Seat #2</strong>. If you put "I dag" in Seat #1, the verb (<em>spiser</em>) claims Seat #2, and the subject (<em>jeg</em>) is displaced to Seat #3:<br>• Standard: <em>"<strong>Jeg spiser</strong> brød i køkkenet i dag."</em><br>• Inverted: <em>"I dag <strong>spiser jeg</strong> brød i køkkenet."</em><br>• Inverted: <em>"I køkkenet <strong>spiser jeg</strong> brød i dag."</em><br>Never say *\*I dag jeg spiser*!`,
             morePairs: [
-                { da: 'Normal: [Jeg] [spiser] brød [i køkkenet] [i dag] (Sted før Tid)', note: 'På dansk kommer Sted (hvor) normalt før Tid (hvornår) til sidst.', note_zh: '丹麦语句尾排队时，地点（在厨房里）通常排在时间（今天）前面。', note_ar: 'الترتيب الطبيعي: Jeg spiser brød i køkkenet i dag (المكان يسبق الزمان عادة في آخر الجملة).' },
-                { da: 'Plads 2-reglen: [I dag] [spiser] [jeg] brød i køkkenet', note: 'Handlingen skal altid blive på Plads 2 i en almindelig sætning.', note_zh: '时间一旦放在第 1 位，动词牢牢霸占第 2 位，主角退至第 3 位。', note_ar: 'قاعدة المركز 2: I dag spiser jeg brød. بدأنا بالزمان، فاحتل الفعل المركز الثاني وتراجع الفاعل للمركز الثالث.' }
+                { da: 'Normal: [Jeg] [spiser] brød [i køkkenet] [i dag] (Sted før Tid)', note: 'På dansk kommer Sted (hvor) normalt før Tid (hvornår) til sidst.', note_zh: '丹麦语句尾排队时，地点（在厨房里）通常排在时间（今天）前面。', note_ar: 'الترتيب الطبيعي: Jeg spiser brød i køkkenet i dag (المكان يسبق الزمان عادة في آخر الجملة).', note_en: 'In Danish, Place (hvor) typically precedes Time (hvornår) at the end of a sentence.' },
+                { da: 'Plads 2-reglen: [I dag] [spiser] [jeg] brød i køkkenet', note: 'Handlingen skal altid blive på Plads 2 i en almindelig sætning.', note_zh: '时间一旦放在第 1 位，动词牢牢霸占第 2 位，主角退至第 3 位。', note_ar: 'قاعدة المركز 2: I dag spiser jeg brød. بدأنا بالزمان، فاحتل الفعل المركز الثاني وتراجع الفاعل للمركز الثالث.', note_en: 'Starting with time forces the verb to stay in Seat #2, bumping the subject to Seat #3.' }
             ],
             links: [
-                { label: '🏗️ Sådan bygger du en sætning', label_zh: '🏗️ 丹麦语句子骨架搭建 (Byg en sætning)', label_ar: '🏗️ هيكل بناء الجملة الدنماركية (Byg en sætning)', route: 'grounding' },
-                { label: '🧩 Ordstilling & Plads 2', label_zh: '🧩 语序与动词第二位 (Ordstilling)', label_ar: '🧩 ترتيب الكلمات وقاعدة المركز الثاني (Ordstilling)', route: 'ordstilling' },
-                { label: '⏰ Træn tidsudtryk', label_zh: '⏰ 时间短语表达 (Træn tidsudtryk)', label_ar: '⏰ تعبيرات الوقت والزمان (Træn tidsudtryk)', route: 'traen_tidsudtryk' }
+                { label: '🏗️ Sådan bygger du en sætning', label_zh: '🏗️ 丹麦语句子骨架搭建 (Byg en sætning)', label_ar: '🏗️ هيكل بناء الجملة الدنماركية (Byg en sætning)', label_en: '🏗️ How to build a Danish sentence (Grounding)', route: 'grounding' },
+                { label: '🧩 Ordstilling & Plads 2', label_zh: '🧩 语序与动词第二位 (Ordstilling)', label_ar: '🧩 ترتيب الكلمات وقاعدة المركز الثاني (Ordstilling)', label_en: '🧩 Word order & Seat #2 (Ordstilling)', route: 'ordstilling' },
+                { label: '⏰ Træn tidsudtryk', label_zh: '⏰ 时间短语表达 (Træn tidsudtryk)', label_ar: '⏰ تعبيرات الوقت والزمان (Træn tidsudtryk)', label_en: '⏰ Practice time expressions (Tidsudtryk)', route: 'traen_tidsudtryk' }
             ]
         },
         {
@@ -650,16 +685,19 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title: 'Talehandlingen (spørgsmål & opfordring)',
             title_zh: '一句话想干什么 (Talehandlingen)',
             title_ar: 'الهدف من الكلام: سؤال أو طلب (Talehandlingen)',
+            title_en: 'Speech Acts: Questions & Commands (Talehandlingen)',
             subtitle: 'Hvad du vil med sætningen: spørge med spørgeord, ja/nej eller give en opfordring',
             subtitle_zh: '打听情况（问什么）、确认是不是（问句动作打头），还是叫人做动作',
             subtitle_ar: 'السؤال بأداة استفهام، السؤال بنعم/لا بتقديم الفعل، وصيغة الأمر بحذف النهاية',
+            subtitle_en: 'Hv-questions, Yes/No questions (NO "do" helper needed!), and crisp commands (Imperative)',
             color: '#facc15',
             widthPct: 86,
             daLine: `Spørgeord: "<span class="mss-hl-da">Hvad spiser du?</span>" • Ja/nej: "<span class="mss-hl-da">Spiser du</span> brød?" • Bydemåde: "<span class="mss-hl-da">Spis</span> brødet!"`,
             daLine_zh: '问什么："Hvad spiser du?" • 问是不是："Spiser du brød?" • 叫人吃："Spis brødet!"',
             daLine_ar: 'سؤال بأداة: "Hvad spiser du?" • سؤال بنعم/لا: "Spiser du brød?" • أمر: "Spis brødet!"',
+            daLine_en: 'Hv: "Hvad spiser du?" • Ja/nej: "Spiser du brød?" (No "do"!) • Command: "Spis brødet!"',
             myLines: {
-                en: `Hv: "What do you eat?" • Ja/nej: "Do you eat bread?" • Imp.: "Eat the bread!"`,
+                en: `Hv: "What do you eat?" • Ja/nej: "Do you eat bread?" • Imp.: "Eat the bread!" — English relies heavily on the auxiliary verb "do/does". Danish NEVER uses "do" to form questions: simply place the main verb in Seat #1 ("Spiser du...?"). Commands simply clip off the -er ending ("Spis!").`,
                 ar: `أداة: "<span class="mss-hl-my">ماذا تأكل؟</span>" • نعم/لا: "<span class="mss-hl-my">هل تأكل</span> الخبز؟" • أمر: "<span class="mss-hl-my">كُلْ</span> الخبز!"`,
                 tr: `Hv: "Ne yiyorsun?" • Ja/nej: "Ekmek yiyor musun?" • Imp.: "Ekmeği ye!"`,
                 uk: `Hv: "Що ти їси?" • Ja/nej: "Ти їси хліб?" • Imp.: "Їж хліб!"`,
@@ -670,37 +708,43 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 zh: `特殊问: "你吃<span class="mss-hl-my">什么 (shénme)?</span>" • 是非问: "你吃面包<span class="mss-hl-my">吗 (ma)?</span>" • 叫人做: "快<span class="mss-hl-my">吃</span>面包!"`
             },
             myLines_da: {
+                en: `Engelsk skal bruge do/does ("Do you eat...?"). Dansk rykker blot verbet frem ("Spiser du...?"). Bydemåde dannes ved at fjerne -er (spis!).`,
                 zh: `Kinesisk lader spørgeordet stå bagerst ("du spiser hvad?"); ja/nej-spørgsmål bruger spørgepartiklen "ma"; ved opfordringer bruges stammen uden bøjning.`,
                 ar: `Hv-spørgsmål har spørgeord + handling; Ja/nej-spørgsmål har handling forrest uden "hal" (هل); Bydemåde er helt ens for alle uden endelse (spis!).`
             },
             detailExplain: `<strong>Talehandlingen (hvad du vil sige):</strong> En sætning bruges altid i den virkelige verden: Vil du have ny viden (spørgsmål med spørgeord), vil du have et ja eller nej, eller vil du give en god opfordring? Her er de 3 måder at bygge det op på:`,
             detailExplain_zh: `<strong>日常说话的意图（Talehandlingen）：</strong>说话到底是为了什么？在丹麦语里有三种最常见的说话方式：<strong>1) 带着疑问小词打听情况（Hvad/Hvor...）</strong>：疑问词占第1位，动作占第2位；<strong>2) 确认是还是不是（Ja/nej 问句）</strong>：不用任何疑问字，直接把动作放到最前面第1位；<strong>3) 叫别人做事或提建议（Imperativ / Bydemåde）</strong>：直接用动词最本来的短身子，把后面的 -er 剪掉，不用带“你 (du)”！`,
             detailExplain_ar: `<strong>الهدف من الكلام (Talehandlingen):</strong> عندما نتحدث في الواقع، نستخدم الجملة لتحقيق هدف محدد: إما لطلب معلومة جديدة، أو للتأكد بنعم/لا، أو لإعطاء نصيحة أو أمر. في الدنماركية هناك 3 قوالب أساسية:`,
+            detailExplain_en: `<strong>Speech Acts (Talehandlingen):</strong> In real-life communication, sentences perform actions: asking for information, checking yes/no, or prompting someone to do something. Danish has 3 clean, efficient templates:<br><br>1) <strong>Open Questions (Hv-words):</strong> Put the question word in Seat 1, the verb in Seat 2, and the person in Seat 3: <em>"<strong>Hvad spiser</strong> du?"</em> (English: "What <em>do</em> you eat?"). Danish does not use "do" auxiliary verbs!<br>2) <strong>Yes/No Questions:</strong> Move the verb directly to Seat 1: <em>"<strong>Spiser du</strong> brød?"</em> (English: "<em>Do</em> you eat bread?"). No filler word required!<br>3) <strong>Commands & Advice (Imperative):</strong> Simply take the short verb stem by clipping off the <em>-er</em> ending from the present tense: <em>spiser ➔ <strong>spis!</strong></em>, <em>læser ➔ <strong>læs!</strong></em>, <em>venter ➔ <strong>vent!</strong></em> No "du" needed!`,
             utteranceCards: [
                 {
                     badge: '1. ÅBENT SPØRGSMÅL (Spørg med hv-ord)',
                     badge_zh: '1. 带着疑问词打听情况（HV-ORD • 疑问小词打头）',
                     badge_ar: '1. سؤال بأداة استفهام (Hv-ord • طلب معلومة جديدة)',
+                    badge_en: '1. OPEN QUESTION (Question words • Hv-ord)',
                     accent: '#38bdf8',
                     daFormula: 'Spørgeord (Plads 1) + Handlingen (Plads 2) + Personen (Plads 3)',
                     daFormula_zh: '疑问小词 (第1位) + 动作词 (第2位) + 谁 (第3位)',
                     daFormula_ar: 'أداة الاستفهام (المركز 1) + الفعل (المركز 2) + الفاعل (المركز 3)',
+                    daFormula_en: 'Question Word (Seat 1) + Verb (Seat 2) + Person (Seat 3)',
                     daExample: '"<strong>Hvad</strong> <u>spiser</u> du i køkkenet i dag?" • "<strong>Hvornår</strong> <u>spiser</u> vi?"',
                     daSubNote: 'De vigtigste spørgeord: hvad, hvem, hvor, hvornår, hvorfor, hvordan.',
                     daSubNote_zh: '核心疑问词：hvad (什么), hvem (谁), hvor (哪里), hvornår (何时), hvorfor (为什么), hvordan (如何)。',
                     daSubNote_ar: 'أهم أدوات الاستفهام: hvad (ماذا)، hvem (من)، hvor (أين)، hvornår (متى)، hvorfor (لماذا)، hvordan (كيف).',
+                    daSubNote_en: 'Key question words: hvad (what), hvem (who), hvor (where), hvornår (when), hvorfor (why), hvordan (how).',
                     myByLang: {
-                        en: '"<strong>What do</strong> you eat in the kitchen today?" — Engelsk indsætter do/does. Dansk sætter handlingen direkte på Plads 2!',
+                        en: '"<strong>What do</strong> you eat in the kitchen today?" — English must insert do/does. Danish puts the action verb directly into Seat 2!',
                         ar: '"<strong>ماذا</strong> تأكل في المطبخ اليوم؟" — في العربية نبدأ بأداة الاستفهام ثم الفعل تماماً مثل الدنماركية، لكن في الدنماركية يبقى الفعل مقيداً بالمركز الثاني ويليه الفاعل مباشرة (Hvad spiser du...).',
                         tr: '"Bugün mutfakta <strong>ne</strong> yiyorsun?" — Spørgeordet ne bliver inde foran handlingen.',
                         uk: '"<strong>Що</strong> ти їси на кухні сьогодні?" — Personen ти står normalt før handlingen.',
                         de: '"<strong>Was</strong> isst du heute in der Küche?" — Samme opbygning: Spørgeord + Handling + Person!',
                         es: '"¿<strong>Qué</strong> comes en la cocina hoy?" — Spørgeord + Handling.',
-                        vi: '"Hôm nay bạn ăn <strong>gì</strong> trong nhà bếp?" — Spørgeordet står bagerst på svarets plads.',
+                        vi: '"Hôm nay bạn ăn <strong>gì</strong> dalam nhà bếp?" — Spørgeordet står bagerst på svarets plads.',
                         fa: '"امروز در آشپزخانه <strong>چه</strong> می‌خوری؟" — Spørgeordet står inde i sætningen.',
                         zh: '"今天你在厨房吃<strong>什么</strong>？" — 汉语把“什么”留在最后：“你今天在厨房吃什么？”；但丹麦语必须把疑问词（Hvad）提到最前面，而且动作（spiser）必须抢占在第2位，人（du）排在第3位！'
                     },
                     myByLang_da: {
+                        en: 'Engelsk indsætter do/does ("What do you eat?"). Dansk sætter handlingen direkte på Plads 2 ("Hvad spiser du?").',
                         zh: 'Kinesisk lader spørgeordet stå bagerst på svarets plads ("du spiser hvad?"), mens dansk rykker det helt forrest og lader handlingen stå på Plads 2.',
                         ar: 'I arabisk kan spørgeord stå forrest ligesom på dansk; på dansk er handlingen altid låst til Plads 2 efterfulgt af subjektet.'
                     }
@@ -709,16 +753,19 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                     badge: '2. JA/NEJ-SPØRGSMÅL (Lukket spørgsmål uden spørgeord)',
                     badge_zh: '2. 确认是还是不是（JA/NEJ • 动作词打头阵）',
                     badge_ar: '2. سؤال بنعم أو لا (Ja/Nej • بدون أداة هل)',
+                    badge_en: '2. YES/NO QUESTION (Direct inversion • No "do")',
                     accent: '#facc15',
                     daFormula: 'Handlingen allerforrest (Plads 1) + Personen (Plads 2)',
                     daFormula_zh: '动作词直接打头阵 (第1位) + 谁 (第2位)',
                     daFormula_ar: 'الفعل مباشرة في البداية (المركز 1) + الفاعل (المركز 2)',
+                    daFormula_en: 'Verb in the lead (Seat 1) + Person (Seat 2)',
                     daExample: '"<strong>Spiser</strong> <u>du</u> brød i køkkenet i dag?"',
                     daSubNote: 'Dansk bytter bare plads på handling og person — uden ekstra spørgeord.',
                     daSubNote_zh: '丹麦语直接把动作推到最前面变成问句，无需添加辅助疑问词。',
                     daSubNote_ar: 'في الدنماركية لا توجد كلمة تعادل "هل"؛ يكفي أن تنقل الفعل إلى أول الجملة ليتحول الكلام إلى سؤال فوري!',
+                    daSubNote_en: 'Danish simply swaps the verb and subject — without any auxiliary "do".',
                     myByLang: {
-                        en: '"<strong>Do</strong> you eat bread...?" — Engelsk skal bruge Do/Are forrest. På dansk rykker selve handlingen (Spiser) frem forrest!',
+                        en: '"<strong>Do</strong> you eat bread...?" — English requires Do/Are in front. In Danish, the main verb itself (Spiser) steps up to Seat 1!',
                         ar: '"<strong>هل</strong> تأكل الخبز...؟" — في العربية نستعمل أداة "هل" في البداية. أما في الدنماركية فلا توجد أداة استفهام إضافية، بل كل ما تفعله هو وضع الفعل (<em>Spiser</em>) في بداية الجملة ليصبح سؤالاً: <em>"Spiser du brød?"</em>.',
                         tr: '"Bugün mutfakta ekmek yiyor <strong>musun</strong>?" — Tyrkisk sætter spørgepartiklen til sidst efter handlingen.',
                         uk: '"<strong>Ти їси</strong> хліб на кухні сьогодні?" — Samme rækkefølge; tonefaldet afgør det.',
@@ -729,6 +776,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                         zh: '"你今天在厨房吃面包<strong>吗</strong>？" — 汉语习惯在句尾加个“吗”：“你今天在厨房吃面包吗？”；但丹麦语根本没有“吗”这个字，它只要把动作（Spiser）直接拎到最前面第1位，立刻就变成了问句！'
                     },
                     myByLang_da: {
+                        en: 'Engelsk kræver Do/Are foran ("Do you eat...?"). På dansk rykker selve handlingen frem forrest ("Spiser du...?").',
                         zh: 'Kinesisk bruger et lille "ma" til sidst; dansk bytter direkte om på person og handling, så handlingen står forrest.',
                         ar: 'Arabisk indleder med et lille spørgeord som هل (hal); dansk har intet spørgeord, men rykker blot handlingen frem forrest.'
                     }
@@ -737,16 +785,19 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                     badge: '3. OPFORDRING & RÅD (Bydemåde)',
                     badge_zh: '3. 让人行动或提建议（Bydemåde • 剪掉尾巴直接说）',
                     badge_ar: '3. الأمر والنصيحة (Bydemåde • احذف ذيل الفعل)',
+                    badge_en: '3. COMMANDS & SUGGESTIONS (Imperative • Cut the tail)',
                     accent: '#4ade80',
                     daFormula: 'Kun verbets korte stamme (fjern -er fra nutid) — uden "du"!',
                     daFormula_zh: '只留动作词的短身子（把 -er 尾巴切掉）— 连“你 (du)”都省了！',
                     daFormula_ar: 'جذع الفعل القصير فقط (احذف -er من الحاضر) — بدون ذكر "du" (أنت)!',
+                    daFormula_en: 'Only the short verb stem (remove -er from present tense) — without "du"!',
                     daExample: '"<strong>Spis</strong> brødet i køkkenet!" • "<strong>Kom</strong> ind og <strong>sæt</strong> dig!"',
                     daSubNote: 'Sådan gøres det: spiser → spis! • læser → læs! • venter → vent!',
                     daSubNote_zh: '口令变化口诀：spiser → spis! (吃吧!) • læser → læs! (读吧!) • venter → vent! (等一下!)',
                     daSubNote_ar: 'قاعدة سحرية: spiser ← spis! (كُلْ!) • læser ← læs! (اقرأ!) • venter ← vent! (انتظر!)',
+                    daSubNote_en: 'Quick formula: spiser → spis! • læser → læs! • venter → vent!',
                     myByLang: {
-                        en: '"<strong>Eat</strong> the bread in the kitchen!" — Bruger grundformen uden you, meget ligesom dansk.',
+                        en: '"<strong>Eat</strong> the bread in the kitchen!" — Uses the base form without you, very similar to Danish.',
                         ar: '"<strong>كُلْ</strong> الخبز في المطبخ!" — في العربية صيغة الأمر تتغير بحسب المخاطب: كُلْ (للمذكر)، كُلِي (للمؤنث)، كُلُوا (للجمع). أما في الدنماركية فالأمر واحد لا يتغير أبداً للجميع: <strong>spis!</strong> بدون أي إضافات ودون ذكر كلمة "du" (أنت)!',
                         tr: '"Mutfakta ekmeği <strong>ye</strong>!" — Bruger ordets korte rod (ye-) til sidst.',
                         uk: '"<strong>Їж</strong> хліб на кухні!" — Har særskilt form for én (їж) og flere (їжте).',
@@ -757,19 +808,20 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                         zh: '"在厨房里<strong>吃</strong>面包吧！" — 汉语通常说“在厨房里吃面包吧！”或“快吃！”；丹麦语则是把现在时后面的小尾巴 -er 剪掉，只留下短促有力的根（spis!），而且绝不要带 "du"！'
                     },
                     myByLang_da: {
+                        en: 'Bruger grundformen uden you, meget ligesom på dansk.',
                         zh: 'Kinesisk bruger verbets grundform (ofte med "ba" eller "kuai"); dansk bruger verbets stamme uden -er og uden "du".',
                         ar: 'Arabisk bøjer bydemåden efter køn og tal (kul, kulī, kulū); på dansk er stammen spis! fuldstændig ens for alle.'
                     }
                 }
             ],
             morePairs: [
-                { da: 'Almindelig: "Du spiser brød." → Ja/nej-spørgsmål: "Spiser du brød?" → Bydemåde: "Spis brødet!"', note: 'Se hvordan de samme ord skifter mening blot ved rækkefølge og endelse.', note_ar: 'الجملة العادية: "Du spiser brød" ← سؤال نعم/لا: "Spiser du brød?" ← أمر: "Spis brødet!"' },
-                { da: 'Høflig opfordring: "Ville du have et stykke brød?" / "Kunne du lukke døren?"', note: 'På dansk bløder man ofte en opfordring op ved at spørge med "Kan/Kunne du...?" fremfor at kommandere.', note_ar: 'الطلب المهذب في الدنماركية يصاغ غالباً بسؤال لطيف: "Kunne du tænke dig...?" أو "Vil du være sød at...؟" بدلاً من الأمر المباشر.' }
+                { da: 'Almindelig: "Du spiser brød." → Ja/nej-spørgsmål: "Spiser du brød?" → Bydemåde: "Spis brødet!"', note: 'Se hvordan de samme ord skifter mening blot ved rækkefølge og endelse.', note_ar: 'الجملة العادية: "Du spiser brød" ← سؤال نعم/لا: "Spiser du brød?" ← أمر: "Spis brødet!"', note_en: 'See how the exact same words change meaning simply through word order and endings.' },
+                { da: 'Høflig opfordring: "Ville du have et stykke brød?" / "Kunne du lukke døren?"', note: 'På dansk bløder man ofte en opfordring op ved at spørge med "Kan/Kunne du...?" fremfor at kommandere.', note_ar: 'الطلب المهذب في الدنماركية يصاغ غالباً بسؤال لطيف: "Kunne du tænke dig...?" أو "Vil du være sød at...؟" بدلاً من الأمر المباشر.', note_en: 'In Danish, commands are often softened into polite questions: "Vil du have...?" or "Kunne du lukke døren?"' }
             ],
             links: [
-                { label: '💬 Lav spørgsmål (Hv- & Ja/nej)', label_zh: '💬 疑问句构造实战 (Lav spørgsmål)', label_ar: '💬 صياغة الأسئلة بالأداة وبنعم/لا (Lav spørgsmål)', route: 'lav_sporgsmal' },
-                { label: '⚡ Verbernes tider & former', label_zh: '⚡ 动词所有形态总览 (Verber)', label_ar: '⚡ صيغ الأفعال والأمر (Verber)', route: 'verber_grammatik' },
-                { label: '🏃 Top 100 Verber', label_zh: '🏃 常用前100个动词 (Top 100 Verber)', label_ar: '🏃 أهم 100 فعل في الدنماركية (Top 100 Verber)', route: 'top100_verber' }
+                { label: '💬 Lav spørgsmål (Hv- & Ja/nej)', label_zh: '💬 疑问句构造实战 (Lav spørgsmål)', label_ar: '💬 صياغة الأسئلة بالأداة وبنعم/لا (Lav spørgsmål)', label_en: '💬 Construct questions (Hv & Yes/No)', route: 'lav_sporgsmal' },
+                { label: '⚡ Verbernes tider & former', label_zh: '⚡ 动词所有形态总览 (Verber)', label_ar: '⚡ صيغ الأفعال والأمر (Verber)', label_en: '⚡ Verb forms & imperative (Verber)', route: 'verber_grammatik' },
+                { label: '🏃 Top 100 Verber', label_zh: '🏃 常用前100个动词 (Top 100 Verber)', label_ar: '🏃 أهم 100 فعل في الدنماركية (Top 100 Verber)', label_en: '🏃 Top 100 Danish Verbs (Verber)', route: 'top100_verber' }
             ]
         },
         {
@@ -777,16 +829,19 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title: 'Spørgsmål & svar (dialogen)',
             title_zh: '两人聊天一问一答 (Spørgsmål & svar)',
             title_ar: 'سؤال وجواب: كلمة Jo والصدى اللطيف (Spørgsmål & svar)',
+            title_en: 'Conversational Turns: The Magic "Jo" & Polite Echoes (Spørgsmål & svar)',
             subtitle: 'Når to taler sammen: Spørgsmål, svar og de vigtige vaner som "Ja/Jo" og ekko-svar',
             subtitle_zh: '一问一答对答如流、丹麦人最特别的“Jo”与温暖的“回声答话”（det gør jeg）',
             subtitle_ar: 'عندما يتحدث اثنان: الرد بـ "Jo" على السؤال المنفي، والصدى الودود ("det gør jeg")',
+            subtitle_en: 'Responding with "Jo!" to negative questions, and avoiding dry one-word answers with "det gør jeg"',
             color: '#4ade80',
             widthPct: 93,
             daLine: `A: "Spiser du <u>ikke</u> brød?" ➔ B: "<span class="mss-hl-da">Jo, det gør jeg!</span>" (Ikke kun et tørt "ja")`,
             daLine_zh: 'A: "难道你不吃面包吗？" ➔ B: "Jo, det gør jeg!"（否定问句想说“吃！”，必须用 Jo，再加上一句温暖的回声）',
             daLine_ar: 'A: "Spiser du ikke brød?" ➔ B: "Jo, det gør jeg!" (سؤال منفي ➔ الجواب الحتمي Jo، مع صدى مهذب)',
+            daLine_en: 'A: "Spiser du ikke brød?" ➔ B: "Jo, det gør jeg!" (Negative question ➔ Mandatory "Jo!", never "Ja")',
             myLines: {
-                en: `A: "Don't you eat bread?" ➔ B: "Yes, I do!" — Engelsk har ikke forskel på Ja og Jo.`,
+                en: `A: "Don't you eat bread?" ➔ B: "<span class="mss-hl-my">Yes, I do!</span>" — English has no distinct word like "Jo" (English just says "Yes"). In Danish, if someone asks a question containing "ikke" (not) and you want to say yes, you MUST say "<strong>Jo!</strong>". Saying "Ja" sounds contradictory to a Dane. And just like English says "Yes, I do", Danish uses the polite echo "<em>Ja, det gør jeg</em>" instead of a blunt one-word answer.`,
                 ar: `A: "ألا تأكل الخبز؟" ➔ B: "<span class="mss-hl-my">بَلَى (Balā)</span>، آكلُه!" — هذا تطابق مذهل بين الدنماركية والعربية! كلمة <strong>Jo</strong> الدنماركية تقابل تماماً كلمة <strong>بَلَى</strong> في القرآن واللغة العربية: إذا سألك أحد بسؤال منفي (فيه ikke / ألا) وأردت إثبات الفعل، إياك أن تقول "Ja"، بل قل حتماً <strong>"Jo!"</strong> مع صدى مهذب.`,
                 tr: `B: "Evet, yiyorum" — Tyrkisk gentager handlingen i stedet for "det gør jeg".`,
                 uk: `B: "Так, їм" — Bruger samme "Ja" (Так) og gentager selve handlingen.`,
@@ -797,6 +852,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 zh: `B: "<span class="mss-hl-my">吃啊 / 会啊</span>" — 中国人回答喜欢重复动作：“吃啊！”或“不吃”；而在丹麦语里，如果对方的问题里带着<strong>“ikke（不）”</strong>，而你想反驳说“我吃！”，<strong>千千万万不能说 Ja，必须说 "Jo"</strong>！而且丹麦人极少光秃秃扔下一个词，总会像回声一样跟上一句：<em>"Jo, det gør jeg!"</em>（吃呀，我吃呢！），显得特别礼貌亲切。`
             },
             myLines_da: {
+                en: `Engelsk har ikke forskel på Ja og Jo (bruger altid "Yes"). Engelsktalende glemmer ofte at sige "Jo!" ved spørgsmål med "ikke". Begge sprog bruger høflige ekkosvar ("Yes, I do" / "Ja, det gør jeg").`,
                 zh: `Kinesisk svarer ved at bekræfte handlingen (吃/会). På dansk skal du huske "Jo!" hvis spørgsmålet har et "ikke", og altid føje det venlige ekko "det gør jeg" til.`,
                 ar: `Arabisk har ordet بَلَى (Balā), der svarer præcis til dansk "Jo!" efter et spørgsmål med "ikke". Og ligesom på dansk gøres svaret høfligt ved at gentage en lille hale.`
             },
@@ -805,13 +861,14 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             detailExplain_ar: `<strong>سؤال وجواب (الحوار الثنائي):</strong> حين يتحاور شخصان، ترتبط الجمل كثنائيات متناغمة. في الدنماركية هناك عادتان ذهبيتان تجعلان كلامك راقياً وطبيعياً جداً:<br><br>
 1) <strong>المفاجأة الرائعة: كلمة "Jo" تعادل "بَلَى" تماماً:</strong> إذا سألك شخص سؤالاً يحتوي على نفي (<strong>ikke</strong>) مثل: <em>"Spiser du ikke brød?" (ألا تأكل الخبز؟)</em>، وأردت أن تجيب بالإيجاب (بلى، أنا آكل)، <strong>إياك مطلقاً أن تقول "Ja"</strong>! إذا قلت Ja سيرتبك الدنماركي، بل يجب أن تقول: <strong>"Jo!"</strong> (تماماً كما تقول "بلى" في العربية).<br><br>
 2) <strong>الصدى المهذب (لا تكن مجيباً جافاً):</strong> الدنماركيون نادراً ما يجيبون بكلمة وحيدة جافة مثل Ja أو Nej، لأنها تبدو فظة وقاسية. بل يضيفون دائماً صدى صغيراً لطيفاً: <em>"Ja, <strong>det gør jeg</strong>"</em> (نعم، أفعل ذلك) أو <em>"Nej, <strong>det gør jeg ikke</strong>"</em> أو <em>"Jo, <strong>det er jeg</strong>"</em>.`,
+            detailExplain_en: `<strong>Conversational Turns (Spørgsmål & svar):</strong> In dialogue, statements and answers form linked pairs. Two habits will make you sound natural and warm:<br><br>1) <strong>The Essential "Jo!":</strong> If someone asks a question containing a negative word like <em>ikke</em> (e.g. <em>"Spiser du <u>ikke</u> brød?"</em> Don’t you eat bread?), and you want to say "Yes, I DO!", <strong>never say "Ja"</strong>. Saying "Ja" sounds contradictory or confused. You must say: <strong>"Jo!"</strong>.<br><br>2) <strong>The Polite Echo (Don\'t be a one-word robot):</strong> English speakers naturally say *"Yes, I do"* or *"No, I don\'t"*. Danes do the exact same! Dropping a blunt, single "Ja" or "Nej" can feel abrupt and cold. Always soften it with a friendly echo: <em>"Ja, <strong>det gør jeg</strong>"</em>, <em>"Nej, <strong>det gør jeg ikke</strong>"</em>, or <em>"Jo, <strong>det er jeg</strong>"</em>.`,
             morePairs: [
-                { da: 'A: "Spiser du brød?" → B: "Ja, det gør jeg." (Almindeligt spørgsmål → Ja)', note: '"Det gør jeg" gør svaret venligt og naturligt på dansk.', note_ar: 'سؤال مثبت: "Spiser du brød?" ➔ الجواب: "Ja, det gør jeg." (سؤال عادي ➔ Ja).' },
-                { da: 'A: "Er du ikke sulten?" → B: "Jo, det er jeg!" (Spørgsmål med "ikke" → Jo)', note: 'Ved ord som "er/har/kan/vil" gentages selve hjælpeordet i stedet for "gør".', note_zh: '问句里有“ikke（不）”，肯定回答千万不能说 Ja，一定要说“Jo”！', note_ar: 'سؤال منفي: "Er du ikke sulten?" ➔ الجواب: "Jo, det er jeg!" (سؤال فيه ikke ➔ حتماً Jo، ومستحيل Ja!).' }
+                { da: 'A: "Spiser du brød?" → B: "Ja, det gør jeg." (Almindeligt spørgsmål → Ja)', note: '"Det gør jeg" gør svaret venligt og naturligt på dansk.', note_ar: 'سؤال مثبت: "Spiser du brød?" ➔ الجواب: "Ja, det gør jeg." (سؤال عادي ➔ Ja).', note_en: 'Positive question ➔ Answer with "Ja" + the polite echo "det gør jeg".' },
+                { da: 'A: "Er du ikke sulten?" → B: "Jo, det er jeg!" (Spørgsmål med "ikke" → Jo)', note: 'Ved ord som "er/har/kan/vil" gentages selve hjælpeordet i stedet for "gør".', note_zh: '问句里有“ikke（不）”，肯定回答千万不能说 Ja，一定要说“Jo”！', note_ar: 'سؤال منفي: "Er du ikke sulten?" ➔ الجواب: "Jo, det er jeg!" (سؤال فيه ikke ➔ حتماً Jo، ومستحيل Ja!).', note_en: 'Negative question containing "ikke" ➔ Mandatory "Jo!". For modal/auxiliary verbs (er, har, kan), echo that specific verb.' }
             ],
             links: [
-                { label: '🗣️ Samtaletræning', label_zh: '🗣️ 实用情景会话训练 (Samtaletræning)', label_ar: '🗣️ تدريب المحادثة الواقعية (Samtaletræning)', route: 'samtale_traening' },
-                { label: '💬 Lav spørgsmål & svar', label_zh: '💬 问答应答轮次练习 (Spørgsmål & svar)', label_ar: '💬 الحوار وسؤال وجواب (Spørgsmål & svar)', route: 'lav_sporgsmal' }
+                { label: '🗣️ Samtaletræning', label_zh: '🗣️ 实用情景会话训练 (Samtaletræning)', label_ar: '🗣️ تدريب المحادثة الواقعية (Samtaletræning)', label_en: '🗣️ Real-life dialogue practice (Samtaletræning)', route: 'samtale_traening' },
+                { label: '💬 Lav spørgsmål & svar', label_zh: '💬 问答应答轮次练习 (Spørgsmål & svar)', label_ar: '💬 الحوار وسؤال وجواب (Spørgsmål & svar)', label_en: '💬 Questions and answers (Spørgsmål & svar)', route: 'lav_sporgsmal' }
             ]
         },
         {
@@ -819,17 +876,20 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             title: 'Den fulde samtale',
             title_zh: '连贯对话与生动聊天 (Den fulde samtale)',
             title_ar: 'المحادثة الحية: جسور الربط وكلمات الابتسامة (Den fulde samtale)',
+            title_en: 'The Full Flowing Conversation: Bridges & Smiley Words (Den fulde samtale)',
             subtitle: 'Når sætninger bindes sammen til levende tale med bindeord og småord ("nå", "lige", "ikke?")',
             subtitle_zh: '把几句话串成生动的聊天：用连接词搭桥，用丹麦语神奇小词（nå, jo, lige, ikke?）让话变甜',
             subtitle_ar: 'ربط الجمل بحروف العطف (så, fordi) وإضفاء الدفء بكلمات الحوار السحرية (nå, lige, ikke?)',
+            subtitle_en: 'Linking thoughts with conjunctions (så, fordi) and adding warmth with little conversational words (nå, lige, ikke?)',
             color: '#2dd4bf',
             widthPct: 100,
             daLine: `"<span class="mss-hl-da">Nå</span>, jeg er sulten, <span class="mss-hl-da">så</span> jeg spiser lige noget brød i køkkenet, <span class="mss-hl-da">ikke?</span>"`,
             daLine_zh: '"Nå, jeg er sulten, så jeg spiser lige noget brød, ikke?"（“好啦，我饿了，所以顺便吃点面包，对吧？”）',
             daLine_ar: '"Nå, jeg er sulten, så jeg spiser lige noget brød i køkkenet, ikke?" ("حسناً، أنا جائع، لذا سآكل على السريع بعض الخبز في المطبخ، تمام؟")',
+            daLine_en: '"Nå, jeg er sulten, så jeg spiser lige noget brød i køkkenet, ikke?" ("Well, I\'m hungry, so I\'ll just grab some bread in the kitchen, right?")',
             myLines: {
-                en: `"Well, I'm hungry, so I'll just eat some bread in the kitchen, okay?"`,
-                ar: `"<span class="mss-hl-my">طيب / يعني</span>، أنا جائع، <span class="mss-hl-my">لذلك</span> سآكل على السريع في المطبخ، <span class="mss-hl-my">مش هيك / تمام؟</span>" — كما نستخدم في العربية العامية كلمات مثل "يعني، طيب، ماشي، تمام" لتلطيف الحديث، يستعمل الدنماركيون كلمات سحرية مثل <strong>nå, lige, jo, ikke?</strong> ليصبح الحديث دافئاً وإنسانياً.`,
+                en: `"<span class="mss-hl-my">Well</span>, I'm hungry, <span class="mss-hl-my">so</span> I'll <span class="mss-hl-my">just</span> eat some bread in the kitchen, <span class="mss-hl-my">okay?</span>" — English uses conversational fillers like "well", "just", "you know", "right?". Danish does the exact same with small magic words: <strong>nå</strong> (well/oh), <strong>lige</strong> (just/casually), and <strong>ikke?</strong> (right?). Notice that "fordi" (because) makes "ikke" jump in front of the verb: "...fordi jeg ikke spiser brød".`,
+                ar: `<span class="mss-hl-my">طيب / يعني</span>، أنا جائع، <span class="mss-hl-my">لذلك</span> سآكل على السريع في المطبخ، <span class="mss-hl-my">مش هيك / تمام؟</span>" — كما نستخدم في العربية العامية كلمات مثل "يعني، طيب، ماشي، تمام" لتلطيف الحديث، يستعمل الدنماركيون كلمات سحرية مثل <strong>nå, lige, jo, ikke?</strong> ليصبح الحديث دافئاً وإنسانياً.`,
                 tr: `"Şey / Yani, karnım aç, o yüzden mutfakta biraz ekmek yiyorum, tamam mı?"`,
                 uk: `"Ну, я голодний, тому я просто поїм хліба на кухні, добре?"`,
                 de: `"Na ja, ich bin hungrig, also esse ich mal Brot in der Küche, oder?"`,
@@ -839,6 +899,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 zh: `"<span class="mss-hl-my">哎 (Āi)</span>，我饿了，<span class="mss-hl-my">所以</span>去厨房吃点面包，<span class="mss-hl-my">对吧？</span>" — 中文聊天时，我们会用“呢、吧、啊、嘛”来让气氛轻松；丹麦人也是一样！他们有一批神奇的<strong>“润滑小词”（nå, jo, lige, vel, ikke?）</strong>。比如加一个 <strong>lige</strong>（我“顺便”吃点），语气瞬间变得非常客气随意；句末加一个 <strong>ikke?</strong>（对吧？），立刻拉近了两人的距离！`
             },
             myLines_da: {
+                en: `Engelsk bruger fillers som "well, just, right?". Dansk bruger bindeord (så, fordi, men) og småord som "nå, lige, jo, vel, ikke?". Bemærk ledsætningsordstilling efter "fordi", hvor ikke hopper foran verbet.`,
                 zh: `Kinesisk bruger småpartikler som 呢, 吧, 啊 til at gøre stemningen venlig; dansk bruger sine egne små magiske ord som nå, jo, lige og ikke?`,
                 ar: `Arabisk bruger ord som "ya'ni, tayyeb, tamām" til at skabe uformel samtalestemning. På dansk bruger vi bindeord (så, fordi, men) og småord (nå, lige, ikke?), der fungerer som sprogets smileys.`
             },
@@ -847,14 +908,15 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             detailExplain_ar: `<strong>المحادثة الكاملة (Den fulde samtale):</strong> في قمة هرم اللغة، نصل إلى نسج عدة أفكار معاً لنبدو كبشر حقيقيين نتواصل بدفء، وليس كروبوتات تقرأ جملاً جافة. لتحقيق ذلك في الدنماركية نستخدم وسيلتين:<br><br>
 1) <strong>جسور الربط (حروف العطف):</strong> مثل <em>fordi</em> (لأن)، <em>så</em> (لذلك/إذن)، <em>men</em> (لكن)، <em>når</em> (عندما). انتبه: كلمة <em>fordi</em> لها سحر خاص، فإذا جاء بعدها نفي، يقفز <em>ikke</em> أمام الفعل: <em>"...fordi jeg <strong>ikke</strong> spiser brød"</em>.<br><br>
 2) <strong>كلمات الابتسامة السحرية (الرموز التعبيرية في الحديث):</strong> الدنماركيون يزينون كلامهم دائماً بكلمات خفيفة تجعل النبرة ودودة ومهذبة: <em>nå</em> (حسناً / أها!)، <em>lige</em> (على السريع / مجرد خطوة خفيفة)، <em>jo</em> (كما تعلم بالطبع)، و <em>ikke?</em> في نهاية الجملة (أليس كذلك؟ تمام؟). هذه الكلمات الصغيرة هي التي تحول لغتك من لغة كتب باردة إلى دنماركية أصيلة دافئة تشبه جلسة شاي بين الأصدقاء!`,
+            detailExplain_en: `<strong>The Full Flowing Conversation (Den fulde samtale):</strong> Connecting multiple thoughts into authentic human conversation. In Danish, this is driven by two tools:<br><br>1) <strong>Bridge Words (Conjunctions):</strong> Words like <em>så</em> (so/therefore), <em>fordi</em> (because), <em>men</em> (but), and <em>når</em> (when/if). Watch out for <em>fordi</em>: in clauses starting with <em>fordi</em>, if you use a negative word like <em>ikke</em>, it jumps in FRONT of the verb: <em>"...fordi jeg <strong>ikke</strong> spiser brød"</em> (unlike standard sentences where it follows the verb!).<br><br>2) <strong>Conversational Smiley Words (The Social Lubricant):</strong> Danes constantly sprinkle small words into speech to soften the tone: <em><strong>nå</strong></em> (well / I see), <em><strong>lige</strong></em> (just quickly / casually), <em><strong>jo</strong></em> (as you know), and <em><strong>ikke?</strong></em> (right? / isn’t that so?). Without these, Danish sounds formal and rigid; with them, you sound like a local chatting over coffee!`,
             morePairs: [
-                { da: 'Jeg spiser brød, FORDI jeg er sulten. (Bindeord hvor "ikke" hopper foran handlingen) ↔ Jeg er sulten, SÅ jeg spiser brød.', note: 'Bindeordet styrer rækkefølgen af ordene i næste sætning.', note_zh: '连接词一换，后面的句子排队规矩也跟着变（比如 fordi 后面如果加“不 ikke”，ikke 会超车跳到动作前面）。', note_ar: 'أداة الربط تغير الترتيب: fordi تجعل ikke تسبق الفعل (...fordi jeg ikke spiser brød). أما så فالفعل يحتل المركز الثاني بعدها.' },
-                { da: '"Nå!" (Overraskelse/ny info) • "Jeg spiser LIGE..." (Gør handlingen uformel og kort)', note: 'Småordene gør dansk levende i hverdagen.', note_zh: '善用 lige（顺便）和 nå（好啦），瞬间让你的丹麦语脱离书本腔，变得鲜活自然。', note_ar: 'استعمال كلمة lige (على السريع/قليلاً) يجعل أي طلب أو تصرف يبدو لطيفاً وغير متكلف في الحياة اليومية.' }
+                { da: 'Jeg spiser brød, FORDI jeg er sulten. (Bindeord hvor "ikke" hopper foran handlingen) ↔ Jeg er sulten, SÅ jeg spiser brød.', note: 'Bindeordet styrer rækkefølgen af ordene i næste sætning.', note_zh: '连接词一换，后面的句子排队规矩也跟着变（比如 fordi 后面如果加“不 ikke”，ikke 会超车跳到动作前面）。', note_ar: 'أداة الربط تغير الترتيب: fordi تجعل ikke تسبق الفعل (...fordi jeg ikke spiser brød). أما så فالفعل يحتل المركز الثاني بعدها.', note_en: 'The conjunction dictates the word order of the following clause (e.g. "ikke" jumps in front of the verb after "fordi").' },
+                { da: '"Nå!" (Overraskelse/ny info) • "Jeg spiser LIGE..." (Gør handlingen uformel og kort)', note: 'Småordene gør dansk levende i hverdagen.', note_zh: '善用 lige（顺便）和 nå（好啦），瞬间让你的丹麦语脱离书本腔，变得鲜活自然。', note_ar: 'استعمال كلمة lige (على السريع/قليلاً) يجعل أي طلب أو تصرف يبدو لطيفاً وغير متكلف في الحياة اليومية.', note_en: 'Small filler words make spoken Danish warm, natural, and friendly in everyday life.' }
             ],
             links: [
-                { label: '🔗 Konjunktioner & Bindeord', label_zh: '🔗 连词与复合句 (Konjunktioner)', label_ar: '🔗 حروف الربط والعطف (Konjunktioner)', route: 'traen_grammatik' },
-                { label: '✨ De små magiske ord (jo, nok, lige)', label_zh: '✨ 丹麦语高频语气小词 (jo, nok, lige)', label_ar: '✨ الكلمات اليومية السحرية (jo, nok, lige)', route: 'adverbier_smaaord' },
-                { label: '🕹️ Interaktive historier', label_zh: '🕹️ 沉浸式互动故事 (Interaktive historier)', label_ar: '🕹️ قصص تفاعلية لتعلم المحادثة (Interaktive historier)', route: 'historier_menu' }
+                { label: '🔗 Konjunktioner & Bindeord', label_zh: '🔗 连词与复合句 (Konjunktioner)', label_ar: '🔗 حروف الربط والعطف (Konjunktioner)', label_en: '🔗 Conjunctions & clauses (Konjunktioner)', route: 'traen_grammatik' },
+                { label: '✨ De små magiske ord (jo, nok, lige)', label_zh: '✨ 丹麦语高频语气小词 (jo, nok, lige)', label_ar: '✨ الكلمات اليومية السحرية (jo, nok, lige)', label_en: '✨ Small magic words (jo, nok, lige)', route: 'adverbier_smaaord' },
+                { label: '🕹️ Interaktive historier', label_zh: '🕹️ 沉浸式互动故事 (Interaktive historier)', label_ar: '🕹️ قصص تفاعلية لتعلم المحادثة (Interaktive historier)', label_en: '🕹️ Interactive dialogue stories (Historier)', route: 'historier_menu' }
             ]
         }
     ];
@@ -880,6 +942,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
     function renderStage() {
         const isZh = selectedLang === 'zh';
         const isAr = selectedLang === 'ar';
+        const isEn = selectedLang === 'en';
 
         // Top bar rendering
         topBar.innerHTML = '';
@@ -887,7 +950,8 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         backBtn.className = 'mss-back-btn';
         backBtn.innerHTML = isZh ? 
             `← Tilbage til forsiden (返回主页)` : 
-            (isAr ? `← Tilbage til forsiden (العودة إلى الصفحة الرئيسية)` : `← Tilbage til forsiden`);
+            (isAr ? `← Tilbage til forsiden (العودة إلى الصفحة الرئيسية)` : 
+            (isEn ? `← Back to main menu (Tilbage til forsiden)` : `← Tilbage til forsiden`));
         backBtn.onclick = () => navigateFn('main');
         topBar.appendChild(backBtn);
 
@@ -908,12 +972,20 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                     <div class="mss-notice-sub">مقارنة شاملة عبر 10 مستويات بين اللغة العربية والدنماركية — من مخارج الأصوات وحركات اللسان إلى بناء المحادثة الكاملة. اضغط على 🇩🇰 Dansk في أي وقت للاطلاع على الشرح للمعلمين بالدنماركية.</div>
                 </div>
             `;
+        } else if (isEn) {
+            noticeBanner.innerHTML = `
+                <span class="mss-notice-flag">🇬🇧</span>
+                <div>
+                    <div class="mss-notice-title">Designed for English Speakers (Mit sprog sammenlignet med dansk)</div>
+                    <div class="mss-notice-sub">A comprehensive 10-level ladder comparing Danish and English — from subtle sound shifts and the soft d to sentence inversion (V2) and fluent conversation. Click 🇩🇰 Dansk anytime to view the Danish teacher perspective.</div>
+                </div>
+            `;
         } else {
             noticeBanner.innerHTML = `
                 <span class="mss-notice-flag">🇩🇰</span>
                 <div>
                     <div class="mss-notice-title">Dansk visning: Fuld sproglig & pædagogisk forklaring</div>
-                    <div class="mss-notice-sub">Du ser alle 10 sproglige niveauer med danske forklaringer og sammenligninger. Vælg 🇸🇦 Arabisk (العربية) eller 🇨🇳 Kinesisk (中文) for at se kursistens visning.</div>
+                    <div class="mss-notice-sub">Du ser alle 10 sproglige niveauer med danske forklaringer og sammenligninger. Vælg 🇬🇧 Engelsk (English), 🇸🇦 Arabisk (العربية) eller 🇨🇳 Kinesisk (中文) for at se kursistens visning.</div>
                 </div>
             `;
         }
@@ -935,6 +1007,14 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                     اكتشف كيف تُبنى اللغة الدنماركية خطوة بخطوة عبر 10 مستويات واضحة، مع مقارنة مباشرة وشاملة مع اللغة العربية بالاعتماد على جملتنا المحورية: <em>"Jeg spiser brød i køkkenet i dag"</em> (أنا آكل الخبز في المطبخ اليوم).
                 </p>
             `;
+        } else if (isEn) {
+            hero.innerHTML = `
+                <div class="mss-hero-kicker">🌍 Language Guide • From subtle sounds to full conversation</div>
+                <h1>My Language Compared to Danish (English)</h1>
+                <p>
+                    Explore how Danish works step-by-step across 10 clear levels, directly contrasted with English using our central reference sentence: <em>"Jeg spiser brød i køkkenet i dag"</em> (I eat bread in the kitchen today).
+                </p>
+            `;
         } else {
             hero.innerHTML = `
                 <div class="mss-hero-kicker">🌍 Sprog-kompas • Fra mindste lyd til hel samtale</div>
@@ -950,10 +1030,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             return `
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:0.85rem; margin-bottom:1.05rem;">
                     ${st.utteranceCards.map(uc => {
-                        const myTxt = isZh ? uc.myByLang.zh : (isAr ? uc.myByLang.ar : (uc.myByLang_da?.zh || uc.myByLang.en));
-                        const badgeText = isZh ? (uc.badge_zh || uc.badge) : (isAr ? (uc.badge_ar || uc.badge) : uc.badge);
-                        const formulaText = isZh ? (uc.daFormula_zh || uc.daFormula) : (isAr ? (uc.daFormula_ar || uc.daFormula) : uc.daFormula);
-                        const subNoteText = isZh ? (uc.daSubNote_zh || uc.daSubNote) : (isAr ? (uc.daSubNote_ar || uc.daSubNote) : uc.daSubNote);
+                        const myTxt = isZh ? uc.myByLang.zh : (isAr ? uc.myByLang.ar : (isEn ? uc.myByLang.en : (uc.myByLang_da?.en || uc.myByLang_da?.zh || uc.myByLang.en)));
+                        const badgeText = isZh ? (uc.badge_zh || uc.badge) : (isAr ? (uc.badge_ar || uc.badge) : (isEn ? (uc.badge_en || uc.badge) : uc.badge));
+                        const formulaText = isZh ? (uc.daFormula_zh || uc.daFormula) : (isAr ? (uc.daFormula_ar || uc.daFormula) : (isEn ? (uc.daFormula_en || uc.daFormula) : uc.daFormula));
+                        const subNoteText = isZh ? (uc.daSubNote_zh || uc.daSubNote) : (isAr ? (uc.daSubNote_ar || uc.daSubNote) : (isEn ? (uc.daSubNote_en || uc.daSubNote) : uc.daSubNote));
 
                         return `
                             <div style="background:rgba(15,23,42,0.92); border:1.5px solid ${uc.accent}; border-radius:14px; padding:0.9rem 1rem; display:flex; flex-direction:column; gap:0.5rem;">
@@ -962,14 +1042,14 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                                 </div>
                                 <div style="background:rgba(239,68,68,0.12); border-left:3.5px solid #ef4444; border-radius:8px; padding:0.55rem 0.7rem;">
                                     <div style="font-size:0.7rem; font-weight:900; color:#fca5a5; text-transform:uppercase; margin-bottom:0.15rem;">
-                                        🇩🇰 ${isZh ? '丹麦语结构公式' : (isAr ? 'القالب الدنماركي' : 'Dansk formel')} (${formulaText})
+                                        🇩🇰 ${isZh ? '丹麦语结构公式' : (isAr ? 'القالب الدنماركي' : (isEn ? 'Danish Formula' : 'Dansk formel'))} (${formulaText})
                                     </div>
                                     <div style="font-size:0.93rem; color:#ffffff; font-weight:800;">${uc.daExample}</div>
                                     <div style="font-size:0.78rem; color:#cbd5e1; margin-top:0.25rem;">${subNoteText}</div>
                                 </div>
                                 <div style="background:rgba(56,189,248,0.1); border-left:3.5px solid #38bdf8; border-radius:8px; padding:0.55rem 0.7rem;" ${isAr ? 'dir="rtl"' : ''}>
                                     <div style="font-size:0.7rem; font-weight:900; color:#7dd3fc; text-transform:uppercase; margin-bottom:0.15rem;">
-                                        ${isZh ? '🇨🇳 中文对比解析' : (isAr ? '🇸🇦 المقارنة بالعربية' : '💡 Pædagogisk forklaring')}
+                                        ${isZh ? '🇨🇳 中文对比解析' : (isAr ? '🇸🇦 المقارنة بالعربية' : (isEn ? '🇬🇧 English Contrast Analysis' : '💡 Pædagogisk forklaring'))}
                                     </div>
                                     <div style="font-size:0.86rem; color:#e0f2fe; line-height:1.5;">${myTxt}</div>
                                 </div>
@@ -985,17 +1065,21 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             const subTitle = isZh ? 
                 `${st.num}. ${st.title_zh || st.title} — ${st.subtitle_zh || st.subtitle}` : 
                 (isAr ? `${st.num}. ${st.title_ar || st.title} — ${st.subtitle_ar || st.subtitle}` :
-                `${st.num}. ${st.title} — ${st.subtitle}`);
-            const closeBtnText = isZh ? '✕ 关闭详情' : (isAr ? '✕ إغلاق التفاصيل' : '✕ Luk underflade');
+                (isEn ? `${st.num}. ${st.title_en || st.title} — ${st.subtitle_en || st.subtitle}` :
+                `${st.num}. ${st.title} — ${st.subtitle}`));
+            const closeBtnText = isZh ? '✕ 关闭详情' : (isAr ? '✕ إغلاق التفاصيل' : (isEn ? '✕ Close details' : '✕ Luk underflade'));
 
             let myAnalysisHtml = '';
             if (isZh) {
                 myAnalysisHtml = st.myLines.zh;
             } else if (isAr) {
                 myAnalysisHtml = st.myLines.ar;
+            } else if (isEn) {
+                myAnalysisHtml = st.myLines.en;
             } else {
                 myAnalysisHtml = `
                     <div style="display:flex; flex-direction:column; gap:0.25rem;">
+                        <div><strong>🇬🇧 Engelsk:</strong> ${(st.myLines_da && st.myLines_da.en) || st.myLines.en}</div>
                         <div><strong>🇸🇦 Arabisk:</strong> ${(st.myLines_da && st.myLines_da.ar) || st.myLines.ar}</div>
                         <div><strong>🇨🇳 Kinesisk:</strong> ${(st.myLines_da && st.myLines_da.zh) || st.myLines.zh}</div>
                     </div>
@@ -1007,7 +1091,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
                         <div>
                             <span style="font-size:0.75rem; font-weight:900; color:${st.color}; text-transform:uppercase;">
-                                ${isZh ? `深度解析 • 第 ${st.num} 级 (Trin ${st.num} af 10)` : (isAr ? `شرح تفصيلي • المستوى ${st.num} (Trin ${st.num} af 10)` : `Underflade • Trin ${st.num} af 10`)}
+                                ${isZh ? `深度解析 • 第 ${st.num} 级 (Trin ${st.num} af 10)` : (isAr ? `شرح تفصيلي • المستوى ${st.num} (Trin ${st.num} af 10)` : (isEn ? `Deep Dive • Level ${st.num} of 10` : `Underflade • Trin ${st.num} af 10`))}
                             </span>
                             <h2 style="margin:0.15rem 0 0; font-size:1.32rem; font-weight:900; color:#ffffff;">
                                 ${subTitle}
@@ -1015,7 +1099,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                         </div>
                         <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
                             <button type="button" class="mss-back-btn" data-copy-step-hw="${st.num}" style="border-color:#38bdf8; color:#7dd3fc; font-weight:800;">
-                                📋 ${isZh ? '复制作业链接' : (isAr ? 'نسخ رابط الواجب' : 'Kopier lektie-link')} (Trin ${st.num})
+                                📋 ${isZh ? '复制作业链接' : (isAr ? 'نسخ رابط الواجب' : (isEn ? 'Copy homework link' : 'Kopier lektie-link'))} (Trin ${st.num})
                             </button>
                             <button type="button" class="mss-back-btn" data-close-sub="1" style="border-color:#fde68a; color:#fde68a;">
                                 ${closeBtnText}
@@ -1025,7 +1109,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
 
                     <div class="mss-two-lines" style="margin-bottom:0.85rem;">
                         <div class="mss-line-da">
-                            <span class="mss-line-tag" style="color:#fca5a5;">🇩🇰 ${isZh ? '丹麦语例句' : (isAr ? 'المثال الدنماركي' : 'Dansk')}:</span>
+                            <span class="mss-line-tag" style="color:#fca5a5;">🇩🇰 ${isZh ? '丹麦语例句' : (isAr ? 'المثال الدنماركي' : (isEn ? 'Danish Example' : 'Dansk'))}:</span>
                             <span>${st.daLine}</span>
                         </div>
                         ${isZh && st.daLine_zh ? `
@@ -1038,14 +1122,19 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                                 💡 المعنى والمخرج: ${st.daLine_ar}
                             </div>
                         ` : ''}
+                        ${isEn && st.daLine_en ? `
+                            <div style="font-size:0.82rem; color:#fca5a5; opacity:0.88; padding-left:0.6rem; margin-top:-0.15rem;">
+                                💡 Meaning & phonetics: ${st.daLine_en}
+                            </div>
+                        ` : ''}
                         <div class="mss-line-my" ${isAr ? 'dir="rtl"' : ''}>
-                            <span class="mss-line-tag" style="color:#7dd3fc;">${isZh ? '🇨🇳 中文对比解析' : (isAr ? '🇸🇦 المقارنة بالعربية' : '💡 Sproglig analyse')}:</span>
+                            <span class="mss-line-tag" style="color:#7dd3fc;">${isZh ? '🇨🇳 中文对比解析' : (isAr ? '🇸🇦 المقارنة بالعربية' : (isEn ? '🇬🇧 English Comparison' : '💡 Sproglig analyse'))}:</span>
                             <span>${myAnalysisHtml}</span>
                         </div>
                     </div>
 
                     <div style="background:rgba(30,41,59,0.75); border:1px solid rgba(148,163,184,0.25); border-radius:12px; padding:0.85rem 1rem; margin-bottom:0.9rem; font-size:0.92rem; line-height:1.6; color:#e2e8f0;" ${isAr ? 'dir="rtl"' : ''}>
-                        ${isZh ? (st.detailExplain_zh || st.detailExplain) : (isAr ? (st.detailExplain_ar || st.detailExplain) : st.detailExplain)}
+                        ${isZh ? (st.detailExplain_zh || st.detailExplain) : (isAr ? (st.detailExplain_ar || st.detailExplain) : (isEn ? (st.detailExplain_en || st.detailExplain) : st.detailExplain))}
                     </div>
 
                     ${buildUtteranceCardsHtml(st)}
@@ -1092,6 +1181,28 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                                 <button type="button" class="mss-link-chip" data-nav="vanskelige_lyde_kinesisk" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.92rem; padding:0.65rem 1.25rem; white-space:nowrap; border-radius:12px;">
                                     打开实用专练 ➔
                                 </button>
+                            ` : (isEn ? `
+                                <div style="max-width: 720px;">
+                                    <div style="display:inline-flex; align-items:center; gap:0.4rem; font-size: 0.74rem; font-weight: 900; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.06em; background:rgba(56,189,248,0.15); padding:0.2rem 0.6rem; border-radius:6px; margin-bottom:0.35rem;">
+                                        <span>🇬🇧</span> <span>English Speakers: Core Danish Pronunciation Keys</span>
+                                    </div>
+                                    <div style="font-size: 1.15rem; font-weight: 900; color: #ffffff; margin-bottom: 0.25rem;">
+                                        The 3 biggest traps: The Soft d (breath on glasses) • The Throat r (crow's call) • and The Paper Test (P vs. B)
+                                    </div>
+                                    <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.6;">
+                                        1) <strong>Soft d (mad, brød):</strong> Never use your teeth! Rest your tongue flat behind your bottom teeth and blow warm air like misting your glasses.<br>
+                                        2) <strong>Throat r (rød, ris):</strong> Deep in the back of your throat like a crow calling "kraa" (never curl the tongue tip like English r!).<br>
+                                        3) <strong>P vs. B (The Paper Test):</strong> Danish P releases a heavy burst of air blowing a paper away (<em>pære</em>), while B is soft and quiet (<em>bære</em>).
+                                    </div>
+                                </div>
+                                <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                                    <button type="button" class="mss-link-chip" data-nav="traen_bogstaver" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.92rem; padding:0.65rem 1.25rem; white-space:nowrap; border-radius:12px;">
+                                        🔤 Practice Letters & Sounds ➔
+                                    </button>
+                                    <button type="button" class="mss-link-chip" data-nav="leg_med_udtale" style="background:rgba(56,189,248,0.2); border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.86rem; padding:0.5rem 1.1rem; white-space:nowrap; border-radius:12px;">
+                                        🎙️ Pronunciation Games & Challenges ➔
+                                    </button>
+                                </div>
                             ` : `
                                 <div style="max-width: 720px;">
                                     <div style="display:inline-flex; align-items:center; gap:0.4rem; font-size: 0.74rem; font-weight: 900; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.06em; background:rgba(56,189,248,0.15); padding:0.2rem 0.6rem; border-radius:6px; margin-bottom:0.35rem;">
@@ -1115,7 +1226,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                                         🔤 Træn bogstaver ➔
                                     </button>
                                 </div>
-                            `)}
+                            `))}
                         </div>
                     ` : ''}
 
@@ -1123,18 +1234,18 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                         ${(st.morePairs || []).map(mp => `
                             <div style="background:rgba(15,23,42,0.85); border:1px solid rgba(148,163,184,0.22); border-radius:11px; padding:0.75rem 0.9rem;">
                                 <div style="font-weight:900; color:#fde68a; font-size:0.88rem; margin-bottom:0.25rem;">${mp.da}</div>
-                                <div style="font-size:0.82rem; color:#cbd5e1;" ${isAr ? 'dir="rtl"' : ''}>${isZh ? (mp.note_zh || mp.note) : (isAr ? (mp.note_ar || mp.note) : mp.note)}</div>
+                                <div style="font-size:0.82rem; color:#cbd5e1;" ${isAr ? 'dir="rtl"' : ''}>${isZh ? (mp.note_zh || mp.note) : (isAr ? (mp.note_ar || mp.note) : (isEn ? (mp.note_en || mp.note) : mp.note))}</div>
                             </div>
                         `).join('')}
                     </div>
 
                     <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.65rem; padding-top:0.8rem; border-top:1px solid rgba(148,163,184,0.2);">
                         <span style="font-size:0.8rem; font-weight:900; color:#86efac; text-transform:uppercase;">
-                            ${isZh ? '在应用中训练此层级 (Træn dette niveau):' : (isAr ? 'تمارين تدريبية لهذا المستوى في التطبيق:' : 'Træn dette niveau i appen:')}
+                            ${isZh ? '在应用中训练此层级 (Træn dette niveau):' : (isAr ? 'تمارين تدريبية لهذا المستوى في التطبيق:' : (isEn ? 'Practice this level in the app (Træn dette niveau):' : 'Træn dette niveau i appen:'))}
                         </span>
                         <div style="display:flex; gap:0.55rem; flex-wrap:wrap;">
                             ${(st.links || []).map(lk => {
-                                const linkLabel = isZh ? (lk.label_zh || lk.label) : (isAr ? (lk.label_ar || lk.label) : lk.label);
+                                const linkLabel = isZh ? (lk.label_zh || lk.label) : (isAr ? (lk.label_ar || lk.label) : (isEn ? (lk.label_en || lk.label) : lk.label));
                                 return `<button class="mss-link-chip" data-nav="${lk.route}">${linkLabel} ➔</button>`;
                             }).join('')}
                         </div>
@@ -1147,10 +1258,10 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             <div class="mss-control-panel">
                 <div class="mss-lang-row" style="border-top:none; padding-top:0;">
                     <span style="font-size:0.78rem; font-weight:900; color:#fde68a; text-transform:uppercase; margin-right:0.25rem;">
-                        ${isZh ? '选择语言:' : (isAr ? 'اختر اللغة:' : 'Vælg sprog:')}
+                        ${isZh ? '选择语言:' : (isAr ? 'اختر اللغة:' : (isEn ? 'Select language:' : 'Vælg sprog:'))}
                     </span>
                     ${LANGUAGES.map(l => {
-                        const isSupported = l.code === 'da' || l.code === 'zh' || l.code === 'ar';
+                        const isSupported = l.code === 'da' || l.code === 'zh' || l.code === 'ar' || l.code === 'en';
                         return `
                             <button class="mss-lang-pill ${selectedLang === l.code ? 'active' : ''}" data-lang="${l.code}" style="${!isSupported ? 'opacity:0.6;' : 'font-weight:900;'}">
                                 ${l.flag} ${l.name} ${!isSupported ? '<span style="font-size:0.7rem; opacity:0.8;">(Kommer senere)</span>' : ''}
@@ -1158,7 +1269,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                         `;
                     }).join('')}
                 </div>
-                <div id="mss-lang-note" style="display:none; font-size:0.82rem; font-weight:800; color:#fca5a5; background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.35); border-radius:8px; padding:0.4rem 0.75rem;"></div>
+                <div id="mss-lang-note" style="display:none; font-size:0.8rem; color:#fde047; padding:0.35rem 0.6rem; background:rgba(234,179,8,0.14); border-radius:8px;"></div>
             </div>
 
             <div class="mss-ladder-wrap">
@@ -1167,22 +1278,26 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                     const stepTitle = isZh ? 
                         `第 ${st.num} 级: ${st.title_zh || st.title}` : 
                         (isAr ? `المستوى ${st.num}: ${st.title_ar || st.title}` :
-                        `Trin ${st.num}. ${st.title}`);
+                        (isEn ? `Level ${st.num}: ${st.title_en || st.title}` :
+                        `Trin ${st.num}. ${st.title}`));
                     const stepSubtitle = isZh ? 
                         (st.subtitle_zh || st.subtitle) : 
-                        (isAr ? (st.subtitle_ar || st.subtitle) : st.subtitle);
+                        (isAr ? (st.subtitle_ar || st.subtitle) : (isEn ? (st.subtitle_en || st.subtitle) : st.subtitle));
                     const btnText = isOpen ? 
-                        (isZh ? '收起详情 ▲' : (isAr ? 'إغلاق التفاصيل ▲' : 'Luk underflade ▲')) : 
-                        (isZh ? '查看详情与练习 ➔' : (isAr ? 'عرض التفاصيل والتمارين ➔' : 'Se mere & links ➔'));
+                        (isZh ? '收起详情 ▲' : (isAr ? 'إغلاق التفاصيل ▲' : (isEn ? 'Close details ▲' : 'Luk underflade ▲'))) : 
+                        (isZh ? '查看详情与练习 ➔' : (isAr ? 'عرض التفاصيل والتمارين ➔' : (isEn ? 'View details & practice ➔' : 'Se mere & links ➔')));
 
                     let myAnalysisLine = '';
                     if (isZh) {
                         myAnalysisLine = st.myLines.zh;
                     } else if (isAr) {
                         myAnalysisLine = st.myLines.ar;
+                    } else if (isEn) {
+                        myAnalysisLine = st.myLines.en;
                     } else {
                         myAnalysisLine = `
                             <div style="display:flex; flex-direction:column; gap:0.2rem;">
+                                <div><strong>🇬🇧 Engelsk:</strong> ${(st.myLines_da && st.myLines_da.en) || st.myLines.en}</div>
                                 <div><strong>🇸🇦 Arabisk:</strong> ${(st.myLines_da && st.myLines_da.ar) || st.myLines.ar}</div>
                                 <div><strong>🇨🇳 Kinesisk:</strong> ${(st.myLines_da && st.myLines_da.zh) || st.myLines.zh}</div>
                             </div>
@@ -1195,7 +1310,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                                 <div class="mss-step-dot" style="--step-color:${st.color};">${st.num}</div>
                                 <div>
                                     <div style="font-size:0.72rem; font-weight:900; color:${st.color}; text-transform:uppercase;">
-                                        ${isZh ? `第 ${st.num} 级 (Trin ${st.num})` : (isAr ? `المستوى ${st.num} (Trin ${st.num})` : `Trin ${st.num} af 10`)}
+                                        ${isZh ? `第 ${st.num} 级 (Trin ${st.num})` : (isAr ? `المستوى ${st.num} (Trin ${st.num})` : (isEn ? `Level ${st.num} of 10` : `Trin ${st.num} af 10`))}
                                     </div>
                                     <div style="font-size:1.06rem; font-weight:900; color:#ffffff; margin:0.1rem 0 0.2rem;">
                                         ${stepTitle}
@@ -1206,7 +1321,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                                 </div>
                                 <div class="mss-two-lines">
                                     <div class="mss-line-da">
-                                        <span class="mss-line-tag" style="color:#fca5a5;">🇩🇰 ${isZh ? '丹麦语' : (isAr ? 'الدنماركية' : 'Dansk')}:</span>
+                                        <span class="mss-line-tag" style="color:#fca5a5;">🇩🇰 ${isZh ? '丹麦语' : (isAr ? 'الدنماركية' : (isEn ? 'Danish' : 'Dansk'))}:</span>
                                         <span>${st.daLine}</span>
                                     </div>
                                     ${isZh && st.daLine_zh ? `
@@ -1219,8 +1334,13 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                                             💡 المعنى والمخرج: ${st.daLine_ar}
                                         </div>
                                     ` : ''}
+                                    ${isEn && st.daLine_en ? `
+                                        <div style="font-size:0.8rem; color:#fca5a5; opacity:0.88; padding-left:0.6rem; margin-top:-0.15rem;">
+                                            💡 Meaning: ${st.daLine_en}
+                                        </div>
+                                    ` : ''}
                                     <div class="mss-line-my" ${isAr ? 'dir="rtl"' : ''}>
-                                        <span class="mss-line-tag" style="color:#7dd3fc;">${isZh ? '🇨🇳 中文对比' : (isAr ? '🇸🇦 المقارنة بالعربية' : '💡 Analyse')}:</span>
+                                        <span class="mss-line-tag" style="color:#7dd3fc;">${isZh ? '🇨🇳 中文对比' : (isAr ? '🇸🇦 المقارنة بالعربية' : (isEn ? '🇬🇧 English Comparison' : '💡 Analyse'))}:</span>
                                         <span>${myAnalysisLine}</span>
                                     </div>
                                 </div>
@@ -1238,7 +1358,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
 
             <div class="mss-bottom-bar" style="margin-top:2.75rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.12); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
                 <button class="mss-back-btn" data-nav="main" style="font-weight:900;">
-                    ${isZh ? '← Tilbage til forsiden (返回主页)' : (isAr ? '← Tilbage til forsiden (العودة إلى الصفحة الرئيسية)' : '← Tilbage til forsiden')}
+                    ${isZh ? '← Tilbage til forsiden (返回主页)' : (isAr ? '← Tilbage til forsiden (العودة إلى الصفحة الرئيسية)' : (isEn ? '← Back to main menu (Tilbage til forsiden)' : '← Tilbage til forsiden'))}
                 </button>
                 <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
                     ${isZh ? `
@@ -1252,6 +1372,13 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                         <button class="mss-link-chip" data-nav="traen_bogstaver" style="background:rgba(56,189,248,0.2); border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.86rem; padding:0.55rem 1.1rem; border-radius:12px;">
                             🔤 تدريب الحروف والأصوات (Træn bogstaver) ➔
                         </button>
+                    ` : (isEn ? `
+                        <button class="mss-link-chip" data-nav="traen_bogstaver" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.92rem; padding:0.6rem 1.25rem; border-radius:12px;">
+                            🔤 Letters & Sounds (Træn bogstaver) ➔
+                        </button>
+                        <button class="mss-link-chip" data-nav="leg_med_udtale" style="background:rgba(56,189,248,0.2); border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.86rem; padding:0.55rem 1.1rem; border-radius:12px;">
+                            🎙️ Pronunciation Games (Leg med udtale) ➔
+                        </button>
                     ` : `
                         <button class="mss-link-chip" data-nav="vanskelige_lyde_arabisk" style="background:#0284c7; border-color:#38bdf8; color:#ffffff; font-weight:800; font-size:0.86rem; padding:0.55rem 1.1rem; border-radius:12px;">
                             🇸🇦 Arabisk udtale (5 lyde) ➔
@@ -1262,7 +1389,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                         <button class="mss-link-chip" data-nav="traen_bogstaver" style="background:rgba(148,163,184,0.18); border-color:rgba(148,163,184,0.4); color:#ffffff; font-weight:800; font-size:0.86rem; padding:0.55rem 1.1rem; border-radius:12px;">
                             🔤 Træn bogstaver & udtale ➔
                         </button>
-                    `)}
+                    `))}
                 </div>
             </div>
         `;
@@ -1271,12 +1398,13 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
         stage.querySelectorAll('[data-lang]').forEach(btn => {
             btn.onclick = () => {
                 const targetLang = btn.dataset.lang;
-                if (targetLang !== 'zh' && targetLang !== 'da' && targetLang !== 'ar') {
+                if (targetLang !== 'zh' && targetLang !== 'da' && targetLang !== 'ar' && targetLang !== 'en') {
                     if (langNoteEl) {
                         langNoteEl.textContent = isZh ? 
-                            '⚠️ 目前支持丹麦语、阿拉伯语与中文对比，其他语言即将推出。' : 
-                            (isAr ? '⚠️ حالياً تدعم المنصة المقارنة بالدنماركية والعربية والصينية، وسيتم إضافة بقية اللغات قريباً.' :
-                            '⚠️ Indtil videre er Dansk, Arabisk og Kinesisk fuldt tilgængelige. Andre sprog følger snart.');
+                            '⚠️ 目前支持丹麦语、英语、阿拉伯语与中文对比，其他语言即将推出。' : 
+                            (isAr ? '⚠️ حالياً تدعم المنصة المقارنة بالدنماركية والإنجليزية والعربية والصينية، وسيتم إضافة بقية اللغات قريباً.' :
+                            (isEn ? '⚠️ Currently Danish, English, Arabic, and Chinese are fully supported. More languages coming soon.' :
+                            '⚠️ Indtil videre er Dansk, Engelsk, Arabisk og Kinesisk fuldt tilgængelige. Andre sprog følger snart.'));
                         langNoteEl.style.display = 'block';
                         setTimeout(() => { if (langNoteEl) langNoteEl.style.display = 'none'; }, 3500);
                     }
@@ -1298,7 +1426,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
                 e.stopPropagation();
                 const idx = Number(el.dataset.openSub);
                 openSubStepIndex = openSubStepIndex === idx ? null : idx;
-                const lang = selectedLang || 'ar';
+                const lang = selectedLang || 'da';
                 if (openSubStepIndex !== null) {
                     history.pushState(null, '', `#/${lang}/mit_sprog_sammenlignet/${openSubStepIndex + 1}`);
                 } else {
@@ -1312,7 +1440,7 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             btn.onclick = (e) => {
                 e.stopPropagation();
                 openSubStepIndex = null;
-                const lang = selectedLang || 'ar';
+                const lang = selectedLang || 'da';
                 history.pushState(null, '', `#/${lang}/mit_sprog_sammenlignet`);
                 renderStage();
             };
@@ -1322,15 +1450,17 @@ export function renderMitSprogSammenlignetView(container, navigateFn, extraData 
             btn.onclick = (e) => {
                 e.stopPropagation();
                 const stepNum = btn.dataset.copyStepHw;
-                const lang = selectedLang || 'ar';
+                const lang = selectedLang || 'da';
                 const url = `${window.location.origin}${window.location.pathname}#/${lang}/mit_sprog_sammenlignet/${stepNum}`;
                 const successMsg = isZh ? 
                     `📋 已复制作业链接 (第 ${stepNum} 级):\n${url}` : 
                     (isAr ? `📋 تم نسخ رابط الواجب للمستوى ${stepNum}:\n${url}` : 
-                    `📋 Lektie-link til Trin ${stepNum} er kopieret:\n${url}`);
+                    (isEn ? `📋 Homework link for Level ${stepNum} copied:\n${url}` :
+                    `📋 Lektie-link til Trin ${stepNum} er kopieret:\n${url}`));
                 const promptMsg = isZh ? 
                     '复制作业链接:' : 
-                    (isAr ? 'انسخ رابط الواجب من هنا:' : 'Kopier lektie-link her:');
+                    (isAr ? 'انسخ رابط الواجب من هنا:' : 
+                    (isEn ? 'Copy homework link here:' : 'Kopier lektie-link her:'));
 
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(url).then(() => {

@@ -22,7 +22,7 @@ export function renderSansningSocialDeiksisView(container, navigateFn, extraData
             leftPos: { x: 50, y: 52 },
             rightPos: { x: 51, y: 45 },
             leftSent: '<span class="ss-box-verb-highlight">Hvad vil</span> du have at drikke?',
-            rightSent: '<span class="ss-box-verb-highlight">Var</span> der andet, eller må det være nok?',
+            rightSent: '<span class="ss-box-verb-highlight">Var</span> der andet?',
             leftExp: 'Venner tæt ved det runde bord spørger direkte i nutid uden omsvøb. Afstanden mellem dem er minimal.',
             rightExp: 'Over disken bruger bageren datidsformen <strong>"Var der andet?"</strong> – ikke fordi tiden er forbi, men for at lægge en blød høflighedsbuffer mellem sig og kunden.',
             aha: 'Dansk bruger <strong>tid (datid)</strong> til at skabe <strong>social afstand og høflighed</strong>, selvom samtalen foregår lige nu!',
@@ -121,10 +121,16 @@ export function renderSansningSocialDeiksisView(container, navigateFn, extraData
             expl: 'Mellem nære venner skaber direkte nutid og bydeform varme og nærhed, mens "Måtte jeg tilbyde Dem" ville skabe kulde og unaturlig afstand.'
         },
         {
-            prompt: 'Hvad gør datidsformerne "ville", "skulle" og "kunne" i sætningen "Kunne du hjælpe mig?"',
+            prompt: 'Hvad gør datidsformerne "ville", "skulle" og "kunne" i sætningen "Kunne du lukke vinduet?"',
             options: ['De placerer handlingen i går.', 'De skaber en høflig social buffer lige nu.'],
             correct: 'De skaber en høflig social buffer lige nu.',
             expl: 'Selvom ordene ligner datid, bruges de her til social distance i nutiden — præcis som at træde et halvt skridt tilbage.'
+        },
+        {
+            prompt: 'Hvorfor siger man ofte "Kunne du ikke være så venlig at lukke vinduet?" i stedet for bare "Luk vinduet!" til en fremmed eller kollega?',
+            options: ['Jo længere høflighedsfrase og jo mere datid, desto større respektfuld buffer.', 'Fordi man ikke må bruge navneord som "vinduet" i korte sætninger.'],
+            correct: 'Jo længere høflighedsfrase og jo mere datid, desto større respektfuld buffer.',
+            expl: 'På dansk markerer længden på høflighedsfrasen sammen med datid ("kunne") og blødgørere ("ikke", "være så venlig at") en tryg social afstand, så anmodningen ikke føles som en ordre.'
         }
     ];
 
@@ -541,6 +547,126 @@ export function renderSansningSocialDeiksisView(container, navigateFn, extraData
             cursor: pointer;
             margin: 0 auto;
         }
+        .ss-phrases-shell {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .ss-phrases-card {
+            background: #5C0812;
+            border: 1.5px solid #851825;
+            border-radius: 20px;
+            padding: 1.5rem 1.6rem;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+        }
+        .ss-phrases-card h2 {
+            font-size: 1.4rem;
+            font-weight: 900;
+            margin: 0 0 0.45rem;
+            color: #ffffff;
+        }
+        .ss-phrases-lead {
+            color: #FFC9CD;
+            font-size: 0.96rem;
+            line-height: 1.55;
+            margin: 0 0 1.25rem;
+        }
+        .ss-ladder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+        .ss-ladder-step {
+            background: #4A040B;
+            border: 1.5px solid #851825;
+            border-radius: 14px;
+            padding: 1rem 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+        .ss-ladder-step:hover {
+            border-color: #FFC9CD;
+            transform: translateY(-2px);
+        }
+        .ss-ladder-step.active {
+            border-color: #fb923c;
+            background: linear-gradient(145deg, #4A040B 0%, rgba(194, 65, 12, 0.28) 100%);
+            box-shadow: 0 0 20px rgba(251, 146, 60, 0.22);
+        }
+        .ss-ladder-step.close-tier.active {
+            border-color: #38bdf8;
+            background: linear-gradient(145deg, #4A040B 0%, rgba(14, 116, 144, 0.28) 100%);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.22);
+        }
+        .ss-ladder-tag {
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            color: #FFC9CD;
+        }
+        .ss-ladder-sent {
+            font-size: 1.02rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.38;
+        }
+        .ss-ladder-meter {
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+            overflow: hidden;
+            margin-top: auto;
+        }
+        .ss-ladder-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #38bdf8, #fb923c);
+        }
+        .ss-ladder-detail {
+            background: #4A040B;
+            border: 1.5px solid #851825;
+            border-radius: 14px;
+            padding: 1.1rem 1.25rem;
+            color: #FFC9CD;
+            font-size: 0.94rem;
+            line-height: 1.55;
+        }
+        .ss-datid-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 0.9rem;
+        }
+        .ss-datid-item {
+            background: #4A040B;
+            border: 1px solid #851825;
+            border-left: 4px solid #fb923c;
+            border-radius: 12px;
+            padding: 0.95rem 1.1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+        .ss-datid-verb {
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            color: #fdba74;
+        }
+        .ss-datid-phrase {
+            font-size: 1.04rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+        .ss-datid-note {
+            font-size: 0.86rem;
+            color: #FFC9CD;
+            line-height: 1.45;
+        }
     `;
     viewContainer.appendChild(style);
 
@@ -566,8 +692,9 @@ export function renderSansningSocialDeiksisView(container, navigateFn, extraData
     hero.innerHTML = `
         <h1>Social deiksis: nærhed vs. høflighedsbuffer</h1>
         <p>
-            Dansk skaber social afstand med tid! Hvor venner taler direkte i nutid (<strong>"Hvad vil du have?"</strong>),
-            lægger man ved høflig distance en tidsforskudt buffer ind (<strong>"Var der andet?"</strong> eller <strong>"Jeg ville lige høre..."</strong>).
+            Dansk skaber social afstand med både tid og sætningslængde! Hvor venner taler direkte i nutid (<strong>"Hvad vil du have?"</strong>),
+            lægger man ved høflig distance en datidsbuffer ind (<strong>"Var der andet?"</strong>, <strong>"Kunne du lukke vinduet?"</strong>)
+            eller pakker anmodningen ind i en lang høflighedsfrase.
         </p>
     `;
     viewContainer.appendChild(hero);
@@ -576,7 +703,8 @@ export function renderSansningSocialDeiksisView(container, navigateFn, extraData
     tabsNav.className = 'ss-tabs-nav';
     tabsNav.innerHTML = `
         <button class="ss-tab-btn active" data-tab="stage">1. Varmt bord vs. disk og buffer</button>
-        <button class="ss-tab-btn" data-tab="quiz">2. Høflighedsprøven</button>
+        <button class="ss-tab-btn" data-tab="phrases">2. Datid og lange høflighedsfraser</button>
+        <button class="ss-tab-btn" data-tab="quiz">3. Høflighedsprøven</button>
     `;
     viewContainer.appendChild(tabsNav);
 
@@ -704,6 +832,139 @@ export function renderSansningSocialDeiksisView(container, navigateFn, extraData
     renderStageHotspots();
     renderInspector();
     panelsContainer.appendChild(panelStage);
+
+    const panelPhrases = document.createElement('div');
+    panelPhrases.className = 'ss-tab-panel';
+    panelPhrases.id = 'panel-phrases';
+
+    const distanceLadder = [
+        {
+            id: 'trin1',
+            tag: 'Trin 1 • Direkte nærhed',
+            sent: 'Luk vinduet!',
+            meter: 20,
+            isClose: true,
+            expl: '<strong>Ingen buffer (helt tæt på):</strong> Kort bydeform går lige på sagen uden indpakning. Det virker varmt og naturligt blandt nære venner eller familie, men kan lyde hårdt over for fremmede.'
+        },
+        {
+            id: 'trin2',
+            tag: 'Trin 2 • Mild nutids-distance',
+            sent: 'Vil du lukke vinduet?',
+            meter: 45,
+            isClose: true,
+            expl: '<strong>Spørgsmål i nutid:</strong> Ved at spørge i stedet for at befale åbnes et lille rum mellem dig og den anden person.'
+        },
+        {
+            id: 'trin3',
+            tag: 'Trin 3 • Høflighedsdatid',
+            sent: 'Kunne du lukke vinduet?',
+            meter: 72,
+            isClose: false,
+            expl: '<strong>Tid som social buffer:</strong> Datidsformen <em>kunne</em> (i stedet for nutid <em>kan</em>) træder et halvt skridt tilbage og gør ønsket hensynsfuldt og let at sige ja eller nej til.'
+        },
+        {
+            id: 'trin4',
+            tag: 'Trin 4 • Lang høflighedsfrase',
+            sent: 'Kunne du ikke være så venlig at lukke vinduet?',
+            meter: 100,
+            isClose: false,
+            expl: '<strong>Længde skaber afstand:</strong> Jo længere høflighedsfrasen bliver, desto større beskyttende buffer lægges der ind. Kombinationen af datid (<em>kunne</em>), nægtelsen (<em>ikke</em>) og den lange ramme (<em>være så venlig at</em>) viser stor respektfuld distance.'
+        }
+    ];
+
+    const datidExamples = [
+        {
+            verb: 'Datid af være',
+            phrase: 'Var der andet?',
+            note: 'Klassisk dansk ekspedient-høflighed over disken, selvom handlen sker lige nu.'
+        },
+        {
+            verb: 'Datid af kunne',
+            phrase: 'Kunne du lukke vinduet?',
+            note: 'Dæmper en bøn til en kollega, nabo eller fremmed ved at flytte "kan" til datid.'
+        },
+        {
+            verb: 'Datid af ville + bare lige',
+            phrase: 'Jeg ville bare lige høre, om du havde tid.',
+            note: 'Lægger en blød buffer foran henvendelsen, så den ikke føles påtrængende.'
+        },
+        {
+            verb: 'Datid af skulle',
+            phrase: 'Skulle der være en kop kaffe mere?',
+            note: 'Giver gæsten eller kunden ro og plads til frit at afslå eller takke ja.'
+        },
+        {
+            verb: 'Datid af have',
+            phrase: 'Undskyld, havde du et øjeblik?',
+            note: 'Viser hensyn ved dørtærsklen: anerkender, at den anden måske er optaget.'
+        },
+        {
+            verb: 'Datid af måtte',
+            phrase: 'Måtte jeg spørge dig om en ting?',
+            note: 'Skaber en ekstra forsigtig og formel distance ved følsomme spørgsmål.'
+        }
+    ];
+
+    let activeLadderId = 'trin3';
+
+    function renderPhrasesTab() {
+        const activeStep = distanceLadder.find(s => s.id === activeLadderId) || distanceLadder[2];
+        panelPhrases.innerHTML = `
+            <div class="ss-phrases-shell">
+                <div class="ss-phrases-card">
+                    <h2>Lange høflighedsfraser og datid skaber social afstand</h2>
+                    <p class="ss-phrases-lead">
+                        På dansk måler vi ikke kun afstand i meter mellem to kroppe, men også i <strong>sætningens længde og tid</strong>.
+                        Jo flere ord der pakkes uden om kernen, og jo oftere vi skifter fra nutid til datid, desto større respektfuld buffer opstår der.
+                        Klik på trinnene herunder og mærk forskellen fra helt tæt på til stor høflighedsdistance:
+                    </p>
+                    <div class="ss-ladder-grid">
+                        ${distanceLadder.map(step => `
+                            <button class="ss-ladder-step ${step.isClose ? 'close-tier' : ''} ${step.id === activeLadderId ? 'active' : ''}" data-step="${step.id}">
+                                <span class="ss-ladder-tag">${step.tag}</span>
+                                <span class="ss-ladder-sent">"${step.sent}"</span>
+                                <div class="ss-ladder-meter">
+                                    <div class="ss-ladder-fill" style="width: ${step.meter}%;"></div>
+                                </div>
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div class="ss-ladder-detail">
+                        ${activeStep.expl}
+                    </div>
+                    <div class="ss-insp-aha" style="margin-top: 1rem;">
+                        <strong>Hovedregel for lange høflighedsfraser:</strong> Når en sætning vokser fra 2 ord (<em>"Luk vinduet!"</em>) til 9 ord (<em>"Kunne du ikke være så venlig at lukke vinduet?"</em>), virker selve de ekstra ord som et fysisk skridt tilbage, der beskytter den andens grænse.
+                    </div>
+                </div>
+
+                <div class="ss-phrases-card">
+                    <h2>Hverdagens faste høflighedsfraser med datid</h2>
+                    <p class="ss-phrases-lead">
+                        Alle disse danske fraser handler om <strong>her og nu</strong>, men bruger datid for at lægge en høflig buffer ind:
+                    </p>
+                    <div class="ss-datid-grid">
+                        ${datidExamples.map(ex => `
+                            <div class="ss-datid-item">
+                                <span class="ss-datid-verb">${ex.verb}</span>
+                                <span class="ss-datid-phrase">"${ex.phrase}"</span>
+                                <span class="ss-datid-note">${ex.note}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        panelPhrases.querySelectorAll('.ss-ladder-step').forEach(btn => {
+            btn.onclick = () => {
+                activeLadderId = btn.getAttribute('data-step');
+                renderPhrasesTab();
+            };
+        });
+    }
+
+    renderPhrasesTab();
+    panelsContainer.appendChild(panelPhrases);
 
     const panelQuiz = document.createElement('div');
     panelQuiz.className = 'ss-tab-panel';

@@ -119,6 +119,13 @@ import { renderVerberTider4View } from './views/VerberTider4View.js';
 import { renderVerberHarErView } from './views/VerberHarErView.js';
 import { renderVerberKraftHvileView } from './views/VerberKraftHvileView.js';
 import { renderVerberLiggerLaeserView } from './views/VerberLiggerLaeserView.js';
+import { renderGrammatikSansningView } from './views/GrammatikSansningView.js';
+import { renderSansningVaereBliveView } from './views/SansningVaereBliveView.js';
+import { renderSansningVerberTiderView } from './views/SansningVerberTiderView.js';
+import { renderSansningHarErView } from './views/SansningHarErView.js';
+import { renderSansningKraftHvileView } from './views/SansningKraftHvileView.js';
+import { renderSansningRummetTaersklenView } from './views/SansningRummetTaersklenView.js';
+import { renderSansningSindetView } from './views/SansningSindetView.js';
 import { renderMitSprogSammenlignetView } from './views/MitSprogSammenlignetView.js';
 import { renderVanskeligeLydeKinesiskView } from './views/VanskeligeLydeKinesiskView.js';
 import { renderVanskeligeLydeArabiskView } from './views/VanskeligeLydeArabiskView.js';
@@ -535,20 +542,52 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     appState.currentView = 'punktet_og_broen';
     renderPunktetOgBroenView(appDiv, navigate, extraData);
   } else if (
+    viewTarget === 'grammatik_sansning' ||
+    viewTarget === 'sansning' ||
+    viewTarget === 'tilstand_forvandling'
+  ) {
+    appState.currentView = 'grammatik_sansning';
+    const sub = extraData && extraData.subPath ? extraData.subPath.toLowerCase() : '';
+    if (sub === 'vaere_blive' || sub === 'station1') {
+      renderSansningVaereBliveView(appDiv, navigate, extraData);
+    } else if (sub === 'verbernes_tider' || sub === 'tider' || sub === 'station2') {
+      renderSansningVerberTiderView(appDiv, navigate, extraData);
+    } else if (sub === 'har_er' || sub === 'station3') {
+      renderSansningHarErView(appDiv, navigate, extraData);
+    } else if (sub === 'kraft_hvile' || sub === 'station4') {
+      renderSansningKraftHvileView(appDiv, navigate, extraData);
+    } else if (sub === 'rummet_taersklen' || sub === 'taersklen' || sub === 'station5') {
+      renderSansningRummetTaersklenView(appDiv, navigate, extraData);
+    } else if (sub === 'sindets_sansning' || sub === 'sindet' || sub === 'station6') {
+      renderSansningSindetView(appDiv, navigate, extraData);
+    } else {
+      renderGrammatikSansningView(appDiv, navigate, extraData);
+    }
+  } else if (viewTarget === 'sansning_vaere_blive' || viewTarget === 'vaere_blive') {
+    appState.currentView = 'sansning_vaere_blive';
+    renderSansningVaereBliveView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_verber_tider' || viewTarget === 'sansning_tider') {
+    appState.currentView = 'sansning_verber_tider';
+    renderSansningVerberTiderView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_har_er') {
+    appState.currentView = 'sansning_har_er';
+    renderSansningHarErView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_kraft_hvile') {
+    appState.currentView = 'sansning_kraft_hvile';
+    renderSansningKraftHvileView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_rummet_taersklen' || viewTarget === 'rummet_taersklen') {
+    appState.currentView = 'sansning_rummet_taersklen';
+    renderSansningRummetTaersklenView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_sindet' || viewTarget === 'sindets_sansning') {
+    appState.currentView = 'sansning_sindet';
+    renderSansningSindetView(appDiv, navigate, extraData);
+  } else if (
     viewTarget === 'verber_grammatik' ||
     viewTarget === 'verber_tider_4' ||
     viewTarget === 'verber_har_er' ||
     viewTarget === 'verber_kraft_hvile' ||
     viewTarget === 'verber_ligger_og_laeser'
   ) {
-    const isLocalhost = typeof window !== 'undefined' && (
-      window.location.hostname === 'localhost' ||
-      window.location.hostname === '127.0.0.1'
-    );
-    if (!isLocalhost) {
-      navigate('dagens_opgave', {}, true);
-      return;
-    }
     appState.currentView = viewTarget;
     if (viewTarget === 'verber_grammatik') renderVerberGrammatikHubView(appDiv, navigate, extraData);
     else if (viewTarget === 'verber_tider_4') renderVerberTider4View(appDiv, navigate, extraData);

@@ -62,15 +62,22 @@ export function renderDagensOpgaveView(container, navigateFn) {
             action: () => navigateFn('tror_synes_mener')
         },
         {
+            icon: '🧭',
+            svgIcon: dsSvgIcons.activity(22),
+            titleKey: 'grammatikSansningTitle',
+            descKey: 'grammatikSansningDesc',
+            fallbackTitle: 'Grammatik & min sansning af verdenen',
+            fallbackDesc: 'Oplev hvordan sproget former virkeligheden: Ro (Yin) vs. Bevægelse (Yang) med interaktive vrimlebilleder.',
+            action: () => navigateFn('grammatik_sansning')
+        },
+        {
             icon: '⚡',
             svgIcon: dsSvgIcons.activity(22),
             titleKey: 'verberGrammatikTitle',
             descKey: 'verberGrammatikDesc',
-            fallbackTitle: 'Verbernes tider',
-            fallbackDesc: 'Lær på en interaktiv måde forskellen på for eksempel datid og nutid.',
-            comingSoon: true,
-            comingSoonLabel: 'Kommer senere',
-            action: () => navigateFn('verber_grammatik')
+            fallbackTitle: 'Tidens Sansning: Verbernes tider',
+            fallbackDesc: 'Vrimlebillede for "hadde været" vs. "var blevet" samt det komplette 4-tiders tidslinje-værksted.',
+            action: () => navigateFn('sansning_verber_tider')
         },
         {
             icon: '🌉',

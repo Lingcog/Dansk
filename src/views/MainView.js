@@ -31,6 +31,15 @@ export function renderMainView(container, navigateFn) {
             action: () => navigateFn('mit_sprog_sammenlignet')
         },
         {
+            icon: '🧭',
+            svgIcon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>`,
+            titleKey: 'grammatikSansningTitle',
+            descKey: 'grammatikSansningDesc',
+            fallbackTitle: 'Grammatik & min sansning af verdenen',
+            fallbackDesc: 'Oplev hvordan sproget former virkeligheden: Ro (Yin) vs. Bevægelse (Yang) med interaktive vrimlebilleder.',
+            action: () => navigateFn('grammatik_sansning')
+        },
+        {
             icon: '🧠',
             svgIcon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="10" y1="7" x2="16" y2="7"></line><line x1="10" y1="11" x2="14" y2="11"></line></svg>`,
             titleKey: 'laerNyeOrd',

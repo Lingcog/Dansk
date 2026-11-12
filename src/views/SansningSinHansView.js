@@ -23,8 +23,8 @@ export function renderSansningSinHansView(container, navigateFn, extraData = {})
             rightPos: { x: 21, y: 78 },
             leftSent: 'Manden kysser <span class="ss-box-verb-highlight">sin</span> kone.',
             rightSent: 'Manden kysser <span class="ss-box-verb-highlight">hans</span> kone.',
-            leftExp: 'Kvinden tilhører subjektets egen kropslige og nære sfære. På dansk peger <strong>sin</strong> tilbage på sætningens handlingssubjekt.',
-            rightExp: 'Nu peger ordet ud mod naboen ved siden af! <strong>Hans</strong> fortæller øjeblikkeligt, at kvinden tilhører en anden mand.',
+            leftExp: 'Den blonde kvinde i rød trøje tilhører subjektets egen nære sfære. På dansk peger <strong>sin</strong> tilbage på sætningens handlingssubjekt.',
+            rightExp: 'Nu kysser han den mørkhårede kvinde i grøn trøje, mens naboen står chokeret lige ved siden af! <strong>Hans</strong> fortæller øjeblikkeligt, at det er en anden mands kone.',
             aha: 'Et eneste bogstav forandrer hele dramaet: <strong>sin</strong> binder sammen inden for samme person; <strong>hans</strong> skaber afstand til en anden.',
             langs: {
                 en: 'his (own) wife vs. his (another man’s) wife',

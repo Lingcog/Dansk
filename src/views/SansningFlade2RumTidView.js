@@ -685,7 +685,7 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
                     <span class="gs-realm-ex-word">Jeg SPISTE i går</span>
                 </div>
                 <div class="gs-realm-ex-item">
-                    <span>Vektor over tærsklen:</span>
+                    <span>Retning over tærsklen:</span>
                     <span class="gs-realm-ex-word">Vi tager HJEM</span>
                 </div>
                 <div class="gs-realm-ex-item">
@@ -829,7 +829,7 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
             tag: 'Zone vs. tærskel',
             accent: '#34d399',
             title: 'Rummet og tærsklen (-e vs. kort)',
-            sub: 'Roen inden for en kendt zone (hjemme, inde, oppe) over for vektoren der krydser tærsklen (hjem, ind, op).',
+            sub: 'Roen inden for en kendt zone (hjemme, inde, oppe) over for bevægelsen der krydser tærsklen (hjem, ind, op).',
             leftImg: `${baseUrl}assets/sansning_rummet_venstre.jpg`,
             rightImg: `${baseUrl}assets/sansning_rummet_hoejre.jpg`,
             leftLabel: 'Ro (-e form)',

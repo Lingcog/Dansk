@@ -75349,6 +75349,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             position: relative;
             overflow: hidden;
             background: #090d16;
+            line-height: 0;
         }
         .stage-half-header {
             position: absolute;
@@ -75364,6 +75365,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             letter-spacing: 0.04em;
             pointer-events: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            line-height: 1.4;
         }
         .stage-half-header.cool {
             color: #7dd3fc;
@@ -75376,10 +75378,12 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             background: rgba(154, 52, 18, 0.85);
         }
 
-        .stage-half svg {
+        .stage-half img,
+        .stage-half-img {
             width: 100%;
             height: auto;
             display: block;
+            filter: brightness(0.98);
         }
 
         /* Hotspots */
@@ -75786,60 +75790,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 <!-- VENSTRE HALVDEL: VÆREN (ER / RO) -->
                 <div class="stage-half left-half">
                     <div class="stage-half-header cool">🔵 VÆREN (At være / Er) — Verden i Ro</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="coolWall" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#0c4a6e"/>
-                            </linearGradient>
-                            <linearGradient id="coolSky" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0284c7"/>
-                                <stop offset="100%" stop-color="#38bdf8"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#coolWall)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#141a29"/>
-
-                        <!-- Vindue kl. 12 med middagssol (ER LYS) -->
-                        <rect x="320" y="40" width="150" height="180" rx="8" fill="url(#coolSky)" stroke="#475569" stroke-width="4"/>
-                        <circle cx="395" cy="110" r="30" fill="#fef08a"/>
-                        <line x1="395" y1="40" x2="395" y2="220" stroke="#334155" stroke-width="3"/>
-                        <line x1="320" y1="130" x2="470" y2="130" stroke="#334155" stroke-width="3"/>
-
-                        <!-- Bilen i indkørslen (ER REN) -->
-                        <g transform="translate(30, 110)">
-                            <rect x="0" y="30" width="130" height="40" rx="6" fill="#3b82f6"/>
-                            <path d="M20,30 L45,5 L90,5 L110,30 Z" fill="#1d4ed8"/>
-                            <circle cx="35" cy="70" r="14" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                            <circle cx="95" cy="70" r="14" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                            <text x="125" y="20" fill="#38bdf8" font-size="14">✨</text>
-                        </g>
-
-                        <!-- Dørkarm med Emil 125 cm (ER 125 CM) -->
-                        <rect x="280" y="90" width="20" height="230" fill="#334155"/>
-                        <line x1="280" y1="180" x2="300" y2="180" stroke="#fde68a" stroke-width="3"/>
-                        <text x="250" y="184" fill="#fde68a" font-size="10" font-weight="900">125</text>
-
-                        <!-- Mads sover tungt i lænestol (ER TRÆT) -->
-                        <g transform="translate(210, 200)">
-                            <rect x="15" y="30" width="60" height="80" rx="10" fill="#831843"/>
-                            <circle cx="45" cy="35" r="14" fill="#fed7aa"/>
-                            <text x="62" y="25" fill="#38bdf8" font-size="12" font-weight="900">Zzz</text>
-                        </g>
-
-                        <!-- Bord med kold kaffekop (ER KOLD - ingen damp) -->
-                        <g transform="translate(80, 280)">
-                            <ellipse cx="60" cy="50" rx="55" ry="24" fill="#334155" stroke="#475569" stroke-width="3"/>
-                            <rect x="52" y="30" width="18" height="14" rx="2" fill="#ffffff"/>
-                            <ellipse cx="61" cy="44" rx="14" ry="6" fill="#cbd5e1"/>
-                        </g>
-
-                        <!-- Komfur med varm suppe (ER VARM) -->
-                        <g transform="translate(130, 180)">
-                            <rect x="0" y="20" width="70" height="60" fill="#1e293b" rx="4"/>
-                            <rect x="15" y="5" width="40" height="20" rx="3" fill="#cbd5e1"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_vaere_venstre.jpg" alt="Væren og ro i havnebyen" class="stage-half-img" />
 
                     <!-- Hotspots Venstre -->
                     <div id="left-hotspots-container"></div>
@@ -75848,70 +75799,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 <!-- HØJRE HALVDEL: TILBLIVELSE (BLIVER / FORVANDLING) -->
                 <div class="stage-half right-half">
                     <div class="stage-half-header warm">🟠 TILBLIVELSE (At blive / Bliver) — Forvandling</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="warmWall" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#7c2d12"/>
-                            </linearGradient>
-                            <linearGradient id="dawnSky" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#312e81"/>
-                                <stop offset="70%" stop-color="#f97316"/>
-                                <stop offset="100%" stop-color="#fef08a"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#warmWall)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#24140e"/>
-
-                        <!-- Vindue kl. 06 med morgengry (BLIVER LYS) -->
-                        <rect x="320" y="40" width="150" height="180" rx="8" fill="url(#dawnSky)" stroke="#78350f" stroke-width="4"/>
-                        <circle cx="395" cy="180" r="30" fill="#ea580c"/> <!-- Solen stiger netop op -->
-                        <line x1="395" y1="40" x2="395" y2="220" stroke="#78350f" stroke-width="3"/>
-                        <line x1="320" y1="130" x2="470" y2="130" stroke="#78350f" stroke-width="3"/>
-
-                        <!-- Bilen under vask (BLIVER REN) -->
-                        <g transform="translate(30, 110)">
-                            <rect x="0" y="30" width="130" height="40" rx="6" fill="#3b82f6"/>
-                            <path d="M20,30 L45,5 L90,5 L110,30 Z" fill="#1d4ed8"/>
-                            <circle cx="35" cy="70" r="14" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                            <circle cx="95" cy="70" r="14" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                            <!-- Vandstråler og hvidt skum -->
-                            <circle cx="70" cy="20" r="10" fill="#ffffff" opacity="0.8"/>
-                            <circle cx="90" cy="35" r="8" fill="#ffffff" opacity="0.8"/>
-                            <circle cx="45" cy="40" r="7" fill="#ffffff" opacity="0.8"/>
-                        </g>
-
-                        <!-- Dørkarm med Emil der vokser (BLIVER HØJ) -->
-                        <rect x="280" y="90" width="20" height="230" fill="#78350f"/>
-                        <line x1="280" y1="150" x2="300" y2="150" stroke="#fb923c" stroke-width="3" stroke-dasharray="3 3"/>
-                        <text x="235" y="154" fill="#fb923c" font-size="10" font-weight="900">↑ vokser</text>
-
-                        <!-- Mads gaber og kæmper mod søvnen (BLIVER TRÆT) -->
-                        <g transform="translate(210, 200)">
-                            <rect x="15" y="30" width="60" height="80" rx="10" fill="#9a3412"/>
-                            <circle cx="45" cy="35" r="14" fill="#fed7aa"/>
-                            <!-- Åben mund (gaber) -->
-                            <ellipse cx="45" cy="40" rx="4" ry="6" fill="#451a03"/>
-                        </g>
-
-                        <!-- Bord med kaffekop der damper af i kulden (BLIVER KOLD) -->
-                        <g transform="translate(80, 280)">
-                            <ellipse cx="60" cy="50" rx="55" ry="24" fill="#451a03" stroke="#78350f" stroke-width="3"/>
-                            <rect x="52" y="30" width="18" height="14" rx="2" fill="#ffffff"/>
-                            <ellipse cx="61" cy="44" rx="14" ry="6" fill="#cbd5e1"/>
-                            <!-- Bølgende damp der forsvinder -->
-                            <path d="M56,26 Q59,16 64,24" stroke="#e2e8f0" stroke-width="2" fill="none" opacity="0.75"/>
-                            <path d="M62,24 Q65,14 70,22" stroke="#e2e8f0" stroke-width="2" fill="none" opacity="0.75"/>
-                        </g>
-
-                        <!-- Komfur med tændt blus under gryden (BLIVER VARM) -->
-                        <g transform="translate(130, 180)">
-                            <rect x="0" y="20" width="70" height="60" fill="#1e293b" rx="4"/>
-                            <!-- Rødt glødende blus -->
-                            <line x1="10" y1="23" x2="60" y2="23" stroke="#ef4444" stroke-width="4"/>
-                            <rect x="15" y="5" width="40" height="20" rx="3" fill="#cbd5e1"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_blive_hoejre.jpg" alt="Tilblivelse og forvandling i havnebyen" class="stage-half-img" />
 
                     <!-- Hotspots Højre -->
                     <div id="right-hotspots-container"></div>
@@ -76195,6 +76083,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             position: relative;
             overflow: hidden;
             background: #090d16;
+            line-height: 0;
         }
         .stage-half-header {
             position: absolute;
@@ -76210,6 +76099,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             letter-spacing: 0.04em;
             pointer-events: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            line-height: 1.4;
         }
         .stage-half-header.cool {
             color: #7dd3fc;
@@ -76222,10 +76112,13 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             background: rgba(180, 83, 9, 0.85);
         }
 
+        .stage-half img,
+        .stage-half-img,
         .stage-half svg {
             width: 100%;
             height: auto;
             display: block;
+            filter: brightness(0.98);
         }
 
         .ss-hotspot {
@@ -76521,92 +76414,14 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 <!-- VENSTRE HALVDEL: HAVDE VÆRET (STILSTAND I FORTID) -->
                 <div class="stage-half left-half">
                     <div class="stage-half-header cool">🔵 HAVDE VÆRET (Uforandret Fortid i Ro)</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="nightCool" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#050814"/>
-                                <stop offset="100%" stop-color="#0f172a"/>
-                            </linearGradient>
-                            <linearGradient id="beamGrad" x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0%" stop-color="rgba(254, 240, 138, 0.7)"/>
-                                <stop offset="100%" stop-color="rgba(254, 240, 138, 0)"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#nightCool)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#cbd5e1"/>
-
-                        <!-- Måne på klar himmel -->
-                        <circle cx="420" cy="60" r="24" fill="#fef08a" opacity="0.9"/>
-                        <circle cx="412" cy="55" r="20" fill="#050814"/>
-
-                        <!-- Vinterhus med tyk sne på taget (HAVDE LIGGET I EN UGE) -->
-                        <g transform="translate(240, 120)">
-                            <rect x="20" y="80" width="220" height="120" fill="#78350f" stroke="#451a03" stroke-width="3"/>
-                            <polygon points="0,80 130,10 260,80" fill="#451a03"/>
-                            <path d="M-5,76 Q130,0 265,76 Q230,90 200,80 Q130,15 -5,76 Z" fill="#ffffff"/>
-                            <rect x="50" y="100" width="50" height="50" fill="#fef08a" stroke="#ca8a04" stroke-width="3"/>
-                            <rect x="130" y="100" width="50" height="50" fill="#fef08a" stroke="#ca8a04" stroke-width="3"/>
-                            <!-- Kold te på bordet indenfor -->
-                            <ellipse cx="75" cy="135" rx="8" ry="4" fill="#94a3b8"/>
-                        </g>
-
-                        <!-- Bilen med lygter der havde lyst i timevis (HAVDE LYST) -->
-                        <g transform="translate(50, 270)">
-                            <polygon points="180,60 360,20 360,100" fill="url(#beamGrad)"/>
-                            <rect x="20" y="45" width="160" height="40" rx="8" fill="#b91c1c"/>
-                            <path d="M50,45 L85,15 L145,15 L170,45 Z" fill="#991b1b"/>
-                            <circle cx="60" cy="85" r="16" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                            <circle cx="150" cy="85" r="16" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                            <circle cx="180" cy="65" r="6" fill="#fef08a"/>
-                            <!-- Mads bag rattet -->
-                            <circle cx="100" cy="30" r="9" fill="#fed7aa"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_verber_tider_venstre.jpg" alt="Vinterhuset og bilen i stabil kulde (havde været)" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: VAR BLEVET (FORVANDLINGEN DER INDTRÆFFER) -->
                 <div class="stage-half right-half">
                     <div class="stage-half-header warm">🟠 VAR BLEVET (Selve Forvandlingen/Omslaget)</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="nightStorm" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#451a03"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#nightStorm)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#94a3b8"/>
-                        <!-- Snefygning / vindstreger -->
-                        <line x1="50" y1="50" x2="120" y2="70" stroke="#ffffff" stroke-width="2" opacity="0.7"/>
-                        <line x1="200" y1="80" x2="300" y2="110" stroke="#ffffff" stroke-width="2.5" opacity="0.8"/>
-                        <line x1="100" y1="160" x2="220" y2="190" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
-
-                        <!-- Vinterhus hvor sneen netop skovles (VAR BLEVET RYDDET) -->
-                        <g transform="translate(240, 120)">
-                            <rect x="20" y="80" width="220" height="120" fill="#78350f" stroke="#451a03" stroke-width="3"/>
-                            <polygon points="0,80 130,10 260,80" fill="#451a03"/>
-                            <path d="M-5,76 Q130,0 265,76 Q230,90 200,80 Q130,15 -5,76 Z" fill="#ffffff"/>
-                            <rect x="50" y="100" width="50" height="50" fill="#fef08a" stroke="#ca8a04" stroke-width="3"/>
-                            <rect x="130" y="100" width="50" height="50" fill="#fef08a" stroke="#ca8a04" stroke-width="3"/>
-                            <!-- Åben dør hvor kold luft strømmer ind (teen VAR BLEVET kold) -->
-                            <rect x="90" y="130" width="25" height="70" fill="#0f172a"/>
-                        </g>
-
-                        <!-- Bilen der kørte ind idet vejret var blevet koldt (VAR BLEVET KOLDT) -->
-                        <g transform="translate(50, 270)">
-                            <rect x="20" y="45" width="160" height="40" rx="8" fill="#b91c1c"/>
-                            <path d="M50,45 L85,15 L145,15 L170,45 Z" fill="#991b1b"/>
-                            <!-- Tændte lygter (VAR BLEVET TÆNDT) -->
-                            <circle cx="180" cy="65" r="7" fill="#fde68a"/>
-                            <polygon points="180,65 370,10 370,120" fill="url(#beamGrad)"/>
-                            <!-- Mads er træt (VAR BLEVET TRÆT) -->
-                            <circle cx="100" cy="30" r="9" fill="#fed7aa"/>
-                            <ellipse cx="100" cy="33" rx="2" ry="4" fill="#0f172a"/> <!-- gaber -->
-                            <circle cx="60" cy="85" r="16" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                            <circle cx="150" cy="85" r="16" fill="#0f172a" stroke="#cbd5e1" stroke-width="3"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_verber_tider_hoejre.jpg" alt="Vejret skifter og kulden sætter ind da bilen ankommer (var blevet)" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
             </div>
@@ -76905,6 +76720,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             position: relative;
             overflow: hidden;
             background: #090d16;
+            line-height: 0;
         }
         .stage-half-header {
             position: absolute;
@@ -76920,6 +76736,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             letter-spacing: 0.04em;
             pointer-events: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            line-height: 1.4;
         }
         .stage-half-header.warm {
             color: #fed7aa;
@@ -76932,10 +76749,13 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             background: rgba(12, 74, 110, 0.85);
         }
 
+        .stage-half img,
+        .stage-half-img,
         .stage-half svg {
             width: 100%;
             height: auto;
             display: block;
+            filter: brightness(0.98);
         }
 
         .ss-hotspot {
@@ -77219,111 +77039,14 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 <!-- VENSTRE HALVDEL: HAR (MOTOREN / AKTIVITET) -->
                 <div class="stage-half left-half">
                     <div class="stage-half-header warm">🟠 MOTOREN (Har) — Aktiviteten i Arbejde</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="warmHar" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#431407"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#warmHar)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#292524"/>
-
-                        <!-- Malerne arbejder på stilladset (HAR MALET) -->
-                        <g transform="translate(320, 60)">
-                            <rect x="0" y="20" width="160" height="200" fill="#f8fafc" stroke="#475569" stroke-width="3"/>
-                            <line x1="-10" y1="40" x2="-10" y2="220" stroke="#94a3b8" stroke-width="4"/>
-                            <line x1="80" y1="40" x2="80" y2="220" stroke="#94a3b8" stroke-width="4"/>
-                            <line x1="-15" y1="120" x2="85" y2="120" stroke="#cbd5e1" stroke-width="5"/>
-                            <circle cx="35" cy="95" r="12" fill="#fed7aa"/>
-                            <rect x="25" y="107" width="20" height="30" fill="#ffffff"/>
-                        </g>
-
-                        <!-- Bageren arbejder i bageriet (HAR BAGT) -->
-                        <g transform="translate(40, 90)">
-                            <rect x="0" y="30" width="120" height="120" fill="#78350f" rx="4"/>
-                            <rect x="15" y="60" width="90" height="60" fill="#ea580c"/>
-                            <ellipse cx="60" cy="100" rx="15" ry="8" fill="#d97706"/>
-                        </g>
-
-                        <!-- Toget kører stærkt i landskabet (HAR KØRT) -->
-                        <g transform="translate(180, 180)">
-                            <rect x="0" y="0" width="120" height="30" rx="4" fill="#dc2626"/>
-                            <line x1="125" y1="10" x2="160" y2="10" stroke="#fde68a" stroke-width="2"/>
-                            <line x1="125" y1="20" x2="150" y2="20" stroke="#fde68a" stroke-width="2"/>
-                        </g>
-
-                        <!-- Cyklisten træner i skoven (HAR CYKLET) -->
-                        <g transform="translate(120, 310)">
-                            <circle cx="30" cy="40" r="16" fill="none" stroke="#ffffff" stroke-width="3"/>
-                            <circle cx="85" cy="40" r="16" fill="none" stroke="#ffffff" stroke-width="3"/>
-                            <path d="M30,40 L55,40 L75,15 L48,15 Z" fill="none" stroke="#ef4444" stroke-width="3.5"/>
-                            <circle cx="60" cy="-2" r="9" fill="#fed7aa"/>
-                        </g>
-
-                        <!-- Gartneren vander blomster (HAR VANDET) -->
-                        <g transform="translate(390, 270)">
-                            <rect x="10" y="30" width="30" height="40" fill="#b45309"/>
-                            <circle cx="25" cy="20" r="10" fill="#ec4899"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_har_er_venstre.jpg" alt="Har - Motoren og aktiviteten i gang" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: ER (DØREN / RESULTATET) -->
                 <div class="stage-half right-half">
                     <div class="stage-half-header cool">🔵 DØREN / SKIFTET (Er) — Ny Tilstand / Sted</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="coolEr" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#0c4a6e"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#coolEr)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#132338"/>
-
-                        <!-- Huset står nymalet og skinnende (ER MALET) -->
-                        <g transform="translate(320, 60)">
-                            <rect x="0" y="20" width="160" height="200" fill="#38bdf8" stroke="#0284c7" stroke-width="3"/>
-                            <rect x="20" y="50" width="40" height="50" fill="#0f172a" rx="3"/>
-                            <rect x="90" y="50" width="40" height="50" fill="#0f172a" rx="3"/>
-                            <text x="140" y="15" fill="#fde68a" font-size="14">✨</text>
-                        </g>
-
-                        <!-- Kagen er bagt og serveret på fad (ER BAGT) -->
-                        <g transform="translate(40, 90)">
-                            <rect x="0" y="30" width="120" height="120" fill="#1e293b" rx="4"/>
-                            <ellipse cx="60" cy="110" rx="35" ry="12" fill="#ffffff"/>
-                            <rect x="40" y="85" width="40" height="25" rx="3" fill="#d97706"/>
-                            <circle cx="60" cy="83" r="5" fill="#ef4444"/>
-                        </g>
-
-                        <!-- Toget er kørt — perronen er tom! (ER KØRT) -->
-                        <g transform="translate(180, 180)">
-                            <rect x="0" y="0" width="140" height="20" fill="#475569" rx="2"/>
-                            <text x="70" y="14" fill="#94a3b8" font-size="8" font-weight="bold" text-anchor="middle">TOM PERRON</text>
-                            <line x1="0" y1="28" x2="140" y2="28" stroke="#64748b" stroke-width="3"/>
-                        </g>
-
-                        <!-- Cyklisten er ankommet på arbejde foran kontoret (ER CYKLET) -->
-                        <g transform="translate(120, 310)">
-                            <rect x="40" y="-30" width="80" height="70" fill="#334155" rx="4"/>
-                            <text x="80" y="-15" fill="#f8fafc" font-size="7" font-weight="900" text-anchor="middle">KONTOR</text>
-                            <!-- Parkered cykel i ro -->
-                            <circle cx="30" cy="40" r="16" fill="none" stroke="#94a3b8" stroke-width="2"/>
-                            <circle cx="85" cy="40" r="16" fill="none" stroke="#94a3b8" stroke-width="2"/>
-                            <!-- Person går ind ad døren -->
-                            <circle cx="95" cy="5" r="8" fill="#fed7aa"/>
-                        </g>
-
-                        <!-- Blomsterne er sprunget ud i fuldt flor (ER SPRUNGET UD) -->
-                        <g transform="translate(390, 270)">
-                            <rect x="10" y="30" width="30" height="40" fill="#b45309"/>
-                            <circle cx="20" cy="20" r="12" fill="#ec4899"/>
-                            <circle cx="35" cy="15" r="14" fill="#a855f7"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_har_er_hoejre.jpg" alt="Er - Resultatet og det nye sted" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
             </div>
@@ -77612,6 +77335,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             position: relative;
             overflow: hidden;
             background: #090d16;
+            line-height: 0;
         }
         .stage-half-header {
             position: absolute;
@@ -77627,6 +77351,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             letter-spacing: 0.04em;
             pointer-events: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            line-height: 1.4;
         }
         .stage-half-header.warm {
             color: #fbcfe8;
@@ -77639,10 +77364,13 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             background: rgba(12, 74, 110, 0.85);
         }
 
+        .stage-half img,
+        .stage-half-img,
         .stage-half svg {
             width: 100%;
             height: auto;
             display: block;
+            filter: brightness(0.98);
         }
 
         .ss-hotspot {
@@ -77933,110 +77661,14 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                 <!-- VENSTRE HALVDEL: KROPPENS KRAFT (LÆGGE, SÆTTE, STILLE) -->
                 <div class="stage-half left-half">
                     <div class="stage-half-header warm">🟠 KROPPENS KRAFT — Hånden flytter tingen</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="warmKraft" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#500724"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#warmKraft)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#24141d"/>
-
-                        <!-- Hånden stiller koppen op på hylden (STILLER) -->
-                        <g transform="translate(340, 80)">
-                            <rect x="0" y="0" width="140" height="180" fill="#451a03" stroke="#2e1002" stroke-width="4"/>
-                            <line x1="0" y1="70" x2="140" y2="70" stroke="#78350f" stroke-width="6"/>
-                            <!-- Hånd der løfter koppen opad -->
-                            <line x1="60" y1="90" x2="60" y2="50" stroke="#fed7aa" stroke-width="6" stroke-linecap="round"/>
-                            <rect x="48" y="35" width="22" height="18" rx="3" fill="#ffffff"/>
-                        </g>
-
-                        <!-- Katten skubber og vælter vasen (VÆLTER) -->
-                        <g transform="translate(370, 260)">
-                            <ellipse cx="20" cy="50" rx="18" ry="12" fill="#d97706"/>
-                            <path d="M35,45 Q50,25 60,40" stroke="#d97706" stroke-width="4" fill="none"/>
-                            <!-- Vase der vipper i luften -->
-                            <rect x="65" y="25" width="18" height="35" rx="3" fill="#38bdf8" transform="rotate(35 65 25)"/>
-                        </g>
-
-                        <!-- Pigen sætter bamsen til rette i sofaen (SÆTTER) -->
-                        <g transform="translate(200, 180)">
-                            <rect x="15" y="30" width="120" height="70" rx="12" fill="#334155"/>
-                            <!-- Pige der anbringer bamse -->
-                            <circle cx="50" cy="20" r="12" fill="#fed7aa"/>
-                            <circle cx="85" cy="45" r="14" fill="#b45309"/>
-                            <line x1="55" y1="30" x2="75" y2="45" stroke="#fed7aa" stroke-width="4"/>
-                        </g>
-
-                        <!-- Hånden lægger bogen på sofabordet (LÆGGER) -->
-                        <g transform="translate(60, 260)">
-                            <ellipse cx="70" cy="60" rx="60" ry="25" fill="#78350f" stroke="#451a03" stroke-width="3"/>
-                            <!-- Hånd og bog i bevægelse -->
-                            <line x1="50" y1="20" x2="65" y2="48" stroke="#fed7aa" stroke-width="5" stroke-linecap="round"/>
-                            <polygon points="50,42 75,38 90,52 65,56" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
-                        </g>
-
-                        <!-- Manden sætter sig i stolen (SÆTTER SIG) -->
-                        <g transform="translate(30, 150)">
-                            <rect x="20" y="20" width="60" height="90" rx="10" fill="#831843"/>
-                            <!-- Person på vej ned i stolen -->
-                            <circle cx="50" cy="0" r="14" fill="#fed7aa"/>
-                            <line x1="50" y1="14" x2="50" y2="40" stroke="#f472b6" stroke-width="6" stroke-linecap="round"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_kraft_hvile_venstre.jpg" alt="Kroppens kraft - Lægger, sætter, stiller" class="stage-half-img" />
                     <div id="left-hotspots-container"></div>
                 </div>
 
                 <!-- HØJRE HALVDEL: TINGENS HVILE (LIGGE, SIDDE, STÅ) -->
                 <div class="stage-half right-half">
                     <div class="stage-half-header cool">🔵 TINGENS HVILE — Tingen hviler i ro</div>
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="coolHvile" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#0c4a6e"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="320" fill="url(#coolHvile)"/>
-                        <polygon points="0,320 500,320 500,450 0,450" fill="#141e2b"/>
-
-                        <!-- Koppen står på hylden i ro (STÅR) -->
-                        <g transform="translate(340, 80)">
-                            <rect x="0" y="0" width="140" height="180" fill="#451a03" stroke="#2e1002" stroke-width="4"/>
-                            <line x1="0" y1="70" x2="140" y2="70" stroke="#78350f" stroke-width="6"/>
-                            <!-- Koppen står solidt -->
-                            <rect x="55" y="48" width="22" height="20" rx="3" fill="#ffffff"/>
-                        </g>
-
-                        <!-- Vasen ligger væltet på gulvet (LIGGER VÆLTET) -->
-                        <g transform="translate(370, 260)">
-                            <ellipse cx="65" cy="55" rx="18" ry="8" fill="#38bdf8"/>
-                            <text x="65" y="45" fill="#fde68a" font-size="10">💧</text>
-                        </g>
-
-                        <!-- Bamsen sidder i sofaen i ro (SIDDER) -->
-                        <g transform="translate(200, 180)">
-                            <rect x="15" y="30" width="120" height="70" rx="12" fill="#334155"/>
-                            <circle cx="75" cy="45" r="14" fill="#b45309"/>
-                            <circle cx="68" cy="35" r="5" fill="#b45309"/>
-                            <circle cx="82" cy="35" r="5" fill="#b45309"/>
-                        </g>
-
-                        <!-- Bogen ligger fladt på sofabordet (LIGGER) -->
-                        <g transform="translate(60, 260)">
-                            <ellipse cx="70" cy="60" rx="60" ry="25" fill="#78350f" stroke="#451a03" stroke-width="3"/>
-                            <polygon points="40,55 70,52 100,55 95,65 70,62 45,65" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
-                        </g>
-
-                        <!-- Manden sidder og læser avisen (SIDDER OG LÆSER) -->
-                        <g transform="translate(30, 150)">
-                            <rect x="20" y="20" width="60" height="90" rx="10" fill="#831843"/>
-                            <circle cx="50" cy="15" r="14" fill="#fed7aa"/>
-                            <!-- Avis i hænderne -->
-                            <rect x="35" y="40" width="30" height="20" fill="#ffffff"/>
-                        </g>
-                    </svg>
+                    <img src="assets/sansning_kraft_hvile_hoejre.jpg" alt="Tingens hvile - Ligger, sidder, står" class="stage-half-img" />
                     <div id="right-hotspots-container"></div>
                 </div>
             </div>
@@ -78335,6 +77967,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             position: relative;
             overflow: hidden;
             background: #090d16;
+            line-height: 0;
         }
         .stage-half-header {
             position: absolute;
@@ -78350,6 +77983,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             letter-spacing: 0.04em;
             pointer-events: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            line-height: 1.4;
         }
         .stage-half-header.cool {
             color: #7dd3fc;
@@ -78362,10 +77996,13 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             background: rgba(154, 52, 18, 0.85);
         }
 
+        .stage-half img,
+        .stage-half-img,
         .stage-half svg {
             width: 100%;
             height: auto;
             display: block;
+            filter: brightness(0.98);
         }
 
         .ss-hotspot {
@@ -78767,71 +78404,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                     <div class="stage-half-header cool">
                         🔵 Yin: Ro i rummet (hjemme, inde, ude, oppe, nede)
                     </div>
-
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="coolSky" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#1e293b"/>
-                            </linearGradient>
-                            <linearGradient id="coolHouse" x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0%" stop-color="#1e3a8a"/>
-                                <stop offset="100%" stop-color="#172554"/>
-                            </linearGradient>
-                            <linearGradient id="coolWarmRoom" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#fef08a" stop-opacity="0.8"/>
-                                <stop offset="100%" stop-color="#eab308" stop-opacity="0.3"/>
-                            </linearGradient>
-                        </defs>
-
-                        <!-- Himmel / Baggrund -->
-                        <rect x="0" y="0" width="500" height="450" fill="url(#coolSky)"/>
-                        
-                        <!-- Måne & Stjerner (Ro) -->
-                        <circle cx="80" cy="50" r="18" fill="#fef08a" opacity="0.8"/>
-                        <circle cx="140" cy="40" r="2" fill="#ffffff" opacity="0.7"/>
-                        <circle cx="210" cy="65" r="1.5" fill="#ffffff" opacity="0.6"/>
-
-                        <!-- Græsplæne & Terrasse i ro -->
-                        <path d="M0,320 Q250,310 500,320 L500,450 L0,450 Z" fill="#064e3b" opacity="0.7"/>
-                        <!-- Terrasse (ude) -->
-                        <polygon points="10,325 150,325 180,410 10,410" fill="#334155"/>
-                        <!-- Havestol med person der slapper af ude -->
-                        <rect x="50" y="340" width="40" height="30" rx="4" fill="#3b82f6"/>
-                        <circle cx="70" cy="325" r="9" fill="#fed7aa"/>
-                        <text x="60" y="430" fill="#7dd3fc" font-size="11" font-weight="bold">Ude på terrassen</text>
-
-                        <!-- Huset (Tværsnit) -->
-                        <polygon points="180,140 340,60 500,140 500,420 180,420" fill="url(#coolHouse)" stroke="#38bdf8" stroke-width="2"/>
-
-                        <!-- 1. Sal (Oppe) -->
-                        <line x1="180" y1="210" x2="500" y2="210" stroke="#38bdf8" stroke-dasharray="4,4" stroke-width="2"/>
-                        <rect x="260" y="100" width="120" height="95" rx="6" fill="url(#coolWarmRoom)"/>
-                        <!-- Seng oppe -->
-                        <rect x="280" y="160" width="70" height="25" rx="3" fill="#64748b"/>
-                        <rect x="285" y="152" width="25" height="10" rx="3" fill="#ffffff"/>
-                        <text x="285" y="130" fill="#0f172a" font-size="11" font-weight="900">Oppe (seng)</text>
-
-                        <!-- Stueetage (Hjemme & Inde) -->
-                        <rect x="220" y="225" width="260" height="110" rx="8" fill="url(#coolWarmRoom)"/>
-                        <!-- Sofa (hjemme i ro) -->
-                        <rect x="240" y="280" width="85" height="35" rx="6" fill="#3b82f6"/>
-                        <circle cx="270" cy="265" r="9" fill="#fed7aa"/>
-                        <text x="250" y="250" fill="#0f172a" font-size="11" font-weight="900">Hjemme i sofaen</text>
-                        <!-- Bord med børn der leger inde -->
-                        <rect x="360" y="285" width="60" height="25" rx="3" fill="#92400e"/>
-                        <circle cx="390" cy="270" r="8" fill="#fca5a5"/>
-                        <text x="365" y="260" fill="#0f172a" font-size="10" font-weight="bold">Inde i stuen</text>
-
-                        <!-- Kælder (Nede) -->
-                        <line x1="180" y1="345" x2="500" y2="345" stroke="#38bdf8" stroke-width="2"/>
-                        <rect x="220" y="355" width="260" height="60" fill="#1e293b"/>
-                        <!-- Vaskemaskine i ro nede -->
-                        <rect x="380" y="365" width="38" height="42" rx="4" fill="#e2e8f0"/>
-                        <circle cx="399" cy="386" r="12" fill="#38bdf8" opacity="0.6"/>
-                        <text x="260" y="390" fill="#94a3b8" font-size="11" font-weight="bold">Nede i kælderen</text>
-                    </svg>
-
+                    <img src="assets/sansning_rummet_venstre.jpg" alt="Ro i rummet - Hjemme, inde, ude, oppe, nede" class="stage-half-img" />
                     <div id="hotspots-left"></div>
                 </div>
 
@@ -78840,75 +78413,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                     <div class="stage-half-header warm">
                         🟠 Yang: Krydser tærsklen (hjem, ind, ud, op, ned)
                     </div>
-
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="warmSky" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#451a03"/>
-                                <stop offset="100%" stop-color="#78350f"/>
-                            </linearGradient>
-                            <linearGradient id="warmHouse" x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0%" stop-color="#9a3412"/>
-                                <stop offset="100%" stop-color="#c2410c"/>
-                            </linearGradient>
-                            <linearGradient id="arrowGlow" x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0%" stop-color="#fbbf24"/>
-                                <stop offset="100%" stop-color="#ea580c"/>
-                            </linearGradient>
-                        </defs>
-
-                        <!-- Himmel / Dynamisk aften -->
-                        <rect x="0" y="0" width="500" height="450" fill="url(#warmSky)"/>
-
-                        <!-- Jord / Indkørsel -->
-                        <path d="M0,320 Q250,310 500,320 L500,450 L0,450 Z" fill="#713f12" opacity="0.8"/>
-                        
-                        <!-- Cyklist på vej hjem -->
-                        <g transform="translate(40, 340)">
-                            <circle cx="15" cy="25" r="10" stroke="#f97316" stroke-width="2" fill="none"/>
-                            <circle cx="50" cy="25" r="10" stroke="#f97316" stroke-width="2" fill="none"/>
-                            <line x1="15" y1="25" x2="32" y2="15" stroke="#fdba74" stroke-width="2"/>
-                            <line x1="50" y1="25" x2="38" y2="10" stroke="#fdba74" stroke-width="2"/>
-                            <circle cx="32" cy="0" r="7" fill="#fed7aa"/>
-                            <!-- Bevægelsespil mod huset -->
-                            <path d="M68,20 L95,20 L85,14 M95,20 L85,26" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
-                            <text x="10" y="55" fill="#fde68a" font-size="11" font-weight="900">Cykler hjem</text>
-                        </g>
-
-                        <!-- Huset med åbne tærskler -->
-                        <polygon points="180,140 340,60 500,140 500,420 180,420" fill="url(#warmHouse)" stroke="#ea580c" stroke-width="2"/>
-
-                        <!-- Terrassedør: Går ud med kande -->
-                        <g transform="translate(140, 310)">
-                            <line x1="20" y1="20" x2="-20" y2="35" stroke="#f97316" stroke-width="4" stroke-linecap="round"/>
-                            <path d="M10,40 L-15,45 L-5,38 M-15,45 L-5,52" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
-                            <text x="-40" y="70" fill="#fed7aa" font-size="10" font-weight="bold">Træder ud</text>
-                        </g>
-
-                        <!-- Indgangsdør: Træder ind over dørtrin -->
-                        <rect x="200" y="240" width="36" height="85" fill="#1e293b"/>
-                        <line x1="190" y1="325" x2="245" y2="325" stroke="#fbbf24" stroke-width="4"/>
-                        <!-- Fod over tærsklen -->
-                        <path d="M185,315 L225,315 L215,308 M225,315 L215,322" stroke="#34d399" stroke-width="3"/>
-                        <text x="195" y="230" fill="#a7f3d0" font-size="11" font-weight="bold">Løber ind</text>
-
-                        <!-- Trappe mod 1. sal: Går op -->
-                        <g transform="translate(320, 150)">
-                            <path d="M0,80 L20,60 L40,40 L60,20 L80,0" stroke="#fbbf24" stroke-width="4" fill="none"/>
-                            <!-- Pil opad -->
-                            <path d="M70,30 L85,5 L60,10" stroke="#fde68a" stroke-width="3" fill="none"/>
-                            <text x="10" y="25" fill="#fed7aa" font-size="11" font-weight="900">Går op ad trappen</text>
-                        </g>
-
-                        <!-- Kældertrappe: Bærer kurv ned -->
-                        <g transform="translate(360, 330)">
-                            <path d="M0,0 L20,20 L40,40 L60,60" stroke="#fbbf24" stroke-width="4" fill="none"/>
-                            <!-- Pil nedad -->
-                            <path d="M40,55 L65,70 L60,45" stroke="#fde68a" stroke-width="3" fill="none"/>
-                            <text x="-15" y="45" fill="#fdba74" font-size="11" font-weight="bold">Går ned</text>
-                        </g>
-                    </svg>
-
+                    <img src="assets/sansning_rummet_hoejre.jpg" alt="Krydser tærsklen - Hjem, ind, ud, op, ned" class="stage-half-img" />
                     <div id="hotspots-right"></div>
                 </div>
             </div>
@@ -79242,6 +78747,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             position: relative;
             overflow: hidden;
             background: #090d16;
+            line-height: 0;
         }
         .stage-half-header {
             position: absolute;
@@ -79257,6 +78763,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             letter-spacing: 0.04em;
             pointer-events: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            line-height: 1.4;
         }
         .stage-half-header.cool {
             color: #67e8f9;
@@ -79269,10 +78776,13 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
             background: rgba(154, 52, 18, 0.85);
         }
 
+        .stage-half img,
+        .stage-half-img,
         .stage-half svg {
             width: 100%;
             height: auto;
             display: block;
+            filter: brightness(0.98);
         }
 
         .ss-hotspot {
@@ -79652,71 +79162,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                     <div class="stage-half-header cool">
                         🔵 Yin: Kroppens sanse-sandhed (Synes)
                     </div>
-
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="bodyBg" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#083344"/>
-                                <stop offset="100%" stop-color="#0e7490"/>
-                            </linearGradient>
-                            <radialGradient id="senseWarmth" cx="50%" cy="50%" r="50%">
-                                <stop offset="0%" stop-color="#fef08a" stop-opacity="0.9"/>
-                                <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.2"/>
-                            </radialGradient>
-                        </defs>
-
-                        <!-- Stue / Café baggrund -->
-                        <rect x="0" y="0" width="500" height="450" fill="url(#bodyBg)"/>
-
-                        <!-- Spisebord og gulv -->
-                        <rect x="0" y="320" width="500" height="130" fill="#042f2e"/>
-                        <ellipse cx="250" cy="310" rx="230" ry="60" fill="#134e4a" stroke="#2dd4bf" stroke-width="2"/>
-
-                        <!-- 1. Dampende suppeskål & mund (Suppe & smag) -->
-                        <g transform="translate(140, 240)">
-                            <ellipse cx="40" cy="30" rx="36" ry="18" fill="#e0f2fe" stroke="#38bdf8" stroke-width="2"/>
-                            <ellipse cx="40" cy="27" rx="30" ry="12" fill="#f97316"/>
-                            <!-- Dampbølger der rammer næsen -->
-                            <path d="M30,15 Q35,5 30,-5 M45,15 Q50,5 45,-5 M40,20 Q35,10 40,0" stroke="#fef08a" stroke-width="2" fill="none" opacity="0.8"/>
-                            <!-- Ske mod munden -->
-                            <line x1="55" y1="20" x2="80" y2="-10" stroke="#cbd5e1" stroke-width="3"/>
-                            <circle cx="85" cy="-15" r="16" fill="#fed7aa"/>
-                            <!-- Tunge mærker smagen -->
-                            <circle cx="85" cy="-8" r="5" fill="#f43f5e"/>
-                            <text x="5" y="60" fill="#67e8f9" font-size="11" font-weight="900">Smager: "Jeg synes!"</text>
-                        </g>
-
-                        <!-- 2. Kaffekop med bitter smag -->
-                        <g transform="translate(60, 180)">
-                            <rect x="20" y="20" width="30" height="25" rx="3" fill="#ffffff"/>
-                            <path d="M50,25 C58,25 58,35 50,38" stroke="#ffffff" stroke-width="2.5" fill="none"/>
-                            <text x="-5" y="65" fill="#a5f3fc" font-size="10" font-weight="bold">Kaffe er bitter</text>
-                        </g>
-
-                        <!-- 3. Vindue med kuldetræk (Kroppen mærker kulden) -->
-                        <g transform="translate(340, 100)">
-                            <rect x="0" y="0" width="110" height="110" rx="8" fill="#082f49" stroke="#38bdf8" stroke-width="2"/>
-                            <!-- Kuldelinjer mod person -->
-                            <path d="M20,50 Q-10,70 -30,80" stroke="#67e8f9" stroke-width="2" stroke-dasharray="3,3" fill="none"/>
-                            <circle cx="28" cy="140" r="14" fill="#fed7aa"/>
-                            <rect x="15" y="154" width="26" height="40" rx="4" fill="#0369a1"/>
-                            <text x="-40" y="210" fill="#a5f3fc" font-size="10" font-weight="bold">Mærker kulden på huden</text>
-                        </g>
-
-                        <!-- 4. Person i stol (kroppen mærker sædet) -->
-                        <g transform="translate(230, 220)">
-                            <rect x="10" y="30" width="35" height="40" rx="4" fill="#1e293b"/>
-                            <circle cx="27" cy="15" r="12" fill="#fed7aa"/>
-                            <text x="-10" y="85" fill="#a5f3fc" font-size="10" font-weight="bold">Ryggen i stolen</text>
-                        </g>
-
-                        <!-- 5. Uret og ventetiden -->
-                        <g transform="translate(390, 260)">
-                            <circle cx="20" cy="20" r="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                            <text x="-5" y="52" fill="#67e8f9" font-size="10" font-weight="bold">Træt af ventetid</text>
-                        </g>
-                    </svg>
-
+                    <img src="assets/sansning_sindet_venstre.jpg" alt="Kroppens sansning - Synes" class="stage-half-img" />
                     <div id="hotspots-left"></div>
                 </div>
 
@@ -79725,71 +79171,7 @@ import{g as e,a as De,b as ro,s as qn,c as ia,n as la,k as da,d as ca,e as ga,v 
                     <div class="stage-half-header warm">
                         🟠 Yang: Hovedets tanker & debat (Tror / Mener / Ved)
                     </div>
-
-                    <svg viewBox="0 0 500 450" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="mindBg" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#431407"/>
-                                <stop offset="100%" stop-color="#7c2d12"/>
-                            </linearGradient>
-                            <linearGradient id="thoughtGlow" x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0%" stop-color="#f59e0b"/>
-                                <stop offset="100%" stop-color="#ea580c"/>
-                            </linearGradient>
-                        </defs>
-
-                        <!-- Baggrund -->
-                        <rect x="0" y="0" width="500" height="450" fill="url(#mindBg)"/>
-
-                        <!-- Gulv / Mødebord -->
-                        <rect x="0" y="320" width="500" height="130" fill="#271007"/>
-                        <ellipse cx="250" cy="310" rx="230" ry="60" fill="#451a03" stroke="#ea580c" stroke-width="2"/>
-
-                        <!-- 1. Uvis ingrediens (Tror der er chili) -->
-                        <g transform="translate(140, 240)">
-                            <!-- Lukket gryde med låg -->
-                            <rect x="15" y="15" width="50" height="30" rx="4" fill="#64748b"/>
-                            <line x1="10" y1="15" x2="70" y2="15" stroke="#94a3b8" stroke-width="3"/>
-                            <!-- Tankebobel med spørgsmålstegn -->
-                            <circle cx="85" cy="-10" r="14" fill="#ffffff" stroke="#f97316" stroke-width="2"/>
-                            <text x="80" y="-4" fill="#c2410c" font-size="15" font-weight="900">?</text>
-                            <text x="5" y="60" fill="#fed7aa" font-size="11" font-weight="900">Gætter: "Jeg tror!"</text>
-                        </g>
-
-                        <!-- 2. Kaffens oprindelse (Tror Colombia) -->
-                        <g transform="translate(60, 180)">
-                            <rect x="15" y="10" width="40" height="45" rx="4" fill="#78350f" stroke="#fbbf24" stroke-width="2"/>
-                            <text x="25" y="35" fill="#fef08a" font-size="9" font-weight="bold">ØKO</text>
-                            <text x="-5" y="68" fill="#fdba74" font-size="10" font-weight="bold">Gætter oprindelse</text>
-                        </g>
-
-                        <!-- 3. Vindue med mørke skyer i fremtiden (Tror det regner snart) -->
-                        <g transform="translate(340, 100)">
-                            <rect x="0" y="0" width="110" height="110" rx="8" fill="#18181b" stroke="#f97316" stroke-width="2"/>
-                            <!-- Mørke skyer og fremtidspil -->
-                            <path d="M20,40 Q35,25 50,40 Q65,25 80,40 Q90,55 75,65 L25,65 Z" fill="#71717a"/>
-                            <text x="-35" y="130" fill="#fed7aa" font-size="10" font-weight="bold">Spår om regn (Tror)</text>
-                        </g>
-
-                        <!-- 4. Avisen & Debatten (Mener vi bør...) -->
-                        <g transform="translate(230, 210)">
-                            <!-- Avis opslået -->
-                            <rect x="0" y="20" width="60" height="40" rx="2" fill="#f8fafc"/>
-                            <line x1="30" y1="20" x2="30" y2="60" stroke="#cbd5e1" stroke-width="2"/>
-                            <circle cx="30" cy="5" r="12" fill="#fed7aa"/>
-                            <!-- Gestikulerende hånd -->
-                            <line x1="45" y1="15" x2="65" y2="0" stroke="#fed7aa" stroke-width="3" stroke-linecap="round"/>
-                            <text x="-15" y="85" fill="#fed7aa" font-size="11" font-weight="900">Debat: "Jeg mener!"</text>
-                        </g>
-
-                        <!-- 5. Køreplanen og fakta (Ved kl. 20:15) -->
-                        <g transform="translate(390, 260)">
-                            <rect x="5" y="5" width="40" height="30" rx="4" fill="#0f172a" stroke="#22c55e" stroke-width="2"/>
-                            <text x="10" y="24" fill="#4ade80" font-size="10" font-weight="900">20:15</text>
-                            <text x="-10" y="52" fill="#86efac" font-size="10" font-weight="bold">Fakta: "Jeg ved!"</text>
-                        </g>
-                    </svg>
-
+                    <img src="assets/sansning_sindet_hoejre.jpg" alt="Hovedets tanker - Tror, mener, ved" class="stage-half-img" />
                     <div id="hotspots-right"></div>
                 </div>
             </div>

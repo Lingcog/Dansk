@@ -153,6 +153,48 @@ export function renderSansningIPaaView(container, navigateFn, extraData = {}) {
             options: ['i', 'på'],
             correct: 'på',
             expl: 'Gaden, torvet og fortovet opleves som åbne færdselsflader: "på gaden" og "på torvet".'
+        },
+        {
+            prompt: 'Jeg mangler mælk til kaffen, så jeg går lige ... supermarkedet.',
+            options: ['i', 'på'],
+            correct: 'i',
+            expl: 'Dagligdagslokaler og butikker opleves som omsluttende rum, vi træder ind i: "går i supermarkedet", "går i biografen", "går i banken".'
+        },
+        {
+            prompt: 'Skal vi ikke gå ... biografen på fredag og se den nye danske film?',
+            options: ['i', 'på'],
+            correct: 'i',
+            expl: 'Biografen, teatret og svømmehallen opleves som mørke/lukkede oplevelsesrum omkring os: "går i biografen".'
+        },
+        {
+            prompt: 'Min søn er otte år og går ... skole hvert år fra august til juni.',
+            options: ['i', 'på'],
+            correct: 'i',
+            expl: 'Når vi taler generelt om selve skolegangen, bruges "i": "han går i skole". (Men nævner du skolens eget navn, skifter det til "på"!)'
+        },
+        {
+            prompt: 'Min nevø går ... Vesterbroskole lige her i nærheden.',
+            options: ['i', 'på'],
+            correct: 'på',
+            expl: 'Så snart en skole har et præcist egennavn eller er en videregående uddannelse, skifter dansk til "på": "han går på Vesterbroskole", "på gymnasiet", "på universitetet".'
+        },
+        {
+            prompt: 'Efter gymnasiet vil hun gerne læse jura og gå ... universitetet.',
+            options: ['i', 'på'],
+            correct: 'på',
+            expl: 'Offentlige uddannelses- og samfundsinstitutioner bruger "på": "går på universitetet", "går på biblioteket", "tager på hospitalet".'
+        },
+        {
+            prompt: 'Han slog foden slemt i fodboldkampen og måtte tage ... hospitalet.',
+            options: ['i', 'på'],
+            correct: 'på',
+            expl: 'Offentlige institutioner og servicebygninger opleves som steder i samfundet man opsøger udefra: "tager på hospitalet", "går på biblioteket", "på rådhuset".'
+        },
+        {
+            prompt: 'I aften skal vi fejre vores årsdag, så vi går ... restaurant.',
+            options: ['i', 'på'],
+            correct: 'på',
+            expl: 'Alle steder hvor man spiser og får serveret mad eller drikke tager "på": "går på restaurant", "på café", "på pizzeria", "på kro".'
         }
     ];
 
@@ -555,6 +597,114 @@ export function renderSansningIPaaView(container, navigateFn, extraData = {}) {
             cursor: pointer;
             margin: 0 auto;
         }
+        /* Bygninger & Institutioner panel */
+        .ss-bld-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.15rem;
+            margin-bottom: 1.4rem;
+        }
+        @media (max-width: 780px) {
+            .ss-bld-grid { grid-template-columns: 1fr; }
+        }
+        .ss-bld-card {
+            background: #5C0812;
+            border: 1.5px solid #851825;
+            border-radius: 18px;
+            padding: 1.25rem 1.35rem;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+        .ss-bld-card.naerhed { border-color: rgba(56, 189, 248, 0.5); }
+        .ss-bld-card.afstand { border-color: rgba(251, 146, 60, 0.5); }
+        .ss-bld-title {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .ss-bld-pill {
+            font-size: 0.74rem;
+            font-weight: 900;
+            padding: 0.2rem 0.65rem;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .ss-bld-card.naerhed .ss-bld-pill {
+            background: rgba(56, 189, 248, 0.2);
+            color: #7dd3fc;
+            border: 1px solid rgba(56, 189, 248, 0.45);
+        }
+        .ss-bld-card.afstand .ss-bld-pill {
+            background: rgba(251, 146, 60, 0.2);
+            color: #fdba74;
+            border: 1px solid rgba(251, 146, 60, 0.45);
+        }
+        .ss-bld-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+        }
+        .ss-bld-item {
+            background: #4A040B;
+            border: 1px solid #851825;
+            border-radius: 12px;
+            padding: 0.7rem 0.9rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.22rem;
+        }
+        .ss-bld-phrase {
+            font-size: 1.02rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+        .ss-bld-note {
+            font-size: 0.85rem;
+            color: #FFC9CD;
+            line-height: 1.45;
+        }
+        .ss-bld-card.naerhed .ss-bld-prep {
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.22);
+            padding: 0.05rem 0.38rem;
+            border-radius: 6px;
+            border-bottom: 2px solid #38bdf8;
+        }
+        .ss-bld-card.afstand .ss-bld-prep {
+            color: #fb923c;
+            background: rgba(251, 146, 60, 0.22);
+            padding: 0.05rem 0.38rem;
+            border-radius: 6px;
+            border-bottom: 2px solid #fb923c;
+        }
+        .ss-school-contrast {
+            background: linear-gradient(135deg, rgba(12, 74, 110, 0.45), rgba(154, 52, 18, 0.4));
+            border: 1.5px solid #851825;
+            border-radius: 18px;
+            padding: 1.25rem 1.4rem;
+            margin-bottom: 1.4rem;
+        }
+        .ss-school-contrast h3 {
+            margin: 0 0 0.75rem;
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: #fde68a;
+        }
+        .ss-school-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.9rem;
+        }
+        @media (max-width: 720px) {
+            .ss-school-pair { grid-template-columns: 1fr; }
+        }
     `;
     viewContainer.appendChild(style);
 
@@ -580,8 +730,8 @@ export function renderSansningIPaaView(container, navigateFn, extraData = {}) {
     hero.innerHTML = `
         <h1>Hulen vs. overfladen: i vs. på</h1>
         <p>
-            <strong>I</strong> lukker verden inde i hulens og rummets trygge favn (<em>i tasken, i stuen, i Danmark</em>),
-            mens <strong>på</strong> lægger tingen eksponeret ud på en åben flade (<em>på bordet, på gaden, på Fyn</em>).
+            <strong>I</strong> lukker verden inde i hulens og rummets trygge favn (<em>i tasken, i stuen, i Danmark, i supermarkedet</em>),
+            mens <strong>på</strong> peger på åbne flader, øer, offentlige institutioner og spisesteder (<em>på bordet, på Fyn, på hospitalet, på restaurant</em>).
         </p>
     `;
     viewContainer.appendChild(hero);
@@ -590,7 +740,8 @@ export function renderSansningIPaaView(container, navigateFn, extraData = {}) {
     tabsNav.className = 'ss-tabs-nav';
     tabsNav.innerHTML = `
         <button class="ss-tab-btn active" data-tab="stage">1. Hulens rum vs. den åbne flade</button>
-        <button class="ss-tab-btn" data-tab="quiz">2. Stedsprøven</button>
+        <button class="ss-tab-btn" data-tab="buildings">2. Bygninger, institutioner & spisesteder</button>
+        <button class="ss-tab-btn" data-tab="quiz">3. Stedsprøven</button>
     `;
     viewContainer.appendChild(tabsNav);
 
@@ -718,6 +869,109 @@ export function renderSansningIPaaView(container, navigateFn, extraData = {}) {
     renderStageHotspots();
     renderInspector();
     panelsContainer.appendChild(panelStage);
+
+    const panelBuildings = document.createElement('div');
+    panelBuildings.className = 'ss-tab-panel';
+    panelBuildings.id = 'panel-buildings';
+    panelBuildings.innerHTML = `
+        <div class="ss-detail-card" style="margin-bottom: 1.4rem;">
+            <div class="ss-detail-header">
+                <span class="ss-main-word">Bygninger i dansk: Omsluttet hule (i) vs. Institution & spisested (på)</span>
+                <span class="ss-cat-pill">Hverdagsrum vs. samfundets adresser</span>
+            </div>
+            <p style="margin:0; color:#FFC9CD; font-size:0.95rem; line-height:1.55;">
+                Selvom man fysisk går ind ad en dør til alle disse bygninger, skelner dansk skarpt mellem <strong>at træde ind i et omsluttet hverdagsrum (i)</strong>
+                og <strong>at opsøge en offentlig institution, et præcist egennavn eller et spisested (på)</strong>.
+            </p>
+        </div>
+
+        <div class="ss-school-contrast">
+            <h3>🎯 Skole-eksemplet: Generel ramme vs. præcis navngiven skole</h3>
+            <div class="ss-school-pair">
+                <div class="ss-contrast-box naerhed">
+                    <span class="ss-box-badge">Generel ramme (uden navn) ➔ I</span>
+                    <div class="ss-box-sent">Han går <span class="ss-box-verb-highlight">i</span> skole.</div>
+                    <div class="ss-box-exp">
+                        Når du taler om selve det at være elev eller befinde sig inde i skolens hverdag uden at nævne et bestemt navn, er skolen et omsluttende rum: <strong>i skole</strong> (ligesom <em>i børnehave</em> og <em>i vuggestue</em>).
+                    </div>
+                </div>
+                <div class="ss-contrast-box afstand">
+                    <span class="ss-box-badge">Præcis navngiven skole / højere trin ➔ PÅ</span>
+                    <div class="ss-box-sent">Han går <span class="ss-box-verb-highlight">på</span> Vesterbroskole.</div>
+                    <div class="ss-box-exp">
+                        Så snart du peger præcist på <strong>skolens navn</strong> (<em>på Vesterbroskole</em>) eller et videregående trin (<em>på gymnasiet, på efterskole, på universitetet</em>), bruger dansk altid <strong>på</strong>!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ss-bld-grid">
+            <div class="ss-bld-card naerhed">
+                <div class="ss-bld-title">
+                    <span>🏠 Omsluttede bygninger & hverdagsrum</span>
+                    <span class="ss-bld-pill">Bruger I</span>
+                </div>
+                <div class="ss-bld-list">
+                    <div class="ss-bld-item">
+                        <div class="ss-bld-phrase">går <span class="ss-bld-prep">i</span> supermarkedet</div>
+                        <div class="ss-bld-note">Butikker og indkøbsrum sanses som lukkede rum fulde af hylder omkring dig (også <em>i Netto, i bageren, i tøjbutikken</em>).</div>
+                    </div>
+                    <div class="ss-bld-item">
+                        <div class="ss-bld-phrase">går <span class="ss-bld-prep">i</span> biograf(en)</div>
+                        <div class="ss-bld-note">Oplevelsesrum med vægge og mørke omkring tilskueren: <em>går i biograf, i teatret, i svømmehallen, i fitnesscenteret</em>.</div>
+                    </div>
+                    <div class="ss-bld-item">
+                        <div class="ss-bld-phrase">går <span class="ss-bld-prep">i</span> skole</div>
+                        <div class="ss-bld-note">Den generelle daglige ramme uden navn (også <em>går i børnehave, i kirke, i banken</em>).</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ss-bld-card afstand">
+                <div class="ss-bld-title">
+                    <span>🏛️ Offentlige institutioner & navngivne steder</span>
+                    <span class="ss-bld-pill">Bruger PÅ</span>
+                </div>
+                <div class="ss-bld-list">
+                    <div class="ss-bld-item">
+                        <div class="ss-bld-phrase">går <span class="ss-bld-prep">på</span> Vesterbroskole &bull; går <span class="ss-bld-prep">på</span> universitetet</div>
+                        <div class="ss-bld-note">Præcise navngivne skoler og videregående uddannelser ses som institutioner på samfundets kort: <em>på Vesterbroskole, på gymnasiet, på universitetet</em>.</div>
+                    </div>
+                    <div class="ss-bld-item">
+                        <div class="ss-bld-phrase">går <span class="ss-bld-prep">på</span> biblioteket &bull; tager <span class="ss-bld-prep">på</span> hospitalet</div>
+                        <div class="ss-bld-note">Offentlige bygninger og samfundsfunktioner bruger fast <strong>på</strong>: <em>på biblioteket, på hospitalet, på rådhuset, på politistationen, på apoteket, på posthuset</em>.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ss-bld-card afstand" style="margin-bottom: 1.4rem;">
+            <div class="ss-bld-title">
+                <span>🍽️ Alle steder hvor man spiser og drikker</span>
+                <span class="ss-bld-pill">Altid PÅ</span>
+            </div>
+            <div class="ss-bld-list" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.7rem;">
+                <div class="ss-bld-item">
+                    <div class="ss-bld-phrase">går <span class="ss-bld-prep">på</span> restaurant</div>
+                    <div class="ss-bld-note">Man tager ud til en serveringsflade og sidder ved et dækket bord.</div>
+                </div>
+                <div class="ss-bld-item">
+                    <div class="ss-bld-phrase">går <span class="ss-bld-prep">på</span> café / <span class="ss-bld-prep">på</span> pizzeria</div>
+                    <div class="ss-bld-note">Gælder alle spisesteder og udskænkningssteder: <em>på café, på kro, på burgerbar, på bodega</em>.</div>
+                </div>
+                <div class="ss-bld-item">
+                    <div class="ss-bld-phrase">spiser <span class="ss-bld-prep">på</span> McDonald's / <span class="ss-bld-prep">på</span> hotel</div>
+                    <div class="ss-bld-note">Også konkrete restaurantnavne og hoteller følger spisested-reglen med <strong>på</strong>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ss-insp-aha">
+            <strong>Huskeregel til bygninger:</strong> Hverdagens indkøb og oplevelsesrum føles som huler du træder ind <strong>i</strong> (<em>i supermarkedet, i biograf, i skole</em>).
+            Men så snart det er en <strong>offentlig institution</strong> (<em>på biblioteket, på hospitalet, på universitetet</em>), en <strong>præcis navngiven skole</strong> (<em>på Vesterbroskole</em>) eller et <strong>sted man spiser</strong> (<em>på restaurant, på café</em>), skifter kameraet til <strong>på</strong>!
+        </div>
+    `;
+    panelsContainer.appendChild(panelBuildings);
 
     const panelQuiz = document.createElement('div');
     panelQuiz.className = 'ss-tab-panel';

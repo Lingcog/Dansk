@@ -84752,11 +84752,68 @@ ${p}`,a=J?"复制作业链接:":X?"انسخ رابط الواجب من هنا:":
             </div>
         `,A.querySelector("#vlk-modal-close").onclick=()=>A.remove(),A.onclick=de=>{de.target===A&&A.remove()},A.querySelectorAll("[data-hw-url]").forEach(de=>{de.onclick=()=>{i(de.dataset.hwUrl,de.dataset.hwLabel)}}),document.body.appendChild(A)}let L="l_vs_n",k="principles";const C=r.subPath||"";if(C){const F=C.split("/").filter(Boolean);F[0]&&["l_vs_n","bloedt_d","dansk_r","udlyd","stumme_lyde"].includes(F[0])&&(L=F[0]),F[1]&&["principles","pairs","speech"].includes(F[1])&&(k=F[1])}else try{const A=window.location.hash.replace(/^#\/?/,"").split("?")[0].split("/"),G=A.findIndex(de=>de==="vanskelige_lyde_kinesisk"||de==="kinesiske_lyde");G!==-1&&(A[G+1]&&["l_vs_n","bloedt_d","dansk_r","udlyd","stumme_lyde"].includes(A[G+1])&&(L=A[G+1]),A[G+2]&&["principles","pairs","speech"].includes(A[G+2])&&(k=A[G+2]))}catch{}let P=L,O="l",U=k;function M(F=!1){const G=`#/${Ae()||"zh"}/vanskelige_lyde_kinesisk/${P}/${U}`;window.location.hash!==G&&(F?history.replaceState(null,"",G):history.pushState(null,"",G))}let J=0,X=0,V=0,E=!1,j=0;const _=document.createElement("div");_.className="vlk-wrapper";const S=document.createElement("style");S.textContent=`
         .vlk-wrapper {
+            box-sizing: border-box;
+            width: 100%;
             max-width: 1040px;
             margin: 0 auto;
             padding: 1.25rem 1rem 3.5rem 1rem;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .vlk-wrapper *,
+        .vlk-wrapper *::before,
+        .vlk-wrapper *::after {
+            box-sizing: border-box;
+        }
+
+        .vlk-copy-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            background: rgba(56, 189, 248, 0.16);
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            color: #7dd3fc;
+            padding: 0.42rem 0.8rem;
+            border-radius: 9px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.16s ease;
+            white-space: nowrap;
+        }
+
+        .vlk-copy-btn:hover {
+            background: rgba(56, 189, 248, 0.28);
+            color: #ffffff;
+        }
+
+        .vlk-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.82);
+            backdrop-filter: blur(6px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .vlk-modal-card {
+            width: 100%;
+            max-width: 720px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: #0f172a;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-radius: 16px;
+            padding: 1.25rem;
+            color: #f8fafc;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
         }
 
         /* Top & Bottom Bar Navigation */
@@ -84834,12 +84891,13 @@ ${p}`,a=J?"复制作业链接:":X?"انسخ رابط الواجب من هنا:":
         /* Top Module Tabs */
         .vlk-nav-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
             gap: 0.75rem;
             margin-bottom: 1.75rem;
         }
 
         .vlk-mod-card {
+            min-width: 0;
             background: rgba(30, 41, 59, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 14px;
@@ -84931,15 +84989,15 @@ ${p}`,a=J?"复制作业链接:":X?"انسخ رابط الواجب من هنا:":
         /* 3 Main Action Tabs */
         .vlk-tabs-nav {
             display: flex;
+            flex-wrap: wrap;
             gap: 0.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             padding-bottom: 0.75rem;
-            overflow-x: auto;
         }
 
         .vlk-tab-btn {
             background: transparent;
-            border: none;
+            border: 1px solid transparent;
             color: #94a3b8;
             font-size: 0.92rem;
             font-weight: 600;
@@ -84947,10 +85005,11 @@ ${p}`,a=J?"复制作业链接:":X?"انسخ رابط الواجب من هنا:":
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.15s ease;
-            white-space: nowrap;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            text-align: left;
+            line-height: 1.3;
         }
 
         .vlk-tab-btn:hover {
@@ -85021,12 +85080,13 @@ ${p}`,a=J?"复制作业链接:":X?"انسخ رابط الواجب من هنا:":
         /* Diagram Grid */
         .vlk-diagram-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
             gap: 1.25rem;
             margin-bottom: 1.5rem;
         }
 
         .vlk-diagram-card {
+            min-width: 0;
             background: rgba(30, 41, 59, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
@@ -85040,6 +85100,8 @@ ${p}`,a=J?"复制作业链接:":X?"انسخ رابط الواجب من هنا:":
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 0.45rem;
             margin-bottom: 0.75rem;
         }
 
@@ -85065,13 +85127,13 @@ ${p}`,a=J?"复制作业链接:":X?"انسخ رابط الواجب من هنا:":
             align-items: center;
             justify-content: center;
             padding: 0.5rem;
-            min-height: 280px;
         }
 
         .vlk-svg-wrapper svg,
         .vlk-diag-svg {
             width: 100%;
-            height: 280px;
+            height: auto;
+            aspect-ratio: 360 / 300;
             max-height: 280px;
             display: block;
         }
@@ -85115,11 +85177,12 @@ ${p}`,a=J?"复制作业链接:":X?"انسخ رابط الواجب من هنا:":
 
         .vlk-pinch-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
             gap: 0.75rem;
         }
 
         .vlk-pinch-item {
+            min-width: 0;
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px;
@@ -85428,6 +85491,291 @@ ${p}`,a=J?"复制作业链接:":X?"انسخ رابط الواجب من هنا:":
             opacity: 0.4;
             cursor: not-allowed;
         }
+
+        .vlk-url-strip {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-radius: 11px;
+            padding: 0.55rem 0.85rem;
+            margin-bottom: 1.15rem;
+        }
+
+        .vlk-url-text-wrap {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            min-width: 0;
+            flex: 1 1 220px;
+            font-size: 0.8rem;
+            color: #cbd5e1;
+        }
+
+        .vlk-url-code {
+            color: #fde68a;
+            font-family: monospace;
+            font-size: 0.78rem;
+            word-break: break-all;
+            overflow-wrap: anywhere;
+        }
+
+        @media (max-width: 640px) {
+            .vlk-wrapper {
+                padding: 0.6rem 0.35rem 2.25rem 0.35rem;
+            }
+
+            .vlk-top-bar {
+                gap: 0.45rem;
+                margin-bottom: 0.85rem;
+                padding-bottom: 0.65rem;
+            }
+
+            .vlk-top-bar > div {
+                width: 100%;
+                gap: 0.4rem !important;
+            }
+
+            .vlk-back-btn {
+                padding: 0.45rem 0.7rem;
+                font-size: 0.78rem;
+                border-radius: 9px;
+                line-height: 1.25;
+                text-align: left;
+            }
+
+            .vlk-badge-top {
+                font-size: 0.72rem;
+                padding: 0.28rem 0.6rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .vlk-nav-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0.45rem;
+                margin-bottom: 1rem;
+            }
+
+            .vlk-mod-card {
+                padding: 0.65rem 0.7rem;
+                border-radius: 11px;
+            }
+
+            .vlk-mod-badge {
+                font-size: 0.64rem;
+                padding: 0.14rem 0.42rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .vlk-mod-title-da {
+                font-size: 0.92rem;
+                line-height: 1.2;
+            }
+
+            .vlk-mod-title-zh {
+                font-size: 0.76rem;
+                line-height: 1.25;
+            }
+
+            .vlk-hero {
+                padding: 0.9rem 0.8rem;
+                border-radius: 14px;
+                margin-bottom: 1rem;
+            }
+
+            .vlk-hero-title {
+                font-size: 1.12rem;
+                line-height: 1.3;
+            }
+
+            .vlk-hero-sub {
+                font-size: 0.84rem;
+                margin-bottom: 0.75rem;
+                line-height: 1.45;
+            }
+
+            .vlk-hero-focus {
+                font-size: 0.8rem !important;
+                padding: 0.55rem 0.7rem !important;
+                margin-bottom: 0.85rem !important;
+                line-height: 1.45;
+            }
+
+            .vlk-url-strip {
+                padding: 0.5rem 0.65rem;
+                margin-bottom: 0.85rem;
+            }
+
+            .vlk-url-text-wrap,
+            .vlk-url-code {
+                font-size: 0.72rem;
+                line-height: 1.35;
+            }
+
+            .vlk-copy-btn {
+                width: 100%;
+                padding: 0.45rem 0.7rem;
+                font-size: 0.78rem;
+            }
+
+            .vlk-tabs-nav {
+                flex-direction: column;
+                gap: 0.38rem;
+                padding-bottom: 0.4rem;
+            }
+
+            .vlk-tab-btn {
+                width: 100%;
+                padding: 0.55rem 0.75rem;
+                font-size: 0.84rem;
+                background: rgba(15, 23, 42, 0.45);
+                border-color: rgba(255, 255, 255, 0.08);
+            }
+
+            .vlk-sub-controls {
+                padding: 0.65rem 0.7rem;
+                gap: 0.45rem;
+                margin: 0.85rem 0 1rem 0;
+            }
+
+            .vlk-sub-label {
+                font-size: 0.82rem;
+                width: 100%;
+            }
+
+            .vlk-sub-btn {
+                width: 100%;
+                border-radius: 12px;
+                padding: 0.55rem 0.8rem;
+                font-size: 0.83rem;
+                line-height: 1.35;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                text-align: left;
+            }
+
+            .vlk-diagram-grid {
+                grid-template-columns: 1fr;
+                gap: 0.85rem;
+                margin-bottom: 1rem;
+            }
+
+            .vlk-diagram-card {
+                padding: 0.8rem 0.75rem;
+                border-radius: 14px;
+            }
+
+            .vlk-diagram-title {
+                font-size: 0.9rem;
+                line-height: 1.3;
+            }
+
+            .vlk-diagram-tag {
+                font-size: 0.7rem;
+            }
+
+            .vlk-svg-wrapper {
+                padding: 0.3rem;
+                min-height: 0;
+            }
+
+            .vlk-svg-wrapper svg,
+            .vlk-diag-svg {
+                height: auto !important;
+                max-height: 245px;
+            }
+
+            .vlk-diagram-notes {
+                font-size: 0.82rem;
+                padding: 0.65rem 0.7rem;
+                margin-top: 0.65rem;
+            }
+
+            .vlk-pinch-card,
+            .vlk-bilingual-card,
+            .vlk-quiz-container,
+            .vlk-speech-card {
+                padding: 0.9rem 0.8rem;
+                border-radius: 14px;
+                margin-bottom: 1rem;
+            }
+
+            .vlk-pinch-title,
+            .vlk-bilingual-title {
+                font-size: 0.96rem;
+                line-height: 1.35;
+            }
+
+            .vlk-pinch-body,
+            .vlk-zh-block,
+            .vlk-da-block {
+                font-size: 0.84rem;
+                line-height: 1.5;
+            }
+
+            .vlk-pinch-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .vlk-quiz-options {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .vlk-listen-btn-big {
+                width: 100%;
+                justify-content: center;
+                padding: 0.8rem 1rem;
+                font-size: 1rem;
+                margin: 0.9rem 0 1.25rem 0;
+            }
+
+            .vlk-pair-word {
+                font-size: 1.35rem;
+            }
+
+            .vlk-speech-meta-bar {
+                flex-wrap: wrap;
+                gap: 0.4rem;
+                font-size: 0.8rem;
+            }
+
+            .vlk-speech-prompt {
+                font-size: 1.28rem;
+            }
+
+            .vlk-mic-row {
+                flex-wrap: wrap;
+                gap: 0.85rem;
+                margin: 1rem 0;
+            }
+
+            .vlk-speech-nav-row {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .vlk-nav-step-btn {
+                flex: 1 1 45%;
+                padding: 0.55rem 0.7rem;
+                font-size: 0.84rem;
+            }
+
+            .vlk-bottom-bar {
+                margin-top: 1.5rem;
+                padding-top: 1rem;
+                gap: 0.65rem;
+            }
+
+            .vlk-modal-card {
+                padding: 0.9rem;
+            }
+        }
     `,_.appendChild(S);function b(F,A=.85){if(!("speechSynthesis"in window)){alert("Din browser understøtter ikke Web Speech API.");return}window.speechSynthesis.cancel();const G=new SpeechSynthesisUtterance(F);G.lang="da-DK",G.rate=A,window.speechSynthesis.speak(G)}const s=[{id:"l_vs_n",titleDa:"L vs. N (Mundvigene mod næsen)",titleZh:"L-音 vs. N-音（两颊吹风 vs. 鼻子哼音）",badge:"核心对比",status:"active",descDa:'L-lyd: Tungespidsen er oppe, men luften suser frit ud af begge mundvige. N-lyd: Munden er helt lukket foran, og al luften presses ud igennem næsen. På dansk er forskellen afgørende: "læse" vs. "næse", "lys" vs. "nys".',descZh:"L-音：舌尖在上方门牙后，气流从两颊和嘴角呼呼吹出；N-音：嘴巴前沿完全闭死，气流全部被迫由鼻腔震动发出。在丹麦语中绝对不可混淆（如 læse 读 vs. næse 鼻子）。",heroTitleZh:"中国学习者核心难点：L-音（两颊吹风）vs. N-音（鼻子哼音）",heroSubZh:"掌握发音机关：L 音两颊通气流出，N 音按住鼻子有强烈震动！"},{id:"bloedt_d",titleDa:"Blødt d (Som at ånde på brillerne)",titleZh:"软 d（擦眼镜哈气法）",badge:"核心难点",status:"active",descDa:'Gør præcis som når du ånder på dine briller, men lad tungespidsen hvile fladt mod bagsiden af undertænderne og sæt stemme på: "ma... d", "brø... d". Mærk hvordan den lune luft bare glider dovent ud over tungen uden modstand!',descZh:"擦眼镜哈气口诀：“就像你在擦眼镜前对着镜片轻轻哈一口气一样，但让舌尖平平地贴在下排门牙背面，并带上声音：‘ma... d’、‘brø... d’。感受温暖的气流完全没有任何阻碍地从舌面上懒洋洋滑出来！”",heroTitleZh:"中国学习者核心难点：丹麦语软 d（擦眼镜哈气法）",heroSubZh:"像擦眼镜哈气一样：舌尖放平紧贴下牙背，让温暖气流懒洋洋滑出 (ma...d, brø...d)"},{id:"dansk_r",titleDa:"Dansk r (Kragelyden dybt i halsen)",titleZh:"丹麦语 r 音（深喉乌鸦叫声 kraa-kraa）",badge:"深喉发音",status:"active",descDa:'Helt nede bagerst i halsen – som når en krage skriger kraa, eller som en tør gurglelyd. Tungespidsen ligger fladt og sover nede i munden (ingen opad-krøllet kinesisk r som i "rén").',descZh:"丹麦语 r 根本不卷舌！发音就像乌鸦“kraa-kraa”叫一样，在喉咙最深处振动。舌尖彻底放松放平躺在嘴底，千万别像汉语拼音“人 rén”那样向上卷舌！",heroTitleZh:"中国学习者喉音难点：丹麦语 r 就像乌鸦叫 “kraa-kraa”！",heroSubZh:"喉咙深处振动发声，舌头完全放平，摆脱汉语卷舌音干扰"},{id:"udlyd",titleDa:"Udlyd (-st, -lt, -kt: Smæk døren i!)",titleZh:"词尾收尾（像关门一样立刻刹车）",badge:"果断断音",status:"active",descDa:'Flere hårde lyde i træk til sidst (-st, -lt, -kt), som skal lukkes brat, som at smække en dør! Pas på ikke at hænge en lille ekstra "e"-lyd på enden af ordet (sig "koldt" – ikke "kold-te").',descZh:"词尾遇到连着的辅音（如 -lt, -st, -kt 如 koldt, fast），必须像关门一样立刻刹车断音！绝不能拖泥带水多念一口气变成“koldt-e”或“fast-e”。",heroTitleZh:"中国学习者结构难点：词尾辅音收尾，像关门一样立刻刹车！",heroSubZh:"干净利落断音收尾，既不漏掉尾音，也绝不多带多余的“-e”尾巴"},{id:"stumme_lyde",titleDa:"Fraværet af lyde (mand, kage, hvad)",titleZh:"声音的隐形：不发音的字母",badge:"隐形发音",status:"active",descDa:'Mange bogstaver på dansk er tavse passagerer: d i "mand" og "finde", g i "kage" og "søge", samt h i "hvad" og "hjem". Forsøg aldrig at udtale alt, hvad du ser skrevet!',descZh:"中国学生最大的心理陷阱：习惯了汉语拼音“见字必须读音”。但在丹麦语中，大量写在纸上的字母完全不发音！mand 读作 man（没有 d）、kage 里的 g 融化成元音（没有硬 g 哥）、hvad 里的 h 隐形（直接从 v 开始）。绝不能见字必读！",heroTitleZh:"中国学习者最大陷阱：声音的隐形与“不发音”的字母",heroSubZh:"字母只是沉睡的乘客！突破 mand（无 d）、kage（无硬 g）、hvad（无 h）"}],w={l_vs_n:{defaultTarget:"l",subControls:{labelZh:"选择要探索的发音：",options:[{id:"l",label:"🌊 L-音：两颊吹风",sub:"(舌尖在门牙后)",activeClass:"active-primary"},{id:"n",label:"🌸 N-音：鼻子震动",sub:"(嘴巴封死，鼻腔出气)",activeClass:"active-secondary"}]},diagCard1:F=>{const A=F==="l";return{title:"Billede 1: Set fra siden (Profil) / 侧面剖面图",tag:A?"Slank aflang tunge • Lille kontaktpunkt":"Bred kontaktflade • Munden forseglet",tagStyle:A?"background:rgba(56,189,248,0.2); color:#38bdf8;":"background:rgba(244,114,182,0.2); color:#f472b6;",svg:v(F),notes:A?"<strong>L-lyd: Aflang tunge og lille berøringspunkt:</strong><br>Tungen strækker sig og bliver <strong>slank og aflang</strong>. Kun den yderste tungespids berører et lille punkt lige bag de øverste fortænder (gul prik). Tungen er sænket i siderne, næsen er lukket af, og luften strømmer frit ud af munden.":"<strong>N-lyd: Stor bred kontaktflade og lukket mund:</strong><br>I modsætning til L presses en <strong>langt større del af tungen fladt op mod ganen</strong> og danner en tæt rød prop. Munden er spærret foran! Ganesejlet hænger ned, og 100% af luften presses ud gennem næsen."}},diagCard2:F=>{const A=F==="l";return{title:"Billede 2: Set forfra i spejlet / 镜子正面口型",tag:A?"Begge mundvige er helt åbne ➔":"Munden lukket • Luften ud af næsen ⬆️",tagStyle:A?"background:rgba(56,189,248,0.2); color:#38bdf8;":"background:rgba(244,114,182,0.2); color:#f472b6;",svg:p(F),notes:A?"<strong>Kig i spejlet på dine mundvige:</strong><br>Tungespidsen er oppe bag fortænderne i midten, men <strong>siderne af tungen hænger helt afslappet ned</strong>. Der er to store åbne passager ved kinderne, så luften blæser frit ud af begge mundvige. Klemmer du for næsen, lyder L 100% uændret!":"<strong>Spejlbilledet for N:</strong><br>Tungen dækker hele overkæben foran. Munden er hermetisk forseglet – der slipper ikke en dråbe luft ud af mundvigene. Al luft presses op i næsen. Klemmer du for næsen, stopper lyden øjeblikkeligt med et ryk!"}},pinchCardHtml:`
                 <div class="vlk-pinch-title">
                     <span>👃</span>
@@ -85591,7 +85939,7 @@ ${p}`,a=J?"复制作业链接:":X?"انسخ رابط الواجب من هنا:":
                     💡 <em>Pædagogisk råd:</em> Lær at overhøre og overse de stumme bogstaver. Hvis du prøver at udtale hvert eneste bogstav i "manden spiser en kage", forstår en dansker dig næsten ikke!
                 </div>
             `,minimalPairs:[{l:"mand",n:"mande",contextL:"En flink mand",contextN:"Mande sig op",meanL_zh:"男人 (mand [mænˀ] - stumt d)",meanN_zh:"mand dig op (mande)"},{l:"vand",n:"vane",contextL:"Drik koldt vand",contextN:"En god vane",meanL_zh:"水 (vand [vænˀ] - stumt d)",meanN_zh:"习惯 (vane)"},{l:"land",n:"lån",contextL:"Danmark er et dejligt land",contextN:"Optage et lån",meanL_zh:"国家/陆地 (land [lænˀ] - stumt d)",meanN_zh:"贷款 (lån)"},{l:"kage",n:"kat",contextL:"Spise en sød kage",contextN:"En lille kat",meanL_zh:"蛋糕 (kage [kæːɪ] - blødt/vokaliseret g)",meanN_zh:"猫 (kat [kæd])"},{l:"hvad",n:"fad",contextL:"Hvad siger du?",contextN:"Et stort fad mad",meanL_zh:"什么 (hvad [væð] - stumt h)",meanN_zh:"托盘 (fad [fæð])"},{l:"hjem",n:"gem",contextL:"Gå hjem nu",contextN:"Gem dine penge",meanL_zh:"家/回家 (hjem [jɛm] - stumt h)",meanN_zh:"藏起来 (gem [gɛm])"},{l:"godt",n:"god",contextL:"Det smager rigtig godt",contextN:"En god ven",meanL_zh:"好 (godt [gʌd] - stumt d, kun t)",meanN_zh:"好的 (god [goːð] - blødt d)"},{l:"finde",n:"fiske",contextL:"Vi vil finde vejen",contextN:"Fiske i søen",meanL_zh:"寻找/找到 (finde [fenə] - stumt d)",meanN_zh:"钓鱼 (fiske)"}],speechExercises:[{text:"Manden spiser en kage",targetSound:"silent",type:"silent",targetWords:["manden","kage"],hintDa:'Stumt d i "manden" (sig "mannen") og intet hårdt g i "kage" (sig "kæ-ie")!',hintZh:"manden 里的 d 完全不发音（读 mannen）；kage 里的 g 融化成元音（绝无硬 g）！"},{text:"Hvad hedder du egentlig",targetSound:"silent",type:"silent",targetWords:["hvad","egentlig"],hintDa:"Hvad: h er helt stumt, start direkte på v! Egentlig: g er stumt.",hintZh:"“hvad” 的 h 彻底隐形，直接读 vad！“egentlig” 的 g 也是不发音的！"},{text:"Et koldt glas vand",targetSound:"silent",type:"silent",targetWords:["koldt","vand"],hintDa:'Vand: d er helt stumt! Sig "van". I "koldt" smækker du døren på t.',hintZh:"“vand” 里的 d 是哑巴，只念 van！千万别念成 van-de！"},{text:"Hvor er dit hjem",targetSound:"silent",type:"silent",targetWords:["hvor","hjem"],hintDa:'Hvor og hjem — begge ord starter med stumt h: sig "vor" og "jem"!',hintZh:"“hvor” 和 “hjem” 的首字母 h 都是不发音的：直接读 vor 和 jem！"},{text:"Det smager rigtig godt",targetSound:"silent",type:"silent",targetWords:["smager","godt"],hintDa:"Smager: g er blødt og glider. Godt: d er stumt, afsluttes rent på t!",hintZh:"“smager” 的 g 变成滑音；“godt” 里的 d 完全不发音，只发 t 的顿音！"},{text:"Vi skal finde en god plads",targetSound:"silent",type:"silent",targetWords:["finde","plads"],hintDa:'Finde (sig "finne" — d er stumt!) og plads (d er stumt!).',hintZh:"“finde” 读作 finne（d 隐形）；“plads” 的 d 也是不发音的！"},{text:"Børnene leger i haven",targetSound:"silent",type:"silent",targetWords:["leger","haven"],hintDa:'Leger og haven — intet hårdt g i "leger" (sig "le-er") og v er blødt.',hintZh:"“leger” 里的 g 消失融化（读 le-er），绝不是“le-ge”！"},{text:"Manden tager bussen hjem",targetSound:"silent",type:"silent",targetWords:["manden","tager","hjem"],hintDa:'Tre stumme lyde: "manden" (uden d), "tager" (uden g, sig "ta-er"), "hjem" (uden h)!',hintZh:"连环不发音挑战：manden（无 d）+ tager（无 g）+ hjem（无 h）！"}]}};function v(F){const A=F==="l",G=A?"#38bdf8":"#f472b6";return`
-            <svg class="vlk-diag-svg" viewBox="0 0 360 300" width="100%" height="280" style="display:block; width:100%; height:280px;" xmlns="http://www.w3.org/2000/svg">
+            <svg class="vlk-diag-svg" viewBox="0 0 360 300" width="100%" height="280" style="display:block; width:100%; height:auto;" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <linearGradient id="lAirflowGrad" x1="0%" y1="100%" x2="100%" y2="0%">
                         <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.2"/>
@@ -85687,7 +86035,7 @@ ${p}`,a=J?"复制作业链接:":X?"انسخ رابط الواجب من هنا:":
                 <text x="80" y="32" fill="${G}" font-size="12" font-weight="900" text-anchor="middle">${A?"🌊 L: Aflang tunge":"🌸 N: Bred kontaktflade"}</text>
             </svg>
         `}function p(F){const A=F==="l",G=A?"#38bdf8":"#f472b6";return`
-            <svg class="vlk-diag-svg" viewBox="0 0 360 300" width="100%" height="280" style="display:block; width:100%; height:280px;" xmlns="http://www.w3.org/2000/svg">
+            <svg class="vlk-diag-svg" viewBox="0 0 360 300" width="100%" height="280" style="display:block; width:100%; height:auto;" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <filter id="glowFront" x="-20%" y="-20%" width="140%" height="140%">
                         <feGaussianBlur stdDeviation="3" result="blur" />
@@ -86099,15 +86447,15 @@ ${p}`,a=J?"复制作业链接:":X?"انسخ رابط الواجب من هنا:":
                 <span>${F.heroTitleZh}</span>
             </div>
             <div class="vlk-hero-sub">${F.heroSubZh}</div>
-            <div style="font-size:0.88rem; color:#cbd5e1; margin-bottom:1.25rem; background:rgba(15,23,42,0.5); padding:0.65rem 0.9rem; border-radius:10px; border-left:3px solid #60a5fa;">
+            <div class="vlk-hero-focus" style="font-size:0.88rem; color:#cbd5e1; margin-bottom:1.25rem; background:rgba(15,23,42,0.5); padding:0.65rem 0.9rem; border-radius:10px; border-left:3px solid #60a5fa;">
                 <strong>Dansk pædagogisk fokus:</strong> ${F.descDa}
             </div>
 
             <!-- Direct Homework URL strip -->
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; background:rgba(15,23,42,0.85); border:1px solid rgba(56,189,248,0.35); border-radius:11px; padding:0.55rem 0.85rem; margin-bottom:1.15rem;">
-                <div style="display:flex; align-items:center; gap:0.45rem; font-size:0.8rem; color:#cbd5e1; max-width:85%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+            <div class="vlk-url-strip">
+                <div class="vlk-url-text-wrap">
                     <span style="color:#38bdf8; font-weight:900;">🔗 Direkte lektie-URL:</span>
-                    <span style="color:#fde68a; font-family:monospace; font-size:0.8rem;">${G}</span>
+                    <span class="vlk-url-code">${G}</span>
                 </div>
                 <button type="button" class="vlk-copy-btn" id="vlk-copy-hero-url">
                     📋 Kopier lektie-link

@@ -236,11 +236,68 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
     const styleEl = document.createElement('style');
     styleEl.textContent = `
         .vlk-wrapper {
+            box-sizing: border-box;
+            width: 100%;
             max-width: 1040px;
             margin: 0 auto;
             padding: 1.25rem 1rem 3.5rem 1rem;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .vlk-wrapper *,
+        .vlk-wrapper *::before,
+        .vlk-wrapper *::after {
+            box-sizing: border-box;
+        }
+
+        .vlk-copy-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            background: rgba(56, 189, 248, 0.16);
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            color: #7dd3fc;
+            padding: 0.42rem 0.8rem;
+            border-radius: 9px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.16s ease;
+            white-space: nowrap;
+        }
+
+        .vlk-copy-btn:hover {
+            background: rgba(56, 189, 248, 0.28);
+            color: #ffffff;
+        }
+
+        .vlk-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.82);
+            backdrop-filter: blur(6px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .vlk-modal-card {
+            width: 100%;
+            max-width: 720px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: #0f172a;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-radius: 16px;
+            padding: 1.25rem;
+            color: #f8fafc;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
         }
 
         /* Top & Bottom Bar Navigation */
@@ -318,12 +375,13 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         /* Top Module Tabs */
         .vlk-nav-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
             gap: 0.75rem;
             margin-bottom: 1.75rem;
         }
 
         .vlk-mod-card {
+            min-width: 0;
             background: rgba(30, 41, 59, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 14px;
@@ -415,15 +473,15 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         /* 3 Main Action Tabs */
         .vlk-tabs-nav {
             display: flex;
+            flex-wrap: wrap;
             gap: 0.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             padding-bottom: 0.75rem;
-            overflow-x: auto;
         }
 
         .vlk-tab-btn {
             background: transparent;
-            border: none;
+            border: 1px solid transparent;
             color: #94a3b8;
             font-size: 0.92rem;
             font-weight: 600;
@@ -431,10 +489,11 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.15s ease;
-            white-space: nowrap;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            text-align: left;
+            line-height: 1.3;
         }
 
         .vlk-tab-btn:hover {
@@ -505,12 +564,13 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         /* Diagram Grid */
         .vlk-diagram-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
             gap: 1.25rem;
             margin-bottom: 1.5rem;
         }
 
         .vlk-diagram-card {
+            min-width: 0;
             background: rgba(30, 41, 59, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
@@ -524,6 +584,8 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 0.45rem;
             margin-bottom: 0.75rem;
         }
 
@@ -549,13 +611,13 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             align-items: center;
             justify-content: center;
             padding: 0.5rem;
-            min-height: 280px;
         }
 
         .vlk-svg-wrapper svg,
         .vlk-diag-svg {
             width: 100%;
-            height: 280px;
+            height: auto;
+            aspect-ratio: 360 / 300;
             max-height: 280px;
             display: block;
         }
@@ -599,11 +661,12 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
 
         .vlk-pinch-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
             gap: 0.75rem;
         }
 
         .vlk-pinch-item {
+            min-width: 0;
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px;
@@ -911,6 +974,291 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         .vlk-nav-step-btn:disabled {
             opacity: 0.4;
             cursor: not-allowed;
+        }
+
+        .vlk-url-strip {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-radius: 11px;
+            padding: 0.55rem 0.85rem;
+            margin-bottom: 1.15rem;
+        }
+
+        .vlk-url-text-wrap {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            min-width: 0;
+            flex: 1 1 220px;
+            font-size: 0.8rem;
+            color: #cbd5e1;
+        }
+
+        .vlk-url-code {
+            color: #fde68a;
+            font-family: monospace;
+            font-size: 0.78rem;
+            word-break: break-all;
+            overflow-wrap: anywhere;
+        }
+
+        @media (max-width: 640px) {
+            .vlk-wrapper {
+                padding: 0.6rem 0.35rem 2.25rem 0.35rem;
+            }
+
+            .vlk-top-bar {
+                gap: 0.45rem;
+                margin-bottom: 0.85rem;
+                padding-bottom: 0.65rem;
+            }
+
+            .vlk-top-bar > div {
+                width: 100%;
+                gap: 0.4rem !important;
+            }
+
+            .vlk-back-btn {
+                padding: 0.45rem 0.7rem;
+                font-size: 0.78rem;
+                border-radius: 9px;
+                line-height: 1.25;
+                text-align: left;
+            }
+
+            .vlk-badge-top {
+                font-size: 0.72rem;
+                padding: 0.28rem 0.6rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .vlk-nav-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0.45rem;
+                margin-bottom: 1rem;
+            }
+
+            .vlk-mod-card {
+                padding: 0.65rem 0.7rem;
+                border-radius: 11px;
+            }
+
+            .vlk-mod-badge {
+                font-size: 0.64rem;
+                padding: 0.14rem 0.42rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .vlk-mod-title-da {
+                font-size: 0.92rem;
+                line-height: 1.2;
+            }
+
+            .vlk-mod-title-zh {
+                font-size: 0.76rem;
+                line-height: 1.25;
+            }
+
+            .vlk-hero {
+                padding: 0.9rem 0.8rem;
+                border-radius: 14px;
+                margin-bottom: 1rem;
+            }
+
+            .vlk-hero-title {
+                font-size: 1.12rem;
+                line-height: 1.3;
+            }
+
+            .vlk-hero-sub {
+                font-size: 0.84rem;
+                margin-bottom: 0.75rem;
+                line-height: 1.45;
+            }
+
+            .vlk-hero-focus {
+                font-size: 0.8rem !important;
+                padding: 0.55rem 0.7rem !important;
+                margin-bottom: 0.85rem !important;
+                line-height: 1.45;
+            }
+
+            .vlk-url-strip {
+                padding: 0.5rem 0.65rem;
+                margin-bottom: 0.85rem;
+            }
+
+            .vlk-url-text-wrap,
+            .vlk-url-code {
+                font-size: 0.72rem;
+                line-height: 1.35;
+            }
+
+            .vlk-copy-btn {
+                width: 100%;
+                padding: 0.45rem 0.7rem;
+                font-size: 0.78rem;
+            }
+
+            .vlk-tabs-nav {
+                flex-direction: column;
+                gap: 0.38rem;
+                padding-bottom: 0.4rem;
+            }
+
+            .vlk-tab-btn {
+                width: 100%;
+                padding: 0.55rem 0.75rem;
+                font-size: 0.84rem;
+                background: rgba(15, 23, 42, 0.45);
+                border-color: rgba(255, 255, 255, 0.08);
+            }
+
+            .vlk-sub-controls {
+                padding: 0.65rem 0.7rem;
+                gap: 0.45rem;
+                margin: 0.85rem 0 1rem 0;
+            }
+
+            .vlk-sub-label {
+                font-size: 0.82rem;
+                width: 100%;
+            }
+
+            .vlk-sub-btn {
+                width: 100%;
+                border-radius: 12px;
+                padding: 0.55rem 0.8rem;
+                font-size: 0.83rem;
+                line-height: 1.35;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                text-align: left;
+            }
+
+            .vlk-diagram-grid {
+                grid-template-columns: 1fr;
+                gap: 0.85rem;
+                margin-bottom: 1rem;
+            }
+
+            .vlk-diagram-card {
+                padding: 0.8rem 0.75rem;
+                border-radius: 14px;
+            }
+
+            .vlk-diagram-title {
+                font-size: 0.9rem;
+                line-height: 1.3;
+            }
+
+            .vlk-diagram-tag {
+                font-size: 0.7rem;
+            }
+
+            .vlk-svg-wrapper {
+                padding: 0.3rem;
+                min-height: 0;
+            }
+
+            .vlk-svg-wrapper svg,
+            .vlk-diag-svg {
+                height: auto !important;
+                max-height: 245px;
+            }
+
+            .vlk-diagram-notes {
+                font-size: 0.82rem;
+                padding: 0.65rem 0.7rem;
+                margin-top: 0.65rem;
+            }
+
+            .vlk-pinch-card,
+            .vlk-bilingual-card,
+            .vlk-quiz-container,
+            .vlk-speech-card {
+                padding: 0.9rem 0.8rem;
+                border-radius: 14px;
+                margin-bottom: 1rem;
+            }
+
+            .vlk-pinch-title,
+            .vlk-bilingual-title {
+                font-size: 0.96rem;
+                line-height: 1.35;
+            }
+
+            .vlk-pinch-body,
+            .vlk-zh-block,
+            .vlk-da-block {
+                font-size: 0.84rem;
+                line-height: 1.5;
+            }
+
+            .vlk-pinch-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .vlk-quiz-options {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .vlk-listen-btn-big {
+                width: 100%;
+                justify-content: center;
+                padding: 0.8rem 1rem;
+                font-size: 1rem;
+                margin: 0.9rem 0 1.25rem 0;
+            }
+
+            .vlk-pair-word {
+                font-size: 1.35rem;
+            }
+
+            .vlk-speech-meta-bar {
+                flex-wrap: wrap;
+                gap: 0.4rem;
+                font-size: 0.8rem;
+            }
+
+            .vlk-speech-prompt {
+                font-size: 1.28rem;
+            }
+
+            .vlk-mic-row {
+                flex-wrap: wrap;
+                gap: 0.85rem;
+                margin: 1rem 0;
+            }
+
+            .vlk-speech-nav-row {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .vlk-nav-step-btn {
+                flex: 1 1 45%;
+                padding: 0.55rem 0.7rem;
+                font-size: 0.84rem;
+            }
+
+            .vlk-bottom-bar {
+                margin-top: 1.5rem;
+                padding-top: 1rem;
+                gap: 0.65rem;
+            }
+
+            .vlk-modal-card {
+                padding: 0.9rem;
+            }
         }
     `;
     viewContainer.appendChild(styleEl);
@@ -1456,7 +1804,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             : 'M 175 110 C 182 135, 186 160, 188 175 C 182 173, 178 150, 170 118 Z'; // Lowered/Open
 
         return `
-            <svg class="vlk-diag-svg" viewBox="0 0 360 300" width="100%" height="280" style="display:block; width:100%; height:280px;" xmlns="http://www.w3.org/2000/svg">
+            <svg class="vlk-diag-svg" viewBox="0 0 360 300" width="100%" height="280" style="display:block; width:100%; height:auto;" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <linearGradient id="lAirflowGrad" x1="0%" y1="100%" x2="100%" y2="0%">
                         <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.2"/>
@@ -1560,7 +1908,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         const primaryColor = isL ? '#38bdf8' : '#f472b6';
 
         return `
-            <svg class="vlk-diag-svg" viewBox="0 0 360 300" width="100%" height="280" style="display:block; width:100%; height:280px;" xmlns="http://www.w3.org/2000/svg">
+            <svg class="vlk-diag-svg" viewBox="0 0 360 300" width="100%" height="280" style="display:block; width:100%; height:auto;" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <filter id="glowFront" x="-20%" y="-20%" width="140%" height="140%">
                         <feGaussianBlur stdDeviation="3" result="blur" />
@@ -2083,15 +2431,15 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                 <span>${currentMod.heroTitleZh}</span>
             </div>
             <div class="vlk-hero-sub">${currentMod.heroSubZh}</div>
-            <div style="font-size:0.88rem; color:#cbd5e1; margin-bottom:1.25rem; background:rgba(15,23,42,0.5); padding:0.65rem 0.9rem; border-radius:10px; border-left:3px solid #60a5fa;">
+            <div class="vlk-hero-focus" style="font-size:0.88rem; color:#cbd5e1; margin-bottom:1.25rem; background:rgba(15,23,42,0.5); padding:0.65rem 0.9rem; border-radius:10px; border-left:3px solid #60a5fa;">
                 <strong>Dansk pædagogisk fokus:</strong> ${currentMod.descDa}
             </div>
 
             <!-- Direct Homework URL strip -->
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; background:rgba(15,23,42,0.85); border:1px solid rgba(56,189,248,0.35); border-radius:11px; padding:0.55rem 0.85rem; margin-bottom:1.15rem;">
-                <div style="display:flex; align-items:center; gap:0.45rem; font-size:0.8rem; color:#cbd5e1; max-width:85%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+            <div class="vlk-url-strip">
+                <div class="vlk-url-text-wrap">
                     <span style="color:#38bdf8; font-weight:900;">🔗 Direkte lektie-URL:</span>
-                    <span style="color:#fde68a; font-family:monospace; font-size:0.8rem;">${currentUrl}</span>
+                    <span class="vlk-url-code">${currentUrl}</span>
                 </div>
                 <button type="button" class="vlk-copy-btn" id="vlk-copy-hero-url">
                     📋 Kopier lektie-link

@@ -153,6 +153,36 @@ export function renderSansningSinHansView(container, navigateFn, extraData = {})
             options: ['sit', 'hendes'],
             correct: 'sit',
             expl: 'Kameraet tilhører Klara selv, som er sætningens subjekt. Intetkøn (et kamera) giver "sit".'
+        },
+        {
+            prompt: 'Hvem er din nye nabo? – Det er ... derovre i den grønne jakke.',
+            options: ['han', 'ham'],
+            correct: 'ham',
+            expl: 'Når vi peger på en person ude i rummet som det udpegede mål foran os, bruger dansk objektformen "ham" ("Det er ham derovre!").'
+        },
+        {
+            prompt: 'Søren trådte hen til spejlet og så ... selv smile tilbage.',
+            options: ['sig', 'ham'],
+            correct: 'sig',
+            expl: 'Handlingen vender tilbage til Søren selv (egen sfære): derfor bruges det refleksive "sig", ligesom "sin".'
+        },
+        {
+            prompt: 'Lukas stod på perronen og vinkede, men hans ven så ikke ... i folkemængden.',
+            options: ['han', 'ham'],
+            correct: 'ham',
+            expl: 'Vennen er sætningens handlende subjekt ("hans ven"), og Lukas er målet for blikket: derfor "ham".'
+        },
+        {
+            prompt: 'Min bror ringede i morges og sagde, at ... kommer forbi til aftensmad i morgen.',
+            options: ['han', 'ham'],
+            correct: 'han',
+            expl: 'Nu er broren den handlende aktør bag kameraet i ledsætningen ("...kommer forbi"): derfor subjektformen "han".'
+        },
+        {
+            prompt: 'Frisøren tog saksen frem og klippede ... pænt før festen.',
+            options: ['sig', 'ham'],
+            correct: 'ham',
+            expl: 'Frisøren klipper en anden person (kunden) – altså en uden for frisørens egen krop: "ham" (ikke sig selv!).'
         }
     ];
 
@@ -569,6 +599,91 @@ export function renderSansningSinHansView(container, navigateFn, extraData = {})
             cursor: pointer;
             margin: 0 auto;
         }
+        /* Pronomen-fane: han, ham & sig */
+        .ss-pro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.1rem;
+            margin-bottom: 1.25rem;
+        }
+        @media (max-width: 780px) {
+            .ss-pro-grid { grid-template-columns: 1fr; }
+        }
+        .ss-pro-card {
+            background: #5C0812;
+            border: 1.5px solid #851825;
+            border-radius: 18px;
+            padding: 1.2rem 1.35rem;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .ss-pro-card.naerhed { border-color: rgba(56, 189, 248, 0.5); }
+        .ss-pro-card.afstand { border-color: rgba(251, 146, 60, 0.5); }
+        .ss-pro-title {
+            font-size: 1.12rem;
+            font-weight: 900;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+        }
+        .ss-pro-pill {
+            font-size: 0.74rem;
+            font-weight: 900;
+            padding: 0.2rem 0.65rem;
+            border-radius: 999px;
+            letter-spacing: 0.04em;
+        }
+        .ss-pro-card.naerhed .ss-pro-pill {
+            background: rgba(56, 189, 248, 0.2);
+            color: #7dd3fc;
+            border: 1px solid rgba(56, 189, 248, 0.45);
+        }
+        .ss-pro-card.afstand .ss-pro-pill {
+            background: rgba(251, 146, 60, 0.2);
+            color: #fdba74;
+            border: 1px solid rgba(251, 146, 60, 0.45);
+        }
+        .ss-pro-ex {
+            background: #4A040B;
+            border: 1px solid #851825;
+            border-radius: 12px;
+            padding: 0.75rem 0.95rem;
+        }
+        .ss-pro-sent {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.22rem;
+        }
+        .ss-pro-note {
+            font-size: 0.85rem;
+            color: #FFC9CD;
+            line-height: 1.45;
+        }
+        .ss-pro-card.naerhed .ss-pro-hl {
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.22);
+            padding: 0.05rem 0.36rem;
+            border-radius: 6px;
+            border-bottom: 2px solid #38bdf8;
+        }
+        .ss-pro-card.afstand .ss-pro-hl {
+            color: #fb923c;
+            background: rgba(251, 146, 60, 0.22);
+            padding: 0.05rem 0.36rem;
+            border-radius: 6px;
+            border-bottom: 2px solid #fb923c;
+        }
+        .ss-chain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.85rem;
+        }
     `;
     viewContainer.appendChild(style);
 
@@ -594,8 +709,8 @@ export function renderSansningSinHansView(container, navigateFn, extraData = {})
     hero.innerHTML = `
         <h1>Kroppens sfære: sin vs. hans og fordelingsental</h1>
         <p>
-            På dansk mærker du straks forskel på, om noget hører hjemme i subjektets egen kropslige og nære zone
-            (<strong>sin / sit / sine</strong>), eller om det tilhører en anden person uden for zonen (<strong>hans / hendes / deres</strong>).
+            På dansk mærker du straks forskel på, om noget hører hjemme i subjektets egen nære zone
+            (<strong>sin / sit / sine / sig</strong>), eller om det peger ud på en anden person på afstand (<strong>hans / hendes / ham / hende</strong>).
         </p>
     `;
     viewContainer.appendChild(hero);
@@ -604,7 +719,8 @@ export function renderSansningSinHansView(container, navigateFn, extraData = {})
     tabsNav.className = 'ss-tabs-nav';
     tabsNav.innerHTML = `
         <button class="ss-tab-btn active" data-tab="stage">1. Egen sfære vs. udenforstående</button>
-        <button class="ss-tab-btn" data-tab="quiz">2. Sfæreprøven</button>
+        <button class="ss-tab-btn" data-tab="pronouns">2. Han, ham & sig (Aktør vs. mål)</button>
+        <button class="ss-tab-btn" data-tab="quiz">3. Sfæreprøven</button>
     `;
     viewContainer.appendChild(tabsNav);
 
@@ -732,6 +848,112 @@ export function renderSansningSinHansView(container, navigateFn, extraData = {})
     renderStageHotspots();
     renderInspector();
     panelsContainer.appendChild(panelStage);
+
+    const panelPronouns = document.createElement('div');
+    panelPronouns.className = 'ss-tab-panel';
+    panelPronouns.id = 'panel-pronouns';
+    panelPronouns.innerHTML = `
+        <div class="ss-detail-card" style="margin-bottom: 1.25rem;">
+            <div class="ss-detail-header">
+                <span class="ss-main-word">Kameraets retning: han (aktør) vs. sig (egen krop) vs. ham (på afstand)</span>
+                <span class="ss-cat-pill">Subjekt • Refleksiv • Objekt</span>
+            </div>
+            <p style="margin:0; color:#FFC9CD; font-size:0.95rem; line-height:1.55;">
+                Den samme forskel mellem <strong>egen zone</strong> og <strong>en anden person på afstand</strong> findes i selve personordene:
+                <strong>han</strong> står bag kameraet som den handlende aktør, <strong>sig</strong> bøjer handlingen tilbage i hans egen krop,
+                mens <strong>ham</strong> peger på den person foran linsen, som handlingen eller blikket rammer.
+            </p>
+        </div>
+
+        <div class="ss-pro-grid">
+            <div class="ss-pro-card naerhed">
+                <div class="ss-pro-title">
+                    <span>🎥 Bag kameraet: Aktøren</span>
+                    <span class="ss-pro-pill">Subjekt: HAN</span>
+                </div>
+                <div class="ss-pro-ex">
+                    <div class="ss-pro-sent"><span class="ss-pro-hl">Han</span> åbner døren og ser ud på gaden.</div>
+                    <div class="ss-pro-note"><strong>Han</strong> er den aktive motor, vi følger indefra. Det er ham, der gør noget og styrer handlingen.</div>
+                </div>
+                <div class="ss-pro-ex">
+                    <div class="ss-pro-sent">Jeg håber, at <span class="ss-pro-hl">han</span> kommer i morgen.</div>
+                    <div class="ss-pro-note">Også inde i en bisætning bruges <strong>han</strong>, så snart personen er den handlende aktør.</div>
+                </div>
+            </div>
+
+            <div class="ss-pro-card afstand">
+                <div class="ss-pro-title">
+                    <span>👉 Foran linsen: Mål &amp; pegen på afstand</span>
+                    <span class="ss-pro-pill">Objekt: HAM</span>
+                </div>
+                <div class="ss-pro-ex">
+                    <div class="ss-pro-sent">Naboen vinker til <span class="ss-pro-hl">ham</span> over gaden.</div>
+                    <div class="ss-pro-note"><strong>Ham</strong> er personen foran kameraet – den som blikket, bevægelsen eller et forholdsord lander på (<em>til ham, mellem ham og mig</em>).</div>
+                </div>
+                <div class="ss-pro-ex">
+                    <div class="ss-pro-sent">Hvem er det? – Det er <span class="ss-pro-hl">ham</span> derovre!</div>
+                    <div class="ss-pro-note">Præcis som <em>den derovre</em> bruger dansk i praksis <strong>ham</strong>, når vi peger på en mand ude i rummet på afstand.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ss-pro-grid">
+            <div class="ss-pro-card naerhed">
+                <div class="ss-pro-title">
+                    <span>🪞 Tilbage til egen krop (spejl af sin)</span>
+                    <span class="ss-pro-pill">Refleksiv: SIG</span>
+                </div>
+                <div class="ss-pro-ex">
+                    <div class="ss-pro-sent">Peter så <span class="ss-pro-hl">sig</span> (selv) i spejlet.</div>
+                    <div class="ss-pro-note">Handlingen bliver inden for Peters egen sfære – præcis ligesom <em>sin bil</em>.</div>
+                </div>
+                <div class="ss-pro-ex">
+                    <div class="ss-pro-sent">Manden barberer <span class="ss-pro-hl">sig</span> hver morgen.</div>
+                    <div class="ss-pro-note">Subjektet og den ramte person er én og samme krop.</div>
+                </div>
+            </div>
+
+            <div class="ss-pro-card afstand">
+                <div class="ss-pro-title">
+                    <span>👥 Ud mod en anden person (spejl af hans)</span>
+                    <span class="ss-pro-pill">Ikke-refleksiv: HAM</span>
+                </div>
+                <div class="ss-pro-ex">
+                    <div class="ss-pro-sent">Peter så <span class="ss-pro-hl">ham</span> på gaden.</div>
+                    <div class="ss-pro-note">Handlingen rammer en helt anden mand ude i byen – præcis ligesom <em>hans bil</em>.</div>
+                </div>
+                <div class="ss-pro-ex">
+                    <div class="ss-pro-sent">Frisøren barberer <span class="ss-pro-hl">ham</span> forsigtigt.</div>
+                    <div class="ss-pro-note">Frisøren (subjekt) retter handlingen mod kunden i stolen (objekt på afstand): <strong>ham</strong>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ss-detail-card" style="margin-bottom: 1.25rem;">
+            <div class="ss-detail-header">
+                <span class="ss-main-word">Hele kæden samlet (og parallellen hun / hende)</span>
+                <span class="ss-cat-pill">Oversigt</span>
+            </div>
+            <div class="ss-chain-grid">
+                <div class="ss-contrast-box naerhed">
+                    <span class="ss-box-badge">Samme persons zone (hankøn &amp; hunkøn)</span>
+                    <div class="ss-box-sent"><span class="ss-box-verb-highlight">Han</span> tager <span class="ss-box-verb-highlight">sin</span> frakke på og skynder <span class="ss-box-verb-highlight">sig</span>.</div>
+                    <div class="ss-box-exp">Aktør: <strong>han / hun</strong> &bull; Egen krop: <strong>sig</strong> &bull; Egen ting: <strong>sin / sit / sine</strong>.</div>
+                </div>
+                <div class="ss-contrast-box afstand">
+                    <span class="ss-box-badge">Ud mod en anden person (afstand)</span>
+                    <div class="ss-box-sent"><span class="ss-box-verb-highlight">Han</span> møder <span class="ss-box-verb-highlight">ham</span> og låner <span class="ss-box-verb-highlight">hans</span> paraply.</div>
+                    <div class="ss-box-exp">Anden mand: <strong>ham / hans</strong> &bull; Anden kvinde: <strong>hende / hendes</strong> (f.eks. <em>Hun møder hende</em>).</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ss-insp-aha">
+            <strong>Vigtig skillelinje:</strong> <em>Han</em> vs. <em>ham</em> styres først og fremmest af <strong>rollen i sætningen</strong> (den der handler = <strong>han</strong>; den der rammes eller peges på = <strong>ham</strong>) – ikke ren fysisk afstand i meter.
+            Derfor hedder det altid <em>"Jeg kender ham"</em> (selvom han står lige ved siden af dig) og altid <em>"Det er ham!"</em>, når man peger ham ud.
+        </div>
+    `;
+    panelsContainer.appendChild(panelPronouns);
 
     const panelQuiz = document.createElement('div');
     panelQuiz.className = 'ss-tab-panel';

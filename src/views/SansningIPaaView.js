@@ -20,7 +20,7 @@ export function renderSansningIPaaView(container, navigateFn, extraData = {}) {
             leftLabel: 'Indrammet: i tasken',
             rightLabel: 'Eksponeret: på bordet',
             leftPos: { x: 28, y: 29 },
-            rightPos: { x: 31, y: 43 },
+            rightPos: { x: 34, y: 41 },
             leftSent: 'Nøglerne ligger dybt <span class="ss-box-verb-highlight">i</span> tasken.',
             rightSent: 'Nøglerne ligger synligt <span class="ss-box-verb-highlight">på</span> bordet.',
             leftExp: 'Taskens vægge omslutter nøglerne fra flere sider som en lille hule. Derfor siger dansk <strong>i tasken</strong>.',
@@ -42,7 +42,7 @@ export function renderSansningIPaaView(container, navigateFn, extraData = {}) {
             leftLabel: 'Omsluttet: i hulen',
             rightLabel: 'Frit fremme: på stolen',
             leftPos: { x: 24, y: 74 },
-            rightPos: { x: 21, y: 69 },
+            rightPos: { x: 22, y: 65 },
             leftSent: 'Drengen sidder trygt inde <span class="ss-box-verb-highlight">i</span> hulen.',
             rightSent: 'Drengen sidder åbent oppe <span class="ss-box-verb-highlight">på</span> stolen.',
             leftExp: 'Tæpperne danner tag og sider omkring ham. Rummet omfavner kroppen, præcis som når vi siger <strong>i stuen</strong> eller <strong>i Danmark</strong>.',
@@ -64,7 +64,7 @@ export function renderSansningIPaaView(container, navigateFn, extraData = {}) {
             leftLabel: 'Nede i: i kassen',
             rightLabel: 'Ovenpå: på kassen',
             leftPos: { x: 54, y: 74 },
-            rightPos: { x: 46, y: 76 },
+            rightPos: { x: 54, y: 73 },
             leftSent: 'Katten sover nede <span class="ss-box-verb-highlight">i</span> papkassen.',
             rightSent: 'Katten ligger oppe <span class="ss-box-verb-highlight">på</span> papkassen.',
             leftExp: 'Når lågene er åbne, er kassen en dyb skål med fire vægge om katten: den hviler <strong>i kassen</strong>.',
@@ -86,7 +86,7 @@ export function renderSansningIPaaView(container, navigateFn, extraData = {}) {
             leftLabel: 'Dyb beholder: i skålen',
             rightLabel: 'Flad overflade: på tallerkenen',
             leftPos: { x: 70, y: 47 },
-            rightPos: { x: 75, y: 57 },
+            rightPos: { x: 73, y: 51 },
             leftSent: 'Æblerne ligger samlet <span class="ss-box-verb-highlight">i</span> skålen.',
             rightSent: 'Æblerne ligger spredt <span class="ss-box-verb-highlight">på</span> tallerkenen.',
             leftExp: 'En dyb skål har høje sider, der holder frugten inde i et rum: derfor siger dansk altid <strong>i skålen</strong>.',
@@ -108,7 +108,7 @@ export function renderSansningIPaaView(container, navigateFn, extraData = {}) {
             leftLabel: 'Bag døre: i skabet',
             rightLabel: 'Åben række: på hylden',
             leftPos: { x: 84, y: 24 },
-            rightPos: { x: 82, y: 26 },
+            rightPos: { x: 83, y: 15 },
             leftSent: 'Kopperne står gemt <span class="ss-box-verb-highlight">i</span> skabet.',
             rightSent: 'Kopperne står fremme <span class="ss-box-verb-highlight">på</span> hylden.',
             leftExp: 'Skabet er en trækasse med sider, top, bund og låge. Kopperne er beskyttet inde <strong>i skabet</strong>.',
@@ -620,7 +620,7 @@ export function renderSansningIPaaView(container, navigateFn, extraData = {}) {
             </div>
             <div class="stage-half right-half" id="stage-right">
                 <div class="stage-half-header warm">Afstand: på (eksponeret på flade)</div>
-                <img src="${baseUrl}assets/sansning_paa_hoejre.svg" alt="Åben overflade: nøgler på bord, dreng på stol, kat på kasse, æbler på tallerken, kopper på hylde" />
+                <img src="${baseUrl}assets/sansning_paa_hoejre.jpg" alt="Åben overflade: nøgler på bord, dreng på stol, kat på kasse, æbler på tallerken, kopper på hylde" />
             </div>
         </div>
         <div class="ss-hotspots-strip" id="hotspots-strip"></div>

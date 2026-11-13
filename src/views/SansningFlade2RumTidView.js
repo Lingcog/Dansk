@@ -786,7 +786,7 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
             title: 'Præpositioner: i vs. på',
             sub: 'Omsluttet i hulens tryghed eller eksponeret på den åbne overflade – også mellem Danmark og øerne.',
             leftImg: `${baseUrl}assets/sansning_i_venstre.jpg`,
-            rightImg: `${baseUrl}assets/sansning_paa_hoejre.svg`,
+            rightImg: `${baseUrl}assets/sansning_paa_hoejre.jpg`,
             leftLabel: 'I (omsluttet)',
             rightLabel: 'På (flade)',
             leftEx: 'I tasken / i Danmark',

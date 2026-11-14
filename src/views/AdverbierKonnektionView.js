@@ -80,7 +80,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     konjBtn.style.background = 'rgba(16, 185, 129, 0.18)';
     konjBtn.style.borderColor = '#10b981';
     konjBtn.style.color = '#6ee7b7';
-    konjBtn.innerHTML = `Gå til Konjunktioner-fladen (og, men, fordi, når/da & ordet "AT") →`;
+    konjBtn.innerHTML = `Gå til konjunktioner-fladen (og, men, fordi, når/da & ordet "at") →`;
     konjBtn.onclick = () => navigateFn('top_konjunktioner');
     topBar.appendChild(konjBtn);
 
@@ -139,7 +139,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             category: 'aarsag',
             x: 10,
             y: 36,
-            meaning: 'Af den grund / som følge heraf (Resultat)',
+            meaning: 'Af den grund / som følge heraf (resultat)',
             sceneDesc: 'Manden i det pludselige uvejr ved busskuret: "Det styrter ned fra mørke skyer. Derfor slår jeg paraplyen op!"',
             sentence: 'Det regner. Derfor tager jeg bussen.',
             contextSentence: 'Det begyndte pludselig at øsregne over torvet. Derfor slog han paraplyen op og søgte læ.',
@@ -199,7 +199,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             category: 'aarsag',
             x: 89,
             y: 53,
-            meaning: 'På denne måde / som følge heraf (Formelt)',
+            meaning: 'På denne måde / som følge heraf (formelt)',
             sceneDesc: 'Direktøren på kontoret lægger pennen: "Begge parter har underskrevet dokumentet, og således er aftalen nu juridisk gældende."',
             sentence: 'Begge skrev under, og således blev aftalen indgået.',
             contextSentence: 'Begge parter underskrev dokumentet på kontoret, og således faldt alle detaljer på plads.',
@@ -261,7 +261,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             category: 'kontrast',
             x: 48,
             y: 20,
-            meaning: 'Alligevel / men (Blød kontrast inde i sætningen)',
+            meaning: 'Alligevel / men (blød kontrast inde i sætningen)',
             sceneDesc: 'Vejr-iagttageren på torvet kigger op mod lyset: "Morgenen startede med mørke skyer, men nu bryder solen dog frem over torvet."',
             sentence: 'Vejret var koldt. Solen skinnede dog.',
             contextSentence: 'Morgenen startede med mørke regnskyer, men op ad formiddagen kom solen dog frem over torvet.',
@@ -281,7 +281,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             category: 'kontrast',
             x: 66,
             y: 54,
-            meaning: 'I modsætning hertil (Sammenligning A vs. B)',
+            meaning: 'I modsætning hertil (sammenligning A vs. B)',
             sceneDesc: 'Cafégæsten betragter nabobordene: "Manden til venstre drikker kaffe. Kvinden til højre drikker derimod grøn te."',
             sentence: 'Peter drikker kaffe. Maria drikker derimod te.',
             contextSentence: 'I caféens venstre side arbejder folk med sort kaffe. I højre side nyder gæsterne derimod rolig te og bøger.',
@@ -343,7 +343,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             category: 'tilfoejelse',
             x: 67,
             y: 26,
-            meaning: 'Derudover / ovenikøbet (Ekstra argument)',
+            meaning: 'Derudover / ovenikøbet (ekstra argument)',
             sceneDesc: 'Beboeren viser kvarteret frem til sin ven: "Lejligheden ligger lige ved stationen. Desuden er der et dejligt grøntmarked nede på torvet."',
             sentence: 'Kvarteret er roligt. Desuden ligger det tæt på stationen.',
             contextSentence: 'Den nye lejlighed er lys og moderne. Desuden ligger der et hyggeligt grøntmarked lige nede på torvet.',
@@ -383,7 +383,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             category: 'tilfoejelse',
             x: 51,
             y: 63,
-            meaning: 'Ovenikøbet / helt op til (Overraskende bonus)',
+            meaning: 'Ovenikøbet / helt op til (overraskende bonus)',
             sceneDesc: 'Den imponerede cafégæst kigger mod køkkenet: "Kokken serverede en fantastisk fiskeret, og han kom endda ind med en gratis fødselsdagskage!"',
             sentence: 'Han lavede middag og bagte endda en kage!',
             contextSentence: 'Kokken i Café Station lavede en fantastisk hovedret, og han kom endda ind med en gratis fødselsdagslagkage!',
@@ -423,7 +423,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             category: 'tilfoejelse',
             x: 78,
             y: 74,
-            meaning: 'Hov, jeg kom lige i tanke om! (Uformelt emneskift)',
+            meaning: 'Hov, jeg kom lige i tanke om! (uformelt emneskift)',
             sceneDesc: 'Kvinden ved døren vender sig pludselig om med løftet finger: "For resten, har du set mine bilnøgler?"',
             sentence: 'For resten, hvornår starter mødet i morgen?',
             contextSentence: 'Vi ses i morgen tidlig! Hov, for resten – husker du at tage projektoplægget med?',
@@ -445,7 +445,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             category: 'alternativ',
             x: 28,
             y: 73,
-            meaning: 'Hvis ikke, så... (Advarsel om konsekvens)',
+            meaning: 'Hvis ikke, så... (advarsel om konsekvens)',
             sceneDesc: 'Manden i jakkesæt løber alt hvad han kan mod toget: "Jeg må løbe! Ellers når jeg ikke toget!"',
             sentence: 'Skynd dig! Ellers kommer vi for sent.',
             contextSentence: 'Du bliver nødt til at løbe ned mod perronen nu. Ellers kører morgentoget uden dig!',
@@ -465,11 +465,11 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             category: 'alternativ',
             x: 11,
             y: 74,
-            meaning: 'Som erstatning / Plan B ("instead")',
+            meaning: 'Som erstatning / plan B ("instead")',
             sceneDesc: 'Den unge mand med det punkterede forhjul sukker: "Mit cykeldæk er helt fladt. I stedet må jeg gå hen og tage bussen."',
             sentence: 'Cyklen er flad. Jeg tager bussen i stedet.',
             contextSentence: 'Mit baghjul punkterede på vej hjem. I stedet måtte jeg gå hen til stoppestedet og tage bussen.',
-            ruleHint: 'Viser at Plan A blev opgivet og erstattet af Plan B. Kan stå forrest med inversion eller til sidst i sætningen.',
+            ruleHint: 'Viser at plan A blev opgivet og erstattet af plan B. Kan stå forrest med inversion eller til sidst i sætningen.',
             translations: {
                 en: { word: 'instead', sentence: 'My rear tire went flat on the way home. Instead, I had to walk to the bus stop and take the bus.' },
                 de: { word: 'stattdessen', sentence: 'Mein Hinterreifen war platt. Stattdessen musste ich zur Haltestelle gehen und den Bus nehmen.' },
@@ -1612,7 +1612,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     const tabs = [
         { id: 'vrimmel', label: '1. Byens knudepunkt (vrimlebilledet)', icon: renderDsIcon('image', '', { size: 16 }) },
         { id: 'vaerksted', label: '2. Brobygger-værkstedet (ordstilling og logik)', icon: renderDsIcon('bridge', '', { size: 16 }) },
-        { id: 'detektiv', label: '3. Logik-Detektiven (10 gåder)', icon: renderDsIcon('search', '', { size: 16 }) },
+        { id: 'detektiv', label: '3. Logik-detektiven (10 gåder)', icon: renderDsIcon('search', '', { size: 16 }) },
         { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: renderDsIcon('bricks', '', { size: 16 }) },
         { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: renderDsIcon('target', '', { size: 16 }) },
         { id: 'aarsag', label: '6. Derfor, nemlig, altså & dermed', icon: renderDsIcon('zap', '', { size: 16 }) },
@@ -1733,7 +1733,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
 
         const img = document.createElement('img');
         img.src = 'assets/adverbier_konnektion_vrimmel.jpg';
-        img.alt = 'Konnektion og tekstbindere i Byens Knudepunkt';
+        img.alt = 'Konnektion og tekstbindere i byens knudepunkt';
         img.className = 'vrimmel-img';
         stage.appendChild(img);
 
@@ -1813,7 +1813,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 sceneContext = match[1].trim();
                 sceneQuote = match[2].trim();
             } else {
-                sceneContext = item.sceneDesc || 'I Byens Knudepunkt';
+                sceneContext = item.sceneDesc || 'I byens knudepunkt';
                 sceneQuote = item.sentence || item.contextSentence || '';
             }
 
@@ -1958,8 +1958,8 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 context: 'Det øsregner udenfor.',
                 canFront: true,
                 frontTokens: [
-                    { role: '1. Forfelt (Adverbium)', word: 'Derfor', color: '#06b6d4' },
-                    { role: '2. Verbum (Inversion!)', word: 'tager', color: '#ef4444' },
+                    { role: '1. Forfelt (adverbium)', word: 'Derfor', color: '#06b6d4' },
+                    { role: '2. Verbum (inversion!)', word: 'tager', color: '#ef4444' },
                     { role: '3. Subjekt', word: 'jeg', color: '#22c55e' },
                     { role: '4. Restled', word: 'bussen i dag.', color: '#0ea5e9' }
                 ],
@@ -1976,8 +1976,8 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 context: 'Det regner og blæser kraftigt.',
                 canFront: true,
                 frontTokens: [
-                    { role: '1. Forfelt (Adverbium)', word: 'Alligevel', color: '#06b6d4' },
-                    { role: '2. Verbum (Inversion!)', word: 'cykler', color: '#ef4444' },
+                    { role: '1. Forfelt (adverbium)', word: 'Alligevel', color: '#06b6d4' },
+                    { role: '2. Verbum (inversion!)', word: 'cykler', color: '#ef4444' },
                     { role: '3. Subjekt', word: 'hun', color: '#22c55e' },
                     { role: '4. Restled', word: 'på arbejde.', color: '#0ea5e9' }
                 ],
@@ -2020,8 +2020,8 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 context: 'Lejligheden er lys og nyistandsat.',
                 canFront: true,
                 frontTokens: [
-                    { role: '1. Forfelt (Adverbium)', word: 'Desuden', color: '#06b6d4' },
-                    { role: '2. Verbum (Inversion!)', word: 'ligger', color: '#ef4444' },
+                    { role: '1. Forfelt (adverbium)', word: 'Desuden', color: '#06b6d4' },
+                    { role: '2. Verbum (inversion!)', word: 'ligger', color: '#ef4444' },
                     { role: '3. Subjekt', word: 'den', color: '#22c55e' },
                     { role: '4. Restled', word: 'tæt på metroen.', color: '#0ea5e9' }
                 ],
@@ -2038,8 +2038,8 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 context: 'Du må skynde dig ud ad døren nu!',
                 canFront: true,
                 frontTokens: [
-                    { role: '1. Forfelt (Adverbium)', word: 'Ellers', color: '#06b6d4' },
-                    { role: '2. Verbum (Inversion!)', word: 'kommer', color: '#ef4444' },
+                    { role: '1. Forfelt (adverbium)', word: 'Ellers', color: '#06b6d4' },
+                    { role: '2. Verbum (inversion!)', word: 'kommer', color: '#ef4444' },
                     { role: '3. Subjekt', word: 'du', color: '#22c55e' },
                     { role: '4. Restled', word: 'for sent til toget.', color: '#0ea5e9' }
                 ],
@@ -2063,9 +2063,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         const card = document.createElement('div');
         card.className = 'vaerksted-card';
         card.innerHTML = `
-            <h2 style="text-align:center; color:#FFFFFF; margin-bottom:0.5rem;">Inversions-Motoren vs. Midterpladsen</h2>
+            <h2 style="text-align:center; color:#FFFFFF; margin-bottom:0.5rem;">Inversions-motoren vs. midterpladsen</h2>
             <p style="text-align:center; color:#cbd5e1; max-width:750px; margin:0 auto 1.2rem;">
-                Klik på en tekstbinder herunder og prøv at flytte den mellem <strong>Plads 1 (Forfeltet)</strong> og <strong>Plads 3 (Centralpladsen efter verbet)</strong>. Læg mærke til, hvordan <span style="color:#ef4444; font-weight:800;">Verbum</span> og <span style="color:#22c55e; font-weight:800;">Subjekt</span> bytter plads!
+                Klik på en tekstbinder herunder og prøv at flytte den mellem <strong>plads 1 (forfeltet)</strong> og <strong>plads 3 (centralpladsen efter verbet)</strong>. Læg mærke til, hvordan <span style="color:#ef4444; font-weight:800;">verbum</span> og <span style="color:#22c55e; font-weight:800;">subjekt</span> bytter plads!
                 ${advTransBlock('kon_ord_intro')}
             </p>
         `;
@@ -2091,10 +2091,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         posRow.className = 'pos-toggle-row';
         posRow.innerHTML = `
             <button class="pos-toggle-btn ${selectedPosMode === 'front' ? 'active' : ''}" id="pos-front-btn">
-                Plads 1: Forrest i sætningen (Udløser INVERSION!)
+                Plads 1: Forrest i sætningen (udløser INVERSION!)
             </button>
             <button class="pos-toggle-btn ${selectedPosMode === 'mid' ? 'active' : ''}" id="pos-mid-btn">
-                Plads 3: Inde i sætningen (Lige efter Verbet)
+                Plads 3: Inde i sætningen (lige efter verbet)
             </button>
         `;
         card.appendChild(posRow);
@@ -2111,7 +2111,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                     ${advTransBlock(current.frontError, errKey)}
                 </div>
                 <button class="action-btn-primary" id="switch-to-mid-btn" style="margin-top:0.8rem;">
-                    Flyt ind efter verbet (Korrekt plads) →
+                    Flyt ind efter verbet (korrekt plads) →
                 </button>
             `;
         } else {
@@ -2198,10 +2198,10 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             },
             alternativ: {
                 title: '4. Alternativ, forbehold og opsamling',
-                subtitle: 'Når du advarer om konsekvensen, vælger Plan B eller sætter en bundgrænse',
+                subtitle: 'Når du advarer om konsekvensen, vælger plan B eller sætter en bundgrænse',
                 items: [
                     { word: 'ellers', role: 'Konsekvens hvis man IKKE gør det', ex: 'Skynd dig! Ellers kommer vi for sent.' },
-                    { word: 'i stedet', role: 'Erstatning / valg af Plan B', ex: 'Kaffen var udsolgt. Jeg købte te i stedet.' },
+                    { word: 'i stedet', role: 'Erstatning / valg af plan B', ex: 'Kaffen var udsolgt. Jeg købte te i stedet.' },
                     { word: 'i hvert fald', role: 'Sikker bundgrænse trods tvivl', ex: 'Jeg ved ikke om vi vinder, men vi prøver i hvert fald.' },
                     { word: 'i det mindste', role: 'Trøst / positivt minimum', ex: 'Det regner, men her i skuret er der i det mindste tørt.' },
                     { word: 'kort sagt', role: 'Samler det hele i én konklusion', ex: 'Kort sagt var hele turen en kæmpe succes.' }
@@ -2215,13 +2215,13 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         const card = document.createElement('div');
         card.className = 'vaerksted-card';
         card.innerHTML = `
-            <h2 style="text-align:center; color:#FFFFFF; margin-bottom:0.5rem;">De 4 Logiske Bro-typer (20 målord)</h2>
+            <h2 style="text-align:center; color:#FFFFFF; margin-bottom:0.5rem;">De 4 logiske bro-typer (20 målord)</h2>
             <p style="text-align:center; color:#cbd5e1; margin-bottom:1.5rem;">Vælg en logisk familie for at sammenligne de 5 tekstbindere og høre dem i kontekst: ${advTransBlock('kon_bro_intro')}</p>
             <div class="word-selector-grid">
-                <button class="word-sel-btn ${selectedBridgeType === 'aarsag' ? 'active' : ''}" data-bt="aarsag">Årsag & Følge (5)</button>
+                <button class="word-sel-btn ${selectedBridgeType === 'aarsag' ? 'active' : ''}" data-bt="aarsag">Årsag & følge (5)</button>
                 <button class="word-sel-btn ${selectedBridgeType === 'kontrast' ? 'active' : ''}" data-bt="kontrast">Kontrast (5)</button>
                 <button class="word-sel-btn ${selectedBridgeType === 'tilfoejelse' ? 'active' : ''}" data-bt="tilfoejelse">Tilføjelse (5)</button>
-                <button class="word-sel-btn ${selectedBridgeType === 'alternativ' ? 'active' : ''}" data-bt="alternativ">Alternativ & Forbehold (5)</button>
+                <button class="word-sel-btn ${selectedBridgeType === 'alternativ' ? 'active' : ''}" data-bt="alternativ">Alternativ & forbehold (5)</button>
             </div>
             <div style="background:#0f172a; border-radius:16px; padding:1.6rem; border:1px solid rgba(255,255,255,0.1); margin-top:1rem;">
                 <h3 style="color:var(--adv-border-focus, #93C5FD); margin-bottom:0.3rem;">${cur.title} ${advTransSpan(cur.title, `kon_bro_${btIdx}_t`)}</h3>
@@ -2259,22 +2259,22 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         const card = document.createElement('div');
         card.className = 'vaerksted-card';
         card.innerHTML = `
-            <h2 style="text-align:center; color:#FFFFFF; margin-bottom:0.5rem;">Pas på Tvillingen! (Konnektivt Adverbium vs. Konjunktion)</h2>
+            <h2 style="text-align:center; color:#FFFFFF; margin-bottom:0.5rem;">Pas på tvillingen! (konnektivt adverbium vs. konjunktion)</h2>
             <p style="text-align:center; color:#cbd5e1; max-width:800px; margin:0 auto 1.8rem;">
-                Mange ord i Felt 7 har en "betydnings-tvilling" blandt konjunktionerne (som du møder på konjunktionsfladen). De betyder næsten det samme, men deres <strong>ordstilling</strong> er vidt forskellig!
+                Mange ord i felt 7 har en "betydnings-tvilling" blandt konjunktionerne (som du møder på konjunktionsfladen). De betyder næsten det samme, men deres <strong>ordstilling</strong> er vidt forskellig!
                 ${advTransBlock('kon_tvil_intro')}
             </p>
             <div style="display:grid; gap:1.2rem;">
                 <div style="background:#0f172a; border-radius:14px; padding:1.3rem; border-left:5px solid var(--adv-primary, #3B82F6);">
-                    <div style="color:var(--adv-border-focus, #93C5FD); font-weight:900; font-size:0.9rem; text-transform:uppercase; margin-bottom:0.5rem;">1. Årsag & Følge</div>
+                    <div style="color:var(--adv-border-focus, #93C5FD); font-weight:900; font-size:0.9rem; text-transform:uppercase; margin-bottom:0.5rem;">1. Årsag & følge</div>
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
                         <div style="background:#1e293b; padding:1rem; border-radius:10px; border:1px solid var(--adv-border, #1E3A66);">
-                            <strong style="color:var(--adv-border-focus, #93C5FD);">Konnektivt Adverbium (Felt 7):</strong><br>
-                            • "Det regner. <strong>Derfor</strong> <span style="color:#ef4444;">tager</span> <span style="color:#22c55e;">jeg</span> bussen." <em>(Inversion!)</em><br>
-                            • "Jeg tager bussen. Det <span style="color:#ef4444;">regner</span> <strong>nemlig</strong>." <em>(Efter verbet!)</em>
+                            <strong style="color:var(--adv-border-focus, #93C5FD);">Konnektivt adverbium (felt 7):</strong><br>
+                            • "Det regner. <strong>Derfor</strong> <span style="color:#ef4444;">tager</span> <span style="color:#22c55e;">jeg</span> bussen." <em>(inversion!)</em><br>
+                            • "Jeg tager bussen. Det <span style="color:#ef4444;">regner</span> <strong>nemlig</strong>." <em>(efter verbet!)</em>
                         </div>
                         <div style="background:rgba(15,23,42,0.6); padding:1rem; border-radius:10px; border:1px dashed rgba(255,255,255,0.15); color:#94a3b8;">
-                            <strong>Konjunktions-tvilling (Konjunktionsfladen):</strong><br>
+                            <strong>Konjunktions-tvilling (konjunktionsfladen):</strong><br>
                             • "Det regner, <em>så</em> jeg tager bussen."<br>
                             • "Jeg tager bussen, <em>fordi</em> det regner."
                         </div>
@@ -2282,15 +2282,15 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 </div>
 
                 <div style="background:#0f172a; border-radius:14px; padding:1.3rem; border-left:5px solid var(--adv-primary, #3B82F6);">
-                    <div style="color:var(--adv-border-focus, #93C5FD); font-weight:900; font-size:0.9rem; text-transform:uppercase; margin-bottom:0.5rem;">2. Modsætning & Indrømmelse</div>
+                    <div style="color:var(--adv-border-focus, #93C5FD); font-weight:900; font-size:0.9rem; text-transform:uppercase; margin-bottom:0.5rem;">2. Modsætning & indrømmelse</div>
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
                         <div style="background:#1e293b; padding:1rem; border-radius:10px; border:1px solid var(--adv-border, #1E3A66);">
-                            <strong style="color:var(--adv-border-focus, #93C5FD);">Konnektivt Adverbium (Felt 7):</strong><br>
-                            • "Det regner. <strong>Alligevel</strong> <span style="color:#ef4444;">cykler</span> <span style="color:#22c55e;">hun</span>." <em>(Inversion!)</em><br>
+                            <strong style="color:var(--adv-border-focus, #93C5FD);">Konnektivt adverbium (felt 7):</strong><br>
+                            • "Det regner. <strong>Alligevel</strong> <span style="color:#ef4444;">cykler</span> <span style="color:#22c55e;">hun</span>." <em>(inversion!)</em><br>
                             • "Værelset er lille. <strong>Til gengæld</strong> <span style="color:#ef4444;">er</span> <span style="color:#22c55e;">det</span> billigt."
                         </div>
                         <div style="background:rgba(15,23,42,0.6); padding:1rem; border-radius:10px; border:1px dashed rgba(255,255,255,0.15); color:#94a3b8;">
-                            <strong>Konjunktions-tvilling (Konjunktionsfladen):</strong><br>
+                            <strong>Konjunktions-tvilling (konjunktionsfladen):</strong><br>
                             • "Hun cykler, <em>selvom</em> det regner."<br>
                             • "Værelset er lille, <em>men</em> det er billigt."
                         </div>
@@ -2298,14 +2298,14 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 </div>
 
                 <div style="background:#0f172a; border-radius:14px; padding:1.3rem; border-left:5px solid var(--adv-primary, #3B82F6);">
-                    <div style="color:var(--adv-border-focus, #93C5FD); font-weight:900; font-size:0.9rem; text-transform:uppercase; margin-bottom:0.5rem;">3. Betingelse & Alternativ</div>
+                    <div style="color:var(--adv-border-focus, #93C5FD); font-weight:900; font-size:0.9rem; text-transform:uppercase; margin-bottom:0.5rem;">3. Betingelse & alternativ</div>
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
                         <div style="background:#1e293b; padding:1rem; border-radius:10px; border:1px solid var(--adv-border, #1E3A66);">
-                            <strong style="color:var(--adv-border-focus, #93C5FD);">Konnektivt Adverbium (Felt 7):</strong><br>
-                            • "Skynd dig! <strong>Ellers</strong> <span style="color:#ef4444;">kommer</span> <span style="color:#22c55e;">vi</span> for sent." <em>(Inversion!)</em>
+                            <strong style="color:var(--adv-border-focus, #93C5FD);">Konnektivt adverbium (felt 7):</strong><br>
+                            • "Skynd dig! <strong>Ellers</strong> <span style="color:#ef4444;">kommer</span> <span style="color:#22c55e;">vi</span> for sent." <em>(inversion!)</em>
                         </div>
                         <div style="background:rgba(15,23,42,0.6); padding:1rem; border-radius:10px; border:1px dashed rgba(255,255,255,0.15); color:#94a3b8;">
-                            <strong>Konjunktions-tvilling (Konjunktionsfladen):</strong><br>
+                            <strong>Konjunktions-tvilling (konjunktionsfladen):</strong><br>
                             • "Vi kommer for sent, <em>hvis</em> du <em>ikke</em> skynder dig."
                         </div>
                     </div>
@@ -2333,7 +2333,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             }
         },
         {
-            tag: 'Gåde 2 • Kompensation (Lyspunktet)',
+            tag: 'Gåde 2 • Kompensation (lyspunktet)',
             prompt: 'Sætning 1 nævner en ulempe ved lejligheden, men sætning 2 nævner en stor fordel, der vejer op for ulempen:',
             quote: '"Vores nye lejlighed ligger lidt langt fra centrum. ______ er huslejen utrolig billig!"',
             options: ['Til gengæld', 'Tværtimod', 'Desuden'],
@@ -2357,7 +2357,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             }
         },
         {
-            tag: 'Gåde 4 • 180 Graders Modsigelse',
+            tag: 'Gåde 4 • 180 graders modsigelse',
             prompt: 'En kollega spørger, om du blev sur over kritikken, men du vil afvise det 100% og sige, at du faktisk blev rigtig glad for hjælpen:',
             quote: '"Blev du sur over hans rettelser? Nej, ______ – jeg lærte rigtig meget af dem!"',
             options: ['tværtimod', 'alligevel', 'desuden'],
@@ -2376,7 +2376,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             correct: 'Ellers',
             explanations: {
                 'Ellers': 'Præcis! "Ellers" betyder "hvis du ikke gør det, så sker denne konsekvens".',
-                'I stedet': '"I stedet" bruges om et bevidst alternativt valg (Plan B), ikke en uønsket konsekvens.',
+                'I stedet': '"I stedet" bruges om et bevidst alternativt valg (plan B), ikke en uønsket konsekvens.',
                 'Derfor': '"Derfor" ville betyde, at paraplyen gør dig gennemblødt!'
             }
         },
@@ -2455,7 +2455,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             container.innerHTML = `
                 <div class="score-celebration-card">
                     <div style="font-size:2.5rem; margin-bottom:1rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
-                    <h2 style="color:#FFFFFF; font-size:2rem; margin-bottom:0.5rem;">Logik-Detektiven Gennemført!</h2>
+                    <h2 style="color:#FFFFFF; font-size:2rem; margin-bottom:0.5rem;">Logik-detektiven gennemført!</h2>
                     <p style="font-size:1.2rem; color:#cbd5e1; margin-bottom:1.5rem;">
                         Du løste <strong>${detektivScore} ud af ${DETEKTIV_RIDDLES.length}</strong> logiske gåder!
                     </p>
@@ -2542,21 +2542,21 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     const BUILDER_EXERCISES = [
         {
             mode: 'inversion', // Adverbium (1) + Verbum (2) + Subjekt (3) + Rest (4)
-            context: 'Første sætning: "Det regner kraftigt i dag." (Vælg følgen i Forfeltet → udløser INVERSION!)',
+            context: 'Første sætning: "Det regner kraftigt i dag." (vælg følgen i forfeltet → udløser INVERSION!)',
             displayTemplate: 'Det regner kraftigt i dag. [BLANK] tager jeg bussen.',
             options: ['Derfor', 'Nemlig', 'Tværtimod'],
             correctWord: 'Derfor',
-            step1Explain: 'Rigtigt! "Derfor" viser følgen og står her forrest i sætningen (Forfeltet) – nu skal vi huske INVERSION (Verbum før Subjekt)!',
+            step1Explain: 'Rigtigt! "Derfor" viser følgen og står her forrest i sætningen (forfeltet) – nu skal vi huske INVERSION (verbum før subjekt)!',
             slots: [
-                { role: 'adverbium', label: '1. Forfelt (Adverbium)', expected: 'Derfor' },
-                { role: 'verbum', label: '2. Verbum (Inversion!)', expected: 'tager' },
+                { role: 'adverbium', label: '1. Forfelt (adverbium)', expected: 'Derfor' },
+                { role: 'verbum', label: '2. Verbum (inversion!)', expected: 'tager' },
                 { role: 'subjekt', label: '3. Subjekt', expected: 'jeg' },
                 { role: 'rest', label: '4. Restled', expected: 'bussen.' }
             ]
         },
         {
             mode: 'central', // Subjekt (1) + Verbum (2) + Adverbium (3) + Rest (4)
-            context: 'Første sætning: "Jeg kan ikke komme til mødet." (Vælg forklaringen, der ALTID står inde efter verbet!)',
+            context: 'Første sætning: "Jeg kan ikke komme til mødet." (vælg forklaringen, der ALTID står inde efter verbet!)',
             displayTemplate: 'Jeg kan ikke komme til mødet. Jeg er [BLANK] blevet syg.',
             options: ['nemlig', 'derfor', 'ellers'],
             correctWord: 'nemlig',
@@ -2570,35 +2570,35 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         },
         {
             mode: 'inversion',
-            context: 'Første sætning: "Det blæser og er koldt." (Vælg ordet for "på trods af det" i Forfeltet → INVERSION!)',
+            context: 'Første sætning: "Det blæser og er koldt." (vælg ordet for "på trods af det" i forfeltet → INVERSION!)',
             displayTemplate: 'Det blæser og er koldt. [BLANK] cykler hun på arbejde.',
             options: ['Alligevel', 'Derimod', 'Nemlig'],
             correctWord: 'Alligevel',
-            step1Explain: 'Flot! Når "Alligevel" starter sætningen i Forfeltet, kommer verbet ("cykler") før subjektet ("hun")!',
+            step1Explain: 'Flot! Når "Alligevel" starter sætningen i forfeltet, kommer verbet ("cykler") før subjektet ("hun")!',
             slots: [
-                { role: 'adverbium', label: '1. Forfelt (Adverbium)', expected: 'Alligevel' },
-                { role: 'verbum', label: '2. Verbum (Inversion!)', expected: 'cykler' },
+                { role: 'adverbium', label: '1. Forfelt (adverbium)', expected: 'Alligevel' },
+                { role: 'verbum', label: '2. Verbum (inversion!)', expected: 'cykler' },
                 { role: 'subjekt', label: '3. Subjekt', expected: 'hun' },
                 { role: 'rest', label: '4. Restled', expected: 'på arbejde.' }
             ]
         },
         {
             mode: 'inversion',
-            context: 'Første sætning: "Du må skynde dig nu!" (Vælg advarslen "hvis ikke" i Forfeltet → INVERSION!)',
+            context: 'Første sætning: "Du må skynde dig nu!" (vælg advarslen "hvis ikke" i forfeltet → INVERSION!)',
             displayTemplate: 'Du må skynde dig nu! [BLANK] kommer vi for sent.',
             options: ['Ellers', 'Endda', 'Dog'],
             correctWord: 'Ellers',
             step1Explain: 'Korrekt! "Ellers" i front udløser straks inversion: Ellers (1) + kommer (2) + vi (3) + for sent (4).',
             slots: [
-                { role: 'adverbium', label: '1. Forfelt (Adverbium)', expected: 'Ellers' },
-                { role: 'verbum', label: '2. Verbum (Inversion!)', expected: 'kommer' },
+                { role: 'adverbium', label: '1. Forfelt (adverbium)', expected: 'Ellers' },
+                { role: 'verbum', label: '2. Verbum (inversion!)', expected: 'kommer' },
                 { role: 'subjekt', label: '3. Subjekt', expected: 'vi' },
                 { role: 'rest', label: '4. Restled', expected: 'for sent.' }
             ]
         },
         {
             mode: 'central',
-            context: 'Første sætning: "Peter drikker altid sort kaffe." (Vælg ordet der sammenligner Peter med Maria inde i sætningen)',
+            context: 'Første sætning: "Peter drikker altid sort kaffe." (vælg ordet der sammenligner Peter med Maria inde i sætningen)',
             displayTemplate: 'Peter drikker altid sort kaffe. Maria drikker [BLANK] grøn te.',
             options: ['derimod', 'derfor', 'ellers'],
             correctWord: 'derimod',
@@ -2612,28 +2612,28 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         },
         {
             mode: 'inversion',
-            context: 'Første sætning: "Lejligheden er meget lille." (Vælg ordet for kompensation i Forfeltet → INVERSION!)',
+            context: 'Første sætning: "Lejligheden er meget lille." (vælg ordet for kompensation i forfeltet → INVERSION!)',
             displayTemplate: 'Lejligheden er meget lille. [BLANK] er huslejen lav.',
             options: ['Til gengæld', 'Derfor', 'For resten'],
             correctWord: 'Til gengæld',
-            step1Explain: 'Lige i skabet! "Til gengæld" står i Forfeltet, så verbet ("er") kommer før subjektet ("huslejen").',
+            step1Explain: 'Lige i skabet! "Til gengæld" står i forfeltet, så verbet ("er") kommer før subjektet ("huslejen").',
             slots: [
-                { role: 'adverbium', label: '1. Forfelt (Adverbium)', expected: 'Til gengæld' },
-                { role: 'verbum', label: '2. Verbum (Inversion!)', expected: 'er' },
+                { role: 'adverbium', label: '1. Forfelt (adverbium)', expected: 'Til gengæld' },
+                { role: 'verbum', label: '2. Verbum (inversion!)', expected: 'er' },
                 { role: 'subjekt', label: '3. Subjekt', expected: 'huslejen' },
                 { role: 'rest', label: '4. Restled', expected: 'lav.' }
             ]
         },
         {
             mode: 'inversion',
-            context: 'Første sætning: "Bilen er alt for gammel." (Tilføj et ekstra argument i Forfeltet → INVERSION!)',
+            context: 'Første sætning: "Bilen er alt for gammel." (tilføj et ekstra argument i forfeltet → INVERSION!)',
             displayTemplate: 'Bilen er alt for gammel. [BLANK] bruger den meget benzin.',
             options: ['Desuden', 'I stedet', 'Tværtimod'],
             correctWord: 'Desuden',
-            step1Explain: 'Rigtigt! "Desuden" fylder plads 1 i Forfeltet og trækker verbet ("bruger") frem foran subjektet ("den").',
+            step1Explain: 'Rigtigt! "Desuden" fylder plads 1 i forfeltet og trækker verbet ("bruger") frem foran subjektet ("den").',
             slots: [
-                { role: 'adverbium', label: '1. Forfelt (Adverbium)', expected: 'Desuden' },
-                { role: 'verbum', label: '2. Verbum (Inversion!)', expected: 'bruger' },
+                { role: 'adverbium', label: '1. Forfelt (adverbium)', expected: 'Desuden' },
+                { role: 'verbum', label: '2. Verbum (inversion!)', expected: 'bruger' },
                 { role: 'subjekt', label: '3. Subjekt', expected: 'den' },
                 { role: 'rest', label: '4. Restled', expected: 'meget benzin.' }
             ]
@@ -2654,21 +2654,21 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         },
         {
             mode: 'inversion',
-            context: 'Første sætning: "Maden var god og musikken spillede." (Opsummer i én konklusion i Forfeltet → INVERSION!)',
+            context: 'Første sætning: "Maden var god og musikken spillede." (opsummer i én konklusion i forfeltet → INVERSION!)',
             displayTemplate: 'Maden var god og musikken spillede. [BLANK] havde vi en dejlig aften.',
             options: ['Kort sagt', 'Ellers', 'Derimod'],
             correctWord: 'Kort sagt',
-            step1Explain: 'Flot! "Kort sagt" i Forfeltet udløser inversion: Kort sagt (1) + havde (2) + vi (3) + en dejlig aften (4).',
+            step1Explain: 'Flot! "Kort sagt" i forfeltet udløser inversion: Kort sagt (1) + havde (2) + vi (3) + en dejlig aften (4).',
             slots: [
-                { role: 'adverbium', label: '1. Forfelt (Adverbium)', expected: 'Kort sagt' },
-                { role: 'verbum', label: '2. Verbum (Inversion!)', expected: 'havde' },
+                { role: 'adverbium', label: '1. Forfelt (adverbium)', expected: 'Kort sagt' },
+                { role: 'verbum', label: '2. Verbum (inversion!)', expected: 'havde' },
                 { role: 'subjekt', label: '3. Subjekt', expected: 'vi' },
                 { role: 'rest', label: '4. Restled', expected: 'en dejlig aften.' }
             ]
         },
         {
             mode: 'central',
-            context: 'Første sætning: "Toget er kørt for ti minutter siden." (Drag den logiske konklusion inde i sætningen)',
+            context: 'Første sætning: "Toget er kørt for ti minutter siden." (drag den logiske konklusion inde i sætningen)',
             displayTemplate: 'Toget er kørt for ti minutter siden. Vi er [BLANK] kommet for sent.',
             options: ['altså', 'alligevel', 'i stedet'],
             correctWord: 'altså',
@@ -2696,9 +2696,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             container.innerHTML = `
                 <div class="score-celebration-card">
                     <div style="font-size:2.5rem; margin-bottom:1rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
-                    <h2 style="color:#FFFFFF; font-size:2rem; margin-bottom:0.5rem;">Sætningsbyggeren Mester!</h2>
+                    <h2 style="color:#FFFFFF; font-size:2rem; margin-bottom:0.5rem;">Sætningsbygger-mester!</h2>
                     <p style="font-size:1.15rem; color:#cbd5e1; margin-bottom:1.5rem;">
-                        Du har mestret både <strong>Inversion i Forfeltet</strong> (Adverbium + Verbum + Subjekt) og <strong>Centralpladsen</strong> (Subjekt + Verbum + Adverbium)!
+                        Du har mestret både <strong>inversion i forfeltet</strong> (adverbium + verbum + subjekt) og <strong>centralpladsen</strong> (subjekt + verbum + adverbium)!
                     </p>
                     <button class="action-btn-primary" id="restart-builder">Byg sætningerne igen</button>
                 </div>
@@ -2737,7 +2737,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
         card.innerHTML = `
             <div class="progress-header">
                 SÆTNINGSBYGGEREN: OPGAVE ${builderIdx + 1} AF ${BUILDER_EXERCISES.length}</span>
-                <span>${ex.mode === 'inversion' ? 'Model A: Adverbium i Forfeltet (INVERSION)' : 'Model B: Adverbium på Centralpladsen'}</span>
+                <span>${ex.mode === 'inversion' ? 'Model A: adverbium i forfeltet (INVERSION)' : 'Model B: adverbium på centralpladsen'}</span>
             </div>
             <div class="progress-bar-wrap">
                 <div class="progress-bar-fill" style="width:${pct}%;"></div>
@@ -2780,7 +2780,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                         fbDiv.innerHTML = `
                             <strong>${ex.step1Explain}</strong>
                             <div style="margin-top:1rem;">
-                                <button class="action-btn-primary" id="go-step-2">Gå til Trin 2: Saml sætnings-puslespillet →</button>
+                                <button class="action-btn-primary" id="go-step-2">Gå til trin 2: saml sætnings-puslespillet →</button>
                             </div>
                         `;
                         fbDiv.querySelector('#go-step-2').onclick = () => {
@@ -3012,7 +3012,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             explanation: '"Derimod" stiller Jonas og taleren op som to klare modsætninger (A gør X ↔ B gør derimod Y).'
         },
         {
-            context: '5/14 • Boligjagt & Kompensation',
+            context: '5/14 • Boligjagt & kompensation',
             quote: '<strong>A:</strong> "Er det nye rækkehus ikke lidt dyrt?"<br><strong>B:</strong> "Jo, huslejen er høj. ______ sparer vi mange penge på transport, fordi det ligger lige ved arbejdet."',
             options: ['Til gengæld', 'Tværtimod', 'Ellers'],
             correct: 'Til gengæld',
@@ -3058,7 +3058,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             quote: '<strong>A:</strong> "De havde desværre udsolgt af laksen."<br><strong>B:</strong> "Nå, hvad bestilte du så?"<br><strong>A:</strong> "Jeg bestilte en bøf ______."',
             options: ['i stedet', 'ellers', 'altså'],
             correct: 'i stedet',
-            explanation: '"I stedet" viser, at bøffen blev valgt som erstatning (Plan B) for den udsolgte laks.'
+            explanation: '"I stedet" viser, at bøffen blev valgt som erstatning (plan B) for den udsolgte laks.'
         },
         {
             context: '12/14 • Sikker bundgrænse',
@@ -3165,7 +3165,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 <div class="special-rule-card" style="border-color:#22c55e;">
                     <div class="special-rule-header">
                         <span class="special-rule-word" style="color:#4ade80;">derfor</span>
-                        <span class="special-rule-role" style="background:rgba(34,197,94,0.2); color:#86efac;">Peger FREM (Resultat)</span>
+                        <span class="special-rule-role" style="background:rgba(34,197,94,0.2); color:#86efac;">Peger FREM (resultat)</span>
                     </div>
                     <div class="special-rule-desc">Sætning 1 er årsagen → <strong>Derfor</strong> + sætning 2 (resultatet). Udløser inversion i front! ${advTransBlock('kon_aar_d_1')}</div>
                     <div class="special-rule-example" style="border-color:#22c55e;">
@@ -3175,7 +3175,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 <div class="special-rule-card" style="border-color:#06b6d4;">
                     <div class="special-rule-header">
                         <span class="special-rule-word" style="color:#22d3ee;">⬅️ nemlig</span>
-                        <span class="special-rule-role" style="background:rgba(6,182,212,0.2); color:#67e8f9;">Peger TILBAGE (Årsag)</span>
+                        <span class="special-rule-role" style="background:rgba(6,182,212,0.2); color:#67e8f9;">Peger TILBAGE (årsag)</span>
                     </div>
                     <div class="special-rule-desc">Sætning 1 er resultatet ⬅ Sætning 2 med <strong>nemlig</strong> giver årsagen. Står ALTID efter verbet! ${advTransBlock('kon_aar_d_2')}</div>
                     <div class="special-rule-example" style="border-color:#06b6d4;">
@@ -3234,14 +3234,14 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
             explanation: 'Vi sammenligner to forskellige byer (A vs. B) → "derimod".'
         },
         {
-            context: '3/8 • Kompensation (Ulempe + Fordel)',
+            context: '3/8 • Kompensation (ulempe + fordel)',
             quote: '"Hotelværelset havde ingen udsigt over havet. ______ var morgenmadsbuffeten helt fantastisk!"',
             options: ['Til gengæld', 'Tværtimod', 'Derimod'],
             correct: 'Til gengæld',
             explanation: 'Den gode morgenmad kompenserer og vejer op for den manglende udsigt → "Til gengæld".'
         },
         {
-            context: '4/8 • 180 Graders afvisning efter "Nej"',
+            context: '4/8 • 180 graders afvisning efter "Nej"',
             quote: '"Troede du, at kurset var kedeligt? Nej, ______ – det var det mest spændende kursus i år!"',
             options: ['tværtimod', 'til gengæld', 'alligevel'],
             correct: 'tværtimod',
@@ -3280,7 +3280,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
     function renderTabKontrast(parent) {
         const introHtml = `
             <div class="special-intro-box">
-                <h2>Kontrast-Mesteren: 4 typer modsætning på dansk</h2>
+                <h2>Kontrast-mesteren: 4 typer modsætning på dansk</h2>
                 <p>På dansk kan man ikke bare bruge ét ord for kontrast. Vælg præcis det ord, der passer til <strong>typen af modsætning</strong>: ${advTransBlock('kon_kon_intro')}</p>
             </div>
             <div class="special-rule-cards-grid">
@@ -3433,9 +3433,9 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 <div class="special-rule-card" style="border-color:#06b6d4;">
                     <div class="special-rule-header">
                         <span class="special-rule-word" style="color:#22d3ee;">i stedet</span>
-                        <span class="special-rule-role" style="background:rgba(6,182,212,0.2); color:#67e8f9;">Plan B (Erstatning)</span>
+                        <span class="special-rule-role" style="background:rgba(6,182,212,0.2); color:#67e8f9;">Plan B (erstatning)</span>
                     </div>
-                    <div class="special-rule-desc">Man opgiver Plan A og vælger aktivt et <strong>alternativ</strong> (Plan B). ${advTransBlock('kon_alt_d_2')}</div>
+                    <div class="special-rule-desc">Man opgiver plan A og vælger aktivt et <strong>alternativ</strong> (plan B). ${advTransBlock('kon_alt_d_2')}</div>
                     <div class="special-rule-example" style="border-color:#06b6d4;">
                         <span>"Cyklen er flad. Jeg tager bussen <strong>i stedet</strong>."</span>
                     </div>
@@ -3443,7 +3443,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 <div class="special-rule-card" style="border-color:#22c55e;">
                     <div class="special-rule-header">
                         <span class="special-rule-word" style="color:#4ade80;">i hvert fald</span>
-                        <span class="special-rule-role" style="background:rgba(34,197,94,0.2); color:#86efac;">100% Bundgrænse</span>
+                        <span class="special-rule-role" style="background:rgba(34,197,94,0.2); color:#86efac;">100% bundgrænse</span>
                     </div>
                     <div class="special-rule-desc">Selvom vi er usikre på helheden, er <strong>denne ene ting</strong> helt sikker. ${advTransBlock('kon_alt_d_3')}</div>
                     <div class="special-rule-example" style="border-color:#22c55e;">
@@ -3453,7 +3453,7 @@ export function renderAdverbierKonnektionView(container, navigateFn, extraData =
                 <div class="special-rule-card" style="border-color:var(--adv-border, #1E3A66);">
                     <div class="special-rule-header">
                         <span class="special-rule-word" style="color:var(--adv-border-focus, #93C5FD);">i det mindste</span>
-                        <span class="special-rule-role" style="background:rgba(59,130,246,0.2); color:#93C5FD;">Trøst / Minimum</span>
+                        <span class="special-rule-role" style="background:rgba(59,130,246,0.2); color:#93C5FD;">Trøst / minimum</span>
                     </div>
                     <div class="special-rule-desc">Et trøstende lyspunkt midt i noget uheldigt ("trods alt"). ${advTransBlock('kon_alt_d_4')}</div>
                     <div class="special-rule-example" style="border-color:var(--adv-border, #1E3A66);">

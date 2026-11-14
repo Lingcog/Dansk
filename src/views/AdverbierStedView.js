@@ -1958,8 +1958,8 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
         const filterButtons = [
             { id: 'all', label: 'Vis alle (18)' },
-            { id: 'retning', label: 'Kun Retning (10)' },
-            { id: 'hvile', label: 'Kun Hvile (8)' }
+            { id: 'retning', label: 'Kun retning (10)' },
+            { id: 'hvile', label: 'Kun hvile (8)' }
         ];
 
         filterButtons.forEach(fb => {
@@ -2115,7 +2115,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         const ruleBox = document.createElement('div');
         ruleBox.className = 'rule-explanation-box';
         ruleBox.innerHTML = `
-            <div style="font-weight: 800; margin-bottom: 0.4rem; color: var(--adv-border-focus, #93C5FD);">Betydning & Regel:</div>
+            <div style="font-weight: 800; margin-bottom: 0.4rem; color: var(--adv-border-focus, #93C5FD);">Betydning & regel:</div>
             <p style="margin-bottom: 0.5rem;">${currentWordData.meaning}. ${advTransBlock(currentWordData.meaning, `sted_m_${wordIdx}`)}</p>
             <p>${currentWordData.ruleHint} ${advTransBlock(currentWordData.ruleHint, `sted_r_${wordIdx}`)}</p>
         `;
@@ -2396,8 +2396,8 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         const intro = document.createElement('div');
         intro.className = 'vippe-intro';
         intro.innerHTML = `
-            <h2>Retnings-Vippen</h2>
-            <p>Klik på et adverbium nedenfor og vælg den rigtige kurv: Er ordet en <strong>Retning</strong> eller <strong>Hvile</strong>? ${advTransBlock('sted_vippe_instr')}</p>
+            <h2>Retnings-vippen</h2>
+            <p>Klik på et adverbium nedenfor og vælg den rigtige kurv: Er ordet en <strong>retning</strong> eller <strong>hvile</strong>? ${advTransBlock('sted_vippe_instr')}</p>
         `;
         container.appendChild(intro);
 
@@ -2465,7 +2465,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         const feedbackBox = document.createElement('div');
         feedbackBox.className = 'vippe-feedback';
         feedbackBox.innerHTML = selectedVippeWord
-            ? `<span style="color: var(--adv-border-focus, #93C5FD);">Valgt ord: <strong>"${selectedVippeWord.word}"</strong>. Klik nu på Retning eller Hvile ovenfor!</span>`
+            ? `<span style="color: var(--adv-border-focus, #93C5FD);">Valgt ord: <strong>"${selectedVippeWord.word}"</strong>. Klik nu på retning eller hvile ovenfor!</span>`
             : `<span style="color: var(--adv-text-muted, #BFDBFE);">Vælg et ord i puljen nedenfor for at placere det.</span>`;
         container.appendChild(feedbackBox);
 
@@ -2562,7 +2562,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         {
             id: 'verbum',
             title: '2. Hvad laver personen eller dyret?',
-            role: 'Verbum (Handling)',
+            role: 'Verbum (handling)',
             catClass: 'sb-cat-verbum',
             badgeClass: 'badge-cat-verbum',
             options: ['går', 'cykler', 'løber', 'slapper af', 'solbader', 'springer', 'vinker', 'bærer vasketøj']
@@ -2578,7 +2578,7 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
         {
             id: 'rest',
             title: '4. Hvad er resten af situationen?',
-            role: 'Restled / Præposition',
+            role: 'Restled / præposition',
             catClass: 'sb-cat-rest',
             badgeClass: 'badge-cat-rest',
             options: ['i haven', 'i stuen', 'på sit værelse', 'i kælderen', 'ad trappen', 'efter arbejde', 'ved huset', 'på vejen']
@@ -2664,8 +2664,8 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
             questionPrompt: 'Vi starter sætningen med stedsadverbiet "Ude". Hvilket verbum passer på 2. pladsen?',
             correctAdv: 'leger',
             distractors: ['sover', 'bager', 'koger'],
-            pedagogyNote: 'Når stedsadverbiet "Ude" står forrest, skal verbet "leger" rykke ind på 2. pladsen (Inversion).',
-            slots: ['1. Sted (Fokus)', '2. Handling (V2)', '3. Hvem?', '4. Hvor?'],
+            pedagogyNote: 'Når stedsadverbiet "Ude" står forrest, skal verbet "leger" rykke ind på 2. pladsen (inversion).',
+            slots: ['1. Sted (fokus)', '2. Handling (V2)', '3. Hvem?', '4. Hvor?'],
             roles: ['[Stedsadverbium]', '[Verbum - V2]', '[Subjekt]', '[Præposition]'],
             chips: ['Ude', 'leger', 'børnene', 'i haven'],
             correctSentence: ['Ude', 'leger', 'børnene', 'i haven']
@@ -2684,11 +2684,11 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
 
         const subTab1Btn = document.createElement('button');
         subTab1Btn.className = `sb-sub-btn ${currentStedSubTab === 'free' ? 'active' : ''}`;
-        subTab1Btn.innerHTML = `1. Udforsk & Byg selv`;
+        subTab1Btn.innerHTML = `1. Udforsk & byg selv`;
 
         const subTab2Btn = document.createElement('button');
         subTab2Btn.className = `sb-sub-btn ${currentStedSubTab === 'challenge' ? 'active' : ''}`;
-        subTab2Btn.innerHTML = `2. Opgave & Puslespil`;
+        subTab2Btn.innerHTML = `2. Opgave & puslespil`;
 
         subNav.appendChild(subTab1Btn);
         subNav.appendChild(subTab2Btn);
@@ -2734,10 +2734,10 @@ export function renderAdverbierStedView(container, navigateFn, extraData = {}) {
                 </div>
 
                 <div class="grammar-legend-bar">
-                    <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> 1. Hvem (Subjekt)</div>
-                    <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> 2. Handling (Verbum)</div>
-                    <div class="grammar-legend-item"><span class="legend-chip chip-sted"></span> 3. Retning/Hvile (Sted)</div>
-                    <div class="grammar-legend-item"><span class="legend-chip chip-rest"></span> 4. Hvor (Restled)</div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> 1. Hvem (subjekt)</div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> 2. Handling (verbum)</div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-sted"></span> 3. Retning/hvile (sted)</div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-rest"></span> 4. Hvor (restled)</div>
                 </div>
 
                 <div id="sted-free-builder-rows"></div>

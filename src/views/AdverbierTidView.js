@@ -299,7 +299,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             id: 'siden',
             word: 'siden',
             type: 'tidspunkt',
-            typeLabel: 'Tidsforløb / Startpunkt',
+            typeLabel: 'Tidsforløb / startpunkt',
             pairId: null,
             pairWord: null,
             pairType: null,
@@ -2100,8 +2100,8 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
 
         const filterButtons = [
             { id: 'all', label: 'Vis alle (19)' },
-            { id: 'frekvens', label: '⏳ Kun Frekvens (7)' },
-            { id: 'tidspunkt', label: '⏰ Kun Tidspunkt & Forløb (12)' }
+            { id: 'frekvens', label: '⏳ Kun frekvens (7)' },
+            { id: 'tidspunkt', label: '⏰ Kun tidspunkt & forløb (12)' }
         ];
 
         filterButtons.forEach(fb => {
@@ -2226,7 +2226,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             const pairSwitch = document.createElement('div');
             pairSwitch.className = 'pair-switch-card';
             pairSwitch.innerHTML = `
-                <div class="pair-switch-header">Tids-modpol / Sammenlign med:</div>
+                <div class="pair-switch-header">Tids-modpol / sammenlign med:</div>
             `;
             const pairBtn = document.createElement('button');
             pairBtn.className = 'pair-action-btn';
@@ -2247,7 +2247,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         const ruleBox = document.createElement('div');
         ruleBox.className = 'rule-explanation-box';
         ruleBox.innerHTML = `
-            <div style="font-weight: 800; margin-bottom: 0.4rem; color: #fbbf24;">Betydning & Grammatik:</div>
+            <div style="font-weight: 800; margin-bottom: 0.4rem; color: #fbbf24;">Betydning & grammatik:</div>
             <p style="margin-bottom: 0.5rem;">${currentWordData.meaning}. ${advTransBlock(currentWordData.meaning, `tid_m_${wordIdx}`)}</p>
             <p>${currentWordData.ruleHint} ${advTransBlock(currentWordData.ruleHint, `tid_r_${wordIdx}`)}</p>
         `;
@@ -2515,7 +2515,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         const intro = document.createElement('div');
         intro.className = 'barometer-intro';
         intro.innerHTML = `
-            <h2>Frekvens-Trappen & Tidslinjen</h2>
+            <h2>Frekvens-trappen & tidslinjen</h2>
             <p>Træn dine tidsadverbier med to interaktive øvelser: Frekvensskalaen fra 100% til 0% og den kronologiske tidslinje! ${advTransBlock('tid_baro_intro')}</p>
         `;
         container.appendChild(intro);
@@ -2527,7 +2527,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         ladderCard.className = 'barometer-exercise-card';
         ladderCard.innerHTML = `
             <div class="barometer-card-title">
-                Øvelse 1: Frekvens-Trappen (100% til 0%)
+                Øvelse 1: Frekvens-trappen (100% til 0%)
             </div>
             <div class="barometer-card-desc">
                 Klik på et ord i puljen nedenfor, og klik derefter på det matchende trin på trappen:
@@ -2799,7 +2799,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         {
             id: 'verbum',
             title: '2. Hvad laver personen eller tingen?',
-            role: 'Verbum (Handling)',
+            role: 'Verbum (handling)',
             catClass: 'sb-cat-verbum',
             badgeClass: 'badge-cat-verbum',
             icon: renderDsIcon('zap', '', { size: 16 }),
@@ -2817,7 +2817,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
         {
             id: 'rest',
             title: '4. Hvad er resten af situationen?',
-            role: 'Restled / Objekt',
+            role: 'Restled / objekt',
             catClass: 'sb-cat-rest',
             badgeClass: 'badge-cat-rest',
             icon: renderDsIcon('mapPin', '', { size: 16 }),
@@ -2866,12 +2866,12 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             structureTitle: 'Inversion: Tidsadverbiet "Nu" står forrest på 1. plads',
             structureNote: 'Når tidsadverbiet "Nu" står på 1. plads, skal verbet stå på 2. pladsen før subjektet (V2-reglen)!',
             flowSteps: [
-                { num: '1. plads', title: 'Tidsadverbium (Fokus)', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
+                { num: '1. plads', title: 'Tidsadverbium (fokus)', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
                 { num: '2. plads', title: 'Verbum (V2)', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
                 { num: '3. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
                 { num: '4. plads', title: 'Objekt', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
-            slots: ['1. Hvornår (Fokus) ⭐', '2. Handling (V2)', '3. Hvem?', '4. Hvad?'],
+            slots: ['1. Hvornår (fokus) ⭐', '2. Handling (V2)', '3. Hvem?', '4. Hvad?'],
             roles: ['[Tidsadverbium]', '[Verbum - V2]', '[Subjekt]', '[Objekt]'],
             chips: ['Nu', 'spiser', 'Peter', 'frokost'],
             correctSentence: ['Nu', 'spiser', 'Peter', 'frokost']
@@ -2941,12 +2941,12 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
             structureTitle: 'Inversion: Tidsadverbiet "Bagefter" står forrest på 1. plads',
             structureNote: 'Når tidsadverbiet "Bagefter" starter sætningen, rykker verbet "cykler" frem på 2. pladsen!',
             flowSteps: [
-                { num: '1. plads', title: 'Tidsadverbium (Fokus)', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
+                { num: '1. plads', title: 'Tidsadverbium (fokus)', icon: '⭐', type: 'adverbium', isTarget: true, tag: 'Her skal adverbiet stå!' },
                 { num: '2. plads', title: 'Verbum (V2)', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
                 { num: '3. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
                 { num: '4. plads', title: 'Præposition', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
-            slots: ['1. Hvornår (Fokus) ⭐', '2. Handling (V2)', '3. Hvem?', '4. Hvorhen?'],
+            slots: ['1. Hvornår (fokus) ⭐', '2. Handling (V2)', '3. Hvem?', '4. Hvorhen?'],
             roles: ['[Tidsadverbium]', '[Verbum - V2]', '[Subjekt]', '[Præposition]'],
             chips: ['Bagefter', 'cykler', 'Mette', 'på arbejde'],
             correctSentence: ['Bagefter', 'cykler', 'Mette', 'på arbejde']
@@ -2990,11 +2990,11 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
 
         const subTab1Btn = document.createElement('button');
         subTab1Btn.className = `sb-sub-btn ${currentTidSubTab === 'free' ? 'active' : ''}`;
-        subTab1Btn.innerHTML = `<span>1. Udforsk & Byg selv</span>`;
+        subTab1Btn.innerHTML = `<span>1. Udforsk & byg selv</span>`;
 
         const subTab2Btn = document.createElement('button');
         subTab2Btn.className = `sb-sub-btn ${currentTidSubTab === 'challenge' ? 'active' : ''}`;
-        subTab2Btn.innerHTML = `<span>2. Opgave & Puslespil</span>`;
+        subTab2Btn.innerHTML = `<span>2. Opgave & puslespil</span>`;
 
         subNav.appendChild(subTab1Btn);
         subNav.appendChild(subTab2Btn);
@@ -3040,10 +3040,10 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                 </div>
 
                 <div class="grammar-legend-bar">
-                    <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> 1. Hvem (Subjekt)</div>
-                    <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> 2. Handling (Verbum)</div>
-                    <div class="grammar-legend-item"><span class="legend-chip chip-tid"></span> 3. Hvornår / Hvor tit (Tid)</div>
-                    <div class="grammar-legend-item"><span class="legend-chip chip-rest"></span> 4. Resten (Objekt / Præposition)</div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-substantiv"></span> 1. Hvem (subjekt)</div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-verbum"></span> 2. Handling (verbum)</div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-tid"></span> 3. Hvornår / hvor tit (tid)</div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-rest"></span> 4. Resten (objekt / præposition)</div>
                 </div>
 
                 <div id="tid-free-builder-rows"></div>
@@ -3308,7 +3308,7 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                 <div class="sb-structure-diagram">
                     <div class="structure-diagram-header">
                         <span class="structure-diagram-badge ${isInv ? 'badge-inversion' : 'badge-central'}">
-                            ${isInv ? 'INVERSION (Tidsadverbium forrest på 1. plads)' : 'NORMAL ORDSTILLING (Centraladverbium på 3. plads)'}
+                            ${isInv ? 'INVERSION (tidsadverbium forrest på 1. plads)' : 'NORMAL ORDSTILLING (centraladverbium på 3. plads)'}
                         </span>
                         <span class="structure-diagram-hint">${task.structureNote}</span>
                     </div>
@@ -3645,16 +3645,16 @@ export function renderAdverbierTidView(container, navigateFn, extraData = {}) {
                 </p>
                 <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; border-radius: 14px; padding: 1.4rem; max-width: 650px; margin: 0 auto 2rem; color: #fef3c7; text-align: left; line-height: 1.6;">
                     <strong>Husk de 3 vigtigste tids-regler:</strong><br>
-                    1. <strong>Allerede vs. Endnu:</strong> <em>Allerede</em> er tidligere end forventet. <em>Ikke endnu</em> er forventet lidt senere.<br>
+                    1. <strong>Allerede vs. endnu:</strong> <em>Allerede</em> er tidligere end forventet. <em>Ikke endnu</em> er forventet lidt senere.<br>
                     2. <strong>Stadig:</strong> Viser at noget fortsætter uafbrudt fra fortiden ind i nuet.<br>
-                    3. <strong>V2-inversion:</strong> Sætter du tidsadverbiets ord forrest (<em>Nu, Bagefter, Sommetider</em>), SKAL verbet stå på 2. pladsen!
+                    3. <strong>V2-inversion:</strong> Sætter du tidsadverbiets ord forrest (<em>nu, bagefter, sommetider</em>), SKAL verbet stå på 2. pladsen!
                 </div>
                 <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
                     <button class="detektiv-next-btn" id="restart-cloze-btn">
                         Tag testen igen
                     </button>
                     <button class="detektiv-next-btn" style="background: #334155;" id="back-to-hub-btn">
-                        Tilbage til Adverbier-oversigten
+                        Tilbage til adverbie-oversigten
                     </button>
                 </div>
             </div>

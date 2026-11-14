@@ -763,7 +763,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                 "sceneDesc": "Kvinden med tommelfingeren op smiler: \"Jeg vil helst sidde ved vinduet.\"",
                 "sentence": "Jeg vil helst blive hjemme.",
                 "contextSentence": "Vejret er koldt og blæsende, så jeg vil helst blive hjemme i dag.",
-                "ruleHint": "Superlativ af præference: Den absolut bedste løsning for taleren.",
+                "ruleHint": "Superlativ af præference: den absolut bedste løsning for taleren.",
                 "translations": {
                         "en": {
                                 "word": "prefer most / preferably",
@@ -2313,7 +2313,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
     const tabs = [
         { id: 'vrimmel', label: '1. Frokoststuen (vrimlebilledet)', icon: renderDsIcon('image', '', { size: 16 }) },
         { id: 'vaerksted', label: '2. Aha-værkstedet ("Hvem ved hvad?")', icon: renderDsIcon('thought', '', { size: 16 }) },
-        { id: 'detektiv', label: '3. Dialog-Detektiven (10 gåder)', icon: renderDsIcon('search', '', { size: 16 }) },
+        { id: 'detektiv', label: '3. Dialog-detektiven (10 gåder)', icon: renderDsIcon('search', '', { size: 16 }) },
         { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: renderDsIcon('bricks', '', { size: 16 }) },
         { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: renderDsIcon('target', '', { size: 16 }) },
         { id: 'hellere', label: '6. Heller, hellere, helst', icon: renderDsIcon('balance', '', { size: 16 }) },
@@ -2611,7 +2611,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             sentence: 'Vi har jo fri i morgen, for det er helligdag!',
             speakerRole: 'Ved det (100% sikker)',
             listenerRole: 'Forventes at vide det i forvejen',
-            source: 'Fælles viden / Erfaring',
+            source: 'Fælles viden / erfaring',
             color: '#10B981',
             pillBg: 'rgba(16, 185, 129, 0.22)',
             pillGlow: 'rgba(16, 185, 129, 0.45)',
@@ -2619,7 +2619,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             y: 95,
             desc: 'Taleren appellerer til en viden, som begge parter i virkeligheden allerede kender ("vi er enige – kig på kalenderen").',
             radarHint: 'Fælles viden & 100% vished (begge parter ved det)',
-            arrowSummary: 'Fælles viden forbinder Taler & Lytter'
+            arrowSummary: 'Fælles viden forbinder taler & lytter'
         },
         'da': {
             word: 'da',
@@ -2628,7 +2628,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             sentence: 'Du må da gerne smage et stykke kage!',
             speakerRole: '100% sikker (selvfølge)',
             listenerRole: 'Tøver / tvivler / genert',
-            source: 'Selvindlysende / Opmuntring',
+            source: 'Selvindlysende / opmuntring',
             color: '#06B6D4',
             pillBg: 'rgba(6, 182, 212, 0.22)',
             pillGlow: 'rgba(6, 182, 212, 0.45)',
@@ -2636,7 +2636,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             y: 95,
             desc: 'Lytteren tøver eller er usikker. Taleren har 100% overskud og skubber tvivlen væk: "Selvfølgelig må/kan du!"',
             radarHint: 'Taler har 100% vished (skubber lytterens tøven væk)',
-            arrowSummary: 'Kraftig pil fra Taler bryder lytterens tøve-sky'
+            arrowSummary: 'Kraftig pil fra taler bryder lytterens tøve-sky'
         },
         'nok': {
             word: 'nok',
@@ -2645,7 +2645,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             sentence: 'Der er mange skyer, så det regner nok snart.',
             speakerRole: 'Eget logisk gæt (~70-80%)',
             listenerRole: 'Ved det ikke',
-            source: 'Egne observationer / Trøst',
+            source: 'Egne observationer / trøst',
             color: '#3B82F6',
             pillBg: 'rgba(59, 130, 246, 0.22)',
             pillGlow: 'rgba(59, 130, 246, 0.45)',
@@ -2653,7 +2653,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             y: 205,
             desc: 'Taleren har gjort en observation (f.eks. kigget på vejret eller skærmen) og drager en personlig, beroligende konklusion.',
             radarHint: 'Talerens eget logiske gæt baseret på observation',
-            arrowSummary: 'Observation ➔ Taler ➔ blød bølgepil til Lytter'
+            arrowSummary: 'Observation ➔ taler ➔ blød bølgepil til lytter'
         },
         'vel': {
             word: 'vel',
@@ -2669,8 +2669,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             x: 610,
             y: 190,
             desc: 'Taleren regner situationen ud, men anerkender, at lytteren er den sande autoritet og skal bekræfte: "Det er rigtigt, ikke?"',
-            radarHint: 'Lytteren ejer facit / Taler appellerer til bekræftelse',
-            arrowSummary: 'Spørgepil til Lytter, stor bekræftelsespil retur'
+            radarHint: 'Lytteren ejer facit / taler appellerer til bekræftelse',
+            arrowSummary: 'Spørgepil til lytter, stor bekræftelsespil retur'
         },
         'vist': {
             word: 'vist',
@@ -2679,7 +2679,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             sentence: 'Jeg hørte i radioen, at toget vist er aflyst.',
             speakerRole: 'Har hørt det (fralægger sig ansvar)',
             listenerRole: 'Ved det ikke',
-            source: 'Ekstern kilde / Rygte',
+            source: 'Ekstern kilde / rygte',
             color: '#F59E0B',
             pillBg: 'rgba(245, 158, 11, 0.22)',
             pillGlow: 'rgba(245, 158, 11, 0.45)',
@@ -2687,7 +2687,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             y: 285,
             desc: 'Taleren har oplysningen udefra (radio, opslag, rygtebørs) og lægger ikke hovedet på blokken for sandhedsværdien.',
             radarHint: 'Ekstern kilde / rygte (taler fralægger sig ansvaret)',
-            arrowSummary: 'Stiplet pil fra ekstern kilde ➔ Taler ➔ Lytter'
+            arrowSummary: 'Stiplet pil fra ekstern kilde ➔ taler ➔ lytter'
         }
     };
 
@@ -2746,7 +2746,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
 
             <div class="vaerksted-subtabs">
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'matrix' ? 'active' : ''}" id="v-subtab-matrix">
-                    1. Videns-Radaren & Matricen
+                    1. Videns-radaren & matricen
                 </button>
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'transformer' ? 'active' : ''}" id="v-subtab-trans">
                     2. Sætnings-transformeren
@@ -2787,7 +2787,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             vectorOverlay = `
                 <line x1="105" y1="175" x2="415" y2="98" stroke="#10B981" stroke-width="3.5" stroke-dasharray="5,5" marker-end="url(#radar-arrow-jo)" />
                 <line x1="795" y1="175" x2="485" y2="98" stroke="#10B981" stroke-width="3.5" stroke-dasharray="5,5" marker-end="url(#radar-arrow-jo)" />
-                <text x="450" y="58" text-anchor="middle" fill="#10B981" font-size="12" font-weight="800">🤝 Begge parter ved det (Fælles viden)</text>
+                <text x="450" y="58" text-anchor="middle" fill="#10B981" font-size="12" font-weight="800">🤝 Begge parter ved det (fælles viden)</text>
             `;
         } else if (selectedRadarWord === 'da') {
             vectorOverlay = `
@@ -2853,7 +2853,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         radarCard.innerHTML = `
             <div class="radar-top-controls">
                 <div class="radar-title-group">
-                    <h3>Videns-Radaren (Epistemisk Koordinatkort)</h3>
+                    <h3>En videns-radar i et koordinatkort</h3>
                     <p>Hvem ejer viden, og hvor udspringer sikkerheden eller tvivlen?</p>
                 </div>
                 <div class="radar-pills-row">
@@ -3003,21 +3003,21 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                         <td><span class="matrix-word-badge" style="border-color: #10B981; color: #10B981; background: rgba(16, 185, 129, 0.15);">jo</span></td>
                         <td>Ved det ${advTransBlock('smaa_mx_1_t')}</td>
                         <td>Forventes at vide det ${advTransBlock('smaa_mx_1_l')}</td>
-                        <td>Fælles viden / Erfaring ${advTransBlock('smaa_mx_1_k')}</td>
+                        <td>Fælles viden / erfaring ${advTransBlock('smaa_mx_1_k')}</td>
                         <td>"Vi har <strong>jo</strong> fri i morgen, for det er helligdag!" ${advTransBlock('smaa_mx_1_e')}</td>
                     </tr>
                     <tr class="matrix-row ${selectedRadarWord === 'da' ? 'radar-active-row' : ''}" data-word="da" style="cursor: pointer;">
                         <td><span class="matrix-word-badge" style="border-color: #06B6D4; color: #06B6D4; background: rgba(6, 182, 212, 0.15);">da</span></td>
                         <td>100% sikker ${advTransBlock('smaa_mx_2_t')}</td>
                         <td>Tøver / tvivler ${advTransBlock('smaa_mx_2_l')}</td>
-                        <td>Selvindlysende / Opmuntring ${advTransBlock('smaa_mx_2_k')}</td>
+                        <td>Selvindlysende / opmuntring ${advTransBlock('smaa_mx_2_k')}</td>
                         <td>"Du må <strong>da</strong> gerne smage et stykke kage!" ${advTransBlock('smaa_mx_2_e')}</td>
                     </tr>
                     <tr class="matrix-row ${selectedRadarWord === 'nok' ? 'radar-active-row' : ''}" data-word="nok" style="cursor: pointer;">
                         <td><span class="matrix-word-badge" style="border-color: #3B82F6; color: #3B82F6; background: rgba(59, 130, 246, 0.15);">nok</span></td>
                         <td>Eget logisk gæt ${advTransBlock('smaa_mx_3_t')}</td>
                         <td>Ved det ikke ${advTransBlock('smaa_mx_3_l')}</td>
-                        <td>Egne observationer / Trøst ${advTransBlock('smaa_mx_3_k')}</td>
+                        <td>Egne observationer / trøst ${advTransBlock('smaa_mx_3_k')}</td>
                         <td>"Der er mange skyer, så det regner <strong>nok</strong> snart." ${advTransBlock('smaa_mx_3_e')}</td>
                     </tr>
                     <tr class="matrix-row ${selectedRadarWord === 'vel' ? 'radar-active-row' : ''}" data-word="vel" style="cursor: pointer;">
@@ -3031,7 +3031,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                         <td><span class="matrix-word-badge" style="border-color: #F59E0B; color: #F59E0B; background: rgba(245, 158, 11, 0.15);">vist</span></td>
                         <td>Har hørt det ${advTransBlock('smaa_mx_5_t')}</td>
                         <td>Ved det ikke ${advTransBlock('smaa_mx_5_l')}</td>
-                        <td>Ekstern kilde / Rygte ${advTransBlock('smaa_mx_5_k')}</td>
+                        <td>Ekstern kilde / rygte ${advTransBlock('smaa_mx_5_k')}</td>
                         <td>"Jeg hørte i radioen, at toget <strong>vist</strong> er aflyst." ${advTransBlock('smaa_mx_5_e')}</td>
                     </tr>
                 </tbody>
@@ -3145,7 +3145,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             options: ['heller', 'hellere', 'helst'],
             correct: 'helst',
             feedback: 'Korrekt! "Helst" er superlativ og angiver den absolut bedste løsning / 1. prioritet (most prefer / ideally).',
-            ruleHighlight: 'Absolut 1. prioritet ("Allerhelst")'
+            ruleHighlight: 'Absolut 1. prioritet ("allerhelst")'
         },
         {
             dialog: 'A: "Jeg forstår slet ikke det nye IT-system."<br>B: "Nej, jeg forstår det ærlig talt ______ ikke!"',
@@ -3166,7 +3166,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             options: ['heller', 'hellere', 'helst'],
             correct: 'helst',
             feedback: 'Korrekt! Din klare favorit blandt alle muligheder på menukortet → "helst".',
-            ruleHighlight: 'Superlativ / Førstevalg'
+            ruleHighlight: 'Superlativ / førstevalg'
         },
         {
             dialog: 'A: "Peter kunne ikke komme til personalemødet i dag."<br>B: "Nej, og Maria kunne desværre ______ ikke nå det."',
@@ -3832,7 +3832,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
 
         container.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <h3 style="font-size: 1.5rem; color: #FFFFFF; margin: 0;">Dialog-Detektiven (10 gåder)</h3>
+                <h3 style="font-size: 1.5rem; color: #FFFFFF; margin: 0;">Dialog-detektiven (10 gåder)</h3>
                 <span style="color: #94a3b8; font-weight: 800;">Gåde ${detektivIdx + 1} af ${DETEKTIV_QUESTIONS.length}</span>
             </div>
 
@@ -4094,7 +4094,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     Placér brikkerne i den rette rækkefølge
                 </h3>
                 <p style="color: #cbd5e1; font-size: 1rem; margin-bottom: 1.8rem;">
-                    Læg mærke til de faste farver: <strong>Grøn</strong> (Subjekt), <strong>Rød</strong> (Verbum), <strong>Turkis</strong> (Småord) og <strong>Blå</strong> (Restled).
+                    Læg mærke til de faste farver: <strong>grøn</strong> (subjekt), <strong>rød</strong> (verbum), <strong>turkis</strong> (småord) og <strong>blå</strong> (restled).
                 </p>
 
                 <!-- 4 Colored Target Slots -->
@@ -4337,7 +4337,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     ← Forrige
                 </button>
                 <button class="action-btn-primary" id="kontekst-next-btn">
-                    ${kontekstIdx < KONTEKST_QUESTIONS.length - 1 ? 'Næste spørgsmål →' : 'Se resultat / Start forfra'}
+                    ${kontekstIdx < KONTEKST_QUESTIONS.length - 1 ? 'Næste spørgsmål →' : 'Se resultat / start forfra'}
                 </button>
             </div>
         `;

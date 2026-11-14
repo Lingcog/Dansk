@@ -2862,7 +2862,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         const img = document.createElement('img');
         img.src = 'assets/adverbier_grad_vrimmel.jpg';
-        img.alt = 'Grad & Intensitet Torv';
+        img.alt = 'Grad- og intensitetstorv';
         img.className = 'vrimmel-img';
         stage.appendChild(img);
 
@@ -3091,7 +3091,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         wrap.innerHTML = `
             <div style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="font-size: 2.2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Aha-værkstedet: Skala & Kontraster</h2>
+                <h2 style="font-size: 2.2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Aha-værkstedet: skala & kontraster</h2>
                 <p style="color: #cbd5e1; font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
                     Få 100% styr på hvordan ordene skruer op og ned for styrken, og forstå den afgørende forskel på <em>meget</em> og <em>for</em>.
                     ${advTransBlock('grad_vk_intro')}
@@ -3405,7 +3405,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
         detektivWrap.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                 <div style="font-size: 0.95rem; font-weight: 800; color: var(--adv-border-focus, #93C5FD); text-transform: uppercase;">
-                    Grads-Detektiven • Opgave ${detektivIndex + 1} af ${DETEKTIV_TASKS.length}
+                    Grads-detektiven • Opgave ${detektivIndex + 1} af ${DETEKTIV_TASKS.length}
                 </div>
                 <div style="font-size: 1.1rem; font-weight: 800; color: #4ade80;">
                     Score: ${detektivScore} point
@@ -3483,7 +3483,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         wrap.innerHTML = `
             <div style="font-size: 2.5rem; margin-bottom: 1rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
-            <h2 style="font-size: 2.2rem; color: var(--adv-border-focus, #93C5FD); margin-bottom: 0.5rem;">Flot klaret i Detektiven!</h2>
+            <h2 style="font-size: 2.2rem; color: var(--adv-border-focus, #93C5FD); margin-bottom: 0.5rem;">Flot klaret i detektiven!</h2>
             <p style="font-size: 1.2rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                 Du fik <strong>${detektivScore}</strong> ud af <strong>${maxScore}</strong> point (${pct}%).
             </p>
@@ -3492,7 +3492,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             </div>
             <div style="display: flex; gap: 1rem; justify-content: center;">
                 <button class="detektiv-next-btn" style="margin: 0;" id="detektiv-retry-btn">Prøv igen</button>
-                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="detektiv-go-saetning">Gå til Sætningsbyggeren →</button>
+                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="detektiv-go-saetning">Gå til sætningsbyggeren →</button>
             </div>
         `;
 
@@ -3586,9 +3586,9 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('coffee', '', { size: 16 }), type: 'subjekt', isTarget: false },
                 { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
                 { num: '3. plads', title: 'Gradsadverbium', icon: renderDsIcon('thermometer', '', { size: 16 }), type: 'grad', isTarget: true, tag: 'HER STÅR GRADEN!' },
-                { num: '4. plads', title: 'Hvad/Hvordan?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
+                { num: '4. plads', title: 'Hvad/hvordan?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
-            slots: ['1. Hvem/Hvad?', '2. Handling/Er?', '3. Hvor meget? ⭐', '4. Hvordan ellers?'],
+            slots: ['1. Hvem/hvad?', '2. Handling/er?', '3. Hvor meget? ⭐', '4. Hvordan ellers?'],
             roles: ['[Subjekt]', '[Verbum]', '[Gradsadverbium]', '[Adjektivled]'],
             chips: ['Kaffen', 'er', 'alt for', 'varm at drikke'],
             correctSentence: ['Kaffen', 'er', 'alt for', 'varm at drikke']
@@ -3614,7 +3614,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 { num: '3. plads', title: 'Gradsadverbium', icon: renderDsIcon('thermometer', '', { size: 16 }), type: 'grad', isTarget: true, tag: 'HER STÅR GRADEN!' },
                 { num: '4. plads', title: 'Hvordan?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
-            slots: ['1. Hvad?', '2. Handling/Er?', '3. Hvor meget? ⭐', '4. Hvordan?'],
+            slots: ['1. Hvad?', '2. Handling/er?', '3. Hvor meget? ⭐', '4. Hvordan?'],
             roles: ['[Subjekt]', '[Verbum]', '[Gradsadverbium]', '[Adjektivled]'],
             chips: ['Kagefadet', 'er', 'fuldstændig', 'tomt efter festen'],
             correctSentence: ['Kagefadet', 'er', 'fuldstændig', 'tomt efter festen']
@@ -3667,7 +3667,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 { num: '4. plads', title: 'Hvor?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvem?', '2. Handling?', '3. Hvor meget? ⭐', '4. Hvordan og hvor?'],
-            roles: ['[Subjekt]', '[Verbum]', '[Gradsadverbium]', '[Adverbium + Sted]'],
+            roles: ['[Subjekt]', '[Verbum]', '[Gradsadverbium]', '[Adverbium + sted]'],
             chips: ['Musikeren', 'spiller', 'ret', 'godt på torvet'],
             correctSentence: ['Musikeren', 'spiller', 'ret', 'godt på torvet']
         },
@@ -3690,7 +3690,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 { num: '1. plads', title: 'Subjekt', icon: renderDsIcon('user', '', { size: 16 }), type: 'subjekt', isTarget: false },
                 { num: '2. plads', title: 'Verbum', icon: renderDsIcon('zap', '', { size: 16 }), type: 'verbum', isTarget: false },
                 { num: '3. plads', title: 'Gradsadverbium', icon: renderDsIcon('thermometer', '', { size: 16 }), type: 'grad', isTarget: true, tag: 'HER STÅR GRADEN!' },
-                { num: '4. plads', title: 'Hvor/Hvornår?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
+                { num: '4. plads', title: 'Hvor/hvornår?', icon: renderDsIcon('mapPin', '', { size: 16 }), type: 'rest', isTarget: false }
             ],
             slots: ['1. Hvem?', '2. Handling?', '3. Hvor meget? ⭐', '4. I hvilket vejr?'],
             roles: ['[Subjekt]', '[Verbum]', '[Gradsadverbium]', '[Præpositionsled]'],
@@ -3737,11 +3737,11 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
 
         const subTab1Btn = document.createElement('button');
         subTab1Btn.className = `sb-sub-btn ${saetningSubTab === 'builder' ? 'active' : ''}`;
-        subTab1Btn.innerHTML = `<span>1. Udforsk sætningen (Byg selv)</span>`;
+        subTab1Btn.innerHTML = `<span>1. Udforsk sætningen (byg selv)</span>`;
 
         const subTab2Btn = document.createElement('button');
         subTab2Btn.className = `sb-sub-btn ${saetningSubTab === 'puzzle' ? 'active' : ''}`;
-        subTab2Btn.innerHTML = `<span>2. Pusleopgaven (Udfordring)</span>`;
+        subTab2Btn.innerHTML = `<span>2. Pusleopgaven (udfordring)</span>`;
 
         subNav.appendChild(subTab1Btn);
         subNav.appendChild(subTab2Btn);
@@ -3787,10 +3787,10 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                 </div>
 
                 <div class="grammar-legend-bar">
-                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-subjekt"></span> <span>1. Subjekt (Grøn)</span></div>
-                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-verbum"></span> <span>2. Verbum (Rød)</span></div>
-                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-grad"></span> <span>3. Gradsadverbium (Lilla)</span></div>
-                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-rest"></span> <span>4. Restled (Blå)</span></div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-subjekt"></span> <span>1. Subjekt (grøn)</span></div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-verbum"></span> <span>2. Verbum (rød)</span></div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-grad"></span> <span>3. Gradsadverbium (lilla)</span></div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-rest"></span> <span>4. Restled (blå)</span></div>
                 </div>
 
                 <div class="category-builder-rows">
@@ -3800,7 +3800,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                             <div class="cat-badge-title cat-title-subjekt">
                                 1. Hvem eller hvad taler vi om? ${advTransSpan('1. Hvem eller hvad taler vi om?')}
                             </div>
-                            <span class="cat-grammar-role badge-subjekt">[Subjekt / Grundled]</span>
+                            <span class="cat-grammar-role badge-subjekt">[Subjekt / grundled]</span>
                         </div>
                         <div class="category-options-flex" id="chips-subjekt"></div>
                     </div>
@@ -3811,7 +3811,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                             <div class="cat-badge-title cat-title-verbum">
                                 2. Hvad laver eller er personen eller tingen? ${advTransSpan('2. Hvad laver eller er personen eller tingen?')}
                             </div>
-                            <span class="cat-grammar-role badge-verbum">[Verbum / Udsagnsled]</span>
+                            <span class="cat-grammar-role badge-verbum">[Verbum / udsagnsled]</span>
                         </div>
                         <div class="category-options-flex" id="chips-verbum"></div>
                     </div>
@@ -3820,7 +3820,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                     <div class="category-row-card cat-row-grad">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-grad">
-                                3. Hvor meget eller i hvor høj grad? (Gradsadverbium) ${advTransSpan('3. Hvor meget eller i hvor høj grad? (Gradsadverbium)')}
+                                3. Hvor meget eller i hvor høj grad? (gradsadv.) ${advTransSpan('3. Hvor meget eller i hvor høj grad? (Gradsadverbium)')}
                             </div>
                             <span class="cat-grammar-role badge-grad">[Gradsadverbium]</span>
                         </div>
@@ -3833,7 +3833,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
                             <div class="cat-badge-title cat-title-rest">
                                 4. Hvad, hvordan eller hvor ellers? ${advTransSpan('4. Hvad, hvordan eller hvor ellers?')}
                             </div>
-                            <span class="cat-grammar-role badge-rest">[Adjektivled / Restled]</span>
+                            <span class="cat-grammar-role badge-rest">[Adjektivled / restled]</span>
                         </div>
                         <div class="category-options-flex" id="chips-rest"></div>
                     </div>
@@ -4445,7 +4445,7 @@ export function renderAdverbierGradView(container, navigateFn, extraData = {}) {
             </div>
             <div style="display: flex; gap: 1rem; justify-content: center;">
                 <button class="detektiv-next-btn" style="margin: 0;" id="kontekst-retry-btn">Prøv igen</button>
-                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="kontekst-back-menu">Tilbage til Adverbie-Oversigten</button>
+                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="kontekst-back-menu">Tilbage til adverbie-oversigten</button>
             </div>
         `;
 

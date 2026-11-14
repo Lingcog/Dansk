@@ -1924,7 +1924,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
         const filterBtns = [
             { id: 'all', label: 'Alle (20)' },
             { id: 't_rule', label: 'Med -t reglen (15)' },
-            { id: 'special', label: 'Uforanderlige / Andre (5)' }
+            { id: 'special', label: 'Uforanderlige / andre (5)' }
         ];
         filterBtns.forEach(fb => {
             const btn = document.createElement('button');
@@ -2026,15 +2026,15 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                 <!-- Aha Contrast Box -->
                 <div class="aha-golden-box">
                     <div class="aha-header">
-                        Den Gyldne Aha-Regel
+                        Den gyldne aha-regel
                     </div>
                     <div class="aha-contrast-row">
                         <div class="aha-contrast-card">
-                            <div class="aha-tag tag-ting">Ting (Adjektiv)</div>
+                            <div class="aha-tag tag-ting">Ting (adjektiv)</div>
                             <div class="aha-sentence">${word.tingExample}</div>
                         </div>
                         <div class="aha-contrast-card">
-                            <div class="aha-tag tag-handling">Handling (Adverbium)</div>
+                            <div class="aha-tag tag-handling">Handling (adverbium)</div>
                             <div class="aha-sentence">${word.handlingExample}</div>
                         </div>
                     </div>
@@ -2164,10 +2164,10 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
             <div class="vaerksted-tabs">
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'transformer' ? 'active' : ''}" id="v-tab-trans">
-                    1. Den Magiske -t Knap (Transformeren)
+                    1. Den magiske -t-knap (transformeren)
                 </button>
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'pairs' ? 'active' : ''}" id="v-tab-pairs">
-                    2. Modsat-måder (Parrings-øvelse)
+                    2. Modsat-måder (parrings-øvelse)
                 </button>
             </div>
 
@@ -2204,7 +2204,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                 <div class="trans-stage">
                     <!-- Left: Ting Box -->
                     <div class="trans-box ting">
-                        <div class="trans-box-tag" style="color: #38bdf8;">Ting (Adjektiv)</div>
+                        <div class="trans-box-tag" style="color: #38bdf8;">Ting (adjektiv)</div>
                         <div class="trans-box-word" style="color: #38bdf8;">${cur.adj}</div>
                         <div class="trans-box-sentence">"${cur.tingSentence}"</div>
                         <button class="filter-btn" style="margin-top: 0.8rem; background: #0369a1;" id="audio-ting-btn">Hør sætning</button>
@@ -2214,7 +2214,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
                     <!-- Right: Handling Box -->
                     <div class="trans-box handling" style="${transformerIsTransformed ? 'box-shadow: 0 0 25px var(--adv-glow, rgba(59, 130, 246, 0.5));' : 'opacity: 0.4; filter: grayscale(80%);'}">
-                        <div class="trans-box-tag" style="color: var(--adv-border-focus, #93C5FD);">Handling (Adverbium)</div>
+                        <div class="trans-box-tag" style="color: var(--adv-border-focus, #93C5FD);">Handling (adverbium)</div>
                         <div class="trans-box-word" style="color: var(--adv-border-focus, #93C5FD);">
                             ${transformerIsTransformed ? cur.adv : `${cur.adj} + ?`}
                         </div>
@@ -2226,7 +2226,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                 </div>
 
                 <button class="trans-action-button" id="trans-trigger-btn">
-                    ${transformerIsTransformed ? '&#10003; -t er sat på! (Prøv næste ord)' : 'Sæt -t på for handling!'}
+                    ${transformerIsTransformed ? '&#10003; -t er sat på! (prøv næste ord)' : 'Sæt -t på for handling!'}
                 </button>
 
                 <div style="margin-top: 1.5rem; background: rgba(30, 41, 59, 0.7); padding: 1.2rem; border-radius: 14px; color: #e2e8f0; font-size: 1.05rem; line-height: 1.5;">
@@ -2273,7 +2273,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                         <div class="pairs-heading">Måde A</div>
                     </div>
                     <div class="pairs-col" id="pairs-right-col">
-                        <div class="pairs-heading">Modsat Måde B</div>
+                        <div class="pairs-heading">Modsat måde B</div>
                     </div>
                 </div>
 
@@ -2445,7 +2445,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
         detektivWrap.innerHTML = `
             <div class="detektiv-header">
-                <h2>-t Detektiven: Ting eller Handling?</h2>
+                <h2>-t-detektiven: ting eller handling?</h2>
                 <p style="color: #94a3b8; margin: 0;">Træn den gyldne regel: Beskriver ordet en <strong>ting</strong> eller en <strong>handling</strong>? ${advTransBlock('maade_det_intro')}</p>
             </div>
 
@@ -2542,7 +2542,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
         wrap.innerHTML = `
             <div style="font-size: 2.5rem; margin-bottom: 1rem;">${renderDsIcon("trophy", "", { size: 48 })}</div>
-            <h2 style="font-size: 2.2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Flot klaret i Detektiven!</h2>
+            <h2 style="font-size: 2.2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Flot klaret i detektiven!</h2>
             <p style="font-size: 1.2rem; color: #cbd5e1; margin-bottom: 1.5rem;">
                 Du fik <strong>${detektivScore}</strong> ud af <strong>${maxScore}</strong> point (${pct}%).
             </p>
@@ -2551,7 +2551,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             </div>
             <div style="display: flex; gap: 1rem; justify-content: center;">
                 <button class="detektiv-next-btn" style="margin: 0;" id="detektiv-retry-btn">Prøv igen</button>
-                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="detektiv-go-saetning">Gå til Sætningsbyggeren →</button>
+                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="detektiv-go-saetning">Gå til sætningsbyggeren →</button>
             </div>
         `;
 
@@ -2796,11 +2796,11 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
 
         const subTab1Btn = document.createElement('button');
         subTab1Btn.className = `sb-sub-btn ${saetningSubTab === 'builder' ? 'active' : ''}`;
-        subTab1Btn.innerHTML = `<span>1. Udforsk sætningen (Hjælpespørgsmål)</span>`;
+        subTab1Btn.innerHTML = `<span>1. Udforsk sætningen (hjælpespørgsmål)</span>`;
 
         const subTab2Btn = document.createElement('button');
         subTab2Btn.className = `sb-sub-btn ${saetningSubTab === 'puzzle' ? 'active' : ''}`;
-        subTab2Btn.innerHTML = `<span>2. Pusleopgaven (Udfordring)</span>`;
+        subTab2Btn.innerHTML = `<span>2. Pusleopgaven (udfordring)</span>`;
 
         subNav.appendChild(subTab1Btn);
         subNav.appendChild(subTab2Btn);
@@ -2846,10 +2846,10 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                 </div>
 
                 <div class="grammar-legend-bar">
-                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-subjekt"></span> <span>1. Subjekt (Grøn)</span></div>
-                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-verbum"></span> <span>2. Verbum (Rød)</span></div>
-                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-maade"></span> <span>3. Mådesadverbium (Pink)</span></div>
-                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-rest"></span> <span>4. Restled (Blå)</span></div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-subjekt"></span> <span>1. Subjekt (grøn)</span></div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-verbum"></span> <span>2. Verbum (rød)</span></div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-maade"></span> <span>3. Mådesadverbium (pink)</span></div>
+                    <div class="grammar-legend-item"><span class="legend-chip chip-legend-rest"></span> <span>4. Restled (blå)</span></div>
                 </div>
 
                 <div class="category-builder-rows">
@@ -2859,7 +2859,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                             <div class="cat-badge-title cat-title-subjekt">
                                 1. Hvem eller hvad taler vi om? ${advTransSpan('1. Hvem eller hvad taler vi om?')}
                             </div>
-                            <span class="cat-grammar-role badge-subjekt">[Subjekt / Grundled]</span>
+                            <span class="cat-grammar-role badge-subjekt">[Subjekt / grundled]</span>
                         </div>
                         <div class="category-options-flex" id="chips-subjekt"></div>
                     </div>
@@ -2870,7 +2870,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                             <div class="cat-badge-title cat-title-verbum">
                                 2. Hvad laver personen eller tingen? ${advTransSpan('2. Hvad laver personen eller tingen?')}
                             </div>
-                            <span class="cat-grammar-role badge-verbum">[Verbum / Udsagnsled]</span>
+                            <span class="cat-grammar-role badge-verbum">[Verbum / udsagnsled]</span>
                         </div>
                         <div class="category-options-flex" id="chips-verbum"></div>
                     </div>
@@ -2879,7 +2879,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                     <div class="category-row-card cat-row-maade">
                         <div class="category-row-header">
                             <div class="cat-badge-title cat-title-maade">
-                                <span>⭐</span> 3. Hvordan foregår handlingen? (Mådesadverbium) ${advTransSpan('3. Hvordan foregår handlingen? (Mådesadverbium)')}
+                                <span>⭐</span> 3. Hvordan foregår handlingen? (mådesadverbium) ${advTransSpan('3. Hvordan foregår handlingen? (Mådesadverbium)')}
                             </div>
                             <span class="cat-grammar-role badge-maade">[Mådesadverbium med -t]</span>
                         </div>
@@ -2892,7 +2892,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
                             <div class="cat-badge-title cat-title-rest">
                                 4. Hvor, hvad eller hvordan ellers? ${advTransSpan('4. Hvor, hvad eller hvordan ellers?')}
                             </div>
-                            <span class="cat-grammar-role badge-rest">[Restled / Præpositionsled / Objekt]</span>
+                            <span class="cat-grammar-role badge-rest">[Restled / præpositionsled / objekt]</span>
                         </div>
                         <div class="category-options-flex" id="chips-rest"></div>
                     </div>
@@ -3526,7 +3526,7 @@ export function renderAdverbierMaadeView(container, navigateFn, extraData = {}) 
             </div>
             <div style="display: flex; gap: 1rem; justify-content: center;">
                 <button class="detektiv-next-btn" style="margin: 0;" id="kontekst-retry-btn">Prøv igen</button>
-                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="kontekst-back-menu">Tilbage til Adverbie-Oversigten</button>
+                <button class="detektiv-next-btn" style="margin: 0; background: #3b82f6;" id="kontekst-back-menu">Tilbage til adverbie-oversigten</button>
             </div>
         `;
 

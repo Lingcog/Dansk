@@ -1881,12 +1881,12 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
     const tabs = [
         { id: 'vrimmel', label: '1. Planlægningsrummet (vrimlebilledet)', icon: renderDsIcon('image', '', { size: 16 }) },
         { id: 'vaerksted', label: '2. Sandsynligheds- og holdningsbarometret', icon: renderDsIcon('thermometer', '', { size: 16 }) },
-        { id: 'detektiv', label: '3. Holdnings-Detektiven (10 gåder)', icon: renderDsIcon('search', '', { size: 16 }) },
+        { id: 'detektiv', label: '3. Holdnings-detektiven (10 gåder)', icon: renderDsIcon('search', '', { size: 16 }) },
         { id: 'builder', label: '4. Sætningsbyggeren og puslespillet', icon: renderDsIcon('bricks', '', { size: 16 }) },
         { id: 'kontekst', label: '5. Kontekst-testen (14 opgaver)', icon: renderDsIcon('target', '', { size: 16 }) },
         { id: 'tvivl', label: '6. Tvivlens grader: næppe, umuligt...', icon: renderDsIcon('scale', '', { size: 16 }) },
         { id: 'tone', label: '7. Heldigvis og desværre (social tone)', icon: renderDsIcon('messageSquare', '', { size: 16 }) },
-        { id: 'beviser', label: '8. Bevis-Detektiven (70-90%)', icon: renderDsIcon('xray', '', { size: 16 }) }
+        { id: 'beviser', label: '8. Bevis-detektiven (70-90%)', icon: renderDsIcon('xray', '', { size: 16 }) }
     ];
 
     let currentTab = 'vrimmel';
@@ -2062,7 +2062,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         },
         'maaske': {
             pct: 50,
-            name: '50/50 Mulighed & tvivl',
+            name: '50/50 mulighed & tvivl',
             tag: '50% balance',
             tagClass: 'tag-tvivl',
             icon: 'scale',
@@ -2071,7 +2071,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         },
         'måske': {
             pct: 50,
-            name: '50/50 Mulighed & tvivl',
+            name: '50/50 mulighed & tvivl',
             tag: '50% balance',
             tagClass: 'tag-tvivl',
             icon: 'scale',
@@ -2490,14 +2490,14 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
         },
         'maaske': {
             pct: '50%',
-            name: '50/50 Mulighed',
+            name: '50/50 mulighed',
             color: '#eab308',
             sentence: 'Projektet bliver måske færdigt til tiden.',
             desc: 'Vægtskålen står lige på midten. Chancen for succes og forsinkelse er lige stor.'
         },
         'naeppe': {
             pct: '15%',
-            name: 'Stærk tvivl (Næsten ikke)',
+            name: 'Stærk tvivl (næsten ikke)',
             color: '#f97316',
             sentence: 'Projektet bliver næppe færdigt til tiden.',
             desc: 'Betyder "næsten sikkert IKKE". En høflig måde at signalere stærk skepsis på.'
@@ -2554,7 +2554,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         wrap.innerHTML = `
             <div style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="font-size: 2.2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Aha-værkstedet: Sandsynlighed & Holdning</h2>
+                <h2 style="font-size: 2.2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Aha-værkstedet: sandsynlighed & holdning</h2>
                 <p style="color: #cbd5e1; font-size: 1.1rem; max-width: 750px; margin: 0 auto;">
                     Udforsk sandsynlighedsskalaen fra 100% til 0%, og se hvordan talerens holdning forvandler en objektiv kendsgerning til lettelse, beklagelse eller håb.
                     ${advTransBlock('hold_vk_intro')}
@@ -2563,13 +2563,13 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
             <div class="vaerksted-subtabs">
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'barometer' ? 'active' : ''}" id="v-subtab-baro">
-                    1. Sandsynligheds-Barometret (0% - 100%)
+                    1. Sandsynligheds-barometret (0% - 100%)
                 </button>
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'polarity' ? 'active' : ''}" id="v-subtab-polar">
-                    2. Holdnings-Polariteten (Heldigvis vs. Desværre)
+                    2. Holdnings-polariteten (heldigvis vs. desværre)
                 </button>
                 <button class="vaerksted-subtab-btn ${vaerkstedSubTab === 'tilsyneladende' ? 'active' : ''}" id="v-subtab-til">
-                    3. Tilsyneladende vs. Åbenbart
+                    3. Tilsyneladende vs. åbenbart
                 </button>
             </div>
 
@@ -2612,7 +2612,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         card.innerHTML = `
             <h3 style="font-size: 1.5rem; color: #FFFFFF; text-align: center; margin-bottom: 0.5rem;">
-                Den Gyldne Sandsynlighedsskala
+                Den gyldne sandsynlighedsskala
             </h3>
             <p style="color: #94a3b8; text-align: center; font-size: 0.95rem; margin-bottom: 2rem;">
                 Klik på et adverbium langs barometeret for at se, hvordan sandsynligheden ændrer sætningens betydning:
@@ -2675,7 +2675,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         card.innerHTML = `
             <h3 style="font-size: 1.5rem; color: #FFFFFF; text-align: center; margin-bottom: 0.5rem;">
-                Holdnings-Polariteten: Heldigvis vs. Desværre
+                Holdnings-polariteten: heldigvis vs. desværre
             </h3>
             <p style="color: #cbd5e1; text-align: center; font-size: 1rem; max-width: 700px; margin: 0 auto;">
                 Selve kendsgerningen er uændret (<em>"Det regner"</em>), men dit valg af adverbium afslører, om hændelsen er god, dårlig eller ønskværdig for dig:
@@ -2684,19 +2684,19 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
             <div class="transformer-pill-grid">
                 <button class="trans-holdning-btn ${selectedPolarityWord === 'neutral' ? 'active' : ''}" data-word="neutral">
-                    Neutral (Fakta)
+                    Neutral (fakta)
                 </button>
                 <button class="trans-holdning-btn ${selectedPolarityWord === 'heldigvis' ? 'active' : ''}" data-word="heldigvis">
-                    Heldigvis (Lettelse)
+                    Heldigvis (lettelse)
                 </button>
                 <button class="trans-holdning-btn ${selectedPolarityWord === 'desvaerre' ? 'active' : ''}" data-word="desvaerre">
-                    Desværre (Beklagelse)
+                    Desværre (beklagelse)
                 </button>
                 <button class="trans-holdning-btn ${selectedPolarityWord === 'forhaabentlig' ? 'active' : ''}" data-word="forhaabentlig">
-                    Forhåbentlig (Ønske)
+                    Forhåbentlig (ønske)
                 </button>
                 <button class="trans-holdning-btn ${selectedPolarityWord === 'aerlig_talt' ? 'active' : ''}" data-word="aerlig_talt">
-                    Ærlig talt (Oprigtighed)
+                    Ærlig talt (oprigtighed)
                 </button>
             </div>
 
@@ -2752,7 +2752,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                         <div class="special-rule-word" style="color: var(--adv-border-focus, #93C5FD);">
                             tilsyneladende
                         </div>
-                        <span class="special-rule-role" style="background: rgba(59, 130, 246, 0.2); color: #93C5FD; border: 1px solid #3B82F6;">Overflade / Forbehold</span>
+                        <span class="special-rule-role" style="background: rgba(59, 130, 246, 0.2); color: #93C5FD; border: 1px solid #3B82F6;">Overflade / forbehold</span>
                     </div>
                     <div class="special-rule-desc">
                         Det <strong>ser sådan ud på overfladen</strong> ("apparently / seemingly"), men du er ikke 100% sikker, og virkeligheden kan vise sig at være en anden.
@@ -2784,8 +2784,8 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
             <div style="background: rgba(15, 23, 42, 0.8); padding: 1.4rem; border-radius: 14px; border-left: 4px solid var(--adv-primary, #3B82F6); line-height: 1.6; color: #cbd5e1;">
                 <strong>Huskereglen:</strong><br>
-                • <strong>Tilsyneladende</strong> = "Sådan ser det ud, men hvem ved?" (Usikker overflade)<br>
-                • <strong>Åbenbart</strong> = "Nu ser vi det alle sammen sort på hvidt!" (Klart bevis)
+                • <strong>Tilsyneladende</strong> = "Sådan ser det ud, men hvem ved?" (usikker overflade)<br>
+                • <strong>Åbenbart</strong> = "Nu ser vi det alle sammen sort på hvidt!" (klart bevis)
                 ${advTransBlock('hold_til_rule')}
             </div>
         `;
@@ -2935,7 +2935,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         container.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <h3 style="font-size: 1.5rem; color: #FFFFFF; margin: 0;">Holdnings-Detektiven (10 gåder)</h3>
+                <h3 style="font-size: 1.5rem; color: #FFFFFF; margin: 0;">Holdnings-detektiven (10 gåder)</h3>
                 <span style="color: #94a3b8; font-weight: 800;">Gåde ${detektivIdx + 1} af ${DETEKTIV_QUESTIONS.length}</span>
             </div>
 
@@ -3195,7 +3195,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     Placér brikkerne i den rette rækkefølge
                 </h3>
                 <p style="color: #cbd5e1; font-size: 1rem; margin-bottom: 1.8rem;">
-                    Læg mærke til de faste grammatiske farver: <strong>Grøn</strong> (Subjekt), <strong>Rød</strong> (Verbum), <strong>Turkis</strong> (Centraladverbium) og <strong>Blå</strong> (Restled).
+                    Læg mærke til de faste grammatiske farver: <strong>grøn</strong> (subjekt), <strong>rød</strong> (verbum), <strong>turkis</strong> (centraladverbium) og <strong>blå</strong> (restled).
                 </p>
 
                 <div class="sb-puzzle-slots">
@@ -3434,7 +3434,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
                     ← Forrige
                 </button>
                 <button class="action-btn-primary" id="kontekst-next-btn">
-                    ${kontekstIdx < KONTEKST_QUESTIONS.length - 1 ? 'Næste spørgsmål →' : 'Se resultat / Start forfra'}
+                    ${kontekstIdx < KONTEKST_QUESTIONS.length - 1 ? 'Næste spørgsmål →' : 'Se resultat / start forfra'}
                 </button>
             </div>
         `;
@@ -3519,7 +3519,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             options: ['måske', 'umuligt', 'afgjort'],
             correct: 'måske',
             feedback: 'Korrekt! En ægte 50/50 mulighed for regn kaldes "måske".',
-            badge: '50/50 Mulighed'
+            badge: '50/50 mulighed'
         },
         {
             dialog: 'A: "Når Peter frem til mødet inden det slutter?"<br>B: "Han sidder fast i køen 50 km væk, så han når det ______."',
@@ -3563,7 +3563,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         container.innerHTML = `
             <div class="special-intro-box">
-                <h2>Tvivlens Grader: Næppe, usandsynligt & umuligt</h2>
+                <h2>Tvivlens grader: næppe, usandsynligt & umuligt</h2>
                 <p>
                     Lær at graduere din skepsis og udelukkelse på dansk uden at lyde afvisende eller uhøflig.
                     ${advTransBlock('hold_tv_intro')}
@@ -4012,7 +4012,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
             options: ['sandsynligvis', 'tilsyneladende', 'åbenbart'],
             correct: 'sandsynligvis',
             feedback: 'Korrekt! Du bygger på målinger, radardata og statistik – den klassiske kilde for "sandsynligvis".',
-            badge: 'Data & Målinger'
+            badge: 'Data & målinger'
         },
         {
             dialog: 'A: "Hvor blev Peter af? Vi skal holde statusmøde nu."<br>B: "Computeren er tændt og kaffen er stadig varm, så han er ______ lige gået på toilettet."',
@@ -4091,7 +4091,7 @@ export function renderAdverbierHoldningView(container, navigateFn, extraData = {
 
         container.innerHTML = `
             <div class="special-intro-box">
-                <h2>Bevis-Detektiven: Hvor har du det fra?</h2>
+                <h2>Bevis-detektiven: hvor har du det fra?</h2>
                 <p>
                     I 70–90% spændet handler det ikke om 5% fra eller til. Det handler om dit <strong>bevisgrundlag</strong>! Hvilket ord matcher situationens videnskilde?
                     ${advTransBlock('hold_bev_intro')}

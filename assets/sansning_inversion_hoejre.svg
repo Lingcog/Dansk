@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <linearGradient id="skyR" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fef3c7"/>
+      <stop offset="50%" stop-color="#ffedd5"/>
+      <stop offset="100%" stop-color="#e0f2fe"/>
+    </linearGradient>
+    <linearGradient id="plaza" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fed7aa"/>
+      <stop offset="100%" stop-color="#fde68a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#skyR)"/>
+  <!-- Cozy city square arch & townhouses behind -->
+  <g fill="#f87171" opacity="0.24" stroke="#7c2d12" stroke-width="2">
+    <rect x="80" y="185" width="160" height="295"/>
+    <rect x="255" y="155" width="175" height="325" fill="#fb923c" opacity="0.28"/>
+    <rect x="810" y="175" width="180" height="305" fill="#38bdf8" opacity="0.25"/>
+  </g>
+
+  <!-- Stone square floor -->
+  <path d="M0 470 L1200 470 L1200 900 L0 900 Z" fill="url(#plaza)" stroke="#78350f" stroke-width="2.5"/>
+  <!-- 3 Dance stage spotlights for Felt 1 -> Felt 2 -> Felt 3 -->
+  <ellipse cx="235" cy="705" rx="125" ry="30" fill="#fbbf24" opacity="0.45" stroke="#d97706" stroke-width="3"/>
+  <ellipse cx="600" cy="705" rx="135" ry="32" fill="#fb7185" opacity="0.42" stroke="#e11d48" stroke-width="3"/>
+  <ellipse cx="955" cy="705" rx="125" ry="30" fill="#7dd3fc" opacity="0.48" stroke="#0284c7" stroke-width="3"/>
+
+  <!-- Slot 1 (Forfelt): Coiled brass spring + golden clock pushing rightward -->
+  <g stroke="#78350f" stroke-width="4" fill="none">
+    <!-- Coiled brass spring -->
+    <path d="M120 675 Q145 615 170 675 Q195 615 220 675 Q245 615 270 675 Q295 615 320 675" stroke="#d97706" stroke-width="9"/>
+    <!-- Golden morning clock bouncing on spring (blank face with hands, zero numbers!) -->
+    <circle cx="235" cy="515" r="70" fill="#fef08a" stroke="#b45309" stroke-width="6"/>
+    <circle cx="235" cy="515" r="56" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+    <line x1="235" y1="515" x2="235" y2="478" stroke="#78350f" stroke-width="5" stroke-linecap="round"/>
+    <line x1="235" y1="515" x2="266" y2="528" stroke="#e11d48" stroke-width="4" stroke-linecap="round"/>
+    <!-- Spring energy push arrow toward Slot 2 -->
+    <path d="M335 520 Q395 490 445 520" stroke="#ea580c" stroke-width="6"/>
+    <polygon points="440,506 468,526 436,534" fill="#ea580c" stroke="none"/>
+  </g>
+
+  <!-- Slot 2: Leaping dancer (Verbum pushed straight into Plads 2!) -->
+  <g stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Flowing amber scarf -->
+    <path d="M585 455 Q510 420 485 460 Q535 480 580 470" fill="#fb923c"/>
+    <!-- Leaping legs -->
+    <path d="M595 570 L535 645" stroke="#be123c" stroke-width="14"/>
+    <path d="M615 570 L668 638" stroke="#be123c" stroke-width="14"/>
+    <!-- Torso -->
+    <path d="M578 465 Q610 455 636 475 L622 578 L584 575 Z" fill="#f43f5e"/>
+    <!-- Outstretched joyful arms -->
+    <path d="M582 480 L525 435" stroke="#f43f5e" stroke-width="11"/>
+    <path d="M632 482 L688 430" stroke="#f43f5e" stroke-width="11"/>
+    <!-- Head -->
+    <circle cx="608" cy="432" r="24" fill="#fed7aa"/>
+    <path d="M586 426 Q608 402 630 424" fill="#92400e"/>
+  </g>
+
+  <!-- Slot 3: Polite commuter (Subjekt) waltzing smoothly into Plads 3 behind verb -->
+  <g stroke="#1e293b" stroke-width="3.5" stroke-linecap="round">
+    <!-- Curved dance arc showing graceful step into slot 3 -->
+    <path d="M745 535 Q800 500 845 535" fill="none" stroke="#0284c7" stroke-width="5" stroke-dasharray="10 8"/>
+    <polygon points="840,524 864,540 834,546" fill="#0284c7" stroke="none"/>
+    <!-- Person stepping in blue coat -->
+    <path d="M945 590 L922 678" stroke="#1e3a8a" stroke-width="14"/>
+    <path d="M968 590 L995 672" stroke="#1e3a8a" stroke-width="14"/>
+    <path d="M926 485 L986 485 L982 595 L930 595 Z" fill="#0284c7"/>
+    <!-- Satchel -->
+    <rect x="975" y="545" width="34" height="28" rx="6" fill="#b45309"/>
+    <circle cx="956" cy="452" r="24" fill="#fed7aa"/>
+    <path d="M934 446 Q956 426 978 446 Z" fill="#7c2d12"/>
+  </g>
+
+  <!-- Swirling autumn leaves showing joyful motion -->
+  <ellipse cx="475" cy="385" rx="14" ry="7" transform="rotate(-25 475 385)" fill="#f97316"/>
+  <ellipse cx="755" cy="395" rx="14" ry="7" transform="rotate(20 755 395)" fill="#eab308"/>
+  <ellipse cx="835" cy="445" rx="12" ry="6" transform="rotate(-15 835 445)" fill="#ef4444"/>
+</svg>

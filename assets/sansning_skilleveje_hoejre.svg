@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e0f2fe"/>
+      <stop offset="50%" stop-color="#fef3c7"/>
+      <stop offset="100%" stop-color="#dcfce7"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#7dd3fc"/>
+    </linearGradient>
+    <linearGradient id="dune" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="meadow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#bbf7d0"/>
+      <stop offset="100%" stop-color="#4ade80" stop-opacity="0.7"/>
+    </linearGradient>
+    <linearGradient id="trail" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fef3c7"/>
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0.65"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky wash -->
+  <rect width="1200" height="900" fill="url(#sky)"/>
+  <circle cx="210" cy="145" r="78" fill="#fde047" opacity="0.65"/>
+  <path d="M90 190 Q170 155 260 185 Q340 160 400 195 Z" fill="#ffffff" opacity="0.6"/>
+  <path d="M760 160 Q840 120 930 155 Q1020 130 1100 175 Z" fill="#ffffff" opacity="0.55"/>
+
+  <!-- Left background: sunny coast & dunes -->
+  <path d="M0 320 Q220 290 480 340 L480 470 L0 470 Z" fill="url(#sea)" stroke="#334155" stroke-width="2"/>
+  <path d="M0 390 Q180 340 420 420 L480 540 L0 540 Z" fill="url(#dune)" stroke="#475569" stroke-width="2.5"/>
+
+  <!-- Right background: lush pine forest & lake -->
+  <path d="M460 360 Q820 300 1200 350 L1200 540 L460 540 Z" fill="#86efac" opacity="0.8"/>
+  <ellipse cx="950" cy="445" rx="185" ry="48" fill="#38bdf8" opacity="0.7" stroke="#334155" stroke-width="2.5"/>
+
+  <!-- Stylized Nordic pines on right -->
+  <g stroke="#1e293b" stroke-width="2.5" stroke-linejoin="round">
+    <polygon points="730,360 775,215 820,360" fill="#15803d"/>
+    <polygon points="815,375 865,190 915,375" fill="#166534"/>
+    <polygon points="995,380 1045,205 1095,380" fill="#15803d"/>
+    <polygon points="1075,395 1130,220 1185,395" fill="#14532d"/>
+    <!-- Birch trees on left slope -->
+    <line x1="115" y1="435" x2="115" y2="295" stroke-width="6" stroke="#f8fafc"/>
+    <line x1="115" y1="435" x2="115" y2="295" stroke-width="2" stroke="#334155"/>
+    <circle cx="115" cy="275" r="46" fill="#86efac" opacity="0.85"/>
+  </g>
+
+  <!-- Ground meadow & Y-fork trail -->
+  <path d="M0 440 Q600 415 1200 440 L1200 900 L0 900 Z" fill="url(#meadow)"/>
+  <!-- Left branch toward coast -->
+  <path d="M565 650 Q430 560 190 425 L265 415 Q485 525 610 615 Z" fill="url(#trail)" stroke="#57534e" stroke-width="3"/>
+  <!-- Right branch toward pine lake -->
+  <path d="M605 630 Q785 550 1005 460 L1065 480 Q845 585 650 665 Z" fill="url(#trail)" stroke="#57534e" stroke-width="3"/>
+  <!-- Main bottom trail -->
+  <path d="M470 900 Q555 745 585 625 L665 635 Q645 770 615 900 Z" fill="url(#trail)" stroke="#57534e" stroke-width="3"/>
+
+  <!-- Blank two-armed wooden signpost (zero text!) -->
+  <g stroke="#292524" stroke-width="3.5" stroke-linejoin="round">
+    <rect x="640" y="340" width="18" height="245" rx="4" fill="#a16207"/>
+    <!-- Left pointing arrow (blank) -->
+    <polygon points="645,365 510,348 485,375 510,402 645,398" fill="#fcd34d"/>
+    <!-- Right pointing arrow (blank) -->
+    <polygon points="654,412 795,395 822,422 795,448 654,445" fill="#fdba74"/>
+  </g>
+
+  <!-- Hiker standing smiling at the Y-fork -->
+  <g stroke="#1e293b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Backpack -->
+    <rect x="520" y="540" width="40" height="58" rx="12" fill="#ea580c"/>
+    <!-- Legs -->
+    <path d="M555 632 L542 710" stroke="#1d4ed8" stroke-width="14"/>
+    <path d="M578 632 L592 710" stroke="#1d4ed8" stroke-width="14"/>
+    <ellipse cx="540" cy="716" rx="13" ry="7" fill="#78350f"/>
+    <ellipse cx="595" cy="716" rx="13" ry="7" fill="#78350f"/>
+    <!-- Torso -->
+    <path d="M538 542 Q566 535 592 545 L588 635 L542 635 Z" fill="#0284c7"/>
+    <!-- Arms -->
+    <path d="M542 560 L504 590" stroke="#0284c7" stroke-width="11"/>
+    <path d="M590 560 L628 530" stroke="#0284c7" stroke-width="11"/>
+    <!-- Map in hand (blank folded lines) -->
+    <polygon points="482,580 518,572 522,608 486,615" fill="#fef9c3"/>
+    <!-- Head & cap -->
+    <circle cx="566" cy="512" r="24" fill="#fed7aa"/>
+    <path d="M542 504 Q566 482 590 504 Z" fill="#ef4444"/>
+    <circle cx="560" cy="512" r="2.5" fill="#1e293b"/>
+    <circle cx="574" cy="512" r="2.5" fill="#1e293b"/>
+    <path d="M560 522 Q567 528 575 522" fill="none" stroke-width="2.5"/>
+  </g>
+
+  <!-- Coastal bench/dune flower accents -->
+  <circle cx="155" cy="520" r="8" fill="#fb7185"/>
+  <circle cx="235" cy="610" r="7" fill="#facc15"/>
+  <circle cx="965" cy="615" r="8" fill="#fb7185"/>
+  <circle cx="1040" cy="575" r="7" fill="#facc15"/>
+</svg>

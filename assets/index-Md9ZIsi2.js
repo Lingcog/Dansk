@@ -14662,9 +14662,6 @@ import{g as e,a as Me,b as as,s as pa,c as Va,n as Ka,k as Ra,d as Oa,e as Ga,v 
             margin: 0 auto;
             line-height: 1.55;
         }
-        .radar-mobile-stage {
-            display: none;
-        }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
@@ -14803,83 +14800,14 @@ import{g as e,a as Me,b as as,s as pa,c as Va,n as Ka,k as Ra,d as Oa,e as Ga,v 
                 white-space: nowrap;
             }
             .radar-stage-box {
-                padding: 0.6rem;
+                padding: 0.35rem;
                 border-radius: 12px;
+                touch-action: pan-x pan-y pinch-zoom;
             }
             .radar-svg-canvas {
-                display: none !important;
-            }
-            .radar-mobile-stage {
-                display: flex;
-                flex-direction: column;
-                gap: 0.55rem;
-            }
-            .rms-top-badges {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.35rem;
-                justify-content: flex-start;
-                align-items: center;
-            }
-            .rms-badge-pill {
-                font-size: 0.7rem;
-                font-weight: 800;
-                padding: 0.2rem 0.55rem;
-                border-radius: 999px;
-                background: rgba(15, 23, 42, 0.9);
-                border: 1px solid var(--rms-accent, #3B82F6);
-                color: #f8fafc;
-            }
-            .rms-flow-row {
-                display: grid;
-                grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-                align-items: center;
-                gap: 0.4rem;
-                background: #071326;
-                border: 1px solid #1E3A66;
-                border-radius: 10px;
-                padding: 0.55rem 0.45rem;
-                text-align: center;
-            }
-            .rms-actor {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 0.15rem;
-                font-size: 0.72rem;
-                color: #cbd5e1;
-                line-height: 1.2;
-                min-width: 0;
-            }
-            .rms-actor strong {
-                color: #ffffff;
-                font-size: 0.78rem;
-            }
-            .rms-word-orb {
-                width: 44px;
-                height: 44px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 0.98rem;
-                font-weight: 900;
-                color: #ffffff;
-                background: var(--rms-accent, #3B82F6);
-                border: 2px solid #ffffff;
-                box-shadow: 0 0 12px var(--rms-glow, rgba(59, 130, 246, 0.45));
-                margin: 0 auto;
-            }
-            .rms-hint-box {
-                background: rgba(15, 23, 42, 0.9);
-                border: 1px solid var(--rms-accent, #3B82F6);
-                border-radius: 8px;
-                padding: 0.42rem 0.6rem;
-                font-size: 0.78rem;
-                font-weight: 700;
-                color: #f8fafc;
-                text-align: center;
-                line-height: 1.3;
+                display: block;
+                width: 100%;
+                height: auto;
             }
             .radar-dialogue-box {
                 padding: 0.7rem 0.8rem;
@@ -15212,26 +15140,6 @@ import{g as e,a as Me,b as as,s as pa,c as Va,n as Ka,k as Ra,d as Oa,e as Ga,v 
                     <rect x="${K.x-140}" y="${K.y+42}" width="280" height="26" rx="6" fill="#0F172A" stroke="${K.color}" stroke-width="1.5" />
                     <text x="${K.x}" y="${K.y+59}" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="800">${K.radarHint}</text>
                 </svg>
-
-                <!-- Mobilvenlig radar-visning (< 720px) -->
-                <div class="radar-mobile-stage" style="--rms-accent: ${K.color}; --rms-glow: ${K.pillGlow};">
-                    <div class="rms-top-badges">
-                        <span class="rms-badge-pill">${K.badge}</span>
-                        <span class="rms-badge-pill">${K.source}</span>
-                    </div>
-                    <div class="rms-flow-row">
-                        <div class="rms-actor">
-                            <strong>🗣️ Taler</strong>
-                            <span>${K.speakerRole}</span>
-                        </div>
-                        <div class="rms-word-orb">${K.word}</div>
-                        <div class="rms-actor">
-                            <strong>👂 Lytter</strong>
-                            <span>${K.listenerRole}</span>
-                        </div>
-                    </div>
-                    <div class="rms-hint-box">${K.arrowSummary}</div>
-                </div>
             </div>
 
             <!-- Dialogue & Didactic Context Card -->

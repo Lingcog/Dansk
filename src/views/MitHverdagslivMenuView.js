@@ -1,8 +1,10 @@
 import { getTranslation } from '../utils/i18n.js';
 import { renderArbejdeBilvaerkstedView } from './ArbejdeBilvaerkstedView.js';
 import { renderArbejdeKoekkenView } from './ArbejdeKoekkenView.js';
+import { renderAarstiderVinterView } from './AarstiderVinterView.js';
+import { renderMinBoligView } from './MinBoligView.js';
 
-export { renderArbejdeBilvaerkstedView, renderArbejdeKoekkenView };
+export { renderArbejdeBilvaerkstedView, renderArbejdeKoekkenView, renderAarstiderVinterView, renderMinBoligView };
 
 /**
  * MitHverdagslivMenuView - Hub for "Mit hverdagsliv" under "Lær nye ord".
@@ -195,13 +197,23 @@ export function renderMitHverdagslivMenuView(container, navigateFn) {
         },
         {
             id: 'mit_hverdagsliv_aarstider',
-            badge: getTranslation('mit_hverdagsliv_aarstider_badge', '🍂 Scenarie 3'),
-            icon: '🍂',
-            title: getTranslation('mit_hverdagsliv_aarstider_title', 'Årstider'),
-            desc: getTranslation('mit_hverdagsliv_aarstider_desc', 'Udforsk forår, sommer, efterår og vinter – vejret, naturen og hverdagens skiftende aktiviteter året rundt.'),
-            btnText: getTranslation('mit_hverdagsliv_aarstider_btn', 'Åbn Årstider ➔'),
-            img: 'assets/adverbier_tid_vrimmel.jpg',
-            accent: '#f59e0b'
+            badge: getTranslation('mit_hverdagsliv_aarstider_badge', '❄️ Scenarie 3 • Vinter'),
+            icon: '❄️',
+            title: getTranslation('mit_hverdagsliv_aarstider_title', 'Årstider: Vinter'),
+            desc: getTranslation('mit_hverdagsliv_aarstider_desc', 'Udforsk dansk vintervejr, påklædning, udeliv og hygge indendørs med vrimlebillede (28 målord), pusleopgaver og 7 træningsbaner.'),
+            btnText: getTranslation('mit_hverdagsliv_aarstider_btn', 'Åbn Årstider: Vinter ➔'),
+            img: 'assets/vinter_vrimmel.jpg',
+            accent: '#38bdf8'
+        },
+        {
+            id: 'mit_hverdagsliv_bolig',
+            badge: '🏠 Scenarie 4 • DU1 Modul 4 Mindmap',
+            icon: '🏠',
+            title: 'Min bolig',
+            desc: 'Lær centrale bolig-ord ud over de 600 mest almindelige ord og træn DU1 Modul 4 mundtlig test ud fra det officielle mindmap (sted/by, hus/lejlighed, værelser/m², alene/sammen med, naboer & område), pusleøvelser og min/mit/mine.',
+            btnText: 'Åbn Min bolig ➔',
+            img: 'assets/min_bolig_vrimmel.jpg',
+            accent: '#14b8a6'
         }
     ];
 
@@ -576,12 +588,6 @@ export function renderMitHverdagslivFritidView(container, navigateFn) {
     });
 }
 
-export function renderMitHverdagslivAarstiderView(container, navigateFn) {
-    renderScenarioSubView(container, navigateFn, {
-        icon: '🍂',
-        title: getTranslation('mit_hverdagsliv_aarstider_title', 'Årstider'),
-        desc: getTranslation('mit_hverdagsliv_aarstider_desc', 'Udforsk forår, sommer, efterår og vinter – vejret, naturen og hverdagens skiftende aktiviteter året rundt.'),
-        img: 'assets/adverbier_tid_vrimmel.jpg',
-        accent: '#f59e0b'
-    });
+export function renderMitHverdagslivAarstiderView(container, navigateFn, extraData = {}) {
+    renderAarstiderVinterView(container, navigateFn, extraData);
 }

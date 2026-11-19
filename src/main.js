@@ -51,7 +51,8 @@ import {
   renderMitHverdagslivFritidView,
   renderMitHverdagslivAarstiderView,
   renderArbejdeBilvaerkstedView,
-  renderArbejdeKoekkenView
+  renderArbejdeKoekkenView,
+  renderMinBoligView
 } from './views/MitHverdagslivMenuView.js';
 import { renderSamtaleTraeningView } from './views/SamtaleTraeningView.js';
 import { renderSamtaleBoligMenuView } from './views/SamtaleBoligMenuView.js';
@@ -334,6 +335,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'mit_hverdagsliv_aarstider') {
     appState.currentView = 'mit_hverdagsliv_aarstider';
     renderMitHverdagslivAarstiderView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'mit_hverdagsliv_bolig' || viewTarget === 'min_bolig') {
+    appState.currentView = 'mit_hverdagsliv_bolig';
+    renderMinBoligView(appDiv, navigate, extraData);
   } else if (viewTarget === 'dansk_kultur') {
     appState.currentView = 'dansk_kultur';
     renderDanskKulturView(appDiv, navigate);

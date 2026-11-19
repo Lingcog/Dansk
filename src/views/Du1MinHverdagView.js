@@ -36,6 +36,11 @@ export function renderDu1MinHverdagView(container, navigateFn) {
             icon: '🧹',
             titleKey: 'rengoering',
             action: () => navigateFn('du1_rengoering')
+        },
+        {
+            icon: '🏠',
+            title: 'Min bolig (DU1 Modul 4 Mindmap)',
+            action: () => navigateFn('mit_hverdagsliv_bolig')
         }
     ];
 
@@ -53,7 +58,7 @@ export function renderDu1MinHverdagView(container, navigateFn) {
 
         const cardTitle = document.createElement('div');
         cardTitle.className = 'card-title';
-        cardTitle.textContent = getTranslation(data.titleKey);
+        cardTitle.textContent = data.title || getTranslation(data.titleKey);
 
         card.appendChild(icon);
         card.appendChild(cardTitle);

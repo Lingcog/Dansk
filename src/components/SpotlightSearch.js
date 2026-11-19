@@ -162,6 +162,19 @@ const GRAMMAR_TOPICS = [
         color: '#10b981'
     },
     {
+        id: 'hverdag_min_bolig',
+        category: 'grammar',
+        title: 'Min bolig (Mit hverdagsliv • DU1 Modul 4)',
+        subtitle: 'Vrimlebillede med 24 bolig-ord, 6 mindmap-bokse, pusleøvelser & min/mit/mine',
+        desc: 'Stilladsering til DU1 Modul 4 mundtlig test om Min bolig: sted/by, hus/lejlighed, værelser/m², alene/sammen med, naboer og område.',
+        example: 'Jeg bor i min lejlighed på 2. sal. Mit område er roligt og tæt på indkøb.',
+        viewTarget: 'mit_hverdagsliv_bolig',
+        extraData: {},
+        icon: '🏠',
+        badge: 'Mit hverdagsliv',
+        color: '#14b8a6'
+    },
+    {
         id: 'gram_stoed',
         category: 'grammar',
         title: 'Det Danske Stød & Udtale',

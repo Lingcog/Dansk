@@ -2,17 +2,13 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { shuffleArray } from '../utils/shuffle.js';
 import { createPromptFlowSection } from '../utils/aiPromptHelper.js';
 import { samtaleIcons } from '../utils/samtaleIcons.js';
+import { mbT, mbSub, isMbRtl } from '../utils/min_bolig_translations.js';
 
 /**
  * MinBoligView — "Min bolig" under hovedfladen "Mit hverdagsliv".
  *
- * Stilladserer DU1, Modul 4 mundtlig test (Opgave 1) på enkelt dansk:
- *   - 24 bolig-ord fordelt på de 6 officielle mindmap-bokse
- *   - Enkle sætnings-puslespil (1. Hvem/hvad -> 2. Hvad sker der -> 3. Hvad/hvordan -> 4. Hvor/hvornår)
- *   - Possessive pronominer (min, mit, mine, vores)
- *   - Personligt mindmap (kun stikord) -> kort Del 1-præsentation
- *   - Del 2 uddybende spørgsmål + AI-tester
- *   - Bolig-detektiv på vrimlebilledet
+ * Stilladserer DU1, Modul 4 mundtlig test (Opgave 1) på enkelt dansk med
+ * oversættelser til alle 18 understøttede sprog i appen.
  */
 
 export const MINDMAP_BOXES = {
@@ -82,7 +78,6 @@ export const MINDMAP_BOXES = {
 // 24 BOLIG-ORD I VRIMLEBILLEDET (KORT, ENKELT DU1 MODUL 4 DANSK)
 // =========================================================================
 export const BOLIG_WORDS = [
-    // --- BOKS 1: STED / BY (3) ---
     {
         num: 1,
         id: 'b1_forstad_bydel',
@@ -128,8 +123,6 @@ export const BOLIG_WORDS = [
         sentence: 'Vi flyttede ind for to år siden.',
         stikord: 'flyttede ind 2024 · 2 år'
     },
-
-    // --- BOKS 2: HUS / LEJLIGHED (5) ---
     {
         num: 4,
         id: 'b4_lejlighed',
@@ -205,8 +198,6 @@ export const BOLIG_WORDS = [
         sentence: 'Min husleje er 6.500 kroner.',
         stikord: 'husleje 6.500 kr.'
     },
-
-    // --- BOKS 3: VÆRELSER / M² (7) ---
     {
         num: 9,
         id: 'b9_kvadratmeter',
@@ -312,8 +303,6 @@ export const BOLIG_WORDS = [
         sentence: 'Vi vasker tøj i vaskerummet.',
         stikord: 'vaskerum · kælder'
     },
-
-    // --- BOKS 4: ALENE / SAMMEN MED (3) ---
     {
         num: 16,
         id: 'b16_sammen_med_familie',
@@ -359,8 +348,6 @@ export const BOLIG_WORDS = [
         sentence: 'Vi har en lille kat.',
         stikord: 'kat (eller: ingen dyr)'
     },
-
-    // --- BOKS 5: NABOER (3) ---
     {
         num: 19,
         id: 'b19_opgang_hilse',
@@ -406,8 +393,6 @@ export const BOLIG_WORDS = [
         sentence: 'Vi drikker kaffe med naboer i gården.',
         stikord: 'gård · kaffe om sommeren'
     },
-
-    // --- BOKS 6: OMRÅDE (3) ---
     {
         num: 22,
         id: 'b22_groent_omraade_legeplads',
@@ -457,185 +442,106 @@ export const BOLIG_WORDS = [
 
 // =========================================================================
 // FANE 2: 12 ENKLE DU1-PUSLEØVELSER
-// 1. Hvem / hvad? -> 2. Hvad sker der? -> 3. Hvad / hvordan? -> 4. Hvor / hvornår?
 // =========================================================================
 const BOLIG_PUZZLES = [
-    {
-        boxId: 'sted_by',
-        q: 'Hvor bor du?',
-        correct: ['Jeg', 'bor', 'i en lejlighed', 'i Odense.'],
-        scrambled: ['i Odense.', 'bor', 'Jeg', 'i en lejlighed'],
-        tip: '1. Jeg · 2. bor · 3. i en lejlighed · 4. i Odense.'
-    },
-    {
-        boxId: 'sted_by',
-        q: 'Hvor længe har I boet her?',
-        correct: ['Vi', 'har boet', 'på en stille vej', 'i to år.'],
-        scrambled: ['i to år.', 'på en stille vej', 'Vi', 'har boet'],
-        tip: '1. Vi · 2. har boet · 3. på en stille vej · 4. i to år.'
-    },
-    {
-        boxId: 'hus_lejlighed',
-        q: 'Hvilken etage bor du på?',
-        correct: ['Min lejlighed', 'ligger', 'på 2. sal', 'i byen.'],
-        scrambled: ['i byen.', 'ligger', 'på 2. sal', 'Min lejlighed'],
-        tip: '1. Min lejlighed · 2. ligger · 3. på 2. sal · 4. i byen.'
-    },
-    {
-        boxId: 'hus_lejlighed',
-        q: 'Hvad laver I på altanen?',
-        correct: ['Vi', 'drikker', 'kaffe', 'på altanen.'],
-        scrambled: ['på altanen.', 'kaffe', 'Vi', 'drikker'],
-        tip: '1. Vi · 2. drikker · 3. kaffe · 4. på altanen.'
-    },
-    {
-        boxId: 'vaerelser_m2',
-        q: 'Hvor stor er din bolig?',
-        correct: ['Min bolig', 'er', '75 kvadratmeter', 'og lys.'],
-        scrambled: ['og lys.', '75 kvadratmeter', 'Min bolig', 'er'],
-        tip: '1. Min bolig · 2. er · 3. 75 kvadratmeter · 4. og lys.'
-    },
-    {
-        boxId: 'vaerelser_m2',
-        q: 'Hvor vasker I tøj?',
-        correct: ['Vi', 'vasker', 'tøj', 'i kælderen.'],
-        scrambled: ['i kælderen.', 'Vi', 'vasker', 'tøj'],
-        tip: '1. Vi · 2. vasker · 3. tøj · 4. i kælderen.'
-    },
-    {
-        boxId: 'alene_sammen',
-        q: 'Hvem bor du sammen med?',
-        correct: ['Jeg', 'bor', 'med min familie', 'i Odense.'],
-        scrambled: ['i Odense.', 'med min familie', 'bor', 'Jeg'],
-        tip: '1. Jeg · 2. bor · 3. med min familie · 4. i Odense.'
-    },
-    {
-        boxId: 'alene_sammen',
-        q: 'Hvordan bor din nabo?',
-        correct: ['Min nabo', 'bor', 'alene', 'i stueetagen.'],
-        scrambled: ['i stueetagen.', 'alene', 'Min nabo', 'bor'],
-        tip: '1. Min nabo · 2. bor · 3. alene · 4. i stueetagen.'
-    },
-    {
-        boxId: 'naboer',
-        q: 'Hvad gør du i opgangen?',
-        correct: ['Jeg', 'hilser', 'på mine naboer', 'i opgangen.'],
-        scrambled: ['i opgangen.', 'hilser', 'på mine naboer', 'Jeg'],
-        tip: '1. Jeg · 2. hilser · 3. på mine naboer · 4. i opgangen.'
-    },
-    {
-        boxId: 'naboer',
-        q: 'Hvordan er dine naboer?',
-        correct: ['Mine naboer', 'er', 'søde og rolige', 'hver dag.'],
-        scrambled: ['hver dag.', 'søde og rolige', 'er', 'Mine naboer'],
-        tip: '1. Mine naboer · 2. er · 3. søde og rolige · 4. hver dag.'
-    },
-    {
-        boxId: 'omraade',
-        q: 'Hvor leger børnene?',
-        correct: ['Børnene', 'leger', 'sammen', 'på legepladsen.'],
-        scrambled: ['på legepladsen.', 'sammen', 'Børnene', 'leger'],
-        tip: '1. Børnene · 2. leger · 3. sammen · 4. på legepladsen.'
-    },
-    {
-        boxId: 'omraade',
-        q: 'Hvad ligger tæt på?',
-        correct: ['Mit område', 'ligger', 'tæt på indkøb', 'og bus.'],
-        scrambled: ['og bus.', 'Mit område', 'tæt på indkøb', 'ligger'],
-        tip: '1. Mit område · 2. ligger · 3. tæt på indkøb · 4. og bus.'
-    }
+    { num: 1, boxId: 'sted_by', q: 'Hvor bor du?', correct: ['Jeg', 'bor', 'i en lejlighed', 'i Odense.'], scrambled: ['i Odense.', 'bor', 'Jeg', 'i en lejlighed'] },
+    { num: 2, boxId: 'sted_by', q: 'Hvor længe har I boet her?', correct: ['Vi', 'har boet', 'på en stille vej', 'i to år.'], scrambled: ['i to år.', 'på en stille vej', 'Vi', 'har boet'] },
+    { num: 3, boxId: 'hus_lejlighed', q: 'Hvilken etage bor du på?', correct: ['Min lejlighed', 'ligger', 'på 2. sal', 'i byen.'], scrambled: ['i byen.', 'ligger', 'på 2. sal', 'Min lejlighed'] },
+    { num: 4, boxId: 'hus_lejlighed', q: 'Hvad laver I på altanen?', correct: ['Vi', 'drikker', 'kaffe', 'på altanen.'], scrambled: ['på altanen.', 'kaffe', 'Vi', 'drikker'] },
+    { num: 5, boxId: 'vaerelser_m2', q: 'Hvor stor er din bolig?', correct: ['Min bolig', 'er', '75 kvadratmeter', 'og lys.'], scrambled: ['og lys.', '75 kvadratmeter', 'Min bolig', 'er'] },
+    { num: 6, boxId: 'vaerelser_m2', q: 'Hvor vasker I tøj?', correct: ['Vi', 'vasker', 'tøj', 'i kælderen.'], scrambled: ['i kælderen.', 'Vi', 'vasker', 'tøj'] },
+    { num: 7, boxId: 'alene_sammen', q: 'Hvem bor du sammen med?', correct: ['Jeg', 'bor', 'med min familie', 'i Odense.'], scrambled: ['i Odense.', 'med min familie', 'bor', 'Jeg'] },
+    { num: 8, boxId: 'alene_sammen', q: 'Hvordan bor din nabo?', correct: ['Min nabo', 'bor', 'alene', 'i stueetagen.'], scrambled: ['i stueetagen.', 'alene', 'Min nabo', 'bor'] },
+    { num: 9, boxId: 'naboer', q: 'Hvad gør du i opgangen?', correct: ['Jeg', 'hilser', 'på mine naboer', 'i opgangen.'], scrambled: ['i opgangen.', 'hilser', 'på mine naboer', 'Jeg'] },
+    { num: 10, boxId: 'naboer', q: 'Hvordan er dine naboer?', correct: ['Mine naboer', 'er', 'søde og rolige', 'hver dag.'], scrambled: ['hver dag.', 'søde og rolige', 'er', 'Mine naboer'] },
+    { num: 11, boxId: 'omraade', q: 'Hvor leger børnene?', correct: ['Børnene', 'leger', 'sammen', 'på legepladsen.'], scrambled: ['på legepladsen.', 'sammen', 'Børnene', 'leger'] },
+    { num: 12, boxId: 'omraade', q: 'Hvad ligger tæt på?', correct: ['Mit område', 'ligger', 'tæt på indkøb', 'og bus.'], scrambled: ['og bus.', 'Mit område', 'tæt på indkøb', 'ligger'] }
 ];
 
 // =========================================================================
-// FANE 3: POSSESSIVE PRONOMINER (MIN, MIT, MINE & VORES) — KORTE DU1-SÆTNINGER
+// FANE 3: POSSESSIVE PRONOMINER (MIN, MIT, MINE & VORES)
 // =========================================================================
 const POSSESSIVE_DUELS = [
-    { noun: 'lejlighed', answer: 'min', sentence: 'Jeg er glad for ___ lejlighed.', expl: 'en lejlighed → min lejlighed.' },
-    { noun: 'hus', answer: 'mit', sentence: '___ hus har en lille have.', expl: 'et hus → mit hus.' },
-    { noun: 'rækkehus', answer: 'mit', sentence: '___ rækkehus er nyt.', expl: 'et rækkehus → mit rækkehus.' },
-    { noun: 'stue', answer: 'min', sentence: '___ stue er stor og lys.', expl: 'en stue → min stue.' },
-    { noun: 'køkken', answer: 'mit', sentence: 'Jeg laver mad i ___ køkken.', expl: 'et køkken → mit køkken.' },
-    { noun: 'soveværelse', answer: 'mit', sentence: '___ soveværelse er stille.', expl: 'et soveværelse → mit soveværelse.' },
-    { noun: 'badeværelse', answer: 'mit', sentence: '___ badeværelse har en bruser.', expl: 'et badeværelse → mit badeværelse.' },
-    { noun: 'værelser', answer: 'mine', sentence: '___ tre værelser er lyse.', expl: 'flertal (værelser) → mine værelser.' },
-    { noun: 'altan', answer: 'min', sentence: 'Jeg drikker kaffe på ___ altan.', expl: 'en altan → min altan.' },
-    { noun: 'husleje', answer: 'min', sentence: '___ husleje er 6.500 kroner.', expl: 'en husleje → min husleje.' },
-    { noun: 'opgang', answer: 'min', sentence: 'Jeg hilser i ___ opgang.', expl: 'en opgang → min opgang.' },
-    { noun: 'naboer', answer: 'mine', sentence: '___ naboer er søde og rolige.', expl: 'flertal (naboer) → mine naboer.' },
-    { noun: 'område', answer: 'mit', sentence: '___ område er grønt og stille.', expl: 'et område → mit område.' },
-    { noun: 'entré', answer: 'min', sentence: 'Mine sko står i ___ entré.', expl: 'en entré → min entré.' },
-    { noun: 'børn', answer: 'mine', sentence: 'Jeg bor sammen med ___ børn.', expl: 'flertal (børn) → mine børn.' },
-    { noun: 'kælderrum', answer: 'mit', sentence: 'Min cykel står i ___ kælderrum.', expl: 'et kælderrum → mit kælderrum.' }
+    { num: 1, noun: 'lejlighed', answer: 'min', ruleKey: 'pd_en', sentence: 'Jeg er glad for ___ lejlighed.' },
+    { num: 2, noun: 'hus', answer: 'mit', ruleKey: 'pd_et', sentence: '___ hus har en lille have.' },
+    { num: 3, noun: 'rækkehus', answer: 'mit', ruleKey: 'pd_et', sentence: '___ rækkehus er nyt.' },
+    { num: 4, noun: 'stue', answer: 'min', ruleKey: 'pd_en', sentence: '___ stue er stor og lys.' },
+    { num: 5, noun: 'køkken', answer: 'mit', ruleKey: 'pd_et', sentence: 'Jeg laver mad i ___ køkken.' },
+    { num: 6, noun: 'soveværelse', answer: 'mit', ruleKey: 'pd_et', sentence: '___ soveværelse er stille.' },
+    { num: 7, noun: 'badeværelse', answer: 'mit', ruleKey: 'pd_et', sentence: '___ badeværelse har en bruser.' },
+    { num: 8, noun: 'værelser', answer: 'mine', ruleKey: 'pd_pl', sentence: '___ tre værelser er lyse.' },
+    { num: 9, noun: 'altan', answer: 'min', ruleKey: 'pd_en', sentence: 'Jeg drikker kaffe på ___ altan.' },
+    { num: 10, noun: 'husleje', answer: 'min', ruleKey: 'pd_en', sentence: '___ husleje er 6.500 kroner.' },
+    { num: 11, noun: 'opgang', answer: 'min', ruleKey: 'pd_en', sentence: 'Jeg hilser i ___ opgang.' },
+    { num: 12, noun: 'naboer', answer: 'mine', ruleKey: 'pd_pl', sentence: '___ naboer er søde og rolige.' },
+    { num: 13, noun: 'område', answer: 'mit', ruleKey: 'pd_et', sentence: '___ område er grønt og stille.' },
+    { num: 14, noun: 'entré', answer: 'min', ruleKey: 'pd_en', sentence: 'Mine sko står i ___ entré.' },
+    { num: 15, noun: 'børn', answer: 'mine', ruleKey: 'pd_pl', sentence: 'Jeg bor sammen med ___ børn.' },
+    { num: 16, noun: 'kælderrum', answer: 'mit', ruleKey: 'pd_et', sentence: 'Min cykel står i ___ kælderrum.' }
 ];
 
 const POSSESSIVE_TRANSFORM_CHALLENGES = [
     {
-        prompt: 'Hvilken sætning er rigtig?',
+        num: 1,
         options: [
             { text: 'Min lejlighed ligger på 2. sal.', correct: true },
             { text: 'Min lejligheden ligger på 2. sal.', correct: false },
             { text: 'Mit lejlighed ligger på 2. sal.', correct: false }
-        ],
-        explanation: 'Efter min/mit/mine bruger vi aldrig -en eller -et: min lejlighed.'
+        ]
     },
     {
-        prompt: 'Hvilken sætning med "vores" er rigtig?',
+        num: 2,
         options: [
             { text: 'Vi er glade for vores lejlighed og vores hus.', correct: true },
             { text: 'Vi er glade for vores lejligheden og vores huset.', correct: false },
             { text: 'Vi er glade for min lejlighed og mit naboer.', correct: false }
-        ],
-        explanation: '"Vores" passer til både en-ord, et-ord og flertal — uden -en/-et.'
+        ]
     },
     {
-        prompt: 'Et værelse (ental) → flere værelser (flertal):',
+        num: 3,
         options: [
             { text: 'mit værelse → mine værelser', correct: true },
             { text: 'mit værelse → mit værelser', correct: false },
             { text: 'min værelse → mine værelserne', correct: false }
-        ],
-        explanation: 'I flertal bruger vi altid "mine": mine værelser.'
+        ]
     },
     {
-        prompt: 'Vælg rigtigt til køkken (et), stue (en) og område (et):',
+        num: 4,
         options: [
             { text: 'Mit køkken er lille. Min stue er lys. Mit område er stille.', correct: true },
             { text: 'Min køkken er lille. Mit stue er lys. Min område er stille.', correct: false },
             { text: 'Mine køkken er lille. Min stue er lys. Mit området er stille.', correct: false }
-        ],
-        explanation: 'et køkken → mit · en stue → min · et område → mit.'
+        ]
     },
     {
-        prompt: 'Vælg den rigtige sætning om naboer:',
+        num: 5,
         options: [
             { text: 'Mine naboer er søde.', correct: true },
             { text: 'Min naboer er søde.', correct: false },
             { text: 'Mine naboerne er søde.', correct: false }
-        ],
-        explanation: 'Flertal uden -ne: mine naboer.'
+        ]
     },
     {
-        prompt: 'Vælg den rigtige sætning om område:',
+        num: 6,
         options: [
             { text: 'Jeg kan godt lide mit område.', correct: true },
             { text: 'Jeg kan godt lide min område.', correct: false },
             { text: 'Jeg kan godt lide mit området.', correct: false }
-        ],
-        explanation: 'et område → mit område (uden -et til sidst).'
+        ]
     }
 ];
 
 const POSSESSIVE_CLOZE_STORY = [
-    { id: 'c1', before: 'Jeg vil fortælle om ', after: ' bolig. (en bolig)', options: ['min', 'mit', 'mine'], answer: 'min' },
-    { id: 'c2', before: 'Jeg bor i ', after: ' lejlighed i Odense. (en lejlighed)', options: ['min', 'mit', 'mine'], answer: 'min' },
-    { id: 'c3', before: 'Vi sidder tit på ', after: ' altan. (en altan)', options: ['min', 'mit', 'mine'], answer: 'min' },
-    { id: 'c4', before: '', after: ' stue er stor og lys. (en stue)', options: ['Min', 'Mit', 'Mine'], answer: 'Min' },
-    { id: 'c5', before: '', after: ' køkken er lille. (et køkken)', options: ['Min', 'Mit', 'Mine'], answer: 'Mit' },
-    { id: 'c6', before: '', after: ' soveværelse er stille. (et soveværelse)', options: ['Min', 'Mit', 'Mine'], answer: 'Mit' },
-    { id: 'c7', before: '', after: ' tre værelser er gode. (flertal)', options: ['Min', 'Mit', 'Mine'], answer: 'Mine' },
-    { id: 'c8', before: 'Jeg bor med ', after: ' mand. (en mand)', options: ['min', 'mit', 'mine'], answer: 'min' },
-    { id: 'c9', before: 'Jeg bor også med ', after: ' to børn. (flertal)', options: ['min', 'mit', 'mine'], answer: 'mine' },
-    { id: 'c10', before: '', after: ' område er grønt og roligt. (et område)', options: ['Min', 'Mit', 'Mine'], answer: 'Mit' }
+    { id: 'c1', trKey: 'pc1', before: 'Jeg vil fortælle om ', after: ' bolig. (en bolig)', options: ['min', 'mit', 'mine'], answer: 'min' },
+    { id: 'c2', trKey: 'pc2', before: 'Jeg bor i ', after: ' lejlighed i Odense. (en lejlighed)', options: ['min', 'mit', 'mine'], answer: 'min' },
+    { id: 'c3', trKey: 'pc3', before: 'Vi sidder tit på ', after: ' altan. (en altan)', options: ['min', 'mit', 'mine'], answer: 'min' },
+    { id: 'c4', trKey: 'pc4', before: '', after: ' stue er stor og lys. (en stue)', options: ['Min', 'Mit', 'Mine'], answer: 'Min' },
+    { id: 'c5', trKey: 'pc5', before: '', after: ' køkken er lille. (et køkken)', options: ['Min', 'Mit', 'Mine'], answer: 'Mit' },
+    { id: 'c6', trKey: 'pc6', before: '', after: ' soveværelse er stille. (et soveværelse)', options: ['Min', 'Mit', 'Mine'], answer: 'Mit' },
+    { id: 'c7', trKey: 'pc7', before: '', after: ' tre værelser er gode. (flertal)', options: ['Min', 'Mit', 'Mine'], answer: 'Mine' },
+    { id: 'c8', trKey: 'pc8', before: 'Jeg bor med ', after: ' mand. (en mand)', options: ['min', 'mit', 'mine'], answer: 'min' },
+    { id: 'c9', trKey: 'pc9', before: 'Jeg bor også med ', after: ' to børn. (flertal)', options: ['min', 'mit', 'mine'], answer: 'mine' },
+    { id: 'c10', trKey: 'pc10', before: '', after: ' område er grønt og roligt. (et område)', options: ['Min', 'Mit', 'Mine'], answer: 'Mit' }
 ];
 
 // =========================================================================
@@ -643,118 +549,118 @@ const POSSESSIVE_CLOZE_STORY = [
 // =========================================================================
 const STIKORD_VS_SAETNING_QUIZ = [
     {
-        boxTitle: '1. Sted / by',
-        question: 'Til prøven må du kun skrive stikord på dit mindmap. Hvad er rigtigt?',
+        num: 1,
+        boxId: 'sted_by',
         options: [
             { text: 'Odense · stille vej · 2 år', correct: true },
             { text: 'Jeg bor i Odense på en stille vej, og jeg har boet her i to år.', correct: false }
         ],
-        oralExpansion: 'Du siger til testeren: »Jeg bor i Odense på en stille vej. Jeg har boet her i to år.«'
+        oralExpansionDa: 'Du siger til testeren: »Jeg bor i Odense på en stille vej. Jeg har boet her i to år.«'
     },
     {
-        boxTitle: '2. Hus / lejlighed',
-        question: 'Hvad må du skrive i boksen "hus / lejlighed"?',
+        num: 2,
+        boxId: 'hus_lejlighed',
         options: [
             { text: 'Lejlighed · 2. sal · altan · til leje', correct: true },
             { text: 'Jeg bor til leje i en lejlighed på 2. sal med altan.', correct: false }
         ],
-        oralExpansion: 'Du siger til testeren: »Jeg bor til leje i en lejlighed på 2. sal. Jeg har en altan.«'
+        oralExpansionDa: 'Du siger til testeren: »Jeg bor til leje i en lejlighed på 2. sal. Jeg har en altan.«'
     },
     {
-        boxTitle: '3. Værelser / m²',
-        question: 'Hvad må du skrive i boksen "værelser / m²"?',
+        num: 3,
+        boxId: 'vaerelser_m2',
         options: [
             { text: '75 m² · 3 værelser · lys stue · køkken', correct: true },
             { text: 'Min lejlighed er 75 kvadratmeter og har tre værelser og et køkken.', correct: false }
         ],
-        oralExpansion: 'Du siger til testeren: »Min lejlighed er 75 kvadratmeter. Den har tre værelser, et køkken og et badeværelse.«'
+        oralExpansionDa: 'Du siger til testeren: »Min lejlighed er 75 kvadratmeter. Den har tre værelser, et køkken og et badeværelse.«'
     },
     {
-        boxTitle: '4. Alene / sammen med',
-        question: 'Hvad må du skrive i boksen "alene / sammen med"?',
+        num: 4,
+        boxId: 'alene_sammen',
         options: [
             { text: 'Mand · 2 børn · kat', correct: true },
             { text: 'Jeg bor sammen med min mand, mine to børn og vores kat.', correct: false }
         ],
-        oralExpansion: 'Du siger til testeren: »Jeg bor sammen med min mand og mine to børn. Vi har også en kat.«'
+        oralExpansionDa: 'Du siger til testeren: »Jeg bor sammen med min mand og mine to børn. Vi har også en kat.«'
     },
     {
-        boxTitle: '5. Naboer',
-        question: 'Hvad må du skrive i boksen "naboer"?',
+        num: 5,
+        boxId: 'naboer',
         options: [
             { text: 'Søde · rolige · hilser i opgangen', correct: true },
             { text: 'Mine naboer er søde og rolige, og vi hilser i opgangen.', correct: false }
         ],
-        oralExpansion: 'Du siger til testeren: »Mine naboer er søde og rolige. Vi hilser på hinanden i opgangen.«'
+        oralExpansionDa: 'Du siger til testeren: »Mine naboer er søde og rolige. Vi hilser på hinanden i opgangen.«'
     },
     {
-        boxTitle: '6. Område',
-        question: 'Hvad må du skrive i boksen "område"?',
+        num: 6,
+        boxId: 'omraade',
         options: [
             { text: 'Grønt · legeplads · tæt på indkøb og bus', correct: true },
             { text: 'Mit område er grønt med en legeplads, og det ligger tæt på indkøb og bus.', correct: false }
         ],
-        oralExpansion: 'Du siger til testeren: »Mit område er grønt og roligt. Jeg bor tæt på indkøb og bus.«'
+        oralExpansionDa: 'Du siger til testeren: »Mit område er grønt og roligt. Jeg bor tæt på indkøb og bus.«'
     }
 ];
 
 // =========================================================================
-// FANE 5: DEL 2 — TESTERENS SPØRGSMÅL (ENKELT DU1 MODUL 4 DANSK)
+// FANE 5: DEL 2 — TESTERENS SPØRGSMÅL
 // =========================================================================
 const EXAMINER_FOLLOWUP_QUESTIONS = [
     {
+        num: 1,
         examinerQ: 'Tester: »Er du glad for din lejlighed? Hvorfor?«',
         options: [
             { text: 'Ja, jeg er glad for min lejlighed. Den er lys, og vi har en altan.', correct: true },
             { text: 'Ja.', correct: false },
             { text: 'Tak for besøget.', correct: false }
-        ],
-        tip: 'Sig ja/nej + en kort grund (fx "Den er lys" eller "Den er tæt på bus").'
+        ]
     },
     {
+        num: 2,
         examinerQ: 'Tester: »Hvilket rum kan du bedst lide?«',
         options: [
             { text: 'Jeg kan bedst lide min stue. Den er stor og lys.', correct: true },
             { text: 'Stue.', correct: false },
             { text: 'Jeg bor i Odense.', correct: false }
-        ],
-        tip: 'Start med: »Jeg kan bedst lide min stue / mit køkken...« + én kort sætning.'
+        ]
     },
     {
+        num: 3,
         examinerQ: 'Tester: »Taler du med dine naboer?«',
         options: [
             { text: 'Ja, vi hilser i opgangen. Nogle gange drikker vi kaffe i gården.', correct: true },
             { text: 'Lidt.', correct: false },
             { text: 'Velbekomme.', correct: false }
-        ],
-        tip: 'Giv ét konkret hverdags-eksempel (hilser i opgangen, drikker kaffe, snakker lidt).'
+        ]
     },
     {
+        num: 4,
         examinerQ: 'Tester: »Kan du godt lide dit område? Hvorfor?«',
         options: [
             { text: 'Ja, jeg kan godt lide mit område. Det er stille og tæt på indkøb.', correct: true },
             { text: 'Fint område.', correct: false },
             { text: 'Min husleje er 6.500.', correct: false }
-        ],
-        tip: 'Nævn 1–2 gode ting ved området (stille, grønt, tæt på indkøb/bus/skole).'
+        ]
     },
     {
+        num: 5,
         examinerQ: 'Tester: »Er der noget, du ikke er så glad for?«',
         options: [
             { text: 'Jeg er glad for min bolig, men mit køkken er lidt lille.', correct: true },
             { text: 'Nej.', correct: false },
             { text: 'Jeg har to børn.', correct: false }
-        ],
-        tip: 'Brug "men": »Jeg er glad for min bolig, men mit køkken er lille / jeg har ingen altan.«'
+        ]
     },
     {
+        num: 6,
         examinerQ: 'Tester: »Vil du blive boende her?«',
         options: [
             { text: 'Ja, nu er jeg glad for min lejlighed. Senere vil jeg gerne have et hus.', correct: true },
             { text: 'Måske.', correct: false },
             { text: 'På 2. sal.', correct: false }
-        ],
-        tip: 'Fortæl kort om nu — og evt. hvad du ønsker senere.'
+        ]
     }
 ];
 
@@ -786,21 +692,21 @@ Når kursisten har fortalt om sin bolig:
 Hvis kursisten svarer med kun ét ord ("Ja"), så hjælp venligt med at lave en hel kort sætning. Slut af med ros og de bedste bolig-ord, kursisten brugte.`;
 
 // =========================================================================
-// FANE 6: 12 BOLIG-DETEKTIV MISSIONER (ENKELT DU1 DANSK)
+// FANE 6: 12 BOLIG-DETEKTIV MISSIONER
 // =========================================================================
 const BOLIG_DETECTIVE_MISSIONS = [
-    { prompt: 'Find den stille vej.', answerId: 'b2_stille_vej', hint: 'Nederst til venstre (#2).' },
-    { prompt: 'Find altanen med blomster.', answerId: 'b7_altan', hint: 'Til venstre på 1. sal (#7).' },
-    { prompt: 'Find det røde rækkehus.', answerId: 'b5_raekkehus', hint: 'Helt til venstre (#5).' },
-    { prompt: 'Find den lyse stue med sofaen.', answerId: 'b10_stue_lys', hint: 'Inde i lejligheden på 1. sal til venstre (#10).' },
-    { prompt: 'Find køkkenet med opvaskemaskine.', answerId: 'b11_koekken_opvaskemaskine', hint: 'Til højre for stuen (#11).' },
-    { prompt: 'Find soveværelset på 2. sal.', answerId: 'b12_sovevaerelse', hint: 'Øverst til venstre i huset (#12).' },
-    { prompt: 'Find badeværelset med bruser.', answerId: 'b13_badevaerelse', hint: 'Øverst til højre for soveværelset (#13).' },
-    { prompt: 'Find vaskerummet i kælderen.', answerId: 'b15_vaskerum_kaelder', hint: 'Nederst i kælderen (#15).' },
-    { prompt: 'Find manden der bor alene i stueetagen.', answerId: 'b17_bo_alene', hint: 'I stueetagen til venstre (#17).' },
-    { prompt: 'Find opgangen hvor naboerne hilser.', answerId: 'b19_opgang_hilse', hint: 'På trappen til højre i huset (#19).' },
-    { prompt: 'Find baggården hvor naboerne drikker kaffe.', answerId: 'b21_baggaard_nabohygge', hint: 'I gården til højre (#21).' },
-    { prompt: 'Find butikken tæt på (indkøb).', answerId: 'b23_taet_paa_indkoeb', hint: 'Nederst til højre (#23).' }
+    { num: 1, prompt: 'Find den stille vej.', answerId: 'b2_stille_vej', hint: 'Nederst til venstre (#2).' },
+    { num: 2, prompt: 'Find altanen med blomster.', answerId: 'b7_altan', hint: 'Til venstre på 1. sal (#7).' },
+    { num: 3, prompt: 'Find det røde rækkehus.', answerId: 'b5_raekkehus', hint: 'Helt til venstre (#5).' },
+    { num: 4, prompt: 'Find den lyse stue med sofaen.', answerId: 'b10_stue_lys', hint: 'Inde i lejligheden på 1. sal til venstre (#10).' },
+    { num: 5, prompt: 'Find køkkenet med opvaskemaskine.', answerId: 'b11_koekken_opvaskemaskine', hint: 'Til højre for stuen (#11).' },
+    { num: 6, prompt: 'Find soveværelset på 2. sal.', answerId: 'b12_sovevaerelse', hint: 'Øverst til venstre i huset (#12).' },
+    { num: 7, prompt: 'Find badeværelset med bruser.', answerId: 'b13_badevaerelse', hint: 'Øverst til højre for soveværelset (#13).' },
+    { num: 8, prompt: 'Find vaskerummet i kælderen.', answerId: 'b15_vaskerum_kaelder', hint: 'Nederst i kælderen (#15).' },
+    { num: 9, prompt: 'Find manden der bor alene i stueetagen.', answerId: 'b17_bo_alene', hint: 'I stueetagen til venstre (#17).' },
+    { num: 10, prompt: 'Find opgangen hvor naboerne hilser.', answerId: 'b19_opgang_hilse', hint: 'På trappen til højre i huset (#19).' },
+    { num: 11, prompt: 'Find baggården hvor naboerne drikker kaffe.', answerId: 'b21_baggaard_nabohygge', hint: 'I gården til højre (#21).' },
+    { num: 12, prompt: 'Find butikken tæt på (indkøb).', answerId: 'b23_taet_paa_indkoeb', hint: 'Nederst til højre (#23).' }
 ];
 
 function speakBolig(text, rate = 0.88, pitch = 1.02) {
@@ -822,11 +728,36 @@ function injectMinBoligStyles() {
             max-width: 1200px;
         }
         .min-bolig-view {
+            width: 100%;
             max-width: 1160px;
             margin: 0 auto;
             padding: 1rem 1rem 3.5rem;
             color: #f8fafc;
             box-sizing: border-box;
+        }
+        .mb-tr {
+            font-size: 0.83rem;
+            color: #94a3b8;
+            font-weight: 600;
+            margin-top: 0.18rem;
+            line-height: 1.4;
+            text-align: left;
+        }
+        .mb-tr-sent {
+            font-size: 0.86rem;
+            color: #99f6e4;
+            font-weight: 600;
+            margin-top: 0.25rem;
+            line-height: 1.4;
+            text-align: left;
+        }
+        .mb-tr-slot {
+            font-size: 0.72rem;
+            color: #cbd5e1;
+            font-weight: 600;
+            margin-top: 0.08rem;
+            line-height: 1.3;
+            text-align: left;
         }
         .mb-hero {
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.97) 0%, rgba(30, 41, 59, 0.96) 55%, rgba(20, 184, 166, 0.24) 100%);
@@ -841,7 +772,7 @@ function injectMinBoligStyles() {
             font-size: clamp(1.35rem, 2.4vw, 1.85rem);
             font-weight: 900;
             color: #ffffff;
-            text-align: left;
+            text-align: start;
         }
         .mb-hero p {
             margin: 0;
@@ -1041,7 +972,7 @@ function injectMinBoligStyles() {
         }
         .mb-slots-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
             gap: 0.6rem;
             margin-bottom: 0.85rem;
         }
@@ -1051,7 +982,7 @@ function injectMinBoligStyles() {
             background: rgba(9, 14, 26, 0.88);
             border: 2px dashed rgba(148, 163, 184, 0.38);
             cursor: pointer;
-            min-height: 58px;
+            min-height: 62px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -1156,6 +1087,10 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     container.innerHTML = '';
     injectMinBoligStyles();
 
+    const lang = getLang() || 'da';
+    const isDa = lang === 'da';
+    const rtlAttr = isMbRtl(lang) ? ' dir="rtl"' : '';
+
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container min-bolig-view';
 
@@ -1164,27 +1099,27 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     topBar.className = 'top-bar';
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.textContent = '← ' + (getTranslation('back') || 'Tilbage');
+    backBtn.textContent = '← ' + (getTranslation('back') || mbT('btn_back', lang));
     backBtn.onclick = () => navigateFn('mit_hverdagsliv');
     topBar.appendChild(backBtn);
     viewContainer.appendChild(topBar);
 
-    // Kompakt Hero — ingen gentagelse af de 6 mindmap-bokse
+    // Kompakt Hero med oversættelse
     const hero = document.createElement('div');
     hero.className = 'mb-hero';
     hero.innerHTML = `
-        <h1>Min bolig</h1>
-        <p>24 bolig-ord og enkle sætninger til DU1, Modul 4 mundtlig prøve.</p>
+        <h1${rtlAttr}>${mbT('hero_title', lang)}</h1>
+        <p${rtlAttr}>${mbT('hero_desc', lang)}</p>
     `;
     viewContainer.appendChild(hero);
 
     const tabs = [
-        { id: 'tab_vrimmel', label: '1. Vrimlebillede (24)' },
-        { id: 'tab_pusle', label: '2. Byg sætninger' },
-        { id: 'tab_possessiv', label: '3. Min, mit, mine' },
-        { id: 'tab_mindmap', label: '4. Mindmap (Del 1)' },
-        { id: 'tab_del2_dialog', label: '5. Spørgsmål (Del 2)' },
-        { id: 'tab_detektiv', label: '6. Detektiv' }
+        { id: 'tab_vrimmel', label: mbT('tab_1', lang) },
+        { id: 'tab_pusle', label: mbT('tab_2', lang) },
+        { id: 'tab_possessiv', label: mbT('tab_3', lang) },
+        { id: 'tab_mindmap', label: mbT('tab_4', lang) },
+        { id: 'tab_del2_dialog', label: mbT('tab_5', lang) },
+        { id: 'tab_detektiv', label: mbT('tab_6', lang) }
     ];
 
     let currentTab = extraData?.subPath && tabs.some(t => t.id === extraData.subPath)
@@ -1209,8 +1144,8 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
 
     function switchTab(tabId) {
         currentTab = tabId;
-        const lang = getLang() || 'da';
-        history.pushState(null, '', `#/${lang}/mit_hverdagsliv_bolig/${tabId}`);
+        const activeLang = getLang() || 'da';
+        history.pushState(null, '', `#/${activeLang}/mit_hverdagsliv_bolig/${tabId}`);
         tabsMenu.querySelectorAll('.mb-tab-btn').forEach(b => {
             b.classList.toggle('active', b.dataset.tab === tabId);
         });
@@ -1241,16 +1176,16 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     card1.innerHTML = `
         <div class="mb-toolbar">
             <div class="mb-filters">
-                <button type="button" class="mb-filter-btn active" data-bfilter="alle">Alle (24)</button>
+                <button type="button" class="mb-filter-btn active" data-bfilter="alle">${mbT('btn_all_24', lang)}</button>
                 ${Object.values(MINDMAP_BOXES).map(b => `
                     <button type="button" class="mb-filter-btn" data-bfilter="${b.id}" style="border-color:${b.border}; color:${b.color};">
-                        ${b.title}
+                        ${mbT('box_' + b.id, lang)}
                     </button>
                 `).join('')}
             </div>
             <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
-                <button type="button" class="mb-btn-secondary" id="mb-toggle-pinmode">Kun tal</button>
-                <button type="button" class="mb-btn-secondary" id="mb-zoom-btn">Zoom 135%</button>
+                <button type="button" class="mb-btn-secondary" id="mb-toggle-pinmode">${mbT('btn_only_nums', lang)}</button>
+                <button type="button" class="mb-btn-secondary" id="mb-zoom-btn">${mbT('btn_zoom_in', lang)}</button>
             </div>
         </div>
 
@@ -1271,12 +1206,12 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     card1.querySelector('#mb-zoom-btn').onclick = (e) => {
         zoomed = !zoomed;
         stageInner.style.transform = zoomed ? 'scale(1.35)' : 'scale(1)';
-        e.currentTarget.textContent = zoomed ? 'Zoom 100%' : 'Zoom 135%';
+        e.currentTarget.textContent = zoomed ? mbT('btn_zoom_out', lang) : mbT('btn_zoom_in', lang);
     };
 
     card1.querySelector('#mb-toggle-pinmode').onclick = (e) => {
         compactPins = !compactPins;
-        e.currentTarget.textContent = compactPins ? 'Vis ord' : 'Kun tal';
+        e.currentTarget.textContent = compactPins ? mbT('btn_show_words', lang) : mbT('btn_only_nums', lang);
         renderPegefelter();
     };
 
@@ -1284,34 +1219,39 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         const boxMeta = MINDMAP_BOXES[w.mindmapBox];
         detailBox.style.borderColor = boxMeta.border;
         detailBox.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.5rem;">
-                <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
-                    <span style="font-size:1.25rem; font-weight:900; color:#ffffff;">#${w.num}. ${w.word}</span>
-                    <span class="mb-pill-tag" style="background:${boxMeta.bg}; color:${boxMeta.color}; border:1px solid ${boxMeta.border};">
-                        ${boxMeta.title}
-                    </span>
-                    ${w.possessive !== '-' ? `
-                        <span class="mb-pill-tag" style="background:rgba(245,158,11,0.14); color:#fde68a; border:1px solid rgba(245,158,11,0.45);">
-                            ${w.possessive}
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.5rem;">
+                <div>
+                    <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+                        <span style="font-size:1.25rem; font-weight:900; color:#ffffff;">#${w.num}. ${w.word}</span>
+                        <span class="mb-pill-tag" style="background:${boxMeta.bg}; color:${boxMeta.color}; border:1px solid ${boxMeta.border};">
+                            ${mbT('box_' + w.mindmapBox, lang)}
                         </span>
-                    ` : ''}
+                        ${w.possessive !== '-' ? `
+                            <span class="mb-pill-tag" style="background:rgba(245,158,11,0.14); color:#fde68a; border:1px solid rgba(245,158,11,0.45);">
+                                ${w.possessive}
+                            </span>
+                        ` : ''}
+                    </div>
+                    ${mbSub(`w${w.num}_word`, 'mb-tr-sent', lang)}
                 </div>
                 <button type="button" class="mb-btn-primary" id="mb-play-word-audio" style="display:inline-flex; align-items:center; gap:0.38rem;">
-                    ${samtaleIcons.audio(15)} Lyt
+                    ${samtaleIcons.audio(15)} ${mbT('btn_listen', lang)}
                 </button>
             </div>
 
             <div style="font-size:0.93rem; color:#e2e8f0; margin-bottom:0.55rem; line-height:1.45;">
-                ${w.meaning}
+                <div>${w.meaning}</div>
+                ${mbSub(`w${w.num}_mean`, 'mb-tr', lang)}
             </div>
 
-            <div style="background:rgba(15,23,42,0.95); border-left:4px solid ${boxMeta.color}; border-radius:11px; padding:0.65rem 0.9rem; margin-bottom:0.55rem; font-size:0.98rem; color:#ffffff; font-weight:800;">
-                »${w.sentence}«
+            <div style="background:rgba(15,23,42,0.95); border-left:4px solid ${boxMeta.color}; border-radius:11px; padding:0.65rem 0.9rem; margin-bottom:0.55rem;">
+                <div style="font-size:0.98rem; color:#ffffff; font-weight:800;">»${w.sentence}«</div>
+                ${mbSub(`w${w.num}_sent`, 'mb-tr-sent', lang)}
             </div>
 
             <div style="font-size:0.82rem; color:#94a3b8; display:flex; flex-wrap:wrap; gap:0.85rem;">
-                <span><strong>Former:</strong> ${w.forms}</span>
-                <span><strong>Mindmap-stikord:</strong> ${w.stikord}</span>
+                <span><strong>${mbT('lbl_forms', lang)}</strong> ${w.forms}</span>
+                <span><strong>${mbT('lbl_keywords', lang)}</strong> ${w.stikord}</span>
             </div>
         `;
         const playBtn = detailBox.querySelector('#mb-play-word-audio');
@@ -1333,7 +1273,7 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
             btn.style.top = `${w.y}%`;
             btn.style.background = 'linear-gradient(135deg, rgba(15,23,42,0.94), rgba(30,41,59,0.95))';
             btn.style.border = `2px solid ${boxMeta.color}`;
-            btn.title = `#${w.num} ${w.word} (${boxMeta.title})`;
+            btn.title = `#${w.num} ${w.word}`;
             btn.innerHTML = compactPins
                 ? `<span class="mb-pegefelt-num" style="background:${boxMeta.color}; color:#0f172a;">${w.num}</span>`
                 : `<span class="mb-pegefelt-num" style="background:${boxMeta.color}; color:#0f172a;">${w.num}</span><span class="mb-pegefelt-label">${w.shortLabel}</span>`;
@@ -1372,7 +1312,7 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         omraade: []
     };
     let activeSortIdx = 0;
-    let sortFeedback = '';
+    let sortFeedback = null;
 
     function renderMindmapSorting() {
         const placedSet = new Set(Object.values(sortedBuckets).flat());
@@ -1384,10 +1324,10 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         if (!showSortDrill) {
             sortCard.innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
-                    <div style="font-size:0.95rem; font-weight:800; color:#e2e8f0;">
-                        Sorteringsøvelse: Placér de 24 ord i de 6 mindmap-bokse (${placedSet.size}/${sortPool.length})
+                    <div style="font-size:0.95rem; font-weight:800; color:#e2e8f0;"${rtlAttr}>
+                        ${mbT('sort_collapsed', lang)} (${placedSet.size}/${sortPool.length})
                     </div>
-                    <button type="button" class="mb-btn-secondary" id="mb-sort-toggle">Åbn øvelse</button>
+                    <button type="button" class="mb-btn-secondary" id="mb-sort-toggle">${mbT('btn_open_ex', lang)}</button>
                 </div>
             `;
             sortCard.querySelector('#mb-sort-toggle').onclick = () => {
@@ -1399,10 +1339,10 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
 
         sortCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
-                <h3 style="margin:0; font-size:1.05rem; font-weight:900;">Sortér i mindmap-bokse (${placedSet.size}/${sortPool.length})</h3>
+                <h3 style="margin:0; font-size:1.05rem; font-weight:900;"${rtlAttr}>${mbT('sort_title', lang)} (${placedSet.size}/${sortPool.length})</h3>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="mb-btn-secondary" id="mb-sort-reset">Nulstil</button>
-                    <button type="button" class="mb-btn-secondary" id="mb-sort-toggle">Skjul</button>
+                    <button type="button" class="mb-btn-secondary" id="mb-sort-reset">${mbT('btn_reset', lang)}</button>
+                    <button type="button" class="mb-btn-secondary" id="mb-sort-toggle">${mbT('btn_hide', lang)}</button>
                 </div>
             </div>
             <div class="mb-chips-pool" style="padding:0.75rem; border-radius:14px; background:rgba(9,14,26,0.85); border:1px solid rgba(148,163,184,0.22);">
@@ -1419,12 +1359,12 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
 
             ${activeItem ? `
                 <div style="margin-bottom:0.75rem; padding:0.65rem 0.9rem; border-radius:12px; background:rgba(20,184,166,0.12); border:1px solid #2dd4bf; font-size:0.9rem;">
-                    <strong style="color:#ffffff;">${activeItem.word}</strong>
-                    <span style="color:#cbd5e1;"> — »${activeItem.sentence}«</span>
+                    <div><strong style="color:#ffffff;">${activeItem.word}</strong> <span style="color:#cbd5e1;">— »${activeItem.sentence}«</span></div>
+                    ${mbSub(`w${activeItem.num}_sent`, 'mb-tr-sent', lang)}
                 </div>
             ` : `
-                <div class="mb-feedback ok" style="margin-bottom:0.75rem;">
-                    Flot! Alle 24 bolig-ord er placeret.
+                <div class="mb-feedback ok" style="margin-bottom:0.75rem;"${rtlAttr}>
+                    ${mbT('sort_done', lang)}
                 </div>
             `}
 
@@ -1433,19 +1373,19 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
                     const items = sortedBuckets[b.id].map(i => sortPool[i]);
                     return `
                         <button type="button" data-msort-bucket="${b.id}" style="text-align:left; padding:0.8rem; border-radius:14px; background:${b.bg}; border:2px dashed ${b.border}; color:#ffffff; cursor:pointer;">
-                            <div style="font-size:0.92rem; font-weight:900; color:${b.color}; margin-bottom:0.4rem;">
-                                ${b.title} (${items.length})
+                            <div style="font-size:0.92rem; font-weight:900; color:${b.color}; margin-bottom:0.4rem;"${rtlAttr}>
+                                ${mbT('box_' + b.id, lang)} (${items.length})
                             </div>
                             <div style="display:flex; flex-wrap:wrap; gap:0.28rem;">
                                 ${items.length
                                     ? items.map(it => `<span style="padding:0.16rem 0.46rem; border-radius:999px; background:rgba(15,23,42,0.9); border:1px solid ${b.border}; font-size:0.74rem; font-weight:800;">${it.shortLabel}</span>`).join('')
-                                    : `<span style="font-size:0.78rem; color:#94a3b8;">Klik for at placere</span>`}
+                                    : `<span style="font-size:0.78rem; color:#94a3b8;">${mbT('sort_click_place', lang)}</span>`}
                             </div>
                         </button>
                     `;
                 }).join('')}
             </div>
-            ${sortFeedback ? `<div class="mb-feedback ${sortFeedback.startsWith('✓') ? 'ok' : 'err'}">${sortFeedback}</div>` : ''}
+            ${sortFeedback ? `<div class="mb-feedback ${sortFeedback.ok ? 'ok' : 'err'}"${rtlAttr}>${sortFeedback.text}</div>` : ''}
         `;
 
         sortCard.querySelector('#mb-sort-toggle').onclick = () => {
@@ -1455,14 +1395,14 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         sortCard.querySelector('#mb-sort-reset').onclick = () => {
             Object.keys(sortedBuckets).forEach(k => { sortedBuckets[k] = []; });
             activeSortIdx = 0;
-            sortFeedback = '';
+            sortFeedback = null;
             renderMindmapSorting();
         };
 
         sortCard.querySelectorAll('[data-msort-item]').forEach(btn => {
             btn.onclick = () => {
                 activeSortIdx = Number(btn.dataset.msortItem);
-                sortFeedback = '';
+                sortFeedback = null;
                 renderMindmapSorting();
             };
         });
@@ -1474,9 +1414,9 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
                 const item = sortPool[activeSortIdx];
                 if (item.mindmapBox === targetBox) {
                     sortedBuckets[targetBox].push(activeSortIdx);
-                    sortFeedback = `✓ Rigtigt! »${item.word}« hører til ${MINDMAP_BOXES[targetBox].title}.`;
+                    sortFeedback = { ok: true, text: `✓ ${mbT('sort_ok', lang)} ${mbT('box_' + targetBox, lang)} («${item.word}»).` };
                 } else {
-                    sortFeedback = `✗ Ikke helt – »${item.word}« hører til ${MINDMAP_BOXES[item.mindmapBox].title}.`;
+                    sortFeedback = { ok: false, text: `✗ ${mbT('sort_err', lang)} ${mbT('box_' + item.mindmapBox, lang)}.` };
                 }
                 renderMindmapSorting();
             };
@@ -1488,7 +1428,7 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     panelsHolder.appendChild(panel1);
 
     // =========================================================================
-    // FANE 2: BYG SÆTNINGER (SKIFTE MELLEM PUSLESPIL OG BYG SELV)
+    // FANE 2: BYG SÆTNINGER (PUSLESPIL & BYG SELV — OVERSATTE HJÆLPESPØRGSMÅL!)
     // =========================================================================
     const panel2 = makePanel('tab_pusle');
     let pusleMode = 'puzzle';
@@ -1503,8 +1443,8 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
 
     function syncPusleMode() {
         pusleModeBar.innerHTML = `
-            <button type="button" class="mb-filter-btn ${pusleMode === 'puzzle' ? 'active' : ''}" data-pmode="puzzle">Puslespil (12)</button>
-            <button type="button" class="mb-filter-btn ${pusleMode === 'builder' ? 'active' : ''}" data-pmode="builder">Byg egen sætning</button>
+            <button type="button" class="mb-filter-btn ${pusleMode === 'puzzle' ? 'active' : ''}" data-pmode="puzzle">${mbT('pusle_tab_puzzle', lang)}</button>
+            <button type="button" class="mb-filter-btn ${pusleMode === 'builder' ? 'active' : ''}" data-pmode="builder">${mbT('pusle_tab_builder', lang)}</button>
         `;
         pusleModeBar.querySelectorAll('[data-pmode]').forEach(b => {
             b.onclick = () => {
@@ -1521,10 +1461,10 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     let pzSlots = [null, null, null, null];
 
     const slotDefs = [
-        { label: '1. Hvem / hvad?', color: '#22c55e' },
-        { label: '2. Hvad sker der?', color: '#ef4444' },
-        { label: '3. Hvad / hvordan?', color: '#f59e0b' },
-        { label: '4. Hvor / hvornår?', color: '#38bdf8' }
+        { key: 'slot_1', da: '1. Hvem / hvad?', color: '#22c55e' },
+        { key: 'slot_2', da: '2. Hvad sker der?', color: '#ef4444' },
+        { key: 'slot_3', da: '3. Hvad / hvordan?', color: '#f59e0b' },
+        { key: 'slot_4', da: '4. Hvor / hvornår?', color: '#38bdf8' }
     ];
 
     function renderPuzzle() {
@@ -1534,10 +1474,10 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         puzzleCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.65rem;">
                 <span class="mb-pill-tag" style="background:${boxMeta.bg}; color:${boxMeta.color}; border:1px solid ${boxMeta.border};">
-                    ${boxMeta.title}
+                    ${mbT('box_' + task.boxId, lang)}
                 </span>
                 <span style="font-size:0.84rem; color:#94a3b8; font-weight:800;">
-                    Opgave ${pzIdx + 1}/${BOLIG_PUZZLES.length} • Løst: ${pzDone.size}/${BOLIG_PUZZLES.length}
+                    ${mbT('lbl_task', lang)} ${pzIdx + 1}/${BOLIG_PUZZLES.length} • ${mbT('lbl_solved', lang)}: ${pzDone.size}/${BOLIG_PUZZLES.length}
                 </span>
             </div>
 
@@ -1549,7 +1489,10 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
                 `).join('')}
             </div>
 
-            <h3 style="margin:0.3rem 0 0.75rem; font-size:1.1rem; font-weight:900;">${task.q}</h3>
+            <div style="margin:0.35rem 0 0.8rem;">
+                <h3 style="margin:0; font-size:1.12rem; font-weight:900; color:#ffffff;">${task.q}</h3>
+                ${mbSub(`pz${task.num}_q`, 'mb-tr-sent', lang)}
+            </div>
 
             <div class="mb-slots-row" id="mb-pz-slots"></div>
             <div class="mb-chips-pool" id="mb-pz-bank"></div>
@@ -1575,8 +1518,9 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
                 s.className = `mb-slot ${pzSlots[idx] ? 'filled' : ''}`;
                 s.style.borderColor = def.color;
                 s.innerHTML = `
-                    <div style="font-size:0.74rem; font-weight:900; color:${def.color}; margin-bottom:0.18rem;">${def.label}</div>
-                    <div style="font-weight:800; font-size:0.95rem; color:${pzSlots[idx] ? '#ffffff' : '#64748b'};">${pzSlots[idx] || 'Klik på brik...'}</div>
+                    <div style="font-size:0.74rem; font-weight:900; color:${def.color};">${def.da}</div>
+                    ${!isDa ? `<div class="mb-tr-slot"${rtlAttr}>${mbT(def.key, lang)}</div>` : ''}
+                    <div${!pzSlots[idx] ? rtlAttr : ''} style="font-weight:800; font-size:0.95rem; margin-top:0.2rem; text-align:left; color:${pzSlots[idx] ? '#ffffff' : '#64748b'};">${pzSlots[idx] || mbT('slot_click_chip', lang)}</div>
                 `;
                 s.onclick = () => {
                     if (pzSlots[idx]) {
@@ -1608,11 +1552,12 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
                             speakBolig(fullSent);
                             fbEl.innerHTML = `
                                 <div class="mb-feedback ok">
-                                    <strong>✓ Rigtigt!</strong> »${fullSent}«
+                                    <div><strong>✓ ${mbT('pz_ok', lang)}</strong> »${fullSent}«</div>
+                                    ${mbSub(`pz${task.num}_ans`, 'mb-tr-sent', lang)}
                                 </div>
                                 <div style="margin-top:0.6rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
-                                    <button type="button" class="mb-btn-secondary" id="mb-pz-speak" style="display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(14)} Lyt</button>
-                                    <button type="button" class="mb-btn-primary" id="mb-pz-next">Næste →</button>
+                                    <button type="button" class="mb-btn-secondary" id="mb-pz-speak" style="display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(14)} ${mbT('btn_listen', lang)}</button>
+                                    <button type="button" class="mb-btn-primary" id="mb-pz-next">${mbT('btn_next', lang)}</button>
                                 </div>
                             `;
                             fbEl.querySelector('#mb-pz-speak').onclick = () => speakBolig(fullSent);
@@ -1623,11 +1568,11 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
                             };
                         } else {
                             fbEl.innerHTML = `
-                                <div class="mb-feedback err">
-                                    Prøv igen! Tjek rækkefølgen 1 → 2 → 3 → 4.
+                                <div class="mb-feedback err"${rtlAttr}>
+                                    ${mbT('pz_err', lang)}
                                 </div>
                                 <div style="margin-top:0.5rem;">
-                                    <button type="button" class="mb-btn-secondary" id="mb-pz-reset">Nulstil</button>
+                                    <button type="button" class="mb-btn-secondary" id="mb-pz-reset">${mbT('btn_reset', lang)}</button>
                                 </div>
                             `;
                             fbEl.querySelector('#mb-pz-reset').onclick = () => {
@@ -1646,10 +1591,10 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     }
 
     const builderRows = [
-        { q: '1. Hvem / hvad?', color: '#22c55e', opts: ['Jeg', 'Vi', 'Min lejlighed', 'Mit hus', 'Mine naboer', 'Mit område'] },
-        { q: '2. Hvad sker der?', color: '#ef4444', opts: ['bor', 'ligger', 'er', 'har', 'hilser'] },
-        { q: '3. Hvad / hvordan?', color: '#f59e0b', opts: ['i en lejlighed', '75 kvadratmeter', 'med min familie', 'søde og rolige', 'tæt på indkøb'] },
-        { q: '4. Hvor / hvornår?', color: '#38bdf8', opts: ['i Odense', 'på 2. sal', 'på en stille vej', 'i opgangen', 'i gården'] }
+        { key: 'slot_1', da: '1. Hvem / hvad?', color: '#22c55e', opts: ['Jeg', 'Vi', 'Min lejlighed', 'Mit hus', 'Mine naboer', 'Mit område'] },
+        { key: 'slot_2', da: '2. Hvad sker der?', color: '#ef4444', opts: ['bor', 'ligger', 'er', 'har', 'hilser'] },
+        { key: 'slot_3', da: '3. Hvad / hvordan?', color: '#f59e0b', opts: ['i en lejlighed', '75 kvadratmeter', 'med min familie', 'søde og rolige', 'tæt på indkøb'] },
+        { key: 'slot_4', da: '4. Hvor / hvornår?', color: '#38bdf8', opts: ['i Odense', 'på 2. sal', 'på en stille vej', 'i opgangen', 'i gården'] }
     ];
     const bSelections = ['Jeg', 'bor', 'i en lejlighed', 'i Odense'];
 
@@ -1657,8 +1602,8 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         const currentSent = `${bSelections[0]} ${bSelections[1]} ${bSelections[2]} ${bSelections[3]}.`;
         builderCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.8rem;">
-                <h3 style="margin:0; font-size:1.08rem; font-weight:900;">Byg din egen sætning</h3>
-                <button type="button" class="mb-btn-primary" id="mb-builder-speak" style="display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(14)} Lyt</button>
+                <h3 style="margin:0; font-size:1.08rem; font-weight:900;"${rtlAttr}>${mbT('builder_title', lang)}</h3>
+                <button type="button" class="mb-btn-primary" id="mb-builder-speak" style="display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(14)} ${mbT('btn_listen', lang)}</button>
             </div>
             <div id="mb-b-rows"></div>
             <div style="margin-top:0.9rem; padding:0.95rem 1.15rem; border-radius:14px; background:rgba(7,13,25,0.92); border:1.5px solid rgba(45,212,191,0.45); font-size:1.1rem; font-weight:800;">
@@ -1672,8 +1617,11 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         const rowsEl = builderCard.querySelector('#mb-b-rows');
         builderRows.forEach((row, rIdx) => {
             const rDiv = document.createElement('div');
-            rDiv.style.cssText = `margin-bottom:0.7rem; padding-left:0.7rem; border-left:3px solid ${row.color};`;
-            rDiv.innerHTML = `<div style="font-size:0.82rem; font-weight:900; color:${row.color}; margin-bottom:0.3rem;">${row.q}</div>`;
+            rDiv.style.cssText = `margin-bottom:0.75rem; padding-left:0.7rem; border-left:3px solid ${row.color};`;
+            rDiv.innerHTML = `
+                <div style="font-size:0.84rem; font-weight:900; color:${row.color};">${row.da}</div>
+                ${!isDa ? `<div class="mb-tr-slot" style="margin-bottom:0.3rem;"${rtlAttr}>${mbT(row.key, lang)}</div>` : '<div style="height:0.25rem;"></div>'}
+            `;
             const pool = document.createElement('div');
             pool.className = 'mb-chips-pool';
             pool.style.margin = '0';
@@ -1702,25 +1650,24 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     panelsHolder.appendChild(panel2);
 
     // =========================================================================
-    // FANE 3: MIN, MIT, MINE & VORES (KOMPAKT REGEL + 3 SKIFTEBARE ØVELSER)
+    // FANE 3: MIN, MIT, MINE & VORES
     // =========================================================================
     const panel3 = makePanel('tab_possessiv');
 
-    // Kompakt 1-linjes regel-oversigt (erstatter den store 4-boks væg)
     const posRuleBar = document.createElement('div');
     posRuleBar.className = 'mb-card';
     posRuleBar.style.padding = '0.8rem 1rem';
     posRuleBar.innerHTML = `
-        <div style="display:flex; flex-wrap:wrap; gap:0.65rem; align-items:center; font-size:0.85rem; line-height:1.45;">
-            <span><strong style="color:#4ade80;">en → min</strong> (min lejlighed)</span>
+        <div style="display:flex; flex-wrap:wrap; gap:0.65rem; align-items:center; font-size:0.85rem; line-height:1.45;"${rtlAttr}>
+            <span style="color:#4ade80; font-weight:800;">${mbT('pos_rule_1', lang)}</span>
             <span>·</span>
-            <span><strong style="color:#7dd3fc;">et → mit</strong> (mit hus, mit område)</span>
+            <span style="color:#7dd3fc; font-weight:800;">${mbT('pos_rule_2', lang)}</span>
             <span>·</span>
-            <span><strong style="color:#fde68a;">flertal → mine</strong> (mine naboer, mine værelser)</span>
+            <span style="color:#fde68a; font-weight:800;">${mbT('pos_rule_3', lang)}</span>
             <span>·</span>
-            <span><strong style="color:#e9d5ff;">vi → vores</strong></span>
+            <span style="color:#e9d5ff; font-weight:800;">${mbT('pos_rule_4', lang)}</span>
             <span>·</span>
-            <span style="color:#fca5a5;"><strong>Husk:</strong> min lejlighed (ikke <em>min lejligheden</em>)</span>
+            <span style="color:#fca5a5; font-weight:800;">${mbT('pos_rule_5', lang)}</span>
         </div>
     `;
     panel3.appendChild(posRuleBar);
@@ -1739,9 +1686,9 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
 
     function syncPosMode() {
         posModeBar.innerHTML = `
-            <button type="button" class="mb-filter-btn ${posMode === 'duel' ? 'active' : ''}" data-posm="duel">1. Min / mit / mine (16)</button>
-            <button type="button" class="mb-filter-btn ${posMode === 'trans' ? 'active' : ''}" data-posm="trans">2. Find den rigtige (6)</button>
-            <button type="button" class="mb-filter-btn ${posMode === 'cloze' ? 'active' : ''}" data-posm="cloze">3. Hel tekst (10)</button>
+            <button type="button" class="mb-filter-btn ${posMode === 'duel' ? 'active' : ''}" data-posm="duel">${mbT('pos_tab_1', lang)}</button>
+            <button type="button" class="mb-filter-btn ${posMode === 'trans' ? 'active' : ''}" data-posm="trans">${mbT('pos_tab_2', lang)}</button>
+            <button type="button" class="mb-filter-btn ${posMode === 'cloze' ? 'active' : ''}" data-posm="cloze">${mbT('pos_tab_3', lang)}</button>
         `;
         posModeBar.querySelectorAll('[data-posm]').forEach(b => {
             b.onclick = () => {
@@ -1764,16 +1711,19 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         posDuelCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
                 <span style="font-size:0.85rem; color:#94a3b8; font-weight:800;">
-                    Ord ${pDuelIdx + 1}/${POSSESSIVE_DUELS.length} • Score: ${pDuelSolved.size}/${POSSESSIVE_DUELS.length}
+                    ${mbT('lbl_word', lang)} ${pDuelIdx + 1}/${POSSESSIVE_DUELS.length} • ${mbT('lbl_score', lang)}: ${pDuelSolved.size}/${POSSESSIVE_DUELS.length}
                 </span>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="mb-btn-secondary" id="mb-pd-prev" ${pDuelIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="mb-btn-secondary" id="mb-pd-next" ${pDuelIdx === POSSESSIVE_DUELS.length - 1 ? 'disabled' : ''}>Næste →</button>
+                    <button type="button" class="mb-btn-secondary" id="mb-pd-prev" ${pDuelIdx === 0 ? 'disabled' : ''}>${mbT('btn_prev', lang)}</button>
+                    <button type="button" class="mb-btn-secondary" id="mb-pd-next" ${pDuelIdx === POSSESSIVE_DUELS.length - 1 ? 'disabled' : ''}>${mbT('btn_next', lang)}</button>
                 </div>
             </div>
 
-            <div style="padding:0.95rem 1.1rem; border-radius:14px; background:rgba(9,14,26,0.95); border-left:4px solid #2dd4bf; margin-bottom:0.85rem; font-size:1.1rem; font-weight:900; color:#ffffff;">
-                »${d.sentence.replace('___', pDuelAns ? `<span style="color:#5eead4; text-decoration:underline;">${pDuelAns}</span>` : '[ ___ ]')}«
+            <div style="padding:0.95rem 1.1rem; border-radius:14px; background:rgba(9,14,26,0.95); border-left:4px solid #2dd4bf; margin-bottom:0.85rem;">
+                <div style="font-size:1.1rem; font-weight:900; color:#ffffff;">
+                    »${d.sentence.replace('___', pDuelAns ? `<span style="color:#5eead4; text-decoration:underline;">${pDuelAns}</span>` : '[ ___ ]')}«
+                </div>
+                ${mbSub(`pd${d.num}_s`, 'mb-tr-sent', lang)}
             </div>
 
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:0.55rem;">
@@ -1792,10 +1742,10 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
             </div>
 
             ${pDuelAns !== null ? `
-                <div class="mb-feedback ${pDuelAns === d.answer ? 'ok' : 'err'}">
-                    <div><strong>${pDuelAns === d.answer ? '✓ Rigtigt!' : `✗ Svaret er "${d.answer}":`}</strong> ${d.expl}</div>
+                <div class="mb-feedback ${pDuelAns === d.answer ? 'ok' : 'err'}"${rtlAttr}>
+                    <div><strong>${pDuelAns === d.answer ? `✓ ${mbT('pos_ok', lang)}` : `✗ ${mbT('pos_err_prefix', lang)} "${d.answer}"`}</strong> · ${mbT(d.ruleKey, lang)}</div>
                     ${pDuelIdx < POSSESSIVE_DUELS.length - 1 ? `
-                        <button type="button" class="mb-btn-primary" id="mb-pd-adv" style="margin-top:0.5rem;">Næste →</button>
+                        <button type="button" class="mb-btn-primary" id="mb-pd-adv" style="margin-top:0.5rem;">${mbT('btn_next', lang)}</button>
                     ` : ''}
                 </div>
             ` : ''}
@@ -1831,15 +1781,15 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         posTransCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
                 <span style="font-size:0.85rem; color:#94a3b8; font-weight:800;">
-                    Opgave ${ptIdx + 1}/${POSSESSIVE_TRANSFORM_CHALLENGES.length} • Løst: ${ptSolved.size}/${POSSESSIVE_TRANSFORM_CHALLENGES.length}
+                    ${mbT('lbl_task', lang)} ${ptIdx + 1}/${POSSESSIVE_TRANSFORM_CHALLENGES.length} • ${mbT('lbl_solved', lang)}: ${ptSolved.size}/${POSSESSIVE_TRANSFORM_CHALLENGES.length}
                 </span>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="mb-btn-secondary" id="mb-pt-prev" ${ptIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="mb-btn-secondary" id="mb-pt-next" ${ptIdx === POSSESSIVE_TRANSFORM_CHALLENGES.length - 1 ? 'disabled' : ''}>Næste →</button>
+                    <button type="button" class="mb-btn-secondary" id="mb-pt-prev" ${ptIdx === 0 ? 'disabled' : ''}>${mbT('btn_prev', lang)}</button>
+                    <button type="button" class="mb-btn-secondary" id="mb-pt-next" ${ptIdx === POSSESSIVE_TRANSFORM_CHALLENGES.length - 1 ? 'disabled' : ''}>${mbT('btn_next', lang)}</button>
                 </div>
             </div>
 
-            <div style="font-size:1rem; font-weight:900; color:#ffffff; margin-bottom:0.75rem;">${q.prompt}</div>
+            <div style="font-size:1rem; font-weight:900; color:#ffffff; margin-bottom:0.75rem;"${rtlAttr}>${mbT(`pt${q.num}_q`, lang)}</div>
 
             <div style="display:grid; gap:0.5rem;">
                 ${q.options.map((opt, idx) => {
@@ -1858,8 +1808,8 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
             </div>
 
             ${ptAns !== null ? `
-                <div class="mb-feedback ${q.options[ptAns]?.correct ? 'ok' : 'err'}">
-                    <strong>${q.options[ptAns]?.correct ? '✓ Rigtigt!' : '✗ Husk:'}</strong> ${q.explanation}
+                <div class="mb-feedback ${q.options[ptAns]?.correct ? 'ok' : 'err'}"${rtlAttr}>
+                    <strong>${q.options[ptAns]?.correct ? `✓ ${mbT('pos_ok', lang)}` : `✗ ${mbT('pos_remember', lang)}`}</strong> ${mbT(`pt${q.num}_e`, lang)}
                 </div>
             ` : ''}
         `;
@@ -1889,8 +1839,8 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         const totalCorrect = POSSESSIVE_CLOZE_STORY.filter(item => clozePicks[item.id] === item.answer).length;
         clozeCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
-                <h3 style="margin:0; font-size:1.05rem; font-weight:900;">Indsæt min, mit eller mine (10 sætninger)</h3>
-                <button type="button" class="mb-btn-secondary" id="mb-cloze-reset">Nulstil</button>
+                <h3 style="margin:0; font-size:1.05rem; font-weight:900;"${rtlAttr}>${mbT('pc_title', lang)}</h3>
+                <button type="button" class="mb-btn-secondary" id="mb-cloze-reset">${mbT('btn_reset', lang)}</button>
             </div>
             <div style="display:grid; gap:0.48rem; margin-bottom:0.85rem;">
                 ${POSSESSIVE_CLOZE_STORY.map((item, idx) => {
@@ -1899,9 +1849,12 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
                     const isErr = clozeChecked && picked && picked !== item.answer;
                     return `
                         <div style="padding:0.62rem 0.9rem; border-radius:11px; background:rgba(9,14,26,0.9); border:1.5px solid ${isOk ? '#4ade80' : isErr ? '#f87171' : 'rgba(148,163,184,0.25)'}; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.45rem;">
-                            <div style="font-size:0.92rem; color:#f8fafc;">
-                                <span style="color:#94a3b8; font-weight:800; margin-right:0.3rem;">${idx + 1}.</span>
-                                ${item.before}<strong style="padding:0.1rem 0.45rem; border-radius:6px; background:rgba(20,184,166,0.2); border:1px solid #2dd4bf; color:#5eead4;">${picked || '___'}</strong>${item.after}
+                            <div>
+                                <div style="font-size:0.92rem; color:#f8fafc;">
+                                    <span style="color:#94a3b8; font-weight:800; margin-right:0.3rem;">${idx + 1}.</span>
+                                    ${item.before}<strong style="padding:0.1rem 0.45rem; border-radius:6px; background:rgba(20,184,166,0.2); border:1px solid #2dd4bf; color:#5eead4;">${picked || '___'}</strong>${item.after}
+                                </div>
+                                ${mbSub(item.trKey, 'mb-tr', lang)}
                             </div>
                             <div style="display:flex; gap:0.35rem;">
                                 ${item.options.map(opt => `
@@ -1914,10 +1867,10 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
                     `;
                 }).join('')}
             </div>
-            <button type="button" class="mb-btn-primary" id="mb-cloze-check">✓ Tjek svar</button>
+            <button type="button" class="mb-btn-primary" id="mb-cloze-check">✓ ${mbT('btn_check', lang)}</button>
             ${clozeChecked ? `
-                <div class="mb-feedback ${totalCorrect === POSSESSIVE_CLOZE_STORY.length ? 'ok' : 'err'}">
-                    <strong>${totalCorrect}/${POSSESSIVE_CLOZE_STORY.length} rigtige.</strong>
+                <div class="mb-feedback ${totalCorrect === POSSESSIVE_CLOZE_STORY.length ? 'ok' : 'err'}"${rtlAttr}>
+                    <strong>${totalCorrect}/${POSSESSIVE_CLOZE_STORY.length} ${mbT('lbl_correct_word', lang)}.</strong>
                 </div>
             ` : ''}
         `;
@@ -1951,7 +1904,7 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     panelsHolder.appendChild(panel3);
 
     // =========================================================================
-    // FANE 4: MINDMAP (DEL 1) — SKIFTE MELLEM BYG MINDMAP OG STIKORD-QUIZ
+    // FANE 4: MINDMAP (DEL 1)
     // =========================================================================
     const panel4 = makePanel('tab_mindmap');
     let mmMode = 'builder';
@@ -1966,8 +1919,8 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
 
     function syncMmMode() {
         mmModeBar.innerHTML = `
-            <button type="button" class="mb-filter-btn ${mmMode === 'builder' ? 'active' : ''}" data-mmode="builder">Byg dit mindmap</button>
-            <button type="button" class="mb-filter-btn ${mmMode === 'quiz' ? 'active' : ''}" data-mmode="quiz">Stikord eller sætning? (6)</button>
+            <button type="button" class="mb-filter-btn ${mmMode === 'builder' ? 'active' : ''}" data-mmode="builder">${mbT('mm_tab_builder', lang)}</button>
+            <button type="button" class="mb-filter-btn ${mmMode === 'quiz' ? 'active' : ''}" data-mmode="quiz">${mbT('mm_tab_quiz', lang)}</button>
         `;
         mmModeBar.querySelectorAll('[data-mmode]').forEach(b => {
             b.onclick = () => {
@@ -2000,23 +1953,23 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     function renderMyMindmapBuilder() {
         myMindmapCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem;">
-                <h3 style="margin:0; font-size:1.08rem; font-weight:900;">Dit mindmap (skriv kun stikord)</h3>
+                <h3 style="margin:0; font-size:1.08rem; font-weight:900;"${rtlAttr}>${mbT('mm_title', lang)}</h3>
                 <button type="button" class="mb-btn-primary" id="mb-speak-full-presentation" style="display:inline-flex; align-items:center; gap:0.35rem;">
-                    ${samtaleIcons.audio(14)} Lyt til eksempel
+                    ${samtaleIcons.audio(14)} ${mbT('btn_listen_ex', lang)}
                 </button>
             </div>
 
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:0.75rem; margin-bottom:0.95rem;">
                 ${Object.values(MINDMAP_BOXES).map(b => `
                     <div style="padding:0.8rem 0.9rem; border-radius:14px; background:rgba(9,14,26,0.92); border:1.5px solid ${b.border};">
-                        <div style="font-weight:900; font-size:0.92rem; color:${b.color}; margin-bottom:0.4rem;">
-                            ${b.title}
+                        <div style="font-weight:900; font-size:0.92rem; color:${b.color}; margin-bottom:0.4rem;"${rtlAttr}>
+                            ${mbT('box_' + b.id, lang)}
                         </div>
                         <input
                             type="text"
                             data-mm-input="${b.id}"
                             value="${userKeywords[b.id].replace(/"/g, '&quot;')}"
-                            placeholder="Skriv stikord..."
+                            placeholder="${mbT('mm_placeholder', lang)}"
                             style="width:100%; box-sizing:border-box; padding:0.48rem 0.7rem; border-radius:9px; border:1px solid rgba(148,163,184,0.35); background:rgba(30,41,59,0.9); color:#ffffff; font-weight:800; font-size:0.85rem; margin-bottom:0.4rem;"
                         />
                         <div style="display:flex; flex-wrap:wrap; gap:0.28rem;">
@@ -2031,16 +1984,16 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
             </div>
 
             <div style="padding:0.95rem 1.1rem; border-radius:14px; background:linear-gradient(135deg, rgba(13,148,136,0.16), rgba(15,23,42,0.95)); border:1.5px solid #2dd4bf;">
-                <div style="font-size:0.8rem; font-weight:900; color:#5eead4; text-transform:uppercase; margin-bottom:0.4rem;">
-                    Enkel tale-hjælp (Del 1 · 1–2 min.)
+                <div style="font-size:0.8rem; font-weight:900; color:#5eead4; text-transform:uppercase; margin-bottom:0.45rem;"${rtlAttr}>
+                    ${mbT('mm_guide_title', lang)}
                 </div>
-                <div style="font-size:0.94rem; color:#f8fafc; line-height:1.65;">
-                    1. Jeg bor i <strong>${userKeywords.sted_by}</strong>.<br>
-                    2. Jeg bor i <strong>${userKeywords.hus_lejlighed}</strong>.<br>
-                    3. Min bolig har <strong>${userKeywords.vaerelser_m2}</strong>.<br>
-                    4. Jeg bor med / alene: <strong>${userKeywords.alene_sammen}</strong>.<br>
-                    5. Mine naboer er <strong>${userKeywords.naboer}</strong>.<br>
-                    6. Mit område er <strong>${userKeywords.omraade}</strong>.
+                <div style="display:grid; gap:0.45rem; font-size:0.94rem; color:#f8fafc; line-height:1.5;">
+                    <div>1. Jeg bor i <strong>${userKeywords.sted_by}</strong>.${mbSub('mm_line_1', 'mb-tr', lang)}</div>
+                    <div>2. Jeg bor i <strong>${userKeywords.hus_lejlighed}</strong>.${mbSub('mm_line_2', 'mb-tr', lang)}</div>
+                    <div>3. Min bolig har <strong>${userKeywords.vaerelser_m2}</strong>.${mbSub('mm_line_3', 'mb-tr', lang)}</div>
+                    <div>4. Jeg bor med / alene: <strong>${userKeywords.alene_sammen}</strong>.${mbSub('mm_line_4', 'mb-tr', lang)}</div>
+                    <div>5. Mine naboer er <strong>${userKeywords.naboer}</strong>.${mbSub('mm_line_5', 'mb-tr', lang)}</div>
+                    <div>6. Mit område er <strong>${userKeywords.omraade}</strong>.${mbSub('mm_line_6', 'mb-tr', lang)}</div>
                 </div>
             </div>
         `;
@@ -2075,14 +2028,14 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         const q = STIKORD_VS_SAETNING_QUIZ[stIdx];
         stikordCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.7rem;">
-                <span style="font-size:0.85rem; color:#94a3b8; font-weight:800;">Boks ${stIdx + 1}/6 · ${q.boxTitle}</span>
+                <span style="font-size:0.85rem; color:#94a3b8; font-weight:800;">${mbT('lbl_box', lang)} ${stIdx + 1}/6 · ${mbT('box_' + q.boxId, lang)}</span>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="mb-btn-secondary" id="mb-st-prev" ${stIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="mb-btn-secondary" id="mb-st-next" ${stIdx === STIKORD_VS_SAETNING_QUIZ.length - 1 ? 'disabled' : ''}>Næste →</button>
+                    <button type="button" class="mb-btn-secondary" id="mb-st-prev" ${stIdx === 0 ? 'disabled' : ''}>${mbT('btn_prev', lang)}</button>
+                    <button type="button" class="mb-btn-secondary" id="mb-st-next" ${stIdx === STIKORD_VS_SAETNING_QUIZ.length - 1 ? 'disabled' : ''}>${mbT('btn_next', lang)}</button>
                 </div>
             </div>
 
-            <p style="margin:0 0 0.8rem; color:#ffffff; font-weight:800; font-size:0.96rem;">${q.question}</p>
+            <p style="margin:0 0 0.8rem; color:#ffffff; font-weight:800; font-size:0.96rem;"${rtlAttr}>${mbT(`st${q.num}_q`, lang)}</p>
 
             <div style="display:grid; gap:0.5rem;">
                 ${q.options.map((opt, idx) => {
@@ -2102,7 +2055,8 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
 
             ${stAns !== null ? `
                 <div class="mb-feedback ${q.options[stAns]?.correct ? 'ok' : 'err'}">
-                    ${q.oralExpansion}
+                    <div>${q.oralExpansionDa}</div>
+                    ${mbSub(`st${q.num}_exp`, 'mb-tr-sent', lang)}
                 </div>
             ` : ''}
         `;
@@ -2129,7 +2083,7 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     panelsHolder.appendChild(panel4);
 
     // =========================================================================
-    // FANE 5: DEL 2 — SPØRGSMÅL (SKIFTE MELLEM ØVELSE OG AI-TESTER)
+    // FANE 5: DEL 2 — SPØRGSMÅL & AI-TESTER
     // =========================================================================
     const panel5 = makePanel('tab_del2_dialog');
     let del2Mode = 'quiz';
@@ -2144,8 +2098,8 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
 
     function syncDel2Mode() {
         del2ModeBar.innerHTML = `
-            <button type="button" class="mb-filter-btn ${del2Mode === 'quiz' ? 'active' : ''}" data-d2m="quiz">Øv spørgsmål (6)</button>
-            <button type="button" class="mb-filter-btn ${del2Mode === 'ai' ? 'active' : ''}" data-d2m="ai">Øv med AI-tester</button>
+            <button type="button" class="mb-filter-btn ${del2Mode === 'quiz' ? 'active' : ''}" data-d2m="quiz">${mbT('d2_tab_quiz', lang)}</button>
+            <button type="button" class="mb-filter-btn ${del2Mode === 'ai' ? 'active' : ''}" data-d2m="ai">${mbT('d2_tab_ai', lang)}</button>
         `;
         del2ModeBar.querySelectorAll('[data-d2m]').forEach(b => {
             b.onclick = () => {
@@ -2166,16 +2120,17 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         del2Card.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
                 <span style="font-size:0.85rem; color:#94a3b8; font-weight:800;">
-                    Spørgsmål ${exQIdx + 1}/${EXAMINER_FOLLOWUP_QUESTIONS.length} • Løst: ${exQSolved.size}/${EXAMINER_FOLLOWUP_QUESTIONS.length}
+                    ${mbT('lbl_question', lang)} ${exQIdx + 1}/${EXAMINER_FOLLOWUP_QUESTIONS.length} • ${mbT('lbl_solved', lang)}: ${exQSolved.size}/${EXAMINER_FOLLOWUP_QUESTIONS.length}
                 </span>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="mb-btn-secondary" id="mb-d2-prev" ${exQIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="mb-btn-secondary" id="mb-d2-next" ${exQIdx === EXAMINER_FOLLOWUP_QUESTIONS.length - 1 ? 'disabled' : ''}>Næste →</button>
+                    <button type="button" class="mb-btn-secondary" id="mb-d2-prev" ${exQIdx === 0 ? 'disabled' : ''}>${mbT('btn_prev', lang)}</button>
+                    <button type="button" class="mb-btn-secondary" id="mb-d2-next" ${exQIdx === EXAMINER_FOLLOWUP_QUESTIONS.length - 1 ? 'disabled' : ''}>${mbT('btn_next', lang)}</button>
                 </div>
             </div>
 
-            <div style="padding:0.95rem 1.1rem; border-radius:14px; background:rgba(9,14,26,0.95); border-left:4px solid #ec4899; margin-bottom:0.85rem; font-size:1rem; font-weight:900; color:#ffffff;">
-                ${q.examinerQ}
+            <div style="padding:0.95rem 1.1rem; border-radius:14px; background:rgba(9,14,26,0.95); border-left:4px solid #ec4899; margin-bottom:0.85rem;">
+                <div style="font-size:1rem; font-weight:900; color:#ffffff;">${q.examinerQ}</div>
+                ${mbSub(`d2_${q.num}_q`, 'mb-tr-sent', lang)}
             </div>
 
             <div style="display:grid; gap:0.5rem;">
@@ -2195,8 +2150,9 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
             </div>
 
             ${exQAns !== null ? `
-                <div class="mb-feedback ${q.options[exQAns]?.correct ? 'ok' : 'err'}">
-                    <strong>${q.options[exQAns]?.correct ? '✓ Godt svar!' : '✗ Tip:'}</strong> ${q.tip}
+                <div class="mb-feedback ${q.options[exQAns]?.correct ? 'ok' : 'err'}"${rtlAttr}>
+                    <div><strong>${q.options[exQAns]?.correct ? `✓ ${mbT('d2_ok', lang)}` : `✗ ${mbT('d2_tip_prefix', lang)}`}</strong> ${mbT(`d2_${q.num}_tip`, lang)}</div>
+                    ${mbSub(`d2_${q.num}_a`, 'mb-tr-sent', lang)}
                 </div>
             ` : ''}
         `;
@@ -2219,10 +2175,8 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     }
 
     aiCard.innerHTML = `
-        <h3 style="margin:0 0 0.35rem; font-size:1.08rem; font-weight:900;">Øv hele prøven med AI-tester</h3>
-        <p style="margin:0 0 0.8rem; color:#cbd5e1; font-size:0.88rem;">
-            Kopiér teksten til ChatGPT, Claude eller Gemini for at øve Del 1 og Del 2 på enkelt dansk.
-        </p>
+        <h3 style="margin:0 0 0.35rem; font-size:1.08rem; font-weight:900;"${rtlAttr}>${mbT('ai_title', lang)}</h3>
+        <p style="margin:0 0 0.8rem; color:#cbd5e1; font-size:0.88rem;"${rtlAttr}>${mbT('ai_desc', lang)}</p>
         <div id="mb-ai-prompt-holder"></div>
     `;
     const promptSection = createPromptFlowSection(DU1_MODUL4_BOLIG_AI_PROMPT);
@@ -2252,26 +2206,33 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         detCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
                 <div>
-                    <h3 style="margin:0; font-size:1.08rem; font-weight:900;">Bolig-detektiven</h3>
-                    <div style="font-size:0.83rem; color:#94a3b8;">Mission ${detIdx + 1}/${BOLIG_DETECTIVE_MISSIONS.length} • Fundet: ${detSolved.size}/${BOLIG_DETECTIVE_MISSIONS.length}</div>
+                    <h3 style="margin:0; font-size:1.08rem; font-weight:900;"${rtlAttr}>${mbT('det_title', lang)}</h3>
+                    <div style="font-size:0.83rem; color:#94a3b8;">${mbT('lbl_mission', lang)} ${detIdx + 1}/${BOLIG_DETECTIVE_MISSIONS.length} • ${mbT('lbl_found', lang)}: ${detSolved.size}/${BOLIG_DETECTIVE_MISSIONS.length}</div>
                 </div>
                 <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
-                    <button type="button" class="mb-btn-secondary" id="mb-det-hint">${detShowHint ? 'Skjul spor' : 'Vis spor'}</button>
-                    <button type="button" class="mb-btn-secondary" id="mb-det-prev" ${detIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="mb-btn-secondary" id="mb-det-next" ${detIdx === BOLIG_DETECTIVE_MISSIONS.length - 1 ? 'disabled' : ''}>Næste →</button>
+                    <button type="button" class="mb-btn-secondary" id="mb-det-hint">${detShowHint ? mbT('btn_hide_hint', lang) : mbT('btn_show_hint', lang)}</button>
+                    <button type="button" class="mb-btn-secondary" id="mb-det-prev" ${detIdx === 0 ? 'disabled' : ''}>${mbT('btn_prev', lang)}</button>
+                    <button type="button" class="mb-btn-secondary" id="mb-det-next" ${detIdx === BOLIG_DETECTIVE_MISSIONS.length - 1 ? 'disabled' : ''}>${mbT('btn_next', lang)}</button>
                 </div>
             </div>
 
             <div style="padding:0.85rem 1.05rem; border-radius:14px; background:rgba(30,41,59,0.85); border-left:4px solid #14b8a6; margin-bottom:0.8rem;">
                 <div style="font-size:0.98rem; font-weight:900; color:#ffffff;">${m.prompt}</div>
-                ${detShowHint ? `<div style="margin-top:0.3rem; font-size:0.84rem; color:#fde68a;">Spor: ${m.hint}</div>` : ''}
+                ${mbSub(`det${m.num}_p`, 'mb-tr-sent', lang)}
+                ${detShowHint ? `
+                    <div style="margin-top:0.35rem; font-size:0.84rem; color:#fde68a;">
+                        ${mbT('lbl_hint', lang)} ${m.hint}
+                        ${mbSub(`det${m.num}_h`, 'mb-tr', lang)}
+                    </div>
+                ` : ''}
             </div>
 
             ${detFeedback ? `
                 <div class="mb-feedback ${detFeedback.ok ? 'ok' : 'err'}" style="margin-bottom:0.8rem;">
                     <div>${detFeedback.text}</div>
+                    ${detFeedback.subHtml || ''}
                     ${detFeedback.ok && detIdx < BOLIG_DETECTIVE_MISSIONS.length - 1 ? `
-                        <button type="button" class="mb-btn-primary" id="mb-det-advance" style="margin-top:0.5rem;">Næste →</button>
+                        <button type="button" class="mb-btn-primary" id="mb-det-advance" style="margin-top:0.5rem;">${mbT('btn_next', lang)}</button>
                     ` : ''}
                 </div>
             ` : ''}
@@ -2303,13 +2264,14 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
                     detSolved.add(detIdx);
                     detFeedback = {
                         ok: true,
-                        text: `✓ Fundet! #${w.num} ${w.word} — »${w.sentence}«`
+                        text: `✓ ${mbT('det_found_prefix', lang)} #${w.num} ${w.word} — »${w.sentence}«`,
+                        subHtml: mbSub(`w${w.num}_sent`, 'mb-tr-sent', lang)
                     };
                     speakBolig(`${w.word}. ${w.sentence}`);
                 } else {
                     detFeedback = {
                         ok: false,
-                        text: `✗ Det var #${w.num} (${w.shortLabel}). Prøv igen.`
+                        text: `✗ ${mbT('det_wrong_prefix', lang)} #${w.num} (${w.shortLabel}). ${mbT('det_try_again', lang)}`
                     };
                 }
                 renderDetective();

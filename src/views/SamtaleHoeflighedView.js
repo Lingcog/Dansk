@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { shuffleArray } from '../utils/shuffle.js';
+import { samtaleIcons, hoeflighedPillarIcon } from '../utils/samtaleIcons.js';
 
 /**
  * SamtaleHoeflighedView — "Høflighed på dansk"
@@ -7,21 +8,21 @@ import { shuffleArray } from '../utils/shuffle.js';
  * "Små lyde der får en samtale til at fungere" og "Små ord der får en samtale til at fungere".
  *
  * Indeholder:
- *   1. 🖼️ Vrimlebillede med de 20 mest almindelige danske høflighedsudtryk + 4-søjle sortering + Fuld oversigtstabel
- *   2. 🎯 Indsæt i social kontekst (20 sociale scenarier + 10 A/B dialog-byggere med 2 huller)
- *   3. 🎬 Video-bane A: Høflig uden "please" (Video 1, 2 & 3: Undskyld, modalverber, gerne/bare/lige) + 2 træningsbaner
- *   4. 🙏 Video-bane B: Tak, Svar på tak & "Tak for sidst" (Video 4, Tak på dansk & Tak for i aftes) + 2 træningsbaner
- *   5. 🛡️ Video-bane C: Høflige afslag & Dansk aftalekultur ("Nej på forskellige måder" & "Hvad er uhøfligt i Danmark?")
- *   6. ⚡ Video-bane D: Hverdagens lyn-situationer (6 Shorts: tilbyde hjælp, vælte kaffe, tak for mad, spørge om vej, gave, hilsen)
- *   7. 🕵️ Høfligheds-detektiven i vrimlebilledet (14 sociale billedjagt-missioner)
+ * 1. Vrimlebillede med de 20 mest almindelige danske høflighedsudtryk + 4-søjle sortering + Fuld oversigtstabel
+ * 2. Indsæt i social kontekst (20 sociale scenarier + 10 A/B dialog-byggere med 2 huller)
+ * 3. Video-bane A: Høflig uden "please" (Video 1, 2 & 3: Undskyld, modalverber, gerne/bare/lige) + 2 træningsbaner
+ * 4. Video-bane B: Tak, Svar på tak & "Tak for sidst" (Video 4, Tak på dansk & Tak for i aftes) + 2 træningsbaner
+ * 5. Video-bane C: Høflige afslag & Dansk aftalekultur ("Nej på forskellige måder" & "Hvad er uhøfligt i Danmark?")
+ * 6. Video-bane D: Hverdagens lyn-situationer (6 Shorts: tilbyde hjælp, vælte kaffe, tak for mad, spørge om vej, gave, hilsen)
+ * 7. Høfligheds-detektiven i vrimlebilledet (14 sociale billedjagt-missioner)
  */
 
 const PILLAR_META = {
     kontakt: {
         id: 'kontakt',
-        label: '🙋‍♂️ 1. Åbne kontakt & bede om noget',
-        short: '🙋‍♂️ KONTAKT & BØN',
-        subtitle: 'Danskernes erstatning for "please": Undskyld (til fremmede), må/vil/kan/skulle, gerne & bede om',
+        label: 'Kontakt & bøn',
+        short: 'KONTAKT & BØN',
+        subtitle: 'Undskyld (til fremmede), modalverber, gerne & bede om',
         color: '#f59e0b',
         border: 'rgba(245, 158, 11, 0.8)',
         bg: 'rgba(245, 158, 11, 0.16)',
@@ -29,9 +30,9 @@ const PILLAR_META = {
     },
     bloedgoer: {
         id: 'bloedgoer',
-        label: '🤝 2. Blødgøre, hjælpe & invitere',
-        short: '🤝 BLØDGØR & HJÆLP',
-        subtitle: 'Småordene "bare", "lige", "være sød at" samt at tilbyde hjælp og byde varmt velkommen',
+        label: 'Blødgør & hjælp',
+        short: 'BLØDGØR & HJÆLP',
+        subtitle: 'Bare, lige, være sød at, tilbyde hjælp & byde velkommen',
         color: '#06b6d4',
         border: 'rgba(6, 182, 212, 0.82)',
         bg: 'rgba(6, 182, 212, 0.16)',
@@ -39,9 +40,9 @@ const PILLAR_META = {
     },
     tak: {
         id: 'tak',
-        label: '🙏 3. Takke & svare på tak',
-        short: '🙏 TAK & SVAR',
-        subtitle: 'Tak + mere ("Tak for..."), forstærkerne Mange/Tusind tak, og svarene "Det var så lidt / Selv tak / Velbekomme"',
+        label: 'Tak & svar',
+        short: 'TAK & SVAR',
+        subtitle: 'Tak for..., Mange/Tusind tak, Det var så lidt & Velbekomme',
         color: '#10b981',
         border: 'rgba(16, 185, 129, 0.82)',
         bg: 'rgba(16, 185, 129, 0.16)',
@@ -49,9 +50,9 @@ const PILLAR_META = {
     },
     afslag: {
         id: 'afslag',
-        label: '🛡️ 4. Høflige afslag, undskyld & aftaler',
-        short: '🛡️ AFSLAG & TAKT',
-        subtitle: 'At sige pænt nej ("Ellers tak / Der springer jeg lige over"), undskylde uheld og overholde dansk tidskultur',
+        label: 'Afslag & takt',
+        short: 'AFSLAG & TAKT',
+        subtitle: 'Ellers tak, springe over, undskylde uheld & punktlighed',
         color: '#c084fc',
         border: 'rgba(192, 132, 252, 0.82)',
         bg: 'rgba(168, 85, 247, 0.16)',
@@ -70,10 +71,9 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Undskyld, må jeg spørge dig om noget?',
         shortLabel: 'Undskyld, må jeg...',
         pillar: 'kontakt',
-        icon: '🚌',
         socialContext: 'Til fremmede på gaden, i bussen eller i butikken',
         intonation: 'Blødt, venligt "Undskyld" + stigende spørgetone ↗ og smil',
-        x: 6.5,
+        x: 11.5,
         y: 36,
         pointerDir: 'down',
         bodyCue: 'Rejsende med blå rygsæk ved busstoppestedet til venstre, der hilser høfligt på en fremmed.',
@@ -93,7 +93,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Må jeg (lige) forstyrre dig et øjeblik?',
         shortLabel: 'Må jeg forstyrre...?',
         pillar: 'kontakt',
-        icon: '💻',
         socialContext: 'Til kolleger, undervisere eller folk du allerede kender',
         intonation: 'Varmt smil + blødt tryk på "forstyrre" og "øjeblik" ↗',
         x: 45,
@@ -116,7 +115,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Jeg vil gerne bede om...',
         shortLabel: 'Jeg vil gerne bede om...',
         pillar: 'kontakt',
-        icon: '🥐',
         socialContext: 'Når du bestiller i bageren, på café eller i en butik',
         intonation: 'Tydeligt tryk på "gerne" og blødt "bede om" [be’ om]',
         x: 21.5,
@@ -139,7 +137,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Må jeg bede om kvitteringen / bonen?',
         shortLabel: 'Må jeg bede om...?',
         pillar: 'kontakt',
-        icon: '🧾',
         socialContext: 'Ved kassen i supermarkedet, bageren eller ved middagsbordet ("Må jeg bede om saltet?")',
         intonation: 'Venlig spørgetone ↗ med blødt d i "bede" [må jeg be’ om]',
         x: 30.5,
@@ -162,7 +159,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Skulle du tilfældigvis have en..., jeg må låne?',
         shortLabel: 'Skulle du tilfældigvis...',
         pillar: 'kontakt',
-        icon: '🖊️',
         socialContext: 'Når du ekstra høfligt vil låne noget af en kollega, klassekammerat eller nabo',
         intonation: '"Skulle" udtales i talesprog kort som [sku’] + venligt stigende tone ↗',
         x: 37.5,
@@ -185,7 +181,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Du skulle vel ikke have set mine briller?',
         shortLabel: 'Du skulle vel ikke...?',
         pillar: 'kontakt',
-        icon: '👓',
         socialContext: 'Når du høfligt spørger efter noget, du leder efter eller håber, den anden ved',
         intonation: 'Blødt "sku\' vel ik\'" med spørgende slutning ↗',
         x: 48.5,
@@ -210,7 +205,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Vil du være sød at hjælpe mig med...?',
         shortLabel: 'Vil du være sød at...?',
         pillar: 'bloedgoer',
-        icon: '💛',
         socialContext: 'Når du beder en kollega, ven eller medarbejder om en konkret tjeneste',
         intonation: 'Varmt tonefald med tryk på "sød" og "hjælpe" ↗',
         x: 50.5,
@@ -233,7 +227,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Jeg har bare / lige et spørgsmål til',
         shortLabel: 'Bare / lige et spørgsmål',
         pillar: 'bloedgoer',
-        icon: '☝️',
         socialContext: 'Til møder, i undervisningen eller hos lægen/kommunen, når du vil spørge om én ting mere',
         intonation: 'Blødt, afdæmpet tonefald hvor "bare" eller "lige" beroliger lytteren →',
         x: 44.5,
@@ -256,7 +249,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Hvad kan jeg hjælpe dig med? / Hvad kan jeg gøre for dig?',
         shortLabel: 'Hvad kan jeg hjælpe med?',
         pillar: 'bloedgoer',
-        icon: '🙌',
         socialContext: 'Når du arbejder i service/butik, tager telefonen eller tager imod en kollega ved dit bord',
         intonation: 'Åbent, imødekommende tonefald med tryk på "hjælpe" eller "gøre" ↘',
         x: 29.5,
@@ -279,7 +271,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Du siger bare til, hvis du har brug for hjælp (en hånd)!',
         shortLabel: 'Du siger bare til!',
         pillar: 'bloedgoer',
-        icon: '📦',
         socialContext: 'Når du tilbyder din hjælp til en ven (fx ved flytning) eller en ny kollega',
         intonation: 'Varmt, uformelt og opmuntrende med tryk på "siger bare til" ↗',
         x: 88,
@@ -302,7 +293,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Kom bare ind, det er jo koldt!',
         shortLabel: 'Kom bare ind!',
         pillar: 'bloedgoer',
-        icon: '🚪',
         socialContext: 'Når du byder gæster velkommen ved hoveddøren eller inviterer en kollega ind på kontoret',
         intonation: 'Varmt og gæstfrit med tryk på "Kom bare ind"',
         x: 87.5,
@@ -327,7 +317,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Tusind tak for hjælpen! (Mange tak for din tid / oplysningen)',
         shortLabel: 'Tusind tak for hjælpen!',
         pillar: 'tak',
-        icon: '🙏',
         socialContext: 'Når nogen har hjulpet dig, givet dig svar i telefonen eller brugt tid på et møde',
         intonation: 'Begejstret tryk på "Tusind" (eller "Mange") + "hjælpen"',
         x: 43,
@@ -350,7 +339,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Det var så lidt! / Selv tak! (Ingen årsag)',
         shortLabel: 'Det var så lidt! / Selv tak!',
         pillar: 'tak',
-        icon: '😊',
         socialContext: 'Dit høflige svar, hver gang nogen siger "Tak for hjælpen" til dig',
         intonation: 'Venligt, let og afvæbnende tonefald ↗',
         x: 13.5,
@@ -373,7 +361,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Tak for mad! ↔ Velbekomme!',
         shortLabel: 'Tak for mad! ↔ Velbekomme!',
         pillar: 'tak',
-        icon: '🍽️',
         socialContext: 'Efter hvert fælles måltid i Danmark (hjemme, hos venner og i kantinen)',
         intonation: 'Varmt "Tak for mad!" efterfulgt af værtens "Velbekomme!"',
         x: 61,
@@ -396,7 +383,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Tak for i aften! ↔ Tak for besøget! (Tak fordi I kunne komme)',
         shortLabel: 'Tak for i aften / besøget',
         pillar: 'tak',
-        icon: '🧣',
         socialContext: 'I entréen ved hoveddøren, når gæsterne tager hjem fra middag eller besøg',
         intonation: 'Hjerteligt afskedstonefald med gensidig tak ↗',
         x: 88,
@@ -419,7 +405,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Tak for i aftes! / Tak for sidst! (ALDRIG "Tak for i nat!")',
         shortLabel: 'Tak for i aftes / sidst!',
         pillar: 'tak',
-        icon: '☕',
         socialContext: 'Når du møder en kollega eller ven dagen efter en fest – eller næste gang I ses',
         intonation: 'Glædeligt gensyns-tonefald ved kaffemaskinen ↗',
         x: 36,
@@ -429,7 +414,7 @@ export const POLITENESS_EXPRESSIONS = [
         definition: 'En unik dansk høflighedsskik: Når du ser eller skriver til folk dagen efter en fest eller middag, siger du "Tak for i aftes!" eller "Tak for i går!". Og næste gang I mødes (efter dage, uger eller måneder), indleder man altid med "Tak for sidst!".',
         dialogueA: 'Godmorgen! <strong>Tak for i aftes (Tak for sidst)!</strong> Det var en rigtig sjov fest.',
         dialogueB: '<strong>Selv tak!</strong> Ja, det var super hyggeligt.',
-        trapTip: '⚠️ KÆMPE FÆLDE: Sig ALDRIG "Tak for i nat!" til en kollega! På dansk betyder "Tak for i nat" kun, at man har sovet sammen i samme seng!',
+        trapTip: 'KÆMPE FÆLDE: Sig ALDRIG "Tak for i nat!" til en kollega! På dansk betyder "Tak for i nat" kun, at man har sovet sammen i samme seng!',
         videoRef: 'Video 6: Tak for i aftes - ikke tak for i nat! (2mamV0pAl1c • 00:00–01:49)',
         videoTab: 'tab_video_tak',
         ttsText: 'Godmorgen og tak for i aftes! Tak for sidst, det var rigtig hyggeligt!',
@@ -442,7 +427,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Tak for lån! / Tak skal du have! (Ej, hvor er du sød!)',
         shortLabel: 'Tak for lån / skal du have',
         pillar: 'tak',
-        icon: '📘',
         socialContext: 'Når du afleverer noget lånt tilbage, modtager en ting/gave eller får en kompliment',
         intonation: 'Varmt tryk på "lån" eller "Tak skal du have" [tak ska’ du ha’]',
         x: 64,
@@ -467,7 +451,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Nej tak / Ellers tak! (Uformelt: Der springer jeg lige over!)',
         shortLabel: 'Ellers tak! / Springer over',
         pillar: 'afslag',
-        icon: '🫖',
         socialContext: 'Når du høfligt siger nej tak til mere kaffe/mad eller afslår et forslag blandt venner/kolleger',
         intonation: 'Varmt, venligt "Ellers tak!" med smil og flad hånd over koppen',
         x: 74,
@@ -490,7 +473,6 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Årh nej, undskyld! Det må du undskylde – skal jeg ikke hente en ny?',
         shortLabel: 'Det må du undskylde!',
         pillar: 'afslag',
-        icon: '☕',
         socialContext: 'Når du kommer til at vælte noget, støde ind i nogen eller lave en fejl',
         intonation: 'Medfølende "Årh nej!" + opreklamerende "Skal jeg ikke...?" ↗',
         x: 13.5,
@@ -513,10 +495,9 @@ export const POLITENESS_EXPRESSIONS = [
         phrase: 'Undskyld, jeg bliver 5 minutter forsinket! (+ Afsked: Du må hilse!)',
         shortLabel: 'Forsinket & Du må hilse!',
         pillar: 'afslag',
-        icon: '⌚',
         socialContext: 'Dansk tid- og aftalehøflighed (giv altid besked ved forsinkelse!) samt varm hilsen ved afsked',
         intonation: 'Respektfuld besked ved forsinkelse + varmt "Du må hilse derhjemme!" ved farvel',
-        x: 94.5,
+        x: 86.5,
         y: 77,
         pointerDir: 'down',
         bodyCue: 'Pendleren i blå jakke nederst til højre, der kigger på sit armbåndsur og sender en hurtig besked.',
@@ -539,7 +520,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 1,
         pillar: 'kontakt',
-        setting: '🚌 På gaden i en ny by (Til en fremmed)',
+        setting: 'På gaden i en ny by (Til en fremmed)',
         contextDesc: 'Du står ved busstoppestedet og er i tvivl om, hvor bussen til Aarhus C holder. Du henvender dig til en fremmed person, du aldrig har mødt før.',
         speakerA: 'Dig (til fremmed): "[ ___ ] Ved du, hvor bussen til Aarhus C holder?"',
         speakerB: 'Fremmed: "Ja, den holder lige derovre på den anden side af gaden!"',
@@ -555,7 +536,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 2,
         pillar: 'kontakt',
-        setting: '💻 På kontoret / sprogskolen (Til en kollega du kender)',
+        setting: 'På kontoret / sprogskolen (Til en kollega du kender)',
         contextDesc: 'Din kollega Mette sidder ved sin computer. I kender hinanden godt, og du vil høfligt stille hende et hurtigt fagligt spørgsmål.',
         speakerA: 'Dig (smiler til kollega): "[ ___ ]"',
         speakerB: 'Mette: "Ja, selvfølgelig! Hvad kan jeg hjælpe med?"',
@@ -571,7 +552,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 3,
         pillar: 'kontakt',
-        setting: '🥐 Hos bageren søndag morgen',
+        setting: 'Hos bageren søndag morgen',
         contextDesc: 'Det er din tur ved disken hos bageren, og du vil bestille to croissanter på naturligt, høfligt dansk (i stedet for engelsk "please").',
         speakerA: 'Bageren: "Godmorgen! Hvad skulle det være?"',
         speakerB: 'Dig: "Godmorgen! [ ___ ] to croissanter."',
@@ -587,7 +568,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 4,
         pillar: 'kontakt',
-        setting: '🧾 Ved kassen i supermarkedet',
+        setting: 'Ved kassen i supermarkedet',
         contextDesc: 'Du har lige betalt med kort i butikken, og du har brug for bonen til dit regnskab.',
         speakerA: 'Ekspedienten: "Så er betalingen gået igennem."',
         speakerB: 'Dig: "Tak! [ ___ ]"',
@@ -603,7 +584,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 5,
         pillar: 'kontakt',
-        setting: '🖊️ Til møde med nye samarbejdspartnere (Ekstra høfligt lån)',
+        setting: 'Til møde med nye samarbejdspartnere (Ekstra høfligt lån)',
         contextDesc: 'Du sidder til et møde og opdager, at du har glemt en kuglepen. Du vil spørge personen ved siden af dig på en ekstra høflig og blød måde.',
         speakerA: 'Dig: "[ ___ ]"',
         speakerB: 'Sidemand: "Ja da, værsgo – jeg har to i tasken!"',
@@ -619,7 +600,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 6,
         pillar: 'kontakt',
-        setting: '👓 I frokoststuen – når du leder efter noget',
+        setting: 'I frokoststuen – når du leder efter noget',
         contextDesc: 'Du leder efter dine briller på fællesbordet og vil høfligt høre, om din kollega måske har lagt mærke til dem.',
         speakerA: 'Dig: "[ ___ ]"',
         speakerB: 'Kollega: "Jo! De ligger lige ved siden af kaffemaskinen."',
@@ -635,7 +616,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 7,
         pillar: 'bloedgoer',
-        setting: '💛 På arbejdspladsen – når du beder om en tjeneste',
+        setting: 'På arbejdspladsen – når du beder om en tjeneste',
         contextDesc: 'Du har brug for, at din kollega Anders hjælper dig i 2 minutter med at løfte en tung kasse printerpapir.',
         speakerA: 'Dig: "Hej Anders! [ ___ ] at flytte den her kasse?"',
         speakerB: 'Anders: "Ja, selvfølgelig – jeg tager fat i den ene ende!"',
@@ -651,7 +632,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 8,
         pillar: 'bloedgoer',
-        setting: '☝️ Ved slutningen af en samtale eller et møde',
+        setting: 'Ved slutningen af en samtale eller et møde',
         contextDesc: 'Underviseren eller mødelederen er næsten færdig med at forklare noget, og du vil blødt skyde ét sidste lille spørgsmål ind.',
         speakerA: 'Dig (løfter en finger med et smil): "[ ___ ]"',
         speakerB: 'Underviser: "Ja, endelig – hvad tænker du på?"',
@@ -667,7 +648,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 9,
         pillar: 'bloedgoer',
-        setting: '🙌 I receptionen eller butikken (Når du tilbyder service)',
+        setting: 'I receptionen eller butikken (Når du tilbyder service)',
         contextDesc: 'En kunde eller gæst træder hen til din skranke på arbejdet. Hvad siger du høfligt for at tage imod personen?',
         speakerA: 'Dig: "Hej og velkommen! [ ___ ]"',
         speakerB: 'Gæst: "Hej! Jeg har en aftale med Henrik klokken 10."',
@@ -683,7 +664,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 10,
         pillar: 'bloedgoer',
-        setting: '📦 En god ven fortæller, at han skal flytte',
+        setting: 'En god ven fortæller, at han skal flytte',
         contextDesc: 'Din ven fortæller på parkeringspladsen, at han skal flytte i næste weekend. Du vil gerne tilbyde din hjælp på ægte dansk manér.',
         speakerA: 'Din ven: "Puha, vi skal flytte alle kasserne på lørdag."',
         speakerB: 'Dig: "[ ___ ]"',
@@ -699,7 +680,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 11,
         pillar: 'bloedgoer',
-        setting: '🚪 Ved hoveddøren en kold efterårsaften',
+        setting: 'Ved hoveddøren en kold efterårsaften',
         contextDesc: 'Din gæst ringer på døren og står ude i kulden med halstørklæde på. Du åbner døren på vid gab.',
         speakerA: 'Gæst: "Hej! Dejligt at se dig."',
         speakerB: 'Dig (holder døren åben): "Hej! [ ___ ]"',
@@ -715,7 +696,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 12,
         pillar: 'tak',
-        setting: '🙏 Når en kollega eller kundeservice har hjulpet dig',
+        setting: 'Når en kollega eller kundeservice har hjulpet dig',
         contextDesc: 'Du har ringet til borgerservice eller spurgt en kollega til råds, og personen har lige brugt 5 minutter på at give dig et grundigt svar.',
         speakerA: 'Medarbejder: "...så du skal bare uploade skemaet inden fredag."',
         speakerB: 'Dig: "[ ___ ]"',
@@ -731,7 +712,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 13,
         pillar: 'tak',
-        setting: '😊 Når nogen takker DIG for hjælpen',
+        setting: 'Når nogen takker DIG for hjælpen',
         contextDesc: 'Du har lige hjulpet en ny kollega med at finde det rigtige mødelokale. Kollegaen siger: "Tusind tak for hjælpen!". Hvad svarer du?',
         speakerA: 'Kollega: "Tusind tak for hjælpen!"',
         speakerB: 'Dig: "[ ___ ]"',
@@ -747,7 +728,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 14,
         pillar: 'tak',
-        setting: '🍽️ Ved middagsbordet hos danske venner',
+        setting: 'Ved middagsbordet hos danske venner',
         contextDesc: 'I er lige blevet færdige med at spise aftensmad hjemme hos en dansk ven. Hvad siger du som gæst – og hvad svarer værten?',
         speakerA: 'Dig (som gæst): "[ ___ ]"',
         speakerB: 'Værten: "Velbekomme! Dejligt at det smagte."',
@@ -763,7 +744,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 15,
         pillar: 'tak',
-        setting: '🧣 I entréen når gæsterne tager hjem (Værtens replik)',
+        setting: 'I entréen når gæsterne tager hjem (Værtens replik)',
         contextDesc: 'Du har haft gæster til middag. Nu står de i entréen med overtøjet på og siger: "Tusind tak for i aften!". Hvad svarer du som VÆRT?',
         speakerA: 'Gæsterne: "Tusind tak for i aften! Det har været så hyggeligt."',
         speakerB: 'Dig (som vært): "[ ___ ]"',
@@ -779,7 +760,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 16,
         pillar: 'tak',
-        setting: '☕ Ved kaffemaskinen på jobbet dagen efter firmafesten',
+        setting: 'Ved kaffemaskinen på jobbet dagen efter firmafesten',
         contextDesc: 'I går aftes var du til middag og fest med dine kolleger. Nu møder du din kollega Søren ved kaffemaskinen næste morgen. Pas på den berømte danske fælde!',
         speakerA: 'Dig (smiler med kaffekoppen): "Godmorgen Søren! [ ___ ]"',
         speakerB: 'Søren: "Selv tak! Ja, det var en rigtig sjov aften."',
@@ -795,7 +776,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 17,
         pillar: 'tak',
-        setting: '📘 Når du afleverer noget tilbage, du har lånt',
+        setting: 'Når du afleverer noget tilbage, du har lånt',
         contextDesc: 'Du har lånt en dansk roman af din veninde i en uge. Nu sidder I i sofaen, og du rækker bogen tilbage til hende.',
         speakerA: 'Dig (rækker bogen frem): "Værsgo, her er din bog – [ ___ ]"',
         speakerB: 'Veninde: "Det var så lidt! Hvad syntes du om den?"',
@@ -811,7 +792,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 18,
         pillar: 'afslag',
-        setting: '🫖 Når værten tilbyder dig en tredje kop kaffe (Høfligt afslag)',
+        setting: 'Når værten tilbyder dig en tredje kop kaffe (Høfligt afslag)',
         contextDesc: 'I sidder omkring bordet efter middagen. Værten kommer med termokanden og spørger: "Skal du have en kop kaffe mere?". Du har allerede drukket to kopper og vil høfligt sige nej.',
         speakerA: 'Værten: "Skal du have en lille tår kaffe mere?"',
         speakerB: 'Dig (smiler og holder en flad hånd let over koppen): "[ ___ ]"',
@@ -827,7 +808,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 19,
         pillar: 'afslag',
-        setting: '☕ Uheld ved cafébordet – du vælter din vens kaffe!',
+        setting: 'Uheld ved cafébordet – du vælter din vens kaffe!',
         contextDesc: 'Du rækker ud efter en serviet og kommer ved et uheld til at vælte din vens gule kaffekop ud over bordet. Hvad siger du med det samme?',
         speakerA: 'Dig (tager en klud med det samme): "[ ___ ]"',
         speakerB: 'Din ven: "Ej, bare rolig – det kan ske for alle!"',
@@ -843,7 +824,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
     {
         num: 20,
         pillar: 'afslag',
-        setting: '⌚ Du er på vej til en aftale kl. 14:00, men bliver 6 minutter forsinket',
+        setting: 'Du er på vej til en aftale kl. 14:00, men bliver 6 minutter forsinket',
         contextDesc: 'Du har en kaffeaftale med en dansk ven eller et møde på jobbet kl. 14:00. Klokken er 13:55, og du kan se, at du først er fremme kl. 14:06. Hvad kræver dansk høflighedskultur?',
         speakerA: 'Dig (sender straks en SMS): "[ ___ ]"',
         speakerB: 'Modtager: "Helt i orden – tusind tak fordi du lige giver besked!"',
@@ -864,7 +845,7 @@ const SOCIAL_CONTEXT_CHALLENGES = [
 const DUAL_SLOT_DIALOGUES = [
     {
         title: '1. Hos bageren: Bestilling + Kvittering',
-        setting: '🥐 I bagerbutikken',
+        setting: 'I bagerbutikken',
         rawHint: 'Fra rå tanke: "Giv mig 2 croissanter" + "Giv mig bonen"',
         slotsText: 'Kunde: "Hej! [1] to croissanter." — Bager: "Værsgo!" — Kunde: "Tak, [2]?"',
         slot1Options: ['Jeg vil gerne bede om', 'Jeg vil have', 'Du skulle vel ikke'],
@@ -875,7 +856,7 @@ const DUAL_SLOT_DIALOGUES = [
     },
     {
         title: '2. Afsked i døren efter middag: Gæst ↔ Vært',
-        setting: '🚪 I entréen kl. 22:30',
+        setting: 'I entréen kl. 22:30',
         rawHint: 'Begge parter takker hinanden i døren',
         slotsText: 'Gæst: "Tusind [1]! Det var så hyggeligt." — Vært: "Selv tak, og [2]!"',
         slot1Options: ['tak for i aften', 'tak for besøget', 'tak for i nat'],
@@ -886,7 +867,7 @@ const DUAL_SLOT_DIALOGUES = [
     },
     {
         title: '3. Efter måltidet: Gæst ↔ Vært',
-        setting: '🍽️ Ved spisebordet',
+        setting: 'Ved spisebordet',
         rawHint: 'Når alle er færdige med at spise',
         slotsText: 'Gæst: "[1], det smagte rigtig godt!" — Vært: "[2]!"',
         slot1Options: ['Tak for mad', 'Tak for sidst', 'Tak for lån'],
@@ -897,7 +878,7 @@ const DUAL_SLOT_DIALOGUES = [
     },
     {
         title: '4. Ekstra høfligt spørgsmål + Svar på negativt spørgsmål',
-        setting: '👓 På kontoret',
+        setting: 'På kontoret',
         rawHint: 'Spørgsmål med "skulle + vel ikke" kræver "Jo!" ved positivt svar',
         slotsText: 'Kollega A: "Du [1] have set mine briller?" — Kollega B: "[2], de ligger lige her på printeren!"',
         slot1Options: ['skulle vel ikke', 'vil gerne bede om', 'springer lige over'],
@@ -908,7 +889,7 @@ const DUAL_SLOT_DIALOGUES = [
     },
     {
         title: '5. Dagen efter firmafesten + Næste gang man ses',
-        setting: '☕ Ved kaffemaskinen',
+        setting: 'Ved kaffemaskinen',
         rawHint: 'Pas på "i nat"-fælden!',
         slotsText: 'Dagen efter festen: "Godmorgen og [1]!" — To uger senere på gangen: "Hej igen, og [2]!"',
         slot1Options: ['tak for i aftes', 'tak for i nat', 'tak for lån'],
@@ -919,7 +900,7 @@ const DUAL_SLOT_DIALOGUES = [
     },
     {
         title: '6. Hjælp mellem kolleger: Tak ↔ Svar på tak',
-        setting: '💼 Ved skrivebordet',
+        setting: 'Ved skrivebordet',
         rawHint: 'Begge sider af en høflig tak-udveksling',
         slotsText: 'Kollega A: "Tusind [1] med rapporten!" — Kollega B: "[2]! Du siger bare til en anden gang."',
         slot1Options: ['tak for hjælpen', 'tak for mad', 'tak for besøget'],
@@ -930,7 +911,7 @@ const DUAL_SLOT_DIALOGUES = [
     },
     {
         title: '7. Fremmed på gaden vs. Kollega på kontoret',
-        setting: '🚌 vs. 💻 Kontrast mellem fremmed og kendt',
+        setting: 'vs. Kontrast mellem fremmed og kendt',
         rawHint: 'Hvornår bruger man "Undskyld" som døråbner?',
         slotsText: 'Til fremmed på gaden: "[1], må jeg spørge dig om noget?" — Til kollega du kender: "(Smiler) [2] forstyrre dig et øjeblik?"',
         slot1Options: ['Undskyld', 'Velbekomme', 'Ellers tak'],
@@ -941,7 +922,7 @@ const DUAL_SLOT_DIALOGUES = [
     },
     {
         title: '8. To typer høflige afslag: Ved kaffebordet vs. Frisk løbetur',
-        setting: '🫖 & 🏃‍♂️ Høfligt nej i to forskellige registre',
+        setting: '& Høfligt nej i to forskellige registre',
         rawHint: 'Klassisk ved bordet vs. lunt blandt kolleger',
         slotsText: 'Værten tilbyder en 3. kop kaffe: "[1], jeg har fint!" — Kollegaen spørger, om du vil med ud at vinterbade kl. 06: "Haha, [2]!"',
         slot1Options: ['Ellers tak', 'Aldrig i livet', 'Tak for lån'],
@@ -952,7 +933,7 @@ const DUAL_SLOT_DIALOGUES = [
     },
     {
         title: '9. Uheld ved bordet: Undskyldning + Høfligt tilbud',
-        setting: '☕ Når du vælter en vens kaffekop',
+        setting: 'Når du vælter en vens kaffekop',
         rawHint: 'Fra Short-videoen "At vælte nogens ting"',
         slotsText: 'Dig: "Årh nej, [1]! [2] hente en ny kop kaffe til dig?"',
         slot1Options: ['det må du undskylde', 'det var så lidt', 'ellers tak'],
@@ -963,7 +944,7 @@ const DUAL_SLOT_DIALOGUES = [
     },
     {
         title: '10. Låne en bog + Sende en hilsen ved afsked',
-        setting: '📘 & 👋 Hos en god ven',
+        setting: '& Hos en god ven',
         rawHint: 'Aflevering af lånt bog + afskedshilsen til familien',
         slotsText: 'Dig: "Her er din bog tilbage – tusind [1]! Vi ses i næste uge, og [2] derhjemme!"',
         slot1Options: ['tak for lån', 'tak for mad', 'tak for oplysningen'],
@@ -1151,7 +1132,7 @@ const VIDEO_LANE_B_VIDEOS = [
         phrases: [
             { time: '00:16', text: 'Tak for i aftes! / Tak for i går!', note: 'Sig dette dagen efter en middag eller fest' },
             { time: '00:29', text: 'Tak for sidst!', note: 'Sig dette næste gang I mødes (dage/uger/måneder efter)' },
-            { time: '01:00', text: '⚠️ ALDRIG: "Tak for i nat!" (til kolleger/venner)', note: 'Betyder kun, at man har sovet i samme seng!' }
+            { time: '01:00', text: 'ALDRIG: "Tak for i nat!" (til kolleger/venner)', note: 'Betyder kun, at man har sovet i samme seng!' }
         ]
     }
 ];
@@ -1945,7 +1926,7 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.textContent = '← ' + (getTranslation('back') || 'Tilbage til Samtaletræning');
+    backBtn.textContent = '←' + (getTranslation('back') || 'Tilbage til Samtaletræning');
     backBtn.onclick = () => navigateFn('samtale_traening');
     topBar.appendChild(backBtn);
 
@@ -1957,67 +1938,54 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
     const sisterLydeBtn = document.createElement('button');
     sisterLydeBtn.type = 'button';
     sisterLydeBtn.className = 'sh-btn-secondary';
-    sisterLydeBtn.innerHTML = '🔊 Søster-flade: <strong>Små LYDE →</strong>';
+    sisterLydeBtn.innerHTML = 'Små lyde →';
     sisterLydeBtn.onclick = () => navigateFn('samtale_smaalyde');
     sisterWrap.appendChild(sisterLydeBtn);
 
     const sisterOrdBtn = document.createElement('button');
     sisterOrdBtn.type = 'button';
     sisterOrdBtn.className = 'sh-btn-secondary';
-    sisterOrdBtn.innerHTML = '💬 Søster-flade: <strong>Små ORD →</strong>';
+    sisterOrdBtn.innerHTML = 'Små ord →';
     sisterOrdBtn.onclick = () => navigateFn('samtale_smaaord');
     sisterWrap.appendChild(sisterOrdBtn);
 
     topBar.appendChild(sisterWrap);
     viewContainer.appendChild(topBar);
 
-    // Hero
+    // Kompakt Hero — ingen gentagelse af søjler eller fraselister
     const hero = document.createElement('div');
     hero.className = 'sh-hero';
+    hero.style.padding = '1rem 1.35rem';
     hero.innerHTML = `
-        <div class="sh-hero-kicker">🎩 Samtaletræning • Flade 3 af 3: De 20 Høflighedsudtryk & Sociale Kontekster</div>
-        <h1>Høflighed på dansk</h1>
-        <p>
-            Dansk har <strong>ikke et ord som "please"</strong> – i stedet viser vi høflighed med <strong>de 20 vigtigste danske høflighedsudtryk</strong>:
-            hvornår du åbner med <em>Undskyld</em> (kun til fremmede!), hvordan du bruger modalverber (<em>må, vil, skulle + tilfældigvis / vel ikke</em>) og småordene <em>gerne, bede om, bare, lige</em>, hvordan du takker og svarer på tak (<em>Tak for... ↔ Det var så lidt / Velbekomme / Tak for sidst</em>), og hvordan du siger pænt nej tak (<em>Ellers tak / Der springer jeg lige over</em>).
+        <h1 style="margin:0 0 0.25rem; font-size:clamp(1.35rem, 2.4vw, 1.85rem); font-weight:900; text-align:left;">Høflighed på dansk</h1>
+        <p style="margin:0; font-size:0.92rem; line-height:1.45;">
+            20 centrale udtryk til at bede pænt, blødgøre, takke og afslå uden ordet "please".
         </p>
-        <div class="sh-pillar-grid">
-            ${Object.values(PILLAR_META).map(m => `
-                <div class="sh-pillar-box" style="border:1.5px solid ${m.border}; background:${m.bg};">
-                    <div style="font-size:0.9rem; font-weight:900; color:${m.color}; margin-bottom:0.2rem;">
-                        ${m.label} (${m.count})
-                    </div>
-                    <div style="font-size:0.79rem; color:#e2e8f0; line-height:1.4;">
-                        ${m.subtitle}
-                    </div>
-                </div>
-            `).join('')}
-        </div>
     `;
     viewContainer.appendChild(hero);
 
     const tabs = [
-        { id: 'tab_vrimmel', icon: '🖼️', label: '1. Vrimlebillede & 20 Udtryk' },
-        { id: 'tab_kontekst', icon: '🎯', label: '2. Indsæt i social kontekst (30)' },
-        { id: 'tab_video_please', icon: '🎬', label: '3. Video A: Høflig uden "please" (Video 1–3)' },
-        { id: 'tab_video_tak', icon: '🙏', label: '4. Video B: Tak, Svar & "Tak for sidst"' },
-        { id: 'tab_video_afslag', icon: '🛡️', label: '5. Video C: Høfligt Nej & Aftalekultur' },
-        { id: 'tab_video_shorts', icon: '⚡', label: '6. Video D: 6 Hverdags-situationer' },
-        { id: 'tab_detektiv', icon: '🕵️', label: '7. Høfligheds-detektiven' }
+        { id:'tab_vrimmel', label:'1. Vrimlebillede (20)' },
+        { id:'tab_kontekst', label:'2. Social kontekst (30)' },
+        { id:'tab_video_please', label:'3. Video: Uden "please"' },
+        { id:'tab_video_tak', label:'4. Video: Tak & svar' },
+        { id:'tab_video_afslag', label:'5. Video: Afslag & tid' },
+        { id:'tab_video_shorts', label:'6. Video: 6 hverdags-klip' },
+        { id:'tab_detektiv', label:'7. Detektiv' }
     ];
 
     let currentTab = extraData?.subPath && tabs.some(t => t.id === extraData.subPath)
         ? extraData.subPath
-        : 'tab_vrimmel';
+        :'tab_vrimmel';
 
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'sh-tabs';
     tabs.forEach(t => {
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = `sh-tab-btn ${t.id === currentTab ? 'active' : ''}`;
+        btn.className = `sh-tab-btn ${t.id === currentTab ? 'active' :''}`;
         btn.dataset.tab = t.id;
-        btn.textContent = `${t.icon} ${t.label}`;
+        btn.textContent = t.label;
         btn.onclick = () => switchTab(t.id);
         tabsMenu.appendChild(btn);
     });
@@ -2040,40 +2008,41 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
 
     function makePanel(id) {
         const p = document.createElement('div');
-        p.className = `sh-panel ${currentTab === id ? 'active' : ''}`;
+        p.className = `sh-panel ${currentTab === id ? 'active' :''}`;
         p.dataset.panel = id;
         return p;
     }
 
     // =========================================================================
-    // FANE 1: VRIMLEBILLEDE MED 20 PEGEFELTER + 4-SØJLE SORTERING + TABEL
+    // FANE 1: VRIMLEBILLEDE MED 20 PEGEFELTER + VALGFRI 4-SØJLE SORTERING
     // =========================================================================
     const panel1 = makePanel('tab_vrimmel');
     let activePillarFilter = 'alle';
     let selectedExpr = POLITENESS_EXPRESSIONS[0];
     let compactPins = false;
     let zoomed = false;
+    let showSortDrill = false;
 
     const card1 = document.createElement('div');
     card1.className = 'sh-card';
     card1.innerHTML = `
         <div class="sh-toolbar">
             <div class="sh-filters">
-                <button type="button" class="sh-filter-btn active" data-pfilter="alle">Alle 20 høflighedsudtryk</button>
-                <button type="button" class="sh-filter-btn" data-pfilter="kontakt" style="border-color:rgba(245,158,11,0.65); color:#fde68a;">🙋‍♂️ Kontakt & Bøn (6)</button>
-                <button type="button" class="sh-filter-btn" data-pfilter="bloedgoer" style="border-color:rgba(6,182,212,0.65); color:#67e8f9;">🤝 Blødgør & Hjælp (5)</button>
-                <button type="button" class="sh-filter-btn" data-pfilter="tak" style="border-color:rgba(16,185,129,0.65); color:#6ee7b7;">🙏 Tak & Svar (6)</button>
-                <button type="button" class="sh-filter-btn" data-pfilter="afslag" style="border-color:rgba(192,132,252,0.75); color:#e9d5ff;">🛡️ Afslag & Takt (3)</button>
+                <button type="button" class="sh-filter-btn active" data-pfilter="alle">Alle (20)</button>
+                <button type="button" class="sh-filter-btn" data-pfilter="kontakt" style="border-color:rgba(245,158,11,0.65); color:#fde68a;">${hoeflighedPillarIcon('kontakt', 14)} Kontakt & bøn (6)</button>
+                <button type="button" class="sh-filter-btn" data-pfilter="bloedgoer" style="border-color:rgba(6,182,212,0.65); color:#67e8f9;">${hoeflighedPillarIcon('bloedgoer', 14)} Blødgør & hjælp (5)</button>
+                <button type="button" class="sh-filter-btn" data-pfilter="tak" style="border-color:rgba(16,185,129,0.65); color:#6ee7b7;">${hoeflighedPillarIcon('tak', 14)} Tak & svar (6)</button>
+                <button type="button" class="sh-filter-btn" data-pfilter="afslag" style="border-color:rgba(192,132,252,0.75); color:#e9d5ff;">${hoeflighedPillarIcon('afslag', 14)} Afslag & takt (3)</button>
             </div>
-            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-                <button type="button" class="sh-btn-secondary" id="sh-toggle-pinmode">🏷️ Vis kun tal / fulde pegefelter</button>
-                <button type="button" class="sh-btn-secondary" id="sh-zoom-btn">🔍 Zoom ind (135%)</button>
+            <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+                <button type="button" class="sh-btn-secondary" id="sh-toggle-pinmode">Kun tal</button>
+                <button type="button" class="sh-btn-secondary" id="sh-zoom-btn">Zoom 135%</button>
             </div>
         </div>
 
         <div class="sh-stage-wrap">
             <div class="sh-stage-inner" id="sh-stage-inner">
-                <img src="assets/samtale_hoeflighed_vrimmel.jpg" onerror="this.src='assets/samtale_smaaord_vrimmel.jpg'" alt="Vrimlebillede med de 20 mest almindelige danske høflighedsudtryk" class="sh-stage-img" />
+                <img src="assets/samtale_hoeflighed_vrimmel.jpg" onerror="this.src= 'assets/samtale_smaaord_vrimmel.jpg'" alt="Vrimlebillede med de 20 mest almindelige danske høflighedsudtryk" class="sh-stage-img" />
                 <div id="sh-pegefelter-layer"></div>
             </div>
         </div>
@@ -2087,12 +2056,13 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
 
     card1.querySelector('#sh-zoom-btn').onclick = (e) => {
         zoomed = !zoomed;
-        stageInner.style.transform = zoomed ? 'scale(1.35)' : 'scale(1)';
-        e.currentTarget.textContent = zoomed ? '🔍 Nulstil zoom (100%)' : '🔍 Zoom ind (135%)';
+        stageInner.style.transform = zoomed ? 'scale(1.35)' :'scale(1)';
+        e.currentTarget.textContent = zoomed ? 'Zoom 100%' :'Zoom 135%';
     };
 
-    card1.querySelector('#sh-toggle-pinmode').onclick = () => {
+    card1.querySelector('#sh-toggle-pinmode').onclick = (e) => {
         compactPins = !compactPins;
+        e.currentTarget.textContent = compactPins ? 'Vis tekst' :'Kun tal';
         renderPegefelter();
     };
 
@@ -2100,49 +2070,39 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
         const meta = PILLAR_META[expr.pillar];
         detailBox.style.borderColor = meta.border;
         detailBox.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.65rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.55rem;">
                 <div style="display:flex; align-items:center; gap:0.55rem; flex-wrap:wrap;">
+                    <span style="font-size:1.25rem; font-weight:900; color:#ffffff;">#${expr.num}. »${expr.phrase}«</span>
                     <span class="sh-pill-tag" style="background:${meta.bg}; color:${meta.color}; border:1.5px solid ${meta.border};">
-                        ${meta.short}
-                    </span>
-                    <span class="sh-pill-tag" style="background:rgba(148,163,184,0.14); color:#e2e8f0; border:1px solid rgba(148,163,184,0.3);">
-                        Kontekst: ${expr.socialContext}
+                        ${hoeflighedPillarIcon(expr.pillar, 13)} ${meta.short}
                     </span>
                 </div>
-                <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-                    <button type="button" class="sh-btn-secondary" id="sh-goto-video-tab">
-                        🎬 Træn i video-banen (${expr.videoRef.split('(')[0].trim()}) →
+                <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+                    <button type="button" class="sh-btn-secondary" id="sh-goto-video-tab" style="display:inline-flex; align-items:center; gap:0.35rem;">
+                        ${samtaleIcons.play(12)} Video →
                     </button>
-                    <button type="button" class="sh-btn-primary" id="sh-play-detail-audio">
-                        🔊 Lyt til udtrykket
+                    <button type="button" class="sh-btn-primary" id="sh-play-detail-audio" style="display:inline-flex; align-items:center; gap:0.35rem;">
+                        ${samtaleIcons.audio(15)} Lyt
                     </button>
                 </div>
             </div>
 
-            <div style="font-size:1.32rem; font-weight:900; color:#ffffff; margin-bottom:0.35rem;">
-                ${expr.icon} #${expr.num}. »${expr.phrase}«
+            <div style="font-size:0.84rem; color:#94a3b8; margin-bottom:0.55rem; display:flex; flex-wrap:wrap; gap:0.85rem;">
+                <span><strong>Kontekst:</strong> ${expr.socialContext}</span>
+                <span><strong>Tone:</strong> ${expr.intonation}</span>
             </div>
 
-            <div style="font-size:0.84rem; color:#94a3b8; margin-bottom:0.6rem; display:flex; flex-wrap:wrap; gap:0.9rem;">
-                <span><strong>🎵 Udtale & tonefald:</strong> ${expr.intonation}</span>
-                <span><strong>👀 I vrimlebilledet:</strong> ${expr.bodyCue}</span>
-            </div>
-
-            <p style="margin:0 0 0.7rem; color:#e2e8f0; font-size:0.95rem; line-height:1.55;">
+            <p style="margin:0 0 0.65rem; color:#e2e8f0; font-size:0.92rem; line-height:1.5;">
                 ${expr.definition}
             </p>
 
-            <div style="background:rgba(15,23,42,0.95); border-left:4px solid ${meta.color}; border-radius:12px; padding:0.75rem 1rem; margin-bottom:0.65rem;">
-                <div style="font-size:0.75rem; font-weight:900; color:${meta.color}; text-transform:uppercase; margin-bottom:0.25rem;">
-                    Social dialog i praksis:
-                </div>
-                <div style="font-size:0.93rem; color:#e2e8f0; margin-bottom:0.22rem;">A: "${expr.dialogueA}"</div>
-                <div style="font-size:0.94rem; color:#ffffff; font-weight:700;">B: "${expr.dialogueB}"</div>
+            <div style="background:rgba(15,23,42,0.95); border-left:4px solid ${meta.color}; border-radius:12px; padding:0.7rem 0.95rem; margin-bottom:0.6rem;">
+                <div style="font-size:0.91rem; color:#e2e8f0; margin-bottom:0.2rem;">A: "${expr.dialogueA}"</div>
+                <div style="font-size:0.92rem; color:#ffffff; font-weight:700;">B: "${expr.dialogueB}"</div>
             </div>
 
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; font-size:0.83rem; color:#fde68a; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.32); border-radius:10px; padding:0.55rem 0.85rem;">
-                <div><strong>⚠️ Pas på den sociale fælde:</strong> ${expr.trapTip}</div>
-                <div style="color:#a7f3d0; font-weight:800;">📺 ${expr.videoRef}</div>
+            <div style="font-size:0.83rem; color:#fde68a; background:rgba(245,158,11,0.09); border:1px solid rgba(245,158,11,0.28); border-radius:10px; padding:0.48rem 0.8rem;">
+                <strong>Pas på:</strong> ${expr.trapTip}
             </div>
         `;
         const playBtn = detailBox.querySelector('#sh-play-detail-audio');
@@ -2162,14 +2122,15 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
             const isSelected = expr.id === selectedExpr.id;
             const btn = document.createElement('button');
             btn.type = 'button';
-            btn.className = `sh-pegefelt pillar-${expr.pillar} ${expr.pointerDir === 'up' ? 'dir-up' : ''} ${isSelected ? 'active show-mobile-label' : ''} ${compactPins ? 'compact-mode' : ''} ${isHidden ? 'hidden-pin' : ''}`;
+            btn.className = `sh-pegefelt pillar-${expr.pillar} ${expr.pointerDir === 'up' ? 'dir-up' :''} ${isSelected ? 'active show-mobile-label' :''} ${compactPins ? 'compact-mode' :''} ${isHidden ? 'hidden-pin' :''}`;
             btn.style.left = `${expr.x}%`;
             btn.style.top = `${expr.y}%`;
             btn.dataset.exprId = expr.id;
             btn.title = `#${expr.num} ${expr.phrase}`;
+            const pIcon = hoeflighedPillarIcon(expr.pillar, 12);
             btn.innerHTML = compactPins
-                ? `<span>${expr.icon}</span><span>${expr.num}</span>`
-                : `<span class="sh-pegefelt-num">${expr.num}</span><span>${expr.icon}</span><span class="sh-pegefelt-label">${expr.shortLabel}</span>`;
+                ? `${pIcon}<span>${expr.num}</span>`
+                : `<span class="sh-pegefelt-num">${expr.num}</span>${pIcon}<span class="sh-pegefelt-label">${expr.shortLabel}</span>`;
             btn.onclick = () => {
                 selectedExpr = expr;
                 renderExprDetail(expr);
@@ -2192,7 +2153,7 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
     renderPegefelter();
     panel1.appendChild(card1);
 
-    // 4-Søjle Sorteringsbane i Fane 1
+    // Valgfri 4-søjle sorteringsbane (sammenklappet som standard; overflødig 20-rækkers tabel fjernet)
     const sortCard = document.createElement('div');
     sortCard.className = 'sh-card';
     const sortPool = shuffleArray([...POLITENESS_EXPRESSIONS]);
@@ -2212,35 +2173,50 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
         }
         const activeItem = activeSortIdx >= 0 ? sortPool[activeSortIdx] : null;
 
+        if (!showSortDrill) {
+            sortCard.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
+                    <div style="font-size:0.96rem; font-weight:800; color:#e2e8f0;">
+                        Sorteringsøvelse: Placér de 20 udtryk i de 4 kategorier (${placedSet.size}/${sortPool.length})
+                    </div>
+                    <button type="button" class="sh-btn-secondary" id="sh-sort-toggle">Åbn øvelse</button>
+                </div>
+            `;
+            sortCard.querySelector('#sh-sort-toggle').onclick = () => {
+                showSortDrill = true;
+                renderPillarSorting();
+            };
+            return;
+        }
+
         sortCard.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.5rem;">
-                <h3 style="margin:0; font-size:1.12rem; font-weight:900;">🎩 Sortér de 20 høflighedsudtryk i deres sociale funktion (${placedSet.size}/${sortPool.length})</h3>
-                <button type="button" class="sh-btn-secondary" id="sh-sort-reset">🔄 Nulstil sortering</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
+                <h3 style="margin:0; font-size:1.05rem; font-weight:900;">Sortér efter funktion (${placedSet.size}/${sortPool.length})</h3>
+                <div style="display:flex; gap:0.4rem;">
+                    <button type="button" class="sh-btn-secondary" id="sh-sort-reset">Nulstil</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-sort-toggle">Skjul</button>
+                </div>
             </div>
-            <p style="margin:0 0 0.8rem; color:#cbd5e1; font-size:0.89rem;">
-                Klik på et udtryk i banken og placer det i den rigtige høfligheds-søjle nedenfor:
-            </p>
-            <div style="display:flex; flex-wrap:wrap; gap:0.4rem; padding:0.8rem; border-radius:14px; background:rgba(9,14,26,0.85); border:1px solid rgba(148,163,184,0.22); margin-bottom:0.85rem;">
+            <div style="display:flex; flex-wrap:wrap; gap:0.4rem; padding:0.75rem; border-radius:14px; background:rgba(9,14,26,0.85); border:1px solid rgba(148,163,184,0.22); margin-bottom:0.75rem;">
                 ${sortPool.map((item, idx) => {
                     const isPlaced = placedSet.has(idx);
                     const isActive = idx === activeSortIdx;
                     return `
-                        <button type="button" class="sh-btn-secondary" data-sort-item="${idx}" ${isPlaced ? 'disabled' : ''} style="${isPlaced ? 'opacity:0.3; text-decoration:line-through;' : ''}${isActive ? 'background:#10b981; color:#0f172a; border-color:#a7f3d0; font-weight:900;' : ''}">
-                            ${item.icon} #${item.num} ${item.shortLabel}
+                        <button type="button" class="sh-btn-secondary" data-sort-item="${idx}" ${isPlaced ? 'disabled' :''} style="${isPlaced ? 'opacity:0.3; text-decoration:line-through;' :''}${isActive ? 'background:#10b981; color:#0f172a; border-color:#a7f3d0; font-weight:900;' :''}">
+                            ${item.shortLabel}
                         </button>
                     `;
                 }).join('')}
             </div>
 
             ${activeItem ? `
-                <div style="margin-bottom:0.85rem; padding:0.75rem 1rem; border-radius:12px; background:rgba(16,185,129,0.14); border:1.5px solid #34d399;">
-                    <span style="font-size:0.76rem; font-weight:900; color:#6ee7b7; text-transform:uppercase;">Valgt høflighedsudtryk:</span>
-                    <strong style="font-size:1.05rem; color:#ffffff; margin-left:0.4rem;">${activeItem.icon} »${activeItem.phrase}«</strong>
-                    <div style="font-size:0.83rem; color:#cbd5e1; margin-top:0.2rem;">Kontekst: ${activeItem.socialContext}</div>
+                <div style="margin-bottom:0.75rem; padding:0.65rem 0.9rem; border-radius:12px; background:rgba(16,185,129,0.12); border:1px solid #34d399; font-size:0.9rem;">
+                    <strong style="color:#ffffff;">»${activeItem.phrase}«</strong>
+                    <span style="color:#cbd5e1;"> — ${activeItem.socialContext}</span>
                 </div>
             ` : `
-                <div class="sh-feedback ok" style="margin-bottom:0.85rem;">
-                    🏆 Flot arbejde! Du har sorteret alle 20 danske høflighedsudtryk i deres 4 sociale funktioner!
+                <div class="sh-feedback ok" style="margin-bottom:0.75rem;">
+                    Flot! Alle 20 høflighedsudtryk er sorteret.
                 </div>
             `}
 
@@ -2248,23 +2224,26 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
                 ${Object.values(PILLAR_META).map(m => {
                     const items = sortedBuckets[m.id].map(i => sortPool[i]);
                     return `
-                        <button type="button" data-sort-bucket="${m.id}" style="text-align:left; padding:0.95rem; border-radius:16px; background:${m.bg}; border:2px dashed ${m.border}; color:#ffffff; cursor:pointer;">
-                            <div style="font-size:0.95rem; font-weight:900; color:${m.color}; margin-bottom:0.22rem;">
-                                ${m.short} (${items.length}/${m.count})
+                        <button type="button" data-sort-bucket="${m.id}" style="text-align:left; padding:0.85rem; border-radius:14px; background:${m.bg}; border:2px dashed ${m.border}; color:#ffffff; cursor:pointer;">
+                            <div style="font-size:0.9rem; font-weight:900; color:${m.color}; margin-bottom:0.45rem; display:flex; align-items:center; gap:0.35rem;">
+                                ${hoeflighedPillarIcon(m.id, 14)} ${m.label} (${items.length}/${m.count})
                             </div>
-                            <div style="font-size:0.78rem; color:#cbd5e1; margin-bottom:0.55rem;">${m.subtitle}</div>
-                            <div style="display:flex; flex-wrap:wrap; gap:0.32rem;">
+                            <div style="display:flex; flex-wrap:wrap; gap:0.3rem;">
                                 ${items.length
-                                    ? items.map(it => `<span style="padding:0.2rem 0.5rem; border-radius:999px; background:rgba(15,23,42,0.88); border:1px solid ${m.border}; font-size:0.76rem; font-weight:800;">#${it.num} ${it.shortLabel}</span>`).join('')
-                                    : `<span style="font-size:0.8rem; color:#94a3b8;">Klik her for at placere udtrykket...</span>`}
+                                    ? items.map(it => `<span style="padding:0.18rem 0.48rem; border-radius:999px; background:rgba(15,23,42,0.88); border:1px solid ${m.border}; font-size:0.75rem; font-weight:800;">${it.shortLabel}</span>`).join('')
+                                    : `<span style="font-size:0.8rem; color:#94a3b8;">Klik for at placere</span>`}
                             </div>
                         </button>
                     `;
                 }).join('')}
             </div>
-            ${sortFeedback ? `<div class="sh-feedback ${sortFeedback.startsWith('✓') ? 'ok' : 'err'}">${sortFeedback}</div>` : ''}
+            ${sortFeedback ? `<div class="sh-feedback ${sortFeedback.startsWith('✓') ? 'ok' :'err'}">${sortFeedback}</div>` :''}
         `;
 
+        sortCard.querySelector('#sh-sort-toggle').onclick = () => {
+            showSortDrill = false;
+            renderPillarSorting();
+        };
         sortCard.querySelector('#sh-sort-reset').onclick = () => {
             sortedBuckets.kontakt = [];
             sortedBuckets.bloedgoer = [];
@@ -2290,10 +2269,9 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
                 const item = sortPool[activeSortIdx];
                 if (item.pillar === targetPillar) {
                     sortedBuckets[targetPillar].push(activeSortIdx);
-                    sortFeedback = `✓ Rigtigt! »${item.phrase}« hører under ${PILLAR_META[targetPillar].short}.`;
+                    sortFeedback = `✓ Rigtigt! »${item.phrase}« hører under ${PILLAR_META[targetPillar].label}.`;
                 } else {
-                    const correctMeta = PILLAR_META[item.pillar];
-                    sortFeedback = `✗ Ikke helt – »${item.phrase}« bruges til ${correctMeta.short} (${item.socialContext}).`;
+                    sortFeedback = `✗ Ikke helt – »${item.phrase}« hører under ${PILLAR_META[item.pillar].label}.`;
                 }
                 renderPillarSorting();
             };
@@ -2302,154 +2280,109 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
 
     renderPillarSorting();
     panel1.appendChild(sortCard);
-
-    // Komplet oversigtstabel over alle 20 høflighedsudtryk
-    const tableCard = document.createElement('div');
-    tableCard.className = 'sh-card';
-    tableCard.innerHTML = `
-        <h3 style="margin:0 0 0.45rem; font-size:1.15rem; font-weight:900;">📋 Komplet oversigt: De 20 mest almindelige høflighedsudtryk på dansk</h3>
-        <p style="margin:0 0 0.85rem; color:#cbd5e1; font-size:0.88rem;">
-            Klik på en række for at fremhæve udtrykket i vrimlebilledet ovenfor og høre udtalen:
-        </p>
-        <div style="overflow-x:auto;">
-            <table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
-                <thead>
-                    <tr style="border-bottom:2px solid rgba(148,163,184,0.3); text-align:left; color:#94a3b8;">
-                        <th style="padding:0.55rem;">#</th>
-                        <th style="padding:0.55rem;">Høflighedsudtryk</th>
-                        <th style="padding:0.55rem;">Kategori</th>
-                        <th style="padding:0.55rem;">Social kontekst & Video-kilde</th>
-                        <th style="padding:0.55rem;">Lyd</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${POLITENESS_EXPRESSIONS.map(expr => {
-                        const m = PILLAR_META[expr.pillar];
-                        return `
-                            <tr data-table-expr="${expr.id}" style="border-bottom:1px solid rgba(148,163,184,0.16); cursor:pointer;">
-                                <td style="padding:0.55rem; font-weight:900; color:#94a3b8;">#${expr.num}</td>
-                                <td style="padding:0.55rem; font-weight:800; color:#ffffff;">${expr.icon} ${expr.phrase}</td>
-                                <td style="padding:0.55rem;">
-                                    <span style="padding:0.18rem 0.55rem; border-radius:999px; background:${m.bg}; color:${m.color}; border:1px solid ${m.border}; font-size:0.72rem; font-weight:900;">
-                                        ${m.short}
-                                    </span>
-                                </td>
-                                <td style="padding:0.55rem; color:#cbd5e1;">
-                                    <div>${expr.socialContext}</div>
-                                    <div style="font-size:0.75rem; color:#6ee7b7;">📺 ${expr.videoRef}</div>
-                                </td>
-                                <td style="padding:0.55rem;">
-                                    <button type="button" class="sh-btn-secondary" data-tts-expr="${expr.id}" style="padding:0.3rem 0.6rem; font-size:0.78rem;">🔊 Lyt</button>
-                                </td>
-                            </tr>
-                        `;
-                    }).join('')}
-                </tbody>
-            </table>
-        </div>
-    `;
-
-    tableCard.querySelectorAll('[data-table-expr]').forEach(row => {
-        row.onclick = (e) => {
-            if (e.target.closest('[data-tts-expr]')) return;
-            const expr = POLITENESS_EXPRESSIONS.find(x => x.id === row.dataset.tableExpr);
-            if (expr) {
-                selectedExpr = expr;
-                renderExprDetail(expr);
-                renderPegefelter();
-                card1.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        };
-    });
-
-    tableCard.querySelectorAll('[data-tts-expr]').forEach(btn => {
-        btn.onclick = (e) => {
-            e.stopPropagation();
-            const expr = POLITENESS_EXPRESSIONS.find(x => x.id === btn.dataset.ttsExpr);
-            if (expr) speakPolite(expr.ttsText, expr.ttsRate, expr.ttsPitch);
-        };
-    });
-
-    panel1.appendChild(tableCard);
     panelsHolder.appendChild(panel1);
 
     // =========================================================================
     // FANE 2: INDSÆT DET RIGTIGE UDTRYK I SOCIAL KONTEKST (20 + 10 = 30 OPGAVER)
     // =========================================================================
     const panel2 = makePanel('tab_kontekst');
+    let kontekstMode = 'single';
     let ctxIdx = 0;
     let ctxAnswered = null;
     const ctxSolved = new Set();
 
+    const modeBar2 = document.createElement('div');
+    modeBar2.className = 'sh-filters';
+    modeBar2.style.marginBottom = '0.9rem';
+
     const ctxCard = document.createElement('div');
     ctxCard.className = 'sh-card';
+
+    const dualCard = document.createElement('div');
+    dualCard.className = 'sh-card';
+
+    function syncKontekstMode() {
+        modeBar2.innerHTML = `
+            <button type="button" class="sh-filter-btn ${kontekstMode === 'single' ? 'active' :''}" data-kmode="single">
+                Del 1: Vælg udtryk (${SOCIAL_CONTEXT_CHALLENGES.length})
+            </button>
+            <button type="button" class="sh-filter-btn ${kontekstMode === 'dual' ? 'active' :''}" data-kmode="dual">
+                Del 2: Dialog-bygger (${DUAL_SLOT_DIALOGUES.length})
+            </button>
+        `;
+        modeBar2.querySelectorAll('[data-kmode]').forEach(btn => {
+            btn.onclick = () => {
+                kontekstMode = btn.dataset.kmode;
+                syncKontekstMode();
+            };
+        });
+        ctxCard.style.display = kontekstMode === 'single' ? 'block' :'none';
+        dualCard.style.display = kontekstMode === 'dual' ? 'block' :'none';
+    }
 
     function renderSocialContextTrack() {
         const q = SOCIAL_CONTEXT_CHALLENGES[ctxIdx];
         const m = PILLAR_META[q.pillar];
 
         ctxCard.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.85rem;">
-                <div>
-                    <span class="sh-pill-tag" style="background:${m.bg}; color:${m.color}; border:1.5px solid ${m.border}; margin-right:0.4rem;">
-                        ${m.short}
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
+                <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+                    <span class="sh-pill-tag" style="background:${m.bg}; color:${m.color}; border:1.5px solid ${m.border};">
+                        ${hoeflighedPillarIcon(q.pillar, 13)} ${m.short}
                     </span>
-                    <span style="font-size:0.86rem; color:#94a3b8; font-weight:800;">
-                        Socialt scenarie ${ctxIdx + 1} af ${SOCIAL_CONTEXT_CHALLENGES.length} • Løst: ${ctxSolved.size}/${SOCIAL_CONTEXT_CHALLENGES.length}
+                    <span style="font-size:0.85rem; color:#94a3b8; font-weight:800;">
+                        Scenarie ${ctxIdx + 1}/${SOCIAL_CONTEXT_CHALLENGES.length} • Løst: ${ctxSolved.size}/${SOCIAL_CONTEXT_CHALLENGES.length}
                     </span>
                 </div>
-                <div style="display:flex; gap:0.45rem;">
-                    <button type="button" class="sh-btn-secondary" id="sh-ctx-prev" ${ctxIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="sh-btn-secondary" id="sh-ctx-next" ${ctxIdx === SOCIAL_CONTEXT_CHALLENGES.length - 1 ? 'disabled' : ''}>Næste →</button>
+                <div style="display:flex; gap:0.4rem;">
+                    <button type="button" class="sh-btn-secondary" id="sh-ctx-prev" ${ctxIdx === 0 ? 'disabled' :''}>← Forrige</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-ctx-next" ${ctxIdx === SOCIAL_CONTEXT_CHALLENGES.length - 1 ? 'disabled' :''}>Næste →</button>
                 </div>
             </div>
 
-            <h3 style="margin:0 0 0.35rem; font-size:1.15rem; font-weight:900; color:#ffffff;">
-                🎯 Del 1: Indsæt det rigtige høflighedsudtryk i den sociale kontekst
-            </h3>
-            <div style="padding:0.85rem 1rem; border-radius:14px; background:rgba(30,41,59,0.75); border:1px solid rgba(148,163,184,0.28); margin-bottom:0.85rem;">
-                <div style="font-size:0.82rem; font-weight:900; color:#6ee7b7; text-transform:uppercase; margin-bottom:0.25rem;">
+            <div style="padding:0.8rem 0.95rem; border-radius:14px; background:rgba(30,41,59,0.75); border:1px solid rgba(148,163,184,0.25); margin-bottom:0.8rem;">
+                <div style="font-size:0.8rem; font-weight:900; color:#6ee7b7; text-transform:uppercase; margin-bottom:0.2rem;">
                     ${q.setting}
                 </div>
-                <div style="font-size:0.93rem; color:#e2e8f0; line-height:1.5;">
+                <div style="font-size:0.92rem; color:#e2e8f0; line-height:1.45;">
                     ${q.contextDesc}
                 </div>
             </div>
 
-            <div style="padding:1rem 1.15rem; border-radius:16px; background:rgba(9,14,26,0.95); border-left:4px solid ${m.color}; margin-bottom:0.95rem;">
-                <div style="font-size:0.98rem; color:#fde68a; font-weight:800; margin-bottom:0.35rem;">
+            <div style="padding:0.95rem 1.1rem; border-radius:15px; background:rgba(9,14,26,0.95); border-left:4px solid ${m.color}; margin-bottom:0.9rem;">
+                <div style="font-size:0.96rem; color:#fde68a; font-weight:800; margin-bottom:0.3rem;">
                     ${q.speakerA}
                 </div>
-                <div style="font-size:0.95rem; color:#cbd5e1;">
+                <div style="font-size:0.94rem; color:#cbd5e1;">
                     ${q.speakerB}
                 </div>
             </div>
 
-            <div style="display:grid; gap:0.55rem;">
+            <div style="display:grid; gap:0.5rem;">
                 ${q.options.map(opt => {
                     let cls = 'sh-option-btn';
                     if (ctxAnswered !== null) {
-                        if (opt.id === q.answerId) cls += ' correct';
-                        else if (opt.id === ctxAnswered) cls += ' wrong';
+                        if (opt.id === q.answerId) cls += 'correct';
+                        else if (opt.id === ctxAnswered) cls += 'wrong';
                     }
                     return `
                         <button type="button" class="${cls}" data-ctx-opt="${opt.id}">
                             <span>»${opt.text}«</span>
-                            <span>${ctxAnswered !== null && opt.id === q.answerId ? '✓' : ''}</span>
+                            <span>${ctxAnswered !== null && opt.id === q.answerId ? '✓' :''}</span>
                         </button>
                     `;
                 }).join('')}
             </div>
 
             ${ctxAnswered !== null ? `
-                <div class="sh-feedback ${ctxAnswered === q.answerId ? 'ok' : 'err'}">
-                    <div><strong>${ctxAnswered === q.answerId ? '✓ Helt rigtigt i denne sociale kontekst!' : '✗ Ikke det bedste match til denne sociale kontekst:'}</strong> ${q.explanation}</div>
+                <div class="sh-feedback ${ctxAnswered === q.answerId ? 'ok' :'err'}">
+                    <div><strong>${ctxAnswered === q.answerId ? '✓ Rigtigt!' :'✗ Ikke det bedste match:'}</strong> ${q.explanation}</div>
                     <div style="margin-top:0.55rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
-                        <button type="button" class="sh-btn-secondary" id="sh-ctx-speak">🔊 Lyt til det rigtige udtryk</button>
-                        ${ctxIdx < SOCIAL_CONTEXT_CHALLENGES.length - 1 ? `<button type="button" class="sh-btn-primary" id="sh-ctx-advance">Næste sociale scenarie →</button>` : ''}
+                        <button type="button" class="sh-btn-secondary" id="sh-ctx-speak" style="display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(14)} Lyt</button>
+                        ${ctxIdx < SOCIAL_CONTEXT_CHALLENGES.length - 1 ? `<button type="button" class="sh-btn-primary" id="sh-ctx-advance">Næste →</button>` :''}
                     </div>
                 </div>
-            ` : ''}
+            ` :''}
         `;
 
         const prevBtn = ctxCard.querySelector('#sh-ctx-prev');
@@ -2485,12 +2418,7 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
         }
     }
 
-    renderSocialContextTrack();
-    panel2.appendChild(ctxCard);
-
     // Del 2 i Fane 2: 10 A↔B Dialog-byggere med 2 huller ([1] og [2])
-    const dualCard = document.createElement('div');
-    dualCard.className = 'sh-card';
     let dualIdx = 0;
     let pick1 = null;
     let pick2 = null;
@@ -2507,42 +2435,37 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
         dualCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
                 <div>
-                    <span class="sh-pill-tag" style="background:rgba(56,189,248,0.16); color:#7dd3fc; border:1px solid rgba(56,189,248,0.45);">
-                        🛠️ Del 2: A↔B Dialog-bygger (${dualIdx + 1}/${DUAL_SLOT_DIALOGUES.length})
-                    </span>
-                    <span style="font-size:0.84rem; color:#94a3b8; font-weight:800; margin-left:0.5rem;">
-                        Løst: ${dualSolved.size}/${DUAL_SLOT_DIALOGUES.length}
-                    </span>
+                    <h3 style="margin:0; font-size:1.08rem; font-weight:900;">${d.title}</h3>
+                    <div style="font-size:0.83rem; color:#94a3b8;">Dialog ${dualIdx + 1}/${DUAL_SLOT_DIALOGUES.length} • Løst: ${dualSolved.size}/${DUAL_SLOT_DIALOGUES.length}</div>
                 </div>
-                <div style="display:flex; gap:0.45rem;">
-                    <button type="button" class="sh-btn-secondary" id="sh-dual-prev" ${dualIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="sh-btn-secondary" id="sh-dual-next" ${dualIdx === DUAL_SLOT_DIALOGUES.length - 1 ? 'disabled' : ''}>Næste →</button>
+                <div style="display:flex; gap:0.4rem;">
+                    <button type="button" class="sh-btn-secondary" id="sh-dual-prev" ${dualIdx === 0 ? 'disabled' :''}>← Forrige</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-dual-next" ${dualIdx === DUAL_SLOT_DIALOGUES.length - 1 ? 'disabled' :''}>Næste →</button>
                 </div>
             </div>
 
-            <h3 style="margin:0 0 0.3rem; font-size:1.12rem; font-weight:900;">${d.title}</h3>
-            <div style="font-size:0.84rem; color:#94a3b8; margin-bottom:0.75rem;">${d.setting} • ${d.rawHint}</div>
+            <div style="font-size:0.84rem; color:#94a3b8; margin-bottom:0.7rem;">${d.setting} • ${d.rawHint}</div>
 
-            <div style="padding:1rem 1.15rem; border-radius:15px; background:rgba(9,14,26,0.94); border:1.5px solid rgba(16,185,129,0.4); font-size:0.97rem; line-height:1.6; color:#f8fafc; margin-bottom:0.95rem;">
+            <div style="padding:0.95rem 1.1rem; border-radius:14px; background:rgba(9,14,26,0.94); border:1.5px solid rgba(16,185,129,0.4); font-size:0.96rem; line-height:1.55; color:#f8fafc; margin-bottom:0.9rem;">
                 ${previewHtml}
             </div>
 
             <div class="sh-two-cols" style="margin-bottom:0.85rem;">
-                <div style="padding:0.85rem; border-radius:14px; background:rgba(30,41,59,0.7); border:1px solid rgba(16,185,129,0.35);">
-                    <div style="font-size:0.8rem; font-weight:900; color:#6ee7b7; text-transform:uppercase; margin-bottom:0.45rem;">Vælg udtryk til hul [1]:</div>
+                <div style="padding:0.8rem; border-radius:14px; background:rgba(30,41,59,0.7); border:1px solid rgba(16,185,129,0.35);">
+                    <div style="font-size:0.78rem; font-weight:900; color:#6ee7b7; text-transform:uppercase; margin-bottom:0.45rem;">Hul [1]</div>
                     <div style="display:grid; gap:0.4rem;">
                         ${d.slot1Options.map(o => `
-                            <button type="button" class="sh-btn-secondary" data-dslot1="${o}" style="text-align:left; ${pick1 === o ? 'background:#059669; color:#ffffff; border-color:#a7f3d0;' : ''}">
+                            <button type="button" class="sh-btn-secondary" data-dslot1="${o}" style="text-align:left; ${pick1 === o ? 'background:#059669; color:#ffffff; border-color:#a7f3d0;' :''}">
                                 »${o}«
                             </button>
                         `).join('')}
                     </div>
                 </div>
-                <div style="padding:0.85rem; border-radius:14px; background:rgba(30,41,59,0.7); border:1px solid rgba(56,189,248,0.35);">
-                    <div style="font-size:0.8rem; font-weight:900; color:#7dd3fc; text-transform:uppercase; margin-bottom:0.45rem;">Vælg udtryk til hul [2]:</div>
+                <div style="padding:0.8rem; border-radius:14px; background:rgba(30,41,59,0.7); border:1px solid rgba(56,189,248,0.35);">
+                    <div style="font-size:0.78rem; font-weight:900; color:#7dd3fc; text-transform:uppercase; margin-bottom:0.45rem;">Hul [2]</div>
                     <div style="display:grid; gap:0.4rem;">
                         ${d.slot2Options.map(o => `
-                            <button type="button" class="sh-btn-secondary" data-dslot2="${o}" style="text-align:left; ${pick2 === o ? 'background:#0284c7; color:#ffffff; border-color:#bae6fd;' : ''}">
+                            <button type="button" class="sh-btn-secondary" data-dslot2="${o}" style="text-align:left; ${pick2 === o ? 'background:#0284c7; color:#ffffff; border-color:#bae6fd;' :''}">
                                 »${o}«
                             </button>
                         `).join('')}
@@ -2550,16 +2473,16 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
                 </div>
             </div>
 
-            <button type="button" class="sh-btn-primary" id="sh-dual-check" ${!pick1 || !pick2 ? 'disabled style="opacity:0.5;"' : ''}>
-                ✓ Tjek hele dialogen
+            <button type="button" class="sh-btn-primary" id="sh-dual-check" ${!pick1 || !pick2 ? 'disabled style="opacity:0.5;"' :''}>
+                ✓ Tjek dialogen
             </button>
 
             ${dualChecked ? `
-                <div class="sh-feedback ${isBothCorrect ? 'ok' : 'err'}">
-                    <strong>${isBothCorrect ? '✓ Perfekt social dialog!' : `✗ Rigtig kombination: [1] »${d.slot1Answer}« og [2] »${d.slot2Answer}«.`}</strong>
-                    <div style="margin-top:0.3rem;">${d.explanation}</div>
+                <div class="sh-feedback ${isBothCorrect ? 'ok' :'err'}">
+                    <strong>${isBothCorrect ? '✓ Rigtigt!' : `✗ Rigtig kombination: [1] »${d.slot1Answer}« og [2] »${d.slot2Answer}«.`}</strong>
+                    <div style="margin-top:0.25rem;">${d.explanation}</div>
                 </div>
-            ` : ''}
+            ` :''}
         `;
 
         const prev = dualCard.querySelector('#sh-dual-prev');
@@ -2586,14 +2509,18 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
         }
     }
 
+    renderSocialContextTrack();
     renderDualSlotTrack();
+    panel2.appendChild(modeBar2);
+    panel2.appendChild(ctxCard);
     panel2.appendChild(dualCard);
+    syncKontekstMode();
     panelsHolder.appendChild(panel2);
 
     // =========================================================================
     // HJÆLPE-RENDERER TIL VIDEO-BANERNE (FANE 3, 4 & 5)
     // =========================================================================
-    function buildVideoMasterclassPanel(panelEl, headerKicker, headerTitle, headerDesc, videosList, exercisesList, accentColor = '#10b981') {
+    function buildVideoMasterclassPanel(panelEl, headerTitle, videosList, exercisesList, accentColor = '#10b981') {
         let activeVidIdx = 0;
         let exIdx = 0;
         let exAnswered = null;
@@ -2605,29 +2532,24 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
         function renderVidSection() {
             const v = videosList[activeVidIdx];
             vidCard.innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.85rem;">
-                    <div>
-                        <span class="sh-pill-tag" style="background:rgba(16,185,129,0.16); color:#6ee7b7; border:1px solid rgba(16,185,129,0.45); margin-bottom:0.35rem;">
-                            ${headerKicker}
-                        </span>
-                        <h3 style="margin:0.25rem 0; font-size:1.22rem; font-weight:900; color:#ffffff;">${headerTitle}</h3>
-                        <p style="margin:0; color:#cbd5e1; font-size:0.9rem; max-width:860px; line-height:1.5;">${headerDesc}</p>
-                    </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.8rem;">
+                    <h3 style="margin:0; font-size:1.15rem; font-weight:900; color:#ffffff;">${headerTitle}</h3>
+                    <a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener noreferrer" class="sh-btn-secondary" style="text-decoration:none;">
+                        YouTube ↗
+                    </a>
                 </div>
 
-                <!-- Video-vælger knapper -->
-                <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+                <div style="display:flex; flex-wrap:wrap; gap:0.45rem; margin-bottom:0.95rem;">
                     ${videosList.map((vid, idx) => `
-                        <button type="button" class="sh-btn-secondary" data-vid-switch="${idx}" style="${idx === activeVidIdx ? `background:linear-gradient(135deg, #059669, #0284c7); color:#ffffff; border-color:#6ee7b7; font-weight:900;` : ''}">
-                            ▶️ ${vid.badge}: ${vid.title.split(':')[0]}
+                        <button type="button" class="sh-btn-secondary" data-vid-switch="${idx}" style="display:inline-flex; align-items:center; gap:0.35rem; ${idx === activeVidIdx ? `background:linear-gradient(135deg, #059669, #0284c7); color:#ffffff; border-color:#6ee7b7; font-weight:900;` :''}">
+                            ${samtaleIcons.play(11)} ${vid.badge}: ${vid.title.split(':')[0]}
                         </button>
                     `).join('')}
                 </div>
 
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:1.1rem; align-items:start;">
-                    <!-- Indlejret YouTube-afspiller -->
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:1rem; align-items:start;">
                     <div>
-                        <div style="position:relative; width:100%; padding-bottom:56.25%; border-radius:16px; overflow:hidden; border:2px solid rgba(16,185,129,0.5); background:#000; box-shadow:0 12px 28px rgba(0,0,0,0.5);">
+                        <div style="position:relative; width:100%; padding-bottom:56.25%; border-radius:16px; overflow:hidden; border:2px solid rgba(16,185,129,0.5); background:#000;">
                             <iframe
                                 src="https://www.youtube.com/embed/${v.id}?rel=0"
                                 title="${v.title}"
@@ -2636,37 +2558,24 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
                                 allowfullscreen>
                             </iframe>
                         </div>
-                        <div style="margin-top:0.6rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; font-size:0.82rem; color:#94a3b8;">
-                            <span>📺 Kanal: <strong>Klar til start i Danmark</strong> (${v.badge})</span>
-                            <a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener noreferrer" style="color:#6ee7b7; font-weight:800; text-decoration:none;">
-                                Åbn på YouTube ↗
-                            </a>
-                        </div>
                     </div>
 
-                    <!-- Klikbare tidsstemplede høflighedsfraser fra videoen -->
-                    <div style="background:rgba(9,14,26,0.92); border:1.5px solid rgba(148,163,184,0.28); border-radius:16px; padding:1rem;">
-                        <div style="font-size:0.78rem; font-weight:900; color:#6ee7b7; text-transform:uppercase; margin-bottom:0.25rem;">
-                            ${v.badge} • Verificeret indhold
-                        </div>
-                        <div style="font-size:1.02rem; font-weight:900; color:#ffffff; margin-bottom:0.35rem;">
+                    <div style="background:rgba(9,14,26,0.92); border:1.5px solid rgba(148,163,184,0.25); border-radius:16px; padding:0.95rem;">
+                        <div style="font-size:1rem; font-weight:900; color:#ffffff; margin-bottom:0.3rem;">
                             ${v.title}
                         </div>
-                        <p style="margin:0 0 0.75rem; font-size:0.85rem; color:#cbd5e1; line-height:1.45;">
+                        <p style="margin:0 0 0.7rem; font-size:0.84rem; color:#cbd5e1; line-height:1.45;">
                             ${v.summary}
                         </p>
-                        <div style="font-size:0.78rem; font-weight:800; color:#94a3b8; margin-bottom:0.45rem;">
-                            🔊 Klik på en frase fra videoen for at høre den udtalt:
-                        </div>
-                        <div style="display:grid; gap:0.42rem;">
+                        <div style="display:grid; gap:0.4rem;">
                             ${v.phrases.map(ph => `
-                                <button type="button" class="sh-btn-secondary" data-phrase-tts="${ph.text.replace(/"/g, '&quot;')}" style="text-align:left; display:flex; justify-content:space-between; align-items:center; gap:0.5rem; padding:0.5rem 0.75rem;">
+                                <button type="button" class="sh-btn-secondary" data-phrase-tts="${ph.text.replace(/"/g, '&quot;')}" style="text-align:left; display:flex; justify-content:space-between; align-items:center; gap:0.5rem; padding:0.48rem 0.72rem;">
                                     <div>
-                                        <span style="font-size:0.74rem; font-weight:900; color:#6ee7b7; margin-right:0.4rem;">[${ph.time}]</span>
-                                        <strong style="color:#ffffff; font-size:0.86rem;">»${ph.text}«</strong>
-                                        <div style="font-size:0.76rem; color:#94a3b8; margin-top:0.12rem;">${ph.note}</div>
+                                        <span style="font-size:0.73rem; font-weight:900; color:#6ee7b7; margin-right:0.35rem;">[${ph.time}]</span>
+                                        <strong style="color:#ffffff; font-size:0.85rem;">»${ph.text}«</strong>
+                                        <div style="font-size:0.75rem; color:#94a3b8; margin-top:0.1rem;">${ph.note}</div>
                                     </div>
-                                    <span style="font-size:0.9rem;">🔊</span>
+                                    <span style="color:#6ee7b7;">${samtaleIcons.audio(14)}</span>
                                 </button>
                             `).join('')}
                         </div>
@@ -2691,54 +2600,49 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
         renderVidSection();
         panelEl.appendChild(vidCard);
 
-        // Træningsbane knyttet direkte til videoerne
         const exCard = document.createElement('div');
         exCard.className = 'sh-card';
 
         function renderExSection() {
             const q = exercisesList[exIdx];
             exCard.innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.7rem;">
                     <div>
-                        <span class="sh-pill-tag" style="background:rgba(245,158,11,0.16); color:#fde68a; border:1px solid rgba(245,158,11,0.5);">
-                            🎯 Video-træningsbane • Opgave ${exIdx + 1} af ${exercisesList.length}
-                        </span>
-                        <span style="font-size:0.84rem; color:#94a3b8; font-weight:800; margin-left:0.5rem;">
-                            Score: ${exSolved.size}/${exercisesList.length}
-                        </span>
+                        <h3 style="margin:0; font-size:1.05rem; font-weight:900;">Øvelser til videoen</h3>
+                        <div style="font-size:0.83rem; color:#94a3b8;">Opgave ${exIdx + 1}/${exercisesList.length} • Score: ${exSolved.size}/${exercisesList.length}</div>
                     </div>
-                    <div style="display:flex; gap:0.45rem;">
-                        <button type="button" class="sh-btn-secondary" data-vex-prev ${exIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                        <button type="button" class="sh-btn-secondary" data-vex-next ${exIdx === exercisesList.length - 1 ? 'disabled' : ''}>Næste →</button>
+                    <div style="display:flex; gap:0.4rem;">
+                        <button type="button" class="sh-btn-secondary" data-vex-prev ${exIdx === 0 ? 'disabled' :''}>← Forrige</button>
+                        <button type="button" class="sh-btn-secondary" data-vex-next ${exIdx === exercisesList.length - 1 ? 'disabled' :''}>Næste →</button>
                     </div>
                 </div>
 
-                <div style="padding:0.9rem 1.05rem; border-radius:14px; background:rgba(30,41,59,0.78); border-left:4px solid ${accentColor}; margin-bottom:0.75rem;">
-                    <div style="font-size:0.94rem; font-weight:800; color:#ffffff; margin-bottom:0.25rem;">${q.situation}</div>
-                    <div style="font-size:0.88rem; color:#fde68a; font-weight:700;">${q.prompt}</div>
+                <div style="padding:0.85rem 1rem; border-radius:14px; background:rgba(30,41,59,0.78); border-left:4px solid ${accentColor}; margin-bottom:0.75rem;">
+                    <div style="font-size:0.93rem; font-weight:800; color:#ffffff; margin-bottom:0.2rem;">${q.situation}</div>
+                    <div style="font-size:0.86rem; color:#fde68a; font-weight:700;">${q.prompt}</div>
                 </div>
 
-                <div style="display:grid; gap:0.5rem;">
+                <div style="display:grid; gap:0.48rem;">
                     ${q.options.map((opt, oIdx) => {
                         let cls = 'sh-option-btn';
                         if (exAnswered !== null) {
-                            if (opt.correct) cls += ' correct';
-                            else if (oIdx === exAnswered) cls += ' wrong';
+                            if (opt.correct) cls += 'correct';
+                            else if (oIdx === exAnswered) cls += 'wrong';
                         }
                         return `
                             <button type="button" class="${cls}" data-vex-opt="${oIdx}">
                                 <span>»${opt.text}«</span>
-                                <span>${exAnswered !== null && opt.correct ? '✓' : ''}</span>
+                                <span>${exAnswered !== null && opt.correct ? '✓' :''}</span>
                             </button>
                         `;
                     }).join('')}
                 </div>
 
                 ${exAnswered !== null ? `
-                    <div class="sh-feedback ${q.options[exAnswered]?.correct ? 'ok' : 'err'}">
-                        <strong>${q.options[exAnswered]?.correct ? '✓ Rigtigt!' : '✗ Se forklaringen fra videoen:'}</strong> ${q.explanation}
+                    <div class="sh-feedback ${q.options[exAnswered]?.correct ? 'ok' :'err'}">
+                        <strong>${q.options[exAnswered]?.correct ? '✓ Rigtigt!' :'✗ Forklaring:'}</strong> ${q.explanation}
                     </div>
-                ` : ''}
+                ` :''}
             `;
 
             const prev = exCard.querySelector('[data-vex-prev]');
@@ -2765,41 +2669,29 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
 
     // FANE 3: Video-bane A (Video 1, 2 & 3)
     const panel3 = makePanel('tab_video_please');
-    buildVideoMasterclassPanel(
-        panel3,
-        '🎬 Video-bane A • Serien "At være høflig på dansk (Video 1–3)"',
-        'Hvordan er man høflig på dansk uden et ord for "please"?',
-        'Se og træn de 3 første hovedvideoer: 1) Hvornår du åbner med »Undskyld« (til fremmede) vs. et smil (til folk du kender), 2) Modalverberne må/vil/kan/skulle + »tilfældigvis« og »vel ikke«, og 3) Småordene »gerne«, »bede om«, »bare« og »lige«.',
+    buildVideoMasterclassPanel(panel3,
+'Høflig på dansk uden "please" (Video 1–3)',
         VIDEO_LANE_A_VIDEOS,
         LANE_A_EXERCISES,
-        '#f59e0b'
-    );
+'#f59e0b');
     panelsHolder.appendChild(panel3);
 
     // FANE 4: Video-bane B (Video 4 + Tak på dansk + Tak for i aftes)
     const panel4 = makePanel('tab_video_tak');
-    buildVideoMasterclassPanel(
-        panel4,
-        '🙏 Video-bane B • Tak, Svar på tak & "Tak for sidst"',
-        '»Tak + mere!« — Begge sider af den danske tak-samtale',
-        'Se og træn de 3 tak-videoer: 1) Hvorfor danskere altid sætter noget efter tak (»Tak for i aften / besøget / mad / oplysningen / lån / din tid«), 2) Hvad den anden svarer (»Det var så lidt / Selv tak / Velbekomme«), og 3) »Tak for i aftes / Tak for sidst« – og hvorfor du aldrig må sige »Tak for i nat!« til en kollega.',
+    buildVideoMasterclassPanel(panel4,
+'Tak, svar på tak & "Tak for sidst"',
         VIDEO_LANE_B_VIDEOS,
         LANE_B_EXERCISES,
-        '#10b981'
-    );
+'#10b981');
     panelsHolder.appendChild(panel4);
 
     // FANE 5: Video-bane C (Høflige afslag & Hvad er uhøfligt i Danmark?)
     const panel5 = makePanel('tab_video_afslag');
-    buildVideoMasterclassPanel(
-        panel5,
-        '🛡️ Video-bane C • Høflige afslag & Dansk aftalekultur',
-        'At sige pænt nej (»Ellers tak« / »Der springer jeg lige over«) & Tidshøflighed',
-        'Se og træn hvordan du afslår et tilbud høfligt ved bordet eller lunt blandt kolleger, og lær de uskrevne danske høflighedsregler om punktlighed, 5 minutters forsinkelse og aftaler.',
+    buildVideoMasterclassPanel(panel5,
+'Høflige afslag & dansk tidskultur',
         VIDEO_LANE_C_VIDEOS,
         LANE_C_EXERCISES,
-        '#c084fc'
-    );
+'#c084fc');
     panelsHolder.appendChild(panel5);
 
     // =========================================================================
@@ -2817,23 +2709,17 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
     function renderShortsSection() {
         const s = VIDEO_LANE_D_SHORTS[activeShortIdx];
         shortsCard.innerHTML = `
-            <span class="sh-pill-tag" style="background:rgba(6,182,212,0.16); color:#67e8f9; border:1px solid rgba(6,182,212,0.5); margin-bottom:0.35rem;">
-                ⚡ Video-bane D • 6 Hverdags-situationer (Shorts)
-            </span>
-            <h3 style="margin:0.25rem 0 0.35rem; font-size:1.2rem; font-weight:900;">Hverdagens lyn-situationer: Hvad siger du lige i øjeblikket?</h3>
-            <p style="margin:0 0 0.9rem; color:#cbd5e1; font-size:0.9rem;">
-                Vælg mellem de 6 korte situations-videoer (15–59 sek.) og træn den præcise replik i hver social situation:
-            </p>
+            <h3 style="margin:0 0 0.75rem; font-size:1.15rem; font-weight:900;">6 hverdags-situationer (Shorts)</h3>
 
-            <div style="display:flex; flex-wrap:wrap; gap:0.45rem; margin-bottom:1rem;">
+            <div style="display:flex; flex-wrap:wrap; gap:0.45rem; margin-bottom:0.95rem;">
                 ${VIDEO_LANE_D_SHORTS.map((item, idx) => `
-                    <button type="button" class="sh-btn-secondary" data-short-switch="${idx}" style="${idx === activeShortIdx ? 'background:linear-gradient(135deg, #0891b2, #059669); color:#ffffff; border-color:#a5f3fc; font-weight:900;' : ''}">
-                        ▶️ ${item.badge.split('•')[0].trim()}: ${item.title.split('(')[0].trim()}
+                    <button type="button" class="sh-btn-secondary" data-short-switch="${idx}" style="display:inline-flex; align-items:center; gap:0.35rem; ${idx === activeShortIdx ? 'background:linear-gradient(135deg, #0891b2, #059669); color:#ffffff; border-color:#a5f3fc; font-weight:900;' :''}">
+                        ${samtaleIcons.play(11)} ${item.title.split('(')[0].trim()}
                     </button>
                 `).join('')}
             </div>
 
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:1.1rem; align-items:start;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:1rem; align-items:start;">
                 <div>
                     <div style="position:relative; width:100%; max-width:340px; margin:0 auto; padding-bottom:110%; border-radius:16px; overflow:hidden; border:2px solid rgba(6,182,212,0.55); background:#000;">
                         <iframe
@@ -2845,16 +2731,14 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
                         </iframe>
                     </div>
                 </div>
-                <div style="background:rgba(9,14,26,0.92); border:1.5px solid rgba(148,163,184,0.28); border-radius:16px; padding:1.05rem;">
-                    <div style="font-size:0.76rem; font-weight:900; color:#67e8f9; text-transform:uppercase; margin-bottom:0.25rem;">${s.badge}</div>
-                    <div style="font-size:1.1rem; font-weight:900; color:#ffffff; margin-bottom:0.35rem;">${s.title}</div>
-                    <p style="margin:0 0 0.75rem; font-size:0.9rem; color:#fde68a; font-weight:700;">Social situation: ${s.situation}</p>
-                    <div style="font-size:0.8rem; color:#94a3b8; margin-bottom:0.45rem; font-weight:800;">🔊 Klik for at lytte til sætningerne fra videoen:</div>
-                    <div style="display:grid; gap:0.45rem;">
+                <div style="background:rgba(9,14,26,0.92); border:1.5px solid rgba(148,163,184,0.25); border-radius:16px; padding:1rem;">
+                    <div style="font-size:1.05rem; font-weight:900; color:#ffffff; margin-bottom:0.3rem;">${s.title}</div>
+                    <p style="margin:0 0 0.7rem; font-size:0.88rem; color:#fde68a; font-weight:700;">${s.situation}</p>
+                    <div style="display:grid; gap:0.42rem;">
                         ${s.phrases.map(ph => `
-                            <button type="button" class="sh-btn-secondary" data-short-tts="${ph.replace(/[»«]/g, '').replace(/"/g, '&quot;')}" style="text-align:left; display:flex; justify-content:space-between; align-items:center; gap:0.5rem; padding:0.6rem 0.85rem;">
+                            <button type="button" class="sh-btn-secondary" data-short-tts="${ph.replace(/[»«]/g, '').replace(/"/g, '&quot;')}" style="text-align:left; display:flex; justify-content:space-between; align-items:center; gap:0.5rem; padding:0.55rem 0.8rem;">
                                 <span style="font-weight:800; color:#ffffff;">${ph}</span>
-                                <span>🔊</span>
+                                <span style="color:#67e8f9;">${samtaleIcons.audio(14)}</span>
                             </button>
                         `).join('')}
                     </div>
@@ -2883,46 +2767,42 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
     function renderShortEx() {
         const q = LANE_D_EXERCISES[shortExIdx];
         shortExCard.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.7rem;">
                 <div>
-                    <span class="sh-pill-tag" style="background:rgba(6,182,212,0.16); color:#67e8f9; border:1px solid rgba(6,182,212,0.5);">
-                        ⚡ Hurtig-træning • Situation ${shortExIdx + 1} af ${LANE_D_EXERCISES.length}
-                    </span>
-                    <span style="font-size:0.84rem; color:#94a3b8; font-weight:800; margin-left:0.5rem;">
-                        Løst: ${shortExSolved.size}/${LANE_D_EXERCISES.length}
-                    </span>
+                    <h3 style="margin:0; font-size:1.05rem; font-weight:900;">Hurtig-træning</h3>
+                    <div style="font-size:0.83rem; color:#94a3b8;">Situation ${shortExIdx + 1}/${LANE_D_EXERCISES.length} • Løst: ${shortExSolved.size}/${LANE_D_EXERCISES.length}</div>
                 </div>
-                <div style="display:flex; gap:0.45rem;">
-                    <button type="button" class="sh-btn-secondary" id="sh-sex-prev" ${shortExIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="sh-btn-secondary" id="sh-sex-next" ${shortExIdx === LANE_D_EXERCISES.length - 1 ? 'disabled' : ''}>Næste →</button>
+                <div style="display:flex; gap:0.4rem;">
+                    <button type="button" class="sh-btn-secondary" id="sh-sex-prev" ${shortExIdx === 0 ? 'disabled' :''}>← Forrige</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-sex-next" ${shortExIdx === LANE_D_EXERCISES.length - 1 ? 'disabled' :''}>Næste →</button>
                 </div>
             </div>
 
-            <div style="padding:0.9rem 1.05rem; border-radius:14px; background:rgba(30,41,59,0.78); border-left:4px solid #06b6d4; margin-bottom:0.8rem; font-size:0.95rem; font-weight:800; color:#ffffff;">
+            <div style="padding:0.85rem 1rem; border-radius:14px; background:rgba(30,41,59,0.78); border-left:4px solid #06b6d4; margin-bottom:0.75rem; font-size:0.94rem; font-weight:800; color:#ffffff;">
                 ${q.prompt}
             </div>
 
-            <div style="display:grid; gap:0.5rem;">
+            <div style="display:grid; gap:0.48rem;">
                 ${q.options.map((opt, idx) => {
                     let cls = 'sh-option-btn';
                     if (shortExAns !== null) {
-                        if (opt.correct) cls += ' correct';
-                        else if (idx === shortExAns) cls += ' wrong';
+                        if (opt.correct) cls += 'correct';
+                        else if (idx === shortExAns) cls += 'wrong';
                     }
                     return `
                         <button type="button" class="${cls}" data-sex-opt="${idx}">
                             <span>»${opt.text}«</span>
-                            <span>${shortExAns !== null && opt.correct ? '✓' : ''}</span>
+                            <span>${shortExAns !== null && opt.correct ? '✓' :''}</span>
                         </button>
                     `;
                 }).join('')}
             </div>
 
             ${shortExAns !== null ? `
-                <div class="sh-feedback ${q.options[shortExAns]?.correct ? 'ok' : 'err'}">
-                    <strong>${q.options[shortExAns]?.correct ? '✓ Rigtigt!' : '✗ Forklaring:'}</strong> ${q.explanation}
+                <div class="sh-feedback ${q.options[shortExAns]?.correct ? 'ok' :'err'}">
+                    <strong>${q.options[shortExAns]?.correct ? '✓ Rigtigt!' :'✗ Forklaring:'}</strong> ${q.explanation}
                 </div>
-            ` : ''}
+            ` :''}
         `;
 
         const prev = shortExCard.querySelector('#sh-sex-prev');
@@ -2961,42 +2841,37 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
 
     function renderDetective() {
         const m = DETECTIVE_MISSIONS[detIdx];
-        const targetExpr = POLITENESS_EXPRESSIONS.find(x => x.id === m.answerId);
 
         detCard.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
                 <div>
-                    <span class="sh-pill-tag" style="background:rgba(16,185,129,0.18); color:#6ee7b7; border:1px solid rgba(16,185,129,0.5);">
-                        🕵️ Høfligheds-detektiven • Mission ${detIdx + 1} af ${DETECTIVE_MISSIONS.length}
-                    </span>
-                    <span style="font-size:0.85rem; color:#94a3b8; font-weight:800; margin-left:0.5rem;">
-                        Fundet: ${detSolved.size}/${DETECTIVE_MISSIONS.length}
-                    </span>
+                    <h3 style="margin:0; font-size:1.1rem; font-weight:900;">Høfligheds-detektiven</h3>
+                    <div style="font-size:0.83rem; color:#94a3b8;">Mission ${detIdx + 1}/${DETECTIVE_MISSIONS.length} • Fundet: ${detSolved.size}/${DETECTIVE_MISSIONS.length}</div>
                 </div>
-                <div style="display:flex; gap:0.45rem;">
-                    <button type="button" class="sh-btn-secondary" id="sh-det-hint">💡 Vis ledetråd</button>
-                    <button type="button" class="sh-btn-secondary" id="sh-det-prev" ${detIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="sh-btn-secondary" id="sh-det-next" ${detIdx === DETECTIVE_MISSIONS.length - 1 ? 'disabled' : ''}>Næste →</button>
+                <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+                    <button type="button" class="sh-btn-secondary" id="sh-det-hint">${detShowHint ? 'Skjul spor' :'Vis spor'}</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-det-prev" ${detIdx === 0 ? 'disabled' :''}>← Forrige</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-det-next" ${detIdx === DETECTIVE_MISSIONS.length - 1 ? 'disabled' :''}>Næste →</button>
                 </div>
             </div>
 
-            <div style="padding:0.95rem 1.1rem; border-radius:14px; background:rgba(30,41,59,0.85); border-left:4px solid #10b981; margin-bottom:0.85rem;">
-                <div style="font-size:1rem; font-weight:900; color:#ffffff;">${m.prompt}</div>
-                ${detShowHint ? `<div style="margin-top:0.4rem; font-size:0.86rem; color:#fde68a;">💡 Ledetråd: ${m.hint}</div>` : ''}
+            <div style="padding:0.85rem 1.05rem; border-radius:14px; background:rgba(30,41,59,0.85); border-left:4px solid #10b981; margin-bottom:0.8rem;">
+                <div style="font-size:0.98rem; font-weight:900; color:#ffffff;">${m.prompt}</div>
+                ${detShowHint ? `<div style="margin-top:0.35rem; font-size:0.84rem; color:#fde68a;">Spor: ${m.hint}</div>` :''}
             </div>
 
             ${detFeedback ? `
-                <div class="sh-feedback ${detFeedback.ok ? 'ok' : 'err'}" style="margin-bottom:0.85rem;">
+                <div class="sh-feedback ${detFeedback.ok ? 'ok' :'err'}" style="margin-bottom:0.8rem;">
                     <div>${detFeedback.text}</div>
                     ${detFeedback.ok && detIdx < DETECTIVE_MISSIONS.length - 1 ? `
-                        <button type="button" class="sh-btn-primary" id="sh-det-advance" style="margin-top:0.5rem;">Næste detektiv-mission →</button>
-                    ` : ''}
+                        <button type="button" class="sh-btn-primary" id="sh-det-advance" style="margin-top:0.5rem;">Næste mission →</button>
+                    ` :''}
                 </div>
-            ` : ''}
+            ` :''}
 
             <div class="sh-stage-wrap">
                 <div class="sh-stage-inner">
-                    <img src="assets/samtale_hoeflighed_vrimmel.jpg" onerror="this.src='assets/samtale_smaaord_vrimmel.jpg'" alt="Detektiv-vrimlebillede" class="sh-stage-img" />
+                    <img src="assets/samtale_hoeflighed_vrimmel.jpg" onerror="this.src= 'assets/samtale_smaaord_vrimmel.jpg'" alt="Detektiv-vrimlebillede" class="sh-stage-img" />
                     <div id="sh-det-layer"></div>
                 </div>
             </div>
@@ -3007,24 +2882,25 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
             const btn = document.createElement('button');
             btn.type = 'button';
             const isCorrectPick = detFeedback?.ok && expr.id === m.answerId;
-            btn.className = `sh-pegefelt pillar-${expr.pillar} ${expr.pointerDir === 'up' ? 'dir-up' : ''} ${isCorrectPick ? 'active show-mobile-label' : 'compact-mode'}`;
+            btn.className = `sh-pegefelt pillar-${expr.pillar} ${expr.pointerDir === 'up' ? 'dir-up' :''} ${isCorrectPick ? 'active show-mobile-label' :'compact-mode'}`;
             btn.style.left = `${expr.x}%`;
             btn.style.top = `${expr.y}%`;
+            const pIcon = hoeflighedPillarIcon(expr.pillar, 12);
             btn.innerHTML = isCorrectPick
-                ? `<span class="sh-pegefelt-num">${expr.num}</span><span>${expr.icon}</span><span class="sh-pegefelt-label">${expr.shortLabel}</span>`
-                : `<span>${expr.icon}</span><span>#${expr.num}</span>`;
+                ? `<span class="sh-pegefelt-num">${expr.num}</span>${pIcon}<span class="sh-pegefelt-label">${expr.shortLabel}</span>`
+                : `${pIcon}<span>${expr.num}</span>`;
             btn.onclick = () => {
                 if (expr.id === m.answerId) {
                     detSolved.add(detIdx);
                     detFeedback = {
                         ok: true,
-                        text: `✓ Fundet! Pegefelt #${expr.num} er »${expr.phrase}« (${expr.socialContext}).`
+                        text: `✓ Fundet! #${expr.num} »${expr.phrase}« (${expr.socialContext}).`
                     };
                     speakPolite(expr.ttsText, expr.ttsRate, expr.ttsPitch);
                 } else {
                     detFeedback = {
                         ok: false,
-                        text: `✗ Du klikkede på #${expr.num} (»${expr.shortLabel}«). Prøv et andet sted i vrimlebilledet – eller klik på "Vis ledetråd"!`
+                        text: `✗ Det var #${expr.num} (»${expr.shortLabel}«). Prøv igen.`
                     };
                 }
                 renderDetective();

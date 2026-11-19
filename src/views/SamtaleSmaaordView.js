@@ -1,29 +1,30 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { shuffleArray } from '../utils/shuffle.js';
+import { samtaleIcons, samtaleRoleIcon } from '../utils/samtaleIcons.js';
 
 /**
  * SamtaleSmaaordView — "Små ord og lyde der får en samtale til at fungere"
  * Placeret under hovedfladen "Samtaletræning".
  *
  * Overordnet grafisk & pædagogisk linje:
- *   🎙️ TALER-SIGNALER (8 ord & lyde — når du tager, holder, blødgør eller afleverer taleturen)
- *   👂 LYTTER-SIGNALER (7 ord & lyde — når du viser aktiv lytning og reagerer uden at stjæle ordet)
+ * TALER-SIGNALER (8 ord & lyde — når du tager, holder, blødgør eller afleverer taleturen)
+ * LYTTER-SIGNALER (7 ord & lyde — når du viser aktiv lytning og reagerer uden at stjæle ordet)
  *
  * Indeholder:
- *   1. 🖼️ Vrimlebillede med 15 grafiske pegefelter (Taler vs. Lytter) + Rolle-sortering
- *   2. 🎯 Vælg det rigtige element (15 autentiske dialog-opgaver)
- *   3. 🎭 Taler eller Lytter? (12 turtagnings-dueller: tag, hold, aflevér eller støt)
- *   4. 🎵 Tonefalds-laboratoriet (10 opgaver med visuelle tonekurver: kort "Nå!" vs. langt "Nååå..." m.fl.)
- *   5. 💬 Hold samtalen i live! (3 interaktive samtale-simulatorer i flere trin)
- *   6. 🛠️ Fra Robot-dansk til Levende dansk (8 dialog-opgraderinger med samtale-smøremiddel)
- *   7. 🕵️ Samtale-detektiven i vrimlebilledet (12 billedjagt-missioner)
+ * 1. Vrimlebillede med 15 grafiske pegefelter (Taler vs. Lytter) + Rolle-sortering
+ * 2. Vælg det rigtige element (15 autentiske dialog-opgaver)
+ * 3. Taler eller Lytter? (12 turtagnings-dueller: tag, hold, aflevér eller støt)
+ * 4. Tonefalds-laboratoriet (10 opgaver med visuelle tonekurver: kort "Nå!" vs. langt "Nååå..." m.fl.)
+ * 5. Hold samtalen i live! (3 interaktive samtale-simulatorer i flere trin)
+ * 6. Fra Robot-dansk til Levende dansk (8 dialog-opgraderinger med samtale-smøremiddel)
+ * 7. Samtale-detektiven i vrimlebilledet (12 billedjagt-missioner)
  */
 
 const ROLE_META = {
     taler: {
         id: 'taler',
-        label: '🎙️ Taler-signal',
-        short: '🎙️ TALER',
+        label: 'Taler',
+        short: 'TALER',
         subtitle: 'Når du tager, holder eller afleverer ordet',
         color: '#f59e0b',
         border: 'rgba(245, 158, 11, 0.75)',
@@ -33,9 +34,9 @@ const ROLE_META = {
     },
     lytter: {
         id: 'lytter',
-        label: '👂 Lytter-signal',
-        short: '👂 LYTTER',
-        subtitle: 'Når du støtter, kvitterer og holder samtalen i gang uden at afbryde',
+        label: 'Lytter',
+        short: 'LYTTER',
+        subtitle: 'Når du støtter og reagerer uden at afbryde',
         color: '#06b6d4',
         border: 'rgba(6, 182, 212, 0.8)',
         bg: 'rgba(6, 182, 212, 0.16)',
@@ -46,7 +47,7 @@ const ROLE_META = {
 
 const SAMTALE_SIGNALS = [
     // =========================================================================
-    // 8 TALER-SIGNALER (🎙️ Når man har, tager, holder eller afleverer ordet)
+    // 8 TALER-SIGNALER (Når man har, tager, holder eller afleverer ordet)
     // =========================================================================
     {
         id: 'oehm',
@@ -62,7 +63,6 @@ const SAMTALE_SIGNALS = [
         x: 9,
         y: 27,
         pointerDir: 'down',
-        icon: '💭',
         bodyCue: 'Kigger skråt op med en finger ved hagen, mens hun tænker.',
         definition: 'Danskernes vigtigste "ventelyd" som taler. Når du siger "øh" eller "øhm", viser du lytteren: "Jeg er ikke færdig med at tale – jeg leder bare lige efter den næste tanke!"',
         whenToUse: 'Brug det midt i din taletur i stedet for helt tavshed, så den anden ikke tror, at du er færdig.',
@@ -84,7 +84,6 @@ const SAMTALE_SIGNALS = [
         x: 19.5,
         y: 21,
         pointerDir: 'down',
-        icon: '☝️',
         bodyCue: 'Læner sig frem ved kaffebaren med åben håndflade for at uddybe sin pointe.',
         definition: 'Et klassisk start- og forklaringsord for taleren. Bruges når du tager ordet for at opsummere, præcisere hvad du mener, eller rette en lille misforståelse på en blød måde.',
         whenToUse: 'Start din sætning med "Altså...", når du vil forklare sammenhængen eller sige din ærlige mening.',
@@ -106,7 +105,6 @@ const SAMTALE_SIGNALS = [
         x: 85,
         y: 52,
         pointerDir: 'down',
-        icon: '⌚',
         bodyCue: 'Kigger venligt på sit armbåndsur ved døren med skuldertasken klar.',
         definition: 'Det danske "gear-skifte" i en samtale! Når en lille pause opstår, bruger taleren "Nå, men..." til enten at skifte til et nyt emne eller runde samtalen hyggeligt af.',
         whenToUse: 'Sig "Nå, men..." når I er færdige med ét emne, eller når du høfligt skal videre på arbejde eller hjem.',
@@ -128,7 +126,6 @@ const SAMTALE_SIGNALS = [
         x: 31,
         y: 49,
         pointerDir: 'down',
-        icon: '🫰',
         bodyCue: 'Knipser let med fingrene i sofaen, mens han leder efter det helt rigtige danske ord.',
         definition: 'En uundværlig redningskrans når du taler dansk! Selv indfødte danskere siger "hvad hedder det..." mange gange om dagen, når et bestemt ord lige ligger på tungen.',
         whenToUse: 'Skyd det ind midt i sætningen, når du mangler en glose – så beholder du taleturen og inviterer evt. lytteren til at hjælpe med ordet.',
@@ -150,7 +147,6 @@ const SAMTALE_SIGNALS = [
         x: 57.5,
         y: 48,
         pointerDir: 'down',
-        icon: '🤲',
         bodyCue: 'Rækker begge åbne håndflader frem mod kollegaen ved rundbordet for at give ordet videre.',
         definition: 'Talerens venlige stafet-aflevering i slutningen af en sætning. "...ikke?" bruges efter en positiv sætning, og "...vel?" bruges efter en negativ sætning (med "ikke").',
         whenToUse: 'Sæt det i slutningen af din sætning for at sige: "Er du enig med mig? Nu er det din tur til at svare!"',
@@ -172,7 +168,6 @@ const SAMTALE_SIGNALS = [
         x: 65.5,
         y: 29,
         pointerDir: 'down',
-        icon: '🤝',
         bodyCue: 'Smiler indforstået ved vinduet og peger ud mod vejret, som begge kender til.',
         definition: 'På dansk har "jo" to nøglefunktioner for taleren: 1) Inde i sætningen betyder det "som vi begge to godt ved" (socialt lim). 2) Forrest som svar ("Jo!") modbeviser det et spørgsmål med "ikke".',
         whenToUse: 'Brug tryksvagt "jo" efter verbet for at inddrage lytteren ("Du ved jo godt..."), og brug "Jo!" når du svarer ja til et negativt spørgsmål.',
@@ -194,7 +189,6 @@ const SAMTALE_SIGNALS = [
         x: 51,
         y: 30,
         pointerDir: 'down',
-        icon: '✋',
         bodyCue: 'Løfter hånden høfligt ved bordet for at stille et lille, hurtigt spørgsmål.',
         definition: 'Danskernes foretrukne høfligheds-smøremiddel. Når du som taler tager ordet eller beder om noget, får "lige" det til at lyde ubesværet, venligt og slet ikke krævende.',
         whenToUse: 'Sæt "lige" ind når du tager en kort taletur ("Jeg siger lige noget", "Må jeg lige spørge...") eller blødgør en opfordring ("Prøv lige at høre!").',
@@ -216,7 +210,6 @@ const SAMTALE_SIGNALS = [
         x: 94,
         y: 48,
         pointerDir: 'down',
-        icon: '💡',
         bodyCue: 'Står ved bogreolen og løfter pegefingeren venligt med en ny oplysning.',
         definition: 'Talerens værktøj til at bringe en ny vinkel, en lille overraskelse eller en høflig korrektion ind i samtalen uden at virke bedrevidende.',
         whenToUse: 'Brug "Faktisk..." eller "Egentlig..." når du tager ordet og vil sige noget, der nuancerer det, den anden lige har sagt.',
@@ -226,7 +219,7 @@ const SAMTALE_SIGNALS = [
     },
 
     // =========================================================================
-    // 7 LYTTER-SIGNALER (👂 Når man støtter, kvitterer og reagerer som lytter)
+    // 7 LYTTER-SIGNALER (Når man støtter, kvitterer og reagerer som lytter)
     // =========================================================================
     {
         id: 'mmm',
@@ -242,7 +235,6 @@ const SAMTALE_SIGNALS = [
         x: 30,
         y: 25,
         pointerDir: 'down',
-        icon: '☕',
         bodyCue: 'Nikker roligt med lukket mund og kaffekop i hånden, mens hun lytter opmærksomt.',
         definition: 'Det mest brugte danske lyttesignal ("backchanneling"). Fordi munden er lukket, signalerer du tydeligt til taleren: "Jeg lytter 100 % til dig, og jeg har IKKE tænkt mig at afbryde dig!"',
         whenToUse: 'Giv et blødt "Mmm" eller "Mm-hm" sammen med et nik for hver 1–2 sætninger, mens den anden fortæller.',
@@ -264,7 +256,6 @@ const SAMTALE_SIGNALS = [
         x: 74.5,
         y: 32,
         pointerDir: 'down',
-        icon: '👍',
         bodyCue: 'Sidder på vinduesbænken og nikker bekræftende med et lille smil.',
         definition: 'Små hurtige "ja"-dryp, som lytteren lægger ind i talerens små pauser for at vise, at man følger tråden. På dansk trækker man endda nogle gange et kort "ja" ind på en indånding!',
         whenToUse: 'Brug et enkelt blødt "Ja" for at støtte taleren. Pas lidt på med for hurtigt "Ja-ja!", som kan betyde "Jeg HAR forstået det, kom videre".',
@@ -286,7 +277,6 @@ const SAMTALE_SIGNALS = [
         x: 42,
         y: 47,
         pointerDir: 'down',
-        icon: '😮',
         bodyCue: 'Løfter øjenbrynene overrasket i lænestolen over en uventet nyhed.',
         definition: 'Lytterens lynhurtige kvittering når taleren fortæller noget NYT eller uventet! Et kort, friskt "Nå!" betyder: "Hov, det var ny viden for mig – hvor interessant!"',
         whenToUse: 'Sig et kort "Nå!" (ofte efterfulgt af "Okay!" eller "Virkelig?"), når taleren giver dig en ny oplysning.',
@@ -308,7 +298,6 @@ const SAMTALE_SIGNALS = [
         x: 20.5,
         y: 51,
         pointerDir: 'down',
-        icon: '❤️',
         bodyCue: 'Lægger hånden varmt på brystet i sofaen, da brikkerne pludselig falder på plads.',
         definition: 'Når du trækker "Nå" langt ud til "Nååå...", skifter ordet totalt betydning! Som lytter betyder det enten: 1) "Aha, NU faldt tiøren, nu forstår jeg sammenhængen!" eller 2) "Årh, hvor er det synd / sødt!"',
         whenToUse: 'Brug langt "Nååå...", når en forklaring pludselig giver mening for dig, eller når du viser medfølelse med taleren.',
@@ -330,7 +319,6 @@ const SAMTALE_SIGNALS = [
         x: 64,
         y: 74,
         pointerDir: 'up',
-        icon: '✅',
         bodyCue: 'Nikker tydeligt ved vinduesbordet for at kvittere for en praktisk besked.',
         definition: 'Lytterens klare kvitteringsstempel. Viser taleren, at en instruktion, en aftale eller et svar er modtaget og forstået, så samtalen trygt kan gå videre.',
         whenToUse: 'Brug "Okay" eller "Aha", når taleren har svaret på dit spørgsmål eller givet dig en praktisk forklaring.',
@@ -352,7 +340,6 @@ const SAMTALE_SIGNALS = [
         x: 81.5,
         y: 43,
         pointerDir: 'up',
-        icon: '🤩',
         bodyCue: 'Læner sig nysgerrigt frem med store øjne for at høre resten af historien.',
         definition: 'Aktivt medspil fra lytteren! Når du siger "Virkelig?", "Seriøst?" eller "Ej, hvor vildt!", stjæler du IKKE ordet – tværtimod giver du taleren brændstof til at fortælle videre med endnu mere entusiasme.',
         whenToUse: 'Skyd det ind, når taleren fortæller noget dramatisk, sjovt eller imponerende.',
@@ -374,7 +361,6 @@ const SAMTALE_SIGNALS = [
         x: 70.5,
         y: 51,
         pointerDir: 'down',
-        icon: '🎯',
         bodyCue: 'Peger begejstret over bordet og nikker som tegn på fuld enighed.',
         definition: 'Lytterens stærkeste opbakningssignal. Hvor "Mmm" og "Ja" blot betyder "jeg hører dig", betyder "Præcis!" og "Nemlig!": "Du ramte hovedet på sømmet – jeg er 100 % enig med dig!"',
         whenToUse: 'Brug det som lytter, når taleren sætter ord på noget, du selv mener eller har oplevet.',
@@ -393,7 +379,7 @@ const CHOOSE_EXERCISES = [
         role: 'taler',
         context: 'Du bliver spurgt om et telefonnummer, og du skal bruge 2 sekunder på at huske de sidste cifre uden at miste taleturen.',
         speakerA: 'Kollega: "Hvad er lokalnummeret til IT-supporten?"',
-        speakerB: 'Dig (🎙️ Taler): "Det er 45, ___ ... 82!"',
+        speakerB: 'Dig (Taler): "Det er 45, ___ ... 82!"',
         answerId: 'oehm',
         options: ['oehm', 'naa_kort', 'praecis', 'ikke_vel'],
         explanation: 'Som taler bruger du "Øhm..." til at fylde tænkepausen ud, så kollegaen ved, at resten af nummeret er på vej.'
@@ -403,7 +389,7 @@ const CHOOSE_EXERCISES = [
         role: 'lytter',
         context: 'Din nabo fortæller en længere historie om sin hund. Du vil vise, at du lytter opmærksomt uden at afbryde.',
         speakerA: 'Nabo: "...og så løb hunden hele vejen ned i baghaven med min hjemmesko i munden..."',
-        speakerB: 'Dig (👂 Lytter): "___" (nikker med lukket mund, så naboen fortsætter)',
+        speakerB: 'Dig (Lytter): "___" (nikker med lukket mund, så naboen fortsætter)',
         answerId: 'mmm',
         options: ['mmm', 'naa_men', 'altsaa', 'hvad_hedder_det'],
         explanation: '"Mmm / Mm-hm" med lukket mund er det reneste lyttesignal på dansk: det viser opmærksomhed uden at tage ordet.'
@@ -413,7 +399,7 @@ const CHOOSE_EXERCISES = [
         role: 'taler',
         context: 'Du vil tage ordet og forklare, hvad du egentlig mener om en plan, så det ikke bliver misforstået.',
         speakerA: 'Ven: "Så du har slet ikke lyst til at tage med i biografen?"',
-        speakerB: 'Dig (🎙️ Taler): "___ jeg vil rigtig gerne med, jeg er bare først fri klokken 19."',
+        speakerB: 'Dig (Taler): "___ jeg vil rigtig gerne med, jeg er bare først fri klokken 19."',
         answerId: 'altsaa',
         options: ['altsaa', 'naa_kort', 'virkelig', 'mmm'],
         explanation: '"Altså..." i starten af en taletur er perfekt til at præcisere og rydde en misforståelse af vejen.'
@@ -423,7 +409,7 @@ const CHOOSE_EXERCISES = [
         role: 'lytter',
         context: 'Du har undret dig over, hvorfor bussen ikke kom, og en anden passager forklarer nu årsagen. Pludselig giver det hele mening!',
         speakerA: 'Passager: "Alle busser kører ad Nørregade i dag på grund af vejarbejde."',
-        speakerB: 'Dig (👂 Lytter): "___! Det er derfor, vi har ventet forgæves!"',
+        speakerB: 'Dig (Lytter): "___! Det er derfor, vi har ventet forgæves!"',
         answerId: 'naaaa_langt',
         options: ['naaaa_langt', 'naa_men', 'ikke_vel', 'hvad_hedder_det'],
         explanation: 'Et langt, blødt "Nååå..." viser lytterens aha-oplevelse: "Nu forstår jeg sammenhængen!"'
@@ -433,7 +419,7 @@ const CHOOSE_EXERCISES = [
         role: 'taler',
         context: 'I har talt om vejret i fem minutter ved kaffemaskinen, og nu vil du venligt skifte emne eller vende tilbage til arbejdet.',
         speakerA: 'Kollega: "Ja, man må håbe solen kommer frem i weekenden."',
-        speakerB: 'Dig (🎙️ Taler): "___ jeg må også hellere komme tilbage til skrivebordet!"',
+        speakerB: 'Dig (Taler): "___ jeg må også hellere komme tilbage til skrivebordet!"',
         answerId: 'naa_men',
         options: ['naa_men', 'virkelig', 'mmm', 'naaaa_langt'],
         explanation: '"Nå, men..." er danskernes faste signal som taler, når man runder et emne af eller skal videre.'
@@ -443,7 +429,7 @@ const CHOOSE_EXERCISES = [
         role: 'lytter',
         context: 'En klassekammerat fortæller en helt ny og lidt overraskende fakta, som du slet ikke kendte til.',
         speakerA: 'Klassekammerat: "Biblioteket har faktisk åbent helt til klokken 22 om torsdagen."',
-        speakerB: 'Dig (👂 Lytter): "___ Det vidste jeg slet ikke!"',
+        speakerB: 'Dig (Lytter): "___ Det vidste jeg slet ikke!"',
         answerId: 'naa_kort',
         options: ['naa_kort', 'hvad_hedder_det', 'lige', 'ikke_vel'],
         explanation: 'Et kort, stigende "Nå!" er lytterens hurtige reaktion på ny, uventet information.'
@@ -452,7 +438,7 @@ const CHOOSE_EXERCISES = [
         num: 7,
         role: 'taler',
         context: 'Midt i din sætning glemmer du det danske ord for "piskeris", men du vil gerne beholde taleturen, mens du kommer i tanke om det.',
-        speakerA: 'Dig (🎙️ Taler): "Kan du række mig det der... ___ ... et piskeris!"',
+        speakerA: 'Dig (Taler): "Kan du række mig det der... ___ ... et piskeris!"',
         speakerB: 'Ven: "Værsgo, det ligger lige her i skuffen."',
         answerId: 'hvad_hedder_det',
         options: ['hvad_hedder_det', 'praecis', 'aha_okay', 'naa_kort'],
@@ -462,7 +448,7 @@ const CHOOSE_EXERCISES = [
         num: 8,
         role: 'taler',
         context: 'Du har sagt en positiv sætning og vil nu aflevere taleturen til din samtalepartner for at høre, om vedkommende er enig.',
-        speakerA: 'Dig (🎙️ Taler): "Det gik da rigtig godt til præsentationen i dag, ___"',
+        speakerA: 'Dig (Taler): "Det gik da rigtig godt til præsentationen i dag, ___"',
         speakerB: 'Kollega: "Jo, helt vildt godt!"',
         answerId: 'ikke_vel',
         options: ['ikke_vel', 'oehm', 'naaaa_langt', 'mmm'],
@@ -473,7 +459,7 @@ const CHOOSE_EXERCISES = [
         role: 'lytter',
         context: 'Din kollega siger en pointe, som du er 100 % enig i, og du vil give stærk, entusiastisk opbakning som lytter.',
         speakerA: 'Kollega: "Det vigtigste i en samtale er, at man tør prøve sig frem uden at være bange for fejl."',
-        speakerB: 'Dig (👂 Lytter): "___ Det har du helt ret i!"',
+        speakerB: 'Dig (Lytter): "___ Det har du helt ret i!"',
         answerId: 'praecis',
         options: ['praecis', 'hvad_hedder_det', 'oehm', 'naa_men'],
         explanation: '"Præcis!" og "Nemlig!" viser som lytter, at du er 100 % enig i talerens pointe.'
@@ -482,7 +468,7 @@ const CHOOSE_EXERCISES = [
         num: 10,
         role: 'taler',
         context: 'Du vil stille et hurtigt spørgsmål til en travl medarbejder og blødgøre henvendelsen, så den lyder ekstra høflig.',
-        speakerA: 'Dig (🎙️ Taler): "Undskyld, må jeg ___ spørge dig om vej til mødelokale B?"',
+        speakerA: 'Dig (Taler): "Undskyld, må jeg ___ spørge dig om vej til mødelokale B?"',
         speakerB: 'Medarbejder: "Selvfølgelig, det er lige ned ad gangen!"',
         answerId: 'lige',
         options: ['lige', 'naa_kort', 'aha_okay', 'virkelig'],
@@ -493,7 +479,7 @@ const CHOOSE_EXERCISES = [
         role: 'lytter',
         context: 'Din ven fortæller noget helt utroligt fra sin rejse, og du vil give engageret medspil, så vennen fortæller mere.',
         speakerA: 'Ven: "Da vi sad på færgen, svømmede der pludselig tre delfiner lige ved siden af os!"',
-        speakerB: 'Dig (👂 Lytter): "___ Ej, hvor fantastisk – fik du taget et billede?"',
+        speakerB: 'Dig (Lytter): "___ Ej, hvor fantastisk – fik du taget et billede?"',
         answerId: 'virkelig',
         options: ['virkelig', 'naa_men', 'lige', 'hvad_hedder_det'],
         explanation: '"Virkelig?!" / "Seriøst?!" giver taleren positiv energi og viser, at du er oprigtigt optaget af historien.'
@@ -502,7 +488,7 @@ const CHOOSE_EXERCISES = [
         num: 12,
         role: 'taler',
         context: 'Du refererer til noget, som både du og lytteren allerede godt ved i forvejen ("fælles viden").',
-        speakerA: 'Dig (🎙️ Taler): "Vi skal huske paraplyen – det regner ___ næsten hele eftermiddagen i dag."',
+        speakerA: 'Dig (Taler): "Vi skal huske paraplyen – det regner ___ næsten hele eftermiddagen i dag."',
         speakerB: 'Ven: "Ja, jeg så godt vejrudsigten i morges!"',
         answerId: 'jo_taler',
         options: ['jo_taler', 'naa_kort', 'virkelig', 'aha_okay'],
@@ -513,7 +499,7 @@ const CHOOSE_EXERCISES = [
         role: 'lytter',
         context: 'En receptionist har lige forklaret dig, hvilken sal lægen bor på. Du vil kvittere tydeligt for, at beskeden er modtaget.',
         speakerA: 'Receptionist: "Du tager bare elevatoren op på 3. sal og drejer til højre."',
-        speakerB: 'Dig (👂 Lytter): "___ Mange tak for hjælpen!"',
+        speakerB: 'Dig (Lytter): "___ Mange tak for hjælpen!"',
         answerId: 'aha_okay',
         options: ['aha_okay', 'oehm', 'ikke_vel', 'hvad_hedder_det'],
         explanation: '"Aha, okay!" kvitterer klart og tydeligt for, at den praktiske information er forstået.'
@@ -523,7 +509,7 @@ const CHOOSE_EXERCISES = [
         role: 'taler',
         context: 'En kollega tror, at bageren har lukket om mandagen, men du har lige set, at de har åbent, og vil sige det på en pæn måde.',
         speakerA: 'Kollega: "Øv, bageren på hjørnet har vist lukket om mandagen."',
-        speakerB: 'Dig (🎙️ Taler): "___ har de lige ændret åbningstider, så de har åbent nu!"',
+        speakerB: 'Dig (Taler): "___ har de lige ændret åbningstider, så de har åbent nu!"',
         answerId: 'faktisk',
         options: ['faktisk', 'mmm', 'naaaa_langt', 'ikke_vel'],
         explanation: '"Faktisk..." (eller "Egentlig...") bruges af taleren til at tilføje en ny nuance eller venlig korrektion.'
@@ -533,7 +519,7 @@ const CHOOSE_EXERCISES = [
         role: 'lytter',
         context: 'Din kollega forklarer trin for trin, hvordan kaffemaskinen virker. Efter første trin giver du et kort bekræftende ord.',
         speakerA: 'Kollega: "Først fylder du vand i beholderen her på siden..."',
-        speakerB: 'Dig (👂 Lytter): "___" (kort nik, så kollegaen går videre til trin 2)',
+        speakerB: 'Dig (Lytter): "___" (kort nik, så kollegaen går videre til trin 2)',
         answerId: 'ja_lytter',
         options: ['ja_lytter', 'naa_men', 'hvad_hedder_det', 'faktisk'],
         explanation: 'Et kort, roligt "Ja" undervejs viser taleren, at du er med på trin 1 og klar til trin 2.'
@@ -631,10 +617,10 @@ const TURN_DUELS = [
 ];
 
 const DUEL_CHOICES = [
-    { id: 'take', icon: '🎙️🚀', label: 'Taler TAGER ordet / skifter retning', role: 'taler' },
-    { id: 'hold', icon: '🎙️⏳', label: 'Taler HOLDER ordet (tænkepause / ordsøgning)', role: 'taler' },
-    { id: 'give', icon: '🎙️🤲', label: 'Taler AFLEVERER ordet til den anden', role: 'taler' },
-    { id: 'backchannel', icon: '👂💬', label: 'Lytter STØTTER & REAGERER (uden at stjæle turen)', role: 'lytter' }
+    { id: 'take', icon: '', label: 'Taler TAGER ordet / skifter retning', role: 'taler' },
+    { id: 'hold', icon: '', label: 'Taler HOLDER ordet (tænkepause / ordsøgning)', role: 'taler' },
+    { id: 'give', icon: '', label: 'Taler AFLEVERER ordet til den anden', role: 'taler' },
+    { id: 'backchannel', icon: '', label: 'Lytter STØTTER & REAGERER (uden at stjæle turen)', role: 'lytter' }
 ];
 
 // =========================================================================
@@ -672,7 +658,7 @@ const NAA_VIDEO_VARIANTS = [
         curve: 'M10,14 Q45,28 90,33',
         color: '#f472b6',
         quoteFromVideo: '"Nåårh, hvor er den sød! Nåårh..."',
-        bodyLanguage: 'Hovedet lægges blødt på skrå med et varmt, smeltende ansigtsudtryk (👶🐶).',
+        bodyLanguage: 'Hovedet lægges blødt på skrå med et varmt, smeltende ansigtsudtryk.',
         meaning: 'Varm følelses- og lytterreaktion når man ser en baby, en lille hundehvalp eller noget rørende.',
         ttsSample: 'Nåårh, hvor er den sød!'
     },
@@ -819,7 +805,7 @@ const INTONATION_LAB_ITEMS = [
         correctIdx: 0,
         variants: [
             { label: 'Nåååh! (okay) — langt & åbent ⌒↘', curve: 'M10,10 Q42,8 90,30', color: '#4ade80', meaning: 'Pludselig aha-forståelse: "Ah, nu giver det mening!"' },
-            { label: 'Nårrh... — lavt & skeptisk 〰️', curve: 'M10,22 Q35,14 60,26 T90,22', color: '#f87171', meaning: 'Uenig / tvivlende: "Det kan ikke passe"' },
+            { label: 'Nårrh... — lavt & skeptisk ~', curve: 'M10,22 Q35,14 60,26 T90,22', color: '#f87171', meaning: 'Uenig / tvivlende: "Det kan ikke passe"' },
             { label: 'Nå! (kom nu) — kort & bestemt ↓', curve: 'M10,14 L65,32', color: '#f59e0b', meaning: 'Utålmodig: "Vi skal gå nu"' },
             { label: 'Nå nå... — dobbelt & dæmpende ↘↘', curve: 'M10,16 L40,28 M52,16 L85,28', color: '#a78bfa', meaning: '"Rolig nu, stop diskussionen"' }
         ],
@@ -831,7 +817,7 @@ const INTONATION_LAB_ITEMS = [
         videoEnd: 55,
         videoTimeLabel: '0:41–0:55',
         role: 'lytter',
-        title: '2. Video-case (0:41): Når danskere ser en lille hund eller en baby 👶🐶',
+        title: '2. Video-case (0:41): Når danskere ser en lille hund eller en baby',
         situation: 'En kollega viser et billede af sin nyfødte baby eller en lille hundehvalp. Hvordan lyder danskerens "Nå" her ifølge videoen?',
         ttsSample: 'Nåårh, hvor er den sød!',
         correctIdx: 1,
@@ -839,7 +825,7 @@ const INTONATION_LAB_ITEMS = [
             { label: 'Nå! (da) — kort & brat stigende ↗', curve: 'M10,32 Q48,28 88,7', color: '#38bdf8', meaning: 'Fakta-overraskelse over noget nyt' },
             { label: 'Nåårh! — blødt, langt & r-farvet faldende ↘', curve: 'M10,14 Q45,28 90,33', color: '#4ade80', meaning: 'Varme & nuttethed: "Hvor er den sød!"' },
             { label: 'Nå, hvad så? — frisk & åbent →↗', curve: 'M10,24 L45,22 L88,10', color: '#f59e0b', meaning: 'Samtale-åbner ved frokostbordet' },
-            { label: 'Nårrh... — rynkede bryn 〰️', curve: 'M10,22 Q35,14 60,26 T90,22', color: '#f87171', meaning: 'Skepsis og uenighed' }
+            { label: 'Nårrh... — rynkede bryn ~', curve: 'M10,22 Q35,14 60,26 T90,22', color: '#f87171', meaning: 'Skepsis og uenighed' }
         ],
         explanation: 'I videoen (0:41) lægger hun hovedet på skrå og siger med blød, dybt faldende stemme: "Nåårh, hvor er den sød!"'
     },
@@ -856,7 +842,7 @@ const INTONATION_LAB_ITEMS = [
         variants: [
             { label: 'Nåå... (mm, nå) — bløde lytter-nik →', curve: 'M10,22 Q35,17 60,22 T90,19', color: '#38bdf8', meaning: 'Stille aktiv lytning' },
             { label: 'Nåå ja! — højt gisp ↗↘', curve: 'M10,30 L35,8 L90,26', color: '#f59e0b', meaning: 'Kommer pludselig i tanke om noget glemt' },
-            { label: 'Nårrh... / Nåh? — sammenknebent & tvivlende 〰️', curve: 'M10,22 Q35,14 60,26 T90,22', color: '#4ade80', meaning: 'Uenig / skeptisk: "Ej, det lyder mærkeligt!"' },
+            { label: 'Nårrh... / Nåh? — sammenknebent & tvivlende ~', curve: 'M10,22 Q35,14 60,26 T90,22', color: '#4ade80', meaning: 'Uenig / skeptisk: "Ej, det lyder mærkeligt!"' },
             { label: 'Nåå nej... — hånden på brystet ↘', curve: 'M10,12 Q45,24 90,32', color: '#a78bfa', meaning: 'Indrømmer at man selv tog fejl' }
         ],
         explanation: 'I videoen (0:56) rynker hun brynene og siger et tvivlende "Nårrh... nåh... ej, det lyder mærkeligt, det kan ikke passe!"'
@@ -927,7 +913,7 @@ const INTONATION_LAB_ITEMS = [
         correctIdx: 0,
         variants: [
             { label: 'Nå, hvad så? (hvasså) — frisk & åbent →↗', curve: 'M10,24 L45,22 L88,10', color: '#4ade80', meaning: 'Samtale-åbner: "Er der sket noget nyt / hvordan går det?"' },
-            { label: 'Nårrh... — skeptisk & lavt 〰️', curve: 'M10,22 Q35,14 60,26 T90,22', color: '#f87171', meaning: 'Tvivl og uenighed' },
+            { label: 'Nårrh... — skeptisk & lavt ~', curve: 'M10,22 Q35,14 60,26 T90,22', color: '#f87171', meaning: 'Tvivl og uenighed' },
             { label: 'Nåå nej... — undskyldende ↘', curve: 'M10,12 Q45,24 90,32', color: '#f59e0b', meaning: 'Indrømmer fejl' },
             { label: 'Nå nå... — dæmpende ↘↘', curve: 'M10,16 L40,28 M52,16 L85,28', color: '#a78bfa', meaning: 'Stopper en diskussion' }
         ],
@@ -947,7 +933,7 @@ const INTONATION_LAB_ITEMS = [
             { label: 'Nå! (kom nu) — kort & utålmodigt ↓', curve: 'M10,14 L65,32', color: '#f87171', meaning: 'Vil afbryde og gå' },
             { label: 'Nåå ja! — højt gisp ↗↘', curve: 'M10,30 L35,8 L90,26', color: '#f59e0b', meaning: 'Kommer i tanke om noget glemt' },
             { label: 'Nåå... (mm, nå... ja) — stille, rytmisk & blødt →', curve: 'M10,22 Q35,17 60,22 T90,19', color: '#4ade80', meaning: 'Aktiv lytning: "Jeg lytter og er interesseret i, hvad du siger"' },
-            { label: 'Nårrh... — rynkede bryn 〰️', curve: 'M10,22 Q35,14 60,26 T90,22', color: '#a78bfa', meaning: 'Tro ikke på dig' }
+            { label: 'Nårrh... — rynkede bryn ~', curve: 'M10,22 Q35,14 60,26 T90,22', color: '#a78bfa', meaning: 'Tro ikke på dig' }
         ],
         explanation: 'I videoen (2:01) viser hun, hvordan "Nå... mm, nå... ja" med rolige nik betyder: "Jeg lytter! Fortsæt bare din historie."'
     },
@@ -980,7 +966,7 @@ const INTONATION_LAB_ITEMS = [
         ttsSample: 'Nåå nej, det er jo rigtigt, undskyld! Du har ret.',
         correctIdx: 3,
         variants: [
-            { label: 'Nårrh... — skeptisk & afvisende 〰️', curve: 'M10,22 Q35,14 60,26 T90,22', color: '#f87171', meaning: 'Fastholder at den anden tager fejl' },
+            { label: 'Nårrh... — skeptisk & afvisende ~', curve: 'M10,22 Q35,14 60,26 T90,22', color: '#f87171', meaning: 'Fastholder at den anden tager fejl' },
             { label: 'Nå! (kom nu) — utålmodigt ↓', curve: 'M10,14 L65,32', color: '#f59e0b', meaning: 'Vil gå med det samme' },
             { label: 'Nå, hvad så? — frisk →↗', curve: 'M10,24 L45,22 L88,10', color: '#38bdf8', meaning: 'Samtale-åbner' },
             { label: 'Nå (nej)... — blødt, selverkendende & faldende ↘', curve: 'M10,12 Q45,24 90,32', color: '#4ade80', meaning: 'Indrømmer fejl: "Nåå nej, det er jo rigtigt, undskyld!"' }
@@ -996,8 +982,8 @@ const INTONATION_LAB_ITEMS = [
         correctIdx: 0,
         variants: [
             { label: 'Ja... (ét roligt nik ad gangen →)', curve: 'M10,22 Q50,20 90,22', color: '#4ade80', meaning: 'Roligt lyttesignal: "Jeg følger med, fortsæt"' },
-            { label: 'Ja-ja-ja! (hurtigt 3 gange i træk ⚡)', curve: 'M10,28 L25,10 L40,28 L55,10 L70,28', color: '#f87171', meaning: 'Utålmodigt: "Jeg HAR forstået det, stop nu!"' },
-            { label: 'Jaaa... (tvivlende & svævende 〰️)', curve: 'M10,20 Q35,8 60,28 T90,18', color: '#f59e0b', meaning: 'Tøvende: "Tja, jeg er nu ikke helt sikker..."' }
+            { label: 'Ja-ja-ja! (hurtigt 3 gange i træk)', curve: 'M10,28 L25,10 L40,28 L55,10 L70,28', color: '#f87171', meaning: 'Utålmodigt: "Jeg HAR forstået det, stop nu!"' },
+            { label: 'Jaaa... (tvivlende & svævende ~)', curve: 'M10,20 Q35,8 60,28 T90,18', color: '#f59e0b', meaning: 'Tøvende: "Tja, jeg er nu ikke helt sikker..."' }
         ],
         explanation: 'Pas på med at sige "Ja-ja-ja!" hurtigt i træk på dansk – det lyder som om du er utålmodig! Ét roligt "Ja..." eller "Mm-hm" ad gangen er meget bedre.'
     },
@@ -1099,7 +1085,7 @@ const JAJO_VIDEO_VARIANTS = [
         label: '1. Hovedreglen: Uden vs. med "ikke"',
         badgeText: 'Hovedreglen: Spørgsmål UDEN "ikke" → Ja/Nej • MED "ikke" → Jo/Nej',
         part: 'uden_ikke',
-        partLabel: '🟢 Del 1: Uden "ikke"',
+        partLabel: 'Del 1: Uden "ikke"',
         matchTag: 'Match: Ord #10 (Ja), Ord #6 (jo) & Ord #5 (ikke)',
         role: 'taler',
         startSec: 0,
@@ -1118,7 +1104,7 @@ const JAJO_VIDEO_VARIANTS = [
         label: '2. "Kommer du i aften?" → Ja / Nej',
         badgeText: 'Del 1 (Uden ikke): "Kommer du i aften?" → Ja / Nej',
         part: 'uden_ikke',
-        partLabel: '🟢 Del 1: Uden "ikke"',
+        partLabel: 'Del 1: Uden "ikke"',
         matchTag: 'Match: Ord #10 (Ja) & Lyd #8 (Nej)',
         role: 'taler',
         startSec: 25,
@@ -1137,7 +1123,7 @@ const JAJO_VIDEO_VARIANTS = [
         label: '3. "Har du købt ind?" → Ja / Nej',
         badgeText: 'Del 1 (Uden ikke): "Har du købt ind?" → Ja / Nej',
         part: 'uden_ikke',
-        partLabel: '🟢 Del 1: Uden "ikke"',
+        partLabel: 'Del 1: Uden "ikke"',
         matchTag: 'Match: Ord #10 (Ja) & Lyd #8 (Nej)',
         role: 'taler',
         startSec: 45,
@@ -1156,7 +1142,7 @@ const JAJO_VIDEO_VARIANTS = [
         label: '4. "Skal du arbejde i weekenden?" → Ja / Nej',
         badgeText: 'Del 1 (Uden ikke): "Skal du arbejde i weekenden?" → Ja / Nej',
         part: 'uden_ikke',
-        partLabel: '🟢 Del 1: Uden "ikke"',
+        partLabel: 'Del 1: Uden "ikke"',
         matchTag: 'Match: Ord #10 (Ja) & Lyd #8 (Nej)',
         role: 'taler',
         startSec: 58,
@@ -1175,7 +1161,7 @@ const JAJO_VIDEO_VARIANTS = [
         label: '5. Del 2 (1:13): Nu kommer "IKKE" ind i spørgsmålet!',
         badgeText: 'Del 2 (Med ikke): Når spørgsmålet har "ikke", SKAL positivt svar være JO!',
         part: 'med_ikke',
-        partLabel: '🟠 Del 2: Med "ikke"',
+        partLabel: 'Del 2: Med "ikke"',
         matchTag: 'Match: Ord #6 (jo) & Ord #5 (ikke)',
         role: 'taler',
         startSec: 73,
@@ -1194,7 +1180,7 @@ const JAJO_VIDEO_VARIANTS = [
         label: '6. "Kommer du ikke i aften?" → Jo / Nej',
         badgeText: 'Del 2 (Med ikke): "Kommer du ikke i aften?" → Jo, jeg kommer / Nej, jeg kommer ikke',
         part: 'med_ikke',
-        partLabel: '🟠 Del 2: Med "ikke"',
+        partLabel: 'Del 2: Med "ikke"',
         matchTag: 'Match: Ord #6 (jo) + Lyd #8 (Nej)',
         role: 'taler',
         startSec: 99,
@@ -1213,7 +1199,7 @@ const JAJO_VIDEO_VARIANTS = [
         label: '7. "Har du ikke købt ind?" → Jo / Nej',
         badgeText: 'Del 2 (Med ikke): "Har du ikke købt ind?" → Jo / Nej',
         part: 'med_ikke',
-        partLabel: '🟠 Del 2: Med "ikke"',
+        partLabel: 'Del 2: Med "ikke"',
         matchTag: 'Match: Ord #6 (jo) + Lyd #8 (Nej)',
         role: 'taler',
         startSec: 122,
@@ -1232,7 +1218,7 @@ const JAJO_VIDEO_VARIANTS = [
         label: '8. "Skal du ikke arbejde i weekenden?" → Jo / Nej',
         badgeText: 'Del 2 (Med ikke): "Skal du ikke arbejde i weekenden?" → Jo / Nej',
         part: 'med_ikke',
-        partLabel: '🟠 Del 2: Med "ikke"',
+        partLabel: 'Del 2: Med "ikke"',
         matchTag: 'Match: Ord #6 (jo) + Lyd #8 (Nej)',
         role: 'taler',
         startSec: 139,
@@ -1261,7 +1247,7 @@ const JAJO_LAB_ITEMS = [
         variants: [
             { label: '"Ja, jeg kommer!" (neutralt spørgsmål uden "ikke" → Ja ↘)', curve: 'M10,16 Q50,22 90,28', color: '#4ade80', meaning: 'Korrekt positivt svar på spørgsmål UDEN "ikke"' },
             { label: '"Jo, jeg kommer!" (bruges kun efter "ikke" ↘)', curve: 'M10,10 Q48,18 90,28', color: '#f87171', meaning: 'Forkert her, fordi spørgsmålet ikke indeholder "ikke"' },
-            { label: '"Nej, jeg kommer!" (selvmodsigende ⚡)', curve: 'M10,28 L50,10 L90,28', color: '#f59e0b', meaning: 'Forvirrende kombination' }
+            { label: '"Nej, jeg kommer!" (selvmodsigende)', curve: 'M10,28 L50,10 L90,28', color: '#f59e0b', meaning: 'Forvirrende kombination' }
         ],
         explanation: 'I videoen (0:25) viser hun, at når spørgsmålet IKKE indeholder ordet "ikke" ("Kommer du i aften?"), hedder det positive svar altid "Ja!".'
     },
@@ -1293,8 +1279,8 @@ const JAJO_LAB_ITEMS = [
         ttsSample: 'Nej, jeg kommer ikke.',
         correctIdx: 2,
         variants: [
-            { label: '"Ja, jeg kommer ikke." (forkert på dansk ⚡)', curve: 'M10,26 L50,12 L90,26', color: '#f87171', meaning: 'På dansk siger man aldrig "Ja" for at bekræfte en negation!' },
-            { label: '"Jo, jeg kommer ikke." (selvmodsigende ⚡)', curve: 'M10,12 L50,28 L90,12', color: '#f59e0b', meaning: '"Jo" betyder altid at du GØR det' },
+            { label: '"Ja, jeg kommer ikke." (forkert på dansk)', curve: 'M10,26 L50,12 L90,26', color: '#f87171', meaning: 'På dansk siger man aldrig "Ja" for at bekræfte en negation!' },
+            { label: '"Jo, jeg kommer ikke." (selvmodsigende)', curve: 'M10,12 L50,28 L90,12', color: '#f59e0b', meaning: '"Jo" betyder altid at du GØR det' },
             { label: '"Nej, jeg kommer ikke." (Lyd #8 Nej bruges altid ved negativt svar ↘)', curve: 'M10,16 Q50,24 90,30', color: '#4ade80', meaning: 'Uanset om spørgsmålet har "ikke" eller ej, hedder et negativt svar altid "Nej!"' }
         ],
         explanation: 'Vigtig pointe fra videoen (1:39): Når du IKKE kommer, hedder svaret "Nej, jeg kommer ikke" – både i Del 1 og Del 2!'
@@ -1605,13 +1591,12 @@ const LIVE_CONVERSATIONS = [
         id: 'kaffemaskinen',
         title: '1. Ved kaffemaskinen mandag morgen',
         partner: 'Mette (kollega)',
-        avatar: '👩‍💼',
         scene: 'Mette står ved kaffemaskinen og begynder at fortælle om sin weekend. Hold samtalen varm som lytter – og tag ordet til sidst!',
         turns: [
             {
                 partnerLine: 'Mette: "Puha, vi havde den vildeste søndag hjemme hos os i går..."',
                 targetRole: 'lytter',
-                instruction: 'Trin 1 (👂 Lytter): Vis Mette at du lytter interesseret, så hun fortæller videre!',
+                instruction: 'Trin 1 (Lytter): Vis Mette at du lytter interesseret, så hun fortæller videre!',
                 options: [
                     { text: 'Mm-hm? Hvad skete der?', ok: true, feedback: 'Perfekt lytter-signal! Dit "Mm-hm?" åbner døren for hendes historie.' },
                     { text: 'Nå, men jeg skal også til møde nu.', ok: false, feedback: 'Hov! "Nå, men..." lukker samtalen ned, lige før hun overhovedet er gået i gang.' },
@@ -1621,7 +1606,7 @@ const LIVE_CONVERSATIONS = [
             {
                 partnerLine: 'Mette: "Jo, vi skulle holde fødselsdag i haven for 15 gæster, og ti minutter før de kom, begyndte det at styrtregne!"',
                 targetRole: 'lytter',
-                instruction: 'Trin 2 (👂 Lytter): Reagér med empati og overraskelse uden at stjæle historien!',
+                instruction: 'Trin 2 (Lytter): Reagér med empati og overraskelse uden at stjæle historien!',
                 options: [
                     { text: 'Nååå nej dog! Virkelig?!', ok: true, feedback: 'Stærkt! Langt "Nååå" viser medfølelse, og "Virkelig?!" giver hende energi til at fortælle slutningen.' },
                     { text: 'Hvad hedder det... regnjakke.', ok: false, feedback: '"Hvad hedder det..." er en taler-lyd til ordsøgning – her er du lytter.' },
@@ -1631,7 +1616,7 @@ const LIVE_CONVERSATIONS = [
             {
                 partnerLine: 'Mette: "Heldigvis hjalp alle naboerne med at rykke bordene ind i garagen, så det endte faktisk med at blive den hyggeligste fest!"',
                 targetRole: 'lytter',
-                instruction: 'Trin 3 (👂 Lytter): Bak op om hendes pointe med varme!',
+                instruction: 'Trin 3 (Lytter): Bak op om hendes pointe med varme!',
                 options: [
                     { text: 'Aha, nå! Ej hvor godt – nogle gange bliver de uplanlagte fester jo de bedste!', ok: true, feedback: 'Flot! Du kvitterer med "Aha, nå!" og bruger fælles-viden "jo".' },
                     { text: 'Øhm... hvad klok er det?', ok: false, feedback: 'Det ignorerer helt hendes pointe.' },
@@ -1641,7 +1626,7 @@ const LIVE_CONVERSATIONS = [
             {
                 partnerLine: 'Mette: "Ja, præcis! Nå, men nu er kaffen vist klar. Hvordan var din weekend egentlig?"',
                 targetRole: 'taler',
-                instruction: 'Trin 4 (🎙️ Taler): Nu gav Mette taleturen til dig! Tag ordet naturligt og aflevér det venligt tilbage til sidst.',
+                instruction: 'Trin 4 (Taler): Nu gav Mette taleturen til dig! Tag ordet naturligt og aflevér det venligt tilbage til sidst.',
                 options: [
                     { text: 'Altså, min weekend var faktisk dejlig stille og rolig. Vi ses til mødet kl. 10, ikke?', ok: true, feedback: 'Topklasse! Du tog ordet med "Altså... faktisk" og afleverede turen med "...ikke?".' },
                     { text: 'Mm-hm.', ok: false, feedback: 'Hun stillede dig et åbent spørgsmål – så nu skal du skifte fra lytter ("Mm-hm") til taler!' },
@@ -1654,13 +1639,12 @@ const LIVE_CONVERSATIONS = [
         id: 'toget',
         title: '2. På perronen når toget er forsinket',
         partner: 'Anders (pendler)',
-        avatar: '🧔',
         scene: 'Du står på stationen. Anders ved siden af dig kigger op på skærmen og starter en lille snak.',
         turns: [
             {
                 partnerLine: 'Anders: "Toget mod København er da ikke aflyst, vel?"',
                 targetRole: 'taler',
-                instruction: 'Trin 1 (🎙️ Taler): Anders spurgte med "ikke... vel?". Du ved, at toget KØRER (det er bare 5 minutter forsinket). Hvordan svarer du?',
+                instruction: 'Trin 1 (Taler): Anders spurgte med "ikke... vel?". Du ved, at toget KØRER (det er bare 5 minutter forsinket). Hvordan svarer du?',
                 options: [
                     { text: 'Jo, det kører skam! Det er faktisk bare fem minutter forsinket.', ok: true, feedback: 'Helt rigtigt! Efter et negativt spørgsmål bruger du "Jo" + "faktisk" til at berolige ham.' },
                     { text: 'Ja.', ok: false, feedback: 'Et tørt "Ja" efter "Er det ikke aflyst?" gør danskere i tvivl om, hvorvidt det ER aflyst eller ej!' },
@@ -1670,7 +1654,7 @@ const LIVE_CONVERSATIONS = [
             {
                 partnerLine: 'Anders: "Årh, pyha! Jeg skal nemlig nå en vigtig jobsamtale inde ved Nørreport."',
                 targetRole: 'lytter',
-                instruction: 'Trin 2 (👂 Lytter): Kvittér for den nye oplysning og vis opbakning!',
+                instruction: 'Trin 2 (Lytter): Kvittér for den nye oplysning og vis opbakning!',
                 options: [
                     { text: 'Nå! Virkelig? Ej, hvor spændende – held og lykke med den!', ok: true, feedback: 'Super! Kort "Nå!" + "Virkelig?" viser straks ægte interesse for hans nye oplysning.' },
                     { text: 'Hvad hedder det...', ok: false, feedback: 'Du leder ikke efter et ord her – du reagerer som lytter.' },
@@ -1680,7 +1664,7 @@ const LIVE_CONVERSATIONS = [
             {
                 partnerLine: 'Anders: "Tusind tak! Man bliver jo altid lidt nervøs lige inden sådan en samtale, ikke?"',
                 targetRole: 'lytter',
-                instruction: 'Trin 3 (👂 Lytter): Han sluttede med "...ikke?" og søger opbakning. Giv ham 100 % enighed!',
+                instruction: 'Trin 3 (Lytter): Han sluttede med "...ikke?" og søger opbakning. Giv ham 100 % enighed!',
                 options: [
                     { text: 'Præcis! Det gør man nemlig altid.', ok: true, feedback: 'Rammer plet! "Præcis!" og "nemlig" giver ham præcis den opbakning, han bad om med "...ikke?".' },
                     { text: 'Øhm... måske.', ok: false, feedback: 'Det giver ingen opbakning til en nervøs medpassager.' },
@@ -1690,7 +1674,7 @@ const LIVE_CONVERSATIONS = [
             {
                 partnerLine: 'Anders: "Se, nu kommer toget vist kørende derhenne!"',
                 targetRole: 'taler',
-                instruction: 'Trin 4 (🎙️ Taler): Brug et høfligt småord, mens I går hen til døren.',
+                instruction: 'Trin 4 (Taler): Brug et høfligt småord, mens I går hen til døren.',
                 options: [
                     { text: 'Ja! Lad os lige gå hen til midtervognen, der er ofte bedst plads.', ok: true, feedback: 'Flot! "Lige" gør dit forslag uformelt og venligt.' },
                     { text: 'Nååå...', ok: false, feedback: 'Langt "Nååå..." passer til en forklaring, ikke til at stige på toget.' },
@@ -1703,13 +1687,12 @@ const LIVE_CONVERSATIONS = [
         id: 'sprogcafe',
         title: '3. I sprogcaféen: Find det rigtige ord i samtalen',
         partner: 'Sofie (frivillig i sprogcaféen)',
-        avatar: '👩‍🎓',
         scene: 'Du sidder i sprogcaféen med Sofie. Øv dig i både at holde din taletur, når et ord driller, og give gode lyttesignaler!',
         turns: [
             {
                 partnerLine: 'Sofie: "Hvad har du lavet i dag inden sprogcaféen?"',
                 targetRole: 'taler',
-                instruction: 'Trin 1 (🎙️ Taler): Du vil fortælle, at du var på borgerservice for at forny dit pas, men du skal lige tænke og finde ordet "borgerservice"!',
+                instruction: 'Trin 1 (Taler): Du vil fortælle, at du var på borgerservice for at forny dit pas, men du skal lige tænke og finde ordet "borgerservice"!',
                 options: [
                     { text: 'Øhm... jeg var nede på, hvad hedder det... Borgerservice for at forny mit pas!', ok: true, feedback: 'Fremragende! Med "Øhm..." og "hvad hedder det..." beholder du taleturen helt naturligt, til ordet kommer.' },
                     { text: 'Mm-hm!', ok: false, feedback: '"Mm-hm" er et lyttesignal – nu er det DIG, der har taleturen!' },
@@ -1719,7 +1702,7 @@ const LIVE_CONVERSATIONS = [
             {
                 partnerLine: 'Sofie: "Ej hvor godt du fik det ordnet! Da jeg skulle forny mit pas sidste år, havde jeg glemt mit gamle pas derhjemme..."',
                 targetRole: 'lytter',
-                instruction: 'Trin 2 (👂 Lytter): Vis at du følger med og forstår hendes uheld!',
+                instruction: 'Trin 2 (Lytter): Vis at du følger med og forstår hendes uheld!',
                 options: [
                     { text: 'Nååå, hvor ærgerligt! Måtte du så hele vejen hjem igen?', ok: true, feedback: 'Lige i øjet! Det lange "Nååå" viser medfølelse med hendes uheld.' },
                     { text: 'Altså, faktisk...', ok: false, feedback: 'Lad hende fortælle sin lille historie færdig først.' },
@@ -1729,7 +1712,7 @@ const LIVE_CONVERSATIONS = [
             {
                 partnerLine: 'Sofie: "Ja, jeg måtte cykle 6 kilometer hjem og tilbage igen! Men man glemmer det i hvert fald aldrig bagefter."',
                 targetRole: 'lytter',
-                instruction: 'Trin 3 (👂 Lytter): Bekræft hendes pointe med et varmt lyttersignal!',
+                instruction: 'Trin 3 (Lytter): Bekræft hendes pointe med et varmt lyttersignal!',
                 options: [
                     { text: 'Ja, præcis! Så husker man det nemlig næste gang.', ok: true, feedback: 'Perfekt! "Ja, præcis!" + "nemlig" skaber varm kontakt.' },
                     { text: 'Øhm...', ok: false, feedback: 'Virker tøvende i stedet for opbakkende.' },
@@ -1739,7 +1722,7 @@ const LIVE_CONVERSATIONS = [
             {
                 partnerLine: 'Sofie: "Vi har ti minutter tilbage i caféen i dag – skal vi tage en kop te mere?"',
                 targetRole: 'taler',
-                instruction: 'Trin 4 (🎙️ Taler): Tag imod tilbuddet og brug et blødgørende småord!',
+                instruction: 'Trin 4 (Taler): Tag imod tilbuddet og brug et blødgørende småord!',
                 options: [
                     { text: 'Ja tak! Jeg henter lige to kopper til os ved disken.', ok: true, feedback: 'Flot afsluttet! "Lige" får dit tilbud om at hente te til at lyde let og venligt.' },
                     { text: 'Nå.', ok: false, feedback: 'Et fladt "Nå." virker afvisende på et venligt tilbud.' },
@@ -1756,8 +1739,8 @@ const LIVE_CONVERSATIONS = [
 const ROBOT_UPGRADES = [
     {
         title: '1. Spørge om hjælp på kontoret',
-        robotText: '🤖 Robot-dansk: "Hjælp mig med printeren. Den virker ikke."',
-        slotsText: '❤️ Levende dansk: "Undskyld, kan du [1] hjælpe mig med printeren? Den virker [2] ikke i dag."',
+        robotText: 'Robot-dansk: "Hjælp mig med printeren. Den virker ikke."',
+        slotsText: 'Levende dansk: "Undskyld, kan du [1] hjælpe mig med printeren? Den virker [2] ikke i dag."',
         slot1Options: ['lige', 'nå', 'mm-hm'],
         slot1Answer: 'lige',
         slot2Options: ['jo', 'vel', 'hvad hedder det'],
@@ -1766,8 +1749,8 @@ const ROBOT_UPGRADES = [
     },
     {
         title: '2. Når man ikke kan huske et ord i butikken',
-        robotText: '🤖 Robot-dansk: "Jeg vil købe en... [stille i 4 sekunder] ... stegepande."',
-        slotsText: '❤️ Levende dansk: "[1], jeg leder efter sådan en... [2]... en stegepande!"',
+        robotText: 'Robot-dansk: "Jeg vil købe en... [stille i 4 sekunder] ... stegepande."',
+        slotsText: 'Levende dansk: "[1], jeg leder efter sådan en... [2]... en stegepande!"',
         slot1Options: ['Øhm', 'Nå!', 'Præcis'],
         slot1Answer: 'Øhm',
         slot2Options: ['hvad hedder det', 'ikke?', 'mm-hm'],
@@ -1776,8 +1759,8 @@ const ROBOT_UPGRADES = [
     },
     {
         title: '3. Svare ja til et negativt spørgsmål',
-        robotText: '🤖 Robot-dansk: A: "Er du ikke sulten?" — B: "Ja."',
-        slotsText: '❤️ Levende dansk: A: "Er du ikke sulten?" — B: "[1], jeg er [2] ret sulten!"',
+        robotText: 'Robot-dansk: A: "Er du ikke sulten?" — B: "Ja."',
+        slotsText: 'Levende dansk: A: "Er du ikke sulten?" — B: "[1], jeg er [2] ret sulten!"',
         slot1Options: ['Jo', 'Ja', 'Nå'],
         slot1Answer: 'Jo',
         slot2Options: ['faktisk', 'vel', 'mm-hm'],
@@ -1786,8 +1769,8 @@ const ROBOT_UPGRADES = [
     },
     {
         title: '4. Være en god lytter når nogen forklarer en årsag',
-        robotText: '🤖 Robot-dansk: A: "Jeg kom for sent, fordi bussen punkterede." — B: "Okay."',
-        slotsText: '❤️ Levende dansk: A: "Jeg kom for sent, fordi bussen punkterede." — B: "[1], det var derfor! [2], hvor uheldigt!"',
+        robotText: 'Robot-dansk: A: "Jeg kom for sent, fordi bussen punkterede." — B: "Okay."',
+        slotsText: 'Levende dansk: A: "Jeg kom for sent, fordi bussen punkterede." — B: "[1], det var derfor! [2], hvor uheldigt!"',
         slot1Options: ['Nååå...', 'Nå, men...', 'Øhm...'],
         slot1Answer: 'Nååå...',
         slot2Options: ['Virkelig', 'Ej', 'Vel'],
@@ -1796,8 +1779,8 @@ const ROBOT_UPGRADES = [
     },
     {
         title: '5. Invitere den anden ind i samtalen',
-        robotText: '🤖 Robot-dansk: "Vejret er dejligt i dag. Er du enig?"',
-        slotsText: '❤️ Levende dansk: "[1], vejret er da helt fantastisk i dag, [2]"',
+        robotText: 'Robot-dansk: "Vejret er dejligt i dag. Er du enig?"',
+        slotsText: 'Levende dansk: "[1], vejret er da helt fantastisk i dag, [2]"',
         slot1Options: ['Altså', 'Mm-hm', 'Nå!'],
         slot1Answer: 'Altså',
         slot2Options: ['ikke?', 'vel?', 'hvad hedder det'],
@@ -1806,8 +1789,8 @@ const ROBOT_UPGRADES = [
     },
     {
         title: '6. Reagere på en overraskende nyhed',
-        robotText: '🤖 Robot-dansk: A: "Jeg har fået nyt job i Aarhus!" — B: "Det er ny information. Tillykke."',
-        slotsText: '❤️ Levende dansk: A: "Jeg har fået nyt job i Aarhus!" — B: "[1] [2]?! Kæmpe tillykke!"',
+        robotText: 'Robot-dansk: A: "Jeg har fået nyt job i Aarhus!" — B: "Det er ny information. Tillykke."',
+        slotsText: 'Levende dansk: A: "Jeg har fået nyt job i Aarhus!" — B: "[1] [2]?! Kæmpe tillykke!"',
         slot1Options: ['Nå!', 'Nå, men...', 'Øhm...'],
         slot1Answer: 'Nå!',
         slot2Options: ['Virkelig', 'Vel', 'Lige'],
@@ -1816,8 +1799,8 @@ const ROBOT_UPGRADES = [
     },
     {
         title: '7. Runde en hyggelig snak af',
-        robotText: '🤖 Robot-dansk: "Samtalen slutter nu. Jeg går."',
-        slotsText: '❤️ Levende dansk: "[1] det var hyggeligt at snakke – jeg må [2] løbe videre til bussen!"',
+        robotText: 'Robot-dansk: "Samtalen slutter nu. Jeg går."',
+        slotsText: 'Levende dansk: "[1] det var hyggeligt at snakke – jeg må [2] løbe videre til bussen!"',
         slot1Options: ['Nå, men...', 'Nååå...', 'Mm-hm'],
         slot1Answer: 'Nå, men...',
         slot2Options: ['lige', 'vel', 'præcis'],
@@ -1826,8 +1809,8 @@ const ROBOT_UPGRADES = [
     },
     {
         title: '8. Vise 100 % enighed i en diskussion',
-        robotText: '🤖 Robot-dansk: A: "Det er vigtigt at lytte i en samtale." — B: "Jeg har samme mening."',
-        slotsText: '❤️ Levende dansk: A: "Det er vigtigt at lytte i en samtale." — B: "[1]! Det er [2] lige så vigtigt som at tale!"',
+        robotText: 'Robot-dansk: A: "Det er vigtigt at lytte i en samtale." — B: "Jeg har samme mening."',
+        slotsText: 'Levende dansk: A: "Det er vigtigt at lytte i en samtale." — B: "[1]! Det er [2] lige så vigtigt som at tale!"',
         slot1Options: ['Præcis', 'Øhm', 'Nå'],
         slot1Answer: 'Præcis',
         slot2Options: ['nemlig', 'vel', 'hvad hedder det'],
@@ -2328,7 +2311,7 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.textContent = '← ' + (getTranslation('back') || 'Tilbage til Samtaletræning');
+    backBtn.textContent = '←' + (getTranslation('back') || 'Tilbage til Samtaletræning');
     backBtn.onclick = () => navigateFn('samtale_traening');
     topBar.appendChild(backBtn);
 
@@ -2340,14 +2323,14 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
     const sisterBtn = document.createElement('button');
     sisterBtn.type = 'button';
     sisterBtn.className = 'ss-btn-secondary';
-    sisterBtn.innerHTML = '🔊 Søster-flade: <strong>Små LYDE →</strong>';
+    sisterBtn.innerHTML = 'Små lyde →';
     sisterBtn.onclick = () => navigateFn('samtale_smaalyde');
     sisterWrap.appendChild(sisterBtn);
 
     const politeBtn = document.createElement('button');
     politeBtn.type = 'button';
     politeBtn.className = 'ss-btn-secondary';
-    politeBtn.innerHTML = '🎩 Søster-flade: <strong>Høflighed på dansk →</strong>';
+    politeBtn.innerHTML = 'Høflighed →';
     politeBtn.onclick = () => navigateFn('samtale_hoeflighed');
     sisterWrap.appendChild(politeBtn);
 
@@ -2355,63 +2338,42 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
 
     viewContainer.appendChild(topBar);
 
-    // Hero med overordnet grafisk linje: TALER vs. LYTTER
+    // Kompakt Hero — ingen gentagelse af ordlister eller rolle-søjler
     const hero = document.createElement('div');
     hero.className = 'ss-hero';
+    hero.style.padding = '1rem 1.35rem';
     hero.innerHTML = `
-        <div class="ss-hero-kicker">💬 Samtaletræning • Flade 2 af 2: Samtalens småord & turtagning</div>
-        <h1>Små ord der får en samtale til at fungere</h1>
-        <p>
-            En god dansk samtale holdes sammen af <strong>de 15 mest almindelige småord og samtalemarkører</strong> (socialt smøremiddel).
-            Udforsk vrimlebilledet med de grafiske pegefelter og træn balancen mellem <strong>hvad du bruger som taler</strong>, og <strong>hvad du bruger som lytter</strong>.
+        <h1 style="margin:0 0 0.25rem; font-size:clamp(1.35rem, 2.4vw, 1.85rem); font-weight:900; text-align:left;">Små ord i dansk samtale</h1>
+        <p style="margin:0; font-size:0.92rem; line-height:1.45;">
+            15 samtalemarkører til at styre taleturen og vise aktiv lytning.
         </p>
-        <div class="ss-dual-line-banner">
-            <div class="ss-role-pillar taler">
-                <div class="ss-role-pillar-icon">🎙️</div>
-                <div>
-                    <div class="ss-role-pillar-title" style="color:#fde68a;">8 TALER-signaler (Når du har eller tager ordet)</div>
-                    <div class="ss-role-pillar-desc">
-                        Bruges til at <strong>tage ordet</strong> (<em>Altså... / Faktisk...</em>), <strong>holde ordet</strong> mens du tænker (<em>Øhm... / Hvad hedder det...</em>), <strong>blødgøre</strong> (<em>lige / jo</em>), <strong>skifte retning</strong> (<em>Nå, men...</em>) eller <strong>aflevere ordet videre</strong> (<em>...ikke? / vel?</em>).
-                    </div>
-                </div>
-            </div>
-            <div class="ss-role-pillar lytter">
-                <div class="ss-role-pillar-icon">👂</div>
-                <div>
-                    <div class="ss-role-pillar-title" style="color:#67e8f9;">7 LYTTER-signaler (Når du støtter uden at afbryde)</div>
-                    <div class="ss-role-pillar-desc">
-                        Bruges til at vise <strong>aktiv lytning</strong> (<em>Mmm / Mm-hm / Ja</em>), <strong>kvittere for info</strong> (<em>Aha / Okay</em>), vise <strong>overraskelse</strong> (<em>Nå! / Virkelig?</em>), <strong>forståelse & empati</strong> (<em>Nååå...</em>) eller <strong>100 % enighed</strong> (<em>Præcis! / Nemlig!</em>).
-                    </div>
-                </div>
-            </div>
-        </div>
     `;
     viewContainer.appendChild(hero);
 
     const tabs = [
-        { id: 'tab_vrimmel', icon: '🖼️', label: '1. Vrimlebillede & Pegefelter (15)' },
-        { id: 'tab_vaelg', icon: '🎯', label: '2. Vælg det rigtige element' },
-        { id: 'tab_duel', icon: '🎭', label: '3. Taler eller Lytter?' },
-        { id: 'tab_tonefald', icon: '🎵', label: '4. Video: "Nå" & Tonefald' },
-        { id: 'tab_jajo_video', icon: '✅', label: '5. Video: "Ja", "Jo" eller "Nej"?' },
-        { id: 'tab_enig_video', icon: '🤝', label: '6. Video: Enighed ("Præcis!" & "Lige")' },
-        { id: 'tab_live', icon: '💬', label: '7. Hold samtalen i live!' },
-        { id: 'tab_robot', icon: '🛠️', label: '8. Fra Robot til Levende dansk' },
-        { id: 'tab_detektiv', icon: '🕵️', label: '9. Samtale-detektiven' }
+        { id:'tab_vrimmel', label:'1. Vrimlebillede (15)' },
+        { id:'tab_vaelg', label:'2. Vælg småord (15)' },
+        { id:'tab_duel', label:'3. Taler eller lytter? ' },
+        { id:'tab_tonefald', label:'4. Video: "Nå"' },
+        { id:'tab_jajo_video', label:'5. Video: Ja / Jo / Nej' },
+        { id:'tab_enig_video', label:'6. Video: Enighed' },
+        { id:'tab_live', label:'7. Hold samtalen i live' },
+        { id:'tab_robot', label:'8. Robot → Levende' },
+        { id:'tab_detektiv', label:'9. Detektiv' }
     ];
 
     let currentTab = extraData?.subPath && tabs.some(t => t.id === extraData.subPath)
         ? extraData.subPath
-        : 'tab_vrimmel';
+        :'tab_vrimmel';
 
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'ss-tabs';
     tabs.forEach(t => {
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = `ss-tab-btn ${t.id === currentTab ? 'active' : ''}`;
+        btn.className = `ss-tab-btn ${t.id === currentTab ? 'active' :''}`;
         btn.dataset.tab = t.id;
-        btn.textContent = `${t.icon} ${t.label}`;
+        btn.textContent = t.label;
         btn.onclick = () => switchTab(t.id);
         tabsMenu.appendChild(btn);
     });
@@ -2434,32 +2396,33 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
 
     function makePanel(id) {
         const p = document.createElement('div');
-        p.className = `ss-panel ${currentTab === id ? 'active' : ''}`;
+        p.className = `ss-panel ${currentTab === id ? 'active' :''}`;
         p.dataset.panel = id;
         return p;
     }
 
     // =========================================================================
-    // FANE 1: VRIMLEBILLEDE MED GRAFISKE PEGEFELTER + TALER/LYTTER-SORTERING
+    // FANE 1: VRIMLEBILLEDE MED 15 PEGEFELTER + VALGFRI ROLLE-SORTERING
     // =========================================================================
     const panel1 = makePanel('tab_vrimmel');
     let activeRoleFilter = 'alle';
     let selectedSignal = SAMTALE_SIGNALS[0];
     let compactPins = false;
     let zoomed = false;
+    let showSortDrill = false;
 
     const card1 = document.createElement('div');
     card1.className = 'ss-card';
     card1.innerHTML = `
         <div class="ss-toolbar">
             <div class="ss-filters">
-                <button type="button" class="ss-filter-btn active" data-rfilter="alle">Alle 15 pegefelter</button>
-                <button type="button" class="ss-filter-btn" data-rfilter="taler" style="border-color:rgba(245,158,11,0.65); color:#fde68a;">🎙️ Taler-signaler (8)</button>
-                <button type="button" class="ss-filter-btn" data-rfilter="lytter" style="border-color:rgba(6,182,212,0.65); color:#67e8f9;">👂 Lytter-signaler (7)</button>
+                <button type="button" class="ss-filter-btn active" data-rfilter="alle">Alle (15)</button>
+                <button type="button" class="ss-filter-btn" data-rfilter="taler" style="border-color:rgba(245,158,11,0.65); color:#fde68a;">${samtaleRoleIcon('taler', 14)} Taler (8)</button>
+                <button type="button" class="ss-filter-btn" data-rfilter="lytter" style="border-color:rgba(6,182,212,0.65); color:#67e8f9;">${samtaleRoleIcon('lytter', 14)} Lytter (7)</button>
             </div>
-            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-                <button type="button" class="ss-btn-secondary" id="ss-toggle-pinmode">🏷️ Vis kun tal / fulde pegefelter</button>
-                <button type="button" class="ss-btn-secondary" id="ss-zoom-btn">🔍 Zoom ind (135%)</button>
+            <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+                <button type="button" class="ss-btn-secondary" id="ss-toggle-pinmode">Kun tal</button>
+                <button type="button" class="ss-btn-secondary" id="ss-zoom-btn">Zoom 135%</button>
             </div>
         </div>
 
@@ -2479,12 +2442,13 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
 
     card1.querySelector('#ss-zoom-btn').onclick = (e) => {
         zoomed = !zoomed;
-        stageInner.style.transform = zoomed ? 'scale(1.35)' : 'scale(1)';
-        e.currentTarget.textContent = zoomed ? '🔍 Nulstil zoom (100%)' : '🔍 Zoom ind (135%)';
+        stageInner.style.transform = zoomed ? 'scale(1.35)' :'scale(1)';
+        e.currentTarget.textContent = zoomed ? 'Zoom 100%' :'Zoom 135%';
     };
 
-    card1.querySelector('#ss-toggle-pinmode').onclick = () => {
+    card1.querySelector('#ss-toggle-pinmode').onclick = (e) => {
         compactPins = !compactPins;
+        e.currentTarget.textContent = compactPins ? 'Vis ord' :'Kun tal';
         renderPegefelter();
     };
 
@@ -2492,47 +2456,36 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         const meta = ROLE_META[sig.role];
         detailBox.style.borderColor = meta.border;
         detailBox.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.65rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.55rem;">
                 <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+                    <span style="font-size:1.3rem; font-weight:900; color:#ffffff;">#${sig.num}. ${sig.word}</span>
                     <span class="ss-pill-tag" style="background:${meta.bg}; color:${meta.color}; border:1.5px solid ${meta.border};">
-                        ${meta.label}
-                    </span>
-                    <span class="ss-pill-tag" style="background:rgba(148,163,184,0.14); color:#e2e8f0; border:1px solid rgba(148,163,184,0.3);">
-                        Funktion: ${sig.turnAction}
+                        ${samtaleRoleIcon(sig.role, 13)} ${meta.short}
                     </span>
                 </div>
-                <button type="button" class="ss-btn-primary" id="ss-play-detail-audio">
-                    🔊 Lyt til "${sig.shortLabel}" i sætning
+                <button type="button" class="ss-btn-primary" id="ss-play-detail-audio" style="display:inline-flex; align-items:center; gap:0.4rem;">
+                    ${samtaleIcons.audio(15)} Lyt
                 </button>
             </div>
 
-            <div style="font-size:1.35rem; font-weight:900; color:#ffffff; margin-bottom:0.35rem;">
-                ${sig.icon} #${sig.num}. ${sig.word}
+            <div style="font-size:0.95rem; color:#f1f5f9; font-weight:700; margin-bottom:0.3rem;">
+                ${sig.turnAction}
+            </div>
+            <div style="font-size:0.83rem; color:#94a3b8; margin-bottom:0.65rem;">
+                <strong>Tonefald:</strong> ${sig.intonation}
             </div>
 
-            <div style="font-size:0.84rem; color:#94a3b8; margin-bottom:0.6rem; display:flex; flex-wrap:wrap; gap:0.9rem;">
-                <span><strong>🎵 Tonefald:</strong> ${sig.intonation}</span>
-                <span><strong>👀 I vrimlebilledet:</strong> ${sig.bodyCue}</span>
-            </div>
-
-            <p style="margin:0 0 0.65rem; color:#e2e8f0; font-size:0.95rem; line-height:1.55;">
+            <p style="margin:0 0 0.7rem; color:#e2e8f0; font-size:0.92rem; line-height:1.5;">
                 ${sig.definition}
             </p>
 
-            <div style="font-size:0.88rem; color:#fde68a; margin-bottom:0.75rem;">
-                <strong>💡 Hvornår bruger du det?</strong> ${sig.whenToUse}
+            <div style="background:rgba(15,23,42,0.95); border-left:4px solid ${meta.color}; border-radius:12px; padding:0.7rem 0.95rem; margin-bottom:0.6rem;">
+                <div style="font-size:0.9rem; color:#cbd5e1; margin-bottom:0.2rem;">A: "${sig.dialogueA}"</div>
+                <div style="font-size:0.93rem; color:#ffffff; font-weight:700;">B (${meta.label}): "${sig.dialogueB}"</div>
             </div>
 
-            <div style="background:rgba(15,23,42,0.95); border-left:4px solid ${meta.color}; border-radius:12px; padding:0.75rem 1rem; margin-bottom:0.6rem;">
-                <div style="font-size:0.75rem; font-weight:900; color:${meta.color}; text-transform:uppercase; margin-bottom:0.25rem;">
-                    Eksempel i en dansk samtale:
-                </div>
-                <div style="font-size:0.92rem; color:#cbd5e1; margin-bottom:0.2rem;">A: "${sig.dialogueA}"</div>
-                <div style="font-size:0.95rem; color:#ffffff; font-weight:700;">B (${meta.short}): "${sig.dialogueB}"</div>
-            </div>
-
-            <div style="font-size:0.83rem; color:#fca5a5; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); border-radius:10px; padding:0.5rem 0.8rem;">
-                <strong>⚠️ Pas på fælden:</strong> ${sig.trapTip}
+            <div style="font-size:0.83rem; color:#fca5a5; background:rgba(239,68,68,0.09); border:1px solid rgba(239,68,68,0.28); border-radius:10px; padding:0.48rem 0.8rem;">
+                <strong>Pas på:</strong> ${sig.trapTip}
             </div>
         `;
         const playBtn = detailBox.querySelector('#ss-play-detail-audio');
@@ -2548,14 +2501,15 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
             const isSelected = sig.id === selectedSignal.id;
             const btn = document.createElement('button');
             btn.type = 'button';
-            btn.className = `ss-pegefelt role-${sig.role} ${sig.pointerDir === 'up' ? 'dir-up' : ''} ${isSelected ? 'active show-mobile-label' : ''} ${compactPins ? 'compact-mode' : ''} ${isHidden ? 'hidden-pin' : ''}`;
+            btn.className = `ss-pegefelt role-${sig.role} ${sig.pointerDir === 'up' ? 'dir-up' :''} ${isSelected ? 'active show-mobile-label' :''} ${compactPins ? 'compact-mode' :''} ${isHidden ? 'hidden-pin' :''}`;
             btn.style.left = `${sig.x}%`;
             btn.style.top = `${sig.y}%`;
             btn.dataset.sigId = sig.id;
             btn.title = `#${sig.num} ${sig.word} (${ROLE_META[sig.role].short})`;
+            const rIcon = samtaleRoleIcon(sig.role, 12);
             btn.innerHTML = compactPins
-                ? `<span>${sig.role === 'taler' ? '🎙️' : '👂'}</span><span>${sig.num}</span>`
-                : `<span class="ss-pegefelt-num">${sig.num}</span><span>${sig.role === 'taler' ? '🎙️' : '👂'}</span><span class="ss-pegefelt-label">${sig.shortLabel}</span>`;
+                ? `${rIcon}<span>${sig.num}</span>`
+                : `<span class="ss-pegefelt-num">${sig.num}</span>${rIcon}<span class="ss-pegefelt-label">${sig.shortLabel}</span>`;
             btn.onclick = () => {
                 selectedSignal = sig;
                 renderSignalDetail(sig);
@@ -2578,7 +2532,7 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
     renderPegefelter();
     panel1.appendChild(card1);
 
-    // Hurtig oversigt + Taler vs. Lytter sorteringsbane nederst i Fane 1
+    // Valgfri Taler vs. Lytter sorteringsbane (sammenklappet som standard)
     const sortCard = document.createElement('div');
     sortCard.className = 'ss-card';
     const sortPool = shuffleArray([...SAMTALE_SIGNALS]);
@@ -2593,37 +2547,50 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         }
         const activeItem = activeSortIdx >= 0 ? sortPool[activeSortIdx] : null;
 
+        if (!showSortDrill) {
+            sortCard.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
+                    <div style="font-size:0.96rem; font-weight:800; color:#e2e8f0;">
+                        Sorteringsøvelse: Placér de 15 småord i Taler eller Lytter (${placedSet.size}/${sortPool.length})
+                    </div>
+                    <button type="button" class="ss-btn-secondary" id="ss-sort-toggle">Åbn øvelse</button>
+                </div>
+            `;
+            sortCard.querySelector('#ss-sort-toggle').onclick = () => {
+                showSortDrill = true;
+                renderRoleSorting();
+            };
+            return;
+        }
+
         sortCard.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.5rem;">
-                <h3 style="margin:0; font-size:1.15rem; font-weight:900;">🎙️ vs. 👂 Hurtig sortering: Bruger du dette som TALER eller LYTTER? (${placedSet.size}/${sortPool.length})</h3>
-                <button type="button" class="ss-btn-secondary" id="ss-sort-reset">🔄 Nulstil sortering</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
+                <h3 style="margin:0; font-size:1.05rem; font-weight:900;">Sortér efter rolle (${placedSet.size}/${sortPool.length})</h3>
+                <div style="display:flex; gap:0.4rem;">
+                    <button type="button" class="ss-btn-secondary" id="ss-sort-reset">Nulstil</button>
+                    <button type="button" class="ss-btn-secondary" id="ss-sort-toggle">Skjul</button>
+                </div>
             </div>
-            <p style="margin:0 0 0.8rem; color:#cbd5e1; font-size:0.9rem;">
-                Klik på et ord/lyd i banken og placer det i den rigtige boks nedenfor:
-            </p>
-            <div style="display:flex; flex-wrap:wrap; gap:0.45rem; padding:0.85rem; border-radius:14px; background:rgba(9,14,26,0.85); border:1px solid rgba(148,163,184,0.22); margin-bottom:0.85rem;">
+            <div style="display:flex; flex-wrap:wrap; gap:0.4rem; padding:0.75rem; border-radius:14px; background:rgba(9,14,26,0.85); border:1px solid rgba(148,163,184,0.22); margin-bottom:0.75rem;">
                 ${sortPool.map((item, idx) => {
                     const isPlaced = placedSet.has(idx);
                     const isActive = idx === activeSortIdx;
                     return `
-                        <button type="button" class="ss-btn-secondary" data-sort-item="${idx}" ${isPlaced ? 'disabled' : ''} style="${isPlaced ? 'opacity:0.32; text-decoration:line-through;' : ''}${isActive ? 'background:#f59e0b; color:#0f172a; border-color:#fef08a; font-weight:900;' : ''}">
-                            ${item.icon} ${item.word}
+                        <button type="button" class="ss-btn-secondary" data-sort-item="${idx}" ${isPlaced ? 'disabled' :''} style="${isPlaced ? 'opacity:0.32; text-decoration:line-through;' :''}${isActive ? 'background:#f59e0b; color:#0f172a; border-color:#fef08a; font-weight:900;' :''}">
+                            ${item.word}
                         </button>
                     `;
                 }).join('')}
             </div>
 
             ${activeItem ? `
-                <div style="margin-bottom:0.85rem; padding:0.7rem 1rem; border-radius:12px; background:rgba(56,189,248,0.14); border:1.5px solid #38bdf8; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
-                    <div>
-                        <span style="font-size:0.78rem; font-weight:900; color:#7dd3fc; text-transform:uppercase;">Valgt element:</span>
-                        <strong style="font-size:1.1rem; color:#ffffff; margin-left:0.4rem;">${activeItem.icon} ${activeItem.word}</strong>
-                        <span style="font-size:0.85rem; color:#cbd5e1; margin-left:0.5rem;">— "${activeItem.turnAction}"</span>
-                    </div>
+                <div style="margin-bottom:0.75rem; padding:0.6rem 0.9rem; border-radius:12px; background:rgba(56,189,248,0.12); border:1px solid #38bdf8; font-size:0.9rem;">
+                    <strong style="color:#ffffff;">${activeItem.word}</strong>
+                    <span style="color:#cbd5e1;"> — ${activeItem.turnAction}</span>
                 </div>
             ` : `
-                <div class="ss-feedback ok" style="margin-bottom:0.85rem;">
-                    🏆 Flot! Du har sorteret alle 15 samtale-ord og -lyde i <strong>🎙️ Taler-signaler (8)</strong> og <strong>👂 Lytter-signaler (7)</strong>!
+                <div class="ss-feedback ok" style="margin-bottom:0.75rem;">
+                    Flot! Alle 15 småord er sorteret.
                 </div>
             `}
 
@@ -2632,23 +2599,26 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
                     const m = ROLE_META[roleKey];
                     const items = sortedBuckets[roleKey].map(i => sortPool[i]);
                     return `
-                        <button type="button" data-sort-bucket="${roleKey}" style="text-align:left; padding:1rem; border-radius:16px; background:${m.bg}; border:2px dashed ${m.border}; color:#ffffff; cursor:pointer; transition:all 0.15s ease;">
-                            <div style="font-size:1rem; font-weight:900; color:${m.color}; margin-bottom:0.25rem;">
-                                ${m.label} (${items.length}/${roleKey === 'taler' ? 8 : 7})
+                        <button type="button" data-sort-bucket="${roleKey}" style="text-align:left; padding:0.85rem; border-radius:14px; background:${m.bg}; border:2px dashed ${m.border}; color:#ffffff; cursor:pointer;">
+                            <div style="font-size:0.94rem; font-weight:900; color:${m.color}; margin-bottom:0.45rem; display:flex; align-items:center; gap:0.35rem;">
+                                ${samtaleRoleIcon(roleKey, 14)} ${m.short} (${items.length}/${roleKey === 'taler' ? 8 : 7})
                             </div>
-                            <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:0.6rem;">${m.subtitle}</div>
-                            <div style="display:flex; flex-wrap:wrap; gap:0.35rem;">
+                            <div style="display:flex; flex-wrap:wrap; gap:0.3rem;">
                                 ${items.length
-                                    ? items.map(it => `<span style="padding:0.22rem 0.55rem; border-radius:999px; background:rgba(15,23,42,0.85); border:1px solid ${m.border}; font-size:0.8rem; font-weight:800;">${it.icon} ${it.shortLabel}</span>`).join('')
-                                    : `<span style="font-size:0.83rem; color:#94a3b8;">Klik her for at placere det valgte element...</span>`}
+                                    ? items.map(it => `<span style="padding:0.18rem 0.48rem; border-radius:999px; background:rgba(15,23,42,0.85); border:1px solid ${m.border}; font-size:0.76rem; font-weight:800;">${it.shortLabel}</span>`).join('')
+                                    : `<span style="font-size:0.8rem; color:#94a3b8;">Klik for at placere</span>`}
                             </div>
                         </button>
                     `;
                 }).join('')}
             </div>
-            ${sortFeedback ? `<div class="ss-feedback ${sortFeedback.startsWith('✓') ? 'ok' : 'err'}">${sortFeedback}</div>` : ''}
+            ${sortFeedback ? `<div class="ss-feedback ${sortFeedback.startsWith('✓') ? 'ok' :'err'}">${sortFeedback}</div>` :''}
         `;
 
+        sortCard.querySelector('#ss-sort-toggle').onclick = () => {
+            showSortDrill = false;
+            renderRoleSorting();
+        };
         sortCard.querySelector('#ss-sort-reset').onclick = () => {
             sortedBuckets.taler = [];
             sortedBuckets.lytter = [];
@@ -2672,10 +2642,9 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
                 const item = sortPool[activeSortIdx];
                 if (item.role === targetRole) {
                     sortedBuckets[targetRole].push(activeSortIdx);
-                    sortFeedback = `✓ Rigtigt! "${item.word}" er et ${ROLE_META[targetRole].label} (${item.turnAction}).`;
+                    sortFeedback = `✓ Rigtigt! "${item.word}" er ${ROLE_META[targetRole].label}.`;
                 } else {
-                    const otherMeta = ROLE_META[item.role];
-                    sortFeedback = `✗ Ikke helt – "${item.word}" bruges primært som ${otherMeta.label} (${item.turnAction}). Prøv den anden boks!`;
+                    sortFeedback = `✗ Ikke helt – "${item.word}" bruges primært som ${ROLE_META[item.role].label}.`;
                 }
                 renderRoleSorting();
             };
@@ -2704,34 +2673,33 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         const sigMap = Object.fromEntries(SAMTALE_SIGNALS.map(s => [s.id, s]));
 
         card2.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.85rem;">
-                <div>
-                    <span class="ss-pill-tag" style="background:${meta.bg}; color:${meta.color}; border:1.5px solid ${meta.border}; margin-right:0.4rem;">
-                        ${meta.label}
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
+                <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+                    <span class="ss-pill-tag" style="background:${meta.bg}; color:${meta.color}; border:1.5px solid ${meta.border};">
+                        ${samtaleRoleIcon(q.role, 13)} ${meta.short}
                     </span>
                     <span style="font-size:0.85rem; color:#94a3b8; font-weight:800;">
-                        Opgave ${chooseIdx + 1} af ${CHOOSE_EXERCISES.length} • Score: ${chooseScore}/${CHOOSE_EXERCISES.length}
+                        Opgave ${chooseIdx + 1}/${CHOOSE_EXERCISES.length} • Score: ${chooseScore}/${CHOOSE_EXERCISES.length}
                     </span>
                 </div>
                 <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
-                    <button type="button" class="ss-btn-secondary" id="ss-choose-prev" ${chooseIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="ss-btn-secondary" id="ss-choose-next" ${chooseIdx === CHOOSE_EXERCISES.length - 1 ? 'disabled' : ''}>Næste →</button>
+                    <button type="button" class="ss-btn-secondary" id="ss-choose-prev" ${chooseIdx === 0 ? 'disabled' :''}>← Forrige</button>
+                    <button type="button" class="ss-btn-secondary" id="ss-choose-next" ${chooseIdx === CHOOSE_EXERCISES.length - 1 ? 'disabled' :''}>Næste →</button>
                 </div>
             </div>
 
-            <div style="font-size:0.92rem; color:#fde68a; background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); border-radius:12px; padding:0.75rem 1rem; margin-bottom:0.9rem;">
-                <strong>🎬 Situation:</strong> ${q.context}
+            <div style="font-size:0.9rem; color:#fde68a; background:rgba(245,158,11,0.09); border:1px solid rgba(245,158,11,0.28); border-radius:12px; padding:0.7rem 0.95rem; margin-bottom:0.85rem;">
+                <strong>Situation:</strong> ${q.context}
             </div>
 
-            <div style="background:rgba(9,14,26,0.92); border-left:4px solid ${meta.color}; border-radius:14px; padding:1rem 1.15rem; margin-bottom:1rem;">
-                <div style="font-size:0.98rem; color:#cbd5e1; margin-bottom:0.5rem;">${q.speakerA}</div>
-                <div style="font-size:1.1rem; font-weight:900; color:#ffffff;">${q.speakerB}</div>
+            <div style="background:rgba(9,14,26,0.92); border-left:4px solid ${meta.color}; border-radius:14px; padding:0.95rem 1.1rem; margin-bottom:0.95rem;">
+                <div style="font-size:0.96rem; color:#cbd5e1; margin-bottom:0.45rem;">${q.speakerA}</div>
+                <div style="font-size:1.08rem; font-weight:900; color:#ffffff;">${q.speakerB}</div>
             </div>
 
             <div class="ss-two-cols">
                 ${q.options.map(optId => {
                     const s = sigMap[optId];
-                    const sMeta = ROLE_META[s.role];
                     let cls = '';
                     if (chooseAnswered) {
                         if (optId === q.answerId) cls = 'correct';
@@ -2739,22 +2707,21 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
                     }
                     return `
                         <button type="button" class="ss-option-btn ${cls}" data-choose-opt="${optId}">
-                            <span><strong>${s.icon} ${s.word}</strong> <span style="font-size:0.78rem; color:#94a3b8;">(${s.turnAction})</span></span>
-                            <span class="ss-pill-tag" style="background:${sMeta.bg}; color:${sMeta.color}; border:1px solid ${sMeta.border}; font-size:0.68rem;">${sMeta.short}</span>
+                            <strong>${s.word}</strong>
                         </button>
                     `;
                 }).join('')}
             </div>
 
             ${chooseAnswered ? `
-                <div class="ss-feedback ${chooseAnswered === q.answerId ? 'ok' : 'err'}">
-                    <div>${chooseAnswered === q.answerId ? '✓ Helt rigtigt!' : `✗ Det bedste valg her er "${sigMap[q.answerId].word}".`} ${q.explanation}</div>
-                    <div style="margin-top:0.6rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
-                        <button type="button" class="ss-btn-primary" id="ss-choose-audio">🔊 Lyt til udtalen</button>
-                        ${chooseIdx < CHOOSE_EXERCISES.length - 1 ? `<button type="button" class="ss-btn-secondary" id="ss-choose-advance">Videre til opgave ${chooseIdx + 2} →</button>` : ''}
+                <div class="ss-feedback ${chooseAnswered === q.answerId ? 'ok' :'err'}">
+                    <div>${chooseAnswered === q.answerId ? '✓ Rigtigt!' : `✗ Bedste valg: "${sigMap[q.answerId].word}".`} ${q.explanation}</div>
+                    <div style="margin-top:0.55rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+                        <button type="button" class="ss-btn-primary" id="ss-choose-audio" style="display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(14)} Lyt</button>
+                        ${chooseIdx < CHOOSE_EXERCISES.length - 1 ? `<button type="button" class="ss-btn-secondary" id="ss-choose-advance">Næste →</button>` :''}
                     </div>
                 </div>
-            ` : ''}
+            ` :''}
         `;
 
         card2.querySelector('#ss-choose-prev').onclick = () => {
@@ -2806,20 +2773,20 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         card3.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
                 <div>
-                    <h3 style="margin:0; font-size:1.15rem; font-weight:900;">🎭 Turtagnings-duellen: Hvad gør personen i samtalen?</h3>
-                    <div style="font-size:0.84rem; color:#94a3b8;">Duel ${duelIdx + 1} af ${TURN_DUELS.length} • Rigtige: ${duelScore}/${TURN_DUELS.length}</div>
+                    <h3 style="margin:0; font-size:1.1rem; font-weight:900;">Taler eller lytter?</h3>
+                    <div style="font-size:0.84rem; color:#94a3b8;">Duel ${duelIdx + 1}/${TURN_DUELS.length} • Rigtige: ${duelScore}/${TURN_DUELS.length}</div>
                 </div>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="ss-btn-secondary" id="ss-duel-prev" ${duelIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="ss-btn-secondary" id="ss-duel-next" ${duelIdx === TURN_DUELS.length - 1 ? 'disabled' : ''}>Næste →</button>
+                    <button type="button" class="ss-btn-secondary" id="ss-duel-prev" ${duelIdx === 0 ? 'disabled' :''}>← Forrige</button>
+                    <button type="button" class="ss-btn-secondary" id="ss-duel-next" ${duelIdx === TURN_DUELS.length - 1 ? 'disabled' :''}>Næste →</button>
                 </div>
             </div>
 
-            <div style="background:rgba(9,14,26,0.92); border:1.5px solid rgba(56,189,248,0.35); border-radius:16px; padding:1.15rem; margin-bottom:1rem;">
-                <div style="font-size:0.78rem; font-weight:900; color:#fde68a; text-transform:uppercase; margin-bottom:0.3rem;">
-                    Fokus-signal: ${d.signal}
+            <div style="background:rgba(9,14,26,0.92); border:1.5px solid rgba(56,189,248,0.35); border-radius:16px; padding:1rem 1.15rem; margin-bottom:0.95rem;">
+                <div style="font-size:0.78rem; font-weight:900; color:#fde68a; text-transform:uppercase; margin-bottom:0.25rem;">
+                    Fokus: ${d.signal}
                 </div>
-                <div style="font-size:1.18rem; font-weight:900; color:#ffffff; line-height:1.45;">
+                <div style="font-size:1.12rem; font-weight:900; color:#ffffff; line-height:1.45;">
                     ${d.quote}
                 </div>
             </div>
@@ -2834,19 +2801,21 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
                     }
                     return `
                         <button type="button" class="ss-option-btn ${cls}" data-duel-opt="${ch.id}">
-                            <span>${ch.icon} ${ch.label}</span>
-                            <span class="ss-pill-tag" style="background:${m.bg}; color:${m.color}; border:1px solid ${m.border}; font-size:0.68rem;">${m.short}</span>
+                            <span style="display:inline-flex; align-items:center; gap:0.5rem;">
+                                <span style="color:${m.color};">${samtaleRoleIcon(ch.role, 16)}</span>
+                                <span>${ch.label}</span>
+                            </span>
                         </button>
                     `;
                 }).join('')}
             </div>
 
             ${duelPicked ? `
-                <div class="ss-feedback ${duelPicked === d.correctAction ? 'ok' : 'err'}">
-                    <div>${duelPicked === d.correctAction ? '✓ Præcis!' : '✗ Se på funktionen i samtalen:'} ${d.explanation}</div>
-                    ${duelIdx < TURN_DUELS.length - 1 ? `<button type="button" class="ss-btn-secondary" id="ss-duel-adv" style="margin-top:0.55rem;">Næste duel →</button>` : ''}
+                <div class="ss-feedback ${duelPicked === d.correctAction ? 'ok' :'err'}">
+                    <div>${duelPicked === d.correctAction ? '✓ Præcis!' :'✗ Se på funktionen i samtalen:'} ${d.explanation}</div>
+                    ${duelIdx < TURN_DUELS.length - 1 ? `<button type="button" class="ss-btn-secondary" id="ss-duel-adv" style="margin-top:0.55rem;">Næste →</button>` :''}
                 </div>
-            ` : ''}
+            ` :''}
         `;
 
         card3.querySelector('#ss-duel-prev').onclick = () => {
@@ -2880,7 +2849,7 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
     // =========================================================================
     const panel4 = makePanel('tab_tonefald');
     let activeNaaVariant = NAA_VIDEO_VARIANTS[0];
-    let labFilter = 'naa_video'; // 'naa_video' | 'other' | 'all'
+    let labFilter = 'naa_video';
     let labIdx = 0;
     let labPicked = null;
 
@@ -2888,26 +2857,22 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
     const videoCard4 = document.createElement('div');
     videoCard4.className = 'ss-card';
     videoCard4.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.9rem;">
-            <div>
-                <div style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.25rem 0.7rem; border-radius:999px; background:rgba(239,68,68,0.18); border:1px solid rgba(248,113,113,0.45); color:#fecaca; font-size:0.74rem; font-weight:900; text-transform:uppercase; margin-bottom:0.4rem;">
-                    ▶️ YouTube Masterclass • @klartilstartidanmark
-                </div>
-                <h3 style="margin:0; font-size:1.25rem; font-weight:900; color:#ffffff;">
-                    🎬 "Nå… på dansk" — ét lille ord med 10 forskellige betydninger!
-                </h3>
-                <p style="margin:0.3rem 0 0; color:#cbd5e1; font-size:0.9rem; line-height:1.5;">
-                    Se videoen herunder eller klik på en af de <strong>10 "Nå"-situationer</strong> til højre for at hoppe direkte til det præcise sekund i videoen, hvor tonefald, længde og ansigtsudtryk vises.
-                </p>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.85rem;">
+            <h3 style="margin:0; font-size:1.18rem; font-weight:900; color:#ffffff;">
+                "Nå… på dansk" — 10 betydninger
+            </h3>
+            <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+                <button type="button" class="ss-btn-secondary" id="ss-naa-play-start" style="display:inline-flex; align-items:center; gap:0.35rem;">
+                    ${samtaleIcons.play(12)} Fra start
+                </button>
+                <a href="https://youtu.be/${NAA_YOUTUBE_ID}" target="_blank" rel="noopener noreferrer" class="ss-btn-secondary" style="text-decoration:none;">
+                    YouTube ↗
+                </a>
             </div>
-            <a href="https://youtu.be/${NAA_YOUTUBE_ID}?si=_-KbKS6x0TJAuBZp" target="_blank" rel="noopener noreferrer" class="ss-btn-secondary" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">
-                🔗 Åbn på YouTube ↗
-            </a>
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:1.1rem; align-items:start;">
-            <!-- Indlejret YouTube-afspiller -->
-            <div style="background:rgba(9,14,26,0.94); border:1.5px solid rgba(56,189,248,0.35); border-radius:16px; overflow:hidden; box-shadow:0 12px 32px rgba(0,0,0,0.45);">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:1rem; align-items:start;">
+            <div style="background:rgba(9,14,26,0.94); border:1.5px solid rgba(56,189,248,0.35); border-radius:16px; overflow:hidden;">
                 <div style="position:relative; width:100%; aspect-ratio:16/9; background:#020617;">
                     <iframe
                         id="ss-naa-yt-iframe"
@@ -2918,20 +2883,11 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
                         allowfullscreen
                     ></iframe>
                 </div>
-                <div id="ss-naa-active-detail" style="padding:0.9rem 1.05rem;"></div>
+                <div id="ss-naa-active-detail" style="padding:0.85rem 1rem;"></div>
             </div>
 
-            <!-- Interaktiv liste med de 10 "Nå"-varianter fra videoen -->
-            <div style="background:rgba(9,14,26,0.9); border:1px solid rgba(148,163,184,0.22); border-radius:16px; padding:0.9rem;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.65rem;">
-                    <span style="font-size:0.84rem; font-weight:900; color:#fde68a; text-transform:uppercase;">
-                        🎯 De 10 "Nå"-situationer i videoen (6 👂 Lytter • 4 🎙️ Taler):
-                    </span>
-                    <button type="button" class="ss-btn-secondary" id="ss-naa-play-start" style="padding:0.32rem 0.65rem; font-size:0.76rem;">
-                        ▶ Afspil fra start (0:00)
-                    </button>
-                </div>
-                <div id="ss-naa-variants-list" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:0.48rem;"></div>
+            <div style="background:rgba(9,14,26,0.9); border:1px solid rgba(148,163,184,0.22); border-radius:16px; padding:0.8rem;">
+                <div id="ss-naa-variants-list" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:0.45rem;"></div>
             </div>
         </div>
     `;
@@ -2941,7 +2897,7 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
     const variantsListBox = videoCard4.querySelector('#ss-naa-variants-list');
 
     function jumpToVideoTimestamp(startSec, endSec) {
-        const endParam = endSec ? `&end=${endSec}` : '';
+        const endParam = endSec ? `&end=${endSec}` :'';
         ytIframe.src = `https://www.youtube.com/embed/${NAA_YOUTUBE_ID}?start=${startSec}${endParam}&autoplay=1&rel=0`;
     }
 
@@ -2949,37 +2905,26 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         const meta = ROLE_META[activeNaaVariant.role];
         activeNaaDetailBox.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.45rem;">
-                <div style="display:flex; align-items:center; gap:0.45rem; flex-wrap:wrap;">
-                    <span class="ss-pill-tag" style="background:${meta.bg}; color:${meta.color}; border:1px solid ${meta.border};">
-                        ${meta.short}
-                    </span>
-                    <span class="ss-pill-tag" style="background:rgba(56,189,248,0.16); color:#7dd3fc; border:1px solid rgba(56,189,248,0.35);">
-                        ⏱️ Tid i video: ${activeNaaVariant.timeLabel}
-                    </span>
-                </div>
-                <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
-                    <button type="button" class="ss-btn-primary" id="ss-naa-jump-clip" style="padding:0.38rem 0.75rem; font-size:0.8rem;">
-                        🎬 Se klippet (${activeNaaVariant.timeLabel})
+                <span class="ss-pill-tag" style="background:${meta.bg}; color:${meta.color}; border:1px solid ${meta.border};">
+                    ${samtaleRoleIcon(activeNaaVariant.role, 12)} ${meta.short}
+                </span>
+                <div style="display:flex; gap:0.4rem;">
+                    <button type="button" class="ss-btn-primary" id="ss-naa-jump-clip" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">
+                        ${samtaleIcons.play(12)} Klip (${activeNaaVariant.timeLabel})
                     </button>
-                    <button type="button" class="ss-btn-secondary" id="ss-naa-tts-clip" style="padding:0.38rem 0.75rem; font-size:0.8rem;">
-                        🔊 Lyt (TTS)
+                    <button type="button" class="ss-btn-secondary" id="ss-naa-tts-clip" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">
+                        ${samtaleIcons.audio(13)} Lyt
                     </button>
                 </div>
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center; gap:0.65rem; margin-bottom:0.35rem;">
-                <div style="font-size:1.05rem; font-weight:900; color:#ffffff;">${activeNaaVariant.badgeText}</div>
-                <svg width="92" height="36" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.9); border-radius:8px; border:1px solid rgba(148,163,184,0.28); flex-shrink:0;">
+                <div style="font-size:0.98rem; font-weight:900; color:#fde68a;">${activeNaaVariant.quoteFromVideo}</div>
+                <svg width="88" height="34" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.9); border-radius:8px; border:1px solid rgba(148,163,184,0.28); flex-shrink:0;">
                     <path d="${activeNaaVariant.curve}" fill="none" stroke="${activeNaaVariant.color}" stroke-width="3.2" stroke-linecap="round"/>
                 </svg>
             </div>
-            <div style="font-size:0.88rem; color:#fde68a; font-weight:700; margin-bottom:0.28rem;">
-                💬 I videoen siger hun: ${activeNaaVariant.quoteFromVideo}
-            </div>
-            <div style="font-size:0.83rem; color:#cbd5e1; margin-bottom:0.2rem;">
-                <strong>👀 Ansigtsudtryk & kropssprog:</strong> ${activeNaaVariant.bodyLanguage}
-            </div>
-            <div style="font-size:0.83rem; color:#94a3b8;">
-                <strong>🎯 Betydning i samtalen:</strong> ${activeNaaVariant.meaning}
+            <div style="font-size:0.84rem; color:#cbd5e1; line-height:1.45;">
+                ${activeNaaVariant.meaning}
             </div>
         `;
 
@@ -2994,12 +2939,12 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
             const vMeta = ROLE_META[v.role];
             const isSel = v.id === activeNaaVariant.id;
             return `
-                <button type="button" data-naa-vid="${v.id}" style="text-align:left; padding:0.55rem 0.7rem; border-radius:12px; background:${isSel ? 'rgba(56,189,248,0.18)' : 'rgba(15,23,42,0.85)'}; border:1.5px solid ${isSel ? '#38bdf8' : vMeta.border}; color:#ffffff; cursor:pointer; display:flex; flex-direction:column; gap:0.22rem; transition:all 0.15s ease;">
+                <button type="button" data-naa-vid="${v.id}" style="text-align:left; padding:0.5rem 0.68rem; border-radius:11px; background:${isSel ? 'rgba(56,189,248,0.18)' :'rgba(15,23,42,0.85)'}; border:1.5px solid ${isSel ? '#38bdf8' : vMeta.border}; color:#ffffff; cursor:pointer; display:flex; flex-direction:column; gap:0.2rem;">
                     <div style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:0.35rem;">
-                        <span style="font-size:0.84rem; font-weight:900; color:#ffffff;">${v.label}</span>
-                        <span style="font-size:0.7rem; font-weight:900; padding:0.12rem 0.42rem; border-radius:999px; background:${vMeta.bg}; color:${vMeta.color};">${v.role === 'taler' ? '🎙️' : '👂'} ${v.timeLabel}</span>
+                        <span style="font-size:0.83rem; font-weight:900; color:#ffffff;">${v.label}</span>
+                        <span style="font-size:0.69rem; font-weight:900; padding:0.1rem 0.4rem; border-radius:999px; background:${vMeta.bg}; color:${vMeta.color}; display:inline-flex; align-items:center; gap:0.22rem;">${samtaleRoleIcon(v.role, 11)} ${v.timeLabel}</span>
                     </div>
-                    <div style="font-size:0.75rem; color:#cbd5e1; line-height:1.3;">${v.badgeText.split('=')[1] ? v.badgeText.split('=')[1].trim() : v.meaning}</div>
+                    <div style="font-size:0.74rem; color:#94a3b8; line-height:1.3;">${v.badgeText.split('= ')[1] ? v.badgeText.split('= ')[1].trim() : v.meaning}</div>
                 </button>
             `;
         }).join('');
@@ -3023,7 +2968,7 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
     renderNaaVideoDashboard();
     panel4.appendChild(videoCard4);
 
-    // 2. Øvelseskort: Tonefalds-laboratoriet tilpasset de 10 "Nå"-situationer fra videoen + øvrige småord
+    // 2. Øvelseskort: Tonefalds-laboratoriet
     const card4 = document.createElement('div');
     card4.className = 'ss-card';
 
@@ -3040,50 +2985,39 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         const roleMeta = ROLE_META[item.role || 'lytter'];
 
         card4.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.7rem;">
                 <div>
-                    <h3 style="margin:0; font-size:1.15rem; font-weight:900;">🎵 Træn de 10 "Nå"-betydninger fra videoen & danske tonefald</h3>
-                    <div style="font-size:0.84rem; color:#94a3b8;">Opgave ${labIdx + 1} af ${list.length}</div>
+                    <h3 style="margin:0; font-size:1.08rem; font-weight:900;">Tonefalds-øvelser</h3>
+                    <div style="font-size:0.83rem; color:#94a3b8;">Opgave ${labIdx + 1}/${list.length}</div>
                 </div>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="ss-btn-secondary" id="ss-lab-prev" ${labIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="ss-btn-secondary" id="ss-lab-next" ${labIdx === list.length - 1 ? 'disabled' : ''}>Næste →</button>
+                    <button type="button" class="ss-btn-secondary" id="ss-lab-prev" ${labIdx === 0 ? 'disabled' :''}>← Forrige</button>
+                    <button type="button" class="ss-btn-secondary" id="ss-lab-next" ${labIdx === list.length - 1 ? 'disabled' :''}>Næste →</button>
                 </div>
             </div>
 
-            <div class="ss-filters" style="margin-bottom:0.9rem;">
-                <button type="button" class="ss-filter-btn ${labFilter === 'naa_video' ? 'active' : ''}" data-lfilter="naa_video">
-                    🎬 De 10 "Nå"-øvelser fra videoen (10)
-                </button>
-                <button type="button" class="ss-filter-btn ${labFilter === 'other' ? 'active' : ''}" data-lfilter="other">
-                    🎵 Øvrige småord & tonefald (7)
-                </button>
-                <button type="button" class="ss-filter-btn ${labFilter === 'all' ? 'active' : ''}" data-lfilter="all">
-                    📚 Alle 17 øvelser (17)
-                </button>
+            <div class="ss-filters" style="margin-bottom:0.85rem;">
+                <button type="button" class="ss-filter-btn ${labFilter === 'naa_video' ? 'active' :''}" data-lfilter="naa_video">"Nå" fra video (10)</button>
+                <button type="button" class="ss-filter-btn ${labFilter === 'other' ? 'active' :''}" data-lfilter="other">Andre småord (7)</button>
+                <button type="button" class="ss-filter-btn ${labFilter === 'all' ? 'active' :''}" data-lfilter="all">Alle (17)</button>
             </div>
 
-            <div style="background:rgba(9,14,26,0.92); border:1.5px solid ${roleMeta.border}; border-radius:16px; padding:1rem 1.15rem; margin-bottom:1rem;">
-                <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.4rem;">
+            <div style="background:rgba(9,14,26,0.92); border:1.5px solid ${roleMeta.border}; border-radius:15px; padding:0.95rem 1.1rem; margin-bottom:0.9rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.45rem; margin-bottom:0.45rem;">
                     <span class="ss-pill-tag" style="background:${roleMeta.bg}; color:${roleMeta.color}; border:1px solid ${roleMeta.border};">
-                        ${roleMeta.label}
+                        ${samtaleRoleIcon(item.role || 'lytter', 12)} ${roleMeta.short}
                     </span>
-                    ${item.isNaaVideo ? `
-                        <span class="ss-pill-tag" style="background:rgba(239,68,68,0.16); color:#fecaca; border:1px solid rgba(248,113,113,0.4);">
-                            🎬 Fra YouTube-videoen (${item.videoTimeLabel})
-                        </span>
-                    ` : ''}
+                    <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+                        <button type="button" class="ss-btn-primary" id="ss-lab-listen" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(13)} Lyt</button>
+                        ${item.isNaaVideo ? `
+                            <button type="button" class="ss-btn-secondary" id="ss-lab-watch-clip" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">
+                                ${samtaleIcons.play(12)} Se klip (${item.videoTimeLabel})
+                            </button>
+                        ` :''}
+                    </div>
                 </div>
-                <div style="font-size:1.05rem; font-weight:900; color:#fde68a; margin-bottom:0.35rem;">${item.title}</div>
-                <div style="font-size:0.95rem; color:#e2e8f0; line-height:1.5; margin-bottom:0.65rem;">${item.situation}</div>
-                <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-                    <button type="button" class="ss-btn-primary" id="ss-lab-listen">🔊 Lyt til det rigtige tonefald</button>
-                    ${item.isNaaVideo ? `
-                        <button type="button" class="ss-btn-secondary" id="ss-lab-watch-clip">
-                            🎬 Se klippet i YouTube-videoen (${item.videoTimeLabel})
-                        </button>
-                    ` : ''}
-                </div>
+                <div style="font-size:1rem; font-weight:900; color:#fde68a; margin-bottom:0.25rem;">${item.title}</div>
+                <div style="font-size:0.93rem; color:#e2e8f0; line-height:1.45;">${item.situation}</div>
             </div>
 
             <div class="ss-two-cols">
@@ -3096,30 +3030,23 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
                     return `
                         <button type="button" class="ss-option-btn ${cls}" data-lab-opt="${vIdx}" style="flex-direction:column; align-items:flex-start;">
                             <div style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:0.5rem;">
-                                <span style="font-size:0.96rem; font-weight:900; color:#ffffff;">${v.label}</span>
-                                <svg width="96" height="38" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.85); border-radius:8px; border:1px solid rgba(148,163,184,0.25); flex-shrink:0;">
+                                <span style="font-size:0.94rem; font-weight:900; color:#ffffff;">${v.label}</span>
+                                <svg width="88" height="34" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.85); border-radius:8px; border:1px solid rgba(148,163,184,0.25); flex-shrink:0;">
                                     <path d="${v.curve}" fill="none" stroke="${v.color}" stroke-width="3.2" stroke-linecap="round"/>
                                 </svg>
                             </div>
-                            <div style="font-size:0.82rem; color:#cbd5e1; font-weight:600;">Betydning: ${v.meaning}</div>
+                            <div style="font-size:0.81rem; color:#cbd5e1; font-weight:600;">${v.meaning}</div>
                         </button>
                     `;
                 }).join('')}
             </div>
 
             ${labPicked !== null ? `
-                <div class="ss-feedback ${labPicked === item.correctIdx ? 'ok' : 'err'}">
-                    <div>${labPicked === item.correctIdx ? '✓ Lige præcis!' : '✗ Bemærk forskellen i længde, melodi og ansigtsudtryk:'} ${item.explanation}</div>
-                    <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.55rem;">
-                        ${item.isNaaVideo ? `
-                            <button type="button" class="ss-btn-primary" id="ss-lab-feedback-clip">
-                                🎬 Afspil svaret i videoen (${item.videoTimeLabel})
-                            </button>
-                        ` : ''}
-                        ${labIdx < list.length - 1 ? `<button type="button" class="ss-btn-secondary" id="ss-lab-adv">Næste eksperiment →</button>` : ''}
-                    </div>
+                <div class="ss-feedback ${labPicked === item.correctIdx ? 'ok' :'err'}">
+                    <div>${labPicked === item.correctIdx ? '✓ Rigtigt!' :'✗ Bemærk tonefaldet:'} ${item.explanation}</div>
+                    ${labIdx < list.length - 1 ? `<button type="button" class="ss-btn-secondary" id="ss-lab-adv" style="margin-top:0.55rem;">Næste →</button>` :''}
                 </div>
-            ` : ''}
+            ` :''}
         `;
 
         card4.querySelectorAll('[data-lfilter]').forEach(btn => {
@@ -3144,14 +3071,7 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         if (watchClipBtn) {
             watchClipBtn.onclick = () => {
                 jumpToVideoTimestamp(item.videoStart, item.videoEnd);
-                ytIframe.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            };
-        }
-        const fbClipBtn = card4.querySelector('#ss-lab-feedback-clip');
-        if (fbClipBtn) {
-            fbClipBtn.onclick = () => {
-                jumpToVideoTimestamp(item.videoStart, item.videoEnd);
-                ytIframe.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                ytIframe.scrollIntoView({ behavior:'smooth', block:'center' });
             };
         }
         card4.querySelectorAll('[data-lab-opt]').forEach(btn => {
@@ -3175,34 +3095,29 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
     // =========================================================================
     const panelJaJo = makePanel('tab_jajo_video');
     let activeJaJoVariant = JAJO_VIDEO_VARIANTS[0];
-    let jajoFilter = 'all'; // 'all' | 'uden_ikke' | 'med_ikke'
+    let jajoFilter = 'all';
     let jajoIdx = 0;
     let jajoPicked = null;
 
     const videoCardJaJo = document.createElement('div');
     videoCardJaJo.className = 'ss-card';
     videoCardJaJo.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.9rem;">
-            <div>
-                <div style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.25rem 0.7rem; border-radius:999px; background:rgba(239,68,68,0.18); border:1px solid rgba(248,113,113,0.45); color:#fecaca; font-size:0.74rem; font-weight:900; text-transform:uppercase; margin-bottom:0.4rem;">
-                    ▶️ YouTube Masterclass • @klartilstartidanmark • Match: Ord #6 (jo), Ord #10 (Ja), Ord #5 (...ikke?) & Lyd #8 (Nej)
-                </div>
-                <h3 style="margin:0; font-size:1.25rem; font-weight:900; color:#ffffff;">
-                    ✅ "Svar med ja eller jo på dansk" — Spørgsmål med og uden <em>"ikke"</em>
-                </h3>
-                <p style="margin:0.3rem 0 0; color:#cbd5e1; font-size:0.9rem; line-height:1.5;">
-                    Klik på et af de <strong>8 klip</strong> til højre for at hoppe direkte i videoen:
-                    <strong>🟢 Del 1 (0:00–1:12): Spørgsmål UDEN "ikke" → Svar: Ja eller Nej</strong> •
-                    <strong>🟠 Del 2 (1:13–2:38): Spørgsmål MED "ikke" → Svar: Jo eller Nej</strong>.
-                </p>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.85rem;">
+            <h3 style="margin:0; font-size:1.18rem; font-weight:900; color:#ffffff;">
+                "Svar med ja eller jo på dansk" — 8 klip
+            </h3>
+            <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+                <button type="button" class="ss-btn-secondary" id="ss-jajo-play-start" style="display:inline-flex; align-items:center; gap:0.35rem;">
+                    ${samtaleIcons.play(12)} Fra start
+                </button>
+                <a href="https://www.youtube.com/watch?v=${JAJO_YOUTUBE_ID}" target="_blank" rel="noopener noreferrer" class="ss-btn-secondary" style="text-decoration:none;">
+                    YouTube ↗
+                </a>
             </div>
-            <a href="https://www.youtube.com/watch?v=${JAJO_YOUTUBE_ID}" target="_blank" rel="noopener noreferrer" class="ss-btn-secondary" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">
-                🔗 Åbn på YouTube ↗
-            </a>
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:1.1rem; align-items:start;">
-            <div style="background:rgba(9,14,26,0.94); border:1.5px solid rgba(245,158,11,0.42); border-radius:16px; overflow:hidden; box-shadow:0 12px 32px rgba(0,0,0,0.45);">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:1rem; align-items:start;">
+            <div style="background:rgba(9,14,26,0.94); border:1.5px solid rgba(245,158,11,0.42); border-radius:16px; overflow:hidden;">
                 <div style="position:relative; width:100%; aspect-ratio:16/9; background:#020617;">
                     <iframe
                         id="ss-jajo-yt-iframe"
@@ -3213,19 +3128,11 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
                         allowfullscreen
                     ></iframe>
                 </div>
-                <div id="ss-jajo-active-detail" style="padding:0.9rem 1.05rem;"></div>
+                <div id="ss-jajo-active-detail" style="padding:0.85rem 1rem;"></div>
             </div>
 
-            <div style="background:rgba(9,14,26,0.9); border:1px solid rgba(148,163,184,0.22); border-radius:16px; padding:0.9rem;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.65rem;">
-                    <span style="font-size:0.84rem; font-weight:900; color:#fde68a; text-transform:uppercase;">
-                        🎯 De 8 klip i videoen (Del 1: Ja/Nej • Del 2: Jo/Nej):
-                    </span>
-                    <button type="button" class="ss-btn-secondary" id="ss-jajo-play-start" style="padding:0.32rem 0.65rem; font-size:0.76rem;">
-                        ▶ Afspil fra start (0:00)
-                    </button>
-                </div>
-                <div id="ss-jajo-variants-list" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(235px, 1fr)); gap:0.48rem;"></div>
+            <div style="background:rgba(9,14,26,0.9); border:1px solid rgba(148,163,184,0.22); border-radius:16px; padding:0.8rem;">
+                <div id="ss-jajo-variants-list" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(225px, 1fr)); gap:0.45rem;"></div>
             </div>
         </div>
     `;
@@ -3235,53 +3142,41 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
     const jajoVariantsListBox = videoCardJaJo.querySelector('#ss-jajo-variants-list');
 
     function jumpToJaJoTimestamp(startSec, endSec) {
-        const endParam = endSec ? `&end=${endSec}` : '';
+        const endParam = endSec ? `&end=${endSec}` :'';
         jajoYtIframe.src = `https://www.youtube.com/embed/${JAJO_YOUTUBE_ID}?start=${startSec}${endParam}&autoplay=1&rel=0`;
     }
 
     function renderJaJoVideoDashboard() {
         const meta = ROLE_META[activeJaJoVariant.role];
-        const partCol = activeJaJoVariant.part === 'uden_ikke' ? '#4ade80' : '#f59e0b';
+        const partCol = activeJaJoVariant.part === 'uden_ikke' ? '#4ade80' :'#f59e0b';
 
         activeJaJoDetailBox.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.45rem;">
-                <div style="display:flex; align-items:center; gap:0.45rem; flex-wrap:wrap;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.45rem; margin-bottom:0.45rem;">
+                <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;">
                     <span class="ss-pill-tag" style="background:rgba(15,23,42,0.9); color:${partCol}; border:1px solid ${partCol};">
                         ${activeJaJoVariant.partLabel}
                     </span>
                     <span class="ss-pill-tag" style="background:${meta.bg}; color:${meta.color}; border:1px solid ${meta.border};">
-                        ${meta.short}
-                    </span>
-                    <span class="ss-pill-tag" style="background:rgba(56,189,248,0.16); color:#7dd3fc; border:1px solid rgba(56,189,248,0.35);">
-                        ⏱️ ${activeJaJoVariant.timeLabel}
+                        ${samtaleRoleIcon(activeJaJoVariant.role, 12)} ${meta.short}
                     </span>
                 </div>
-                <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
-                    <button type="button" class="ss-btn-primary" id="ss-jajo-jump-clip" style="padding:0.38rem 0.75rem; font-size:0.8rem;">
-                        🎬 Se klippet (${activeJaJoVariant.timeLabel})
+                <div style="display:flex; gap:0.4rem;">
+                    <button type="button" class="ss-btn-primary" id="ss-jajo-jump-clip" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">
+                        ${samtaleIcons.play(12)} Klip (${activeJaJoVariant.timeLabel})
                     </button>
-                    <button type="button" class="ss-btn-secondary" id="ss-jajo-tts-clip" style="padding:0.38rem 0.75rem; font-size:0.8rem;">
-                        🔊 Lyt (TTS)
+                    <button type="button" class="ss-btn-secondary" id="ss-jajo-tts-clip" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">
+                        ${samtaleIcons.audio(13)} Lyt
                     </button>
                 </div>
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center; gap:0.65rem; margin-bottom:0.35rem;">
-                <div>
-                    <div style="font-size:1.03rem; font-weight:900; color:#ffffff;">${activeJaJoVariant.badgeText}</div>
-                    <div style="font-size:0.75rem; color:#fde68a; font-weight:800;">🔗 ${activeJaJoVariant.matchTag}</div>
-                </div>
-                <svg width="92" height="36" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.9); border-radius:8px; border:1px solid rgba(148,163,184,0.28); flex-shrink:0;">
+                <div style="font-size:0.98rem; font-weight:900; color:#fde68a;">${activeJaJoVariant.quoteFromVideo}</div>
+                <svg width="88" height="34" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.9); border-radius:8px; border:1px solid rgba(148,163,184,0.28); flex-shrink:0;">
                     <path d="${activeJaJoVariant.curve}" fill="none" stroke="${activeJaJoVariant.color}" stroke-width="3.2" stroke-linecap="round"/>
                 </svg>
             </div>
-            <div style="font-size:0.88rem; color:#fde68a; font-weight:700; margin-bottom:0.28rem;">
-                💬 I videoen siger hun: ${activeJaJoVariant.quoteFromVideo}
-            </div>
-            <div style="font-size:0.83rem; color:#cbd5e1; margin-bottom:0.2rem;">
-                <strong>👀 Tonefald & kropssprog:</strong> ${activeJaJoVariant.bodyLanguage}
-            </div>
-            <div style="font-size:0.83rem; color:#94a3b8;">
-                <strong>🎯 Regel i dansk samtale:</strong> ${activeJaJoVariant.meaning}
+            <div style="font-size:0.84rem; color:#cbd5e1; line-height:1.45;">
+                ${activeJaJoVariant.meaning}
             </div>
         `;
 
@@ -3294,14 +3189,14 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
 
         jajoVariantsListBox.innerHTML = JAJO_VIDEO_VARIANTS.map(v => {
             const isSel = v.id === activeJaJoVariant.id;
-            const pCol = v.part === 'uden_ikke' ? '#4ade80' : '#f59e0b';
+            const pCol = v.part === 'uden_ikke' ? '#4ade80' :'#f59e0b';
             return `
-                <button type="button" data-jajo-vid="${v.id}" style="text-align:left; padding:0.55rem 0.7rem; border-radius:12px; background:${isSel ? 'rgba(245,158,11,0.2)' : 'rgba(15,23,42,0.85)'}; border:1.5px solid ${isSel ? '#fbbf24' : pCol}; color:#ffffff; cursor:pointer; display:flex; flex-direction:column; gap:0.22rem;">
+                <button type="button" data-jajo-vid="${v.id}" style="text-align:left; padding:0.5rem 0.68rem; border-radius:11px; background:${isSel ? 'rgba(245,158,11,0.2)' :'rgba(15,23,42,0.85)'}; border:1.5px solid ${isSel ? '#fbbf24' : pCol}; color:#ffffff; cursor:pointer; display:flex; flex-direction:column; gap:0.2rem;">
                     <div style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:0.35rem;">
-                        <span style="font-size:0.83rem; font-weight:900; color:#ffffff;">${v.label}</span>
-                        <span style="font-size:0.69rem; font-weight:900; padding:0.12rem 0.42rem; border-radius:999px; background:rgba(15,23,42,0.9); color:${pCol}; border:1px solid ${pCol};">${v.timeLabel}</span>
+                        <span style="font-size:0.82rem; font-weight:900; color:#ffffff;">${v.label}</span>
+                        <span style="font-size:0.69rem; font-weight:900; padding:0.1rem 0.4rem; border-radius:999px; background:rgba(15,23,42,0.9); color:${pCol}; border:1px solid ${pCol};">${v.timeLabel}</span>
                     </div>
-                    <div style="font-size:0.73rem; color:#cbd5e1; font-weight:700;">${v.partLabel}</div>
+                    <div style="font-size:0.73rem; color:#94a3b8; font-weight:700;">${v.partLabel}</div>
                 </button>
             `;
         }).join('');
@@ -3341,46 +3236,37 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         const roleMeta = ROLE_META[item.role || 'taler'];
 
         cardJaJoQuiz.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.7rem;">
                 <div>
-                    <h3 style="margin:0; font-size:1.15rem; font-weight:900;">🎯 Øvelser til videoen: Skal du svare "Ja", "Jo" eller "Nej"?</h3>
-                    <div style="font-size:0.84rem; color:#94a3b8;">Opgave ${jajoIdx + 1} af ${list.length}</div>
+                    <h3 style="margin:0; font-size:1.08rem; font-weight:900;">Øvelser: Ja, Jo eller Nej?</h3>
+                    <div style="font-size:0.83rem; color:#94a3b8;">Opgave ${jajoIdx + 1}/${list.length}</div>
                 </div>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="ss-btn-secondary" id="ss-jajo-prev" ${jajoIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="ss-btn-secondary" id="ss-jajo-next" ${jajoIdx === list.length - 1 ? 'disabled' : ''}>Næste →</button>
+                    <button type="button" class="ss-btn-secondary" id="ss-jajo-prev" ${jajoIdx === 0 ? 'disabled' :''}>← Forrige</button>
+                    <button type="button" class="ss-btn-secondary" id="ss-jajo-next" ${jajoIdx === list.length - 1 ? 'disabled' :''}>Næste →</button>
                 </div>
             </div>
 
-            <div class="ss-filters" style="margin-bottom:0.9rem;">
-                <button type="button" class="ss-filter-btn ${jajoFilter === 'all' ? 'active' : ''}" data-jjfilter="all">
-                    🎬 Alle 8 øvelser (8)
-                </button>
-                <button type="button" class="ss-filter-btn ${jajoFilter === 'uden_ikke' ? 'active' : ''}" data-jjfilter="uden_ikke">
-                    🟢 Del 1: Spørgsmål UDEN "ikke" → Ja / Nej (4)
-                </button>
-                <button type="button" class="ss-filter-btn ${jajoFilter === 'med_ikke' ? 'active' : ''}" data-jjfilter="med_ikke">
-                    🟠 Del 2: Spørgsmål MED "ikke" → Jo / Nej (4)
-                </button>
+            <div class="ss-filters" style="margin-bottom:0.85rem;">
+                <button type="button" class="ss-filter-btn ${jajoFilter === 'all' ? 'active' :''}" data-jjfilter="all">Alle (8)</button>
+                <button type="button" class="ss-filter-btn ${jajoFilter === 'uden_ikke' ? 'active' :''}" data-jjfilter="uden_ikke">Uden "ikke" (4)</button>
+                <button type="button" class="ss-filter-btn ${jajoFilter === 'med_ikke' ? 'active' :''}" data-jjfilter="med_ikke">Med "ikke" (4)</button>
             </div>
 
-            <div style="background:rgba(9,14,26,0.92); border:1.5px solid ${roleMeta.border}; border-radius:16px; padding:1rem 1.15rem; margin-bottom:1rem;">
-                <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.4rem;">
+            <div style="background:rgba(9,14,26,0.92); border:1.5px solid ${roleMeta.border}; border-radius:15px; padding:0.95rem 1.1rem; margin-bottom:0.9rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.45rem; margin-bottom:0.45rem;">
                     <span class="ss-pill-tag" style="background:${roleMeta.bg}; color:${roleMeta.color}; border:1px solid ${roleMeta.border};">
-                        ${roleMeta.label}
+                        ${samtaleRoleIcon(item.role || 'taler', 12)} ${roleMeta.short}
                     </span>
-                    <span class="ss-pill-tag" style="background:rgba(239,68,68,0.16); color:#fecaca; border:1px solid rgba(248,113,113,0.4);">
-                        🎬 Fra YouTube-videoen (${item.videoTimeLabel})
-                    </span>
+                    <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+                        <button type="button" class="ss-btn-primary" id="ss-jajo-listen" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(13)} Lyt</button>
+                        <button type="button" class="ss-btn-secondary" id="ss-jajo-watch-clip" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">
+                            ${samtaleIcons.play(12)} Se klip (${item.videoTimeLabel})
+                        </button>
+                    </div>
                 </div>
-                <div style="font-size:1.05rem; font-weight:900; color:#fde68a; margin-bottom:0.35rem;">${item.title}</div>
-                <div style="font-size:0.95rem; color:#e2e8f0; line-height:1.5; margin-bottom:0.65rem;">${item.situation}</div>
-                <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-                    <button type="button" class="ss-btn-primary" id="ss-jajo-listen">🔊 Lyt til spørgsmål & svar</button>
-                    <button type="button" class="ss-btn-secondary" id="ss-jajo-watch-clip">
-                        🎬 Se klippet i YouTube-videoen (${item.videoTimeLabel})
-                    </button>
-                </div>
+                <div style="font-size:1rem; font-weight:900; color:#fde68a; margin-bottom:0.25rem;">${item.title}</div>
+                <div style="font-size:0.93rem; color:#e2e8f0; line-height:1.45;">${item.situation}</div>
             </div>
 
             <div class="ss-two-cols">
@@ -3393,28 +3279,23 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
                     return `
                         <button type="button" class="ss-option-btn ${cls}" data-jajo-opt="${vIdx}" style="flex-direction:column; align-items:flex-start;">
                             <div style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:0.5rem;">
-                                <span style="font-size:0.96rem; font-weight:900; color:#ffffff;">${v.label}</span>
-                                <svg width="96" height="38" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.85); border-radius:8px; border:1px solid rgba(148,163,184,0.25); flex-shrink:0;">
+                                <span style="font-size:0.94rem; font-weight:900; color:#ffffff;">${v.label}</span>
+                                <svg width="88" height="34" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.85); border-radius:8px; border:1px solid rgba(148,163,184,0.25); flex-shrink:0;">
                                     <path d="${v.curve}" fill="none" stroke="${v.color}" stroke-width="3.2" stroke-linecap="round"/>
                                 </svg>
                             </div>
-                            <div style="font-size:0.82rem; color:#cbd5e1; font-weight:600;">Regel: ${v.meaning}</div>
+                            <div style="font-size:0.81rem; color:#cbd5e1; font-weight:600;">${v.meaning}</div>
                         </button>
                     `;
                 }).join('')}
             </div>
 
             ${jajoPicked !== null ? `
-                <div class="ss-feedback ${jajoPicked === item.correctIdx ? 'ok' : 'err'}">
-                    <div>${jajoPicked === item.correctIdx ? '✓ Lige præcis!' : '✗ Se på om spørgsmålet indeholder "ikke":'} ${item.explanation}</div>
-                    <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.55rem;">
-                        <button type="button" class="ss-btn-primary" id="ss-jajo-feedback-clip">
-                            🎬 Afspil svaret i videoen (${item.videoTimeLabel})
-                        </button>
-                        ${jajoIdx < list.length - 1 ? `<button type="button" class="ss-btn-secondary" id="ss-jajo-adv">Næste opgave →</button>` : ''}
-                    </div>
+                <div class="ss-feedback ${jajoPicked === item.correctIdx ? 'ok' :'err'}">
+                    <div>${jajoPicked === item.correctIdx ? '✓ Rigtigt!' :'✗ Tjek om spørgsmålet indeholder "ikke":'} ${item.explanation}</div>
+                    ${jajoIdx < list.length - 1 ? `<button type="button" class="ss-btn-secondary" id="ss-jajo-adv" style="margin-top:0.55rem;">Næste →</button>` :''}
                 </div>
-            ` : ''}
+            ` :''}
         `;
 
         cardJaJoQuiz.querySelectorAll('[data-jjfilter]').forEach(btn => {
@@ -3436,15 +3317,8 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         };
         cardJaJoQuiz.querySelector('#ss-jajo-watch-clip').onclick = () => {
             jumpToJaJoTimestamp(item.videoStart, item.videoEnd);
-            jajoYtIframe.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            jajoYtIframe.scrollIntoView({ behavior:'smooth', block:'center' });
         };
-        const fbBtn = cardJaJoQuiz.querySelector('#ss-jajo-feedback-clip');
-        if (fbBtn) {
-            fbBtn.onclick = () => {
-                jumpToJaJoTimestamp(item.videoStart, item.videoEnd);
-                jajoYtIframe.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            };
-        }
         cardJaJoQuiz.querySelectorAll('[data-jajo-opt]').forEach(btn => {
             btn.onclick = () => {
                 jajoPicked = Number(btn.dataset.jajoOpt);
@@ -3462,7 +3336,7 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
     panelsHolder.appendChild(panelJaJo);
 
     // =========================================================================
-    // FANE 6: YOUTUBE-VIDEO "AT VÆRE ENIG I NOGET" (Præcis! & Lige – 100 % enighed)
+    // FANE 6: YOUTUBE-VIDEO "AT VÆRE ENIG I NOGET"
     // =========================================================================
     const panelEnig = makePanel('tab_enig_video');
     let activeEnigVariant = ENIG_VIDEO_VARIANTS[0];
@@ -3472,25 +3346,22 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
     const videoCardEnig = document.createElement('div');
     videoCardEnig.className = 'ss-card';
     videoCardEnig.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.9rem;">
-            <div>
-                <div style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.25rem 0.7rem; border-radius:999px; background:rgba(239,68,68,0.18); border:1px solid rgba(248,113,113,0.45); color:#fecaca; font-size:0.74rem; font-weight:900; text-transform:uppercase; margin-bottom:0.4rem;">
-                    ▶️ YouTube Masterclass • @klartilstartidanmark • Match: Ord #15 (Præcis! / Nemlig!) & Ord #7 (lige)
-                </div>
-                <h3 style="margin:0; font-size:1.25rem; font-weight:900; color:#ffffff;">
-                    🤝 "At være enig i noget" — 6 danske lytter-reaktioner med <em>"Præcis!"</em> og <em>"Lige"</em>
-                </h3>
-                <p style="margin:0.3rem 0 0; color:#cbd5e1; font-size:0.9rem; line-height:1.5;">
-                    Se hvordan du som aktiv lytter giver taleren 100 % opbakning i en dansk samtale — herunder med vores udvalgte småord <strong>#7 Lige</strong> (<em>"Lige mine ord"</em>, 0:44) og <strong>#15 Præcis</strong> (<em>"Jeg tænker præcis det samme"</em>, 0:54).
-                </p>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.85rem;">
+            <h3 style="margin:0; font-size:1.18rem; font-weight:900; color:#ffffff;">
+                "At være enig i noget" — 6 lytter-reaktioner
+            </h3>
+            <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+                <button type="button" class="ss-btn-secondary" id="ss-enig-play-start" style="display:inline-flex; align-items:center; gap:0.35rem;">
+                    ${samtaleIcons.play(12)} Fra start
+                </button>
+                <a href="https://www.youtube.com/watch?v=${ENIG_YOUTUBE_ID}" target="_blank" rel="noopener noreferrer" class="ss-btn-secondary" style="text-decoration:none;">
+                    YouTube ↗
+                </a>
             </div>
-            <a href="https://www.youtube.com/watch?v=${ENIG_YOUTUBE_ID}" target="_blank" rel="noopener noreferrer" class="ss-btn-secondary" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem;">
-                🔗 Åbn på YouTube ↗
-            </a>
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:1.1rem; align-items:start;">
-            <div style="background:rgba(9,14,26,0.94); border:1.5px solid rgba(6,182,212,0.42); border-radius:16px; overflow:hidden; box-shadow:0 12px 32px rgba(0,0,0,0.45);">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:1rem; align-items:start;">
+            <div style="background:rgba(9,14,26,0.94); border:1.5px solid rgba(6,182,212,0.42); border-radius:16px; overflow:hidden;">
                 <div style="position:relative; width:100%; aspect-ratio:16/9; background:#020617;">
                     <iframe
                         id="ss-enig-yt-iframe"
@@ -3501,19 +3372,11 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
                         allowfullscreen
                     ></iframe>
                 </div>
-                <div id="ss-enig-active-detail" style="padding:0.9rem 1.05rem;"></div>
+                <div id="ss-enig-active-detail" style="padding:0.85rem 1rem;"></div>
             </div>
 
-            <div style="background:rgba(9,14,26,0.9); border:1px solid rgba(148,163,184,0.22); border-radius:16px; padding:0.9rem;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.65rem;">
-                    <span style="font-size:0.84rem; font-weight:900; color:#fde68a; text-transform:uppercase;">
-                        🎯 De 6 opbaknings-svar i videoen (👂 Lytter):
-                    </span>
-                    <button type="button" class="ss-btn-secondary" id="ss-enig-play-start" style="padding:0.32rem 0.65rem; font-size:0.76rem;">
-                        ▶ Afspil fra start (0:00)
-                    </button>
-                </div>
-                <div id="ss-enig-variants-list" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(235px, 1fr)); gap:0.48rem;"></div>
+            <div style="background:rgba(9,14,26,0.9); border:1px solid rgba(148,163,184,0.22); border-radius:16px; padding:0.8rem;">
+                <div id="ss-enig-variants-list" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(225px, 1fr)); gap:0.45rem;"></div>
             </div>
         </div>
     `;
@@ -3523,7 +3386,7 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
     const enigVariantsListBox = videoCardEnig.querySelector('#ss-enig-variants-list');
 
     function jumpToEnigTimestamp(startSec, endSec) {
-        const endParam = endSec ? `&end=${endSec}` : '';
+        const endParam = endSec ? `&end=${endSec}` :'';
         enigYtIframe.src = `https://www.youtube.com/embed/${ENIG_YOUTUBE_ID}?start=${startSec}${endParam}&autoplay=1&rel=0`;
     }
 
@@ -3531,41 +3394,27 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         const meta = ROLE_META[activeEnigVariant.role];
 
         activeEnigDetailBox.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.45rem;">
-                <div style="display:flex; align-items:center; gap:0.45rem; flex-wrap:wrap;">
-                    <span class="ss-pill-tag" style="background:${meta.bg}; color:${meta.color}; border:1px solid ${meta.border};">
-                        ${meta.short}
-                    </span>
-                    <span class="ss-pill-tag" style="background:rgba(56,189,248,0.16); color:#7dd3fc; border:1px solid rgba(56,189,248,0.35);">
-                        ⏱️ Tid i video: ${activeEnigVariant.timeLabel}
-                    </span>
-                </div>
-                <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
-                    <button type="button" class="ss-btn-primary" id="ss-enig-jump-clip" style="padding:0.38rem 0.75rem; font-size:0.8rem;">
-                        🎬 Se klippet (${activeEnigVariant.timeLabel})
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.45rem; margin-bottom:0.45rem;">
+                <span class="ss-pill-tag" style="background:${meta.bg}; color:${meta.color}; border:1px solid ${meta.border};">
+                    ${samtaleRoleIcon(activeEnigVariant.role, 12)} ${meta.short}
+                </span>
+                <div style="display:flex; gap:0.4rem;">
+                    <button type="button" class="ss-btn-primary" id="ss-enig-jump-clip" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">
+                        ${samtaleIcons.play(12)} Klip (${activeEnigVariant.timeLabel})
                     </button>
-                    <button type="button" class="ss-btn-secondary" id="ss-enig-tts-clip" style="padding:0.38rem 0.75rem; font-size:0.8rem;">
-                        🔊 Lyt (TTS)
+                    <button type="button" class="ss-btn-secondary" id="ss-enig-tts-clip" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">
+                        ${samtaleIcons.audio(13)} Lyt
                     </button>
                 </div>
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center; gap:0.65rem; margin-bottom:0.35rem;">
-                <div>
-                    <div style="font-size:1.05rem; font-weight:900; color:#ffffff;">${activeEnigVariant.badgeText}</div>
-                    <div style="font-size:0.75rem; color:#67e8f9; font-weight:800;">🔗 ${activeEnigVariant.matchTag}</div>
-                </div>
-                <svg width="92" height="36" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.9); border-radius:8px; border:1px solid rgba(148,163,184,0.28); flex-shrink:0;">
+                <div style="font-size:0.98rem; font-weight:900; color:#fde68a;">${activeEnigVariant.quoteFromVideo}</div>
+                <svg width="88" height="34" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.9); border-radius:8px; border:1px solid rgba(148,163,184,0.28); flex-shrink:0;">
                     <path d="${activeEnigVariant.curve}" fill="none" stroke="${activeEnigVariant.color}" stroke-width="3.2" stroke-linecap="round"/>
                 </svg>
             </div>
-            <div style="font-size:0.88rem; color:#fde68a; font-weight:700; margin-bottom:0.28rem;">
-                💬 I videoen siger hun: ${activeEnigVariant.quoteFromVideo}
-            </div>
-            <div style="font-size:0.83rem; color:#cbd5e1; margin-bottom:0.2rem;">
-                <strong>👀 Ansigtsudtryk & kropssprog:</strong> ${activeEnigVariant.bodyLanguage}
-            </div>
-            <div style="font-size:0.83rem; color:#94a3b8;">
-                <strong>🎯 Funktion i samtalen:</strong> ${activeEnigVariant.meaning}
+            <div style="font-size:0.84rem; color:#cbd5e1; line-height:1.45;">
+                ${activeEnigVariant.meaning}
             </div>
         `;
 
@@ -3579,12 +3428,12 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         enigVariantsListBox.innerHTML = ENIG_VIDEO_VARIANTS.map(v => {
             const isSel = v.id === activeEnigVariant.id;
             return `
-                <button type="button" data-enig-vid="${v.id}" style="text-align:left; padding:0.55rem 0.7rem; border-radius:12px; background:${isSel ? 'rgba(6,182,212,0.2)' : 'rgba(15,23,42,0.85)'}; border:1.5px solid ${isSel ? '#22d3ee' : v.color}; color:#ffffff; cursor:pointer; display:flex; flex-direction:column; gap:0.22rem;">
+                <button type="button" data-enig-vid="${v.id}" style="text-align:left; padding:0.5rem 0.68rem; border-radius:11px; background:${isSel ? 'rgba(6,182,212,0.2)' :'rgba(15,23,42,0.85)'}; border:1.5px solid ${isSel ? '#22d3ee' : v.color}; color:#ffffff; cursor:pointer; display:flex; flex-direction:column; gap:0.2rem;">
                     <div style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:0.35rem;">
-                        <span style="font-size:0.84rem; font-weight:900; color:#ffffff;">${v.label}</span>
-                        <span style="font-size:0.7rem; font-weight:900; padding:0.12rem 0.42rem; border-radius:999px; background:rgba(6,182,212,0.18); color:#67e8f9;">👂 ${v.timeLabel}</span>
+                        <span style="font-size:0.83rem; font-weight:900; color:#ffffff;">${v.label}</span>
+                        <span style="font-size:0.69rem; font-weight:900; padding:0.1rem 0.4rem; border-radius:999px; background:rgba(6,182,212,0.18); color:#67e8f9; display:inline-flex; align-items:center; gap:0.22rem;">${samtaleRoleIcon('lytter', 11)} ${v.timeLabel}</span>
                     </div>
-                    <div style="font-size:0.73rem; color:#fde68a; font-weight:700;">${v.matchTag}</div>
+                    <div style="font-size:0.73rem; color:#94a3b8; font-weight:700;">${v.matchTag}</div>
                 </button>
             `;
         }).join('');
@@ -3618,34 +3467,31 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         const roleMeta = ROLE_META[item.role || 'lytter'];
 
         cardEnigQuiz.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.7rem;">
                 <div>
-                    <h3 style="margin:0; font-size:1.15rem; font-weight:900;">🎯 Øvelser til videoen: Giv taleren 100 % opbakning med "Præcis!" & "Lige"</h3>
-                    <div style="font-size:0.84rem; color:#94a3b8;">Opgave ${enigIdx + 1} af ${list.length}</div>
+                    <h3 style="margin:0; font-size:1.08rem; font-weight:900;">Øvelser: Giv opbakning</h3>
+                    <div style="font-size:0.83rem; color:#94a3b8;">Opgave ${enigIdx + 1}/${list.length}</div>
                 </div>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="ss-btn-secondary" id="ss-enig-prev" ${enigIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="ss-btn-secondary" id="ss-enig-next" ${enigIdx === list.length - 1 ? 'disabled' : ''}>Næste →</button>
+                    <button type="button" class="ss-btn-secondary" id="ss-enig-prev" ${enigIdx === 0 ? 'disabled' :''}>← Forrige</button>
+                    <button type="button" class="ss-btn-secondary" id="ss-enig-next" ${enigIdx === list.length - 1 ? 'disabled' :''}>Næste →</button>
                 </div>
             </div>
 
-            <div style="background:rgba(9,14,26,0.92); border:1.5px solid ${roleMeta.border}; border-radius:16px; padding:1rem 1.15rem; margin-bottom:1rem;">
-                <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.4rem;">
+            <div style="background:rgba(9,14,26,0.92); border:1.5px solid ${roleMeta.border}; border-radius:15px; padding:0.95rem 1.1rem; margin-bottom:0.9rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.45rem; margin-bottom:0.45rem;">
                     <span class="ss-pill-tag" style="background:${roleMeta.bg}; color:${roleMeta.color}; border:1px solid ${roleMeta.border};">
-                        ${roleMeta.label}
+                        ${samtaleRoleIcon(item.role || 'lytter', 12)} ${roleMeta.short}
                     </span>
-                    <span class="ss-pill-tag" style="background:rgba(239,68,68,0.16); color:#fecaca; border:1px solid rgba(248,113,113,0.4);">
-                        🎬 Fra YouTube-videoen (${item.videoTimeLabel})
-                    </span>
+                    <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+                        <button type="button" class="ss-btn-primary" id="ss-enig-listen" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(13)} Lyt</button>
+                        <button type="button" class="ss-btn-secondary" id="ss-enig-watch-clip" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">
+                            ${samtaleIcons.play(12)} Se klip (${item.videoTimeLabel})
+                        </button>
+                    </div>
                 </div>
-                <div style="font-size:1.05rem; font-weight:900; color:#fde68a; margin-bottom:0.35rem;">${item.title}</div>
-                <div style="font-size:0.95rem; color:#e2e8f0; line-height:1.5; margin-bottom:0.65rem;">${item.situation}</div>
-                <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-                    <button type="button" class="ss-btn-primary" id="ss-enig-listen">🔊 Lyt til opbakningen</button>
-                    <button type="button" class="ss-btn-secondary" id="ss-enig-watch-clip">
-                        🎬 Se klippet i YouTube-videoen (${item.videoTimeLabel})
-                    </button>
-                </div>
+                <div style="font-size:1rem; font-weight:900; color:#fde68a; margin-bottom:0.25rem;">${item.title}</div>
+                <div style="font-size:0.93rem; color:#e2e8f0; line-height:1.45;">${item.situation}</div>
             </div>
 
             <div class="ss-two-cols">
@@ -3658,28 +3504,23 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
                     return `
                         <button type="button" class="ss-option-btn ${cls}" data-enig-opt="${vIdx}" style="flex-direction:column; align-items:flex-start;">
                             <div style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:0.5rem;">
-                                <span style="font-size:0.96rem; font-weight:900; color:#ffffff;">${v.label}</span>
-                                <svg width="96" height="38" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.85); border-radius:8px; border:1px solid rgba(148,163,184,0.25); flex-shrink:0;">
+                                <span style="font-size:0.94rem; font-weight:900; color:#ffffff;">${v.label}</span>
+                                <svg width="88" height="34" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.85); border-radius:8px; border:1px solid rgba(148,163,184,0.25); flex-shrink:0;">
                                     <path d="${v.curve}" fill="none" stroke="${v.color}" stroke-width="3.2" stroke-linecap="round"/>
                                 </svg>
                             </div>
-                            <div style="font-size:0.82rem; color:#cbd5e1; font-weight:600;">Funktion: ${v.meaning}</div>
+                            <div style="font-size:0.81rem; color:#cbd5e1; font-weight:600;">${v.meaning}</div>
                         </button>
                     `;
                 }).join('')}
             </div>
 
             ${enigPicked !== null ? `
-                <div class="ss-feedback ${enigPicked === item.correctIdx ? 'ok' : 'err'}">
-                    <div>${enigPicked === item.correctIdx ? '✓ Helt rigtigt!' : '✗ Se hvordan hun giver lytter-opbakning i videoen:'} ${item.explanation}</div>
-                    <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.55rem;">
-                        <button type="button" class="ss-btn-primary" id="ss-enig-feedback-clip">
-                            🎬 Afspil svaret i videoen (${item.videoTimeLabel})
-                        </button>
-                        ${enigIdx < list.length - 1 ? `<button type="button" class="ss-btn-secondary" id="ss-enig-adv">Næste opgave →</button>` : ''}
-                    </div>
+                <div class="ss-feedback ${enigPicked === item.correctIdx ? 'ok' :'err'}">
+                    <div>${enigPicked === item.correctIdx ? '✓ Rigtigt!' :'✗ Se videoens eksempel:'} ${item.explanation}</div>
+                    ${enigIdx < list.length - 1 ? `<button type="button" class="ss-btn-secondary" id="ss-enig-adv" style="margin-top:0.55rem;">Næste →</button>` :''}
                 </div>
-            ` : ''}
+            ` :''}
         `;
 
         cardEnigQuiz.querySelector('#ss-enig-prev').onclick = () => {
@@ -3693,15 +3534,8 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         };
         cardEnigQuiz.querySelector('#ss-enig-watch-clip').onclick = () => {
             jumpToEnigTimestamp(item.videoStart, item.videoEnd);
-            enigYtIframe.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            enigYtIframe.scrollIntoView({ behavior:'smooth', block:'center' });
         };
-        const fbBtn = cardEnigQuiz.querySelector('#ss-enig-feedback-clip');
-        if (fbBtn) {
-            fbBtn.onclick = () => {
-                jumpToEnigTimestamp(item.videoStart, item.videoEnd);
-                enigYtIframe.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            };
-        }
         cardEnigQuiz.querySelectorAll('[data-enig-opt]').forEach(btn => {
             btn.onclick = () => {
                 enigPicked = Number(btn.dataset.enigOpt);
@@ -3736,47 +3570,46 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         const roleMeta = turn ? ROLE_META[turn.targetRole] : null;
 
         card5.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.85rem;">
-                <h3 style="margin:0; font-size:1.15rem; font-weight:900;">💬 Hold samtalen i live! (Aktiv-lytter & Tur-skifte simulator)</h3>
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
+                <h3 style="margin:0; font-size:1.1rem; font-weight:900;">Hold samtalen i live</h3>
                 <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
                     ${LIVE_CONVERSATIONS.map((c, idx) => `
-                        <button type="button" class="ss-filter-btn ${idx === simIdx ? 'active' : ''}" data-sim-pick="${idx}">
-                            ${c.avatar} ${c.title}
+                        <button type="button" class="ss-filter-btn ${idx === simIdx ? 'active' :''}" data-sim-pick="${idx}">
+                            ${c.title}
                         </button>
                     `).join('')}
                 </div>
             </div>
 
-            <div style="font-size:0.9rem; color:#cbd5e1; background:rgba(15,23,42,0.85); border:1px solid rgba(148,163,184,0.25); border-radius:12px; padding:0.7rem 1rem; margin-bottom:0.95rem;">
-                <strong>Scenarie:</strong> ${sim.scene}
+            <div style="font-size:0.88rem; color:#cbd5e1; background:rgba(15,23,42,0.85); border:1px solid rgba(148,163,184,0.22); border-radius:12px; padding:0.65rem 0.95rem; margin-bottom:0.9rem;">
+                ${sim.scene}
             </div>
 
-            <!-- Samtale-historik -->
-            <div style="display:flex; flex-direction:column; gap:0.6rem; margin-bottom:1rem;">
+            <div style="display:flex; flex-direction:column; gap:0.55rem; margin-bottom:0.95rem;">
                 ${simHistory.map(h => `
-                    <div style="background:rgba(30,41,59,0.75); border-radius:12px; padding:0.65rem 0.95rem; font-size:0.9rem; color:#cbd5e1;">
+                    <div style="background:rgba(30,41,59,0.75); border-radius:12px; padding:0.6rem 0.9rem; font-size:0.88rem; color:#cbd5e1;">
                         ${h.partnerLine}
                     </div>
-                    <div style="align-self:flex-end; background:rgba(34,197,94,0.18); border:1px solid rgba(74,222,128,0.45); border-radius:12px; padding:0.6rem 0.95rem; font-size:0.9rem; color:#bbf7d0; font-weight:800;">
+                    <div style="align-self:flex-end; background:rgba(34,197,94,0.18); border:1px solid rgba(74,222,128,0.45); border-radius:12px; padding:0.55rem 0.9rem; font-size:0.88rem; color:#bbf7d0; font-weight:800;">
                         Dig: "${h.userReply}" ✓
                     </div>
                 `).join('')}
             </div>
 
             ${turn ? `
-                <div style="background:rgba(9,14,26,0.94); border-left:4px solid ${roleMeta.color}; border-radius:14px; padding:1rem 1.15rem; margin-bottom:0.95rem;">
-                    <div style="font-size:1.04rem; color:#ffffff; font-weight:800; margin-bottom:0.55rem;">
-                        ${sim.avatar} ${turn.partnerLine}
+                <div style="background:rgba(9,14,26,0.94); border-left:4px solid ${roleMeta.color}; border-radius:14px; padding:0.95rem 1.1rem; margin-bottom:0.9rem;">
+                    <div style="font-size:1rem; color:#ffffff; font-weight:800; margin-bottom:0.5rem;">
+                        ${turn.partnerLine}
                     </div>
                     <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
                         <span class="ss-pill-tag" style="background:${roleMeta.bg}; color:${roleMeta.color}; border:1px solid ${roleMeta.border};">
-                            Din rolle nu: ${roleMeta.label}
+                            ${samtaleRoleIcon(turn.targetRole, 12)} ${roleMeta.short}
                         </span>
-                        <span style="font-size:0.88rem; color:#fde68a; font-weight:700;">${turn.instruction}</span>
+                        <span style="font-size:0.86rem; color:#fde68a; font-weight:700;">${turn.instruction}</span>
                     </div>
                 </div>
 
-                <div style="display:flex; flex-direction:column; gap:0.55rem;">
+                <div style="display:flex; flex-direction:column; gap:0.5rem;">
                     ${turn.options.map((opt, oIdx) => {
                         let cls = '';
                         if (simPickedOpt !== null) {
@@ -3792,21 +3625,21 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
                 </div>
 
                 ${simPickedOpt !== null ? `
-                    <div class="ss-feedback ${turn.options[simPickedOpt].ok ? 'ok' : 'err'}">
+                    <div class="ss-feedback ${turn.options[simPickedOpt].ok ? 'ok' :'err'}">
                         <div>${turn.options[simPickedOpt].feedback}</div>
                         ${turn.options[simPickedOpt].ok ? `
-                            <button type="button" class="ss-btn-primary" id="ss-sim-continue" style="margin-top:0.6rem;">
-                                ${simTurnIdx < sim.turns.length - 1 ? 'Fortsæt samtalen →' : 'Afslut samtalen 🏆'}
+                            <button type="button" class="ss-btn-primary" id="ss-sim-continue" style="margin-top:0.55rem;">
+                                ${simTurnIdx < sim.turns.length - 1 ? 'Fortsæt →' :'Afslut'}
                             </button>
-                        ` : ''}
+                        ` :''}
                     </div>
-                ` : ''}
+                ` :''}
             ` : `
                 <div class="ss-feedback ok">
-                    <div style="font-size:1.05rem; margin-bottom:0.45rem;">🏆 Fantastisk! Du holdt hele samtalen med ${sim.partner} levende og naturlig!</div>
+                    <div style="font-size:1rem; margin-bottom:0.45rem;">✓ Flot! Du gennemførte samtalen med ${sim.partner}.</div>
                     <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-                        <button type="button" class="ss-btn-secondary" id="ss-sim-restart">🔄 Prøv samtalen igen</button>
-                        ${simIdx < LIVE_CONVERSATIONS.length - 1 ? `<button type="button" class="ss-btn-primary" id="ss-sim-next-scene">Næste samtale-scenarie →</button>` : ''}
+                        <button type="button" class="ss-btn-secondary" id="ss-sim-restart">Prøv igen</button>
+                        ${simIdx < LIVE_CONVERSATIONS.length - 1 ? `<button type="button" class="ss-btn-primary" id="ss-sim-next-scene">Næste samtale →</button>` :''}
                     </div>
                 </div>
             `}
@@ -3881,45 +3714,45 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         const item = ROBOT_UPGRADES[robIdx];
         const bothDone = pick1 === item.slot1Answer && pick2 === item.slot2Answer;
         const previewHtml = item.slotsText
-            .replace('[1]', `<strong style="padding:0.15rem 0.5rem; border-radius:6px; background:${pick1 === item.slot1Answer ? 'rgba(34,197,94,0.28)' : 'rgba(245,158,11,0.25)'}; color:#fde68a;">${pick1 || '[ 1 ]'}</strong>`)
-            .replace('[2]', `<strong style="padding:0.15rem 0.5rem; border-radius:6px; background:${pick2 === item.slot2Answer ? 'rgba(34,197,94,0.28)' : 'rgba(6,182,212,0.25)'}; color:#67e8f9;">${pick2 || '[ 2 ]'}</strong>`);
+            .replace('[1]', `<strong style="padding:0.15rem 0.5rem; border-radius:6px; background:${pick1 === item.slot1Answer ? 'rgba(34,197,94,0.28)' :'rgba(245,158,11,0.25)'}; color:#fde68a;">${pick1 || '[ 1 ]'}</strong>`)
+            .replace('[2]', `<strong style="padding:0.15rem 0.5rem; border-radius:6px; background:${pick2 === item.slot2Answer ? 'rgba(34,197,94,0.28)' :'rgba(6,182,212,0.25)'}; color:#67e8f9;">${pick2 || '[ 2 ]'}</strong>`);
 
         card6.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.85rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
                 <div>
-                    <h3 style="margin:0; font-size:1.15rem; font-weight:900;">🛠️ Fra Robot-dansk til Levende dansk (Samtale-smøremidlet)</h3>
-                    <div style="font-size:0.84rem; color:#94a3b8;">Dialog ${robIdx + 1} af ${ROBOT_UPGRADES.length}: ${item.title}</div>
+                    <h3 style="margin:0; font-size:1.1rem; font-weight:900;">Fra robot-dansk til levende dansk</h3>
+                    <div style="font-size:0.84rem; color:#94a3b8;">Dialog ${robIdx + 1}/${ROBOT_UPGRADES.length}: ${item.title}</div>
                 </div>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="ss-btn-secondary" id="ss-rob-prev" ${robIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="ss-btn-secondary" id="ss-rob-next" ${robIdx === ROBOT_UPGRADES.length - 1 ? 'disabled' : ''}>Næste →</button>
+                    <button type="button" class="ss-btn-secondary" id="ss-rob-prev" ${robIdx === 0 ? 'disabled' :''}>← Forrige</button>
+                    <button type="button" class="ss-btn-secondary" id="ss-rob-next" ${robIdx === ROBOT_UPGRADES.length - 1 ? 'disabled' :''}>Næste →</button>
                 </div>
             </div>
 
-            <div style="background:rgba(239,68,68,0.12); border:1px solid rgba(248,113,113,0.35); border-radius:12px; padding:0.75rem 1rem; margin-bottom:0.75rem; color:#fecaca; font-size:0.95rem;">
+            <div style="background:rgba(239,68,68,0.12); border:1px solid rgba(248,113,113,0.35); border-radius:12px; padding:0.7rem 0.95rem; margin-bottom:0.7rem; color:#fecaca; font-size:0.93rem;">
                 ${item.robotText}
             </div>
 
-            <div style="background:rgba(34,197,94,0.12); border:1.5px solid rgba(74,222,128,0.45); border-radius:14px; padding:0.95rem 1.1rem; margin-bottom:1rem; color:#ffffff; font-size:1.05rem; line-height:1.55;">
+            <div style="background:rgba(34,197,94,0.12); border:1.5px solid rgba(74,222,128,0.45); border-radius:14px; padding:0.9rem 1.05rem; margin-bottom:0.95rem; color:#ffffff; font-size:1.03rem; line-height:1.55;">
                 ${previewHtml}
             </div>
 
             <div class="ss-two-cols">
-                <div style="background:rgba(9,14,26,0.85); border:1px solid rgba(148,163,184,0.25); border-radius:14px; padding:0.9rem;">
-                    <div style="font-size:0.82rem; font-weight:900; color:#fde68a; text-transform:uppercase; margin-bottom:0.5rem;">Vælg småord/lyd til Plads [ 1 ]:</div>
-                    <div style="display:flex; flex-direction:column; gap:0.45rem;">
+                <div style="background:rgba(9,14,26,0.85); border:1px solid rgba(148,163,184,0.25); border-radius:14px; padding:0.85rem;">
+                    <div style="font-size:0.8rem; font-weight:900; color:#fde68a; text-transform:uppercase; margin-bottom:0.45rem;">Plads [ 1 ]</div>
+                    <div style="display:flex; flex-direction:column; gap:0.4rem;">
                         ${item.slot1Options.map(opt => `
-                            <button type="button" class="ss-option-btn ${pick1 === opt ? (opt === item.slot1Answer ? 'correct' : 'wrong') : ''}" data-rob-s1="${opt}">
+                            <button type="button" class="ss-option-btn ${pick1 === opt ? (opt === item.slot1Answer ? 'correct' :'wrong') :''}" data-rob-s1="${opt}">
                                 <span>${opt}</span>
                             </button>
                         `).join('')}
                     </div>
                 </div>
-                <div style="background:rgba(9,14,26,0.85); border:1px solid rgba(148,163,184,0.25); border-radius:14px; padding:0.9rem;">
-                    <div style="font-size:0.82rem; font-weight:900; color:#67e8f9; text-transform:uppercase; margin-bottom:0.5rem;">Vælg småord/lyd til Plads [ 2 ]:</div>
-                    <div style="display:flex; flex-direction:column; gap:0.45rem;">
+                <div style="background:rgba(9,14,26,0.85); border:1px solid rgba(148,163,184,0.25); border-radius:14px; padding:0.85rem;">
+                    <div style="font-size:0.8rem; font-weight:900; color:#67e8f9; text-transform:uppercase; margin-bottom:0.45rem;">Plads [ 2 ]</div>
+                    <div style="display:flex; flex-direction:column; gap:0.4rem;">
                         ${item.slot2Options.map(opt => `
-                            <button type="button" class="ss-option-btn ${pick2 === opt ? (opt === item.slot2Answer ? 'correct' : 'wrong') : ''}" data-rob-s2="${opt}">
+                            <button type="button" class="ss-option-btn ${pick2 === opt ? (opt === item.slot2Answer ? 'correct' :'wrong') :''}" data-rob-s2="${opt}">
                                 <span>${opt}</span>
                             </button>
                         `).join('')}
@@ -3929,10 +3762,10 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
 
             ${bothDone ? `
                 <div class="ss-feedback ok">
-                    <div>✓ Sådan! ${item.explanation}</div>
-                    ${robIdx < ROBOT_UPGRADES.length - 1 ? `<button type="button" class="ss-btn-secondary" id="ss-rob-adv" style="margin-top:0.55rem;">Næste dialog →</button>` : ''}
+                    <div>✓ ${item.explanation}</div>
+                    ${robIdx < ROBOT_UPGRADES.length - 1 ? `<button type="button" class="ss-btn-secondary" id="ss-rob-adv" style="margin-top:0.55rem;">Næste →</button>` :''}
                 </div>
-            ` : ''}
+            ` :''}
         `;
 
         card6.querySelector('#ss-rob-prev').onclick = () => {
@@ -3964,6 +3797,7 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
     let detIdx = 0;
     let detMsg = '';
     let detSolved = false;
+    let detShowHint = false;
     const detDoneSet = new Set();
 
     const card7 = document.createElement('div');
@@ -3977,21 +3811,22 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         card7.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
                 <div>
-                    <h3 style="margin:0; font-size:1.15rem; font-weight:900;">🕵️ Samtale-detektiven: Find det rigtige pegefelt på vrimlebilledet!</h3>
-                    <div style="font-size:0.84rem; color:#94a3b8;">Mission ${detIdx + 1} af ${DETECTIVE_MISSIONS.length} • Løst: ${detDoneSet.size}/${DETECTIVE_MISSIONS.length}</div>
+                    <h3 style="margin:0; font-size:1.1rem; font-weight:900;">Samtale-detektiven</h3>
+                    <div style="font-size:0.83rem; color:#94a3b8;">Mission ${detIdx + 1}/${DETECTIVE_MISSIONS.length} • Løst: ${detDoneSet.size}/${DETECTIVE_MISSIONS.length}</div>
                 </div>
-                <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="ss-btn-secondary" id="ss-det-prev" ${detIdx === 0 ? 'disabled' : ''}>← Forrige</button>
-                    <button type="button" class="ss-btn-secondary" id="ss-det-next" ${detIdx === DETECTIVE_MISSIONS.length - 1 ? 'disabled' : ''}>Næste →</button>
+                <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+                    <button type="button" class="ss-btn-secondary" id="ss-det-hint">${detShowHint ? 'Skjul spor' :'Vis spor'}</button>
+                    <button type="button" class="ss-btn-secondary" id="ss-det-prev" ${detIdx === 0 ? 'disabled' :''}>← Forrige</button>
+                    <button type="button" class="ss-btn-secondary" id="ss-det-next" ${detIdx === DETECTIVE_MISSIONS.length - 1 ? 'disabled' :''}>Næste →</button>
                 </div>
             </div>
 
-            <div style="background:rgba(56,189,248,0.14); border:1.5px solid #38bdf8; border-radius:14px; padding:0.9rem 1.1rem; margin-bottom:0.85rem;">
-                <div style="font-size:1.02rem; font-weight:900; color:#ffffff; margin-bottom:0.25rem;">🎯 ${m.prompt}</div>
-                <div style="font-size:0.83rem; color:#bae6fd;">💡 Spor: ${m.hint}</div>
+            <div style="background:rgba(56,189,248,0.12); border:1.5px solid #38bdf8; border-radius:14px; padding:0.85rem 1.05rem; margin-bottom:0.8rem;">
+                <div style="font-size:0.98rem; font-weight:900; color:#ffffff;">${m.prompt}</div>
+                ${detShowHint ? `<div style="font-size:0.83rem; color:#bae6fd; margin-top:0.35rem;">Spor: ${m.hint}</div>` :''}
             </div>
 
-            ${detMsg ? `<div class="ss-feedback ${detSolved ? 'ok' : 'err'}" style="margin-top:0; margin-bottom:0.85rem;">${detMsg}</div>` : ''}
+            ${detMsg ? `<div class="ss-feedback ${detSolved ? 'ok' :'err'}" style="margin-top:0; margin-bottom:0.8rem;">${detMsg}</div>` :''}
 
             <div class="ss-stage-wrap">
                 <div class="ss-stage-inner">
@@ -4005,30 +3840,37 @@ export function renderSamtaleSmaaordView(container, navigateFn, extraData = {}) 
         SAMTALE_SIGNALS.forEach(sig => {
             const btn = document.createElement('button');
             btn.type = 'button';
-            btn.className = `ss-pegefelt role-${sig.role} ${sig.pointerDir === 'up' ? 'dir-up' : ''} ${detSolved && sig.id === m.answerId ? 'active' : ''}`;
+            const isFound = detSolved && sig.id === m.answerId;
+            btn.className = `ss-pegefelt role-${sig.role} ${sig.pointerDir === 'up' ? 'dir-up' :''} ${isFound ? 'active show-mobile-label' :'compact-mode'}`;
             btn.style.left = `${sig.x}%`;
             btn.style.top = `${sig.y}%`;
-            btn.innerHTML = `<span class="ss-pegefelt-num">${sig.num}</span><span>${sig.role === 'taler' ? '🎙️' : '👂'}</span><span class="ss-pegefelt-label">${sig.shortLabel}</span>`;
+            btn.innerHTML = isFound
+                ? `<span class="ss-pegefelt-num">${sig.num}</span>${samtaleRoleIcon(sig.role, 12)}<span class="ss-pegefelt-label">${sig.shortLabel}</span>`
+                : `${samtaleRoleIcon(sig.role, 12)}<span>${sig.num}</span>`;
             btn.onclick = () => {
                 if (sig.id === m.answerId) {
                     detSolved = true;
                     detDoneSet.add(detIdx);
-                    detMsg = `✓ Fundet! Pegefelt #${targetSig.num} "${targetSig.word}" (${ROLE_META[targetSig.role].short}): ${targetSig.definition}`;
+                    detMsg = `✓ Fundet! #${targetSig.num} "${targetSig.word}" (${ROLE_META[targetSig.role].label}): ${targetSig.turnAction}`;
                     speakSignal(targetSig.ttsText, targetSig.ttsRate, targetSig.ttsPitch);
                 } else {
                     detSolved = false;
-                    detMsg = `✗ Du klikkede på #${sig.num} "${sig.word}" (${sig.turnAction}). Kig efter sporet: ${m.hint}`;
+                    detMsg = `✗ Det var #${sig.num} "${sig.word}". Prøv igen.`;
                 }
                 renderDetective();
             };
             detPinsLayer.appendChild(btn);
         });
 
+        card7.querySelector('#ss-det-hint').onclick = () => {
+            detShowHint = !detShowHint;
+            renderDetective();
+        };
         card7.querySelector('#ss-det-prev').onclick = () => {
-            if (detIdx > 0) { detIdx--; detMsg = ''; detSolved = false; renderDetective(); }
+            if (detIdx > 0) { detIdx--; detMsg = ''; detSolved = false; detShowHint = false; renderDetective(); }
         };
         card7.querySelector('#ss-det-next').onclick = () => {
-            if (detIdx < DETECTIVE_MISSIONS.length - 1) { detIdx++; detMsg = ''; detSolved = false; renderDetective(); }
+            if (detIdx < DETECTIVE_MISSIONS.length - 1) { detIdx++; detMsg = ''; detSolved = false; detShowHint = false; renderDetective(); }
         };
     }
 

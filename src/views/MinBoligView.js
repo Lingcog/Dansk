@@ -1175,11 +1175,11 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     card1.className = 'mb-card';
     card1.innerHTML = `
         <div class="mb-toolbar">
-            <div class="mb-filters">
-                <button type="button" class="mb-filter-btn active" data-bfilter="alle">${mbT('btn_all_24', lang)}</button>
+            <div class="mb-filters" dir="ltr">
+                <button type="button" class="mb-filter-btn active" data-bfilter="alle">Alle (24)</button>
                 ${Object.values(MINDMAP_BOXES).map(b => `
                     <button type="button" class="mb-filter-btn" data-bfilter="${b.id}" style="border-color:${b.border}; color:${b.color};">
-                        ${mbT('box_' + b.id, lang)}
+                        ${b.title}
                     </button>
                 `).join('')}
             </div>

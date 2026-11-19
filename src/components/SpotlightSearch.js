@@ -123,6 +123,45 @@ const GRAMMAR_TOPICS = [
         color: '#06b6d4'
     },
     {
+        id: 'gram_samtale_smaalyde',
+        category: 'grammar',
+        title: 'Små lyde der får en samtale til at fungere',
+        subtitle: 'De 20 danske dialoglyde (Øhm, Mhm, Nå, Ej, Puha, Indåndings-"ja" m.fl.)',
+        desc: 'Udforsk de 20 vigtigste danske dialoglyde i vrimlebilledet fordelt på Taler, Lytter og Begge + video-træning.',
+        example: 'Nå! / Nååå... / Ej, det passer jo ikke!',
+        viewTarget: 'samtale_smaalyde',
+        extraData: {},
+        icon: '🔊',
+        badge: 'Samtaletræning',
+        color: '#f59e0b'
+    },
+    {
+        id: 'gram_samtale_smaaord',
+        category: 'grammar',
+        title: 'Små ord der får en samtale til at fungere',
+        subtitle: 'De 15 samtale-småord (Altså, Nå men, lige, jo, ikke/vel, Præcis m.fl.)',
+        desc: 'Træn turtagning mellem Taler og Lytter, Ja/Jo/Nej-spørgsmål og 100 % enighed i dansk samtale.',
+        example: 'Vi ses i morgen, ikke? — Jo, præcis!',
+        viewTarget: 'samtale_smaaord',
+        extraData: {},
+        icon: '💬',
+        badge: 'Samtaletræning',
+        color: '#0284c7'
+    },
+    {
+        id: 'gram_samtale_hoeflighed',
+        category: 'grammar',
+        title: 'Høflighed på dansk',
+        subtitle: 'De 20 vigtigste høflighedsudtryk i vrimlebilledet + 14 videoer & social kontekst',
+        desc: 'Lær at være høflig uden "please": Undskyld (til fremmede), må/vil/skulle, gerne/bede om/bare/lige, Tak for... ↔ Det var så lidt / Velbekomme / Tak for sidst & Ellers tak.',
+        example: 'Jeg vil gerne bede om to croissanter. — Tusind tak for hjælpen! — Det var så lidt!',
+        viewTarget: 'samtale_hoeflighed',
+        extraData: {},
+        icon: '🎩',
+        badge: 'Samtaletræning',
+        color: '#10b981'
+    },
+    {
         id: 'gram_stoed',
         category: 'grammar',
         title: 'Det Danske Stød & Udtale',

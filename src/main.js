@@ -1123,5 +1123,5 @@ if ('caches' in window) {
   });
 }
 
-// Cache buster Mon Nov 9 23:12:00 CET 2026
-console.log('App version: Mon Nov 9 23:12:00 CET 2026 - Læsetræning 18 sprog');
+// Cache buster Thu Nov 19 14:45:00 CET 2026
+console.log('App version: Thu Nov 19 14:45:00 CET 2026 - Høflighed på dansk + Samtaletræning');

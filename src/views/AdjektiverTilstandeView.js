@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { adjektiverWordTranslations } from '../utils/top100_adjektiver_translations.js';
+import { tAdj5, adj5TransBlock, adj5TransSpan } from '../utils/adjektiver_tilstande_extra_translations.js';
 import { formatNounLinks, attachNounLinkListeners } from '../utils/nounQuickPeekModal.js';
 import { shuffleArray } from '../utils/shuffle.js';
 import { renderDsIcon } from '../utils/designSystemIcons.js';
@@ -1167,18 +1168,27 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
         const transMeaning = wordTrans?.meaning;
         const transSentence = wordTrans?.sentence;
 
+        const otherTrans = adjektiverWordTranslations[item.other.word]?.[lang]
+            || (lang !== 'da' ? adjektiverWordTranslations[item.other.word]?.['en'] : null);
+        const otherMeaning = lang !== 'da' ? otherTrans?.meaning : '';
+
+        const slug = item.me.word.replace(/å/g, 'aa').replace(/ø/g, 'oe').replace(/æ/g, 'ae');
+        const labelTrans = tAdj5(`lbl_${slug}`, lang);
+        const cgTransParts = (tAdj5(`cg_${slug}`, lang) || '').split('•').map(s => s.trim());
+
         detailCard.style.display = 'flex';
         detailCard.innerHTML = `
             <div class="adj-detail-header">
-                <div class="adj-title-group">
+                <div class="adj-title-group" style="flex-wrap: wrap;">
                     <span class="adj-main-word">${item.me.word}</span>
                     ${transMeaning ? `<span class="adj-trans-meaning" style="font-size: 1.15rem; color: #fed7aa; font-weight: 600; margin-left: 0.6rem;">(${transMeaning})</span>` : ''}
                     <button class="adj-tts-btn" id="card-tts-btn">${renderDsIcon('volume', '', { size: 16 })} ${getTranslation('adj_listen_pronunciation')}</button>
-                    <span style="color: #fed7aa; font-size: 0.95rem; margin-left: 0.5rem;">(${item.me.itemLabel})</span>
+                    <span style="color: #fed7aa; font-size: 0.95rem; margin-left: 0.5rem;">(${item.me.itemLabel}${lang !== 'da' && labelTrans ? ` — <em>${labelTrans}</em>` : ''})</span>
                 </div>
                 <div class="adj-modpol-pill" id="card-swap-btn" title="Klik for at se modpolen">
                     <span>${getTranslation('adj_modpol_label')}</span>
                     <strong>${item.other.word}</strong>
+                    ${otherMeaning ? `<span style="font-size: 0.88rem; color: #fdba74; font-style: italic;">(${otherMeaning})</span>` : ''}
                     <span>➔</span>
                 </div>
             </div>
@@ -1187,21 +1197,24 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 <div class="adj-congruence-box">
                     <div class="adj-congruence-label">${getTranslation('adj_faelles_label')}</div>
                     <div class="adj-congruence-val">${formatNounLinks(item.me.faelles)}</div>
+                    ${lang !== 'da' && cgTransParts[0] ? `<div style="font-size: 0.88rem; color: #fed7aa; font-style: italic; margin-top: 0.25rem;">(${cgTransParts[0]})</div>` : ''}
                 </div>
                 <div class="adj-congruence-box">
                     <div class="adj-congruence-label">${getTranslation('adj_intet_label')}</div>
                     <div class="adj-congruence-val"><mark>${formatNounLinks(item.me.intet)}</mark></div>
+                    ${lang !== 'da' && cgTransParts[1] ? `<div style="font-size: 0.88rem; color: #fed7aa; font-style: italic; margin-top: 0.25rem;">(${cgTransParts[1]})</div>` : ''}
                 </div>
                 <div class="adj-congruence-box">
                     <div class="adj-congruence-label">${getTranslation('adj_flertal_label')}</div>
                     <div class="adj-congruence-val">${formatNounLinks(item.me.flertal)}</div>
+                    ${lang !== 'da' && cgTransParts[2] ? `<div style="font-size: 0.88rem; color: #fed7aa; font-style: italic; margin-top: 0.25rem;">(${cgTransParts[2]})</div>` : ''}
                 </div>
             </div>
 
             <div class="adj-example-box">
                 <strong>${getTranslation('adj_example_sentence')}</strong><br>
                 "${formatNounLinks(item.me.context)}"
-                ${transSentence ? `<div class="adj-trans-sentence" style="font-size: 0.95rem; color: #fed7aa; font-style: italic; margin-top: 0.35rem;">"${transSentence}"</div>` : ''}
+                ${transSentence ? `<div class="adj-trans-sentence" style="font-size: 0.95rem; color: #fed7aa; font-style: italic; margin-top: 0.35rem;">("${transSentence}")</div>` : ''}
             </div>
         `;
 
@@ -1352,14 +1365,17 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
 
     function renderDuel() {
         const item = antonymDuels[currentDuelIndex];
+        const dNum = currentDuelIndex + 1;
         antonymCard.innerHTML = `
             <div class="task-top-bar">
-                <span class="task-counter">Duel ${currentDuelIndex + 1} af ${antonymDuels.length}</span>
-                <span class="task-score">Point: <strong>${duelScore}</strong></span>
+                <span class="task-counter">${getTranslation('adj_duel_counter').replace('{current}', dNum).replace('{total}', antonymDuels.length)}</span>
+                <span class="task-score">${getTranslation('adj_score_label')} <strong>${duelScore}</strong></span>
             </div>
             <div class="task-prompt-box">
-                ${formatNounLinks(item.stimulus)}
+                <div>${formatNounLinks(item.stimulus)}</div>
+                ${adj5TransBlock(`d${dNum}_stim`)}
                 <div class="task-subprompt">${formatNounLinks(item.question)}</div>
+                ${adj5TransBlock(`d${dNum}_q`)}
             </div>
             <div class="task-options-grid" id="duel-options"></div>
             <div id="duel-feedback"></div>
@@ -1389,8 +1405,10 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
 
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box correct">
-                            <strong>Rigtigt!</strong> Modpolen til <em>${item.targetWord}</em> er <strong>${item.correct}</strong>.<br>
-                            <span style="display:inline-block; margin-top:0.5rem; color:#FFFFFF;"><strong>Sætnings-par:</strong> ${formatNounLinks(item.congruenceBonus)}</span>
+                            <strong>${getTranslation('adj_correct_feedback')}</strong> Modpolen til <em>${item.targetWord}</em> er <strong>${item.correct}</strong>.
+                            ${adj5TransBlock(`d${dNum}_ok`)}
+                            <span style="display:block; margin-top:0.55rem; color:#FFFFFF;"><strong>Sætnings-par:</strong> ${formatNounLinks(item.congruenceBonus)}</span>
+                            ${adj5TransBlock(`d${dNum}_pair`)}
                         </div>
                     `;
                 } else {
@@ -1400,8 +1418,9 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                     });
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box wrong">
-                            <strong>Ikke helt:</strong> ${item.wrongExplanation}<br>
-                            Det rigtige svar er <strong>${item.correct}</strong>.
+                            <strong>${getTranslation('adj_wrong_feedback')}</strong> ${item.wrongExplanation}<br>
+                            ${getTranslation('adj_correct_answer_is')} <strong>${item.correct}</strong>.
+                            ${adj5TransBlock(`d${dNum}_err`)}
                         </div>
                     `;
                 }
@@ -1411,22 +1430,22 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'task-next-btn';
                 if (currentDuelIndex + 1 < antonymDuels.length) {
-                    nextBtn.textContent = 'Næste duel ➔';
+                    nextBtn.textContent = getTranslation('adj_next_duel');
                     nextBtn.onclick = () => {
                         currentDuelIndex++;
                         renderDuel();
                     };
                 } else {
-                    nextBtn.textContent = `Se resultat (${duelScore}/${antonymDuels.length})`;
+                    nextBtn.textContent = getTranslation('adj_result_duel_btn').replace('{score}', duelScore).replace('{total}', antonymDuels.length);
                     nextBtn.onclick = () => {
                         antonymCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
                                 <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
                                     ${renderDsIcon('trophy', '', { size: 56 })}
                                 </div>
-                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #FFFFFF;">Flot klaret i Tilstands-duellen!</h2>
-                                <p style="font-size: 1.15rem; color: var(--adj-text-muted, #fed7aa); margin-bottom: 2rem;">Du fik <strong>${duelScore}</strong> ud af <strong>${antonymDuels.length}</strong> rigtige modpoler.</p>
-                                <button class="task-next-btn" id="restart-duel-btn">Prøv igen</button>
+                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #FFFFFF;">${getTranslation('adj_duel_modal_title')}</h2>
+                                <p style="font-size: 1.15rem; color: var(--adj-text-muted, #fed7aa); margin-bottom: 2rem;">${getTranslation('adj_duel_modal_score').replace('{score}', duelScore).replace('{total}', antonymDuels.length)}</p>
+                                <button class="task-next-btn" id="restart-duel-btn">${getTranslation('adj_retry_btn')}</button>
                             </div>
                         `;
                         antonymCard.querySelector('#restart-duel-btn').onclick = () => {
@@ -1545,14 +1564,17 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
 
     function renderSynonymTask() {
         const item = synonymTasks[currentSynonymIndex];
+        const sNum = currentSynonymIndex + 1;
         synonymCard.innerHTML = `
             <div class="task-top-bar">
-                <span class="task-counter">Nuance ${currentSynonymIndex + 1} af ${synonymTasks.length}</span>
-                <span class="task-score">Point: <strong>${synonymScore}</strong></span>
+                <span class="task-counter">${getTranslation('adj_nuance_counter').replace('{current}', sNum).replace('{total}', synonymTasks.length)}</span>
+                <span class="task-score">${getTranslation('adj_score_label')} <strong>${synonymScore}</strong></span>
             </div>
             <div class="task-prompt-box">
-                ${formatNounLinks(item.sentence)}
+                <div>${formatNounLinks(item.sentence)}</div>
+                ${adj5TransBlock(`syn${sNum}_sent`)}
                 <div class="task-subprompt">${formatNounLinks(item.question)}</div>
+                ${adj5TransBlock(`syn${sNum}_q`)}
             </div>
             <div class="task-options-grid" id="synonym-options"></div>
             <div id="synonym-feedback"></div>
@@ -1580,7 +1602,8 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                     synonymCard.querySelector('.task-score strong').textContent = synonymScore;
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box correct">
-                            <strong>Rigtigt!</strong> ${item.explanation}
+                            <strong>${getTranslation('adj_correct_feedback')}</strong> ${item.explanation}
+                            ${adj5TransBlock(`syn${sNum}_expl`)}
                         </div>
                     `;
                 } else {
@@ -1590,7 +1613,8 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                     });
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box wrong">
-                            <strong>Svaret er:</strong> ${item.correct}.<br>${item.explanation}
+                            <strong>${getTranslation('adj_correct_answer_is')}</strong> ${item.correct}.<br>${item.explanation}
+                            ${adj5TransBlock(`syn${sNum}_expl`)}
                         </div>
                     `;
                 }
@@ -1598,22 +1622,22 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'task-next-btn';
                 if (currentSynonymIndex + 1 < synonymTasks.length) {
-                    nextBtn.textContent = 'Næste nuance ➔';
+                    nextBtn.textContent = getTranslation('adj_next_nuance');
                     nextBtn.onclick = () => {
                         currentSynonymIndex++;
                         renderSynonymTask();
                     };
                 } else {
-                    nextBtn.textContent = `Afslut synonymer (${synonymScore}/${synonymTasks.length})`;
+                    nextBtn.textContent = getTranslation('adj_result_syn_btn').replace('{score}', synonymScore).replace('{total}', synonymTasks.length);
                     nextBtn.onclick = () => {
                         synonymCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
                                 <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
                                     ${renderDsIcon('trophy', '', { size: 56 })}
                                 </div>
-                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #FFFFFF;">Flot ordforråd i tilstande!</h2>
-                                <p style="font-size: 1.15rem; color: var(--adj-text-muted, #fed7aa); margin-bottom: 2rem;">Du fik <strong>${synonymScore}</strong> ud af <strong>${synonymTasks.length}</strong> rigtige nuancer.</p>
-                                <button class="task-next-btn" id="restart-syn-btn">Prøv igen</button>
+                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #FFFFFF;">${getTranslation('adj_syn_modal_title')}</h2>
+                                <p style="font-size: 1.15rem; color: var(--adj-text-muted, #fed7aa); margin-bottom: 2rem;">${getTranslation('adj_syn_modal_score').replace('{score}', synonymScore).replace('{total}', synonymTasks.length)}</p>
+                                <button class="task-next-btn" id="restart-syn-btn">${getTranslation('adj_retry_btn')}</button>
                             </div>
                         `;
                         synonymCard.querySelector('#restart-syn-btn').onclick = () => {
@@ -1709,25 +1733,48 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
         const totalSlots = item.correctOrder.length;
         let placed = [];
         let pool = shuffleArray(item.correctOrder);
+        const lang = getLang();
 
-        const bTitle = getTranslation(`adj_baro_${item.id}_title`) || item.title;
-        const bDesc = getTranslation(`adj_baro_${item.id}_desc`) || item.desc;
-        const bLow = getTranslation(`adj_baro_${item.id}_low`) || item.lowLabel;
-        const bHigh = getTranslation(`adj_baro_${item.id}_high`) || item.highLabel;
+        const rawTitleTrans = item.id === 'f5_s7'
+            ? tAdj5('bar_f5_s7_title', lang)
+            : getTranslation(`adj_baro_${item.id}_title`);
+        const rawDescTrans = item.id === 'f5_s7'
+            ? tAdj5('bar_f5_s7_desc', lang)
+            : getTranslation(`adj_baro_${item.id}_desc`);
+        const rawLowTrans = item.id === 'f5_s7'
+            ? tAdj5('bar_f5_s7_low', lang)
+            : getTranslation(`adj_baro_${item.id}_low`);
+        const rawHighTrans = item.id === 'f5_s7'
+            ? tAdj5('bar_f5_s7_high', lang)
+            : getTranslation(`adj_baro_${item.id}_high`);
+
+        const showTrans = lang !== 'da';
+        const titleTransHtml = (showTrans && rawTitleTrans && rawTitleTrans !== item.title && !rawTitleTrans.startsWith('adj_baro_'))
+            ? `<div style="font-size:0.95rem; color:#fed7aa; font-style:italic; font-weight:500; margin-top:0.2rem;">(${rawTitleTrans})</div>`
+            : '';
+        const descTransHtml = (showTrans && rawDescTrans && rawDescTrans !== item.desc && !rawDescTrans.startsWith('adj_baro_'))
+            ? `<div style="font-size:0.95rem; color:#fed7aa; font-style:italic; font-weight:500; margin-top:0.25rem;">(${rawDescTrans})</div>`
+            : '';
+        const lowTransStr = (showTrans && rawLowTrans && rawLowTrans !== item.lowLabel && !rawLowTrans.startsWith('adj_baro_'))
+            ? ` <em>(${rawLowTrans})</em>`
+            : '';
+        const highTransStr = (showTrans && rawHighTrans && rawHighTrans !== item.highLabel && !rawHighTrans.startsWith('adj_baro_'))
+            ? ` <em>(${rawHighTrans})</em>`
+            : '';
 
         barometerCard.innerHTML = `
             <div class="task-top-bar">
                 <span class="task-counter">${getTranslation('adj_baro_counter').replace('{current}', currentBarometerIndex + 1).replace('{total}', barometerChallenges.length)}</span>
-                <span class="task-score">${bTitle}</span>
+                <span class="task-score">${item.title}</span>
             </div>
             <div class="task-prompt-box">
-                <div style="font-size:1.3rem; font-weight:700; margin-bottom:0.4rem;">${bTitle}</div>
-                <div class="task-subprompt">${bDesc}</div>
+                <div style="font-size:1.3rem; font-weight:700; margin-bottom:0.4rem;">${item.title}${titleTransHtml}</div>
+                <div class="task-subprompt">${item.desc}${descTransHtml}</div>
             </div>
 
             <div class="scale-indicators">
-                <span>1. ${bLow}</span>
-                <span>${totalSlots}. ${bHigh}</span>
+                <span>1. ${item.lowLabel}${lowTransStr}</span>
+                <span>${totalSlots}. ${item.highLabel}${highTransStr}</span>
             </div>
 
             <div class="barometer-track" id="barometer-slots"></div>
@@ -1790,8 +1837,10 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             if (isAllCorrect) {
                 feedbackBox.innerHTML = `
                     <div class="task-feedback-box correct">
-                        <strong>${getTranslation('adj_baro_success')}</strong><br>
+                        <strong>Perfekt sorteret! Du placerede ordene i helt rigtig rækkefølge:</strong>
+                        ${showTrans ? `<div style="font-size:0.95rem; color:#fed7aa; font-style:italic; margin-top:0.2rem;">(${getTranslation('adj_baro_success')})</div>` : ''}<br>
                         <em>${item.correctOrder.join(' ➔ ')}</em>
+                        ${adj5TransBlock(`bar_${item.id}_order`)}
                     </div>
                 `;
                 checkBtn.style.display = 'none';
@@ -1815,8 +1864,9 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             } else {
                 feedbackBox.innerHTML = `
                     <div class="task-feedback-box wrong">
-                        <strong>${getTranslation('adj_baro_wrong')}</strong><br>
-                        ${getTranslation('adj_baro_hint')}
+                        <strong>Ikke helt i mål endnu. Nogle af ordene står ikke i rigtig rækkefølge.</strong><br>
+                        Tip: Tænk på den mildeste tilstand først og den mest intense til sidst!
+                        ${showTrans ? `<div style="font-size:0.95rem; color:#fed7aa; font-style:italic; margin-top:0.35rem;">(${getTranslation('adj_baro_wrong')} ${getTranslation('adj_baro_hint')})</div>` : ''}
                     </div>
                 `;
             }
@@ -1943,6 +1993,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
 
     function renderKongruensTask() {
         const item = kongruensTasks[currentKongruensIndex];
+        const kNum = currentKongruensIndex + 1;
         kongruensCard.innerHTML = `
             <div class="adj-grammar-link-box">
                 <div style="display: flex; align-items: center; gap: 0.8rem;">
@@ -1980,11 +2031,12 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
             </div>
 
             <div class="task-top-bar">
-                <span class="task-counter">${getTranslation('adj_kongruens_counter').replace('{current}', currentKongruensIndex + 1).replace('{total}', kongruensTasks.length)}</span>
+                <span class="task-counter">${getTranslation('adj_kongruens_counter').replace('{current}', kNum).replace('{total}', kongruensTasks.length)}</span>
                 <span class="task-score">${getTranslation('adj_score_label')} <strong>${kongruensScore}</strong></span>
             </div>
             <div class="task-prompt-box">
-                ${formatNounLinks(item.sentence)}
+                <div>${formatNounLinks(item.sentence)}</div>
+                ${adj5TransBlock(`k${kNum}_sent`)}
                 <div class="task-subprompt">${getTranslation('adj_kongruens_subprompt')}</div>
             </div>
             <div class="task-options-grid" id="kongruens-options"></div>
@@ -2017,6 +2069,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                         <div class="task-feedback-box correct">
                             <strong>${getTranslation('adj_correct_feedback')}</strong><br>
                             ${item.rule}
+                            ${adj5TransBlock(`k${kNum}_rule`)}
                             <div>
                                 <a class="feedback-grammar-link" id="feedback-link-grammar">
                                     ${renderDsIcon('bookOpen', '', { size: 16 })} ${getTranslation('adj_grammar_banner_btn')}
@@ -2033,6 +2086,7 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                         <div class="task-feedback-box wrong">
                             <strong>${getTranslation('adj_wrong_feedback')}</strong> ${getTranslation('adj_correct_answer_is')} <strong>${item.correct}</strong>.<br>
                             ${item.rule}
+                            ${adj5TransBlock(`k${kNum}_rule`)}
                             <div>
                                 <a class="feedback-grammar-link" id="feedback-link-grammar">
                                     ${renderDsIcon('bookOpen', '', { size: 16 })} ${getTranslation('adj_grammar_banner_btn')}
@@ -2170,13 +2224,15 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
 
     function renderStoryTask() {
         const item = historieTasks[currentStoryIndex];
+        const hNum = currentStoryIndex + 1;
         storyCard.innerHTML = `
             <div class="task-top-bar">
-                <span class="task-counter">${getTranslation('adj_situation_counter').replace('{current}', currentStoryIndex + 1).replace('{total}', historieTasks.length)}</span>
+                <span class="task-counter">${getTranslation('adj_situation_counter').replace('{current}', hNum).replace('{total}', historieTasks.length)}</span>
                 <span class="task-score">${getTranslation('adj_score_label')} <strong>${storyScore}</strong></span>
             </div>
             <div class="task-prompt-box">
-                "${formatNounLinks(item.story)}"
+                <div>"${formatNounLinks(item.story)}"</div>
+                ${adj5TransBlock(`h${hNum}_story`)}
                 <div class="task-subprompt">${getTranslation('adj_story_subprompt')}</div>
             </div>
             <div class="task-options-grid" id="story-options"></div>
@@ -2203,7 +2259,8 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                     storyCard.querySelector('.task-score strong').textContent = storyScore;
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box correct">
-                            <strong>Helt rigtigt!</strong> ${item.explanation}
+                            <strong>${getTranslation('adj_correct_feedback')}</strong> ${item.explanation}
+                            ${adj5TransBlock(`h${hNum}_expl`)}
                         </div>
                     `;
                 } else {
@@ -2213,7 +2270,8 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                     });
                     feedbackContainer.innerHTML = `
                         <div class="task-feedback-box wrong">
-                            <strong>Svaret er "${item.correct}":</strong> ${item.explanation}
+                            <strong>${getTranslation('adj_correct_answer_is')} "${item.correct}":</strong> ${item.explanation}
+                            ${adj5TransBlock(`h${hNum}_expl`)}
                         </div>
                     `;
                 }
@@ -2221,22 +2279,22 @@ export function renderAdjektiverTilstandeView(container, navigateFn, extraData =
                 const nextBtn = document.createElement('button');
                 nextBtn.className = 'task-next-btn';
                 if (currentStoryIndex + 1 < historieTasks.length) {
-                    nextBtn.textContent = 'Næste situation ➔';
+                    nextBtn.textContent = getTranslation('adj_next_situation');
                     nextBtn.onclick = () => {
                         currentStoryIndex++;
                         renderStoryTask();
                     };
                 } else {
-                    nextBtn.textContent = `Se resultat (${storyScore}/${historieTasks.length})`;
+                    nextBtn.textContent = getTranslation('adj_result_story_btn').replace('{score}', storyScore).replace('{total}', historieTasks.length);
                     nextBtn.onclick = () => {
                         storyCard.innerHTML = `
                             <div style="text-align:center; padding: 2rem;">
                                 <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
                                     ${renderDsIcon('trophy', '', { size: 56 })}
                                 </div>
-                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #FFFFFF;">Super flot forståelse af farver, mængder og tilstande!</h2>
-                                <p style="font-size: 1.15rem; color: var(--adj-text-muted, #fed7aa); margin-bottom: 2rem;">Du fik <strong>${storyScore}</strong> ud af <strong>${historieTasks.length}</strong> rigtige svar.</p>
-                                <button class="task-next-btn" id="restart-story-btn">Prøv igen</button>
+                                <h2 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #FFFFFF;">${getTranslation('adj_story_modal_title')}</h2>
+                                <p style="font-size: 1.15rem; color: var(--adj-text-muted, #fed7aa); margin-bottom: 2rem;">${getTranslation('adj_story_modal_score').replace('{score}', storyScore).replace('{total}', historieTasks.length)}</p>
+                                <button class="task-next-btn" id="restart-story-btn">${getTranslation('adj_retry_btn')}</button>
                             </div>
                         `;
                         storyCard.querySelector('#restart-story-btn').onclick = () => {

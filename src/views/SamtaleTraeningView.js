@@ -23,6 +23,21 @@ export function renderSamtaleTraeningView(container, navigateFn) {
     // Cards
     const cardsData = [
         {
+            icon: '🔊',
+            title: 'Små lyde der får en samtale til at fungere',
+            action: () => navigateFn('samtale_smaalyde')
+        },
+        {
+            icon: '💬',
+            title: 'Små ord der får en samtale til at fungere',
+            action: () => navigateFn('samtale_smaaord')
+        },
+        {
+            icon: '🎩',
+            title: 'Høflighed på dansk',
+            action: () => navigateFn('samtale_hoeflighed')
+        },
+        {
             icon: '🗣',
             titleKey: 'hverdagssamtale',
             action: () => navigateFn('samtale_hverdag')

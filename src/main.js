@@ -134,9 +134,27 @@ import { renderSansningHarErView } from './views/SansningHarErView.js';
 import { renderSansningKraftHvileView } from './views/SansningKraftHvileView.js';
 import { renderSansningRummetTaersklenView } from './views/SansningRummetTaersklenView.js';
 import { renderSansningSindetView } from './views/SansningSindetView.js';
+import { renderSansningFlade3ModalitetView } from './views/SansningFlade3ModalitetView.js';
+import { renderSansningFundamentView } from './views/SansningFundamentView.js';
+import { renderSansningEvidensView } from './views/SansningEvidensView.js';
+import { renderSansningModalverberView } from './views/SansningModalverberView.js';
+import { renderSansningFlade4FlowView } from './views/SansningFlade4FlowView.js';
+import { renderSansningFremdriftView } from './views/SansningFremdriftView.js';
+import { renderSansningModstandView } from './views/SansningModstandView.js';
+import { renderSansningSkillevejeView } from './views/SansningSkillevejeView.js';
+import { renderSansningInversionView } from './views/SansningInversionView.js';
 import { renderMitSprogSammenlignetView } from './views/MitSprogSammenlignetView.js';
 import { renderVanskeligeLydeKinesiskView } from './views/VanskeligeLydeKinesiskView.js';
 import { renderVanskeligeLydeArabiskView } from './views/VanskeligeLydeArabiskView.js';
+import { renderVanskeligeLydeUkrainskView } from './views/VanskeligeLydeUkrainskView.js';
+import { renderVanskeligeLydeVietnamesiskView } from './views/VanskeligeLydeVietnamesiskView.js';
+import { renderVanskeligeLydeUrduView } from './views/VanskeligeLydeUrduView.js';
+import { renderVanskeligeLydeFarsiView } from './views/VanskeligeLydeFarsiView.js';
+import { renderVanskeligeLydePortugisiskView } from './views/VanskeligeLydePortugisiskView.js';
+import { renderVanskeligeLydeSpanskView } from './views/VanskeligeLydeSpanskView.js';
+import { renderSamtaleSmaaordView } from './views/SamtaleSmaaordView.js';
+import { renderSamtaleSmaalydeView } from './views/SamtaleSmaalydeView.js';
+import { renderSamtaleHoeflighedView } from './views/SamtaleHoeflighedView.js';
 import { initAdverbChoiceExerciseView } from './views/AdverbChoiceExerciseView.js';
 import { initAdverbDialogExerciseView } from './views/AdverbDialogExerciseView.js';
 import { initConjunctionChoiceExerciseView } from './views/ConjunctionChoiceExerciseView.js';
@@ -325,6 +343,15 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'samtale_traening') {
     appState.currentView = 'samtale_traening';
     renderSamtaleTraeningView(appDiv, navigate);
+  } else if (viewTarget === 'samtale_smaalyde') {
+    appState.currentView = 'samtale_smaalyde';
+    renderSamtaleSmaalydeView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'samtale_smaaord') {
+    appState.currentView = 'samtale_smaaord';
+    renderSamtaleSmaaordView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'samtale_hoeflighed') {
+    appState.currentView = 'samtale_hoeflighed';
+    renderSamtaleHoeflighedView(appDiv, navigate, extraData);
   } else if (viewTarget === 'samtale_hverdag') {
     appState.currentView = 'samtale_hverdag';
     renderHverdagssamtaleView(appDiv, navigate, extraData);
@@ -572,6 +599,10 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
       renderSansningFlade1DynamikView(appDiv, navigate, extraData);
     } else if (sub === 'flade2' || sub === 'rum_tid') {
       renderSansningFlade2RumTidView(appDiv, navigate, extraData);
+    } else if (sub === 'flade3' || sub === 'modalitet') {
+      renderSansningFlade3ModalitetView(appDiv, navigate, extraData);
+    } else if (sub === 'flade4' || sub === 'tekstflow' || sub === 'flow') {
+      renderSansningFlade4FlowView(appDiv, navigate, extraData);
     } else if (sub === 'i_paa' || sub === 'station2_1') {
       renderSansningIPaaView(appDiv, navigate, extraData);
     } else if (sub === 'denne_den' || sub === 'station2_2') {
@@ -594,6 +625,20 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
       renderSansningRummetTaersklenView(appDiv, navigate, extraData);
     } else if (sub === 'sindets_sansning' || sub === 'sindet' || sub === 'station6') {
       renderSansningSindetView(appDiv, navigate, extraData);
+    } else if (sub === 'fundament' || sub === 'station3_1') {
+      renderSansningFundamentView(appDiv, navigate, extraData);
+    } else if (sub === 'evidens' || sub === 'station3_2') {
+      renderSansningEvidensView(appDiv, navigate, extraData);
+    } else if (sub === 'modalverber' || sub === 'station3_4') {
+      renderSansningModalverberView(appDiv, navigate, extraData);
+    } else if (sub === 'fremdrift' || sub === 'station4_1') {
+      renderSansningFremdriftView(appDiv, navigate, extraData);
+    } else if (sub === 'modstand' || sub === 'station4_2') {
+      renderSansningModstandView(appDiv, navigate, extraData);
+    } else if (sub === 'skilleveje' || sub === 'station4_3') {
+      renderSansningSkillevejeView(appDiv, navigate, extraData);
+    } else if (sub === 'inversion' || sub === 'station4_4') {
+      renderSansningInversionView(appDiv, navigate, extraData);
     } else {
       renderGrammatikSansningView(appDiv, navigate, extraData);
     }
@@ -623,6 +668,32 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     }
     appState.currentView = 'sansning_flade2';
     renderSansningFlade2RumTidView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_flade3' || viewTarget === 'flade3_modalitet') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = 'sansning_flade3';
+    renderSansningFlade3ModalitetView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_flade4' || viewTarget === 'flade4_flow') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = 'sansning_flade4';
+    renderSansningFlade4FlowView(appDiv, navigate, extraData);
   } else if (viewTarget === 'sansning_i_paa' || viewTarget === 'i_paa') {
     const isLocalhost = typeof window !== 'undefined' && (
       window.location.hostname === 'localhost' ||
@@ -779,6 +850,97 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     }
     appState.currentView = 'sansning_sindet';
     renderSansningSindetView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_fundament' || viewTarget === 'fundamentets_fasthed') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = 'sansning_fundament';
+    renderSansningFundamentView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_evidens' || viewTarget === 'evidensens_kilde') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = 'sansning_evidens';
+    renderSansningEvidensView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_modalverber' || viewTarget === 'modalverbernes_pres') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = 'sansning_modalverber';
+    renderSansningModalverberView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_fremdrift' || viewTarget === 'uhindret_fremdrift') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = 'sansning_fremdrift';
+    renderSansningFremdriftView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_modstand' || viewTarget === 'kraft_mod_modstand') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = 'sansning_modstand';
+    renderSansningModstandView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_skilleveje' || viewTarget === 'valg_skilleveje') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = 'sansning_skilleveje';
+    renderSansningSkillevejeView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_inversion' || viewTarget === 'saetningsdansen') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = 'sansning_inversion';
+    renderSansningInversionView(appDiv, navigate, extraData);
   } else if (
     viewTarget === 'verber_grammatik' ||
     viewTarget === 'verber_tider_4' ||
@@ -811,6 +973,24 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'vanskelige_lyde_arabisk' || viewTarget === 'arabiske_lyde') {
     appState.currentView = 'vanskelige_lyde_arabisk';
     renderVanskeligeLydeArabiskView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'vanskelige_lyde_ukrainsk' || viewTarget === 'ukrainske_lyde') {
+    appState.currentView = 'vanskelige_lyde_ukrainsk';
+    renderVanskeligeLydeUkrainskView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'vanskelige_lyde_vietnamesisk' || viewTarget === 'vietnamesiske_lyde') {
+    appState.currentView = 'vanskelige_lyde_vietnamesisk';
+    renderVanskeligeLydeVietnamesiskView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'vanskelige_lyde_urdu' || viewTarget === 'urdu_lyde') {
+    appState.currentView = 'vanskelige_lyde_urdu';
+    renderVanskeligeLydeUrduView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'vanskelige_lyde_farsi' || viewTarget === 'persiske_lyde') {
+    appState.currentView = 'vanskelige_lyde_farsi';
+    renderVanskeligeLydeFarsiView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'vanskelige_lyde_portugisisk' || viewTarget === 'portugisiske_lyde') {
+    appState.currentView = 'vanskelige_lyde_portugisisk';
+    renderVanskeligeLydePortugisiskView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'vanskelige_lyde_spansk' || viewTarget === 'spanske_lyde') {
+    appState.currentView = 'vanskelige_lyde_spansk';
+    renderVanskeligeLydeSpanskView(appDiv, navigate, extraData);
   } else if (viewTarget === 'grounding') {
     appState.currentView = 'grounding';
     renderGroundingView(appDiv, navigate);

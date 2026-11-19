@@ -2160,12 +2160,26 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
     backBtn.onclick = () => navigateFn('samtale_traening');
     topBar.appendChild(backBtn);
 
+    const sisterWrap = document.createElement('div');
+    sisterWrap.style.display = 'flex';
+    sisterWrap.style.flexWrap = 'wrap';
+    sisterWrap.style.gap = '0.45rem';
+
     const sisterBtn = document.createElement('button');
     sisterBtn.type = 'button';
     sisterBtn.className = 'sl-btn-secondary';
-    sisterBtn.innerHTML = '💬 Skift til søster-fladen: <strong>Små ORD der får en samtale til at fungere →</strong>';
+    sisterBtn.innerHTML = '💬 Søster-flade: <strong>Små ORD →</strong>';
     sisterBtn.onclick = () => navigateFn('samtale_smaaord');
-    topBar.appendChild(sisterBtn);
+    sisterWrap.appendChild(sisterBtn);
+
+    const politeBtn = document.createElement('button');
+    politeBtn.type = 'button';
+    politeBtn.className = 'sl-btn-secondary';
+    politeBtn.innerHTML = '🎩 Søster-flade: <strong>Høflighed på dansk →</strong>';
+    politeBtn.onclick = () => navigateFn('samtale_hoeflighed');
+    sisterWrap.appendChild(politeBtn);
+
+    topBar.appendChild(sisterWrap);
 
     viewContainer.appendChild(topBar);
 

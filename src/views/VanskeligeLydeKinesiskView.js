@@ -70,26 +70,29 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         }, 3200);
     }
 
-    function copyToClipboard(text, label = 'Lektie-link') {
+    function copyToClipboard(text, label) {
+        const isDa = getLang() === 'da';
+        const effectiveLabel = label || (isDa ? 'Lektie-link' : '练习链接');
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text).then(() => {
-                showCopyToast(`📋 ${label} kopieret til udklipsholder!`);
+                showCopyToast(isDa ? `📋 ${effectiveLabel} kopieret til udklipsholder!` : `📋 已复制：${effectiveLabel}`);
             }).catch(() => {
-                fallbackCopy(text, label);
+                fallbackCopy(text, effectiveLabel);
             });
         } else {
-            fallbackCopy(text, label);
+            fallbackCopy(text, effectiveLabel);
         }
     }
 
     function fallbackCopy(text, label) {
+        const isDa = getLang() === 'da';
         const input = document.createElement('input');
         input.value = text;
         document.body.appendChild(input);
         input.select();
         document.execCommand('copy');
         document.body.removeChild(input);
-        showCopyToast(`📋 ${label} kopieret!`);
+        showCopyToast(isDa ? `📋 ${label} kopieret!` : `📋 已复制：${label}`);
     }
 
     function getFullHomeworkUrl(modId, tabId) {
@@ -104,6 +107,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         const existing = document.querySelector('#vlk-hw-modal');
         if (existing) existing.remove();
 
+        const isDa = getLang() === 'da';
         const overlay = document.createElement('div');
         overlay.id = 'vlk-hw-modal';
         overlay.className = 'vlk-modal-overlay';
@@ -118,13 +122,15 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             <div class="vlk-modal-card">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.12); padding-bottom:0.75rem;">
                     <div>
-                        <div style="font-size:0.75rem; font-weight:900; color:#38bdf8; text-transform:uppercase;">📚 Lærer-værktøj • Hjemmearbejde URL'er</div>
-                        <h2 style="margin:0.2rem 0 0; font-size:1.3rem; font-weight:900; color:#ffffff;">Direkte links til alle lektier og opgaver</h2>
+                        <div style="font-size:0.75rem; font-weight:900; color:#38bdf8; text-transform:uppercase;">${isDa ? "📚 Lærer-værktøj • Hjemmearbejde URL'er" : '📚 全部练习直达链接'}</div>
+                        <h2 style="margin:0.2rem 0 0; font-size:1.3rem; font-weight:900; color:#ffffff;">${isDa ? 'Direkte links til alle lektier og opgaver' : '全部 5 个重点发音模块与练习链接'}</h2>
                     </div>
-                    <button type="button" class="vlk-back-btn" id="vlk-modal-close" style="padding:0.4rem 0.8rem;">✕ Luk</button>
+                    <button type="button" class="vlk-back-btn" id="vlk-modal-close" style="padding:0.4rem 0.8rem;">${isDa ? '✕ Luk' : '✕ 关闭'}</button>
                 </div>
                 <div style="font-size:0.86rem; color:#cbd5e1; margin-bottom:1.15rem; line-height:1.45;">
-                    Klik på <strong>Kopier link</strong> ud for den ønskede opgave. Kursisten sendes direkte ind på det valgte modul og den specifikke opgavefane.
+                    ${isDa
+                        ? 'Klik på <strong>Kopier link</strong> ud for den ønskede opgave. Kursisten sendes direkte ind på det valgte modul og den specifikke opgavefane.'
+                        : '点击任意练习旁的<strong>复制链接</strong>，即可直接进入对应的发音模块与练习页面。'}
                 </div>
                 <div style="display:flex; flex-direction:column; gap:1.15rem;">
                     ${SOUND_MODULES.map(mod => `
@@ -132,8 +138,8 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; flex-wrap:wrap; gap:0.4rem;">
                                 <div>
                                     <span style="font-size:0.7rem; font-weight:800; background:rgba(56,189,248,0.2); color:#7dd3fc; padding:0.15rem 0.5rem; border-radius:9999px;">${mod.badge}</span>
-                                    <strong style="color:#ffffff; font-size:1.02rem; margin-left:0.35rem;">${mod.titleDa}</strong>
-                                    <span style="color:#94a3b8; font-size:0.84rem; margin-left:0.25rem;">(${mod.titleZh})</span>
+                                    <strong style="color:#ffffff; font-size:1.02rem; margin-left:0.35rem;">${isDa ? mod.titleDa : mod.titleZh}</strong>
+                                    ${isDa ? `<span style="color:#94a3b8; font-size:0.84rem; margin-left:0.25rem;">(${mod.titleZh})</span>` : ''}
                                 </div>
                             </div>
                             <div style="display:flex; flex-direction:column; gap:0.45rem;">
@@ -143,10 +149,11 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                                     return `
                                         <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(15,23,42,0.65); padding:0.45rem 0.75rem; border-radius:8px; gap:0.5rem; flex-wrap:wrap;">
                                             <div style="font-size:0.82rem; color:#e2e8f0;">
-                                                <strong>${tName.da}</strong> <span style="color:#94a3b8; font-size:0.76rem;">${tName.zh}</span>
+                                                <strong>${isDa ? tName.da : tName.zh}</strong>
+                                                ${isDa ? `<span style="color:#94a3b8; font-size:0.76rem;"> ${tName.zh}</span>` : ''}
                                             </div>
-                                            <button type="button" class="vlk-copy-btn" data-hw-url="${url}" data-hw-label="${mod.titleDa} - ${tName.da}">
-                                                📋 Kopier link
+                                            <button type="button" class="vlk-copy-btn" data-hw-url="${url}" data-hw-label="${isDa ? `${mod.titleDa} - ${tName.da}` : `${mod.titleZh} - ${tName.zh}`}">
+                                                ${isDa ? '📋 Kopier link' : '📋 复制链接'}
                                             </button>
                                         </div>
                                     `;
@@ -1349,25 +1356,25 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             diagCard1: (target) => {
                 const isL = target === 'l';
                 return {
-                    title: 'Billede 1: Set fra siden (Profil) / 侧面剖面图',
-                    tag: isL ? 'Slank aflang tunge • Lille kontaktpunkt' : 'Bred kontaktflade • Munden forseglet',
+                    title: '图 1：侧面剖面图',
+                    tag: isL ? '舌头细长 • 极小接触点' : '宽大接触面 • 口腔封死',
                     tagStyle: isL ? 'background:rgba(56,189,248,0.2); color:#38bdf8;' : 'background:rgba(244,114,182,0.2); color:#f472b6;',
                     svg: generateSagittalProfileSvg(target),
                     notes: isL 
-                        ? '<strong>L-lyd: Aflang tunge og lille berøringspunkt:</strong><br>Tungen strækker sig og bliver <strong>slank og aflang</strong>. Kun den yderste tungespids berører et lille punkt lige bag de øverste fortænder (gul prik). Tungen er sænket i siderne, næsen er lukket af, og luften strømmer frit ud af munden.'
-                        : '<strong>N-lyd: Stor bred kontaktflade og lukket mund:</strong><br>I modsætning til L presses en <strong>langt større del af tungen fladt op mod ganen</strong> og danner en tæt rød prop. Munden er spærret foran! Ganesejlet hænger ned, og 100% af luften presses ud gennem næsen.'
+                        ? '<strong>L 音：细长舌头与极小接触点：</strong><br>舌头向前伸展，变得<strong>细长</strong>。仅最前端的舌尖轻触上门牙正后方的一个极小接触点（黄点处）。舌头两侧自然放低，鼻腔通道关闭，气流从口腔两侧顺畅吹出。'
+                        : '<strong>N 音：宽大接触面与紧闭口腔：</strong><br>与 L 音相反，<strong>舌头前部更大面积平压在上腭上</strong>，形成一道严密的红色屏障，彻底封住口腔前部！软腭下垂，100% 的气流被迫从鼻腔涌出。'
                 };
             },
             diagCard2: (target) => {
                 const isL = target === 'l';
                 return {
-                    title: 'Billede 2: Set forfra i spejlet / 镜子正面口型',
-                    tag: isL ? 'Begge mundvige er helt åbne ➔' : 'Munden lukket • Luften ud af næsen ⬆️',
+                    title: '图 2：镜子正面口型',
+                    tag: isL ? '两侧嘴角完全畅通 ➔' : '口腔封死 • 气流从鼻腔冲出 ⬆️',
                     tagStyle: isL ? 'background:rgba(56,189,248,0.2); color:#38bdf8;' : 'background:rgba(244,114,182,0.2); color:#f472b6;',
                     svg: generateFrontalMirrorSvg(target),
                     notes: isL
-                        ? '<strong>Kig i spejlet på dine mundvige:</strong><br>Tungespidsen er oppe bag fortænderne i midten, men <strong>siderne af tungen hænger helt afslappet ned</strong>. Der er to store åbne passager ved kinderne, så luften blæser frit ud af begge mundvige. Klemmer du for næsen, lyder L 100% uændret!'
-                        : '<strong>Spejlbilledet for N:</strong><br>Tungen dækker hele overkæben foran. Munden er hermetisk forseglet – der slipper ikke en dråbe luft ud af mundvigene. Al luft presses op i næsen. Klemmer du for næsen, stopper lyden øjeblikkeligt med et ryk!'
+                        ? '<strong>照镜子观察两侧嘴角：</strong><br>舌尖顶在中间上门牙后方，但<strong>舌头两侧完全放松下垂</strong>。脸颊两侧留出两条宽敞的通道，气流从左右嘴角自由吹出。即使捏住鼻子，L 音也 100% 保持不变！'
+                        : '<strong>N 音正面镜子视角：</strong><br>舌头贴满整个上牙弓前部，口腔被严密密封——嘴角一丝气流也漏不出来。所有气流都被压入鼻腔。如果捏住鼻子，声音会瞬间卡住中断！'
                 };
             },
             pinchCardHtml: `
@@ -1382,25 +1389,25 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     <div class="vlk-pinch-item">
                         <div style="font-weight: 800; color: #38bdf8; margin-bottom: 0.25rem;">当你发 "Lllll..." 时：</div>
                         <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.45;">
-                            Tungespidsen er oppe, men luften suser frit ud af begge mundvige. Lyden er <strong>100% uændret og ren</strong>, selv når du klemmer for næsen!
+                            舌尖顶在门牙后，但气流从两侧嘴角呼呼吹出。即使捏住鼻子，声音依然<strong>100% 纯净不变</strong>！
                         </div>
                     </div>
                     <div class="vlk-pinch-item">
                         <div style="font-weight: 800; color: #f472b6; margin-bottom: 0.25rem;">当你发 "Nnnnn..." 时：</div>
                         <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.45;">
-                            Munden er helt lukket foran, og al luften presses ud igennem næsen. Klemmer du om næsen, <strong>stopper lyden øjeblikkeligt med et ryk</strong>!
+                            口腔前部完全封死，全部气流被迫经由鼻腔排出。一旦捏住鼻子，<strong>声音会瞬间被憋住中断</strong>！
                         </div>
                     </div>
                 </div>
             `,
             bilingualGuideHtml: `
-                <div class="vlk-bilingual-title">中文发音核心要诀 (Foretrukne råd)</div>
+                <div class="vlk-bilingual-title">中文发音核心要诀</div>
                 <div class="vlk-zh-block">
-                    <strong>L-音（两颊出风）：</strong>Tungespidsen rammer lige bag de øverste fortænder, men luften suser frit ud af begge mundvige. Næsen er lukket af.<br>
-                    <strong>N-音（鼻子震动）：</strong>Munden er helt lukket foran, og al luften presses ud igennem næsen. Klemmer du for næsen, stopper lyden med det samme.
+                    <strong>L 音（两颊出风）：</strong>舌尖轻触上门牙正后方，气流从两侧嘴角顺畅吹出，鼻腔保持关闭。<br>
+                    <strong>N 音（鼻子震动）：</strong>舌头前部封死口腔，全部气流被迫从鼻腔冲出；捏住鼻子时声音立刻停止。
                 </div>
                 <div class="vlk-da-block">
-                    💡 <em>Pædagogisk råd:</em> Pas på, at tungen ikke rører kindtænderne på "læse" og "lys". Slap af i kinderne, så luften blæser frit ud i mundvigene!
+                    💡 <em>实用小贴士：</em>读 <strong>læse</strong> 和 <strong>lys</strong> 时，注意不要让舌头两侧碰到大牙。放松脸颊，让气流从嘴角自由吹出来！
                 </div>
             `,
             minimalPairs: [
@@ -1437,25 +1444,25 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             diagCard1: (target) => {
                 const isSoftD = target === 'soft_d';
                 return {
-                    title: '视角 1: 侧面看口型（舌头平平躺在底部）',
+                    title: '视角 1：侧面看口型（舌头平平躺在底部）',
                     tag: isSoftD ? '舌尖平贴下牙背 • 轻柔滑出' : '错误警示：舌头翘起碰上牙',
                     tagStyle: isSoftD ? 'background:rgba(34,197,94,0.2); color:#4ade80;' : 'background:rgba(239,68,68,0.2); color:#f87171;',
                     svg: generateSagittalSoftDSvg(target),
                     notes: isSoftD
-                        ? '<strong>Det bløde d (擦眼镜哈气法):</strong><br>“就像你在擦眼镜前对着镜片轻轻哈一口气一样，但让舌尖平平地贴在下排门牙的背面，并带上声音：‘ma... d’、‘brø... d’。感受温暖的气流完全没有任何阻碍地从舌面上懒洋洋滑出来！”'
-                        : '<strong>Typisk fejl:</strong><br>Løfter du tungen op mod de øverste tænder eller ganen, forvandles ordet til et hårdt d eller et L. Så bliver <em>brød</em> til <em>brøl</em>, og <em>mad</em> bliver til <em>mal</em>! Hold tungen nede!'
+                        ? '<strong>软 d（擦眼镜哈气法）：</strong><br>“就像你在擦眼镜前对着镜片轻轻哈一口气一样，但让舌尖平平地贴在下排门牙的背面，并带上声音：‘ma... d’、‘brø... d’。感受温暖的气流完全没有任何阻碍地从舌面上懒洋洋滑出来！”'
+                        : '<strong>典型错误：</strong><br>如果把舌头抬起来碰到上门牙或上腭，单词就会变成硬 d 或 L 音：<em>brød</em>（面包）会变成 <em>brøl</em>（吼叫），<em>mad</em>（食物）会变成 <em>mal</em>（刷漆）！务必让舌头待在下方！'
                 };
             },
             diagCard2: (target) => {
                 const isSoftD = target === 'soft_d';
                 return {
-                    title: '视角 2: 正面看上下牙缝隙',
+                    title: '视角 2：正面看上下牙缝隙',
                     tag: isSoftD ? '上下牙留微缝 • 气流平稳吹出' : '错误：舌尖堵死门牙缝隙',
                     tagStyle: isSoftD ? 'background:rgba(34,197,94,0.2); color:#4ade80;' : 'background:rgba(239,68,68,0.2); color:#f87171;',
                     svg: generateFrontalSoftDSvg(target),
                     notes: isSoftD
-                        ? '<strong>Luften glider frit:</strong><br>Tænderne er en lille smule åbne, og tungen gemmer sig bag de nederste fortænder som en doven tunge i en sofa.'
-                        : '<strong>Blokeret udgang:</strong><br>Hvis tungen presses op mod overmunden, lukker du for luften og skaber en hård bump-lyd.'
+                        ? '<strong>气流顺畅滑出：</strong><br>上下门牙留出一条小缝，舌头就像懒洋洋躺在沙发里一样，平平地躲在下排门牙背面。'
+                        : '<strong>出口被堵死：</strong><br>如果舌头顶到口腔上方，气流通道就会被封死，发出僵硬的撞击音。'
                 };
             },
             pinchCardHtml: `
@@ -1485,14 +1492,14 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                 </div>
             `,
             bilingualGuideHtml: `
-                <div class="vlk-bilingual-title">中文发音核心要诀 (Foretrukne råd)</div>
+                <div class="vlk-bilingual-title">中文发音核心要诀</div>
                 <div class="vlk-zh-block">
                     <strong>软 d 的生活化发音绝招（擦眼镜哈气法）：</strong><br>
                     “就像你在擦眼镜前对着镜片轻轻哈一口气一样，但让舌尖平平地贴在下排门牙的背面，并带上声音：‘ma... d’、‘brø... d’。感受温暖的气流完全没有任何阻碍地从舌面上懒洋洋滑出来！”<br><br>
                     <strong>切勿变成 L 或硬 D：</strong>读 "brød"（面包）时如果舌头往上碰，丹麦人听起来就是 "brøl"（狮子吼叫）！舌尖必须像地毯一样平平地铺在下牙后。
                 </div>
                 <div class="vlk-da-block">
-                    💡 <em>Dansk instruks:</em> Gør præcis som når du ånder på dine briller, men lad tungespidsen hvile fladt mod bagsiden af undertænderne og sæt stemme på: 'ma... d', 'brø... d'. Mærk hvordan den lune luft bare glider dovent ud over tungen uden modstand!
+                    💡 <em>实用小贴士：</em>发软 d 时不要刻意用力卷舌或顶牙，把它想象成一口带着声带振动的温暖哈气，越放松越自然！
                 </div>
             `,
             minimalPairs: [
@@ -1529,25 +1536,25 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             diagCard1: (target) => {
                 const isDanishR = target === 'danish_r';
                 return {
-                    title: '视角 1: 侧面看口型（喉咙深处发力）',
+                    title: '视角 1：侧面看口型（喉咙深处发力）',
                     tag: isDanishR ? '喉咙深处发声 • 舌头平放' : '错误警示：舌头向前卷起',
                     tagStyle: isDanishR ? 'background:rgba(250,204,21,0.2); color:#facc15;' : 'background:rgba(239,68,68,0.2); color:#f87171;',
                     svg: generateSagittalDanskRSvg(target),
                     notes: isDanishR
-                        ? '<strong>Helt nede bagerst i halsen – som når en krage skriger kraa!</strong><br>Lyden laves helt nede bagerst i halsen, præcis som en krage, der skriger hæst <em>"kraa... kraa..."</em>, eller som en tør gurglelyd. <strong>Tungespidsen ligger helt fladt og sover nede i munden</strong> – den rører ingenting!'
-                        : '<strong>Pas på med at krølle tungen op:</strong><br>I kinesisk (som i <em>rén</em> 人, <em>rì</em> 日) krøller man tungespidsen opad mod ganen. På dansk skal tungen ligge helt fladt! Hvis du krøller tungen, forsvinder den rigtige dybe halslyd.'
+                        ? '<strong>就在喉咙最深处——像乌鸦叫 “kraa” 一样！</strong><br>声音在喉咙最深处发出，就像乌鸦沙哑地叫 <em>“kraa... kraa...”</em>，或者像干漱口时的轻柔摩擦声。<strong>舌尖完全平放、像在嘴底睡觉一样</strong>——不要触碰任何地方！'
+                        : '<strong>切忌把舌尖向上卷起：</strong><br>在汉语普通话（如 <em>rén</em> 人、<em>rì</em> 日）中，舌尖会向上卷向硬腭。但在丹麦语中，舌头必须完全放平！一旦卷舌，真正的深喉 r 音就会消失。'
                 };
             },
             diagCard2: (target) => {
                 const isDanishR = target === 'danish_r';
                 return {
-                    title: '视角 2: 喉咙深处气流通视',
+                    title: '视角 2：喉咙深处气流通视',
                     tag: isDanishR ? '深喉共鸣通道开通' : '错误：舌头挡在前面',
                     tagStyle: isDanishR ? 'background:rgba(250,204,21,0.2); color:#facc15;' : 'background:rgba(239,68,68,0.2); color:#f87171;',
                     svg: generateThroatRSvg(target),
                     notes: isDanishR
-                        ? '<strong>Universelt krageskrig:</strong><br>Krager og ravne over hele verden (også i Mellemøsten og Asien) skriger med netop denne dybe halslyd. På arabisk hedder en krage endda <em>"ghurāb" (غراب)</em>, fordi den starter med netop denne lyd!'
-                        : '<strong>Spærret udgang:</strong><br>Hvis du løfter tungespidsen op foran, blokerer du for halsens frie resonans.'
+                        ? '<strong>全世界的乌鸦都这样叫：</strong><br>世界各地（包括亚洲和中东）的乌鸦都是用这种深喉音叫唤的。在阿拉伯语中，乌鸦甚至直接叫 <em>ghurāb (غراب)</em>，就是以这个深喉音开头的！'
+                        : '<strong>声音通道受阻：</strong><br>如果你把舌尖抬起挡在口腔前部，就会堵住喉咙深处自由共鸣的通道。'
                 };
             },
             pinchCardHtml: `
@@ -1556,31 +1563,31 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     <span>实用自检绝招：乌鸦叫与干漱口测试法（一秒找到喉咙发音点）</span>
                 </div>
                 <div class="vlk-pinch-body">
-                    Helt nede bagerst i halsen – som når en krage skriger kraa, eller som en tør gurglelyd!
+                    发力点就在喉咙最深处——像乌鸦叫 “kraa-kraa”，或者像干漱口一样轻柔振动！
                 </div>
                 <div class="vlk-pinch-grid">
                     <div class="vlk-pinch-item">
                         <div style="font-weight: 800; color: #facc15; margin-bottom: 0.25rem;">像乌鸦叫一样发音：</div>
                         <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.45;">
-                            Sig som en krage: <strong>"kraa... kraa..."</strong>. Mærk hvordan det kradser blødt og hæst helt nede bagerst i halsen. Træk følelsen over i ord som "rød", "ris", "rejse"!
+                            模仿乌鸦叫：<strong>“kraa... kraa...”</strong>。感受喉咙最深处那股轻柔、微哑的摩擦振动，再把这种感觉带入 <strong>rød</strong>、<strong>ris</strong>、<strong>rejse</strong> 等单词！
                         </div>
                     </div>
                     <div class="vlk-pinch-item">
                         <div style="font-weight: 800; color: #38bdf8; margin-bottom: 0.25rem;">舌尖平躺防卷：</div>
                         <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.45;">
-                            Lad tungespidsen sove helt fladt i bunden af munden! Mærker du spidsen røre overmunden eller krølle op som i "rén", så slap helt af i tungen.
+                            让舌尖彻底平躺在口腔底部“睡觉”！只要感觉舌尖碰到上腭，或像汉语拼音 <em>rén</em> 那样往上卷，就立刻放松舌头。
                         </div>
                     </div>
                 </div>
             `,
             bilingualGuideHtml: `
-                <div class="vlk-bilingual-title">中文发音核心要诀 (Foretrukne råd)</div>
+                <div class="vlk-bilingual-title">中文发音核心要诀</div>
                 <div class="vlk-zh-block">
-                    <strong>丹麦语 r 音的秘密：</strong>Helt nede bagerst i halsen – som når en krage skriger kraa, eller som en tør gurglelyd. 它的发音点完全在<strong>喉咙最深处</strong>。<br>
-                    <strong>舌头千万别动：</strong>舌头平平地躺在嘴底睡觉。切勿像汉语“人 rén、日 rì”那样把舌头往上卷！
+                    <strong>丹麦语 r 音的秘密：</strong>发音位置在<strong>喉咙最深处</strong>，就像乌鸦叫 “kraa-kraa” 或干漱口时喉部的轻柔摩擦。<br>
+                    <strong>舌头千万别动：</strong>舌尖平平地躺在嘴底休息，切忌像汉语“人 rén、日 rì”那样把舌头向上卷起！
                 </div>
                 <div class="vlk-da-block">
-                    💡 <em>Pædagogisk råd:</em> Helt nede bagerst i halsen – som når en krage skriger kraa, eller som en tør gurglelyd. Lad tungespidsen sove fladt nede i munden!
+                    💡 <em>实用小贴士：</em>练习时可以轻轻仰起一点下巴，发出极轻的干漱口声，让舌尖全程安静贴在口腔底部！
                 </div>
             `,
             minimalPairs: [
@@ -1617,25 +1624,25 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             diagCard1: (target) => {
                 const isClean = target === 'clean_cluster';
                 return {
-                    title: '视角 1: 几个声音连着收尾，立刻刹车',
+                    title: '视角 1：几个辅音连着收尾，立刻刹车',
                     tag: isClean ? '声音到位 • 立即刹车' : '错误警示：多念了一口气',
                     tagStyle: isClean ? 'background:rgba(34,197,94,0.2); color:#4ade80;' : 'background:rgba(239,68,68,0.2); color:#f87171;',
                     svg: generateClusterTimingSvg(target),
                     notes: isClean
-                        ? '<strong>Flere hårde lyde i træk til sidst:</strong><br>Flere hårde lyde i træk til sidst (-st, -lt, -kt), som skal lukkes brat, som at smække en dør! I "koldt" glider munden fra o til l og smækker så t-døren i med det samme. Ikke en millimeter mere lyd!'
-                        : '<strong>Pas på den ekstra "e"-lyd på enden:</strong><br>Pas på ikke at hænge en lille ekstra "e"-lyd på enden af ordet (sig "koldt" – ikke "kold-te")! Mange kommer til at åbne munden lidt igen efter t-lyden og puster et ekstra "e" ud. Det forvirrer danskere og ændrer grammatikken!'
+                        ? '<strong>词尾连续辅音果断收尾：</strong><br>词尾连续出现多个辅音（如 -st, -lt, -kt）时，必须像啪地关上门一样立刻刹车截断！读 <strong>koldt</strong> 时，口腔从 o 滑向 l，然后瞬间扣死 t 音，绝不多漏一丝余音！'
+                        : '<strong>切忌在词尾多带一个 “-e” 尾巴：</strong><br>千万不要在词尾多挂一个多余的 “e” 音（要读 <strong>koldt</strong>，不要读成 <em>kold-te</em>）！很多学习者在发完 t 后又松开嘴巴呼出一口气，这会让丹麦人误以为换了别的语法形式！'
                 };
             },
             diagCard2: (target) => {
                 const isClean = target === 'clean_cluster';
                 return {
-                    title: '视角 2: Lydbølgen stopper brat',
-                    tag: isClean ? 'Klippet over med en saks' : 'Lyd der slæber bagefter',
+                    title: '视角 2：声波瞬间截断',
+                    tag: isClean ? '如剪刀一刀剪断' : '拖泥带水的尾音',
                     tagStyle: isClean ? 'background:rgba(34,197,94,0.2); color:#4ade80;' : 'background:rgba(239,68,68,0.2); color:#f87171;',
                     svg: generateWaveformStopSvg(target),
                     notes: isClean
-                        ? '<strong>Brat stop:</strong><br>Lyden stopper som klippet over med en saks. Der er helt stille bagefter.'
-                        : '<strong>Slæbende hale:</strong><br>Hvis man ikke lukker munden tæt, hænger der en lille irriterende restlyd bagefter.'
+                        ? '<strong>干脆利落的截断：</strong><br>声音像被剪刀“咔嚓”一刀剪断，收尾之后完全归于安静。'
+                        : '<strong>拖沓的尾音尾巴：</strong><br>如果收尾时没有紧闭口腔，后面就会拖出一段多余的余音。'
                 };
             },
             pinchCardHtml: `
@@ -1644,31 +1651,31 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     <span>实用自检绝招：手掌阻风闭气法（一秒测出是否多带尾音）</span>
                 </div>
                 <div class="vlk-pinch-body">
-                    Hold hånden 2-3 cm foran munden:
+                    将手掌放在嘴前 2–3 厘米处进行测试：
                 </div>
                 <div class="vlk-pinch-grid">
                     <div class="vlk-pinch-item">
                         <div style="font-weight: 800; color: #4ade80; margin-bottom: 0.25rem;">正确停顿检验：</div>
                         <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.45;">
-                            Flere hårde lyde i træk til sidst, som skal lukkes brat, som at smække en dør! Sig "koldt" eller "fast" – luften skal stoppe prompte uden det mindste pust efter ordet.
+                            词尾连续辅音要像关门一样瞬间关停！读 <strong>koldt</strong> 或 <strong>fast</strong> 时，气流必须立刻刹住，收尾后手掌感受不到丝毫额外呼气。
                         </div>
                     </div>
                     <div class="vlk-pinch-item">
                         <div style="font-weight: 800; color: #f87171; margin-bottom: 0.25rem;">多加元音检验：</div>
                         <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.45;">
-                            Pas på ikke at hænge en lille ekstra "e"-lyd på enden af ordet (sig "koldt" – ikke "kold-te")! Mærker du det mindste lune pust mod hånden bagefter, har du åbnet munden for tidligt.
+                            切忌在词尾多拖出一个 “-e” 音（读 <strong>koldt</strong>，不要读成 <em>kold-te</em>）！如果手掌感觉到后面又吹来一口暖气，说明嘴巴松开得太早了。
                         </div>
                     </div>
                 </div>
             `,
             bilingualGuideHtml: `
-                <div class="vlk-bilingual-title">中文发音核心要诀 (Foretrukne råd)</div>
+                <div class="vlk-bilingual-title">中文发音核心要诀</div>
                 <div class="vlk-zh-block">
-                    <strong>词尾收音的黄金法则：</strong>Flere hårde lyde i træk til sidst, som skal lukkes brat, som at smække en dør! 汉语的字尾只有元音或 n/ng，所以最容易犯的错误就是读完后嘴巴又松开，多带出一个弱读的“-e”尾音（把 fast 念成 fast-e，把 koldt 念成 kold-te）。<br>
-                    <strong>Grammatisk vigtigt:</strong> Den lille t-lyd til sidst fortæller, at det er intetkøn ("et koldt glas") eller datid. Slukker du ikke lyden rent, lyder det som en helt anden bøjning!
+                    <strong>词尾收音的黄金法则：</strong>词尾连续出现多个辅音时，必须像“关门”一样瞬间刹车截断！汉语字尾只有元音或 n/ng，因此最容易犯的错误就是读完后嘴巴又松开，多带出一个弱读的 “-e” 尾音（把 <em>fast</em> 念成 <em>fast-e</em>，把 <em>koldt</em> 念成 <em>kold-te</em>）。<br>
+                    <strong>语法意义极其重要：</strong>词尾这个短促的 <strong>-t</strong> 往往标志着中性词（如 <em>et koldt glas</em>）或过去时态。如果收尾不干净，听起来就会像完全不同的词形变化！
                 </div>
                 <div class="vlk-da-block">
-                    💡 <em>Pædagogisk råd:</em> Flere hårde lyde i træk til sidst, som skal lukkes brat, som at smække en dør! Pas på ikke at hænge en lille ekstra "e"-lyd på enden af ordet (sig "koldt" – ikke "kold-te").
+                    💡 <em>实用小贴士：</em>发完词尾辅音后，刻意屏住呼吸半秒钟再松口，立刻就能改掉拖出 “-e” 尾音的习惯！
                 </div>
             `,
             minimalPairs: [
@@ -1698,32 +1705,32 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             subControls: {
                 labelZh: '选择要探索的隐形字母类型：',
                 options: [
-                    { id: 'silent_d', label: '👻 Stumt d (mand, vand, finde)', sub: '(Bogstavet d er helt tavst)', activeClass: 'active-primary' },
-                    { id: 'silent_g_h', label: '🌫️ Blødt/Stumt g & h (kage, hvad)', sub: '(Smelter til vokal eller forsvinder)', activeClass: 'active-secondary' }
+                    { id: 'silent_d', label: '👻 不发音的 d（mand, vand, finde）', sub: '(字母 d 完全沉默)', activeClass: 'active-primary' },
+                    { id: 'silent_g_h', label: '🌫️ 融化/不发音的 g 与 h（kage, hvad）', sub: '(融化成元音或彻底隐形)', activeClass: 'active-secondary' }
                 ]
             },
             diagCard1: (target) => {
                 const isSilentD = target === 'silent_d';
                 return {
-                    title: isSilentD ? '视角 1: Stumt d (Tungen stopper ved N)' : '视角 1: Stumt h (Start direkte på V)',
-                    tag: isSilentD ? 'd er usynligt • Stop ved N' : 'h er helt tavst • Start på V',
+                    title: isSilentD ? '视角 1：不发音的 d（舌头停在 N）' : '视角 1：不发音的 h（直接从 V 开始）',
+                    tag: isSilentD ? 'd 完全隐形 • 停在 N' : 'h 彻底不发音 • 直接读 V',
                     tagStyle: 'background:rgba(168,85,247,0.2); color:#c084fc;',
                     svg: generateSagittalSilentDSvg(target),
                     notes: isSilentD
-                        ? '<strong>Bogstavet d er en tavs passager:</strong><br>I ordet <em>"mand"</em> [mænˀ] udtaler du kun m-a-n (med et lille stop i stemmen). Tungen stopper ved n-lyden bag fortænderne. <strong>Lav ALDRIG en ekstra d-lyd til sidst!</strong> Hvis du siger "mand-de", lyder det som to ord.'
-                        : '<strong>H foran v og j er 100% stumt:</strong><br>Når du ser ord som <em>"hvad"</em>, <em>"hvem"</em>, <em>"hvor"</em> eller <em>"hjem"</em>, skal du lade som om, bogstavet "h" slet ikke findes! Start direkte på v-lyden: [væð], [vɛm], [vɒː] eller j-lyden [jɛm].'
+                        ? '<strong>字母 d 只是沉睡的乘客：</strong><br>在单词 <em>mand</em> [mænˀ] 中，你只发 m-a-n（带一点轻微喉顿）。舌头停在门牙后的 n 位置即可。<strong>千万不要在最后多发一个 d 音！</strong>如果念成 “mand-de”，听起来就像两个词。'
+                        : '<strong>v 和 j 前面的 h 100% 不发音：</strong><br>看到 <em>hvad</em>、<em>hvem</em>、<em>hvor</em> 或 <em>hjem</em> 时，直接当成字母 h 不存在！直接从 v 音开始读：[væð]、[vɛm]、[vɒː]，或直接从 j 音开始读 [jɛm]。'
                 };
             },
             diagCard2: (target) => {
                 const isSilentD = target === 'silent_d';
                 return {
-                    title: isSilentD ? '视角 2: Kontrast: Hvad du ser vs. Hvad du siger' : '视角 2: Kage (G smelter til en blød vokal)',
-                    tag: isSilentD ? 'Skrift: mand ➔ Tale: [mænˀ]' : 'Intet hårdt "ge" • Glid som [kæːɪ]',
+                    title: isSilentD ? '视角 2：对比——眼睛看到的 vs. 嘴巴读出来的' : '视角 2：kage（g 融化成柔和元音）',
+                    tag: isSilentD ? '拼写：mand ➔ 实际发音：[mænˀ]' : '绝无硬“哥”音 • 滑读作 [kæːɪ]',
                     tagStyle: 'background:rgba(168,85,247,0.2); color:#c084fc;',
                     svg: generateVisualSilentTextSvg(target),
                     notes: isSilentD
-                        ? '<strong>Pinyin-vanen skal aflæres:</strong><br>I kinesisk Pinyin svarer hvert bogstav til en lyd. På dansk har vi 500 års stavehistorie: Bogstaverne står der på skrift, men er faldet i søvn i talesproget. Se igennem dem!'
-                        : '<strong>G-lyden efter en vokal:</strong><br>I ord som <em>"kage"</em>, <em>"tage"</em> og <em>"søge"</em> må du ALDRIG lave en hård g-lyd fra halsen som i kinesisk 哥 (gē). G smelter sammen med vokalen og bliver til en blød glidelyd som et "i" eller "j" ([kæːɪ]).'
+                        ? '<strong>必须打破汉语拼音的“见字必读”习惯：</strong><br>在汉语拼音里，每个字母都对应一个读音；但丹麦语有 500 年拼写历史，许多字母留在纸面上，在口语里早已“睡着”。学会直接跳过它们！'
+                        : '<strong>元音后的字母 g：</strong><br>在 <em>kage</em>、<em>tage</em>、<em>søge</em> 这类词中，绝对不要像汉语“哥 (gē)”那样从喉咙发出硬 g！这里的 g 会与元音融化成一个柔和的滑音，像轻轻带过一个 i 或 j（[kæːɪ]）。'
                 };
             },
             pinchCardHtml: `
@@ -1732,25 +1739,25 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     <span>实用自检绝招：手指遮字法（强迫眼睛跳过不发音字母）</span>
                 </div>
                 <div class="vlk-pinch-body">
-                    Læg pegefingeren fysisk hen over det stumme bogstav, når du læser:
+                    朗读时直接用食指盖住那个不发音的字母：
                 </div>
                 <div class="vlk-pinch-grid">
                     <div class="vlk-pinch-item">
-                        <div style="font-weight: 800; color: #c084fc; margin-bottom: 0.25rem;">Stumt d: man[d], van[d], fin[d]e</div>
+                        <div style="font-weight: 800; color: #c084fc; margin-bottom: 0.25rem;">不发音的 d：man[d], van[d], fin[d]e</div>
                         <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.45;">
-                            Dæk d'et med fingeren og læs højt: "man", "van", "finne". Hvis din hjerne råber "hov, der står et d!", så husk: <strong>Bogstavet er bare en tavs passager</strong>.
+                            用手指盖住 d，直接大声读出："man"、"van"、"finne"。就算大脑提醒“这里明明写着 d！”，也要记住：<strong>它只是个不发音的沉默乘客</strong>。
                         </div>
                     </div>
                     <div class="vlk-pinch-item">
-                        <div style="font-weight: 800; color: #38bdf8; margin-bottom: 0.25rem;">Stumt h: [h]vad, [h]vem, [h]vor</div>
+                        <div style="font-weight: 800; color: #38bdf8; margin-bottom: 0.25rem;">不发音的 h：[h]vad, [h]vem, [h]vor</div>
                         <div style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.45;">
-                            Dæk h'et med fingeren: Læs ordene direkte som "vad", "vem", "vor" og "jem". Der er absolut ingen h-lyd!
+                            用手指盖住 h，直接读成 "vad"、"vem"、"vor" 和 "jem"。这里完全没有任何 h 的气音！
                         </div>
                     </div>
                 </div>
             `,
             bilingualGuideHtml: `
-                <div class="vlk-bilingual-title">中文发音核心要诀 (Fraværet af lyd)</div>
+                <div class="vlk-bilingual-title">中文发音核心要诀</div>
                 <div class="vlk-zh-block">
                     <strong>为什么这是中国人最大的障碍：</strong>汉语普通话的拼音是极其严谨的一对一拼读系统（见 b 读 b，见 d 读 d）。但丹麦语是历史悠久的拼写，经历了几个世纪的“懒人音变”：很多辅音在嘴里慢慢退化、融化甚至彻底消失了！<br>
                     <strong>三大必须装作看不见的字母：</strong><br>
@@ -1759,18 +1766,18 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     3. <strong>hv- 和 hj- 里的 h：</strong>hvad 读 væð，hvor 读 vo，hjem 读 jæm。h 完全不发音！
                 </div>
                 <div class="vlk-da-block">
-                    💡 <em>Pædagogisk råd:</em> Lær at overhøre og overse de stumme bogstaver. Hvis du prøver at udtale hvert eneste bogstav i "manden spiser en kage", forstår en dansker dig næsten ikke!
+                    💡 <em>实用小贴士：</em>学会大胆跳过沉默字母！如果把 <strong>manden spiser en kage</strong> 里的每个字母都一字不落地读出来，丹麦人反而几乎听不懂！
                 </div>
             `,
             minimalPairs: [
-                { l: 'mand', n: 'mande', contextL: 'En flink mand', contextN: 'Mande sig op', meanL_zh: '男人 (mand [mænˀ] - stumt d)', meanN_zh: 'mand dig op (mande)' },
-                { l: 'vand', n: 'vane', contextL: 'Drik koldt vand', contextN: 'En god vane', meanL_zh: '水 (vand [vænˀ] - stumt d)', meanN_zh: '习惯 (vane)' },
-                { l: 'land', n: 'lån', contextL: 'Danmark er et dejligt land', contextN: 'Optage et lån', meanL_zh: '国家/陆地 (land [lænˀ] - stumt d)', meanN_zh: '贷款 (lån)' },
-                { l: 'kage', n: 'kat', contextL: 'Spise en sød kage', contextN: 'En lille kat', meanL_zh: '蛋糕 (kage [kæːɪ] - blødt/vokaliseret g)', meanN_zh: '猫 (kat [kæd])' },
-                { l: 'hvad', n: 'fad', contextL: 'Hvad siger du?', contextN: 'Et stort fad mad', meanL_zh: '什么 (hvad [væð] - stumt h)', meanN_zh: '托盘 (fad [fæð])' },
-                { l: 'hjem', n: 'gem', contextL: 'Gå hjem nu', contextN: 'Gem dine penge', meanL_zh: '家/回家 (hjem [jɛm] - stumt h)', meanN_zh: '藏起来 (gem [gɛm])' },
-                { l: 'godt', n: 'god', contextL: 'Det smager rigtig godt', contextN: 'En god ven', meanL_zh: '好 (godt [gʌd] - stumt d, kun t)', meanN_zh: '好的 (god [goːð] - blødt d)' },
-                { l: 'finde', n: 'fiske', contextL: 'Vi vil finde vejen', contextN: 'Fiske i søen', meanL_zh: '寻找/找到 (finde [fenə] - stumt d)', meanN_zh: '钓鱼 (fiske)' }
+                { l: 'mand', n: 'mande', contextL: 'En flink mand', contextN: 'Mande sig op', meanL_zh: '男人（mand [mænˀ] — d 不发音）', meanN_zh: '鼓起勇气（mande sig op）' },
+                { l: 'vand', n: 'vane', contextL: 'Drik koldt vand', contextN: 'En god vane', meanL_zh: '水（vand [vænˀ] — d 不发音）', meanN_zh: '习惯（vane）' },
+                { l: 'land', n: 'lån', contextL: 'Danmark er et dejligt land', contextN: 'Optage et lån', meanL_zh: '国家/陆地（land [lænˀ] — d 不发音）', meanN_zh: '贷款（lån）' },
+                { l: 'kage', n: 'kat', contextL: 'Spise en sød kage', contextN: 'En lille kat', meanL_zh: '蛋糕（kage [kæːɪ] — g 融化成元音）', meanN_zh: '猫（kat [kæd]）' },
+                { l: 'hvad', n: 'fad', contextL: 'Hvad siger du?', contextN: 'Et stort fad mad', meanL_zh: '什么（hvad [væð] — h 不发音）', meanN_zh: '大盘子（fad [fæð]）' },
+                { l: 'hjem', n: 'gem', contextL: 'Gå hjem nu', contextN: 'Gem dine penge', meanL_zh: '家/回家（hjem [jɛm] — h 不发音）', meanN_zh: '藏起来（gem [gɛm]）' },
+                { l: 'godt', n: 'god', contextL: 'Det smager rigtig godt', contextN: 'En god ven', meanL_zh: '好（godt [gʌd] — d 不发音，仅读 t）', meanN_zh: '好的（god [goːð] — 软 d）' },
+                { l: 'finde', n: 'fiske', contextL: 'Vi vil finde vejen', contextN: 'Fiske i søen', meanL_zh: '寻找/找到（finde [fenə] — d 不发音）', meanN_zh: '钓鱼（fiske）' }
             ],
             speechExercises: [
                 { text: 'Manden spiser en kage', targetSound: 'silent', type: 'silent', targetWords: ['manden', 'kage'], hintDa: 'Stumt d i "manden" (sig "mannen") og intet hårdt g i "kage" (sig "kæ-ie")!', hintZh: 'manden 里的 d 完全不发音（读 mannen）；kage 里的 g 融化成元音（绝无硬 g）！' },
@@ -1852,7 +1859,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
 
                 <!-- Nasal Cavity (Næsehulen) -->
                 <path d="M 205 70 C 240 60, 260 70, 285 115" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="3,3"/>
-                <text x="235" y="55" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">Næsehule (鼻腔)</text>
+                <text x="235" y="55" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">鼻腔</text>
 
                 <!-- Velum / Soft Palate (Ganesejlet) -->
                 <path d="${velumPath}" fill="${isL ? '#38bdf8' : '#f472b6'}" stroke="#f8fafc" stroke-width="1.5"/>
@@ -1863,41 +1870,41 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                 ${isL ? `
                     <!-- L: Slank aflang tunge, rører KUN i ét punkt bag fortænderne -->
                     <circle cx="236" cy="100" r="6" fill="#facc15" stroke="#fef08a" stroke-width="2"/>
-                    <text x="236" y="85" fill="#facc15" font-size="11" font-weight="900" text-anchor="middle">Lille berøringspunkt (kun spidsen)</text>
-                    <text x="236" y="118" fill="#93c5fd" font-size="9" text-anchor="middle">Aflang slank tunge</text>
+                    <text x="236" y="85" fill="#facc15" font-size="11" font-weight="900" text-anchor="middle">极小接触点（仅舌尖）</text>
+                    <text x="236" y="118" fill="#93c5fd" font-size="9.5" text-anchor="middle">细长舌头</text>
 
                     <!-- Velum closure cross (Næsen lukket) -->
                     <circle cx="206" cy="143" r="5" fill="#ef4444"/>
                     <line x1="202" y1="139" x2="210" y2="147" stroke="#ffffff" stroke-width="1.8"/>
                     <line x1="210" y1="139" x2="202" y2="147" stroke="#ffffff" stroke-width="1.8"/>
-                    <text x="170" y="148" fill="#f87171" font-size="10" font-weight="bold" text-anchor="end">Lukket for næsen!</text>
+                    <text x="170" y="148" fill="#f87171" font-size="10.5" font-weight="bold" text-anchor="end">鼻腔已关闭！</text>
 
                     <!-- Blue Oral Airflow Path -->
                     <path d="M 175 250 C 180 200, 195 180, 220 165 C 240 155, 275 165, 305 168" 
                           fill="none" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="8,4" 
                           filter="url(#glowAir)" marker-end="url(#arrowL)"/>
-                    <text x="280" y="195" fill="#38bdf8" font-size="12" font-weight="bold">Luften ud af munden ➔</text>
-                    <text x="280" y="210" fill="#cbd5e1" font-size="10">Suser ud i mundvigene</text>
+                    <text x="295" y="195" fill="#38bdf8" font-size="11.5" font-weight="bold" text-anchor="middle">气流从口腔吹出 ➔</text>
+                    <text x="295" y="211" fill="#cbd5e1" font-size="10" text-anchor="middle">从两侧嘴角呼呼吹出</text>
                 ` : `
                     <!-- N: Bred kontaktflade der spærrer hele munden -->
                     <path d="M 222 104 C 235 96, 250 96, 258 108" fill="none" stroke="#ef4444" stroke-width="6" stroke-linecap="round"/>
-                    <text x="236" y="85" fill="#f87171" font-size="11" font-weight="900" text-anchor="middle">Stor bred kontaktflade ⛔</text>
-                    <text x="285" y="145" fill="#f87171" font-size="11" font-weight="bold" text-anchor="middle">Munden er spærret foran ⛔</text>
+                    <text x="236" y="85" fill="#f87171" font-size="11" font-weight="900" text-anchor="middle">宽大接触面封口 ⛔</text>
+                    <text x="288" y="145" fill="#f87171" font-size="10.5" font-weight="bold" text-anchor="middle">口腔前部被封死 ⛔</text>
 
                     <!-- Open velum indicator -->
-                    <text x="170" y="148" fill="#4ade80" font-size="10" font-weight="bold" text-anchor="end">Åben til næsen ➔</text>
+                    <text x="170" y="148" fill="#4ade80" font-size="10.5" font-weight="bold" text-anchor="end">通向鼻腔打开 ➔</text>
 
                     <!-- Pink Nasal Airflow Path -->
                     <path d="M 175 250 C 180 190, 185 140, 195 110 C 205 75, 245 70, 290 120" 
                           fill="none" stroke="#f472b6" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="8,4" 
                           filter="url(#glowAir)" marker-end="url(#arrowN)"/>
-                    <text x="270" y="45" fill="#f472b6" font-size="12" font-weight="bold">Op gennem næsen ➔</text>
-                    <text x="270" y="60" fill="#cbd5e1" font-size="10">Mærk snurren i næsen</text>
+                    <text x="292" y="45" fill="#f472b6" font-size="11.5" font-weight="bold" text-anchor="middle">向上经鼻腔冲出 ➔</text>
+                    <text x="292" y="61" fill="#cbd5e1" font-size="10" text-anchor="middle">感受鼻翼震动</text>
                 `}
 
                 <!-- Mode Pill in SVG -->
                 <rect x="15" y="15" width="130" height="26" rx="6" fill="rgba(15, 23, 42, 0.85)" stroke="${primaryColor}" stroke-width="1.5"/>
-                <text x="80" y="32" fill="${primaryColor}" font-size="12" font-weight="900" text-anchor="middle">${isL ? '🌊 L: Aflang tunge' : '🌸 N: Bred kontaktflade'}</text>
+                <text x="80" y="32" fill="${primaryColor}" font-size="12" font-weight="900" text-anchor="middle">${isL ? '🌊 L：细长舌头' : '🌸 N：宽大封口'}</text>
             </svg>
         `;
     }
@@ -1926,8 +1933,8 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                 <rect width="360" height="300" rx="14" fill="#0b1329" stroke="rgba(148, 163, 184, 0.2)" stroke-width="1.5"/>
 
                 <!-- Perspective Title -->
-                <text x="180" y="26" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle" letter-spacing="0.05em">
-                    MUNDEN SET FORFRA I SPEJLET (镜子正面视角)
+                <text x="235" y="29" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle" letter-spacing="0.04em">
+                    镜子正面视角
                 </text>
 
                 <!-- Nose outline at the top -->
@@ -1961,34 +1968,34 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     <path d="M 160 185 C 165 155, 172 136, 180 136 C 188 136, 195 155, 200 185 Z" 
                           fill="#38bdf8" opacity="0.9" stroke="#60a5fa" stroke-width="2"/>
                     <circle cx="180" cy="136" r="4.5" fill="#facc15"/>
-                    <text x="180" y="112" fill="#facc15" font-size="10.5" font-weight="bold" text-anchor="middle">Kun spidsen i midten!</text>
+                    <text x="180" y="110" fill="#facc15" font-size="11" font-weight="bold" text-anchor="middle">仅舌尖顶在中间！</text>
 
                     <!-- Big Open Gaps at the sides with Airflow -->
                     <!-- Left Corner Airflow -->
                     <path d="M 140 160 C 115 160, 85 165, 55 170" 
                           fill="none" stroke="#38bdf8" stroke-width="4.5" stroke-dasharray="6,3" 
                           filter="url(#glowFront)" marker-end="url(#arrowLFront)"/>
-                    <text x="45" y="152" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="end">Luft ud her ➔</text>
-                    <text x="45" y="165" fill="#94a3b8" font-size="9" text-anchor="end">(Venstre mundvig)</text>
+                    <text x="48" y="148" fill="#38bdf8" font-size="10.5" font-weight="bold" text-anchor="middle">⬅ 气流从此出</text>
+                    <text x="48" y="162" fill="#94a3b8" font-size="9.5" text-anchor="middle">（左嘴角）</text>
 
                     <!-- Right Corner Airflow -->
                     <path d="M 220 160 C 245 160, 275 165, 305 170" 
                           fill="none" stroke="#38bdf8" stroke-width="4.5" stroke-dasharray="6,3" 
                           filter="url(#glowFront)" marker-end="url(#arrowLFront)"/>
-                    <text x="315" y="152" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="start">➔ Luft ud her</text>
-                    <text x="315" y="165" fill="#94a3b8" font-size="9" text-anchor="start">(Højre mundvig)</text>
+                    <text x="312" y="148" fill="#38bdf8" font-size="10.5" font-weight="bold" text-anchor="middle">气流从此出 ➔</text>
+                    <text x="312" y="162" fill="#94a3b8" font-size="9.5" text-anchor="middle">（右嘴角）</text>
 
                     <!-- Bottom Explanation Box -->
                     <rect x="25" y="225" width="310" height="55" rx="10" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(56, 189, 248, 0.4)"/>
-                    <text x="180" y="246" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">BEGGE MUNDVIGE ER HELT ÅBNE</text>
-                    <text x="180" y="264" fill="#cbd5e1" font-size="10.5" text-anchor="middle">Tungens sider hænger frit. Luften suser frit ud i begge sider.</text>
+                    <text x="180" y="246" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">两侧嘴角完全畅通</text>
+                    <text x="180" y="264" fill="#cbd5e1" font-size="10.5" text-anchor="middle">舌头两侧自然放松下垂，气流从左右嘴角呼呼吹出。</text>
                 ` : `
                     <!-- N-SOUND: Broad tongue sealing the entire mouth arch, Airflow goes up through nose -->
                     <!-- Solid tongue seal covering all teeth -->
                     <path d="M 120 170 C 120 132, 140 126, 180 126 C 220 126, 240 132, 240 170 Z" 
                           fill="#f472b6" opacity="0.9" stroke="#ec4899" stroke-width="2"/>
                     <path d="M 125 132 C 145 125, 215 125, 235 132" fill="none" stroke="#ef4444" stroke-width="4"/>
-                    <text x="180" y="155" fill="#ffffff" font-size="11" font-weight="900" text-anchor="middle">⛔ MUNDEN ER HELT LUKKET ⛔</text>
+                    <text x="180" y="156" fill="#ffffff" font-size="11" font-weight="900" text-anchor="middle">⛔ 口腔完全封死 ⛔</text>
 
                     <!-- Airflow blasting UP through nostrils -->
                     <path d="M 170 58 C 165 40, 150 30, 130 22" 
@@ -1997,17 +2004,17 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     <path d="M 190 58 C 195 40, 210 30, 230 22" 
                           fill="none" stroke="#f472b6" stroke-width="4.5" stroke-dasharray="6,3" 
                           filter="url(#glowFront)" marker-end="url(#arrowNFront)"/>
-                    <text x="180" y="42" fill="#f472b6" font-size="11.5" font-weight="bold" text-anchor="middle">⬆️ Al luft presses ud af næsen! ⬆️</text>
+                    <text x="180" y="45" fill="#f472b6" font-size="11" font-weight="bold" text-anchor="middle">⬆️ 全部气流从鼻腔冲出！ ⬆️</text>
 
                     <!-- Bottom Explanation Box -->
                     <rect x="25" y="225" width="310" height="55" rx="10" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(244, 114, 182, 0.4)"/>
-                    <text x="180" y="246" fill="#f472b6" font-size="12" font-weight="bold" text-anchor="middle">KOMPLET FORSEGLING I MUNDEN</text>
-                    <text x="180" y="264" fill="#cbd5e1" font-size="10.5" text-anchor="middle">Tungen lukker tæt fortil. Klem om næsen, så stopper lyden!</text>
+                    <text x="180" y="246" fill="#f472b6" font-size="12" font-weight="bold" text-anchor="middle">口腔前部完全密封</text>
+                    <text x="180" y="264" fill="#cbd5e1" font-size="10.5" text-anchor="middle">舌头严密封住前部，捏住鼻子时声音立刻停止！</text>
                 `}
 
                 <!-- Mode Pill in SVG -->
                 <rect x="15" y="15" width="125" height="24" rx="6" fill="rgba(15, 23, 42, 0.85)" stroke="${primaryColor}" stroke-width="1.2"/>
-                <text x="77" y="31" fill="${primaryColor}" font-size="11" font-weight="900" text-anchor="middle">${isL ? '🌊 L: Åbne mundvige' : '🌸 N: Næseluft'}</text>
+                <text x="77" y="31" fill="${primaryColor}" font-size="11" font-weight="900" text-anchor="middle">${isL ? '🌊 L：两颊出风' : '🌸 N：鼻腔出气'}</text>
             </svg>
         `;
     }
@@ -2035,22 +2042,22 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     <!-- Tongue resting against lower incisors (Blødt d) -->
                     <path d="M 190 240 Q 210 230 238 210 L 235 225 Q 210 245 190 240 Z" fill="#4ade80" opacity="0.9"/>
                     <path d="M 190 240 Q 215 215 238 208" fill="none" stroke="#22c55e" stroke-width="3"/>
-                    <text x="235" y="235" fill="#facc15" font-size="10" font-weight="bold" text-anchor="middle">Tungen nede bag undertænderne!</text>
+                    <text x="225" y="238" fill="#facc15" font-size="10.5" font-weight="bold" text-anchor="middle">舌尖平贴在下门牙背面！</text>
                     
                     <!-- Free glide airflow out -->
                     <path d="M 180 200 Q 210 180 260 175 L 290 175" fill="none" stroke="#4ade80" stroke-width="3.5" stroke-dasharray="5 3"/>
-                    <text x="270" y="170" fill="#4ade80" font-size="12" font-weight="bold">Glider blødt ud ➔</text>
-                    <text x="270" y="185" fill="#cbd5e1" font-size="10">Rører aldrig ganen!</text>
+                    <text x="285" y="168" fill="#4ade80" font-size="11.5" font-weight="bold" text-anchor="middle">气流轻柔滑出 ➔</text>
+                    <text x="285" y="185" fill="#cbd5e1" font-size="10" text-anchor="middle">绝不碰上腭！</text>
                 ` : `
                     <!-- Erroneous tongue touching upper teeth (Hard D or L) -->
                     <path d="M 190 240 Q 215 170 236 98 L 230 110 Q 210 180 190 240 Z" fill="#f87171" opacity="0.85"/>
-                    <text x="236" y="80" fill="#ef4444" font-size="11" font-weight="bold" text-anchor="middle">Må IKKE røre heroppe! ⛔</text>
+                    <text x="236" y="78" fill="#ef4444" font-size="11" font-weight="bold" text-anchor="middle">绝对不能碰这里！⛔</text>
                     <path d="M 180 210 L 225 150" fill="none" stroke="#ef4444" stroke-width="3" stroke-dasharray="3 3"/>
-                    <text x="270" y="180" fill="#f87171" font-size="11" font-weight="bold">Fejl: Lyder som L eller hårdt D!</text>
+                    <text x="282" y="180" fill="#f87171" font-size="10.5" font-weight="bold" text-anchor="middle">错误：变成 L 或硬 D！</text>
                 `}
 
-                <rect x="15" y="15" width="135" height="24" rx="6" fill="#1e293b" stroke="${primaryColor}" stroke-width="1.5"/>
-                <text x="82" y="31" fill="${primaryColor}" font-size="12" font-weight="900" text-anchor="middle">${isSoftD ? '🍃 Blødt d (Tungen nede)' : '⛔ Fejl: Rører overmunden'}</text>
+                <rect x="15" y="15" width="142" height="24" rx="6" fill="#1e293b" stroke="${primaryColor}" stroke-width="1.5"/>
+                <text x="86" y="31" fill="${primaryColor}" font-size="11.5" font-weight="900" text-anchor="middle">${isSoftD ? '🍃 软 d（舌头放低）' : '⛔ 错误：碰到上牙'}</text>
             </svg>
         `;
     }
@@ -2080,17 +2087,17 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                 ${isSoftD ? `
                     <!-- Tongue resting behind lower teeth -->
                     <path d="M 120 185 Q 180 178 240 185 L 240 210 Q 180 210 120 210 Z" fill="#4ade80" opacity="0.85"/>
-                    <text x="180" y="155" fill="#4ade80" font-size="12" font-weight="bold" text-anchor="middle">Åben spalte: Luften glider frit ud ➔</text>
-                    <text x="180" y="240" fill="#cbd5e1" font-size="11" text-anchor="middle">Tungespidsen hviler fladt bag de nederste tænder</text>
+                    <text x="180" y="155" fill="#4ade80" font-size="11.5" font-weight="bold" text-anchor="middle">牙缝微开：气流顺畅滑出 ➔</text>
+                    <text x="180" y="242" fill="#cbd5e1" font-size="11" text-anchor="middle">舌尖平平地贴在下排门牙背面</text>
                 ` : `
                     <!-- Tongue rising up and blocking teeth gap -->
                     <path d="M 130 155 Q 180 120 230 155 L 230 190 Q 180 190 130 190 Z" fill="#f87171" opacity="0.9"/>
-                    <text x="180" y="150" fill="#ef4444" font-size="13" font-weight="bold" text-anchor="middle">⛔ Tungen lukker for munden</text>
-                    <text x="180" y="240" fill="#fca5a5" font-size="11" text-anchor="middle">Hvis tungen løftes, forvandles ordet til "brøl" eller "mal"!</text>
+                    <text x="180" y="150" fill="#ef4444" font-size="12.5" font-weight="bold" text-anchor="middle">⛔ 舌头堵住了口腔</text>
+                    <text x="180" y="242" fill="#fca5a5" font-size="11" text-anchor="middle">舌头一抬起，就会变成 “brøl” 或 “mal”！</text>
                 `}
 
                 <rect x="15" y="15" width="135" height="24" rx="6" fill="#1e293b" stroke="${primaryColor}" stroke-width="1.5"/>
-                <text x="82" y="31" fill="${primaryColor}" font-size="12" font-weight="900" text-anchor="middle">${isSoftD ? '🍃 Åben tandspalte' : '⛔ Lukket mund'}</text>
+                <text x="82" y="31" fill="${primaryColor}" font-size="11.5" font-weight="900" text-anchor="middle">${isSoftD ? '🍃 牙缝畅通' : '⛔ 口腔堵死'}</text>
             </svg>
         `;
     }
@@ -2113,26 +2120,26 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
 
                 <!-- Deep in throat (Kragelyden) -->
                 <circle cx="165" cy="165" r="7" fill="#facc15"/>
-                <text x="165" y="155" fill="#facc15" font-size="10" font-weight="bold" text-anchor="end">Dybt i halsen (Kragelyden kraa)</text>
+                <text x="155" y="155" fill="#facc15" font-size="10.5" font-weight="bold" text-anchor="end">喉咙深处（乌鸦叫 kraa）</text>
 
                 ${isDanishR ? `
                     <!-- Tongue lying completely flat; tongue root retracted -->
                     <path d="M 175 185 Q 185 170 200 220 Q 220 235 245 235 L 235 245 Q 200 245 175 185 Z" fill="#facc15" opacity="0.85"/>
-                    <text x="240" y="250" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">Tungespidsen ligger helt fladt!</text>
+                    <text x="230" y="255" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">舌尖完全放平！</text>
                     
                     <!-- Throaty vibration wave -->
                     <path d="M 160 175 Q 170 160 180 180 Q 210 185 270 190" fill="none" stroke="#facc15" stroke-width="3.5" stroke-dasharray="4 2"/>
-                    <text x="270" y="185" fill="#facc15" font-size="12" font-weight="bold">Lyden laves her ➔</text>
-                    <text x="270" y="200" fill="#cbd5e1" font-size="10">Som en krage i halsen</text>
+                    <text x="285" y="182" fill="#facc15" font-size="11.5" font-weight="bold" text-anchor="middle">发声位置在此 ➔</text>
+                    <text x="285" y="198" fill="#cbd5e1" font-size="10" text-anchor="middle">像喉咙里的乌鸦叫</text>
                 ` : `
                     <!-- Chinese retroflex R: Tongue curled up forwards -->
                     <path d="M 180 240 Q 205 180 225 105 L 215 105 Q 195 180 180 240 Z" fill="#f87171" opacity="0.85"/>
-                    <text x="210" y="95" fill="#ef4444" font-size="11" font-weight="bold" text-anchor="middle">Krøl ALDRIG tungen op! ⛔</text>
-                    <text x="270" y="180" fill="#f87171" font-size="11" font-weight="bold">Fejl: Kinesisk 'rén'-lyd</text>
+                    <text x="215" y="92" fill="#ef4444" font-size="11" font-weight="bold" text-anchor="middle">绝不要向上卷舌！⛔</text>
+                    <text x="282" y="180" fill="#f87171" font-size="10.5" font-weight="bold" text-anchor="middle">错误：汉语 “rén” 卷舌音</text>
                 `}
 
-                <rect x="15" y="15" width="135" height="24" rx="6" fill="#1e293b" stroke="${primaryColor}" stroke-width="1.5"/>
-                <text x="82" y="31" fill="${primaryColor}" font-size="12" font-weight="900" text-anchor="middle">${isDanishR ? '🦅 Kragelyden dybt i halsen' : '⛔ Fejl: Krøllet tunge'}</text>
+                <rect x="15" y="15" width="142" height="24" rx="6" fill="#1e293b" stroke="${primaryColor}" stroke-width="1.5"/>
+                <text x="86" y="31" fill="${primaryColor}" font-size="11.5" font-weight="900" text-anchor="middle">${isDanishR ? '🦅 深喉乌鸦叫声' : '⛔ 错误：舌头卷起'}</text>
             </svg>
         `;
     }
@@ -2150,7 +2157,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                 <!-- Throat passage -->
                 <circle cx="180" cy="150" r="45" fill="#1e1b4b" stroke="#4338ca" stroke-width="2"/>
                 <circle cx="180" cy="125" r="8" fill="#facc15"/>
-                <text x="180" y="110" fill="#facc15" font-size="11" font-weight="bold" text-anchor="middle">Dybt i halsen (Som kragens kald)</text>
+                <text x="180" y="108" fill="#facc15" font-size="11" font-weight="bold" text-anchor="middle">喉咙深处（像乌鸦叫声）</text>
 
                 ${isDanishR ? `
                     <!-- Flat tongue at bottom -->
@@ -2158,16 +2165,16 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     <!-- Vibration waves emerging from deep throat -->
                     <circle cx="180" cy="150" r="25" fill="none" stroke="#facc15" stroke-width="3" stroke-dasharray="6 3"/>
                     <circle cx="180" cy="150" r="38" fill="none" stroke="#facc15" stroke-width="2" stroke-dasharray="8 4"/>
-                    <text x="180" y="240" fill="#facc15" font-size="12" font-weight="bold" text-anchor="middle">Lyden kradser blødt nede i svælget: kraa-kraa!</text>
+                    <text x="180" y="242" fill="#facc15" font-size="11.5" font-weight="bold" text-anchor="middle">声音在深喉轻柔摩擦：kraa-kraa！</text>
                 ` : `
                     <!-- Tongue blocking the throat completely -->
                     <path d="M 120 220 Q 180 130 240 220 Z" fill="#f87171" opacity="0.8"/>
-                    <text x="180" y="175" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">Tungen blokerer munden ⛔</text>
-                    <text x="180" y="240" fill="#f87171" font-size="11" font-weight="bold" text-anchor="middle">Halsens dybe lyd bliver kvalt!</text>
+                    <text x="180" y="175" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">舌头挡住了口腔 ⛔</text>
+                    <text x="180" y="242" fill="#f87171" font-size="11" font-weight="bold" text-anchor="middle">深喉共鸣声被完全憋住！</text>
                 `}
 
                 <rect x="15" y="15" width="135" height="24" rx="6" fill="#1e293b" stroke="${primaryColor}" stroke-width="1.5"/>
-                <text x="82" y="31" fill="${primaryColor}" font-size="12" font-weight="900" text-anchor="middle">${isDanishR ? '🦅 Åben halskanal' : '⛔ Tungen i vejen'}</text>
+                <text x="82" y="31" fill="${primaryColor}" font-size="11.5" font-weight="900" text-anchor="middle">${isDanishR ? '🦅 深喉通道畅通' : '⛔ 舌头挡住通道'}</text>
             </svg>
         `;
     }
@@ -2179,42 +2186,42 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
 
         return `
             <svg viewBox="0 0 360 300" width="100%" height="280" style="display:block;" xmlns="http://www.w3.org/2000/svg">
-                <text x="180" y="45" fill="#f8fafc" font-size="13" font-weight="900" text-anchor="middle">Eksempel: "koldt" (k + o + l + dt)</text>
+                <text x="180" y="52" fill="#f8fafc" font-size="12.5" font-weight="900" text-anchor="middle">示例："koldt" (k + o + l + dt)</text>
 
                 <!-- Step 1: Vowel /ɔ/ -->
                 <rect x="40" y="80" width="75" height="50" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                <text x="77" y="105" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">Vokal: o</text>
-                <text x="77" y="120" fill="#94a3b8" font-size="10" text-anchor="middle">Stemme</text>
+                <text x="77" y="105" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">元音：o</text>
+                <text x="77" y="120" fill="#94a3b8" font-size="10" text-anchor="middle">发声</text>
                 <text x="127" y="110" fill="#64748b" font-size="16">➔</text>
 
                 <!-- Step 2: Consonant 1: /l/ -->
                 <rect x="142" y="80" width="75" height="50" rx="8" fill="#1e293b" stroke="#facc15" stroke-width="2"/>
-                <text x="179" y="105" fill="#facc15" font-size="12" font-weight="bold" text-anchor="middle">Lyd 1: l</text>
-                <text x="179" y="120" fill="#94a3b8" font-size="10" text-anchor="middle">Tungen op</text>
+                <text x="179" y="105" fill="#facc15" font-size="12" font-weight="bold" text-anchor="middle">尾音 1：l</text>
+                <text x="179" y="120" fill="#94a3b8" font-size="10" text-anchor="middle">舌尖抬起</text>
                 <text x="227" y="110" fill="#64748b" font-size="16">➔</text>
 
                 <!-- Step 3: Consonant 2: /t/ stop -->
                 <rect x="242" y="80" width="75" height="50" rx="8" fill="#1e293b" stroke="${primaryColor}" stroke-width="2"/>
-                <text x="279" y="105" fill="${primaryColor}" font-size="12" font-weight="bold" text-anchor="middle">Lyd 2: dt</text>
-                <text x="279" y="120" fill="#94a3b8" font-size="10" text-anchor="middle">Smæk døren!</text>
+                <text x="279" y="105" fill="${primaryColor}" font-size="12" font-weight="bold" text-anchor="middle">尾音 2：dt</text>
+                <text x="279" y="120" fill="#94a3b8" font-size="10" text-anchor="middle">关门刹车！</text>
 
                 ${isClean ? `
                     <!-- Clean sudden stop -->
                     <line x1="317" y1="65" x2="317" y2="145" stroke="#4ade80" stroke-width="4"/>
                     <rect x="235" y="165" width="95" height="30" rx="6" fill="rgba(34,197,94,0.2)" stroke="#4ade80"/>
-                    <text x="282" y="185" fill="#86efac" font-size="11" font-weight="bold" text-anchor="middle">⏹️ Stands brat!</text>
-                    <text x="180" y="235" fill="#4ade80" font-size="13" font-weight="bold" text-anchor="middle">✅ Smæk døren i: Luften stopper på et splitsekund!</text>
-                    <text x="180" y="255" fill="#cbd5e1" font-size="11" text-anchor="middle">Som at klippe lyden over med en saks</text>
+                    <text x="282" y="185" fill="#86efac" font-size="11" font-weight="bold" text-anchor="middle">⏹️ 立刻刹车！</text>
+                    <text x="180" y="235" fill="#4ade80" font-size="12.5" font-weight="bold" text-anchor="middle">✅ 像关门一样：气流在一瞬间停止！</text>
+                    <text x="180" y="255" fill="#cbd5e1" font-size="11" text-anchor="middle">就像用剪刀把声音一刀剪断</text>
                 ` : `
                     <!-- Error: Leaking trailing vowel -->
                     <rect x="235" y="165" width="105" height="30" rx="6" fill="rgba(239,68,68,0.2)" stroke="#ef4444"/>
-                    <text x="287" y="185" fill="#fca5a5" font-size="11" font-weight="bold" text-anchor="middle">+ ekstra "-e" ⛔</text>
-                    <text x="180" y="235" fill="#ef4444" font-size="13" font-weight="bold" text-anchor="middle">⚠️ Fejl: Du slap et ekstra pust ud til sidst ("koldt-e")!</text>
-                    <text x="180" y="255" fill="#fca5a5" font-size="11" text-anchor="middle">Luk munden tæt og hold vejret et øjeblik</text>
+                    <text x="287" y="185" fill="#fca5a5" font-size="11" font-weight="bold" text-anchor="middle">+ 多余 "-e" ⛔</text>
+                    <text x="180" y="235" fill="#ef4444" font-size="12" font-weight="bold" text-anchor="middle">⚠️ 错误：末尾多吐出一口气 ("koldt-e")！</text>
+                    <text x="180" y="255" fill="#fca5a5" font-size="11" text-anchor="middle">收尾时闭紧嘴巴，短暂屏住呼吸</text>
                 `}
 
                 <rect x="15" y="15" width="135" height="24" rx="6" fill="#1e293b" stroke="${primaryColor}" stroke-width="1.5"/>
-                <text x="82" y="31" fill="${primaryColor}" font-size="12" font-weight="900" text-anchor="middle">${isClean ? '🧱 Lukkes brat' : '⛔ Ekstra "-e" hale'}</text>
+                <text x="82" y="31" fill="${primaryColor}" font-size="11.5" font-weight="900" text-anchor="middle">${isClean ? '🧱 瞬间关停' : '⛔ 多余 "-e" 尾巴'}</text>
             </svg>
         `;
     }
@@ -2226,34 +2233,34 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
 
         return `
             <svg viewBox="0 0 360 300" width="100%" height="280" style="display:block;" xmlns="http://www.w3.org/2000/svg">
-                <text x="180" y="45" fill="#f8fafc" font-size="12" font-weight="bold" text-anchor="middle">Lydbølgen (Stop lyden brat)</text>
+                <text x="180" y="52" fill="#f8fafc" font-size="12" font-weight="bold" text-anchor="middle">声波图（立刻截断声音）</text>
 
                 <!-- Baseline -->
                 <line x1="30" y1="140" x2="330" y2="140" stroke="#334155" stroke-width="1.5"/>
 
                 <!-- Vowel Wave -->
                 <path d="M 40 140 Q 55 80 70 140 Q 85 200 100 140 Q 115 85 130 140 Q 145 195 160 140" fill="none" stroke="#38bdf8" stroke-width="2.5"/>
-                <text x="100" y="165" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">Vokal</text>
+                <text x="100" y="165" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">元音</text>
 
                 <!-- First Consonant Wave -->
                 <path d="M 160 140 Q 175 110 190 140 Q 205 170 220 140 Q 235 120 250 140" fill="none" stroke="#facc15" stroke-width="2.5"/>
-                <text x="205" y="165" fill="#facc15" font-size="11" font-weight="bold" text-anchor="middle">L-lyd</text>
+                <text x="205" y="165" fill="#facc15" font-size="11" font-weight="bold" text-anchor="middle">L 音</text>
 
                 ${isClean ? `
                     <!-- Sudden flatline -->
                     <line x1="250" y1="140" x2="330" y2="140" stroke="#4ade80" stroke-width="4"/>
                     <circle cx="250" cy="140" r="5" fill="#4ade80"/>
-                    <text x="290" y="125" fill="#4ade80" font-size="12" font-weight="bold" text-anchor="middle">Fuld stilhed ⏹️</text>
-                    <text x="180" y="235" fill="#4ade80" font-size="13" font-weight="bold" text-anchor="middle">Lyden slukkes prompte som med en kontakt</text>
+                    <text x="290" y="125" fill="#4ade80" font-size="11.5" font-weight="bold" text-anchor="middle">彻底安静 ⏹️</text>
+                    <text x="180" y="235" fill="#4ade80" font-size="12.5" font-weight="bold" text-anchor="middle">像按下开关一样瞬间断音</text>
                 ` : `
                     <!-- Trailing ripple (epenthetic vowel) -->
                     <path d="M 250 140 Q 270 115 290 140 Q 305 160 320 140" fill="none" stroke="#f87171" stroke-width="2.5" stroke-dasharray="4 2"/>
-                    <text x="290" y="110" fill="#f87171" font-size="11" font-weight="bold" text-anchor="middle">+ Lyd der slæber ⚠️</text>
-                    <text x="180" y="235" fill="#f87171" font-size="13" font-weight="bold" text-anchor="middle">Uønsket hale af lyd slæber bagefter</text>
+                    <text x="290" y="110" fill="#f87171" font-size="11" font-weight="bold" text-anchor="middle">+ 拖尾余音 ⚠️</text>
+                    <text x="180" y="235" fill="#f87171" font-size="12.5" font-weight="bold" text-anchor="middle">多余的尾音拖泥带水留在后面</text>
                 `}
 
                 <rect x="15" y="15" width="135" height="24" rx="6" fill="#1e293b" stroke="${primaryColor}" stroke-width="1.5"/>
-                <text x="82" y="31" fill="${primaryColor}" font-size="12" font-weight="900" text-anchor="middle">${isClean ? '🧱 Rent stop' : '⛔ Slæbende hale'}</text>
+                <text x="82" y="31" fill="${primaryColor}" font-size="11.5" font-weight="900" text-anchor="middle">${isClean ? '🧱 干净断音' : '⛔ 拖泥带水'}</text>
             </svg>
         `;
     }
@@ -2281,20 +2288,20 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                     <path d="M 195 240 Q 210 210 226 140 Q 232 100 238 85 Q 234 110 220 170 Q 210 230 195 240 Z" fill="#c084fc" opacity="0.85"/>
                     <path d="M 195 240 Q 210 210 226 140 Q 232 100 238 85" fill="none" stroke="#a855f7" stroke-width="2.5"/>
 
-                    <text x="236" y="70" fill="#c084fc" font-size="11" font-weight="bold" text-anchor="middle">Tungen stopper ved N! ⏹️</text>
-                    <text x="270" y="180" fill="#f87171" font-size="12" font-weight="bold">🚫 Intet d her!</text>
-                    <text x="270" y="198" fill="#cbd5e1" font-size="10">Sig kun "man" [mænˀ]</text>
-                    <text x="180" y="240" fill="#a855f7" font-size="12" font-weight="bold" text-anchor="middle">Bogstavet d er en tavs passager (tyst som en mus)</text>
+                    <text x="236" y="70" fill="#c084fc" font-size="11" font-weight="bold" text-anchor="middle">舌头停在 N 即可！⏹️</text>
+                    <text x="285" y="180" fill="#f87171" font-size="11.5" font-weight="bold" text-anchor="middle">🚫 这里没有 d 音！</text>
+                    <text x="285" y="198" fill="#cbd5e1" font-size="10" text-anchor="middle">只读 "man" [mænˀ]</text>
+                    <text x="180" y="250" fill="#a855f7" font-size="11.5" font-weight="bold" text-anchor="middle">字母 d 是沉默的乘客（完全不发音）</text>
                 ` : `
                     <!-- Stumt h: Starts directly on V / J without throat friction -->
                     <path d="M 190 240 Q 215 220 240 200 L 235 225 Q 210 245 190 240 Z" fill="#38bdf8" opacity="0.85"/>
-                    <text x="270" y="165" fill="#38bdf8" font-size="12" font-weight="bold">Start direkte på V ➔</text>
-                    <text x="270" y="182" fill="#cbd5e1" font-size="10">Ingen "h"-lyd overhovedet</text>
-                    <text x="180" y="240" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">"hvad" udtales [væð] — glem h'et fuldstændigt!</text>
+                    <text x="285" y="165" fill="#38bdf8" font-size="11.5" font-weight="bold" text-anchor="middle">直接从 V 开始读 ➔</text>
+                    <text x="285" y="183" fill="#cbd5e1" font-size="10" text-anchor="middle">完全没有 h 气音</text>
+                    <text x="180" y="250" fill="#38bdf8" font-size="11.5" font-weight="bold" text-anchor="middle">"hvad" 读作 [væð] ——彻底忽略 h！</text>
                 `}
 
-                <rect x="15" y="15" width="135" height="24" rx="6" fill="#1e293b" stroke="#c084fc" stroke-width="1.5"/>
-                <text x="82" y="31" fill="#c084fc" font-size="12" font-weight="900" text-anchor="middle">${isSilentD ? '👻 Stumt d (mand)' : '🌫️ Stumt h (hvad)'}</text>
+                <rect x="15" y="15" width="142" height="24" rx="6" fill="#1e293b" stroke="#c084fc" stroke-width="1.5"/>
+                <text x="86" y="31" fill="#c084fc" font-size="11.5" font-weight="900" text-anchor="middle">${isSilentD ? '👻 不发音的 d (mand)' : '🌫️ 不发音的 h (hvad)'}</text>
             </svg>
         `;
     }
@@ -2306,7 +2313,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         return `
             <svg viewBox="0 0 360 300" width="100%" height="280" style="display:block;" xmlns="http://www.w3.org/2000/svg">
                 ${isSilentD ? `
-                    <text x="180" y="45" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">👀 Hvad øjnene ser på skrift:</text>
+                    <text x="180" y="52" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">👀 纸面上写着的字母：</text>
                     
                     <!-- Written word: m a n d -->
                     <g font-size="24" font-weight="900" text-anchor="middle">
@@ -2323,15 +2330,15 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                         <line x1="225" y1="70" x2="260" y2="105" stroke="#ef4444" stroke-width="3"/>
                         <line x1="225" y1="105" x2="260" y2="70" stroke="#ef4444" stroke-width="3"/>
                     </g>
-                    <text x="242" y="125" fill="#f87171" font-size="10" font-weight="bold" text-anchor="middle">👻 Stum!</text>
+                    <text x="242" y="127" fill="#f87171" font-size="10.5" font-weight="bold" text-anchor="middle">👻 不发音！</text>
 
-                    <text x="180" y="165" fill="#4ade80" font-size="12" font-weight="bold" text-anchor="middle">🗣️ Hvad munden rent faktisk siger:</text>
+                    <text x="180" y="165" fill="#4ade80" font-size="12" font-weight="bold" text-anchor="middle">🗣️ 嘴巴实际读出来的音：</text>
                     <rect x="75" y="180" width="210" height="45" rx="10" fill="rgba(34,197,94,0.15)" stroke="#4ade80" stroke-width="2"/>
                     <text x="180" y="210" fill="#4ade80" font-size="22" font-weight="900" text-anchor="middle">[ m æ n ˀ ]</text>
 
-                    <text x="180" y="255" fill="#cbd5e1" font-size="11" text-anchor="middle">✅ Stop ved N! Sig ALDRIG "mand-de" eller "man-duh"</text>
+                    <text x="180" y="255" fill="#cbd5e1" font-size="11" text-anchor="middle">✅ 停在 N 即可！绝不要读成 "mand-de" 或 "man-duh"</text>
                 ` : `
-                    <text x="180" y="45" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">👀 Hvad øjnene ser på skrift: k-a-g-e</text>
+                    <text x="180" y="52" fill="#94a3b8" font-size="11" font-weight="bold" text-anchor="middle">👀 纸面上写着的字母：k-a-g-e</text>
                     
                     <g font-size="22" font-weight="900" text-anchor="middle">
                         <rect x="50" y="65" width="45" height="45" rx="8" fill="#1e293b" stroke="#38bdf8"/>
@@ -2346,17 +2353,17 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                         <rect x="215" y="65" width="45" height="45" rx="8" fill="#1e293b" stroke="#38bdf8"/>
                         <text x="237" y="97" fill="#38bdf8">e</text>
                     </g>
-                    <text x="182" y="125" fill="#c084fc" font-size="10" font-weight="bold" text-anchor="middle">Smelter til [i]!</text>
+                    <text x="182" y="127" fill="#c084fc" font-size="10.5" font-weight="bold" text-anchor="middle">融化成 [i]！</text>
 
-                    <text x="180" y="165" fill="#4ade80" font-size="12" font-weight="bold" text-anchor="middle">🗣️ Hvad munden rent faktisk siger:</text>
+                    <text x="180" y="165" fill="#4ade80" font-size="12" font-weight="bold" text-anchor="middle">🗣️ 嘴巴实际读出来的音：</text>
                     <rect x="75" y="180" width="210" height="45" rx="10" fill="rgba(34,197,94,0.15)" stroke="#4ade80" stroke-width="2"/>
                     <text x="180" y="210" fill="#4ade80" font-size="22" font-weight="900" text-anchor="middle">[ k æ ː ɪ ]</text>
 
-                    <text x="180" y="255" fill="#cbd5e1" font-size="11" text-anchor="middle">✅ G bliver til en blød vokal – ingen hård 哥 (ge) fra halsen!</text>
+                    <text x="180" y="255" fill="#cbd5e1" font-size="11" text-anchor="middle">✅ g 融化成柔和元音——绝不要发出喉咙里的硬“哥 (ge)”！</text>
                 `}
 
-                <rect x="15" y="15" width="135" height="24" rx="6" fill="#1e293b" stroke="#c084fc" stroke-width="1.5"/>
-                <text x="82" y="31" fill="#c084fc" font-size="12" font-weight="900" text-anchor="middle">${isSilentD ? '👻 Lyd-kontrast' : '🌫️ G smelter til vokal'}</text>
+                <rect x="15" y="15" width="142" height="24" rx="6" fill="#1e293b" stroke="#c084fc" stroke-width="1.5"/>
+                <text x="86" y="31" fill="#c084fc" font-size="11.5" font-weight="900" text-anchor="middle">${isSilentD ? '👻 拼写与发音对比' : '🌫️ g 融化成元音'}</text>
             </svg>
         `;
     }
@@ -2369,6 +2376,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         // Keep browser URL synchronized with selected sound module and tab
         syncUrl(true);
 
+        const isDa = getLang() === 'da';
         const currentMod = SOUND_MODULES.find(m => m.id === activeModuleId) || SOUND_MODULES[0];
         const modData = MODULE_DATA[activeModuleId];
         const currentUrl = getFullHomeworkUrl(activeModuleId, activeTab);
@@ -2379,13 +2387,13 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         topBar.innerHTML = `
             <div style="display:flex; gap:0.65rem; flex-wrap:wrap; align-items:center;">
                 <button type="button" class="vlk-back-btn vlk-back-btn-primary" id="vlk-btn-back-main">
-                    ← Tilbage til forsiden (返回主页)
+                    ${isDa ? '← Tilbage til forsiden (返回主页)' : '← 返回主页'}
                 </button>
                 <button type="button" class="vlk-back-btn" id="vlk-btn-back-mss">
-                    🌍 Mit sprog sammenlignet (母语对比)
+                    ${isDa ? '🌍 Mit sprog sammenlignet (母语对比)' : '🌍 母语对比'}
                 </button>
                 <button type="button" class="vlk-back-btn" id="vlk-btn-all-hw" style="border-color:#fde68a; color:#fde68a;">
-                    📚 Vis alle lektie-links (全套作业链接)
+                    ${isDa ? '📚 Vis alle lektie-links (全套作业链接)' : '📚 查看全部练习链接'}
                 </button>
             </div>
             <div class="vlk-badge-top">
@@ -2405,8 +2413,8 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             card.className = `vlk-mod-card ${mod.id === activeModuleId ? 'active' : ''}`;
             card.innerHTML = `
                 <span class="vlk-mod-badge">${mod.badge}</span>
-                <div class="vlk-mod-title-da">${mod.titleDa}</div>
-                <div class="vlk-mod-title-zh">${mod.titleZh}</div>
+                ${isDa ? `<div class="vlk-mod-title-da">${mod.titleDa}</div>` : ''}
+                <div class="vlk-mod-title-zh" style="${isDa ? '' : 'font-size:0.95rem; font-weight:800; color:#ffffff; margin-top:0.2rem;'}">${mod.titleZh}</div>
             `;
             card.onclick = () => {
                 if (activeModuleId !== mod.id) {
@@ -2432,17 +2440,19 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             </div>
             <div class="vlk-hero-sub">${currentMod.heroSubZh}</div>
             <div class="vlk-hero-focus" style="font-size:0.88rem; color:#cbd5e1; margin-bottom:1.25rem; background:rgba(15,23,42,0.5); padding:0.65rem 0.9rem; border-radius:10px; border-left:3px solid #60a5fa;">
-                <strong>Dansk pædagogisk fokus:</strong> ${currentMod.descDa}
+                ${isDa
+                    ? `<strong>Dansk pædagogisk fokus:</strong> ${currentMod.descDa}<div style="margin-top:0.35rem; color:#93c5fd;">${currentMod.descZh}</div>`
+                    : `<strong>核心发音要点：</strong> ${currentMod.descZh}`}
             </div>
 
             <!-- Direct Homework URL strip -->
             <div class="vlk-url-strip">
                 <div class="vlk-url-text-wrap">
-                    <span style="color:#38bdf8; font-weight:900;">🔗 Direkte lektie-URL:</span>
+                    <span style="color:#38bdf8; font-weight:900;">${isDa ? '🔗 Direkte lektie-URL:' : '🔗 本页直达练习链接：'}</span>
                     <span class="vlk-url-code">${currentUrl}</span>
                 </div>
                 <button type="button" class="vlk-copy-btn" id="vlk-copy-hero-url">
-                    📋 Kopier lektie-link
+                    ${isDa ? '📋 Kopier lektie-link' : '📋 复制练习链接'}
                 </button>
             </div>
 
@@ -2450,21 +2460,21 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             <div class="vlk-tabs-nav">
                 <button type="button" class="vlk-tab-btn ${activeTab === 'principles' ? 'active' : ''}" id="tab-btn-principles">
                     <span>👄</span>
-                    <span>1. 口型与发音要诀 Mundstilling & Princip</span>
+                    <span>${isDa ? '1. 口型与发音要诀 Mundstilling & Princip' : '1. 口型与发音要诀'}</span>
                 </button>
                 <button type="button" class="vlk-tab-btn ${activeTab === 'pairs' ? 'active' : ''}" id="tab-btn-pairs">
                     <span>🎧</span>
-                    <span>2. 极小对立体辨音 Minimale Par (${modData.minimalPairs.length} 组)</span>
+                    <span>${isDa ? `2. 极小对立体辨音 Minimale Par (${modData.minimalPairs.length} 组)` : `2. 极小对立体辨音（${modData.minimalPairs.length} 组）`}</span>
                 </button>
                 <button type="button" class="vlk-tab-btn ${activeTab === 'speech' ? 'active' : ''}" id="tab-btn-speech">
                     <span>🎙️</span>
-                    <span>3. 麦克风跟读实战 Mikrofontræning (${modData.speechExercises.length} 题)</span>
+                    <span>${isDa ? `3. 麦克风跟读实战 Mikrofontræning (${modData.speechExercises.length} 题)` : `3. 麦克风跟读实战（${modData.speechExercises.length} 题）`}</span>
                 </button>
             </div>
         `;
 
         hero.querySelector('#vlk-copy-hero-url').onclick = () => {
-            copyToClipboard(currentUrl, `${currentMod.titleDa} (${activeTab})`);
+            copyToClipboard(currentUrl, isDa ? `${currentMod.titleDa} (${activeTab})` : currentMod.titleZh);
         };
 
         hero.querySelector('#tab-btn-principles').onclick = () => { activeTab = 'principles'; syncUrl(); renderView(); };
@@ -2492,20 +2502,20 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
         bottomBar.innerHTML = `
             <div style="display:flex; gap:0.65rem; flex-wrap:wrap; align-items:center;">
                 <button type="button" class="vlk-back-btn vlk-back-btn-primary" id="vlk-btn-bottom-main">
-                    ← Tilbage til forsiden (返回主页)
+                    ${isDa ? '← Tilbage til forsiden (返回主页)' : '← 返回主页'}
                 </button>
                 <button type="button" class="vlk-back-btn" id="vlk-btn-bottom-mss">
-                    🌍 Tilbage til Mit sprog sammenlignet (返回母语对比) ➔
+                    ${isDa ? '🌍 Tilbage til Mit sprog sammenlignet (返回母语对比) ➔' : '🌍 返回母语对比 ➔'}
                 </button>
             </div>
             <button type="button" class="vlk-copy-btn" id="vlk-btn-bottom-copy" style="font-size:0.86rem; padding:0.55rem 1rem;">
-                📋 Kopier dette lektie-link
+                ${isDa ? '📋 Kopier dette lektie-link' : '📋 复制本页练习链接'}
             </button>
         `;
         bottomBar.querySelector('#vlk-btn-bottom-main').onclick = handleBackToMain;
         bottomBar.querySelector('#vlk-btn-bottom-mss').onclick = handleBackToMSS;
         bottomBar.querySelector('#vlk-btn-bottom-copy').onclick = () => {
-            copyToClipboard(currentUrl, `${currentMod.titleDa} (${activeTab})`);
+            copyToClipboard(currentUrl, isDa ? `${currentMod.titleDa} (${activeTab})` : currentMod.titleZh);
         };
         viewContainer.appendChild(bottomBar);
     }
@@ -2603,7 +2613,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
 
             <button type="button" class="vlk-listen-btn-big" id="vlk-play-target">
                 <span>🔊</span>
-                <span>播放发音 (Lyt)</span>
+                <span>${getLang() === 'da' ? '播放发音 (Lyt)' : '播放发音'}</span>
             </button>
 
             <div class="vlk-quiz-options">
@@ -2740,8 +2750,8 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
             <div class="vlk-speech-feedback-box" id="vlk-speech-fb"></div>
 
             <div style="background:rgba(30,41,59,0.7); border-radius:12px; padding:0.85rem 1rem; margin-top:1.2rem; font-size:0.86rem; color:#cbd5e1; text-align:left;">
-                <strong style="color:#fde68a;">发音要领指导：</strong> ${ex.hintDa}<br>
-                <span style="font-size:0.82rem; color:#94a3b8; display:inline-block; margin-top:0.3rem;">中文提示：${ex.hintZh}</span>
+                <strong style="color:#fde68a;">发音要领指导：</strong> ${ex.hintZh}
+                ${getLang() === 'da' ? `<br><span style="font-size:0.82rem; color:#94a3b8; display:inline-block; margin-top:0.3rem;">Dansk: ${ex.hintDa}</span>` : ''}
             </div>
 
             <div class="vlk-speech-nav-row">
@@ -2830,7 +2840,7 @@ export function renderVanskeligeLydeKinesiskView(container, navigateFn, extraDat
                         <div style="font-size:0.88rem; color:#cbd5e1; line-height:1.5;">
                             目标词：<strong>${ex.targetWords.join(', ')}</strong><br>
                             您读的是：<em>"${transcript}"</em><br>
-                            <span style="color:#fde047;">诊断点：</span>${ex.hintDa}
+                            <span style="color:#fde047;">诊断点：</span>${ex.hintZh}
                         </div>
                     `;
                 }

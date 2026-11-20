@@ -71,26 +71,29 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
         }, 3200);
     }
 
-    function copyToClipboard(text, label = 'Lektie-link') {
+    function copyToClipboard(text, label) {
+        const isDa = getLang() === 'da';
+        const effectiveLabel = label || (isDa ? 'Lektie-link' : 'رابط التمرين');
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text).then(() => {
-                showCopyToast(`📋 ${label} kopieret til udklipsholder!`);
+                showCopyToast(isDa ? `📋 ${effectiveLabel} kopieret til udklipsholder!` : `📋 تم النسخ: ${effectiveLabel}`);
             }).catch(() => {
-                fallbackCopy(text, label);
+                fallbackCopy(text, effectiveLabel);
             });
         } else {
-            fallbackCopy(text, label);
+            fallbackCopy(text, effectiveLabel);
         }
     }
 
     function fallbackCopy(text, label) {
+        const isDa = getLang() === 'da';
         const input = document.createElement('input');
         input.value = text;
         document.body.appendChild(input);
         input.select();
         document.execCommand('copy');
         document.body.removeChild(input);
-        showCopyToast(`📋 ${label} kopieret!`);
+        showCopyToast(isDa ? `📋 ${label} kopieret!` : `📋 تم النسخ: ${label}`);
     }
 
     function getFullHomeworkUrl(modId, tabId) {
@@ -105,36 +108,39 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
         const existing = document.querySelector('#vla-hw-modal');
         if (existing) existing.remove();
 
+        const isDa = getLang() === 'da';
         const overlay = document.createElement('div');
         overlay.id = 'vla-hw-modal';
         overlay.className = 'vla-modal-overlay';
 
         const tabNames = {
-            principles: { da: '1. Mundstilling & Princip (Teori)', ar: '1. حركة الفم والخدعة العملية' },
-            pairs: { da: '2. Minimale Par (Lyttequiz)', ar: '2. تمييز الأصوات (اختبار الاستماع)' },
-            speech: { da: '3. Mikrofontræning (Udtaleopgave)', ar: '3. تحدي النطق بالمايكروفون' }
+            principles: { da: '1. Mundstilling & Princip (Teori)', ar: '١. حركة الفم والخدعة العملية' },
+            pairs: { da: '2. Minimale Par (Lyttequiz)', ar: '٢. تمييز الأصوات (اختبار الاستماع)' },
+            speech: { da: '3. Mikrofontræning (Udtaleopgave)', ar: '٣. تحدي النطق بالمايكروفون' }
         };
 
         overlay.innerHTML = `
             <div class="vla-modal-card">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.12); padding-bottom:0.75rem;">
-                    <div>
-                        <div style="font-size:0.75rem; font-weight:900; color:#38bdf8; text-transform:uppercase;">📚 Lærer-værktøj • Hjemmearbejde URL'er (روابط الواجبات)</div>
-                        <h2 style="margin:0.2rem 0 0; font-size:1.3rem; font-weight:900; color:#ffffff;">Direkte links til alle lektier og opgaver</h2>
+                    <div${isDa ? '' : ' dir="rtl"'}>
+                        <div style="font-size:0.75rem; font-weight:900; color:#38bdf8; text-transform:uppercase;">${isDa ? "📚 Lærer-værktøj • Hjemmearbejde URL'er (روابط الواجبات)" : '📚 روابط الواجبات والتمارين • العربية'}</div>
+                        <h2 style="margin:0.2rem 0 0; font-size:1.3rem; font-weight:900; color:#ffffff;">${isDa ? 'Direkte links til alle lektier og opgaver' : 'روابط مباشرة لجميع الأصوات الخمسة والتمارين'}</h2>
                     </div>
-                    <button type="button" class="vla-back-btn" id="vla-modal-close" style="padding:0.4rem 0.8rem;">✕ Luk (إغلاق)</button>
+                    <button type="button" class="vla-back-btn" id="vla-modal-close" style="padding:0.4rem 0.8rem;">${isDa ? '✕ Luk (إغلاق)' : '✕ إغلاق'}</button>
                 </div>
-                <div style="font-size:0.86rem; color:#cbd5e1; margin-bottom:1.15rem; line-height:1.45;">
-                    Klik på <strong>Kopier link</strong> ud for den ønskede opgave for at sende kursisten direkte ind på modulet og den specifikke fane.
+                <div style="font-size:0.86rem; color:#cbd5e1; margin-bottom:1.15rem; line-height:1.45;"${isDa ? '' : ' dir="rtl"'}>
+                    ${isDa
+                        ? 'Klik på <strong>Kopier link</strong> ud for den ønskede opgave for at sende kursisten direkte ind på modulet og den specifikke fane.'
+                        : 'اضغط على <strong>نسخ الرابط</strong> بجانب أي تمرين للانتقال مباشرة إلى الصوت والتدريب المطلوب.'}
                 </div>
                 <div style="display:flex; flex-direction:column; gap:1.15rem;">
                     ${SOUND_MODULES.map(mod => `
                         <div style="background:rgba(30,41,59,0.7); border:1px solid rgba(148,163,184,0.22); border-radius:12px; padding:0.9rem 1rem;">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; flex-wrap:wrap; gap:0.4rem;">
-                                <div>
+                                <div${isDa ? '' : ' dir="rtl"'}>
                                     <span style="font-size:0.7rem; font-weight:800; background:rgba(56,189,248,0.2); color:#7dd3fc; padding:0.15rem 0.5rem; border-radius:9999px;">${mod.badge}</span>
-                                    <strong style="color:#ffffff; font-size:1.02rem; margin-left:0.35rem;">${mod.titleDa}</strong>
-                                    <span style="color:#94a3b8; font-size:0.84rem; margin-left:0.25rem;">(${mod.titleAr})</span>
+                                    <strong style="color:#ffffff; font-size:1.02rem; margin-left:0.35rem;">${isDa ? mod.titleDa : mod.titleAr}</strong>
+                                    ${isDa ? `<span style="color:#94a3b8; font-size:0.84rem; margin-left:0.25rem;">(${mod.titleAr})</span>` : ''}
                                 </div>
                             </div>
                             <div style="display:flex; flex-direction:column; gap:0.45rem;">
@@ -143,11 +149,11 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
                                     const tName = tabNames[tabId];
                                     return `
                                         <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(15,23,42,0.65); padding:0.45rem 0.75rem; border-radius:8px; gap:0.5rem; flex-wrap:wrap;">
-                                            <div style="font-size:0.82rem; color:#e2e8f0;">
-                                                <strong>${tName.da}</strong> <span style="color:#94a3b8; font-size:0.76rem;">${tName.ar}</span>
+                                            <div style="font-size:0.82rem; color:#e2e8f0;"${isDa ? '' : ' dir="rtl"'}>
+                                                <strong>${isDa ? tName.da : tName.ar}</strong>${isDa ? ` <span style="color:#94a3b8; font-size:0.76rem;">${tName.ar}</span>` : ''}
                                             </div>
-                                            <button type="button" class="vla-copy-btn" data-hw-url="${url}" data-hw-label="${mod.titleDa} - ${tName.da}">
-                                                📋 Kopier link (نسخ)
+                                            <button type="button" class="vla-copy-btn" data-hw-url="${url}" data-hw-label="${isDa ? `${mod.titleDa} - ${tName.da}` : `${mod.titleAr} - ${tName.ar}`}">
+                                                ${isDa ? '📋 Kopier link (نسخ)' : '📋 نسخ الرابط'}
                                             </button>
                                         </div>
                                     `;
@@ -821,7 +827,7 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
             id: 'p_vs_b',
             titleDa: '1. P vs. B (Papir-testen)',
             titleAr: '١. الفرق بين P و B (اختبار الورقة)',
-            badge: 'Fokus 1',
+            badge: 'التركيز ١',
             descDa: 'På arabisk findes kun B (ب) og intet P. Derfor forveksles "penge" med "benge", og "pære" med "bære". Pustet er afgørende: Ved P skal munden eksplodere og blæse et stykke papir væk foran læberne. Ved B er læberne bløde og rolige uden pust.',
             descAr: 'في اللغة العربية يوجد فقط حرف الباء (ب) ولا يوجد حرف P إطلاقاً! لذلك يقع الكثيرون في فخ نطق penge كأنها benge، أو pære (كمثرى) كأنها bære (يحمل). السر يكمن في اندفاع الهواء: مع حرف P تنفجر الشفتان بهواء قوي يطيّر ورقة أمام فمك، بينما مع B تكون الشفتان هادئتين دون اندفاع للهواء.',
             heroTitleAr: 'الصوت الصعب رقم ١: انفجار P مقابل هدوء B',
@@ -957,7 +963,7 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
             id: 'bloedt_d',
             titleDa: '2. Blødt d (Ånde på brillerne)',
             titleAr: '٢. حرف d الناعم (مسح النظارات)',
-            badge: 'Fokus 2',
+            badge: 'التركيز ٢',
             descDa: 'Mange arabisktalende stikker tungespidsen ud mellem tænderne som ved arabisk ذ (dhāl som i "the"). Det giver en hård og læspende lyd. På dansk skal tungespidsen hvile fladt og dovent bag undertænderne, mens luften blot ånder lunt ud: "ma... d", "brø... d", "hvi... d".',
             descAr: 'أكبر فخ يقع فيه الناطقون بالعربية هو إخراج اللسان بين الأسنان كنطق حرف الذال (ذ) في كلمة "ذكر" أو the بالإنجليزية! في الدنماركية، اللسان يرتاح مسترخياً تماماً ومسطحاً خلف الأسنان السفلية، وتتنفس هواءً دافئاً كأنك تمسح نظاراتك: mad, brød, hvid.',
             heroTitleAr: 'الصوت الصعب رقم ٢: حرف d الناعم ليس حرف الذال (ذ)!',
@@ -965,8 +971,8 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
             subControls: {
                 labelAr: 'المقارنة المباشرة:',
                 options: [
-                    { id: 'bloedt_d', label: 'حرف d الناعم (mad, brød)', sub: 'Ånde på brillerne', activeClass: 'active-target' },
-                    { id: 'haardt_d', label: 'حرف d الصلب (dag, dør)', sub: 'Spids mod ganen', activeClass: 'active-target' }
+                    { id: 'bloedt_d', label: 'حرف d الناعم (mad, brød)', sub: 'النفخ الدافئ على النظارات', activeClass: 'active-target' },
+                    { id: 'haardt_d', label: 'حرف d الصلب (dag, dør)', sub: 'طرف اللسان يلمس سقف الحلق', activeClass: 'active-target' }
                 ]
             },
             diagCard1: (tgt) => {
@@ -1088,7 +1094,7 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
             id: 'dansk_r',
             titleDa: '3. Dansk r (Kragelyd & slugt r)',
             titleAr: '٣. حرف r الدنماركي (صوت الغراب والراء المبتلعة)',
-            badge: 'Fokus 3',
+            badge: 'التركيز ٣',
             descDa: 'Arabisk har et flot rulle-r med tungespidsen (ر). Men på dansk findes to helt andre r-lyde: 1) Foran en vokal laves r dybt nede i halsen som kragens "kraa-kraa" eller arabisk غ (rød, rejse). 2) Efter en vokal og i endelser som -er forvandles r til en åben vokal eller sluges helt (spiser, lærer, mor).',
             descAr: 'في العربية نستخدم الراء المفخمة برول اللسان (ر). لكن الدنماركية لا تلفظ الراء بطرف اللسان أبداً: 1) في أول الكلمة تخرج من قاع الحلق كصوت غراب ينادي "كراا" (قريب من حرف الغين غ في كلمة غراب) مثل rød, rejse. 2) في آخر الكلمة واللواحق مثل -er تبتلع تماماً وتتحول إلى حركة مفتوحة شبيهة بالألف الممالة (spiser, lærer, mor).',
             heroTitleAr: 'الصوت الصعب رقم ٣: لا تدحرج لسانك كالراء العربية (ر)!',
@@ -1209,7 +1215,7 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
             id: 'stoettevokal',
             titleDa: '4. Konsonantklynger (Smæk døren i)',
             titleAr: '٤. تتابع السواكن (اقفل الباب بحزم)',
-            badge: 'Fokus 4',
+            badge: 'التركيز ٤',
             descDa: 'På arabisk må ord sjældent have to konsonanter i træk i starten og aldrig tre til sidst. Derfor kommer arabisktalende tit til at hænge en lille støttevokal på: "skole" bliver til "es-kole", og "koldt" bliver til "kold-te". Træn at smække døren i og lukke munden brat uden den ekstra lyd!',
             descAr: 'في قواعد اللغة العربية "لا يلتقي ساكنان" ولا تبدأ كلمة بساكن؛ لذلك يميل الناطقون بالعربية تلقائياً إلى إضافة همزة وصل أو كسرة: skole تصبح es-kole، و koldt تصبح kold-te، و tekst تصبح tek-set. في الدنماركية يجب أن تتعلم "إغلاق الباب بحزم" وحبس الصوت فوراً دون فتح فمك بحركة إضافية!',
             heroTitleAr: 'الصوت الصعب رقم ٤: احذر من إضافة كسرة أو همزة وصل مساعدة!',
@@ -1295,12 +1301,12 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
                 </div>
             `,
             minimalPairs: [
-                { l: 'koldt', meanL_ar: 'بارد للمحايد (smækkes i)', n: 'kold', meanN_ar: 'بارد للمفرد المشترك', contextL: 'Vandet er meget koldt.', contextN: 'En kold vinterdag.' },
-                { l: 'skole', meanL_ar: 'مدرسة (uden es-)', n: 'kole', meanN_ar: 'يبرد', contextL: 'Børnene er i skole.', contextN: 'Suppen skal køle af.' },
-                { l: 'tekst', meanL_ar: 'نص (uden -te)', n: 'tægt', meanN_ar: 'أخذ / ريع', contextL: 'Læs denne svære tekst.', contextN: 'En gammel lov.' },
-                { l: 'først', meanL_ar: 'أولاً (uden -te)', n: 'før', meanN_ar: 'قبل', contextL: 'Kom først i mål.', contextN: 'Jeg så ham før.' },
-                { l: 'sidst', meanL_ar: 'أخيراً (uden -te)', n: 'sidste', meanN_ar: 'الأخير (fuldt ord med e)', contextL: 'Hvem kom sidst?', contextN: 'Den sidste time.' },
-                { l: 'frisk', meanL_ar: 'طازج (uden f-risk)', n: 'fisk', meanN_ar: 'سمك', contextL: 'Frisk mælk hver dag.', contextN: 'En levende fisk.' }
+                { l: 'koldt', meanL_ar: 'بارد للمحايد (تُغلق بحزم)', n: 'kold', meanN_ar: 'بارد للمفرد المشترك', contextL: 'Vandet er meget koldt.', contextN: 'En kold vinterdag.' },
+                { l: 'skole', meanL_ar: 'مدرسة (بدون همزة es-)', n: 'kole', meanN_ar: 'يبرد', contextL: 'Børnene er i skole.', contextN: 'Suppen skal køle af.' },
+                { l: 'tekst', meanL_ar: 'نص (بدون حركة -te)', n: 'tægt', meanN_ar: 'أخذ / ريع', contextL: 'Læs denne svære tekst.', contextN: 'En gammel lov.' },
+                { l: 'først', meanL_ar: 'أولاً (بدون حركة -te)', n: 'før', meanN_ar: 'قبل', contextL: 'Kom først i mål.', contextN: 'Jeg så ham før.' },
+                { l: 'sidst', meanL_ar: 'أخيراً (بدون حركة -te)', n: 'sidste', meanN_ar: 'الأخير (كلمة كاملة بحرف e)', contextL: 'Hvem kom sidst?', contextN: 'Den sidste time.' },
+                { l: 'frisk', meanL_ar: 'طازج (بدون كسر f-risk)', n: 'fisk', meanN_ar: 'سمك', contextL: 'Frisk mælk hver dag.', contextN: 'En levende fisk.' }
             ],
             speechExercises: [
                 {
@@ -1333,10 +1339,10 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
             id: 'y_og_oe',
             titleDa: '5. Læberundede vokaler: Y & Ø (Kyssemunden)',
             titleAr: '٥. الحركات المدوّرة: Y و Ø (حركة التقبيل)',
-            badge: 'Fokus 5',
+            badge: 'التركيز ٥',
             descDa: 'Arabisk har kun 3 vokalkvaliteter (a, i, u) og mangler fuldstændig forvokaler med spidsede læber som y og ø. Siger man "lys" med flade læber som et smil, bliver det til "lis". Siger man "høre" uden at spidse læberne, risikerer man at sige et helt andet ord ("hore"!).',
             descAr: 'في العربية توجد حركات أساسية (فتحة، كسرة، ضمة) ولا توجد حركات تجمع بين الكسرة في الحلق وضم الشفتين للأمام كأنك تقبّل مثل y و ø. إذا لم تضم شفتيك للأمام ستنطق lys (ضوء) كأنها Lis (اسم فتاة)، وستنطق høre (يسمع) كأنها كلمة غير لائقة تماماً (hore)!',
-            heroTitleAr: 'الصوت الصعب رقم ٥: زم شفتيك وادفعهما للأمام كأنك تقبّل (Kyssemunden)!',
+            heroTitleAr: 'الصوت الصعب رقم ٥: زم شفتيك وادفعهما للأمام كأنك تقبّل!',
             heroSubAr: 'الفرق بين "الضوء" واسم فتاة، وبين "يسمع" وكلمة بذيئة، هو فقط شكل الشفتين!',
             subControls: {
                 labelAr: 'المقارنة المباشرة:',
@@ -1358,7 +1364,7 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
                             <circle cx="120" cy="80" r="${isY ? '12' : '18'}" fill="#0f172a" stroke="#38bdf8" stroke-width="4"/>
                             <!-- Kiss indication arrows -->
                             <path d="M 60 80 L 75 80 M 180 80 L 165 80" stroke="#fde047" stroke-width="3" stroke-linecap="round"/>
-                            <text x="50" y="30" fill="#fde047" font-size="12" font-weight="bold">شفتان مضمومتان للأمام بقوة (Kyssemund)</text>
+                            <text x="120" y="30" text-anchor="middle" fill="#fde047" font-size="12" font-weight="bold">شفتان مضمومتان للأمام بقوة كالتقبيل</text>
                         </svg>
                     `,
                     notes: isY ? 
@@ -1456,6 +1462,7 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
     function renderView() {
         viewContainer.innerHTML = '';
 
+        const isDa = getLang() === 'da';
         const currentMod = SOUND_MODULES.find(m => m.id === activeModuleId) || SOUND_MODULES[0];
 
         // Top bar
@@ -1464,15 +1471,15 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
         topBar.innerHTML = `
             <div style="display:flex; align-items:center; gap:0.55rem; flex-wrap:wrap;">
                 <button type="button" class="vla-back-btn" id="vla-top-back-main">
-                    ← Tilbage til forsiden (العودة للرئيسية)
+                    ${isDa ? '← Tilbage til forsiden (العودة للرئيسية)' : '← العودة للرئيسية'}
                 </button>
                 <button type="button" class="vla-back-btn" id="vla-top-back-mss">
-                    ← Sammenligning (المقارنة)
+                    ${isDa ? '← Sammenligning (المقارنة)' : '← مقارنة لغتي بالدنماركية'}
                 </button>
             </div>
             <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
                 <button type="button" class="vla-back-btn vla-back-btn-primary" id="vla-open-all-hw">
-                    📚 Vis alle lektie-links (جميع روابط الواجبات)
+                    ${isDa ? '📚 Vis alle lektie-links (جميع روابط الواجبات)' : '📚 جميع روابط الواجبات'}
                 </button>
             </div>
         `;
@@ -1489,8 +1496,8 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
             card.className = `vla-mod-card ${mod.id === activeModuleId ? 'active' : ''}`;
             card.innerHTML = `
                 <div class="vla-mod-badge">${mod.badge}</div>
-                <div class="vla-mod-title-da">${mod.titleDa}</div>
-                <div class="vla-mod-title-ar">${mod.titleAr}</div>
+                ${isDa ? `<div class="vla-mod-title-da">${mod.titleDa}</div>` : ''}
+                <div class="vla-mod-title-ar" dir="rtl" style="${isDa ? '' : 'font-size:0.95rem; font-weight:800; color:#ffffff; margin-top:0.2rem;'}">${mod.titleAr}</div>
             `;
             card.onclick = () => {
                 if (activeModuleId !== mod.id) {
@@ -1519,21 +1526,21 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
             <div style="display:inline-flex; align-items:center; gap:0.4rem; font-size:0.75rem; font-weight:900; color:#38bdf8; text-transform:uppercase; margin-bottom:0.35rem; background:rgba(56,189,248,0.15); padding:0.2rem 0.6rem; border-radius:6px;">
                 <span>🇸🇦</span> <span>${currentMod.badge} • تدريب عملي للناطقين بالعربية</span>
             </div>
-            <div class="vla-hero-title">${currentMod.heroTitleAr}</div>
+            <div class="vla-hero-title" dir="rtl">${currentMod.heroTitleAr}</div>
             <div class="vla-hero-desc" dir="rtl">${currentMod.descAr}</div>
             
             <div class="vla-action-row">
-                <div style="font-size:0.84rem; color:#94a3b8;">
-                    <strong>Fokus på dansk:</strong> ${currentMod.descDa}
-                </div>
+                ${isDa
+                    ? `<div style="font-size:0.84rem; color:#94a3b8;"><strong>Fokus på dansk:</strong> ${currentMod.descDa}</div>`
+                    : `<div style="font-size:0.84rem; color:#94a3b8;" dir="rtl">${currentMod.heroSubAr}</div>`}
                 <button type="button" class="vla-copy-btn" id="vla-copy-current-hw">
-                    📋 Kopier lektie-link (نسخ رابط الواجب لهذه الصفحة)
+                    ${isDa ? '📋 Kopier lektie-link (نسخ رابط الواجب لهذه الصفحة)' : '📋 نسخ رابط التمرين لهذه الصفحة'}
                 </button>
             </div>
         `;
         hero.querySelector('#vla-copy-current-hw').onclick = () => {
             const currentUrl = getFullHomeworkUrl(currentMod.id, activeTab);
-            copyToClipboard(currentUrl, `${currentMod.titleDa} (${activeTab})`);
+            copyToClipboard(currentUrl, isDa ? `${currentMod.titleDa} (${activeTab})` : currentMod.titleAr);
         };
         viewContainer.appendChild(hero);
 
@@ -1542,9 +1549,9 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
         tabBar.className = 'vla-tab-bar';
 
         const tabs = [
-            { id: 'principles', label: '1. Mundstilling & Princip (حركة الفم والخدعة)' },
-            { id: 'pairs', label: '2. Minimale Par (اختبار الاستماع)' },
-            { id: 'speech', label: '3. Mikrofontræning (تحدي النطق بالمايك)' }
+            { id: 'principles', label: isDa ? '1. Mundstilling & Princip (حركة الفم والخدعة)' : '١. حركة الفم والخدعة العملية' },
+            { id: 'pairs', label: isDa ? '2. Minimale Par (اختبار الاستماع)' : '٢. الأزواج المتقاربة (اختبار الاستماع)' },
+            { id: 'speech', label: isDa ? '3. Mikrofontræning (تحدي النطق بالمايك)' : '٣. تحدي النطق بالمايكروفون' }
         ];
 
         tabs.forEach(t => {
@@ -1578,21 +1585,21 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
         bottomBar.innerHTML = `
             <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
                 <button type="button" class="vla-back-btn" id="vla-btm-back-main">
-                    ← Tilbage til forsiden (العودة للرئيسية)
+                    ${isDa ? '← Tilbage til forsiden (العودة للرئيسية)' : '← العودة للرئيسية'}
                 </button>
                 <button type="button" class="vla-back-btn" id="vla-btm-back-mss">
-                    ← Sammenligning (المقارنة)
+                    ${isDa ? '← Sammenligning (المقارنة)' : '← مقارنة لغتي بالدنماركية'}
                 </button>
             </div>
             <button type="button" class="vla-copy-btn" id="vla-btm-copy-hw">
-                📋 Kopier lektie-link til denne opgave
+                ${isDa ? '📋 Kopier lektie-link til denne opgave' : '📋 نسخ رابط هذا التمرين'}
             </button>
         `;
         bottomBar.querySelector('#vla-btm-back-main').onclick = handleBackToMain;
         bottomBar.querySelector('#vla-btm-back-mss').onclick = handleBackToMSS;
         bottomBar.querySelector('#vla-btm-copy-hw').onclick = () => {
             const currentUrl = getFullHomeworkUrl(currentMod.id, activeTab);
-            copyToClipboard(currentUrl, `${currentMod.titleDa} (${activeTab})`);
+            copyToClipboard(currentUrl, isDa ? `${currentMod.titleDa} (${activeTab})` : currentMod.titleAr);
         };
         viewContainer.appendChild(bottomBar);
     }
@@ -1651,15 +1658,23 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
         wrap.appendChild(grid);
 
         // Practical Self-Test Card
+        const isDa = getLang() === 'da';
         const pinchCard = document.createElement('div');
         pinchCard.className = 'vla-pinch-card';
-        pinchCard.innerHTML = modData.pinchCardHtml;
+        pinchCard.innerHTML = isDa
+            ? modData.pinchCardHtml
+            : modData.pinchCardHtml.replace(/\s*\((Papir-testen|Ånde på brillerne|Kragens kraa|Smæk døren|Fingerspids-testen)\)/g, '');
         wrap.appendChild(pinchCard);
 
         // Bilingual Guide
         const guideCard = document.createElement('div');
         guideCard.className = 'vla-bilingual-card';
-        guideCard.innerHTML = modData.bilingualGuideHtml;
+        guideCard.innerHTML = isDa
+            ? modData.bilingualGuideHtml
+            : modData.bilingualGuideHtml
+                .replace(/\s*\(Guide\)/g, '')
+                .replace(/Dansk & Arabisk/g, 'العربية')
+                .replace(/<strong>Dansk:<\/strong>[\s\S]*?<br>\s*/g, '');
         wrap.appendChild(guideCard);
     }
 
@@ -1690,7 +1705,7 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
 
             <button type="button" class="vla-listen-btn-big" id="vla-play-target">
                 <span>🔊</span>
-                <span>استمع للنطق (Lyt)</span>
+                <span>${getLang() === 'da' ? 'استمع للنطق (Lyt)' : 'استمع للنطق'}</span>
             </button>
 
             <div class="vla-quiz-options">
@@ -1810,7 +1825,7 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
 
             <div class="vla-mic-row">
                 <button type="button" class="vla-listen-model-btn" id="vla-speech-listen">
-                    <span>🔊 استمع للنموذج الصوتي (Lyt)</span>
+                    <span>${getLang() === 'da' ? '🔊 استمع للنموذج الصوتي (Lyt)' : '🔊 استمع للنموذج الصوتي'}</span>
                 </button>
                 <button type="button" class="vla-mic-btn" id="vla-speech-mic" title="اضغط لبدء التسجيل الصوتي">
                     <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
@@ -1826,9 +1841,9 @@ export function renderVanskeligeLydeArabiskView(container, navigateFn, extraData
 
             <div class="vla-speech-feedback-box" id="vla-speech-fb"></div>
 
-            <div style="background:rgba(30,41,59,0.7); border-radius:12px; padding:0.85rem 1rem; margin-top:1.2rem; font-size:0.86rem; color:#cbd5e1; text-align:left;">
-                <strong style="color:#fde68a;">Instruktion:</strong> ${ex.hintDa}<br>
-                <span style="font-size:0.82rem; color:#94a3b8; display:inline-block; margin-top:0.3rem;" dir="rtl">نصيحة النطق: ${ex.hintAr}</span>
+            <div style="background:rgba(30,41,59,0.7); border-radius:12px; padding:0.85rem 1rem; margin-top:1.2rem; font-size:0.86rem; color:#cbd5e1; text-align:right;" dir="rtl">
+                <strong style="color:#fde68a;">نصيحة النطق:</strong> ${ex.hintAr}
+                ${getLang() === 'da' ? `<br><span style="font-size:0.82rem; color:#94a3b8; display:inline-block; margin-top:0.3rem;" dir="ltr"><strong>Instruktion:</strong> ${ex.hintDa}</span>` : ''}
             </div>
 
             <div style="display:flex; justify-content:space-between; margin-top:1.5rem; gap:0.5rem; flex-wrap:wrap;">

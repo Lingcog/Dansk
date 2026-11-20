@@ -2218,7 +2218,6 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
 
             <div style="padding:0.85rem 1.05rem; border-radius:14px; background:rgba(30,41,59,0.85); border-left:4px solid #14b8a6; margin-bottom:0.8rem;">
                 <div style="font-size:0.98rem; font-weight:900; color:#ffffff;">${m.prompt}</div>
-                ${mbSub(`det${m.num}_p`, 'mb-tr-sent', lang)}
                 ${detShowHint ? `
                     <div style="margin-top:0.35rem; font-size:0.84rem; color:#fde68a;">
                         ${mbT('lbl_hint', lang)} ${m.hint}

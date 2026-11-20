@@ -1,6 +1,7 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { shuffleArray } from '../utils/shuffle.js';
 import { samtaleIcons, hoeflighedPillarIcon } from '../utils/samtaleIcons.js';
+import { st, stSub, stRtlAttr, isSamtaleLangLoaded, ensureSamtaleLang, SAMTALE_TR_CSS } from '../utils/samtale_translations.js';
 
 /**
  * SamtaleHoeflighedView — "Høflighed på dansk"
@@ -1538,12 +1539,14 @@ function injectSamtaleHoeflighedStyles() {
             max-width: 1200px;
         }
         .samtale-hoeflighed-view {
+            width: 100%;
             max-width: 1160px;
             margin: 0 auto;
             padding: 1rem 1rem 3.5rem;
             color: #f8fafc;
             box-sizing: border-box;
         }
+        ${SAMTALE_TR_CSS}
         .sh-hero {
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.97) 0%, rgba(30, 41, 59, 0.96) 52%, rgba(16, 185, 129, 0.28) 100%);
             border: 1.5px solid rgba(16, 185, 129, 0.45);
@@ -1909,6 +1912,19 @@ function injectSamtaleHoeflighedStyles() {
 }
 
 export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {}) {
+    const lang = getLang() || 'da';
+    const rtlAttr = stRtlAttr(lang);
+
+    if (lang !== 'da' && !isSamtaleLangLoaded(lang)) {
+        container.innerHTML = `<div class="view-container samtale-hoeflighed-view" style="padding:2.5rem 1rem; text-align:center; color:#cbd5e1; font-weight:700;">...</div>`;
+        ensureSamtaleLang(lang).then(() => {
+            if ((getLang() || 'da') === lang && container.isConnected) {
+                renderSamtaleHoeflighedView(container, navigateFn, extraData);
+            }
+        });
+        return;
+    }
+
     container.innerHTML = '';
     injectSamtaleHoeflighedStyles();
 
@@ -1926,7 +1942,7 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
 
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.textContent = '←' + (getTranslation('back') || 'Tilbage til Samtaletræning');
+    backBtn.textContent = '← ' + (getTranslation('back') || st('Tilbage til Samtaletræning', lang));
     backBtn.onclick = () => navigateFn('samtale_traening');
     topBar.appendChild(backBtn);
 
@@ -1938,14 +1954,14 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
     const sisterLydeBtn = document.createElement('button');
     sisterLydeBtn.type = 'button';
     sisterLydeBtn.className = 'sh-btn-secondary';
-    sisterLydeBtn.innerHTML = 'Små lyde →';
+    sisterLydeBtn.innerHTML = st('Små lyde →', lang);
     sisterLydeBtn.onclick = () => navigateFn('samtale_smaalyde');
     sisterWrap.appendChild(sisterLydeBtn);
 
     const sisterOrdBtn = document.createElement('button');
     sisterOrdBtn.type = 'button';
     sisterOrdBtn.className = 'sh-btn-secondary';
-    sisterOrdBtn.innerHTML = 'Små ord →';
+    sisterOrdBtn.innerHTML = st('Små ord →', lang);
     sisterOrdBtn.onclick = () => navigateFn('samtale_smaaord');
     sisterWrap.appendChild(sisterOrdBtn);
 
@@ -1957,21 +1973,21 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
     hero.className = 'sh-hero';
     hero.style.padding = '1rem 1.35rem';
     hero.innerHTML = `
-        <h1 style="margin:0 0 0.25rem; font-size:clamp(1.35rem, 2.4vw, 1.85rem); font-weight:900; text-align:left;">Høflighed på dansk</h1>
-        <p style="margin:0; font-size:0.92rem; line-height:1.45;">
-            20 centrale udtryk til at bede pænt, blødgøre, takke og afslå uden ordet "please".
+        <h1${rtlAttr} style="margin:0 0 0.25rem; font-size:clamp(1.35rem, 2.4vw, 1.85rem); font-weight:900; text-align:start;">${st('Høflighed på dansk', lang)}</h1>
+        <p${rtlAttr} style="margin:0; font-size:0.92rem; line-height:1.45;">
+            ${st('20 centrale udtryk til at bede pænt, blødgøre, takke og afslå uden ordet "please".', lang)}
         </p>
     `;
     viewContainer.appendChild(hero);
 
     const tabs = [
-        { id:'tab_vrimmel', label:'1. Vrimlebillede (20)' },
-        { id:'tab_kontekst', label:'2. Social kontekst (30)' },
-        { id:'tab_video_please', label:'3. Video: Uden "please"' },
-        { id:'tab_video_tak', label:'4. Video: Tak & svar' },
-        { id:'tab_video_afslag', label:'5. Video: Afslag & tid' },
-        { id:'tab_video_shorts', label:'6. Video: 6 hverdags-klip' },
-        { id:'tab_detektiv', label:'7. Detektiv' }
+        { id:'tab_vrimmel', label: st('1. Vrimlebillede (20)', lang) },
+        { id:'tab_kontekst', label: st('2. Social kontekst (30)', lang) },
+        { id:'tab_video_please', label: st('3. Video: Uden "please"', lang) },
+        { id:'tab_video_tak', label: st('4. Video: Tak & svar', lang) },
+        { id:'tab_video_afslag', label: st('5. Video: Afslag & tid', lang) },
+        { id:'tab_video_shorts', label: st('6. Video: 6 hverdags-klip', lang) },
+        { id:'tab_detektiv', label: st('7. Detektiv', lang) }
     ];
 
     let currentTab = extraData?.subPath && tabs.some(t => t.id === extraData.subPath)
@@ -2028,15 +2044,15 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
     card1.innerHTML = `
         <div class="sh-toolbar">
             <div class="sh-filters">
-                <button type="button" class="sh-filter-btn active" data-pfilter="alle">Alle (20)</button>
-                <button type="button" class="sh-filter-btn" data-pfilter="kontakt" style="border-color:rgba(245,158,11,0.65); color:#fde68a;">${hoeflighedPillarIcon('kontakt', 14)} Kontakt & bøn (6)</button>
-                <button type="button" class="sh-filter-btn" data-pfilter="bloedgoer" style="border-color:rgba(6,182,212,0.65); color:#67e8f9;">${hoeflighedPillarIcon('bloedgoer', 14)} Blødgør & hjælp (5)</button>
-                <button type="button" class="sh-filter-btn" data-pfilter="tak" style="border-color:rgba(16,185,129,0.65); color:#6ee7b7;">${hoeflighedPillarIcon('tak', 14)} Tak & svar (6)</button>
-                <button type="button" class="sh-filter-btn" data-pfilter="afslag" style="border-color:rgba(192,132,252,0.75); color:#e9d5ff;">${hoeflighedPillarIcon('afslag', 14)} Afslag & takt (3)</button>
+                <button type="button" class="sh-filter-btn active" data-pfilter="alle">${st('Alle (20)', lang)}</button>
+                <button type="button" class="sh-filter-btn" data-pfilter="kontakt" style="border-color:rgba(245,158,11,0.65); color:#fde68a;">${hoeflighedPillarIcon('kontakt', 14)} ${st('Kontakt & bøn (6)', lang)}</button>
+                <button type="button" class="sh-filter-btn" data-pfilter="bloedgoer" style="border-color:rgba(6,182,212,0.65); color:#67e8f9;">${hoeflighedPillarIcon('bloedgoer', 14)} ${st('Blødgør & hjælp (5)', lang)}</button>
+                <button type="button" class="sh-filter-btn" data-pfilter="tak" style="border-color:rgba(16,185,129,0.65); color:#6ee7b7;">${hoeflighedPillarIcon('tak', 14)} ${st('Tak & svar (6)', lang)}</button>
+                <button type="button" class="sh-filter-btn" data-pfilter="afslag" style="border-color:rgba(192,132,252,0.75); color:#e9d5ff;">${hoeflighedPillarIcon('afslag', 14)} ${st('Afslag & takt (3)', lang)}</button>
             </div>
             <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
-                <button type="button" class="sh-btn-secondary" id="sh-toggle-pinmode">Kun tal</button>
-                <button type="button" class="sh-btn-secondary" id="sh-zoom-btn">Zoom 135%</button>
+                <button type="button" class="sh-btn-secondary" id="sh-toggle-pinmode">${st('Kun tal', lang)}</button>
+                <button type="button" class="sh-btn-secondary" id="sh-zoom-btn">${st('Zoom 135%', lang)}</button>
             </div>
         </div>
 
@@ -2057,12 +2073,12 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
     card1.querySelector('#sh-zoom-btn').onclick = (e) => {
         zoomed = !zoomed;
         stageInner.style.transform = zoomed ? 'scale(1.35)' :'scale(1)';
-        e.currentTarget.textContent = zoomed ? 'Zoom 100%' :'Zoom 135%';
+        e.currentTarget.textContent = zoomed ? st('Zoom 100%', lang) : st('Zoom 135%', lang);
     };
 
     card1.querySelector('#sh-toggle-pinmode').onclick = (e) => {
         compactPins = !compactPins;
-        e.currentTarget.textContent = compactPins ? 'Vis tekst' :'Kun tal';
+        e.currentTarget.textContent = compactPins ? st('Vis tekst', lang) : st('Kun tal', lang);
         renderPegefelter();
     };
 
@@ -2070,39 +2086,48 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
         const meta = PILLAR_META[expr.pillar];
         detailBox.style.borderColor = meta.border;
         detailBox.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.55rem;">
-                <div style="display:flex; align-items:center; gap:0.55rem; flex-wrap:wrap;">
-                    <span style="font-size:1.25rem; font-weight:900; color:#ffffff;">#${expr.num}. »${expr.phrase}«</span>
-                    <span class="sh-pill-tag" style="background:${meta.bg}; color:${meta.color}; border:1.5px solid ${meta.border};">
-                        ${hoeflighedPillarIcon(expr.pillar, 13)} ${meta.short}
-                    </span>
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.55rem;">
+                <div>
+                    <div style="display:flex; align-items:center; gap:0.55rem; flex-wrap:wrap;">
+                        <span style="font-size:1.25rem; font-weight:900; color:#ffffff;">#${expr.num}. »${expr.phrase}«</span>
+                        <span class="sh-pill-tag" style="background:${meta.bg}; color:${meta.color}; border:1.5px solid ${meta.border};">
+                            ${hoeflighedPillarIcon(expr.pillar, 13)} ${st(meta.short, lang)}
+                        </span>
+                    </div>
+                    ${stSub(expr.phrase, 'st-tr-sent', lang)}
                 </div>
                 <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
                     <button type="button" class="sh-btn-secondary" id="sh-goto-video-tab" style="display:inline-flex; align-items:center; gap:0.35rem;">
-                        ${samtaleIcons.play(12)} Video →
+                        ${samtaleIcons.play(12)} ${st('Video →', lang)}
                     </button>
                     <button type="button" class="sh-btn-primary" id="sh-play-detail-audio" style="display:inline-flex; align-items:center; gap:0.35rem;">
-                        ${samtaleIcons.audio(15)} Lyt
+                        ${samtaleIcons.audio(15)} ${st('Lyt', lang)}
                     </button>
                 </div>
             </div>
 
-            <div style="font-size:0.84rem; color:#94a3b8; margin-bottom:0.55rem; display:flex; flex-wrap:wrap; gap:0.85rem;">
-                <span><strong>Kontekst:</strong> ${expr.socialContext}</span>
-                <span><strong>Tone:</strong> ${expr.intonation}</span>
+            <div${rtlAttr} style="font-size:0.84rem; color:#94a3b8; margin-bottom:0.55rem; display:flex; flex-wrap:wrap; gap:0.85rem;">
+                <span><strong>${st('Kontekst:', lang)}</strong> ${st(expr.socialContext, lang)}</span>
+                <span><strong>${st('Tone:', lang)}</strong> ${st(expr.intonation, lang)}</span>
             </div>
 
-            <p style="margin:0 0 0.65rem; color:#e2e8f0; font-size:0.92rem; line-height:1.5;">
-                ${expr.definition}
+            <p${rtlAttr} style="margin:0 0 0.65rem; color:#e2e8f0; font-size:0.92rem; line-height:1.5;">
+                ${st(expr.definition, lang)}
             </p>
 
             <div style="background:rgba(15,23,42,0.95); border-left:4px solid ${meta.color}; border-radius:12px; padding:0.7rem 0.95rem; margin-bottom:0.6rem;">
-                <div style="font-size:0.91rem; color:#e2e8f0; margin-bottom:0.2rem;">A: "${expr.dialogueA}"</div>
-                <div style="font-size:0.92rem; color:#ffffff; font-weight:700;">B: "${expr.dialogueB}"</div>
+                <div style="margin-bottom:0.35rem;">
+                    <div style="font-size:0.91rem; color:#e2e8f0;">A: "${expr.dialogueA}"</div>
+                    ${stSub(expr.dialogueA, 'st-tr', lang)}
+                </div>
+                <div>
+                    <div style="font-size:0.92rem; color:#ffffff; font-weight:700;">B: "${expr.dialogueB}"</div>
+                    ${stSub(expr.dialogueB, 'st-tr-sent', lang)}
+                </div>
             </div>
 
-            <div style="font-size:0.83rem; color:#fde68a; background:rgba(245,158,11,0.09); border:1px solid rgba(245,158,11,0.28); border-radius:10px; padding:0.48rem 0.8rem;">
-                <strong>Pas på:</strong> ${expr.trapTip}
+            <div${rtlAttr} style="font-size:0.83rem; color:#fde68a; background:rgba(245,158,11,0.09); border:1px solid rgba(245,158,11,0.28); border-radius:10px; padding:0.48rem 0.8rem;">
+                <strong>${st('Pas på:', lang)}</strong> ${st(expr.trapTip, lang)}
             </div>
         `;
         const playBtn = detailBox.querySelector('#sh-play-detail-audio');
@@ -2176,10 +2201,10 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
         if (!showSortDrill) {
             sortCard.innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
-                    <div style="font-size:0.96rem; font-weight:800; color:#e2e8f0;">
-                        Sorteringsøvelse: Placér de 20 udtryk i de 4 kategorier (${placedSet.size}/${sortPool.length})
+                    <div${rtlAttr} style="font-size:0.96rem; font-weight:800; color:#e2e8f0;">
+                        ${st('Sorteringsøvelse: Placér de 20 udtryk i de 4 kategorier', lang)} (${placedSet.size}/${sortPool.length})
                     </div>
-                    <button type="button" class="sh-btn-secondary" id="sh-sort-toggle">Åbn øvelse</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-sort-toggle">${st('Åbn øvelse', lang)}</button>
                 </div>
             `;
             sortCard.querySelector('#sh-sort-toggle').onclick = () => {
@@ -2191,10 +2216,10 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
 
         sortCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
-                <h3 style="margin:0; font-size:1.05rem; font-weight:900;">Sortér efter funktion (${placedSet.size}/${sortPool.length})</h3>
+                <h3${rtlAttr} style="margin:0; font-size:1.05rem; font-weight:900;">${st('Sortér efter funktion', lang)} (${placedSet.size}/${sortPool.length})</h3>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="sh-btn-secondary" id="sh-sort-reset">Nulstil</button>
-                    <button type="button" class="sh-btn-secondary" id="sh-sort-toggle">Skjul</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-sort-reset">${st('Nulstil', lang)}</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-sort-toggle">${st('Skjul', lang)}</button>
                 </div>
             </div>
             <div style="display:flex; flex-wrap:wrap; gap:0.4rem; padding:0.75rem; border-radius:14px; background:rgba(9,14,26,0.85); border:1px solid rgba(148,163,184,0.22); margin-bottom:0.75rem;">
@@ -2211,12 +2236,12 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
 
             ${activeItem ? `
                 <div style="margin-bottom:0.75rem; padding:0.65rem 0.9rem; border-radius:12px; background:rgba(16,185,129,0.12); border:1px solid #34d399; font-size:0.9rem;">
-                    <strong style="color:#ffffff;">»${activeItem.phrase}«</strong>
-                    <span style="color:#cbd5e1;"> — ${activeItem.socialContext}</span>
+                    <div><strong style="color:#ffffff;">»${activeItem.phrase}«</strong> <span${rtlAttr} style="color:#cbd5e1;"> — ${st(activeItem.socialContext, lang)}</span></div>
+                    ${stSub(activeItem.phrase, 'st-tr-sent', lang)}
                 </div>
             ` : `
-                <div class="sh-feedback ok" style="margin-bottom:0.75rem;">
-                    Flot! Alle 20 høflighedsudtryk er sorteret.
+                <div class="sh-feedback ok"${rtlAttr} style="margin-bottom:0.75rem;">
+                    ${st('Flot! Alle 20 høflighedsudtryk er sorteret.', lang)}
                 </div>
             `}
 
@@ -2226,18 +2251,18 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
                     return `
                         <button type="button" data-sort-bucket="${m.id}" style="text-align:left; padding:0.85rem; border-radius:14px; background:${m.bg}; border:2px dashed ${m.border}; color:#ffffff; cursor:pointer;">
                             <div style="font-size:0.9rem; font-weight:900; color:${m.color}; margin-bottom:0.45rem; display:flex; align-items:center; gap:0.35rem;">
-                                ${hoeflighedPillarIcon(m.id, 14)} ${m.label} (${items.length}/${m.count})
+                                ${hoeflighedPillarIcon(m.id, 14)} ${st(m.label, lang)} (${items.length}/${m.count})
                             </div>
                             <div style="display:flex; flex-wrap:wrap; gap:0.3rem;">
                                 ${items.length
                                     ? items.map(it => `<span style="padding:0.18rem 0.48rem; border-radius:999px; background:rgba(15,23,42,0.88); border:1px solid ${m.border}; font-size:0.75rem; font-weight:800;">${it.shortLabel}</span>`).join('')
-                                    : `<span style="font-size:0.8rem; color:#94a3b8;">Klik for at placere</span>`}
+                                    : `<span style="font-size:0.8rem; color:#94a3b8;">${st('Klik for at placere', lang)}</span>`}
                             </div>
                         </button>
                     `;
                 }).join('')}
             </div>
-            ${sortFeedback ? `<div class="sh-feedback ${sortFeedback.startsWith('✓') ? 'ok' :'err'}">${sortFeedback}</div>` :''}
+            ${sortFeedback ? `<div class="sh-feedback ${sortFeedback.startsWith('✓') ? 'ok' :'err'}"${rtlAttr}>${sortFeedback}</div>` :''}
         `;
 
         sortCard.querySelector('#sh-sort-toggle').onclick = () => {
@@ -2269,9 +2294,9 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
                 const item = sortPool[activeSortIdx];
                 if (item.pillar === targetPillar) {
                     sortedBuckets[targetPillar].push(activeSortIdx);
-                    sortFeedback = `✓ Rigtigt! »${item.phrase}« hører under ${PILLAR_META[targetPillar].label}.`;
+                    sortFeedback = `✓ ${st('Rigtigt!', lang)} »${item.phrase}« ${st('hører under', lang)} ${st(PILLAR_META[targetPillar].label, lang)}.`;
                 } else {
-                    sortFeedback = `✗ Ikke helt – »${item.phrase}« hører under ${PILLAR_META[item.pillar].label}.`;
+                    sortFeedback = `✗ ${st('Ikke helt –', lang)} »${item.phrase}« ${st('hører under', lang)} ${st(PILLAR_META[item.pillar].label, lang)}.`;
                 }
                 renderPillarSorting();
             };
@@ -2304,10 +2329,10 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
     function syncKontekstMode() {
         modeBar2.innerHTML = `
             <button type="button" class="sh-filter-btn ${kontekstMode === 'single' ? 'active' :''}" data-kmode="single">
-                Del 1: Vælg udtryk (${SOCIAL_CONTEXT_CHALLENGES.length})
+                ${st('Del 1: Vælg udtryk (20)', lang)}
             </button>
             <button type="button" class="sh-filter-btn ${kontekstMode === 'dual' ? 'active' :''}" data-kmode="dual">
-                Del 2: Dialog-bygger (${DUAL_SLOT_DIALOGUES.length})
+                ${st('Del 2: Dialog-bygger (10)', lang)}
             </button>
         `;
         modeBar2.querySelectorAll('[data-kmode]').forEach(btn => {
@@ -2328,33 +2353,35 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
                 <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
                     <span class="sh-pill-tag" style="background:${m.bg}; color:${m.color}; border:1.5px solid ${m.border};">
-                        ${hoeflighedPillarIcon(q.pillar, 13)} ${m.short}
+                        ${hoeflighedPillarIcon(q.pillar, 13)} ${st(m.short, lang)}
                     </span>
                     <span style="font-size:0.85rem; color:#94a3b8; font-weight:800;">
-                        Scenarie ${ctxIdx + 1}/${SOCIAL_CONTEXT_CHALLENGES.length} • Løst: ${ctxSolved.size}/${SOCIAL_CONTEXT_CHALLENGES.length}
+                        ${st('Scenarie', lang)} ${ctxIdx + 1}/${SOCIAL_CONTEXT_CHALLENGES.length} • ${st('Løst:', lang)} ${ctxSolved.size}/${SOCIAL_CONTEXT_CHALLENGES.length}
                     </span>
                 </div>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="sh-btn-secondary" id="sh-ctx-prev" ${ctxIdx === 0 ? 'disabled' :''}>← Forrige</button>
-                    <button type="button" class="sh-btn-secondary" id="sh-ctx-next" ${ctxIdx === SOCIAL_CONTEXT_CHALLENGES.length - 1 ? 'disabled' :''}>Næste →</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-ctx-prev" ${ctxIdx === 0 ? 'disabled' :''}>${st('← Forrige', lang)}</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-ctx-next" ${ctxIdx === SOCIAL_CONTEXT_CHALLENGES.length - 1 ? 'disabled' :''}>${st('Næste →', lang)}</button>
                 </div>
             </div>
 
-            <div style="padding:0.8rem 0.95rem; border-radius:14px; background:rgba(30,41,59,0.75); border:1px solid rgba(148,163,184,0.25); margin-bottom:0.8rem;">
+            <div${rtlAttr} style="padding:0.8rem 0.95rem; border-radius:14px; background:rgba(30,41,59,0.75); border:1px solid rgba(148,163,184,0.25); margin-bottom:0.8rem;">
                 <div style="font-size:0.8rem; font-weight:900; color:#6ee7b7; text-transform:uppercase; margin-bottom:0.2rem;">
-                    ${q.setting}
+                    ${st(q.setting, lang)}
                 </div>
                 <div style="font-size:0.92rem; color:#e2e8f0; line-height:1.45;">
-                    ${q.contextDesc}
+                    ${st(q.contextDesc, lang)}
                 </div>
             </div>
 
             <div style="padding:0.95rem 1.1rem; border-radius:15px; background:rgba(9,14,26,0.95); border-left:4px solid ${m.color}; margin-bottom:0.9rem;">
-                <div style="font-size:0.96rem; color:#fde68a; font-weight:800; margin-bottom:0.3rem;">
-                    ${q.speakerA}
+                <div style="margin-bottom:0.4rem;">
+                    <div style="font-size:0.96rem; color:#fde68a; font-weight:800;">${q.speakerA}</div>
+                    ${stSub(q.speakerA, 'st-tr-sent', lang)}
                 </div>
-                <div style="font-size:0.94rem; color:#cbd5e1;">
-                    ${q.speakerB}
+                <div>
+                    <div style="font-size:0.94rem; color:#cbd5e1;">${q.speakerB}</div>
+                    ${stSub(q.speakerB, 'st-tr', lang)}
                 </div>
             </div>
 
@@ -2362,12 +2389,15 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
                 ${q.options.map(opt => {
                     let cls = 'sh-option-btn';
                     if (ctxAnswered !== null) {
-                        if (opt.id === q.answerId) cls += 'correct';
-                        else if (opt.id === ctxAnswered) cls += 'wrong';
+                        if (opt.id === q.answerId) cls += ' correct';
+                        else if (opt.id === ctxAnswered) cls += ' wrong';
                     }
                     return `
                         <button type="button" class="${cls}" data-ctx-opt="${opt.id}">
-                            <span>»${opt.text}«</span>
+                            <div>
+                                <div>»${opt.text}«</div>
+                                ${stSub(opt.text, 'st-tr-opt', lang)}
+                            </div>
                             <span>${ctxAnswered !== null && opt.id === q.answerId ? '✓' :''}</span>
                         </button>
                     `;
@@ -2375,11 +2405,11 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
             </div>
 
             ${ctxAnswered !== null ? `
-                <div class="sh-feedback ${ctxAnswered === q.answerId ? 'ok' :'err'}">
-                    <div><strong>${ctxAnswered === q.answerId ? '✓ Rigtigt!' :'✗ Ikke det bedste match:'}</strong> ${q.explanation}</div>
+                <div class="sh-feedback ${ctxAnswered === q.answerId ? 'ok' :'err'}"${rtlAttr}>
+                    <div><strong>${ctxAnswered === q.answerId ? `✓ ${st('Rigtigt!', lang)}` : `✗ ${st('Ikke det bedste match:', lang)}`}</strong> ${st(q.explanation, lang)}</div>
                     <div style="margin-top:0.55rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
-                        <button type="button" class="sh-btn-secondary" id="sh-ctx-speak" style="display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(14)} Lyt</button>
-                        ${ctxIdx < SOCIAL_CONTEXT_CHALLENGES.length - 1 ? `<button type="button" class="sh-btn-primary" id="sh-ctx-advance">Næste →</button>` :''}
+                        <button type="button" class="sh-btn-secondary" id="sh-ctx-speak" style="display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(14)} ${st('Lyt', lang)}</button>
+                        ${ctxIdx < SOCIAL_CONTEXT_CHALLENGES.length - 1 ? `<button type="button" class="sh-btn-primary" id="sh-ctx-advance">${st('Næste →', lang)}</button>` :''}
                     </div>
                 </div>
             ` :''}
@@ -2435,38 +2465,41 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
         dualCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
                 <div>
-                    <h3 style="margin:0; font-size:1.08rem; font-weight:900;">${d.title}</h3>
-                    <div style="font-size:0.83rem; color:#94a3b8;">Dialog ${dualIdx + 1}/${DUAL_SLOT_DIALOGUES.length} • Løst: ${dualSolved.size}/${DUAL_SLOT_DIALOGUES.length}</div>
+                    <h3${rtlAttr} style="margin:0; font-size:1.08rem; font-weight:900;">${st(d.title, lang)}</h3>
+                    <div style="font-size:0.83rem; color:#94a3b8;">${st('Dialog', lang)} ${dualIdx + 1}/${DUAL_SLOT_DIALOGUES.length} • ${st('Løst:', lang)} ${dualSolved.size}/${DUAL_SLOT_DIALOGUES.length}</div>
                 </div>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="sh-btn-secondary" id="sh-dual-prev" ${dualIdx === 0 ? 'disabled' :''}>← Forrige</button>
-                    <button type="button" class="sh-btn-secondary" id="sh-dual-next" ${dualIdx === DUAL_SLOT_DIALOGUES.length - 1 ? 'disabled' :''}>Næste →</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-dual-prev" ${dualIdx === 0 ? 'disabled' :''}>${st('← Forrige', lang)}</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-dual-next" ${dualIdx === DUAL_SLOT_DIALOGUES.length - 1 ? 'disabled' :''}>${st('Næste →', lang)}</button>
                 </div>
             </div>
 
-            <div style="font-size:0.84rem; color:#94a3b8; margin-bottom:0.7rem;">${d.setting} • ${d.rawHint}</div>
+            <div${rtlAttr} style="font-size:0.84rem; color:#94a3b8; margin-bottom:0.7rem;">${st(d.setting, lang)} • ${st(d.rawHint, lang)}</div>
 
             <div style="padding:0.95rem 1.1rem; border-radius:14px; background:rgba(9,14,26,0.94); border:1.5px solid rgba(16,185,129,0.4); font-size:0.96rem; line-height:1.55; color:#f8fafc; margin-bottom:0.9rem;">
-                ${previewHtml}
+                <div>${previewHtml}</div>
+                ${stSub(d.slotsText, 'st-tr-sent', lang)}
             </div>
 
             <div class="sh-two-cols" style="margin-bottom:0.85rem;">
                 <div style="padding:0.8rem; border-radius:14px; background:rgba(30,41,59,0.7); border:1px solid rgba(16,185,129,0.35);">
-                    <div style="font-size:0.78rem; font-weight:900; color:#6ee7b7; text-transform:uppercase; margin-bottom:0.45rem;">Hul [1]</div>
+                    <div style="font-size:0.78rem; font-weight:900; color:#6ee7b7; text-transform:uppercase; margin-bottom:0.45rem;">${st('Hul [1]', lang)}</div>
                     <div style="display:grid; gap:0.4rem;">
                         ${d.slot1Options.map(o => `
                             <button type="button" class="sh-btn-secondary" data-dslot1="${o}" style="text-align:left; ${pick1 === o ? 'background:#059669; color:#ffffff; border-color:#a7f3d0;' :''}">
-                                »${o}«
+                                <div>»${o}«</div>
+                                ${stSub(o, 'st-tr-opt', lang)}
                             </button>
                         `).join('')}
                     </div>
                 </div>
                 <div style="padding:0.8rem; border-radius:14px; background:rgba(30,41,59,0.7); border:1px solid rgba(56,189,248,0.35);">
-                    <div style="font-size:0.78rem; font-weight:900; color:#7dd3fc; text-transform:uppercase; margin-bottom:0.45rem;">Hul [2]</div>
+                    <div style="font-size:0.78rem; font-weight:900; color:#7dd3fc; text-transform:uppercase; margin-bottom:0.45rem;">${st('Hul [2]', lang)}</div>
                     <div style="display:grid; gap:0.4rem;">
                         ${d.slot2Options.map(o => `
                             <button type="button" class="sh-btn-secondary" data-dslot2="${o}" style="text-align:left; ${pick2 === o ? 'background:#0284c7; color:#ffffff; border-color:#bae6fd;' :''}">
-                                »${o}«
+                                <div>»${o}«</div>
+                                ${stSub(o, 'st-tr-opt', lang)}
                             </button>
                         `).join('')}
                     </div>
@@ -2474,13 +2507,13 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
             </div>
 
             <button type="button" class="sh-btn-primary" id="sh-dual-check" ${!pick1 || !pick2 ? 'disabled style="opacity:0.5;"' :''}>
-                ✓ Tjek dialogen
+                ✓ ${st('Tjek dialogen', lang)}
             </button>
 
             ${dualChecked ? `
-                <div class="sh-feedback ${isBothCorrect ? 'ok' :'err'}">
-                    <strong>${isBothCorrect ? '✓ Rigtigt!' : `✗ Rigtig kombination: [1] »${d.slot1Answer}« og [2] »${d.slot2Answer}«.`}</strong>
-                    <div style="margin-top:0.25rem;">${d.explanation}</div>
+                <div class="sh-feedback ${isBothCorrect ? 'ok' :'err'}"${rtlAttr}>
+                    <strong>${isBothCorrect ? `✓ ${st('Rigtigt!', lang)}` : `✗ ${st('Rigtig kombination:', lang)} [1] »${d.slot1Answer}« ${st('og', lang)} [2] »${d.slot2Answer}«.`}</strong>
+                    <div style="margin-top:0.25rem;">${st(d.explanation, lang)}</div>
                 </div>
             ` :''}
         `;
@@ -2533,7 +2566,7 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
             const v = videosList[activeVidIdx];
             vidCard.innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.8rem;">
-                    <h3 style="margin:0; font-size:1.15rem; font-weight:900; color:#ffffff;">${headerTitle}</h3>
+                    <h3${rtlAttr} style="margin:0; font-size:1.15rem; font-weight:900; color:#ffffff;">${st(headerTitle, lang)}</h3>
                     <a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener noreferrer" class="sh-btn-secondary" style="text-decoration:none;">
                         YouTube ↗
                     </a>
@@ -2542,7 +2575,7 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
                 <div style="display:flex; flex-wrap:wrap; gap:0.45rem; margin-bottom:0.95rem;">
                     ${videosList.map((vid, idx) => `
                         <button type="button" class="sh-btn-secondary" data-vid-switch="${idx}" style="display:inline-flex; align-items:center; gap:0.35rem; ${idx === activeVidIdx ? `background:linear-gradient(135deg, #059669, #0284c7); color:#ffffff; border-color:#6ee7b7; font-weight:900;` :''}">
-                            ${samtaleIcons.play(11)} ${vid.badge}: ${vid.title.split(':')[0]}
+                            ${samtaleIcons.play(11)} ${st(vid.badge, lang)}: ${st(vid.title.split(':')[0], lang)}
                         </button>
                     `).join('')}
                 </div>
@@ -2561,19 +2594,22 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
                     </div>
 
                     <div style="background:rgba(9,14,26,0.92); border:1.5px solid rgba(148,163,184,0.25); border-radius:16px; padding:0.95rem;">
-                        <div style="font-size:1rem; font-weight:900; color:#ffffff; margin-bottom:0.3rem;">
-                            ${v.title}
+                        <div${rtlAttr} style="font-size:1rem; font-weight:900; color:#ffffff; margin-bottom:0.3rem;">
+                            ${st(v.title, lang)}
                         </div>
-                        <p style="margin:0 0 0.7rem; font-size:0.84rem; color:#cbd5e1; line-height:1.45;">
-                            ${v.summary}
+                        <p${rtlAttr} style="margin:0 0 0.7rem; font-size:0.84rem; color:#cbd5e1; line-height:1.45;">
+                            ${st(v.summary, lang)}
                         </p>
                         <div style="display:grid; gap:0.4rem;">
                             ${v.phrases.map(ph => `
                                 <button type="button" class="sh-btn-secondary" data-phrase-tts="${ph.text.replace(/"/g, '&quot;')}" style="text-align:left; display:flex; justify-content:space-between; align-items:center; gap:0.5rem; padding:0.48rem 0.72rem;">
                                     <div>
-                                        <span style="font-size:0.73rem; font-weight:900; color:#6ee7b7; margin-right:0.35rem;">[${ph.time}]</span>
-                                        <strong style="color:#ffffff; font-size:0.85rem;">»${ph.text}«</strong>
-                                        <div style="font-size:0.75rem; color:#94a3b8; margin-top:0.1rem;">${ph.note}</div>
+                                        <div>
+                                            <span style="font-size:0.73rem; font-weight:900; color:#6ee7b7; margin-right:0.35rem;">[${ph.time}]</span>
+                                            <strong style="color:#ffffff; font-size:0.85rem;">»${ph.text}«</strong>
+                                        </div>
+                                        ${stSub(ph.text, 'st-tr-sent', lang)}
+                                        <div${rtlAttr} style="font-size:0.75rem; color:#94a3b8; margin-top:0.1rem;">${st(ph.note, lang)}</div>
                                     </div>
                                     <span style="color:#6ee7b7;">${samtaleIcons.audio(14)}</span>
                                 </button>
@@ -2608,30 +2644,33 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
             exCard.innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.7rem;">
                     <div>
-                        <h3 style="margin:0; font-size:1.05rem; font-weight:900;">Øvelser til videoen</h3>
-                        <div style="font-size:0.83rem; color:#94a3b8;">Opgave ${exIdx + 1}/${exercisesList.length} • Score: ${exSolved.size}/${exercisesList.length}</div>
+                        <h3${rtlAttr} style="margin:0; font-size:1.05rem; font-weight:900;">${st('Øvelser til videoen', lang)}</h3>
+                        <div style="font-size:0.83rem; color:#94a3b8;">${st('Opgave', lang)} ${exIdx + 1}/${exercisesList.length} • ${st('Score:', lang)} ${exSolved.size}/${exercisesList.length}</div>
                     </div>
                     <div style="display:flex; gap:0.4rem;">
-                        <button type="button" class="sh-btn-secondary" data-vex-prev ${exIdx === 0 ? 'disabled' :''}>← Forrige</button>
-                        <button type="button" class="sh-btn-secondary" data-vex-next ${exIdx === exercisesList.length - 1 ? 'disabled' :''}>Næste →</button>
+                        <button type="button" class="sh-btn-secondary" data-vex-prev ${exIdx === 0 ? 'disabled' :''}>${st('← Forrige', lang)}</button>
+                        <button type="button" class="sh-btn-secondary" data-vex-next ${exIdx === exercisesList.length - 1 ? 'disabled' :''}>${st('Næste →', lang)}</button>
                     </div>
                 </div>
 
-                <div style="padding:0.85rem 1rem; border-radius:14px; background:rgba(30,41,59,0.78); border-left:4px solid ${accentColor}; margin-bottom:0.75rem;">
-                    <div style="font-size:0.93rem; font-weight:800; color:#ffffff; margin-bottom:0.2rem;">${q.situation}</div>
-                    <div style="font-size:0.86rem; color:#fde68a; font-weight:700;">${q.prompt}</div>
+                <div${rtlAttr} style="padding:0.85rem 1rem; border-radius:14px; background:rgba(30,41,59,0.78); border-left:4px solid ${accentColor}; margin-bottom:0.75rem;">
+                    <div style="font-size:0.93rem; font-weight:800; color:#ffffff; margin-bottom:0.2rem;">${st(q.situation, lang)}</div>
+                    <div style="font-size:0.86rem; color:#fde68a; font-weight:700;">${st(q.prompt, lang)}</div>
                 </div>
 
                 <div style="display:grid; gap:0.48rem;">
                     ${q.options.map((opt, oIdx) => {
                         let cls = 'sh-option-btn';
                         if (exAnswered !== null) {
-                            if (opt.correct) cls += 'correct';
-                            else if (oIdx === exAnswered) cls += 'wrong';
+                            if (opt.correct) cls += ' correct';
+                            else if (oIdx === exAnswered) cls += ' wrong';
                         }
                         return `
                             <button type="button" class="${cls}" data-vex-opt="${oIdx}">
-                                <span>»${opt.text}«</span>
+                                <div>
+                                    <div>»${opt.text}«</div>
+                                    ${stSub(opt.text, 'st-tr-opt', lang)}
+                                </div>
                                 <span>${exAnswered !== null && opt.correct ? '✓' :''}</span>
                             </button>
                         `;
@@ -2639,8 +2678,8 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
                 </div>
 
                 ${exAnswered !== null ? `
-                    <div class="sh-feedback ${q.options[exAnswered]?.correct ? 'ok' :'err'}">
-                        <strong>${q.options[exAnswered]?.correct ? '✓ Rigtigt!' :'✗ Forklaring:'}</strong> ${q.explanation}
+                    <div class="sh-feedback ${q.options[exAnswered]?.correct ? 'ok' :'err'}"${rtlAttr}>
+                        <strong>${q.options[exAnswered]?.correct ? `✓ ${st('Rigtigt!', lang)}` : `✗ ${st('Forklaring:', lang)}`}</strong> ${st(q.explanation, lang)}
                     </div>
                 ` :''}
             `;
@@ -2709,12 +2748,12 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
     function renderShortsSection() {
         const s = VIDEO_LANE_D_SHORTS[activeShortIdx];
         shortsCard.innerHTML = `
-            <h3 style="margin:0 0 0.75rem; font-size:1.15rem; font-weight:900;">6 hverdags-situationer (Shorts)</h3>
+            <h3${rtlAttr} style="margin:0 0 0.75rem; font-size:1.15rem; font-weight:900;">${st('6 hverdags-situationer (Shorts)', lang)}</h3>
 
             <div style="display:flex; flex-wrap:wrap; gap:0.45rem; margin-bottom:0.95rem;">
                 ${VIDEO_LANE_D_SHORTS.map((item, idx) => `
                     <button type="button" class="sh-btn-secondary" data-short-switch="${idx}" style="display:inline-flex; align-items:center; gap:0.35rem; ${idx === activeShortIdx ? 'background:linear-gradient(135deg, #0891b2, #059669); color:#ffffff; border-color:#a5f3fc; font-weight:900;' :''}">
-                        ${samtaleIcons.play(11)} ${item.title.split('(')[0].trim()}
+                        ${samtaleIcons.play(11)} ${st(item.title.split('(')[0].trim(), lang)}
                     </button>
                 `).join('')}
             </div>
@@ -2732,12 +2771,15 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
                     </div>
                 </div>
                 <div style="background:rgba(9,14,26,0.92); border:1.5px solid rgba(148,163,184,0.25); border-radius:16px; padding:1rem;">
-                    <div style="font-size:1.05rem; font-weight:900; color:#ffffff; margin-bottom:0.3rem;">${s.title}</div>
-                    <p style="margin:0 0 0.7rem; font-size:0.88rem; color:#fde68a; font-weight:700;">${s.situation}</p>
+                    <div${rtlAttr} style="font-size:1.05rem; font-weight:900; color:#ffffff; margin-bottom:0.3rem;">${st(s.title, lang)}</div>
+                    <p${rtlAttr} style="margin:0 0 0.7rem; font-size:0.88rem; color:#fde68a; font-weight:700;">${st(s.situation, lang)}</p>
                     <div style="display:grid; gap:0.42rem;">
                         ${s.phrases.map(ph => `
                             <button type="button" class="sh-btn-secondary" data-short-tts="${ph.replace(/[»«]/g, '').replace(/"/g, '&quot;')}" style="text-align:left; display:flex; justify-content:space-between; align-items:center; gap:0.5rem; padding:0.55rem 0.8rem;">
-                                <span style="font-weight:800; color:#ffffff;">${ph}</span>
+                                <div>
+                                    <div style="font-weight:800; color:#ffffff;">${ph}</div>
+                                    ${stSub(ph, 'st-tr-sent', lang)}
+                                </div>
                                 <span style="color:#67e8f9;">${samtaleIcons.audio(14)}</span>
                             </button>
                         `).join('')}
@@ -2769,29 +2811,32 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
         shortExCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.7rem;">
                 <div>
-                    <h3 style="margin:0; font-size:1.05rem; font-weight:900;">Hurtig-træning</h3>
-                    <div style="font-size:0.83rem; color:#94a3b8;">Situation ${shortExIdx + 1}/${LANE_D_EXERCISES.length} • Løst: ${shortExSolved.size}/${LANE_D_EXERCISES.length}</div>
+                    <h3${rtlAttr} style="margin:0; font-size:1.05rem; font-weight:900;">${st('Hurtig-træning', lang)}</h3>
+                    <div style="font-size:0.83rem; color:#94a3b8;">${st('Situation', lang)} ${shortExIdx + 1}/${LANE_D_EXERCISES.length} • ${st('Løst:', lang)} ${shortExSolved.size}/${LANE_D_EXERCISES.length}</div>
                 </div>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="sh-btn-secondary" id="sh-sex-prev" ${shortExIdx === 0 ? 'disabled' :''}>← Forrige</button>
-                    <button type="button" class="sh-btn-secondary" id="sh-sex-next" ${shortExIdx === LANE_D_EXERCISES.length - 1 ? 'disabled' :''}>Næste →</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-sex-prev" ${shortExIdx === 0 ? 'disabled' :''}>${st('← Forrige', lang)}</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-sex-next" ${shortExIdx === LANE_D_EXERCISES.length - 1 ? 'disabled' :''}>${st('Næste →', lang)}</button>
                 </div>
             </div>
 
-            <div style="padding:0.85rem 1rem; border-radius:14px; background:rgba(30,41,59,0.78); border-left:4px solid #06b6d4; margin-bottom:0.75rem; font-size:0.94rem; font-weight:800; color:#ffffff;">
-                ${q.prompt}
+            <div${rtlAttr} style="padding:0.85rem 1rem; border-radius:14px; background:rgba(30,41,59,0.78); border-left:4px solid #06b6d4; margin-bottom:0.75rem; font-size:0.94rem; font-weight:800; color:#ffffff;">
+                ${st(q.prompt, lang)}
             </div>
 
             <div style="display:grid; gap:0.48rem;">
                 ${q.options.map((opt, idx) => {
                     let cls = 'sh-option-btn';
                     if (shortExAns !== null) {
-                        if (opt.correct) cls += 'correct';
-                        else if (idx === shortExAns) cls += 'wrong';
+                        if (opt.correct) cls += ' correct';
+                        else if (idx === shortExAns) cls += ' wrong';
                     }
                     return `
                         <button type="button" class="${cls}" data-sex-opt="${idx}">
-                            <span>»${opt.text}«</span>
+                            <div>
+                                <div>»${opt.text}«</div>
+                                ${stSub(opt.text, 'st-tr-opt', lang)}
+                            </div>
                             <span>${shortExAns !== null && opt.correct ? '✓' :''}</span>
                         </button>
                     `;
@@ -2799,8 +2844,8 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
             </div>
 
             ${shortExAns !== null ? `
-                <div class="sh-feedback ${q.options[shortExAns]?.correct ? 'ok' :'err'}">
-                    <strong>${q.options[shortExAns]?.correct ? '✓ Rigtigt!' :'✗ Forklaring:'}</strong> ${q.explanation}
+                <div class="sh-feedback ${q.options[shortExAns]?.correct ? 'ok' :'err'}"${rtlAttr}>
+                    <strong>${q.options[shortExAns]?.correct ? `✓ ${st('Rigtigt!', lang)}` : `✗ ${st('Forklaring:', lang)}`}</strong> ${st(q.explanation, lang)}
                 </div>
             ` :''}
         `;
@@ -2845,26 +2890,27 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
         detCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
                 <div>
-                    <h3 style="margin:0; font-size:1.1rem; font-weight:900;">Høfligheds-detektiven</h3>
-                    <div style="font-size:0.83rem; color:#94a3b8;">Mission ${detIdx + 1}/${DETECTIVE_MISSIONS.length} • Fundet: ${detSolved.size}/${DETECTIVE_MISSIONS.length}</div>
+                    <h3${rtlAttr} style="margin:0; font-size:1.1rem; font-weight:900;">${st('Høfligheds-detektiven', lang)}</h3>
+                    <div style="font-size:0.83rem; color:#94a3b8;">${st('Mission', lang)} ${detIdx + 1}/${DETECTIVE_MISSIONS.length} • ${st('Fundet:', lang)} ${detSolved.size}/${DETECTIVE_MISSIONS.length}</div>
                 </div>
                 <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
-                    <button type="button" class="sh-btn-secondary" id="sh-det-hint">${detShowHint ? 'Skjul spor' :'Vis spor'}</button>
-                    <button type="button" class="sh-btn-secondary" id="sh-det-prev" ${detIdx === 0 ? 'disabled' :''}>← Forrige</button>
-                    <button type="button" class="sh-btn-secondary" id="sh-det-next" ${detIdx === DETECTIVE_MISSIONS.length - 1 ? 'disabled' :''}>Næste →</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-det-hint">${detShowHint ? st('Skjul spor', lang) : st('Vis spor', lang)}</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-det-prev" ${detIdx === 0 ? 'disabled' :''}>${st('← Forrige', lang)}</button>
+                    <button type="button" class="sh-btn-secondary" id="sh-det-next" ${detIdx === DETECTIVE_MISSIONS.length - 1 ? 'disabled' :''}>${st('Næste →', lang)}</button>
                 </div>
             </div>
 
-            <div style="padding:0.85rem 1.05rem; border-radius:14px; background:rgba(30,41,59,0.85); border-left:4px solid #10b981; margin-bottom:0.8rem;">
-                <div style="font-size:0.98rem; font-weight:900; color:#ffffff;">${m.prompt}</div>
-                ${detShowHint ? `<div style="margin-top:0.35rem; font-size:0.84rem; color:#fde68a;">Spor: ${m.hint}</div>` :''}
+            <div${rtlAttr} style="padding:0.85rem 1.05rem; border-radius:14px; background:rgba(30,41,59,0.85); border-left:4px solid #10b981; margin-bottom:0.8rem;">
+                <div style="font-size:0.98rem; font-weight:900; color:#ffffff;">${st(m.prompt, lang)}</div>
+                ${detShowHint ? `<div style="margin-top:0.35rem; font-size:0.84rem; color:#fde68a;">${st('Spor:', lang)} ${st(m.hint, lang)}</div>` :''}
             </div>
 
             ${detFeedback ? `
                 <div class="sh-feedback ${detFeedback.ok ? 'ok' :'err'}" style="margin-bottom:0.8rem;">
-                    <div>${detFeedback.text}</div>
+                    <div${rtlAttr}>${detFeedback.text}</div>
+                    ${detFeedback.subHtml || ''}
                     ${detFeedback.ok && detIdx < DETECTIVE_MISSIONS.length - 1 ? `
-                        <button type="button" class="sh-btn-primary" id="sh-det-advance" style="margin-top:0.5rem;">Næste mission →</button>
+                        <button type="button" class="sh-btn-primary" id="sh-det-advance" style="margin-top:0.5rem;">${st('Næste mission →', lang)}</button>
                     ` :''}
                 </div>
             ` :''}
@@ -2894,13 +2940,14 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
                     detSolved.add(detIdx);
                     detFeedback = {
                         ok: true,
-                        text: `✓ Fundet! #${expr.num} »${expr.phrase}« (${expr.socialContext}).`
+                        text: `✓ ${st('Fundet!', lang)} #${expr.num} »${expr.phrase}« (${st(expr.socialContext, lang)}).`,
+                        subHtml: stSub(expr.phrase, 'st-tr-sent', lang)
                     };
                     speakPolite(expr.ttsText, expr.ttsRate, expr.ttsPitch);
                 } else {
                     detFeedback = {
                         ok: false,
-                        text: `✗ Det var #${expr.num} (»${expr.shortLabel}«). Prøv igen.`
+                        text: `✗ ${st('Det var', lang)} #${expr.num} (»${expr.shortLabel}«). ${st('Prøv igen.', lang)}`
                     };
                 }
                 renderDetective();

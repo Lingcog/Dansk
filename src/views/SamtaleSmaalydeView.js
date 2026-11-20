@@ -1,6 +1,7 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { shuffleArray } from '../utils/shuffle.js';
 import { samtaleIcons, samtaleRoleIcon } from '../utils/samtaleIcons.js';
+import { st, stSub, stRtlAttr, isSamtaleLangLoaded, ensureSamtaleLang, SAMTALE_TR_CSS } from '../utils/samtale_translations.js';
 
 /**
  * SamtaleSmaalydeView — "Små lyde der får en samtale til at fungere"
@@ -1768,17 +1769,30 @@ function speakSound(text, rate = 0.9, pitch = 1.0) {
 }
 
 export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {}) {
+    const lang = getLang() || 'da';
+    const rtlAttr = stRtlAttr(lang);
+
+    if (lang !== 'da' && !isSamtaleLangLoaded(lang)) {
+        container.innerHTML = `<div class="view-container sl-page" style="padding:2.5rem 1rem; text-align:center; color:#cbd5e1; font-weight:700;">...</div>`;
+        ensureSamtaleLang(lang).then(() => {
+            if ((getLang() || 'da') === lang && container.isConnected) {
+                renderSamtaleSmaalydeView(container, navigateFn, extraData);
+            }
+        });
+        return;
+    }
+
     container.innerHTML = '';
 
     const tabs = [
-        { id:'tab_vrimmel', label:'1. Vrimlebillede (20)' },
-        { id:'tab_vaelg', label:'2. Vælg lyd (20)' },
-        { id:'tab_duel', label:'3. Taler eller lytter? ' },
-        { id:'tab_tonefald', label:'4. Video: "Nå"' },
-        { id:'tab_uenig_video', label:'5. Video: Uenig' },
-        { id:'tab_live', label:'6. Hold samtalen i live' },
-        { id:'tab_robot', label:'7. Robot → Levende' },
-        { id:'tab_detektiv', label:'8. Detektiv' }
+        { id:'tab_vrimmel', label: st('1. Vrimlebillede (20)', lang) },
+        { id:'tab_vaelg', label: st('2. Vælg lyd (20)', lang) },
+        { id:'tab_duel', label: st('3. Taler eller lytter?', lang) },
+        { id:'tab_tonefald', label: st('4. Video: "Nå"', lang) },
+        { id:'tab_uenig_video', label: st('5. Video: Uenig', lang) },
+        { id:'tab_live', label: st('6. Hold samtalen i live', lang) },
+        { id:'tab_robot', label: st('7. Robot → Levende', lang) },
+        { id:'tab_detektiv', label: st('8. Detektiv', lang) }
     ];
 
     let currentTab = 'tab_vrimmel';
@@ -1792,11 +1806,14 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
         const styleEl = document.createElement('style');
         styleEl.id = 'samtale-smaalyde-styles';
         styleEl.textContent = `
+            ${SAMTALE_TR_CSS}
             .sl-page {
+                width: 100%;
                 max-width: 1260px;
                 margin: 0 auto;
                 padding: 1rem 1rem 4rem;
                 color: #f8fafc;
+                box-sizing: border-box;
             }
             .sl-hero {
                 background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.94));
@@ -2146,14 +2163,14 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
     const sisterBtn = document.createElement('button');
     sisterBtn.type = 'button';
     sisterBtn.className = 'sl-btn-secondary';
-    sisterBtn.innerHTML = 'Små ord →';
+    sisterBtn.innerHTML = st('Små ord →', lang);
     sisterBtn.onclick = () => navigateFn('samtale_smaaord');
     sisterWrap.appendChild(sisterBtn);
 
     const politeBtn = document.createElement('button');
     politeBtn.type = 'button';
     politeBtn.className = 'sl-btn-secondary';
-    politeBtn.innerHTML = 'Høflighed →';
+    politeBtn.innerHTML = st('Høflighed →', lang);
     politeBtn.onclick = () => navigateFn('samtale_hoeflighed');
     sisterWrap.appendChild(politeBtn);
 
@@ -2166,11 +2183,11 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
     hero.className = 'sl-hero';
     hero.style.padding = '1rem 1.35rem';
     hero.innerHTML = `
-        <h1 style="margin:0 0 0.25rem; font-size:clamp(1.35rem, 2.4vw, 1.85rem); font-weight:900; color:#ffffff; text-align:left;">
-            Små lyde i dansk samtale
+        <h1${rtlAttr} style="margin:0 0 0.25rem; font-size:clamp(1.35rem, 2.4vw, 1.85rem); font-weight:900; color:#ffffff; text-align:start;">
+            ${st('Små lyde i dansk samtale', lang)}
         </h1>
-        <p style="margin:0; color:#cbd5e1; font-size:0.92rem; line-height:1.45;">
-            20 danske dialoglyde, der styrer turtagning, aktiv lytning og følelser.
+        <p${rtlAttr} style="margin:0; color:#cbd5e1; font-size:0.92rem; line-height:1.45;">
+            ${st('20 danske dialoglyde, der styrer turtagning, aktiv lytning og følelser.', lang)}
         </p>
     `;
     viewContainer.appendChild(hero);
@@ -2226,14 +2243,14 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
     card1.innerHTML = `
         <div class="sl-toolbar">
             <div class="sl-filters">
-                <button type="button" class="sl-filter-btn active" data-rfilter="alle">Alle (20)</button>
-                <button type="button" class="sl-filter-btn" data-rfilter="taler" style="border-color:rgba(245,158,11,0.65); color:#fde68a;">${samtaleRoleIcon('taler', 14)} Taler (4)</button>
-                <button type="button" class="sl-filter-btn" data-rfilter="lytter" style="border-color:rgba(6,182,212,0.65); color:#67e8f9;">${samtaleRoleIcon('lytter', 14)} Lytter (7)</button>
-                <button type="button" class="sl-filter-btn" data-rfilter="begge" style="border-color:rgba(192,132,252,0.75); color:#e9d5ff;">${samtaleRoleIcon('begge', 14)} Begge (9)</button>
+                <button type="button" class="sl-filter-btn active" data-rfilter="alle">${st('Alle (20)', lang)}</button>
+                <button type="button" class="sl-filter-btn" data-rfilter="taler" style="border-color:rgba(245,158,11,0.65); color:#fde68a;">${samtaleRoleIcon('taler', 14)} ${st('Taler (4)', lang)}</button>
+                <button type="button" class="sl-filter-btn" data-rfilter="lytter" style="border-color:rgba(6,182,212,0.65); color:#67e8f9;">${samtaleRoleIcon('lytter', 14)} ${st('Lytter (7)', lang)}</button>
+                <button type="button" class="sl-filter-btn" data-rfilter="begge" style="border-color:rgba(192,132,252,0.75); color:#e9d5ff;">${samtaleRoleIcon('begge', 14)} ${st('Begge (9)', lang)}</button>
             </div>
             <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
-                <button type="button" class="sl-btn-secondary" id="sl-toggle-pinmode">Kun tal</button>
-                <button type="button" class="sl-btn-secondary" id="sl-zoom-btn">Zoom 135%</button>
+                <button type="button" class="sl-btn-secondary" id="sl-toggle-pinmode">${st('Kun tal', lang)}</button>
+                <button type="button" class="sl-btn-secondary" id="sl-zoom-btn">${st('Zoom 135%', lang)}</button>
             </div>
         </div>
 
@@ -2254,12 +2271,12 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
     card1.querySelector('#sl-zoom-btn').onclick = (e) => {
         zoomed = !zoomed;
         stageInner.style.transform = zoomed ? 'scale(1.35)' :'scale(1)';
-        e.currentTarget.textContent = zoomed ? 'Zoom 100%' :'Zoom 135%';
+        e.currentTarget.textContent = zoomed ? st('Zoom 100%', lang) : st('Zoom 135%', lang);
     };
 
     card1.querySelector('#sl-toggle-pinmode').onclick = (e) => {
         compactPins = !compactPins;
-        e.currentTarget.textContent = compactPins ? 'Vis ord' :'Kun tal';
+        e.currentTarget.textContent = compactPins ? st('Vis ord', lang) : st('Kun tal', lang);
         renderPegefelter();
     };
 
@@ -2273,48 +2290,52 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
 
         const showTaler = sig.role === 'taler' || sig.role === 'begge';
         const showLytter = sig.role === 'lytter' || sig.role === 'begge';
+        const talerEx = sig.talerUsage.replace(/^Som TALER[^:]*:\s*/i, '');
+        const lytterEx = sig.lytterUsage.replace(/^Som LYTTER[^:]*:\s*/i, '');
 
         detailBox.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.55rem;">
                 <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
                     <span style="font-size:1.3rem; font-weight:900; color:#ffffff;">#${sig.num}. ${sig.sound}</span>
                     <span class="sl-pill-tag" style="background:${meta.bg}; color:${meta.color}; border:1.5px solid ${meta.border};">
-                        ${roleIcon(sig.role, 13)} ${meta.short}
+                        ${roleIcon(sig.role, 13)} ${st(meta.short, lang)}
                     </span>
                 </div>
                 <button type="button" class="sl-btn-primary" id="sl-play-detail-audio" style="display:inline-flex; align-items:center; gap:0.4rem;">
-                    ${samtaleIcons.audio(15)} Lyt
+                    ${samtaleIcons.audio(15)} ${st('Lyt', lang)}
                 </button>
             </div>
 
-            <div style="font-size:0.95rem; color:#f1f5f9; font-weight:700; margin-bottom:0.35rem;">
-                ${sig.turnAction}
+            <div${rtlAttr} style="font-size:0.95rem; color:#f1f5f9; font-weight:700; margin-bottom:0.35rem;">
+                ${st(sig.turnAction, lang)}
             </div>
-            <div style="font-size:0.83rem; color:#94a3b8; margin-bottom:0.7rem;">
-                <strong>Tonefald:</strong> ${sig.intonation}
+            <div${rtlAttr} style="font-size:0.83rem; color:#94a3b8; margin-bottom:0.7rem;">
+                <strong>${st('Tonefald:', lang)}</strong> ${st(sig.intonation, lang)}
             </div>
 
             <div class="${showTaler && showLytter ? 'sl-two-cols' :''}" style="margin-bottom:0.65rem;">
                 ${showTaler ? `
                     <div style="background:rgba(245,158,11,0.1); border-left:4px solid #f59e0b; border-radius:12px; padding:0.7rem 0.9rem;">
                         <div style="font-size:0.74rem; font-weight:900; color:#fbbf24; text-transform:uppercase; margin-bottom:0.2rem; display:flex; align-items:center; gap:0.35rem;">
-                            ${samtaleIcons.taler(13)} Som taler
+                            ${samtaleIcons.taler(13)} ${st('Som taler', lang)}
                         </div>
-                        <div style="font-size:0.9rem; color:#f8fafc; line-height:1.45;">${sig.talerUsage.replace(/^Som TALER[^:]*:\s*/i, '')}</div>
+                        <div style="font-size:0.9rem; color:#f8fafc; line-height:1.45;">${talerEx}</div>
+                        ${stSub(talerEx, 'st-tr-sent', lang)}
                     </div>
                 ` :''}
                 ${showLytter ? `
                     <div style="background:rgba(6,182,212,0.1); border-left:4px solid #06b6d4; border-radius:12px; padding:0.7rem 0.9rem;">
                         <div style="font-size:0.74rem; font-weight:900; color:#22d3ee; text-transform:uppercase; margin-bottom:0.2rem; display:flex; align-items:center; gap:0.35rem;">
-                            ${samtaleIcons.lytter(13)} Som lytter
+                            ${samtaleIcons.lytter(13)} ${st('Som lytter', lang)}
                         </div>
-                        <div style="font-size:0.9rem; color:#f8fafc; line-height:1.45;">${sig.lytterUsage.replace(/^Som LYTTER[^:]*:\s*/i, '')}</div>
+                        <div style="font-size:0.9rem; color:#f8fafc; line-height:1.45;">${lytterEx}</div>
+                        ${stSub(lytterEx, 'st-tr-sent', lang)}
                     </div>
                 ` :''}
             </div>
 
-            <div style="font-size:0.83rem; color:#fde68a; background:rgba(245,158,11,0.09); border:1px solid rgba(245,158,11,0.28); border-radius:10px; padding:0.5rem 0.8rem;">
-                <strong>Pas på:</strong> ${sig.trapTip}
+            <div${rtlAttr} style="font-size:0.83rem; color:#fde68a; background:rgba(245,158,11,0.09); border:1px solid rgba(245,158,11,0.28); border-radius:10px; padding:0.5rem 0.8rem;">
+                <strong>${st('Pas på:', lang)}</strong> ${st(sig.trapTip, lang)}
             </div>
         `;
         const playBtn = detailBox.querySelector('#sl-play-detail-audio');
@@ -2379,10 +2400,10 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
         if (!showSortDrill) {
             sortCard.innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
-                    <div style="font-size:0.96rem; font-weight:800; color:#e2e8f0;">
-                        Sorteringsøvelse: Placér de 20 lyde i Taler, Lytter eller Begge (${placedSet.size}/${sortPool.length})
+                    <div${rtlAttr} style="font-size:0.96rem; font-weight:800; color:#e2e8f0;">
+                        ${st('Sorteringsøvelse: Placér de 20 lyde i Taler, Lytter eller Begge', lang)} (${placedSet.size}/${sortPool.length})
                     </div>
-                    <button type="button" class="sl-btn-secondary" id="sl-sort-toggle">Åbn øvelse</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-sort-toggle">${st('Åbn øvelse', lang)}</button>
                 </div>
             `;
             sortCard.querySelector('#sl-sort-toggle').onclick = () => {
@@ -2394,10 +2415,10 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
 
         sortCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
-                <h3 style="margin:0; font-size:1.05rem; font-weight:900;">Sortér efter rolle (${placedSet.size}/${sortPool.length})</h3>
+                <h3${rtlAttr} style="margin:0; font-size:1.05rem; font-weight:900;">${st('Sortér efter rolle', lang)} (${placedSet.size}/${sortPool.length})</h3>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="sl-btn-secondary" id="sl-sort-reset">Nulstil</button>
-                    <button type="button" class="sl-btn-secondary" id="sl-sort-toggle">Skjul</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-sort-reset">${st('Nulstil', lang)}</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-sort-toggle">${st('Skjul', lang)}</button>
                 </div>
             </div>
             <div style="display:flex; flex-wrap:wrap; gap:0.4rem; padding:0.75rem; border-radius:14px; background:rgba(9,14,26,0.85); border:1px solid rgba(148,163,184,0.22); margin-bottom:0.75rem;">
@@ -2413,13 +2434,13 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
             </div>
 
             ${activeItem ? `
-                <div style="margin-bottom:0.75rem; padding:0.6rem 0.9rem; border-radius:12px; background:rgba(56,189,248,0.12); border:1px solid #38bdf8; font-size:0.9rem;">
+                <div${rtlAttr} style="margin-bottom:0.75rem; padding:0.6rem 0.9rem; border-radius:12px; background:rgba(56,189,248,0.12); border:1px solid #38bdf8; font-size:0.9rem;">
                     <strong style="color:#ffffff;">${activeItem.sound}</strong>
-                    <span style="color:#cbd5e1;"> — ${activeItem.turnAction}</span>
+                    <span style="color:#cbd5e1;"> — ${st(activeItem.turnAction, lang)}</span>
                 </div>
             ` : `
-                <div class="sl-feedback ok" style="margin-bottom:0.75rem;">
-                    Flot! Alle 20 dialoglyde er sorteret.
+                <div class="sl-feedback ok"${rtlAttr} style="margin-bottom:0.75rem;">
+                    ${st('Flot! Alle 20 dialoglyde er sorteret.', lang)}
                 </div>
             `}
 
@@ -2434,18 +2455,18 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
                     return `
                         <button type="button" data-sort-bucket="${key}" style="text-align:left; padding:0.85rem; border-radius:14px; background:${m.bg}; border:2px dashed ${m.border}; color:#ffffff; cursor:pointer;">
                             <div style="font-size:0.94rem; font-weight:900; color:${m.color}; margin-bottom:0.45rem; display:flex; align-items:center; gap:0.35rem;">
-                                ${roleIcon(key, 14)} ${m.short} (${items.length}/${total})
+                                ${roleIcon(key, 14)} ${st(m.short, lang)} (${items.length}/${total})
                             </div>
                             <div style="display:flex; flex-wrap:wrap; gap:0.3rem;">
                                 ${items.length
                                     ? items.map(it => `<span style="padding:0.18rem 0.48rem; border-radius:999px; background:rgba(15,23,42,0.88); border:1px solid ${m.border}; font-size:0.76rem; font-weight:800;">${it.shortLabel}</span>`).join('')
-                                    : `<span style="font-size:0.8rem; color:#94a3b8;">Klik for at placere</span>`}
+                                    : `<span style="font-size:0.8rem; color:#94a3b8;">${st('Klik for at placere', lang)}</span>`}
                             </div>
                         </button>
                     `;
                 }).join('')}
             </div>
-            ${sortFeedback ? `<div class="sl-feedback ${sortFeedback.startsWith('✓') ? 'ok' :'err'}">${sortFeedback}</div>` :''}
+            ${sortFeedback ? `<div class="sl-feedback ${sortFeedback.startsWith('✓') ? 'ok' :'err'}"${rtlAttr}>${sortFeedback}</div>` :''}
         `;
 
         sortCard.querySelector('#sl-sort-toggle').onclick = () => {
@@ -2474,9 +2495,9 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
                 const item = sortPool[activeSortIdx];
                 if (item.role === targetRole) {
                     sortedBuckets[targetRole].push(activeSortIdx);
-                    sortFeedback = `✓ Rigtigt! "${item.sound}" er ${ROLE_META[targetRole].label}.`;
+                    sortFeedback = `✓ ${st('Rigtigt!', lang)} "${item.sound}" ${st('er', lang)} ${st(ROLE_META[targetRole].label, lang)}.`;
                 } else {
-                    sortFeedback = `✗ Ikke helt – "${item.sound}" hører under ${ROLE_META[item.role].label}.`;
+                    sortFeedback = `✗ ${st('Ikke helt –', lang)} "${item.sound}" ${st('hører under', lang)} ${st(ROLE_META[item.role].label, lang)}.`;
                 }
                 renderRoleSorting();
             };
@@ -2508,25 +2529,31 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
                 <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
                     <span class="sl-pill-tag" style="background:${meta.bg}; color:${meta.color}; border:1.5px solid ${meta.border};">
-                        ${roleIcon(q.role, 13)} ${meta.short}
+                        ${roleIcon(q.role, 13)} ${st(meta.short, lang)}
                     </span>
                     <span style="font-size:0.85rem; color:#94a3b8; font-weight:800;">
-                        Opgave ${chooseIdx + 1}/${CHOOSE_SOUND_EXERCISES.length} • Score: ${chooseScore}/${CHOOSE_SOUND_EXERCISES.length}
+                        ${st('Opgave', lang)} ${chooseIdx + 1}/${CHOOSE_SOUND_EXERCISES.length} • ${st('Score:', lang)} ${chooseScore}/${CHOOSE_SOUND_EXERCISES.length}
                     </span>
                 </div>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="sl-btn-secondary" id="sl-choose-prev" ${chooseIdx === 0 ? 'disabled' :''}>← Forrige</button>
-                    <button type="button" class="sl-btn-secondary" id="sl-choose-next" ${chooseIdx === CHOOSE_SOUND_EXERCISES.length - 1 ? 'disabled' :''}>Næste →</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-choose-prev" ${chooseIdx === 0 ? 'disabled' :''}>${st('← Forrige', lang)}</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-choose-next" ${chooseIdx === CHOOSE_SOUND_EXERCISES.length - 1 ? 'disabled' :''}>${st('Næste →', lang)}</button>
                 </div>
             </div>
 
-            <div style="font-size:0.9rem; color:#fde68a; background:rgba(245,158,11,0.09); border:1px solid rgba(245,158,11,0.28); border-radius:12px; padding:0.7rem 0.95rem; margin-bottom:0.85rem;">
-                <strong>Situation:</strong> ${q.context}
+            <div${rtlAttr} style="font-size:0.9rem; color:#fde68a; background:rgba(245,158,11,0.09); border:1px solid rgba(245,158,11,0.28); border-radius:12px; padding:0.7rem 0.95rem; margin-bottom:0.85rem;">
+                <strong>${st('Situation:', lang)}</strong> ${st(q.context, lang)}
             </div>
 
             <div style="background:rgba(9,14,26,0.92); border-left:4px solid ${meta.color}; border-radius:14px; padding:0.95rem 1.1rem; margin-bottom:0.95rem;">
-                <div style="font-size:0.96rem; color:#cbd5e1; margin-bottom:0.45rem;">${q.speakerA}</div>
-                <div style="font-size:1.08rem; font-weight:900; color:#ffffff;">${q.speakerB}</div>
+                <div style="margin-bottom:0.5rem;">
+                    <div style="font-size:0.96rem; color:#cbd5e1;">${q.speakerA}</div>
+                    ${stSub(q.speakerA, 'st-tr', lang)}
+                </div>
+                <div>
+                    <div style="font-size:1.08rem; font-weight:900; color:#ffffff;">${q.speakerB}</div>
+                    ${stSub(q.speakerB, 'st-tr-sent', lang)}
+                </div>
             </div>
 
             <div class="sl-two-cols">
@@ -2546,11 +2573,11 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
             </div>
 
             ${chooseAnswered ? `
-                <div class="sl-feedback ${chooseAnswered === q.answerId ? 'ok' :'err'}">
-                    <div>${chooseAnswered === q.answerId ? '✓ Rigtigt!' : `✗ Bedste valg: "${sigMap[q.answerId].sound}".`} ${q.explanation}</div>
+                <div class="sl-feedback ${chooseAnswered === q.answerId ? 'ok' :'err'}"${rtlAttr}>
+                    <div>${chooseAnswered === q.answerId ? `✓ ${st('Rigtigt!', lang)}` : `✗ ${st('Bedste valg:', lang)} "${sigMap[q.answerId].sound}".`} ${st(q.explanation, lang)}</div>
                     <div style="margin-top:0.55rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
-                        <button type="button" class="sl-btn-primary" id="sl-choose-audio" style="display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(14)} Lyt</button>
-                        ${chooseIdx < CHOOSE_SOUND_EXERCISES.length - 1 ? `<button type="button" class="sl-btn-secondary" id="sl-choose-advance">Næste →</button>` :''}
+                        <button type="button" class="sl-btn-primary" id="sl-choose-audio" style="display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(14)} ${st('Lyt', lang)}</button>
+                        ${chooseIdx < CHOOSE_SOUND_EXERCISES.length - 1 ? `<button type="button" class="sl-btn-secondary" id="sl-choose-advance">${st('Næste →', lang)}</button>` :''}
                     </div>
                 </div>
             ` :''}
@@ -2605,22 +2632,23 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
         card3.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
                 <div>
-                    <h3 style="margin:0; font-size:1.1rem; font-weight:900;">Taler eller lytter?</h3>
-                    <div style="font-size:0.84rem; color:#94a3b8;">Duel ${duelIdx + 1}/${SOUND_DUELS.length} • Rigtige: ${duelScore}/${SOUND_DUELS.length}</div>
+                    <h3${rtlAttr} style="margin:0; font-size:1.1rem; font-weight:900;">${st('Taler eller lytter?', lang)}</h3>
+                    <div style="font-size:0.84rem; color:#94a3b8;">${st('Duel', lang)} ${duelIdx + 1}/${SOUND_DUELS.length} • ${st('Rigtige:', lang)} ${duelScore}/${SOUND_DUELS.length}</div>
                 </div>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="sl-btn-secondary" id="sl-duel-prev" ${duelIdx === 0 ? 'disabled' :''}>← Forrige</button>
-                    <button type="button" class="sl-btn-secondary" id="sl-duel-next" ${duelIdx === SOUND_DUELS.length - 1 ? 'disabled' :''}>Næste →</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-duel-prev" ${duelIdx === 0 ? 'disabled' :''}>${st('← Forrige', lang)}</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-duel-next" ${duelIdx === SOUND_DUELS.length - 1 ? 'disabled' :''}>${st('Næste →', lang)}</button>
                 </div>
             </div>
 
             <div style="background:rgba(9,14,26,0.92); border:1.5px solid rgba(192,132,252,0.45); border-radius:16px; padding:1rem 1.15rem; margin-bottom:0.95rem;">
-                <div style="font-size:0.78rem; font-weight:900; color:#fde68a; text-transform:uppercase; margin-bottom:0.25rem;">
-                    Fokus: ${d.signal}
+                <div${rtlAttr} style="font-size:0.78rem; font-weight:900; color:#fde68a; text-transform:uppercase; margin-bottom:0.25rem;">
+                    ${st('Fokus:', lang)} ${st(d.signal, lang)}
                 </div>
                 <div style="font-size:1.08rem; font-weight:900; color:#ffffff; line-height:1.45;">
                     ${d.quote}
                 </div>
+                ${stSub(d.quote, 'st-tr-sent', lang)}
             </div>
 
             <div class="sl-two-cols">
@@ -2635,7 +2663,7 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
                         <button type="button" class="sl-option-btn ${cls}" data-duel-opt="${ch.id}">
                             <span style="display:inline-flex; align-items:center; gap:0.5rem;">
                                 <span style="color:${m.color};">${roleIcon(ch.role, 16)}</span>
-                                <span>${ch.label}</span>
+                                <span${rtlAttr}>${st(ch.label, lang)}</span>
                             </span>
                         </button>
                     `;
@@ -2643,9 +2671,9 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
             </div>
 
             ${duelPicked ? `
-                <div class="sl-feedback ${duelPicked === d.correctAction ? 'ok' :'err'}">
-                    <div>${duelPicked === d.correctAction ? '✓ Præcis!' :'✗ Se på rollen i dialogen:'} ${d.explanation}</div>
-                    ${duelIdx < SOUND_DUELS.length - 1 ? `<button type="button" class="sl-btn-secondary" id="sl-duel-adv" style="margin-top:0.55rem;">Næste →</button>` :''}
+                <div class="sl-feedback ${duelPicked === d.correctAction ? 'ok' :'err'}"${rtlAttr}>
+                    <div>${duelPicked === d.correctAction ? `✓ ${st('Præcis!', lang)}` : `✗ ${st('Se på rollen i dialogen:', lang)}`} ${st(d.explanation, lang)}</div>
+                    ${duelIdx < SOUND_DUELS.length - 1 ? `<button type="button" class="sl-btn-secondary" id="sl-duel-adv" style="margin-top:0.55rem;">${st('Næste →', lang)}</button>` :''}
                 </div>
             ` :''}
         `;
@@ -2689,12 +2717,12 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
     videoCard4.className = 'sl-card';
     videoCard4.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.85rem;">
-            <h3 style="margin:0; font-size:1.18rem; font-weight:900; color:#ffffff;">
-                "Nå… på dansk" — 10 betydninger
+            <h3${rtlAttr} style="margin:0; font-size:1.18rem; font-weight:900; color:#ffffff;">
+                ${st('"Nå… på dansk" — 10 betydninger', lang)}
             </h3>
             <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
                 <button type="button" class="sl-btn-secondary" id="sl-naa-play-start" style="display:inline-flex; align-items:center; gap:0.35rem;">
-                    ${samtaleIcons.play(12)} Fra start
+                    ${samtaleIcons.play(12)} ${st('Fra start', lang)}
                 </button>
                 <a href="https://youtu.be/${NAA_YOUTUBE_ID}" target="_blank" rel="noopener noreferrer" class="sl-btn-secondary" style="text-decoration:none;">
                     YouTube ↗
@@ -2737,25 +2765,28 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
         activeNaaDetailBox.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.45rem;">
                 <span class="sl-pill-tag" style="background:${meta.bg}; color:${meta.color}; border:1px solid ${meta.border};">
-                    ${roleIcon(activeNaaVariant.role, 12)} ${meta.short}
+                    ${roleIcon(activeNaaVariant.role, 12)} ${st(meta.short, lang)}
                 </span>
                 <div style="display:flex; gap:0.4rem;">
                     <button type="button" class="sl-btn-primary" id="sl-naa-jump-clip" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">
-                        ${samtaleIcons.play(12)} Klip (${activeNaaVariant.timeLabel})
+                        ${samtaleIcons.play(12)} ${st('Klip', lang)} (${activeNaaVariant.timeLabel})
                     </button>
                     <button type="button" class="sl-btn-secondary" id="sl-naa-tts-clip" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">
-                        ${samtaleIcons.audio(13)} Lyt
+                        ${samtaleIcons.audio(13)} ${st('Lyt', lang)}
                     </button>
                 </div>
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center; gap:0.65rem; margin-bottom:0.35rem;">
-                <div style="font-size:0.98rem; font-weight:900; color:#fde68a;">${activeNaaVariant.quoteFromVideo}</div>
+                <div>
+                    <div style="font-size:0.98rem; font-weight:900; color:#fde68a;">${activeNaaVariant.quoteFromVideo}</div>
+                    ${stSub(activeNaaVariant.quoteFromVideo, 'st-tr-sent', lang)}
+                </div>
                 <svg width="88" height="34" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.9); border-radius:8px; border:1px solid rgba(148,163,184,0.28); flex-shrink:0;">
                     <path d="${activeNaaVariant.curve}" fill="none" stroke="${activeNaaVariant.color}" stroke-width="3.2" stroke-linecap="round"/>
                 </svg>
             </div>
-            <div style="font-size:0.84rem; color:#cbd5e1; line-height:1.45;">
-                ${activeNaaVariant.meaning}
+            <div${rtlAttr} style="font-size:0.84rem; color:#cbd5e1; line-height:1.45;">
+                ${st(activeNaaVariant.meaning, lang)}
             </div>
         `;
 
@@ -2769,13 +2800,14 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
         variantsListBox.innerHTML = NAA_VIDEO_VARIANTS.map(v => {
             const vMeta = ROLE_META[v.role];
             const isSel = v.id === activeNaaVariant.id;
+            const subRaw = v.badgeText.split('= ')[1] ? v.badgeText.split('= ')[1].trim() : v.meaning;
             return `
                 <button type="button" data-naa-vid="${v.id}" style="text-align:left; padding:0.5rem 0.68rem; border-radius:11px; background:${isSel ? 'rgba(56,189,248,0.18)' :'rgba(15,23,42,0.85)'}; border:1.5px solid ${isSel ? '#38bdf8' : vMeta.border}; color:#ffffff; cursor:pointer; display:flex; flex-direction:column; gap:0.2rem;">
                     <div style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:0.35rem;">
-                        <span style="font-size:0.83rem; font-weight:900; color:#ffffff;">${v.label}</span>
+                        <span style="font-size:0.83rem; font-weight:900; color:#ffffff;">${st(v.label, lang)}</span>
                         <span style="font-size:0.69rem; font-weight:900; padding:0.1rem 0.4rem; border-radius:999px; background:${vMeta.bg}; color:${vMeta.color}; display:inline-flex; align-items:center; gap:0.22rem;">${roleIcon(v.role, 11)} ${v.timeLabel}</span>
                     </div>
-                    <div style="font-size:0.74rem; color:#94a3b8; line-height:1.3;">${v.badgeText.split('= ')[1] ? v.badgeText.split('= ')[1].trim() : v.meaning}</div>
+                    <div${rtlAttr} style="font-size:0.74rem; color:#94a3b8; line-height:1.3;">${st(subRaw, lang)}</div>
                 </button>
             `;
         }).join('');
@@ -2817,37 +2849,37 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
         card4.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.7rem;">
                 <div>
-                    <h3 style="margin:0; font-size:1.08rem; font-weight:900;">Tonefalds-øvelser</h3>
-                    <div style="font-size:0.83rem; color:#94a3b8;">Opgave ${labIdx + 1}/${list.length}</div>
+                    <h3${rtlAttr} style="margin:0; font-size:1.08rem; font-weight:900;">${st('Tonefalds-øvelser', lang)}</h3>
+                    <div style="font-size:0.83rem; color:#94a3b8;">${st('Opgave', lang)} ${labIdx + 1}/${list.length}</div>
                 </div>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="sl-btn-secondary" id="sl-lab-prev" ${labIdx === 0 ? 'disabled' :''}>← Forrige</button>
-                    <button type="button" class="sl-btn-secondary" id="sl-lab-next" ${labIdx === list.length - 1 ? 'disabled' :''}>Næste →</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-lab-prev" ${labIdx === 0 ? 'disabled' :''}>${st('← Forrige', lang)}</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-lab-next" ${labIdx === list.length - 1 ? 'disabled' :''}>${st('Næste →', lang)}</button>
                 </div>
             </div>
 
             <div class="sl-filters" style="margin-bottom:0.85rem;">
-                <button type="button" class="sl-filter-btn ${labFilter === 'naa_video' ? 'active' :''}" data-lfilter="naa_video">"Nå" fra video (10)</button>
-                <button type="button" class="sl-filter-btn ${labFilter === 'other' ? 'active' :''}" data-lfilter="other">Andre lyde (5)</button>
-                <button type="button" class="sl-filter-btn ${labFilter === 'all' ? 'active' :''}" data-lfilter="all">Alle (15)</button>
+                <button type="button" class="sl-filter-btn ${labFilter === 'naa_video' ? 'active' :''}" data-lfilter="naa_video">${st('"Nå" fra video (10)', lang)}</button>
+                <button type="button" class="sl-filter-btn ${labFilter === 'other' ? 'active' :''}" data-lfilter="other">${st('Andre lyde (5)', lang)}</button>
+                <button type="button" class="sl-filter-btn ${labFilter === 'all' ? 'active' :''}" data-lfilter="all">${st('Alle (15)', lang)}</button>
             </div>
 
             <div style="background:rgba(9,14,26,0.92); border:1.5px solid ${roleMeta.border}; border-radius:15px; padding:0.95rem 1.1rem; margin-bottom:0.9rem;">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.45rem; margin-bottom:0.45rem;">
                     <span class="sl-pill-tag" style="background:${roleMeta.bg}; color:${roleMeta.color}; border:1px solid ${roleMeta.border};">
-                        ${roleIcon(item.role || 'lytter', 12)} ${roleMeta.short}
+                        ${roleIcon(item.role || 'lytter', 12)} ${st(roleMeta.short, lang)}
                     </span>
                     <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
-                        <button type="button" class="sl-btn-primary" id="sl-lab-listen" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(13)} Lyt</button>
+                        <button type="button" class="sl-btn-primary" id="sl-lab-listen" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(13)} ${st('Lyt', lang)}</button>
                         ${item.isNaaVideo ? `
                             <button type="button" class="sl-btn-secondary" id="sl-lab-watch-clip" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">
-                                ${samtaleIcons.play(12)} Se klip (${item.videoTimeLabel})
+                                ${samtaleIcons.play(12)} ${st('Se klip', lang)} (${item.videoTimeLabel})
                             </button>
                         ` :''}
                     </div>
                 </div>
-                <div style="font-size:1rem; font-weight:900; color:#fde68a; margin-bottom:0.25rem;">${item.title}</div>
-                <div style="font-size:0.93rem; color:#e2e8f0; line-height:1.45;">${item.situation}</div>
+                <div${rtlAttr} style="font-size:1rem; font-weight:900; color:#fde68a; margin-bottom:0.25rem;">${st(item.title, lang)}</div>
+                <div${rtlAttr} style="font-size:0.93rem; color:#e2e8f0; line-height:1.45;">${st(item.situation, lang)}</div>
             </div>
 
             <div class="sl-two-cols">
@@ -2860,21 +2892,21 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
                     return `
                         <button type="button" class="sl-option-btn ${cls}" data-lab-opt="${vIdx}" style="flex-direction:column; align-items:flex-start;">
                             <div style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:0.5rem;">
-                                <span style="font-size:0.94rem; font-weight:900; color:#ffffff;">${v.label}</span>
+                                <span${rtlAttr} style="font-size:0.94rem; font-weight:900; color:#ffffff;">${st(v.label, lang)}</span>
                                 <svg width="88" height="34" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.85); border-radius:8px; border:1px solid rgba(148,163,184,0.25); flex-shrink:0;">
                                     <path d="${v.curve}" fill="none" stroke="${v.color}" stroke-width="3.2" stroke-linecap="round"/>
                                 </svg>
                             </div>
-                            <div style="font-size:0.81rem; color:#cbd5e1; font-weight:600;">${v.meaning}</div>
+                            <div${rtlAttr} style="font-size:0.81rem; color:#cbd5e1; font-weight:600;">${st(v.meaning, lang)}</div>
                         </button>
                     `;
                 }).join('')}
             </div>
 
             ${labPicked !== null ? `
-                <div class="sl-feedback ${labPicked === item.correctIdx ? 'ok' :'err'}">
-                    <div>${labPicked === item.correctIdx ? '✓ Rigtigt!' :'✗ Bemærk tonefaldet:'} ${item.explanation}</div>
-                    ${labIdx < list.length - 1 ? `<button type="button" class="sl-btn-secondary" id="sl-lab-adv" style="margin-top:0.55rem;">Næste →</button>` :''}
+                <div class="sl-feedback ${labPicked === item.correctIdx ? 'ok' :'err'}"${rtlAttr}>
+                    <div>${labPicked === item.correctIdx ? `✓ ${st('Rigtigt!', lang)}` : `✗ ${st('Bemærk tonefaldet:', lang)}`} ${st(item.explanation, lang)}</div>
+                    ${labIdx < list.length - 1 ? `<button type="button" class="sl-btn-secondary" id="sl-lab-adv" style="margin-top:0.55rem;">${st('Næste →', lang)}</button>` :''}
                 </div>
             ` :''}
         `;
@@ -2932,12 +2964,12 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
     videoCardUenig.className = 'sl-card';
     videoCardUenig.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.85rem;">
-            <h3 style="margin:0; font-size:1.18rem; font-weight:900; color:#ffffff;">
-                "At være uenig i noget" — 8 udtryk
+            <h3${rtlAttr} style="margin:0; font-size:1.18rem; font-weight:900; color:#ffffff;">
+                ${st('"At være uenig i noget" — 8 udtryk', lang)}
             </h3>
             <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
                 <button type="button" class="sl-btn-secondary" id="sl-uenig-play-start" style="display:inline-flex; align-items:center; gap:0.35rem;">
-                    ${samtaleIcons.play(12)} Fra start
+                    ${samtaleIcons.play(12)} ${st('Fra start', lang)}
                 </button>
                 <a href="https://www.youtube.com/watch?v=${UENIG_YOUTUBE_ID}" target="_blank" rel="noopener noreferrer" class="sl-btn-secondary" style="text-decoration:none;">
                     YouTube ↗
@@ -2987,29 +3019,32 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.45rem; margin-bottom:0.45rem;">
                 <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;">
                     <span class="sl-pill-tag" style="background:rgba(15,23,42,0.9); color:${regColor}; border:1px solid ${regColor};">
-                        ${activeUenigVariant.registerLabel}
+                        ${st(activeUenigVariant.registerLabel, lang)}
                     </span>
                     <span class="sl-pill-tag" style="background:${meta.bg}; color:${meta.color}; border:1px solid ${meta.border};">
-                        ${roleIcon(activeUenigVariant.role, 12)} ${meta.short}
+                        ${roleIcon(activeUenigVariant.role, 12)} ${st(meta.short, lang)}
                     </span>
                 </div>
                 <div style="display:flex; gap:0.4rem;">
                     <button type="button" class="sl-btn-primary" id="sl-uenig-jump-clip" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">
-                        ${samtaleIcons.play(12)} Klip (${activeUenigVariant.timeLabel})
+                        ${samtaleIcons.play(12)} ${st('Klip', lang)} (${activeUenigVariant.timeLabel})
                     </button>
                     <button type="button" class="sl-btn-secondary" id="sl-uenig-tts-clip" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">
-                        ${samtaleIcons.audio(13)} Lyt
+                        ${samtaleIcons.audio(13)} ${st('Lyt', lang)}
                     </button>
                 </div>
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center; gap:0.65rem; margin-bottom:0.35rem;">
-                <div style="font-size:0.98rem; font-weight:900; color:#fde68a;">${activeUenigVariant.quoteFromVideo}</div>
+                <div>
+                    <div style="font-size:0.98rem; font-weight:900; color:#fde68a;">${activeUenigVariant.quoteFromVideo}</div>
+                    ${stSub(activeUenigVariant.quoteFromVideo, 'st-tr-sent', lang)}
+                </div>
                 <svg width="88" height="34" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.9); border-radius:8px; border:1px solid rgba(148,163,184,0.28); flex-shrink:0;">
                     <path d="${activeUenigVariant.curve}" fill="none" stroke="${activeUenigVariant.color}" stroke-width="3.2" stroke-linecap="round"/>
                 </svg>
             </div>
-            <div style="font-size:0.84rem; color:#cbd5e1; line-height:1.45;">
-                ${activeUenigVariant.meaning}
+            <div${rtlAttr} style="font-size:0.84rem; color:#cbd5e1; line-height:1.45;">
+                ${st(activeUenigVariant.meaning, lang)}
             </div>
         `;
 
@@ -3029,7 +3064,7 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
                         <span style="font-size:0.82rem; font-weight:900; color:#ffffff;">${v.label}</span>
                         <span style="font-size:0.69rem; font-weight:900; padding:0.1rem 0.4rem; border-radius:999px; background:rgba(15,23,42,0.9); color:${rCol}; border:1px solid ${rCol};">${v.timeLabel}</span>
                     </div>
-                    <div style="font-size:0.73rem; color:#94a3b8; font-weight:700;">${v.registerLabel}</div>
+                    <div${rtlAttr} style="font-size:0.73rem; color:#94a3b8; font-weight:700;">${st(v.registerLabel, lang)}</div>
                 </button>
             `;
         }).join('');
@@ -3071,35 +3106,35 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
         cardUenigQuiz.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.7rem;">
                 <div>
-                    <h3 style="margin:0; font-size:1.08rem; font-weight:900;">Øvelser til videoen</h3>
-                    <div style="font-size:0.83rem; color:#94a3b8;">Opgave ${uenigIdx + 1}/${list.length}</div>
+                    <h3${rtlAttr} style="margin:0; font-size:1.08rem; font-weight:900;">${st('Øvelser til videoen', lang)}</h3>
+                    <div style="font-size:0.83rem; color:#94a3b8;">${st('Opgave', lang)} ${uenigIdx + 1}/${list.length}</div>
                 </div>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="sl-btn-secondary" id="sl-uenig-prev" ${uenigIdx === 0 ? 'disabled' :''}>← Forrige</button>
-                    <button type="button" class="sl-btn-secondary" id="sl-uenig-next" ${uenigIdx === list.length - 1 ? 'disabled' :''}>Næste →</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-uenig-prev" ${uenigIdx === 0 ? 'disabled' :''}>${st('← Forrige', lang)}</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-uenig-next" ${uenigIdx === list.length - 1 ? 'disabled' :''}>${st('Næste →', lang)}</button>
                 </div>
             </div>
 
             <div class="sl-filters" style="margin-bottom:0.85rem;">
-                <button type="button" class="sl-filter-btn ${uenigFilter === 'all' ? 'active' :''}" data-ufilter="all">Alle (8)</button>
-                <button type="button" class="sl-filter-btn ${uenigFilter === 'uformel' ? 'active' :''}" data-ufilter="uformel">Uformel (5)</button>
-                <button type="button" class="sl-filter-btn ${uenigFilter === 'hoeflig' ? 'active' :''}" data-ufilter="hoeflig">Høflig (3)</button>
+                <button type="button" class="sl-filter-btn ${uenigFilter === 'all' ? 'active' :''}" data-ufilter="all">${st('Alle (8)', lang)}</button>
+                <button type="button" class="sl-filter-btn ${uenigFilter === 'uformel' ? 'active' :''}" data-ufilter="uformel">${st('Uformel (5)', lang)}</button>
+                <button type="button" class="sl-filter-btn ${uenigFilter === 'hoeflig' ? 'active' :''}" data-ufilter="hoeflig">${st('Høflig (3)', lang)}</button>
             </div>
 
             <div style="background:rgba(9,14,26,0.92); border:1.5px solid ${roleMeta.border}; border-radius:15px; padding:0.95rem 1.1rem; margin-bottom:0.9rem;">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.45rem; margin-bottom:0.45rem;">
                     <span class="sl-pill-tag" style="background:${roleMeta.bg}; color:${roleMeta.color}; border:1px solid ${roleMeta.border};">
-                        ${roleIcon(item.role || 'lytter', 12)} ${roleMeta.short}
+                        ${roleIcon(item.role || 'lytter', 12)} ${st(roleMeta.short, lang)}
                     </span>
                     <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
-                        <button type="button" class="sl-btn-primary" id="sl-uenig-listen" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(13)} Lyt</button>
+                        <button type="button" class="sl-btn-primary" id="sl-uenig-listen" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">${samtaleIcons.audio(13)} ${st('Lyt', lang)}</button>
                         <button type="button" class="sl-btn-secondary" id="sl-uenig-watch-clip" style="padding:0.36rem 0.72rem; font-size:0.8rem; display:inline-flex; align-items:center; gap:0.35rem;">
-                            ${samtaleIcons.play(12)} Se klip (${item.videoTimeLabel})
+                            ${samtaleIcons.play(12)} ${st('Se klip', lang)} (${item.videoTimeLabel})
                         </button>
                     </div>
                 </div>
-                <div style="font-size:1rem; font-weight:900; color:#fde68a; margin-bottom:0.25rem;">${item.title}</div>
-                <div style="font-size:0.93rem; color:#e2e8f0; line-height:1.45;">${item.situation}</div>
+                <div${rtlAttr} style="font-size:1rem; font-weight:900; color:#fde68a; margin-bottom:0.25rem;">${st(item.title, lang)}</div>
+                <div${rtlAttr} style="font-size:0.93rem; color:#e2e8f0; line-height:1.45;">${st(item.situation, lang)}</div>
             </div>
 
             <div class="sl-two-cols">
@@ -3112,21 +3147,21 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
                     return `
                         <button type="button" class="sl-option-btn ${cls}" data-uenig-opt="${vIdx}" style="flex-direction:column; align-items:flex-start;">
                             <div style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:0.5rem;">
-                                <span style="font-size:0.94rem; font-weight:900; color:#ffffff;">${v.label}</span>
+                                <span${rtlAttr} style="font-size:0.94rem; font-weight:900; color:#ffffff;">${st(v.label, lang)}</span>
                                 <svg width="88" height="34" viewBox="0 0 100 38" style="background:rgba(15,23,42,0.85); border-radius:8px; border:1px solid rgba(148,163,184,0.25); flex-shrink:0;">
                                     <path d="${v.curve}" fill="none" stroke="${v.color}" stroke-width="3.2" stroke-linecap="round"/>
                                 </svg>
                             </div>
-                            <div style="font-size:0.81rem; color:#cbd5e1; font-weight:600;">${v.meaning}</div>
+                            <div${rtlAttr} style="font-size:0.81rem; color:#cbd5e1; font-weight:600;">${st(v.meaning, lang)}</div>
                         </button>
                     `;
                 }).join('')}
             </div>
 
             ${uenigPicked !== null ? `
-                <div class="sl-feedback ${uenigPicked === item.correctIdx ? 'ok' :'err'}">
-                    <div>${uenigPicked === item.correctIdx ? '✓ Rigtigt!' :'✗ Se videoens eksempel:'} ${item.explanation}</div>
-                    ${uenigIdx < list.length - 1 ? `<button type="button" class="sl-btn-secondary" id="sl-uenig-adv" style="margin-top:0.55rem;">Næste →</button>` :''}
+                <div class="sl-feedback ${uenigPicked === item.correctIdx ? 'ok' :'err'}"${rtlAttr}>
+                    <div>${uenigPicked === item.correctIdx ? `✓ ${st('Rigtigt!', lang)}` : `✗ ${st('Se videoens eksempel:', lang)}`} ${st(item.explanation, lang)}</div>
+                    ${uenigIdx < list.length - 1 ? `<button type="button" class="sl-btn-secondary" id="sl-uenig-adv" style="margin-top:0.55rem;">${st('Næste →', lang)}</button>` :''}
                 </div>
             ` :''}
         `;
@@ -3187,41 +3222,44 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
 
         card5.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
-                <h3 style="margin:0; font-size:1.1rem; font-weight:900;">Hold samtalen i live</h3>
+                <h3${rtlAttr} style="margin:0; font-size:1.1rem; font-weight:900;">${st('Hold samtalen i live', lang)}</h3>
                 <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
                     ${LIVE_SOUND_CONVERSATIONS.map((c, idx) => `
                         <button type="button" class="sl-filter-btn ${idx === simIdx ? 'active' :''}" data-sim-pick="${idx}">
-                            ${c.title}
+                            ${st(c.title, lang)}
                         </button>
                     `).join('')}
                 </div>
             </div>
 
-            <div style="font-size:0.88rem; color:#cbd5e1; background:rgba(15,23,42,0.85); border:1px solid rgba(148,163,184,0.22); border-radius:12px; padding:0.65rem 0.95rem; margin-bottom:0.9rem;">
-                ${sim.scene}
+            <div${rtlAttr} style="font-size:0.88rem; color:#cbd5e1; background:rgba(15,23,42,0.85); border:1px solid rgba(148,163,184,0.22); border-radius:12px; padding:0.65rem 0.95rem; margin-bottom:0.9rem;">
+                ${st(sim.scene, lang)}
             </div>
 
             <div style="display:flex; flex-direction:column; gap:0.55rem; margin-bottom:0.95rem;">
                 ${simHistory.map(h => `
                     <div style="background:rgba(30,41,59,0.75); border-radius:12px; padding:0.6rem 0.9rem; font-size:0.88rem; color:#cbd5e1;">
-                        ${h.partnerLine}
+                        <div>${h.partnerLine}</div>
+                        ${stSub(h.partnerLine, 'st-tr', lang)}
                     </div>
                     <div style="align-self:flex-end; background:rgba(34,197,94,0.18); border:1px solid rgba(74,222,128,0.45); border-radius:12px; padding:0.55rem 0.9rem; font-size:0.88rem; color:#bbf7d0; font-weight:800;">
-                        Dig: "${h.userReply}" ✓
+                        <div>${st('Dig:', lang)} "${h.userReply}" ✓</div>
+                        ${stSub(h.userReply, 'st-tr', lang)}
                     </div>
                 `).join('')}
             </div>
 
             ${turn ? `
                 <div style="background:rgba(9,14,26,0.94); border-left:4px solid ${roleMeta.color}; border-radius:14px; padding:0.95rem 1.1rem; margin-bottom:0.9rem;">
-                    <div style="font-size:1rem; color:#ffffff; font-weight:800; margin-bottom:0.5rem;">
-                        ${turn.partnerLine}
+                    <div style="margin-bottom:0.5rem;">
+                        <div style="font-size:1rem; color:#ffffff; font-weight:800;">${turn.partnerLine}</div>
+                        ${stSub(turn.partnerLine, 'st-tr-sent', lang)}
                     </div>
                     <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
                         <span class="sl-pill-tag" style="background:${roleMeta.bg}; color:${roleMeta.color}; border:1px solid ${roleMeta.border};">
-                            ${roleIcon(turn.targetRole, 12)} ${roleMeta.short}
+                            ${roleIcon(turn.targetRole, 12)} ${st(roleMeta.short, lang)}
                         </span>
-                        <span style="font-size:0.86rem; color:#fde68a; font-weight:700;">${turn.instruction}</span>
+                        <span${rtlAttr} style="font-size:0.86rem; color:#fde68a; font-weight:700;">${st(turn.instruction, lang)}</span>
                     </div>
                 </div>
 
@@ -3233,29 +3271,30 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
                             else if (oIdx === simPickedOpt) cls = 'wrong';
                         }
                         return `
-                            <button type="button" class="sl-option-btn ${cls}" data-sim-opt="${oIdx}">
+                            <button type="button" class="sl-option-btn ${cls}" data-sim-opt="${oIdx}" style="flex-direction:column; align-items:flex-start; gap:0.12rem;">
                                 <span>"${opt.text}"</span>
+                                ${stSub(opt.text, 'st-tr-opt', lang)}
                             </button>
                         `;
                     }).join('')}
                 </div>
 
                 ${simPickedOpt !== null ? `
-                    <div class="sl-feedback ${turn.options[simPickedOpt].ok ? 'ok' :'err'}">
-                        <div>${turn.options[simPickedOpt].feedback}</div>
+                    <div class="sl-feedback ${turn.options[simPickedOpt].ok ? 'ok' :'err'}"${rtlAttr}>
+                        <div>${st(turn.options[simPickedOpt].feedback, lang)}</div>
                         ${turn.options[simPickedOpt].ok ? `
                             <button type="button" class="sl-btn-primary" id="sl-sim-continue" style="margin-top:0.55rem;">
-                                ${simTurnIdx < sim.turns.length - 1 ? 'Fortsæt →' :'Afslut'}
+                                ${simTurnIdx < sim.turns.length - 1 ? st('Fortsæt →', lang) : st('Afslut', lang)}
                             </button>
                         ` :''}
                     </div>
                 ` :''}
             ` : `
-                <div class="sl-feedback ok">
-                    <div style="font-size:1rem; margin-bottom:0.45rem;">✓ Flot! Du gennemførte samtalen med ${sim.partner}.</div>
+                <div class="sl-feedback ok"${rtlAttr}>
+                    <div style="font-size:1rem; margin-bottom:0.45rem;">✓ ${st('Flot! Du gennemførte samtalen med', lang)} ${st(sim.partner, lang)}.</div>
                     <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-                        <button type="button" class="sl-btn-secondary" id="sl-sim-restart">Prøv igen</button>
-                        ${simIdx < LIVE_SOUND_CONVERSATIONS.length - 1 ? `<button type="button" class="sl-btn-primary" id="sl-sim-next-scene">Næste samtale →</button>` :''}
+                        <button type="button" class="sl-btn-secondary" id="sl-sim-restart">${st('Prøv igen', lang)}</button>
+                        ${simIdx < LIVE_SOUND_CONVERSATIONS.length - 1 ? `<button type="button" class="sl-btn-primary" id="sl-sim-next-scene">${st('Næste samtale →', lang)}</button>` :''}
                     </div>
                 </div>
             `}
@@ -3332,26 +3371,28 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
         card6.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem;">
                 <div>
-                    <h3 style="margin:0; font-size:1.1rem; font-weight:900;">Fra robot-dansk til levende dialoglyde</h3>
-                    <div style="font-size:0.84rem; color:#94a3b8;">Dialog ${robIdx + 1}/${ROBOT_SOUND_UPGRADES.length}: ${item.title}</div>
+                    <h3${rtlAttr} style="margin:0; font-size:1.1rem; font-weight:900;">${st('Fra robot-dansk til levende dialoglyde', lang)}</h3>
+                    <div${rtlAttr} style="font-size:0.84rem; color:#94a3b8;">${st('Dialog', lang)} ${robIdx + 1}/${ROBOT_SOUND_UPGRADES.length}: ${st(item.title, lang)}</div>
                 </div>
                 <div style="display:flex; gap:0.4rem;">
-                    <button type="button" class="sl-btn-secondary" id="sl-rob-prev" ${robIdx === 0 ? 'disabled' :''}>← Forrige</button>
-                    <button type="button" class="sl-btn-secondary" id="sl-rob-next" ${robIdx === ROBOT_SOUND_UPGRADES.length - 1 ? 'disabled' :''}>Næste →</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-rob-prev" ${robIdx === 0 ? 'disabled' :''}>${st('← Forrige', lang)}</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-rob-next" ${robIdx === ROBOT_SOUND_UPGRADES.length - 1 ? 'disabled' :''}>${st('Næste →', lang)}</button>
                 </div>
             </div>
 
             <div style="background:rgba(239,68,68,0.12); border:1px solid rgba(248,113,113,0.35); border-radius:12px; padding:0.7rem 0.95rem; margin-bottom:0.7rem; color:#fecaca; font-size:0.93rem;">
-                ${item.robotText}
+                <div>${item.robotText}</div>
+                ${stSub(item.robotText, 'st-tr', lang)}
             </div>
 
             <div style="background:rgba(34,197,94,0.12); border:1.5px solid rgba(74,222,128,0.45); border-radius:14px; padding:0.9rem 1.05rem; margin-bottom:0.95rem; color:#ffffff; font-size:1.03rem; line-height:1.55;">
-                ${previewHtml}
+                <div>${previewHtml}</div>
+                ${stSub(item.slotsText, 'st-tr-sent', lang)}
             </div>
 
             <div class="sl-two-cols">
                 <div style="background:rgba(9,14,26,0.85); border:1px solid rgba(148,163,184,0.25); border-radius:14px; padding:0.85rem;">
-                    <div style="font-size:0.8rem; font-weight:900; color:#fde68a; text-transform:uppercase; margin-bottom:0.45rem;">Plads [ 1 ]</div>
+                    <div style="font-size:0.8rem; font-weight:900; color:#fde68a; text-transform:uppercase; margin-bottom:0.45rem;">${st('Plads [ 1 ]', lang)}</div>
                     <div style="display:flex; flex-direction:column; gap:0.4rem;">
                         ${item.slot1Options.map(opt => `
                             <button type="button" class="sl-option-btn ${pick1 === opt ? (opt === item.slot1Answer ? 'correct' :'wrong') :''}" data-rob-s1="${opt}">
@@ -3361,7 +3402,7 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
                     </div>
                 </div>
                 <div style="background:rgba(9,14,26,0.85); border:1px solid rgba(148,163,184,0.25); border-radius:14px; padding:0.85rem;">
-                    <div style="font-size:0.8rem; font-weight:900; color:#67e8f9; text-transform:uppercase; margin-bottom:0.45rem;">Plads [ 2 ]</div>
+                    <div style="font-size:0.8rem; font-weight:900; color:#67e8f9; text-transform:uppercase; margin-bottom:0.45rem;">${st('Plads [ 2 ]', lang)}</div>
                     <div style="display:flex; flex-direction:column; gap:0.4rem;">
                         ${item.slot2Options.map(opt => `
                             <button type="button" class="sl-option-btn ${pick2 === opt ? (opt === item.slot2Answer ? 'correct' :'wrong') :''}" data-rob-s2="${opt}">
@@ -3373,9 +3414,9 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
             </div>
 
             ${bothDone ? `
-                <div class="sl-feedback ok">
-                    <div>✓ ${item.explanation}</div>
-                    ${robIdx < ROBOT_SOUND_UPGRADES.length - 1 ? `<button type="button" class="sl-btn-secondary" id="sl-rob-adv" style="margin-top:0.55rem;">Næste →</button>` :''}
+                <div class="sl-feedback ok"${rtlAttr}>
+                    <div>✓ ${st(item.explanation, lang)}</div>
+                    ${robIdx < ROBOT_SOUND_UPGRADES.length - 1 ? `<button type="button" class="sl-btn-secondary" id="sl-rob-adv" style="margin-top:0.55rem;">${st('Næste →', lang)}</button>` :''}
                 </div>
             ` :''}
         `;
@@ -3423,22 +3464,22 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
         card7.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
                 <div>
-                    <h3 style="margin:0; font-size:1.1rem; font-weight:900;">Lyd-detektiven</h3>
-                    <div style="font-size:0.83rem; color:#94a3b8;">Mission ${detIdx + 1}/${DETECTIVE_SOUND_MISSIONS.length} • Løst: ${detDoneSet.size}/${DETECTIVE_SOUND_MISSIONS.length}</div>
+                    <h3${rtlAttr} style="margin:0; font-size:1.1rem; font-weight:900;">${st('Lyd-detektiven', lang)}</h3>
+                    <div style="font-size:0.83rem; color:#94a3b8;">${st('Mission', lang)} ${detIdx + 1}/${DETECTIVE_SOUND_MISSIONS.length} • ${st('Løst:', lang)} ${detDoneSet.size}/${DETECTIVE_SOUND_MISSIONS.length}</div>
                 </div>
                 <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
-                    <button type="button" class="sl-btn-secondary" id="sl-det-hint">${detShowHint ? 'Skjul spor' :'Vis spor'}</button>
-                    <button type="button" class="sl-btn-secondary" id="sl-det-prev" ${detIdx === 0 ? 'disabled' :''}>← Forrige</button>
-                    <button type="button" class="sl-btn-secondary" id="sl-det-next" ${detIdx === DETECTIVE_SOUND_MISSIONS.length - 1 ? 'disabled' :''}>Næste →</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-det-hint">${detShowHint ? st('Skjul spor', lang) : st('Vis spor', lang)}</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-det-prev" ${detIdx === 0 ? 'disabled' :''}>${st('← Forrige', lang)}</button>
+                    <button type="button" class="sl-btn-secondary" id="sl-det-next" ${detIdx === DETECTIVE_SOUND_MISSIONS.length - 1 ? 'disabled' :''}>${st('Næste →', lang)}</button>
                 </div>
             </div>
 
-            <div style="background:rgba(56,189,248,0.12); border:1.5px solid #38bdf8; border-radius:14px; padding:0.85rem 1.05rem; margin-bottom:0.8rem;">
-                <div style="font-size:0.98rem; font-weight:900; color:#ffffff;">${m.prompt}</div>
-                ${detShowHint ? `<div style="font-size:0.83rem; color:#bae6fd; margin-top:0.35rem;">Spor: ${m.hint}</div>` :''}
+            <div${rtlAttr} style="background:rgba(56,189,248,0.12); border:1.5px solid #38bdf8; border-radius:14px; padding:0.85rem 1.05rem; margin-bottom:0.8rem;">
+                <div style="font-size:0.98rem; font-weight:900; color:#ffffff;">${st(m.prompt, lang)}</div>
+                ${detShowHint ? `<div style="font-size:0.83rem; color:#bae6fd; margin-top:0.35rem;">${st('Spor:', lang)} ${st(m.hint, lang)}</div>` :''}
             </div>
 
-            ${detMsg ? `<div class="sl-feedback ${detSolved ? 'ok' :'err'}" style="margin-top:0; margin-bottom:0.8rem;">${detMsg}</div>` :''}
+            ${detMsg ? `<div class="sl-feedback ${detSolved ? 'ok' :'err'}"${rtlAttr} style="margin-top:0; margin-bottom:0.8rem;">${detMsg}</div>` :''}
 
             <div class="sl-stage-wrap">
                 <div class="sl-stage-inner">
@@ -3463,11 +3504,11 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
                 if (sig.id === m.answerId) {
                     detSolved = true;
                     detDoneSet.add(detIdx);
-                    detMsg = `✓ Fundet! #${targetSig.num} "${targetSig.sound}" (${ROLE_META[targetSig.role].label}): ${targetSig.turnAction}`;
+                    detMsg = `✓ ${st('Fundet!', lang)} #${targetSig.num} "${targetSig.sound}" (${st(ROLE_META[targetSig.role].label, lang)}): ${st(targetSig.turnAction, lang)}`;
                     speakSound(targetSig.ttsText, targetSig.ttsRate, targetSig.ttsPitch);
                 } else {
                     detSolved = false;
-                    detMsg = `✗ Det var #${sig.num} "${sig.sound}". Prøv igen.`;
+                    detMsg = `✗ ${st('Det var', lang)} #${sig.num} "${sig.sound}". ${st('Prøv igen.', lang)}`;
                 }
                 renderDetective();
             };

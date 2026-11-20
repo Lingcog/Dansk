@@ -260,7 +260,7 @@ export const MIN_BOLIG_G2 = {
         st6_exp: 'تقول للممتحِن: «منطقتي خضراء وهادئة. أسكن قريبًا من المتاجر والحافلة.»',
 
         // Fane 5: Spørgsmål (Del 2)
-        d2_tab_quiz: 'تدرّب على الأسئلة (6)',
+        d2_tab_quiz: 'تدرّب على الأسئلة (12)',
         d2_tab_ai: 'تدرّب مع ممتحِن بالذكاء الاصطناعي',
         d2_ok: 'إجابة جيدة!',
         d2_tip_prefix: 'نصيحة:',
@@ -572,7 +572,7 @@ export const MIN_BOLIG_G2 = {
         st6_exp: 'به آزمون‌گیرنده می‌گویی: «منطقه من سرسبز و آرام است. نزدیک فروشگاه‌ها و اتوبوس زندگی می‌کنم.»',
 
         // Fane 5: Spørgsmål (Del 2)
-        d2_tab_quiz: 'تمرین پرسش‌ها (6)',
+        d2_tab_quiz: 'تمرین پرسش‌ها (12)',
         d2_tab_ai: 'تمرین با آزمون‌گیرنده هوش مصنوعی',
         d2_ok: 'پاسخ خوب!',
         d2_tip_prefix: 'نکته:',
@@ -884,7 +884,7 @@ export const MIN_BOLIG_G2 = {
         st6_exp: 'Tu ji ezmûnkar re dibêjî: «Devera min kesk û aram e. Ez nêzîkî dikanan û otobusê dijîm.»',
 
         // Fane 5: Spørgsmål (Del 2)
-        d2_tab_quiz: 'Pirsan biceribîne (6)',
+        d2_tab_quiz: 'Pirsan biceribîne (12)',
         d2_tab_ai: 'Bi ezmûnkarê AI re bixebite',
         d2_ok: 'Bersiveke baş!',
         d2_tip_prefix: 'Şîret:',
@@ -1196,7 +1196,7 @@ export const MIN_BOLIG_G2 = {
         st6_exp: 'آپ ممتحن سے کہتے ہیں: «میرا علاقہ ہرا بھرا اور پرسکون ہے۔ میں دکانوں اور بس کے قریب رہتا ہوں۔»',
 
         // Fane 5: Spørgsmål (Del 2)
-        d2_tab_quiz: 'سوالات کی مشق (6)',
+        d2_tab_quiz: 'سوالات کی مشق (12)',
         d2_tab_ai: 'AI ممتحن کے ساتھ مشق کریں',
         d2_ok: 'اچھا جواب!',
         d2_tip_prefix: 'مشورہ:',
@@ -1508,7 +1508,7 @@ export const MIN_BOLIG_G2 = {
         st6_exp: 'ازموینه اخیستونکي ته وایې: «زما سیمه شنه او ارامه ده. زه هټیو او بس ته نږدې اوسم.»',
 
         // Fane 5: Spørgsmål (Del 2)
-        d2_tab_quiz: 'پوښتنې تمرین کړه (6)',
+        d2_tab_quiz: 'پوښتنې تمرین کړه (12)',
         d2_tab_ai: 'د AI ازموینه اخیستونکي سره تمرین',
         d2_ok: 'ښه ځواب!',
         d2_tip_prefix: 'لارښوونه:',

@@ -259,7 +259,7 @@ export const MIN_BOLIG_G1 = {
         st6_exp: 'You say to the examiner: "My area is green and calm. I live close to shopping and the bus."',
 
         // Tab 5: Questions (Part 2)
-        d2_tab_quiz: 'Practice questions (6)',
+        d2_tab_quiz: 'Practice questions (12)',
         d2_tab_ai: 'Practice with AI examiner',
         d2_ok: 'Good answer!',
         d2_tip_prefix: 'Tip:',
@@ -568,7 +568,7 @@ export const MIN_BOLIG_G1 = {
         st6_exp: 'Du sagst zum Prüfer: "Meine Gegend ist grün und ruhig. Ich wohne nah an Einkaufsmöglichkeiten und Bus."',
 
         // Tab 5: Fragen (Teil 2)
-        d2_tab_quiz: 'Fragen üben (6)',
+        d2_tab_quiz: 'Fragen üben (12)',
         d2_tab_ai: 'Mit KI-Prüfer üben',
         d2_ok: 'Gute Antwort!',
         d2_tip_prefix: 'Tipp:',
@@ -877,7 +877,7 @@ export const MIN_BOLIG_G1 = {
         st6_exp: 'Le dices al examinador: "Mi zona es verde y tranquila. Vivo cerca de tiendas y del autobús."',
 
         // Pestaña 5: Preguntas (Parte 2)
-        d2_tab_quiz: 'Practicar preguntas (6)',
+        d2_tab_quiz: 'Practicar preguntas (12)',
         d2_tab_ai: 'Practicar con examinador IA',
         d2_ok: '¡Buena respuesta!',
         d2_tip_prefix: 'Consejo:',
@@ -1186,7 +1186,7 @@ export const MIN_BOLIG_G1 = {
         st6_exp: 'Você diz ao examinador: "Minha região é verde e tranquila. Moro perto de mercados e do ônibus."',
 
         // Aba 5: Perguntas (Parte 2)
-        d2_tab_quiz: 'Praticar perguntas (6)',
+        d2_tab_quiz: 'Praticar perguntas (12)',
         d2_tab_ai: 'Praticar com examinador IA',
         d2_ok: 'Boa resposta!',
         d2_tip_prefix: 'Dica:',
@@ -1495,7 +1495,7 @@ export const MIN_BOLIG_G1 = {
         st6_exp: 'Sınav görevlisine şöyle dersin: "Bölgem yeşil ve sakin. Alışverişe ve otobüse yakın yaşıyorum."',
 
         // Sekme 5: Sorular (Bölüm 2)
-        d2_tab_quiz: 'Soruları çalış (6)',
+        d2_tab_quiz: 'Soruları çalış (12)',
         d2_tab_ai: 'Yapay zeka sınav görevlisiyle çalış',
         d2_ok: 'İyi cevap!',
         d2_tip_prefix: 'İpucu:',

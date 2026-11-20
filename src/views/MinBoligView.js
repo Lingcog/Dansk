@@ -605,7 +605,7 @@ const STIKORD_VS_SAETNING_QUIZ = [
 ];
 
 // =========================================================================
-// FANE 5: DEL 2 — TESTERENS SPØRGSMÅL
+// FANE 5: DEL 2 — TESTERENS SPØRGSMÅL (12 VERBUM-KONTRAST ØVELSER)
 // =========================================================================
 const EXAMINER_FOLLOWUP_QUESTIONS = [
     {
@@ -613,54 +613,120 @@ const EXAMINER_FOLLOWUP_QUESTIONS = [
         examinerQ: 'Tester: »Er du glad for din lejlighed? Hvorfor?«',
         options: [
             { text: 'Ja, jeg er glad for min lejlighed. Den er lys, og vi har en altan.', correct: true },
-            { text: 'Ja.', correct: false },
-            { text: 'Tak for besøget.', correct: false }
-        ]
+            { text: 'Ja, jeg er glad for min lejlighed. Den har lys, og vi er en altan.', correct: false },
+            { text: 'Ja, jeg er glad for min lejlighed. Den bor lys, og vi køber en altan.', correct: false }
+        ],
+        tip: 'Tjek verberne: En lejlighed "er" lys (tilstand), og vi "har" en altan.'
     },
     {
         num: 2,
         examinerQ: 'Tester: »Hvilket rum kan du bedst lide?«',
         options: [
+            { text: 'Jeg kan bedst lide min stue. Den har stor og lys.', correct: false },
             { text: 'Jeg kan bedst lide min stue. Den er stor og lys.', correct: true },
-            { text: 'Stue.', correct: false },
-            { text: 'Jeg bor i Odense.', correct: false }
-        ]
+            { text: 'Jeg kan bedst lide min stue. Den bor stor og lys.', correct: false }
+        ],
+        tip: 'Tjek verbet: Vi bruger "er" (ikke "har" eller "bor") foran tillægsord som stor og lys.'
     },
     {
         num: 3,
         examinerQ: 'Tester: »Taler du med dine naboer?«',
         options: [
-            { text: 'Ja, vi hilser i opgangen. Nogle gange drikker vi kaffe i gården.', correct: true },
-            { text: 'Lidt.', correct: false },
-            { text: 'Velbekomme.', correct: false }
-        ]
+            { text: 'Ja, vi vasker i opgangen. Nogle gange flytter vi kaffe i gården.', correct: false },
+            { text: 'Ja, vi sover i opgangen. Nogle gange køber vi kaffe i gården.', correct: false },
+            { text: 'Ja, vi hilser i opgangen. Nogle gange drikker vi kaffe i gården.', correct: true }
+        ],
+        tip: 'Tjek verberne: Man "hilser" (siger hej) på naboer i opgangen, og man "drikker" kaffe.'
     },
     {
         num: 4,
         examinerQ: 'Tester: »Kan du godt lide dit område? Hvorfor?«',
         options: [
-            { text: 'Ja, jeg kan godt lide mit område. Det er stille og tæt på indkøb.', correct: true },
-            { text: 'Fint område.', correct: false },
-            { text: 'Min husleje er 6.500.', correct: false }
-        ]
+            { text: 'Ja, jeg kan godt lide mit område. Det er stille og ligger tæt på indkøb.', correct: true },
+            { text: 'Ja, jeg kan godt lide mit område. Det har stille og sover tæt på indkøb.', correct: false },
+            { text: 'Ja, jeg kan godt lide mit område. Det bor stille og køber tæt på indkøb.', correct: false }
+        ],
+        tip: 'Tjek verberne: Området "er" stille, og et sted "ligger" tæt på indkøb.'
     },
     {
         num: 5,
         examinerQ: 'Tester: »Er der noget, du ikke er så glad for?«',
         options: [
+            { text: 'Jeg har glad for min bolig, men mit køkken bor lidt lille.', correct: false },
             { text: 'Jeg er glad for min bolig, men mit køkken er lidt lille.', correct: true },
-            { text: 'Nej.', correct: false },
-            { text: 'Jeg har to børn.', correct: false }
-        ]
+            { text: 'Jeg bliver glad for min bolig, men mit køkken har lidt lille.', correct: false }
+        ],
+        tip: 'Tjek verbet: Man "er" glad for noget, og et køkken "er" lille.'
     },
     {
         num: 6,
         examinerQ: 'Tester: »Vil du blive boende her?«',
         options: [
-            { text: 'Ja, nu er jeg glad for min lejlighed. Senere vil jeg gerne have et hus.', correct: true },
-            { text: 'Måske.', correct: false },
-            { text: 'På 2. sal.', correct: false }
-        ]
+            { text: 'Ja, nu spiser jeg i en lejlighed. Senere vil jeg gerne sove et hus.', correct: false },
+            { text: 'Ja, nu ligger jeg i en lejlighed. Senere vil jeg gerne sidde et hus.', correct: false },
+            { text: 'Ja, nu bor jeg i en lejlighed. Senere vil jeg gerne købe et hus.', correct: true }
+        ],
+        tip: 'Tjek verberne: Man "bor" i en lejlighed, og man kan "købe" et hus.'
+    },
+    {
+        num: 7,
+        examinerQ: 'Tester: »Hvad laver du i dit køkken?«',
+        options: [
+            { text: 'Jeg vasker mad i køkkenet, og bagefter sover jeg op.', correct: false },
+            { text: 'Jeg laver mad i køkkenet, og bagefter vasker jeg op.', correct: true },
+            { text: 'Jeg køber mad i køkkenet, og bagefter bor jeg op.', correct: false }
+        ],
+        tip: 'Tjek verberne: Man "laver" mad og "vasker op" i køkkenet.'
+    },
+    {
+        num: 8,
+        examinerQ: 'Tester: »Hvordan kommer du på arbejde fra din bolig?«',
+        options: [
+            { text: 'Jeg køber bussen ved stoppestedet, eller jeg står på cykelstien.', correct: false },
+            { text: 'Jeg laver bussen ved stoppestedet, eller jeg sover på cykelstien.', correct: false },
+            { text: 'Jeg tager bussen ved stoppestedet, eller jeg cykler på cykelstien.', correct: true }
+        ],
+        tip: 'Tjek verberne: Som passager "tager" man bussen, og man "cykler" på en cykelsti.'
+    },
+    {
+        num: 9,
+        examinerQ: 'Tester: »Hvor vasker I tøj?«',
+        options: [
+            { text: 'Vi vasker tøj i kælderen, og vi hænger det til tørre i gården.', correct: true },
+            { text: 'Vi spiser tøj i kælderen, og vi drikker det til tørre i gården.', correct: false },
+            { text: 'Vi bor tøj i kælderen, og vi hilser det til tørre i gården.', correct: false }
+        ],
+        tip: 'Tjek verberne: Man "vasker" tøj og "hænger" det til tørre.'
+    },
+    {
+        num: 10,
+        examinerQ: 'Tester: »Hvad betaler du i husleje?«',
+        options: [
+            { text: 'Jeg spiser 6.500 kroner om måneden, og jeg køber min lejlighed.', correct: false },
+            { text: 'Jeg betaler 6.500 kroner om måneden, og jeg lejer min lejlighed.', correct: true },
+            { text: 'Jeg sover 6.500 kroner om måneden, og jeg hilser min lejlighed.', correct: false }
+        ],
+        tip: 'Tjek verberne: Man "betaler" husleje hver måned, når man "lejer" en bolig.'
+    },
+    {
+        num: 11,
+        examinerQ: 'Tester: »Hvornår flyttede du ind i din bolig?«',
+        options: [
+            { text: 'Vi flyttede ind for to år siden, og vi trives godt her.', correct: true },
+            { text: 'Vi spiste ind for to år siden, og vi cykler godt her.', correct: false },
+            { text: 'Vi vaskede ind for to år siden, og vi betaler godt her.', correct: false }
+        ],
+        tip: 'Tjek verberne: Man "flytter ind" (datid: "flyttede ind") i en ny bolig, og man "trives" godt, når man er glad for stedet.'
+    },
+    {
+        num: 12,
+        examinerQ: 'Tester: »Hvad laver I i stuen om aftenen?«',
+        options: [
+            { text: 'Vi står i sofaen, vi kigger fjernsyn, og vi betaler sammen.', correct: false },
+            { text: 'Vi cykler i sofaen, vi vasker fjernsyn, og vi lejer sammen.', correct: false },
+            { text: 'Vi sidder i sofaen, vi ser fjernsyn, og vi snakker sammen.', correct: true }
+        ],
+        tip: 'Tjek verberne: Man "sidder" i en sofa, man "ser" fjernsyn, og man "snakker" sammen.'
     }
 ];
 
@@ -2130,7 +2196,6 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
 
             <div style="padding:0.95rem 1.1rem; border-radius:14px; background:rgba(9,14,26,0.95); border-left:4px solid #ec4899; margin-bottom:0.85rem;">
                 <div style="font-size:1rem; font-weight:900; color:#ffffff;">${q.examinerQ}</div>
-                ${mbSub(`d2_${q.num}_q`, 'mb-tr-sent', lang)}
             </div>
 
             <div style="display:grid; gap:0.5rem;">
@@ -2150,9 +2215,8 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
             </div>
 
             ${exQAns !== null ? `
-                <div class="mb-feedback ${q.options[exQAns]?.correct ? 'ok' : 'err'}"${rtlAttr}>
-                    <div><strong>${q.options[exQAns]?.correct ? `✓ ${mbT('d2_ok', lang)}` : `✗ ${mbT('d2_tip_prefix', lang)}`}</strong> ${mbT(`d2_${q.num}_tip`, lang)}</div>
-                    ${mbSub(`d2_${q.num}_a`, 'mb-tr-sent', lang)}
+                <div class="mb-feedback ${q.options[exQAns]?.correct ? 'ok' : 'err'}">
+                    <div><strong>${q.options[exQAns]?.correct ? '✓ Godt svar!' : '✗ Tip:'}</strong> ${q.tip}</div>
                 </div>
             ` : ''}
         `;

@@ -254,8 +254,8 @@ export const MIN_BOLIG_DA = {
     st6_q: 'Hvad må du skrive i boksen "område"?',
     st6_exp: 'Du siger til testeren: »Mit område er grønt og roligt. Jeg bor tæt på indkøb og bus.«',
 
-    // Fane 5: Spørgsmål (Del 2)
-    d2_tab_quiz: 'Øv spørgsmål (6)',
+    // Fane 5: Spørgsmål (Del 2 — 12 verbum-kontrast øvelser uden oversættelseshjælp)
+    d2_tab_quiz: 'Øv spørgsmål (12)',
     d2_tab_ai: 'Øv med AI-tester',
     d2_ok: 'Godt svar!',
     d2_tip_prefix: 'Tip:',

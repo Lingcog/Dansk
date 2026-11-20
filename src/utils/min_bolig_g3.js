@@ -259,7 +259,7 @@ export const MIN_BOLIG_G3 = {
         st6_exp: "Вы говорите экзаменатору: «Мой район зелёный и спокойный. Я живу рядом с магазинами и автобусом».",
 
         // Fane 5: Spørgsmål (Del 2)
-        d2_tab_quiz: "Тренируй вопросы (6)",
+        d2_tab_quiz: "Тренируй вопросы (12)",
         d2_tab_ai: "Тренируйся с ИИ-экзаменатором",
         d2_ok: "Хороший ответ!",
         d2_tip_prefix: "Совет:",
@@ -571,7 +571,7 @@ export const MIN_BOLIG_G3 = {
         st6_exp: "Ви кажете екзаменатору: «Мій район зелений і спокійний. Я живу поруч із магазинами та автобусом».",
 
         // Fane 5: Spørgsmål (Del 2)
-        d2_tab_quiz: "Тренуй запитання (6)",
+        d2_tab_quiz: "Тренуй запитання (12)",
         d2_tab_ai: "Тренуйся з ШІ-екзаменатором",
         d2_ok: "Гарна відповідь!",
         d2_tip_prefix: "Порада:",
@@ -883,7 +883,7 @@ export const MIN_BOLIG_G3 = {
         st6_exp: "你对考官说：“我住的片区绿意盎然又安静。我住得离商店和公交车很近。”",
 
         // Fane 5: Spørgsmål (Del 2)
-        d2_tab_quiz: "练习问题 (6)",
+        d2_tab_quiz: "练习问题 (12)",
         d2_tab_ai: "用 AI 考官练习",
         d2_ok: "回答得很好！",
         d2_tip_prefix: "小提示：",
@@ -1195,7 +1195,7 @@ export const MIN_BOLIG_G3 = {
         st6_exp: "Bạn nói với giám khảo: «Khu vực của tôi xanh và yên bình. Tôi sống gần nơi mua sắm và xe buýt.»",
 
         // Fane 5: Spørgsmål (Del 2)
-        d2_tab_quiz: "Luyện câu hỏi (6)",
+        d2_tab_quiz: "Luyện câu hỏi (12)",
         d2_tab_ai: "Luyện với giám khảo AI",
         d2_ok: "Trả lời hay lắm!",
         d2_tip_prefix: "Mẹo:",
@@ -1507,7 +1507,7 @@ export const MIN_BOLIG_G3 = {
         st6_exp: "Ti i thua ekzaminuesit: «Zona ime është e gjelbër dhe e qetë. Banoj afër dyqaneve dhe autobusit.»",
 
         // Fane 5: Spørgsmål (Del 2)
-        d2_tab_quiz: "Ushtro pyetje (6)",
+        d2_tab_quiz: "Ushtro pyetje (12)",
         d2_tab_ai: "Ushtro me ekzaminues AI",
         d2_ok: "Përgjigje e mirë!",
         d2_tip_prefix: "Këshillë:",

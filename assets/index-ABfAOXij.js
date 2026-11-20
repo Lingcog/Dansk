@@ -1,4 +1,4 @@
-import{g as e,a as Be,b as zi,s as oo,c as ts,n as rs,k as ns,d as as,e as os,v as jr,f as xr,h as ss,i as is,j as ln,l as rt,m as lr,o as cr,p as ys,q as to,t as gn,r as hr,u as ka,w as xa,x as ya,y as wa,z as _a,A as ja,B as za,C as Ea,D as $a,E as Ui,F as pt,G as pr,H as Je,I as co,J as Qt,K as go,L as or,M as bs,N as us,O as fs,P as $e,S as vs,Q as Gt,R as Yi}from"./translations-bundle-CyjfOSVg.js";import{u as Qi,a as Xi,b as Zi,k as ws,c as _s,h as Un,p as Ca,g as el,s as js}from"./app-data-DdcU_8NP.js";(function(){const b=document.createElement("link").relList;if(b&&b.supports&&b.supports("modulepreload"))return;for(const m of document.querySelectorAll('link[rel="modulepreload"]'))t(m);new MutationObserver(m=>{for(const g of m)if(g.type==="childList")for(const p of g.addedNodes)p.tagName==="LINK"&&p.rel==="modulepreload"&&t(p)}).observe(document,{childList:!0,subtree:!0});function n(m){const g={};return m.integrity&&(g.integrity=m.integrity),m.referrerPolicy&&(g.referrerPolicy=m.referrerPolicy),m.crossOrigin==="use-credentials"?g.credentials="include":m.crossOrigin==="anonymous"?g.credentials="omit":g.credentials="same-origin",g}function t(m){if(m.ep)return;m.ep=!0;const g=n(m);fetch(m.href,g)}})();const rr={user:(d=18)=>`
+import{g as e,a as Be,b as zi,s as oo,c as ts,n as rs,k as ns,d as as,e as os,v as jr,f as xr,h as ss,i as is,j as ln,l as rt,m as lr,o as cr,p as ys,q as to,t as gn,r as hr,u as ka,w as xa,x as ya,y as wa,z as _a,A as ja,B as za,C as Ea,D as $a,E as Ui,F as pt,G as br,H as Je,I as co,J as Qt,K as go,L as or,M as bs,N as us,O as fs,P as $e,S as vs,Q as Gt,R as Yi}from"./translations-bundle-CyjfOSVg.js";import{u as Qi,a as Xi,b as Zi,k as ws,c as _s,h as Un,p as Ca,g as el,s as js}from"./app-data-DdcU_8NP.js";(function(){const b=document.createElement("link").relList;if(b&&b.supports&&b.supports("modulepreload"))return;for(const m of document.querySelectorAll('link[rel="modulepreload"]'))t(m);new MutationObserver(m=>{for(const g of m)if(g.type==="childList")for(const p of g.addedNodes)p.tagName==="LINK"&&p.rel==="modulepreload"&&t(p)}).observe(document,{childList:!0,subtree:!0});function n(m){const g={};return m.integrity&&(g.integrity=m.integrity),m.referrerPolicy&&(g.referrerPolicy=m.referrerPolicy),m.crossOrigin==="use-credentials"?g.credentials="include":m.crossOrigin==="anonymous"?g.credentials="omit":g.credentials="same-origin",g}function t(m){if(m.ep)return;m.ep=!0;const g=n(m);fetch(m.href,g)}})();const rr={user:(d=18)=>`
         <svg viewBox="0 0 24 24" width="${d}" height="${d}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
             <circle cx="12" cy="7" r="4"></circle>
@@ -45722,13 +45722,13 @@ Har du forstået opgaven? Hvis ja, så svar kort "Jeg er klar! Giv mig dine inpu
                         <div style="background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.35); color:#fbbf24; border-radius:8px; padding:0.45rem 0.65rem; font-size:0.8rem; font-weight:700; text-align:center;">
                             🔒 Klik for at se oversættelse & forklaring (-10 point)
                         </div>
-                    `,nr.querySelector(".bv-gl-listen").onclick=br=>{br.stopPropagation(),z(At.word)},nr.onclick=()=>{jt.add(At.id),z(At.word),Ve(),Tt()};else{const br=At.trans&&(At.trans[Ft]||At.trans.en)||At.word;nr.innerHTML=`
+                    `,nr.querySelector(".bv-gl-listen").onclick=pr=>{pr.stopPropagation(),z(At.word)},nr.onclick=()=>{jt.add(At.id),z(At.word),Ve(),Tt()};else{const pr=At.trans&&(At.trans[Ft]||At.trans.en)||At.word;nr.innerHTML=`
                         <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem;">
                             <span style="font-weight:800; color:#38bdf8; font-size:1rem;">🔓 "${At.word}"</span>
                             <button type="button" class="bv-gl-listen" style="background:#2563eb; color:white; border:none; padding:0.25rem 0.6rem; border-radius:6px; cursor:pointer; font-size:0.8rem; font-weight:700;">🔊 Lyt</button>
                         </div>
                         <div style="background:rgba(56,189,248,0.14); border-left:3px solid #38bdf8; padding:0.45rem 0.65rem; border-radius:6px; color:white; font-weight:800; font-size:0.95rem;">
-                            🌍 ${br}
+                            🌍 ${pr}
                         </div>
                         <div style="font-size:0.84rem; color:#cbd5e1; line-height:1.4;">
                             📖 <strong>Dansk:</strong> ${At.da}
@@ -45826,10 +45826,10 @@ Har du forstået opgaven? Hvis ja, så svar kort "Jeg er klar! Giv mig dine inpu
                     <span style="display:inline-block; margin:0.2rem; padding:0.25rem 0.6rem; border-radius:8px; font-weight:${Sa?"900":"700"}; font-size:0.95rem; background:${Mr?"rgba(34,197,94,0.2)":"rgba(239,68,68,0.2)"}; color:${Mr?"#4ade80":"#f87171"}; border:1.5px solid ${Mr?"#22c55e":"#ef4444"}; ${Sa?"text-decoration:underline; text-underline-offset:3px;":""}">
                         ${Mr?"✓":"✗"} ${Pt.word}
                     </span>
-                `)});const br=$t>0?Math.round(It/$t*100):0,mr=At>0?Math.round(Jt/At*100):100,dr=br>=75?"#4ade80":br>=45?"#fbbf24":"#f87171",Ut=br>=75?`🎉 Flot udtale! Du ramte ${Jt} af ${At} betonede nøgleord tydeligt!`:`👍 Godt forsøg! Du fik ${Jt} af ${At} betonede ord med – prøv gerne igen og læg ekstra tryk på de understregede ord.`;Dt.innerHTML=`
+                `)});const pr=$t>0?Math.round(It/$t*100):0,mr=At>0?Math.round(Jt/At*100):100,dr=pr>=75?"#4ade80":pr>=45?"#fbbf24":"#f87171",Ut=pr>=75?`🎉 Flot udtale! Du ramte ${Jt} af ${At} betonede nøgleord tydeligt!`:`👍 Godt forsøg! Du fik ${Jt} af ${At} betonede ord med – prøv gerne igen og læg ekstra tryk på de understregede ord.`;Dt.innerHTML=`
                 <div style="background:rgba(15,23,42,0.9); border:1.5px solid ${dr}; border-radius:14px; padding:1rem; margin-top:0.5rem;">
                     <div style="font-weight:800; font-size:1.05rem; color:${dr}; margin-bottom:0.4rem;">
-                        ${Ut} (Score: ${br}% • Betoning: ${mr}%)
+                        ${Ut} (Score: ${pr}% • Betoning: ${mr}%)
                     </div>
                     <div style="font-size:0.88rem; color:#94a3b8; margin-bottom:0.65rem;">
                         🎤 Vi hørte dig sige: <strong style="color:white;">"${Tt}"</strong>
@@ -47614,7 +47614,7 @@ Hvis kursisten svarer med kun ét ord ("Ja"), så hjælp venligt med at lave en 
                             </span>
                         `:""}
                     </div>
-                    ${pr(`w${Oe.num}_word`,"mb-tr-sent",t)}
+                    ${br(`w${Oe.num}_word`,"mb-tr-sent",t)}
                 </div>
                 <button type="button" class="mb-btn-primary" id="mb-play-word-audio" style="display:inline-flex; align-items:center; gap:0.38rem;">
                     ${Rt.audio(15)} ${pt("btn_listen",t)}
@@ -47623,12 +47623,12 @@ Hvis kursisten svarer med kun ét ord ("Ja"), så hjælp venligt med at lave en 
 
             <div style="font-size:0.93rem; color:#e2e8f0; margin-bottom:0.55rem; line-height:1.45;">
                 <div>${Oe.meaning}</div>
-                ${pr(`w${Oe.num}_mean`,"mb-tr",t)}
+                ${br(`w${Oe.num}_mean`,"mb-tr",t)}
             </div>
 
             <div style="background:rgba(15,23,42,0.95); border-left:4px solid ${ct.color}; border-radius:11px; padding:0.65rem 0.9rem; margin-bottom:0.55rem;">
                 <div style="font-size:0.98rem; color:#ffffff; font-weight:800;">»${Oe.sentence}«</div>
-                ${pr(`w${Oe.num}_sent`,"mb-tr-sent",t)}
+                ${br(`w${Oe.num}_sent`,"mb-tr-sent",t)}
             </div>
 
             <div style="font-size:0.82rem; color:#94a3b8; display:flex; flex-wrap:wrap; gap:0.85rem;">
@@ -47661,7 +47661,7 @@ Hvis kursisten svarer med kun ét ord ("Ja"), så hjælp venligt med at lave en 
             ${ct?`
                 <div style="margin-bottom:0.75rem; padding:0.65rem 0.9rem; border-radius:12px; background:rgba(20,184,166,0.12); border:1px solid #2dd4bf; font-size:0.9rem;">
                     <div><strong style="color:#ffffff;">${ct.word}</strong> <span style="color:#cbd5e1;">— »${ct.sentence}«</span></div>
-                    ${pr(`w${ct.num}_sent`,"mb-tr-sent",t)}
+                    ${br(`w${ct.num}_sent`,"mb-tr-sent",t)}
                 </div>
             `:`
                 <div class="mb-feedback ok" style="margin-bottom:0.75rem;"${g}>
@@ -47705,7 +47705,7 @@ Hvis kursisten svarer med kun ét ord ("Ja"), så hjælp venligt med at lave en 
 
             <div style="margin:0.35rem 0 0.8rem;">
                 <h3 style="margin:0; font-size:1.12rem; font-weight:900; color:#ffffff;">${Oe.q}</h3>
-                ${pr(`pz${Oe.num}_q`,"mb-tr-sent",t)}
+                ${br(`pz${Oe.num}_q`,"mb-tr-sent",t)}
             </div>
 
             <div class="mb-slots-row" id="mb-pz-slots"></div>
@@ -47718,7 +47718,7 @@ Hvis kursisten svarer med kun ét ord ("Ja"), så hjælp venligt med at lave en 
                 `,Et.onclick=()=>{A[Ze]&&(A[Ze]=null,Re.innerHTML="",Qe())},yt.appendChild(Et)}),De.innerHTML="",Oe.scrambled.forEach(st=>{const Ze=document.createElement("button");Ze.type="button",Ze.className="mb-chip",Ze.textContent=st,Ze.disabled=A.includes(st),Ze.onclick=()=>{const Et=A.indexOf(null);if(Et!==-1&&(A[Et]=st,Qe(),!A.includes(null)))if(A.every((Fe,ot)=>Fe===Oe.correct[ot])){N.add(me);const Fe=A.join(" ");Jr(Fe),Re.innerHTML=`
                                 <div class="mb-feedback ok">
                                     <div><strong>✓ ${pt("pz_ok",t)}</strong> »${Fe}«</div>
-                                    ${pr(`pz${Oe.num}_ans`,"mb-tr-sent",t)}
+                                    ${br(`pz${Oe.num}_ans`,"mb-tr-sent",t)}
                                 </div>
                                 <div style="margin-top:0.6rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
                                     <button type="button" class="mb-btn-secondary" id="mb-pz-speak" style="display:inline-flex; align-items:center; gap:0.35rem;">${Rt.audio(14)} ${pt("btn_listen",t)}</button>
@@ -47777,7 +47777,7 @@ Hvis kursisten svarer med kun ét ord ("Ja"), så hjælp venligt med at lave en 
                 <div style="font-size:1.1rem; font-weight:900; color:#ffffff;">
                     »${Oe.sentence.replace("___",S?`<span style="color:#5eead4; text-decoration:underline;">${S}</span>`:"[ ___ ]")}«
                 </div>
-                ${pr(`pd${Oe.num}_s`,"mb-tr-sent",t)}
+                ${br(`pd${Oe.num}_s`,"mb-tr-sent",t)}
             </div>
 
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:0.55rem;">
@@ -47836,7 +47836,7 @@ Hvis kursisten svarer med kun ét ord ("Ja"), så hjælp venligt med at lave en 
                                     <span style="color:#94a3b8; font-weight:800; margin-right:0.3rem;">${yt+1}.</span>
                                     ${ct.before}<strong style="padding:0.1rem 0.45rem; border-radius:6px; background:rgba(20,184,166,0.2); border:1px solid #2dd4bf; color:#5eead4;">${De||"___"}</strong>${ct.after}
                                 </div>
-                                ${pr(ct.trKey,"mb-tr",t)}
+                                ${br(ct.trKey,"mb-tr",t)}
                             </div>
                             <div style="display:flex; gap:0.35rem;">
                                 ${ct.options.map(st=>`
@@ -47894,12 +47894,12 @@ Hvis kursisten svarer med kun ét ord ("Ja"), så hjælp venligt med at lave en 
                     ${pt("mm_guide_title",t)}
                 </div>
                 <div style="display:grid; gap:0.45rem; font-size:0.94rem; color:#f8fafc; line-height:1.5;">
-                    <div>1. Jeg bor i <strong>${oe.sted_by}</strong>.${pr("mm_line_1","mb-tr",t)}</div>
-                    <div>2. Jeg bor i <strong>${oe.hus_lejlighed}</strong>.${pr("mm_line_2","mb-tr",t)}</div>
-                    <div>3. Min bolig har <strong>${oe.vaerelser_m2}</strong>.${pr("mm_line_3","mb-tr",t)}</div>
-                    <div>4. Jeg bor med / alene: <strong>${oe.alene_sammen}</strong>.${pr("mm_line_4","mb-tr",t)}</div>
-                    <div>5. Mine naboer er <strong>${oe.naboer}</strong>.${pr("mm_line_5","mb-tr",t)}</div>
-                    <div>6. Mit område er <strong>${oe.omraade}</strong>.${pr("mm_line_6","mb-tr",t)}</div>
+                    <div>1. Jeg bor i <strong>${oe.sted_by}</strong>.${br("mm_line_1","mb-tr",t)}</div>
+                    <div>2. Jeg bor i <strong>${oe.hus_lejlighed}</strong>.${br("mm_line_2","mb-tr",t)}</div>
+                    <div>3. Min bolig har <strong>${oe.vaerelser_m2}</strong>.${br("mm_line_3","mb-tr",t)}</div>
+                    <div>4. Jeg bor med / alene: <strong>${oe.alene_sammen}</strong>.${br("mm_line_4","mb-tr",t)}</div>
+                    <div>5. Mine naboer er <strong>${oe.naboer}</strong>.${br("mm_line_5","mb-tr",t)}</div>
+                    <div>6. Mit område er <strong>${oe.omraade}</strong>.${br("mm_line_6","mb-tr",t)}</div>
                 </div>
             </div>
         `,be.querySelectorAll("[data-mm-input]").forEach(Oe=>{Oe.oninput=()=>{oe[Oe.dataset.mmInput]=Oe.value},Oe.onchange=()=>ie()}),be.querySelectorAll("[data-mm-preset]").forEach(Oe=>{Oe.onclick=()=>{oe[Oe.dataset.mmPreset]=Oe.dataset.mmVal,ie()}}),be.querySelector("#mb-speak-full-presentation").onclick=()=>{Jr("Jeg vil fortælle om min bolig. Jeg bor i Odense på en stille vej. Jeg har boet her i to år. Jeg bor til leje i en lejlighed på anden sal. Jeg har en lille altan. Min lejlighed er 75 kvadratmeter. Den har tre værelser, et køkken og et badeværelse. Jeg bor sammen med min mand og mine to børn. Vi har også en kat. Mine naboer er søde og rolige. Vi hilser i opgangen. Mit område er grønt og stille. Jeg bor tæt på indkøb og bus.")}}let we=0,_e=null;function Ee(){const Oe=ko[we];ye.innerHTML=`
@@ -47925,7 +47925,7 @@ Hvis kursisten svarer med kun ét ord ("Ja"), så hjælp venligt med at lave en 
             ${_e!==null?`
                 <div class="mb-feedback ${Oe.options[_e]?.correct?"ok":"err"}">
                     <div>${Oe.oralExpansionDa}</div>
-                    ${pr(`st${Oe.num}_exp`,"mb-tr-sent",t)}
+                    ${br(`st${Oe.num}_exp`,"mb-tr-sent",t)}
                 </div>
             `:""}
         `;const ct=ye.querySelector("#mb-st-prev");ct&&(ct.onclick=()=>{we>0&&(we--,_e=null,Ee())});const yt=ye.querySelector("#mb-st-next");yt&&(yt.onclick=()=>{we<ko.length-1&&(we++,_e=null,Ee())}),ye.querySelectorAll("[data-st-opt]").forEach(De=>{De.onclick=()=>{_e=Number(De.dataset.stOpt),Ee()}})}ie(),Ee(),de.appendChild(Y),de.appendChild(be),de.appendChild(ye),xe(),M.appendChild(de);const Se=J("tab_del2_dialog");let Ce="quiz";const Te=document.createElement("div");Te.className="mb-filters",Te.style.marginBottom="0.9rem";const Le=document.createElement("div");Le.className="mb-card";const qe=document.createElement("div");qe.className="mb-card";function Ge(){Te.innerHTML=`
@@ -47944,7 +47944,7 @@ Hvis kursisten svarer med kun ét ord ("Ja"), så hjælp venligt med at lave en 
 
             <div style="padding:0.95rem 1.1rem; border-radius:14px; background:rgba(9,14,26,0.95); border-left:4px solid #ec4899; margin-bottom:0.85rem;">
                 <div style="font-size:1rem; font-weight:900; color:#ffffff;">${Oe.examinerQ}</div>
-                ${pr(`d2_${Oe.num}_q`,"mb-tr-sent",t)}
+                ${br(`d2_${Oe.num}_q`,"mb-tr-sent",t)}
             </div>
 
             <div style="display:grid; gap:0.5rem;">
@@ -47959,7 +47959,7 @@ Hvis kursisten svarer med kun ét ord ("Ja"), så hjælp venligt med at lave en 
             ${We!==null?`
                 <div class="mb-feedback ${Oe.options[We]?.correct?"ok":"err"}"${g}>
                     <div><strong>${Oe.options[We]?.correct?`✓ ${pt("d2_ok",t)}`:`✗ ${pt("d2_tip_prefix",t)}`}</strong> ${pt(`d2_${Oe.num}_tip`,t)}</div>
-                    ${pr(`d2_${Oe.num}_a`,"mb-tr-sent",t)}
+                    ${br(`d2_${Oe.num}_a`,"mb-tr-sent",t)}
                 </div>
             `:""}
         `;const ct=Le.querySelector("#mb-d2-prev");ct&&(ct.onclick=()=>{Ke>0&&(Ke--,We=null,lt())});const yt=Le.querySelector("#mb-d2-next");yt&&(yt.onclick=()=>{Ke<na.length-1&&(Ke++,We=null,lt())}),Le.querySelectorAll("[data-d2-opt]").forEach(De=>{De.onclick=()=>{We=Number(De.dataset.d2Opt),Oe.options[We]?.correct&&(Xe.add(Ke),Jr(Oe.options[We].text)),lt()}})}qe.innerHTML=`
@@ -47981,11 +47981,10 @@ Hvis kursisten svarer med kun ét ord ("Ja"), så hjælp venligt med at lave en 
 
             <div style="padding:0.85rem 1.05rem; border-radius:14px; background:rgba(30,41,59,0.85); border-left:4px solid #14b8a6; margin-bottom:0.8rem;">
                 <div style="font-size:0.98rem; font-weight:900; color:#ffffff;">${Oe.prompt}</div>
-                ${pr(`det${Oe.num}_p`,"mb-tr-sent",t)}
                 ${St?`
                     <div style="margin-top:0.35rem; font-size:0.84rem; color:#fde68a;">
                         ${pt("lbl_hint",t)} ${Oe.hint}
-                        ${pr(`det${Oe.num}_h`,"mb-tr",t)}
+                        ${br(`det${Oe.num}_h`,"mb-tr",t)}
                     </div>
                 `:""}
             </div>
@@ -48006,7 +48005,7 @@ Hvis kursisten svarer med kun ét ord ("Ja"), så hjælp venligt med at lave en 
                     <div id="mb-det-layer"></div>
                 </div>
             </div>
-        `;const ct=Vt.querySelector("#mb-det-layer");Aa.forEach(st=>{const Ze=en[st.mindmapBox],Et=Nt?.ok&&st.id===Oe.answerId,wt=document.createElement("button");wt.type="button",wt.className=`mb-pegefelt ${Et?"active show-mobile-label":"compact-mode"}`,wt.style.left=`${st.x}%`,wt.style.top=`${st.y}%`,wt.style.background="linear-gradient(135deg, rgba(15,23,42,0.94), rgba(30,41,59,0.95))",wt.style.border=`2px solid ${Ze.color}`,wt.innerHTML=Et?`<span class="mb-pegefelt-num" style="background:${Ze.color}; color:#0f172a;">${st.num}</span><span class="mb-pegefelt-label">${st.shortLabel}</span>`:`<span class="mb-pegefelt-num" style="background:${Ze.color}; color:#0f172a;">${st.num}</span>`,wt.onclick=()=>{st.id===Oe.answerId?(qt.add(_t),Nt={ok:!0,text:`✓ ${pt("det_found_prefix",t)} #${st.num} ${st.word} — »${st.sentence}«`,subHtml:pr(`w${st.num}_sent`,"mb-tr-sent",t)},Jr(`${st.word}. ${st.sentence}`)):Nt={ok:!1,text:`✗ ${pt("det_wrong_prefix",t)} #${st.num} (${st.shortLabel}). ${pt("det_try_again",t)}`},Ot()},ct.appendChild(wt)});const yt=Vt.querySelector("#mb-det-hint");yt&&(yt.onclick=()=>{St=!St,Ot()});const De=Vt.querySelector("#mb-det-prev");De&&(De.onclick=()=>{_t>0&&(_t--,Nt=null,St=!1,Ot())});const Re=Vt.querySelector("#mb-det-next");Re&&(Re.onclick=()=>{_t<xn.length-1&&(_t++,Nt=null,St=!1,Ot())});const Qe=Vt.querySelector("#mb-det-advance");Qe&&(Qe.onclick=()=>{_t++,Nt=null,St=!1,Ot()})}Ot(),xt.appendChild(Vt),M.appendChild(xt),d.appendChild(p)}function _d(d,b){d.innerHTML="";const n=document.createElement("div");n.className="view-container mit-hverdagsliv-hub";const t=document.createElement("div");t.className="top-bar";const m=document.createElement("button");m.className="back-btn",m.innerHTML=`← ${e("back")||"Tilbage"}`,m.onclick=()=>b("word_learning"),t.appendChild(m),n.appendChild(t);const g=document.createElement("style");g.textContent=`
+        `;const ct=Vt.querySelector("#mb-det-layer");Aa.forEach(st=>{const Ze=en[st.mindmapBox],Et=Nt?.ok&&st.id===Oe.answerId,wt=document.createElement("button");wt.type="button",wt.className=`mb-pegefelt ${Et?"active show-mobile-label":"compact-mode"}`,wt.style.left=`${st.x}%`,wt.style.top=`${st.y}%`,wt.style.background="linear-gradient(135deg, rgba(15,23,42,0.94), rgba(30,41,59,0.95))",wt.style.border=`2px solid ${Ze.color}`,wt.innerHTML=Et?`<span class="mb-pegefelt-num" style="background:${Ze.color}; color:#0f172a;">${st.num}</span><span class="mb-pegefelt-label">${st.shortLabel}</span>`:`<span class="mb-pegefelt-num" style="background:${Ze.color}; color:#0f172a;">${st.num}</span>`,wt.onclick=()=>{st.id===Oe.answerId?(qt.add(_t),Nt={ok:!0,text:`✓ ${pt("det_found_prefix",t)} #${st.num} ${st.word} — »${st.sentence}«`,subHtml:br(`w${st.num}_sent`,"mb-tr-sent",t)},Jr(`${st.word}. ${st.sentence}`)):Nt={ok:!1,text:`✗ ${pt("det_wrong_prefix",t)} #${st.num} (${st.shortLabel}). ${pt("det_try_again",t)}`},Ot()},ct.appendChild(wt)});const yt=Vt.querySelector("#mb-det-hint");yt&&(yt.onclick=()=>{St=!St,Ot()});const De=Vt.querySelector("#mb-det-prev");De&&(De.onclick=()=>{_t>0&&(_t--,Nt=null,St=!1,Ot())});const Re=Vt.querySelector("#mb-det-next");Re&&(Re.onclick=()=>{_t<xn.length-1&&(_t++,Nt=null,St=!1,Ot())});const Qe=Vt.querySelector("#mb-det-advance");Qe&&(Qe.onclick=()=>{_t++,Nt=null,St=!1,Ot()})}Ot(),xt.appendChild(Vt),M.appendChild(xt),d.appendChild(p)}function _d(d,b){d.innerHTML="";const n=document.createElement("div");n.className="view-container mit-hverdagsliv-hub";const t=document.createElement("div");t.className="top-bar";const m=document.createElement("button");m.className="back-btn",m.innerHTML=`← ${e("back")||"Tilbage"}`,m.onclick=()=>b("word_learning"),t.appendChild(m),n.appendChild(t);const g=document.createElement("style");g.textContent=`
         .mit-hverdagsliv-hub {
             max-width: 1100px;
             margin: 0 auto;
@@ -56219,7 +56218,7 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
         </button>
     `,ye.appendChild(oe);const he=document.createElement("div");he.className="saetning-sub-panel active",he.id="panel-puzzle-view";const ie=document.createElement("div");ie.className="saetning-sub-panel",ie.id="panel-step-builder-view",ye.appendChild(he),ye.appendChild(ie),oe.querySelectorAll(".saetning-sub-tab-btn").forEach(He=>{He.onclick=()=>{oe.querySelectorAll(".saetning-sub-tab-btn").forEach(Ie=>Ie.classList.remove("active")),He.classList.add("active"),He.dataset.subtab==="puzzle"?(he.classList.add("active"),ie.classList.remove("active")):(ie.classList.add("active"),he.classList.remove("active"))}});function we(He){const Ve=[{question:"Hvad laver hun om mandagen?",questionEn:"What does she do on Monday?",correct:["Om mandagen","vasker","hun","tøj."],scrambled:["vasker","tøj.","Om mandagen","hun"],ruleTip:'Når "Om mandagen" står først, står verbet "vasker" på 2. plads.'},{question:"Hvad laver drengen om tirsdagen?",questionEn:"What does the boy do on Tuesday?",correct:["Om tirsdagen","tømmer","han","maskinen."],scrambled:["maskinen.","Om tirsdagen","han","tømmer"],ruleTip:'Verbet "tømmer" står på 2. plads lige efter tidsordet.'},{question:"Hvad laver hun om onsdagen?",questionEn:"What does she do on Wednesday?",correct:["Om onsdagen","hænger","hun","tøj op."],scrambled:["hun","Om onsdagen","hænger","tøj op."],ruleTip:"Om onsdagen hænger hun det våde tøj op."},{question:"Hvad laver hun om torsdagen?",questionEn:"What does she do on Thursday?",correct:["Om torsdagen","lægger","hun","tøj sammen."],scrambled:["lægger","tøj sammen.","Om torsdagen","hun"],ruleTip:"Om torsdagen lægger hun det tørre tøj sammen."},{question:"Hvad laver hun om fredagen?",questionEn:"What does she do on Friday?",correct:["Om fredagen","stryger","hun","skjorter."],scrambled:["stryger","skjorter.","hun","Om fredagen"],ruleTip:"Om fredagen stryger hun skjorter med et strygejern."},{question:"Hvad laver hun om lørdagen?",questionEn:"What does she do on Saturday?",correct:["Om lørdagen","vasker","hun","gulv."],scrambled:["gulv.","vasker","Om lørdagen","hun"],ruleTip:"Om lørdagen vasker hun gulv med en moppe."},{question:"Hvad laver familien om søndagen?",questionEn:"What does the family do on Sunday?",correct:["Om søndagen","holder","familien","fri."],scrambled:["familien","fri.","Om søndagen","holder"],ruleTip:"Om søndagen holder familien fri og drikker kaffe."},{question:"Hvornår går vi rundt om busken?",questionEn:"When do we walk around the bush?",correct:["Hver morgen","går","vi","rundt om busken."],scrambled:["går","rundt om busken.","Hver morgen","vi"],ruleTip:'Tidsudtrykket "Hver morgen" står først, og verbet "går" står på 2. plads.'}];let Ie=0,nt=[null,null,null,null];const at=new Set,zt=document.createElement("div");zt.className="puzzle-wrapper";const mt=[{text:"Hvornår?",grammar:"Tid (1)",colorClass:"slot-tid",tagClass:"tag-tid"},{text:"Hvad gør man?",grammar:"Verbum (2)",colorClass:"slot-verbum",tagClass:"tag-verbum"},{text:"Hvem?",grammar:"Subjekt (3)",colorClass:"slot-subjekt",tagClass:"tag-subjekt"},{text:"Hvad / Hvor?",grammar:"Objekt (4)",colorClass:"slot-objekt",tagClass:"tag-objekt"}];function Dt(){zt.innerHTML="",nt=[null,null,null,null];const Bt=Ve[Ie],Ft=document.createElement("div");Ft.className="puzzle-header";const Tt=document.createElement("div");Tt.className="puzzle-pills-row",Ve.forEach((dr,Ut)=>{const Pt=document.createElement("button");Pt.className=`puzzle-pill ${Ut===Ie?"active":""} ${at.has(Ut)?"completed":""}`,Pt.textContent=Ut+1,Pt.title=`Opgave ${Ut+1}`,Pt.onclick=()=>{Ie=Ut,Dt()},Tt.appendChild(Pt)}),Ft.appendChild(Tt);const jt=document.createElement("div");jt.className="puzzle-counter",jt.textContent=`Spørgsmål ${Ie+1} / ${Ve.length}`,Ft.appendChild(jt);const $t=document.createElement("div");$t.className="puzzle-question-card",$t.innerHTML=`
                 <h3 class="puzzle-question-title">❓ ${Bt.question}</h3>
-            `,Ft.appendChild($t);const It=document.createElement("div");It.className="puzzle-guide-hint",It.textContent="Klik på ordene nedenfor for at sætte dem i rigtig rækkefølge:",Ft.appendChild(It),zt.appendChild(Ft);const At=document.createElement("div");At.className="puzzle-slots",mt.forEach((dr,Ut)=>{const Pt=document.createElement("div");Pt.className=`puzzle-slot ${dr.colorClass}`,Pt.dataset.idx=Ut,Pt.onclick=()=>{nt[Ut]&&(nt[Ut]=null,br())},At.appendChild(Pt)}),zt.appendChild(At);const Jt=document.createElement("div");Jt.className="puzzle-word-bank",zt.appendChild(Jt);const nr=document.createElement("div");nr.className="puzzle-feedback-area",zt.appendChild(nr);function br(){At.querySelectorAll(".puzzle-slot").forEach((dr,Ut)=>{const Pt=nt[Ut],Yt=mt[Ut];Pt?(dr.classList.add("filled"),dr.innerHTML=`
+            `,Ft.appendChild($t);const It=document.createElement("div");It.className="puzzle-guide-hint",It.textContent="Klik på ordene nedenfor for at sætte dem i rigtig rækkefølge:",Ft.appendChild(It),zt.appendChild(Ft);const At=document.createElement("div");At.className="puzzle-slots",mt.forEach((dr,Ut)=>{const Pt=document.createElement("div");Pt.className=`puzzle-slot ${dr.colorClass}`,Pt.dataset.idx=Ut,Pt.onclick=()=>{nt[Ut]&&(nt[Ut]=null,pr())},At.appendChild(Pt)}),zt.appendChild(At);const Jt=document.createElement("div");Jt.className="puzzle-word-bank",zt.appendChild(Jt);const nr=document.createElement("div");nr.className="puzzle-feedback-area",zt.appendChild(nr);function pr(){At.querySelectorAll(".puzzle-slot").forEach((dr,Ut)=>{const Pt=nt[Ut],Yt=mt[Ut];Pt?(dr.classList.add("filled"),dr.innerHTML=`
                             <span class="slot-badge-num">${Ut+1}</span>
                             <div class="slot-word-content">${Pt}</div>
                             <span class="slot-grammar-tag ${Yt.tagClass}">[${Yt.grammar}]</span>
@@ -56228,7 +56227,7 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
                             <span class="slot-badge-num">${Ut+1}</span>
                             <div class="slot-hint-text">${Yt.text}</div>
                             <span class="slot-grammar-tag ${Yt.tagClass}">[${Yt.grammar}]</span>
-                        `)}),Jt.innerHTML="",Bt.scrambled.forEach(dr=>{const Ut=nt.includes(dr),Pt=document.createElement("button");Pt.className="puzzle-chip-btn",Pt.textContent=dr,Pt.disabled=Ut,Pt.onclick=()=>{const Yt=nt.indexOf(null);Yt!==-1&&(nt[Yt]=dr,br(),mr())},Jt.appendChild(Pt)})}function mr(){if(nt.includes(null)){nr.innerHTML="";return}const dr=nt.every((Pt,Yt)=>Pt===Bt.correct[Yt]),Ut=nt.join(" ");dr?(at.add(Ie),Tt.querySelectorAll(".puzzle-pill").forEach((Pt,Yt)=>{at.has(Yt)&&Pt.classList.add("completed")}),nr.innerHTML=`
+                        `)}),Jt.innerHTML="",Bt.scrambled.forEach(dr=>{const Ut=nt.includes(dr),Pt=document.createElement("button");Pt.className="puzzle-chip-btn",Pt.textContent=dr,Pt.disabled=Ut,Pt.onclick=()=>{const Yt=nt.indexOf(null);Yt!==-1&&(nt[Yt]=dr,pr(),mr())},Jt.appendChild(Pt)})}function mr(){if(nt.includes(null)){nr.innerHTML="";return}const dr=nt.every((Pt,Yt)=>Pt===Bt.correct[Yt]),Ut=nt.join(" ");dr?(at.add(Ie),Tt.querySelectorAll(".puzzle-pill").forEach((Pt,Yt)=>{at.has(Yt)&&Pt.classList.add("completed")}),nr.innerHTML=`
                         <div class="puzzle-msg success">
                             <div style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
                                 🎉 Helt rigtigt! "<strong>${Ut}</strong>"
@@ -56259,7 +56258,7 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
                                 <span>🔄</span> Prøv igen
                             </button>
                         </div>
-                    `,nr.querySelector("#puzzle-retry-btn").onclick=()=>{nt=[null,null,null,null],nr.innerHTML="",br()})}br()}Dt(),He.appendChild(zt)}function _e(He){const Ve=[{q:"1. Hvornår? (Tid)",grammar:"Tid (1)",rowClass:"row-tid",selClass:"sel-tid",colorWord:"word-color-tid",options:["Om mandagen","Om tirsdagen","Om onsdagen","Om torsdagen","Om fredagen","Om lørdagen","Om søndagen","I dag"]},{q:"2. Hvad gør man? (Verbum)",grammar:"Verbum (2)",rowClass:"row-verbum",selClass:"sel-verbum",colorWord:"word-color-verbum",options:["vasker","tømmer","tørrer","folder","stryger","holder"]},{q:"3. Hvem? (Subjekt)",grammar:"Subjekt (3)",rowClass:"row-subjekt",selClass:"sel-subjekt",colorWord:"word-color-subjekt",options:["hun","han","vi","jeg","familien"]},{q:"4. Hvad? (Objekt)",grammar:"Objekt (4)",rowClass:"row-objekt",selClass:"sel-objekt",colorWord:"word-color-objekt",options:["tøj","maskinen","skjorter","gulv","fri"]}];let Ie=["Om mandagen","vasker","hun","tøj"];const nt=document.createElement("div");nt.className="step-builder-wrapper";const at=document.createElement("div");at.className="live-sentence-display";function zt(){at.innerHTML=`
+                    `,nr.querySelector("#puzzle-retry-btn").onclick=()=>{nt=[null,null,null,null],nr.innerHTML="",pr()})}pr()}Dt(),He.appendChild(zt)}function _e(He){const Ve=[{q:"1. Hvornår? (Tid)",grammar:"Tid (1)",rowClass:"row-tid",selClass:"sel-tid",colorWord:"word-color-tid",options:["Om mandagen","Om tirsdagen","Om onsdagen","Om torsdagen","Om fredagen","Om lørdagen","Om søndagen","I dag"]},{q:"2. Hvad gør man? (Verbum)",grammar:"Verbum (2)",rowClass:"row-verbum",selClass:"sel-verbum",colorWord:"word-color-verbum",options:["vasker","tømmer","tørrer","folder","stryger","holder"]},{q:"3. Hvem? (Subjekt)",grammar:"Subjekt (3)",rowClass:"row-subjekt",selClass:"sel-subjekt",colorWord:"word-color-subjekt",options:["hun","han","vi","jeg","familien"]},{q:"4. Hvad? (Objekt)",grammar:"Objekt (4)",rowClass:"row-objekt",selClass:"sel-objekt",colorWord:"word-color-objekt",options:["tøj","maskinen","skjorter","gulv","fri"]}];let Ie=["Om mandagen","vasker","hun","tøj"];const nt=document.createElement("div");nt.className="step-builder-wrapper";const at=document.createElement("div");at.className="live-sentence-display";function zt(){at.innerHTML=`
                 <div class="live-badge-label">✨ Din sætning (Verbum på 2. plads)</div>
                 <div class="live-sentence-text">
                     <span class="word-color-tid">${Ie[0]}</span> 
@@ -56423,7 +56422,7 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
     `,Pe.appendChild(it);const tt=document.createElement("div");tt.className="saetning-sub-panel active";const ht=document.createElement("div");ht.className="saetning-sub-panel",Pe.appendChild(tt),Pe.appendChild(ht),it.querySelectorAll(".saetning-sub-tab-btn").forEach(He=>{He.onclick=()=>{it.querySelectorAll(".saetning-sub-tab-btn").forEach(Ve=>Ve.classList.remove("active")),He.classList.add("active"),He.dataset.ahst==="puzzle"?(tt.classList.add("active"),ht.classList.remove("active")):(ht.classList.add("active"),tt.classList.remove("active"))}}),(function(Ve){const Ie=[{question:"Hvad laver manden i stuen?",correct:["I stuen","støvsuger","manden","gulvet."],scrambled:["støvsuger","gulvet.","I stuen","manden"],ruleTip:'Stedet "I stuen" står på 1. plads, og verbet "støvsuger" står på 2. plads.'},{question:"Hvad gør hun i soveværelset hver morgen?",correct:["Hver morgen","reder","hun","sengen."],scrambled:["reder","sengen.","hun","Hver morgen"],ruleTip:'Tidsudtrykket "Hver morgen" står først, og verbet "reder" står på 2. plads.'},{question:"Hvad laver kvinden ved vinduet?",correct:["Om lørdagen","pudser","hun","vinduer."],scrambled:["vinduer.","Om lørdagen","pudser","hun"],ruleTip:'Verbet "pudser" står på 2. plads lige efter "Om lørdagen".'},{question:"Hvad gør drengen på værelset?",correct:["På værelset","rydder","drengen","legetøj op."],scrambled:["drengen","legetøj op.","På værelset","rydder"],ruleTip:'Verbet "rydder" står på 2. plads.'},{question:"Hvad laver manden i køkkenet?",correct:["I køkkenet","laver","han","mad."],scrambled:["mad.","laver","I køkkenet","han"],ruleTip:"I køkkenet (1) + laver (2) + han (3) + mad (4)."},{question:"Hvad gør kvinden efter maden?",correct:["Efter maden","tørrer","hun","bordet af."],scrambled:["tørrer","bordet af.","Efter maden","hun"],ruleTip:"Efter maden (1) + tørrer (2) + hun (3) + bordet af (4)."},{question:"Hvad gør drengen med skraldeposen?",correct:["Om aftenen","bærer","drengen","skrald ud."],scrambled:["skrald ud.","Om aftenen","drengen","bærer"],ruleTip:"Om aftenen (1) + bærer (2) + drengen (3) + skrald ud (4)."},{question:"Hvad gør vi med blomsterne i vinduet?",correct:["I dag","vander","vi","blomsterne."],scrambled:["blomsterne.","vi","I dag","vander"],ruleTip:"I dag (1) + vander (2) + vi (3) + blomsterne (4)."}];let nt=0,at=[null,null,null,null];const zt=new Set,mt=document.createElement("div");mt.className="puzzle-wrapper";const Dt=[{text:p("ah_slot1_text","Hvornår / Hvor?"),grammar:p("ah_slot1_grammar","Tid / Sted (1)"),colorClass:"slot-tid",tagClass:"tag-tid"},{text:p("ah_slot2_text","Hvad gør man?"),grammar:p("ah_slot2_grammar","Verbum (2)"),colorClass:"slot-verbum",tagClass:"tag-verbum"},{text:p("ah_slot3_text","Hvem?"),grammar:p("ah_slot3_grammar","Subjekt (3)"),colorClass:"slot-subjekt",tagClass:"tag-subjekt"},{text:p("ah_slot4_text","Hvad?"),grammar:p("ah_slot4_grammar","Objekt (4)"),colorClass:"slot-objekt",tagClass:"tag-objekt"}];function Bt(){mt.innerHTML="",at=[null,null,null,null];const Ft=Ie[nt],Tt=nt+1,jt=p(`ah_pz_${Tt}_q`,Ft.question),$t=p(`ah_pz_${Tt}_tip`,Ft.ruleTip),It=document.createElement("div");It.className="puzzle-header";const At=document.createElement("div");At.className="puzzle-pills-row",Ie.forEach((Ut,Pt)=>{const Yt=document.createElement("button");Yt.className=`puzzle-pill ${Pt===nt?"active":""} ${zt.has(Pt)?"completed":""}`,Yt.textContent=Pt+1,Yt.onclick=()=>{nt=Pt,Bt()},At.appendChild(Yt)}),It.appendChild(At);const Jt=document.createElement("div");Jt.className="puzzle-question-card",Jt.innerHTML=`
                 <h3 class="puzzle-question-title">${Ft.question}</h3>
                 ${!m&&jt!==Ft.question?`<div style="font-size: 0.95rem; color: #94a3b8; margin-top: 0.2rem; font-style: italic;">"${jt}"</div>`:""}
-            `,It.appendChild(Jt),mt.appendChild(It);const nr=document.createElement("div");nr.className="puzzle-slots",Dt.forEach((Ut,Pt)=>{const Yt=document.createElement("div");Yt.className=`puzzle-slot ${Ut.colorClass}`,Yt.onclick=()=>{at[Pt]&&(at[Pt]=null,dr())},nr.appendChild(Yt)}),mt.appendChild(nr);const br=document.createElement("div");br.className="puzzle-word-bank",mt.appendChild(br);const mr=document.createElement("div");mr.className="puzzle-feedback-area",mt.appendChild(mr);function dr(){nr.querySelectorAll(".puzzle-slot").forEach((Ut,Pt)=>{const Yt=at[Pt],Hr=Dt[Pt];Yt?(Ut.classList.add("filled"),Ut.innerHTML=`
+            `,It.appendChild(Jt),mt.appendChild(It);const nr=document.createElement("div");nr.className="puzzle-slots",Dt.forEach((Ut,Pt)=>{const Yt=document.createElement("div");Yt.className=`puzzle-slot ${Ut.colorClass}`,Yt.onclick=()=>{at[Pt]&&(at[Pt]=null,dr())},nr.appendChild(Yt)}),mt.appendChild(nr);const pr=document.createElement("div");pr.className="puzzle-word-bank",mt.appendChild(pr);const mr=document.createElement("div");mr.className="puzzle-feedback-area",mt.appendChild(mr);function dr(){nr.querySelectorAll(".puzzle-slot").forEach((Ut,Pt)=>{const Yt=at[Pt],Hr=Dt[Pt];Yt?(Ut.classList.add("filled"),Ut.innerHTML=`
                             <span class="slot-badge-num">${Pt+1}</span>
                             <div class="slot-word-content">${Yt}</div>
                             <span class="slot-grammar-tag ${Hr.tagClass}">[${Hr.grammar}]</span>
@@ -56432,7 +56431,7 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
                             <span class="slot-badge-num">${Pt+1}</span>
                             <div class="slot-hint-text">${Hr.text}</div>
                             <span class="slot-grammar-tag ${Hr.tagClass}">[${Hr.grammar}]</span>
-                        `)}),br.innerHTML="",Ft.scrambled.forEach(Ut=>{const Pt=document.createElement("button");Pt.className="puzzle-chip-btn",Pt.textContent=Ut,Pt.disabled=at.includes(Ut),Pt.onclick=()=>{const Yt=at.indexOf(null);if(Yt!==-1&&(at[Yt]=Ut,dr(),!at.includes(null))){const Hr=at.every((Sa,cn)=>Sa===Ft.correct[cn]),Mr=at.join(" ");Hr?(zt.add(nt),mr.innerHTML=`
+                        `)}),pr.innerHTML="",Ft.scrambled.forEach(Ut=>{const Pt=document.createElement("button");Pt.className="puzzle-chip-btn",Pt.textContent=Ut,Pt.disabled=at.includes(Ut),Pt.onclick=()=>{const Yt=at.indexOf(null);if(Yt!==-1&&(at[Yt]=Ut,dr(),!at.includes(null))){const Hr=at.every((Sa,cn)=>Sa===Ft.correct[cn]),Mr=at.join(" ");Hr?(zt.add(nt),mr.innerHTML=`
                                         <div class="puzzle-msg success">
                                             <div style="font-size: 1.2rem; font-weight: 800;">${p("ah_puzzle_success","Helt rigtigt!")} "<strong>${Mr}</strong>"</div>
                                             <div style="font-size: 0.92rem; margin-top: 0.25rem;">${Ft.ruleTip}</div>
@@ -56447,7 +56446,7 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
                                         <div class="puzzle-action-row">
                                             <button class="retry-task-btn" id="ah-pz-retry">${p("ah_puzzle_retry","Prøv igen")}</button>
                                         </div>
-                                    `,mr.querySelector("#ah-pz-retry").onclick=()=>{at=[null,null,null,null],mr.innerHTML="",dr()})}},br.appendChild(Pt)})}dr()}Bt(),Ve.appendChild(mt)})(tt),(function(Ve){const Ie=[{q:p("ah_step_cat1_q","1. Hvornår eller hvor? (1. plads)"),grammar:p("ah_slot1_grammar","Tid / Sted (1)"),rowClass:"row-tid",selClass:"sel-tid",options:["Hver morgen","Om eftermiddagen","Efter maden","I stuen","I køkkenet","På badeværelset"]},{q:p("ah_step_cat2_q","2. Hvad gør man? (Verbum på 2. plads)"),grammar:p("ah_slot2_grammar","Verbum (2)"),rowClass:"row-verbum",selClass:"sel-verbum",options:["støvsuger","reder","pudser","vander","vasker","tørrer","dækker","fejer","fodrer"]},{q:p("ah_step_cat3_q","3. Hvem? (Subjekt på 3. plads)"),grammar:p("ah_slot3_grammar","Subjekt (3)"),rowClass:"row-subjekt",selClass:"sel-subjekt",options:["jeg","vi","hun","han","drengen","familien"]},{q:p("ah_step_cat4_q","4. Hvad? (Objekt på 4. plads)"),grammar:p("ah_slot4_grammar","Objekt (4)"),rowClass:"row-objekt",selClass:"sel-objekt",options:["gulvet","sengen","vinduerne","blomsterne","op","bordet af","bord","hunden og katten"]}];let nt=["Hver morgen","reder","jeg","sengen"];const at=document.createElement("div");at.className="step-builder-wrapper";const zt=document.createElement("div");zt.className="live-sentence-display";function mt(){zt.innerHTML=`
+                                    `,mr.querySelector("#ah-pz-retry").onclick=()=>{at=[null,null,null,null],mr.innerHTML="",dr()})}},pr.appendChild(Pt)})}dr()}Bt(),Ve.appendChild(mt)})(tt),(function(Ve){const Ie=[{q:p("ah_step_cat1_q","1. Hvornår eller hvor? (1. plads)"),grammar:p("ah_slot1_grammar","Tid / Sted (1)"),rowClass:"row-tid",selClass:"sel-tid",options:["Hver morgen","Om eftermiddagen","Efter maden","I stuen","I køkkenet","På badeværelset"]},{q:p("ah_step_cat2_q","2. Hvad gør man? (Verbum på 2. plads)"),grammar:p("ah_slot2_grammar","Verbum (2)"),rowClass:"row-verbum",selClass:"sel-verbum",options:["støvsuger","reder","pudser","vander","vasker","tørrer","dækker","fejer","fodrer"]},{q:p("ah_step_cat3_q","3. Hvem? (Subjekt på 3. plads)"),grammar:p("ah_slot3_grammar","Subjekt (3)"),rowClass:"row-subjekt",selClass:"sel-subjekt",options:["jeg","vi","hun","han","drengen","familien"]},{q:p("ah_step_cat4_q","4. Hvad? (Objekt på 4. plads)"),grammar:p("ah_slot4_grammar","Objekt (4)"),rowClass:"row-objekt",selClass:"sel-objekt",options:["gulvet","sengen","vinduerne","blomsterne","op","bordet af","bord","hunden og katten"]}];let nt=["Hver morgen","reder","jeg","sengen"];const at=document.createElement("div");at.className="step-builder-wrapper";const zt=document.createElement("div");zt.className="live-sentence-display";function mt(){zt.innerHTML=`
                 <div class="live-badge-label">${p("ah_step_live_label","Din sætning med nye husarbejde-ord")}</div>
                 <div class="live-sentence-text">
                     <span class="word-color-tid">${nt[0]}</span> 

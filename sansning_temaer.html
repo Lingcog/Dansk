@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grammatik & Sansning — 3 Skandinaviske Farveforslag</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+    background: #0b0f14;
+    color: #e6edf3;
+    min-height: 100vh;
+  }
+
+  .switcher-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(11, 15, 20, 0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .switcher-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #cbd5e1;
+  }
+  .switcher-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .sw-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: #cbd5e1;
+    padding: 0.48rem 0.95rem;
+    border-radius: 9px;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .sw-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+  .sw-btn.active {
+    background: #e2e8f0;
+    color: #0f172a;
+    border-color: #e2e8f0;
+  }
+
+  .preview-stage {
+    padding: 1.5rem 1.25rem 3.5rem;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+  .preview-stage.compare-grid {
+    max-width: 1620px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    align-items: start;
+  }
+  @media (max-width: 1220px) {
+    .preview-stage.compare-grid { grid-template-columns: 1fr; max-width: 920px; }
+  }
+
+  .theme-panel { display: none; }
+  .theme-panel.visible { display: block; }
+  .preview-stage.compare-grid .theme-panel { display: block; }
+
+  .theme-caption {
+    margin-bottom: 0.9rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .theme-caption h2 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #f8fafc;
+  }
+  .theme-caption p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #94a3b8;
+    line-height: 1.45;
+  }
+  .swatches { display: flex; gap: 0.4rem; margin-top: 0.55rem; }
+  .swatch { width: 22px; height: 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.2); }
+
+  /* ===================================================================== */
+  /* SHARED SANSNING MOCKUP STRUCTURE                                      */
+  /* ===================================================================== */
+  .s-page {
+    background: var(--bg-page);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.25rem;
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+  }
+
+  /* Global top realm strip */
+  .s-nav-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    padding: 0.45rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .s-nav-pill {
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 0.34rem 0.65rem;
+    border-radius: 8px;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid transparent;
+  }
+  .s-nav-pill.active {
+    background: var(--nav-active-bg);
+    color: var(--nav-active-text);
+    border-color: var(--nav-active-border);
+    font-weight: 700;
+  }
+
+  /* Hero */
+  .s-hero {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 1.1rem 1.25rem;
+  }
+  .s-hero-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.22rem 0.7rem;
+    border-radius: 999px;
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    color: var(--badge-text);
+    margin-bottom: 0.55rem;
+  }
+  .s-hero h1 {
+    margin: 0 0 0.35rem 0;
+    font-size: 1.38rem;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.015em;
+  }
+  .s-hero p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Tactile Grounding Lab (the blue hero block) */
+  .s-lab {
+    background: var(--lab-bg);
+    border: 1.5px solid var(--lab-border);
+    border-radius: 16px;
+    padding: 1.1rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .s-lab-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cool-text);
+  }
+  .s-lab-title {
+    margin: 0;
+    font-size: 1.06rem;
+    font-weight: 800;
+    color: var(--text-main);
+  }
+  .s-lab-sub {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  .s-station-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.38rem;
+  }
+  .s-st-pill {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.32rem 0.65rem;
+    border-radius: 8px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  .s-st-pill.active {
+    background: var(--pill-active-bg);
+    border-color: var(--pill-active-border);
+    color: var(--pill-active-text);
+    font-weight: 700;
+  }
+
+  .s-mode-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+  @media (max-width: 600px) { .s-mode-grid { grid-template-columns: 1fr; } }
+  .s-mode-btn {
+    border-radius: 11px;
+    padding: 0.65rem 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+  }
+  .s-mode-btn.cool-active {
+    background: var(--cool-bg);
+    border: 1.5px solid var(--cool-border);
+  }
+  .s-mode-btn.warm-idle {
+    border-color: var(--warm-border-soft);
+  }
+  .s-mode-head {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+  .s-dot { width: 9px; height: 9px; border-radius: 999px; flex-shrink: 0; }
+  .s-dot.cool { background: var(--cool-accent); }
+  .s-dot.warm { background: var(--warm-accent); }
+  .s-mode-sub {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+
+  .s-svg-frame {
+    background: var(--svg-bg);
+    border: 1px solid var(--cool-border-soft);
+    border-radius: 12px;
+    padding: 0.55rem;
+  }
+
+  .s-slots-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+  .s-slot {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.5rem 0.65rem;
+  }
+  .s-slot.focus {
+    border-color: var(--cool-border);
+    background: var(--cool-bg);
+  }
+  .s-slot-lbl {
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.15rem;
+  }
+  .s-slot-txt {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .s-explain {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    background: var(--bg-surface);
+    border-left: 3px solid var(--cool-accent);
+    padding: 0.6rem 0.85rem;
+    border-radius: 0 9px 9px 0;
+  }
+  .s-explain strong { color: var(--text-main); }
+
+  .s-lab-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.55rem;
+    padding-top: 0.45rem;
+    border-top: 1px solid var(--border);
+  }
+  .s-ghost-btn {
+    padding: 0.45rem 0.85rem;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .s-primary-btn {
+    padding: 0.52rem 1rem;
+    border-radius: 9px;
+    border: 1px solid var(--primary-border);
+    background: var(--primary-bg);
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  /* Station cards preview */
+  .s-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+  }
+  @media (max-width: 600px) { .s-cards-grid { grid-template-columns: 1fr; } }
+  .s-card-mini {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--cool-accent);
+    border-radius: 12px;
+    padding: 0.85rem 0.95rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .s-card-mini h4 {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+  .s-card-mini p {
+    margin: 0;
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  /* ===================================================================== */
+  /* FORSLAG 1: NORDISK SKIFER & BLÅT LAB (Tættest på Klods-Hans)          */
+  /* ===================================================================== */
+  .theme-1 {
+    --bg-page: #101419;
+    --bg-card: #151a21;
+    --bg-surface: #1a212b;
+    --border: rgba(203, 213, 225, 0.13);
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --nav-active-bg: #e2e8f0;
+    --nav-active-text: #0f172a;
+    --nav-active-border: #e2e8f0;
+    --badge-bg: rgba(43, 110, 120, 0.22);
+    --badge-border: rgba(76, 155, 166, 0.45);
+    --badge-text: #7ec4ce;
+    --lab-bg: #0b1528;
+    --lab-border: rgba(56, 189, 248, 0.45);
+    --svg-bg: #08101f;
+    --pill-active-bg: #e2e8f0;
+    --pill-active-border: #e2e8f0;
+    --pill-active-text: #0f172a;
+    --cool-accent: #38bdf8;
+    --cool-text: #7dd3fc;
+    --cool-bg: rgba(56, 189, 248, 0.14);
+    --cool-border: rgba(56, 189, 248, 0.6);
+    --cool-border-soft: rgba(56, 189, 248, 0.25);
+    --warm-accent: #e08e5a;
+    --warm-border-soft: rgba(224, 142, 90, 0.35);
+    --primary-bg: #2b6e78;
+    --primary-border: #3d8b96;
+  }
+
+  /* ===================================================================== */
+  /* FORSLAG 2: DYB NORDISK MIDNATSBLÅ (Hele fladen i lab'ets blå tone)    */
+  /* ===================================================================== */
+  .theme-2 {
+    --bg-page: #09111f;
+    --bg-card: #0f1a2e;
+    --bg-surface: #15233b;
+    --border: rgba(148, 197, 233, 0.15);
+    --text-main: #eef5fc;
+    --text-muted: #93acc7;
+    --nav-active-bg: rgba(56, 189, 248, 0.2);
+    --nav-active-text: #e0f2fe;
+    --nav-active-border: rgba(56, 189, 248, 0.5);
+    --badge-bg: rgba(56, 189, 248, 0.14);
+    --badge-border: rgba(56, 189, 248, 0.38);
+    --badge-text: #7dd3fc;
+    --lab-bg: #0c172b;
+    --lab-border: rgba(125, 211, 252, 0.35);
+    --svg-bg: #08101e;
+    --pill-active-bg: #38bdf8;
+    --pill-active-border: #38bdf8;
+    --pill-active-text: #081221;
+    --cool-accent: #38bdf8;
+    --cool-text: #7dd3fc;
+    --cool-bg: rgba(56, 189, 248, 0.15);
+    --cool-border: rgba(56, 189, 248, 0.58);
+    --cool-border-soft: rgba(125, 211, 252, 0.24);
+    --warm-accent: #e59a5c;
+    --warm-border-soft: rgba(229, 154, 92, 0.35);
+    --primary-bg: #1e6091;
+    --primary-border: #3888bf;
+  }
+
+  /* ===================================================================== */
+  /* FORSLAG 3: KØLIG SKIFER & FJORD-PETROL (Blød, redaktionel kontrast)   */
+  /* ===================================================================== */
+  .theme-3 {
+    --bg-page: #12171d;
+    --bg-card: #171e26;
+    --bg-surface: #1e2731;
+    --border: rgba(203, 213, 225, 0.12);
+    --text-main: #edf2f7;
+    --text-muted: #96a4b4;
+    --nav-active-bg: #e2e8f0;
+    --nav-active-text: #0f172a;
+    --nav-active-border: #e2e8f0;
+    --badge-bg: rgba(78, 168, 197, 0.16);
+    --badge-border: rgba(78, 168, 197, 0.4);
+    --badge-text: #8cc9dc;
+    --lab-bg: #11212c;
+    --lab-border: rgba(78, 168, 197, 0.42);
+    --svg-bg: #0c1821;
+    --pill-active-bg: #2b6e78;
+    --pill-active-border: #4ea8c5;
+    --pill-active-text: #ffffff;
+    --cool-accent: #4ea8c5;
+    --cool-text: #8cc9dc;
+    --cool-bg: rgba(78, 168, 197, 0.14);
+    --cool-border: rgba(78, 168, 197, 0.55);
+    --cool-border-soft: rgba(78, 168, 197, 0.25);
+    --warm-accent: #d49a56;
+    --warm-border-soft: rgba(212, 154, 86, 0.35);
+    --primary-bg: #2b6e78;
+    --primary-border: #4ea8c5;
+  }
+</style>
+</head>
+<body>
+
+<div class="switcher-bar">
+  <div class="switcher-title">Grammatik &amp; Sansning · 3 Forslag (Blåt Taktilt Lab + Nordisk Minimalisme)</div>
+  <div class="switcher-tabs">
+    <button class="sw-btn active" data-view="compare">Alle 3 side om side</button>
+    <button class="sw-btn" data-view="t1">1. Skifer &amp; Blåt Lab</button>
+    <button class="sw-btn" data-view="t2">2. Nordisk Midnatsblå</button>
+    <button class="sw-btn" data-view="t3">3. Skifer &amp; Fjord-Petrol</button>
+  </div>
+</div>
+
+<div class="preview-stage compare-grid" id="stage"></div>
+
+<script>
+  const ICON_LAB = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`;
+  const ICON_AUDIO = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>`;
+  const ICON_ANCHOR = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><line x1="12" y1="7.5" x2="12" y2="21"/><path d="M5 13H2a10 10 0 0 0 20 0h-3"/></svg>`;
+
+  const themes = [
+    {
+      id: 't1',
+      cls: 'theme-1',
+      name: 'Forslag 1 · Nordisk Skifer & Blåt Lab',
+      desc: 'Samme rolige skifer-ramme som Klods-Hans rundt om hele siden, mens det taktile laboratorium lyser op i sin dybblå signaturfarve i midten.',
+      swatches: ['#151a21', '#0b1528', '#38bdf8', '#2b6e78', '#e08e5a']
+    },
+    {
+      id: 't2',
+      cls: 'theme-2',
+      name: 'Forslag 2 · Dyb Nordisk Midnatsblå',
+      desc: 'Løfter det taktile laboratoriums dybblå tone ud over hele fladen — sømløst, roligt og inspireret af skandinavisk arkitekt-blåtryk.',
+      swatches: ['#09111f', '#0f1a2e', '#38bdf8', '#1e6091', '#e59a5c']
+    },
+    {
+      id: 't3',
+      cls: 'theme-3',
+      name: 'Forslag 3 · Kølig Skifer & Fjord-Petrol',
+      desc: 'Endnu mere afdæmpet og redaktionel kontrast: blød skifer, dyb petrol-blå lab-flade, fjordblå vs. støvet rav — nul visuel træthed.',
+      swatches: ['#171e26', '#11212c', '#4ea8c5', '#2b6e78', '#d49a56']
+    }
+  ];
+
+  function buildMockup(theme) {
+    return `
+      <div class="theme-panel visible" data-panel="${theme.id}">
+        <div class="theme-caption">
+          <h2>${theme.name}</h2>
+          <p>${theme.desc}</p>
+          <div class="swatches">
+            ${theme.swatches.map(c => `<span class="swatch" style="background:${c};" title="${c}"></span>`).join('')}
+          </div>
+        </div>
+
+        <div class="s-page ${theme.cls}">
+          <!-- Global top strip -->
+          <div class="s-nav-strip">
+            <span class="s-nav-pill active">1. Substans &amp; Bestemthed</span>
+            <span class="s-nav-pill">2. Tilstand &amp; Bevægelse</span>
+            <span class="s-nav-pill">3. Rum, Tid &amp; Relationer</span>
+            <span class="s-nav-pill">4. Sindets Fundament</span>
+            <span class="s-nav-pill">5. Tankens Vej &amp; Flow</span>
+          </div>
+
+          <!-- Hero -->
+          <div class="s-hero">
+            <span class="s-hero-badge">Hovedflade 1 • Substans, form &amp; bestemthed</span>
+            <h1>Tingene og deres grænser</h1>
+            <p>Hvordan sanserne skærer verden ud i flydende stof, afgrænsede enheder, udpegede ting og aktiviteter støbt i fast form.</p>
+          </div>
+
+          <!-- Tactile Lab -->
+          <div class="s-lab">
+            <div>
+              <div class="s-lab-kicker">${ICON_LAB}<span>Taktilt Grounding-Laboratorium • Hovedflade 1</span></div>
+              <h3 class="s-lab-title" style="margin-top:0.25rem;">Form-støberen: Uafgrænset stof vs. Fast kontur med artikel-anker</h3>
+              <p class="s-lab-sub" style="margin-top:0.2rem;">Se hvordan dansk grammatik først kan sætte »en/et« eller tal foran, når stoffet støbes ind i en fast, synlig grænse:</p>
+            </div>
+
+            <div class="s-station-pills">
+              <span class="s-st-pill active">1.1 Masse vs. form</span>
+              <span class="s-st-pill">1.2 Stof vs. individ</span>
+              <span class="s-st-pill">1.3 Ubestemt vs. bestemt</span>
+              <span class="s-st-pill">1.4 Huset vs. det røde hus</span>
+              <span class="s-st-pill">1.5 Fra aktivitet til ting</span>
+            </div>
+
+            <div class="s-mode-grid">
+              <div class="s-mode-btn cool-active">
+                <span class="s-mode-head"><span class="s-dot cool"></span><span>Hæld frit: Uafgrænset masse</span></span>
+                <span class="s-mode-sub">Flydende stof uden kontur • Utælleligt</span>
+              </div>
+              <div class="s-mode-btn warm-idle">
+                <span class="s-mode-head"><span class="s-dot warm"></span><span>Sæt fast beholder om (en / to -er)</span></span>
+                <span class="s-mode-sub">Afgrænset kontur • Tællelig genstand</span>
+              </div>
+            </div>
+
+            <!-- Tactile SVG Diagram -->
+            <div class="s-svg-frame">
+              <svg viewBox="0 0 360 116" width="100%" height="116" style="display:block;">
+                <text x="16" y="20" fill="var(--cool-text)" font-size="10.5" font-weight="800">UAFGRÆNSET MASSE (Ingen fast ydre kontur = 0 artikel)</text>
+                <path d="M 18 76 Q 76 46 138 74 T 262 66 T 342 74 L 342 96 L 18 96 Z" fill="var(--cool-bg)" stroke="var(--cool-accent)" stroke-width="2.5"/>
+                <circle cx="96" cy="54" r="4" fill="var(--cool-accent)" opacity="0.75"/>
+                <circle cx="176" cy="48" r="3" fill="var(--cool-accent)" opacity="0.6"/>
+                <circle cx="250" cy="52" r="4.5" fill="var(--cool-accent)" opacity="0.7"/>
+                <text x="180" y="109" text-anchor="middle" fill="var(--text-muted)" font-size="10.5" font-weight="700">meget vand • kaffe • mel (utælleligt)</text>
+              </svg>
+            </div>
+
+            <!-- Live Sentence Slots -->
+            <div class="s-slots-row">
+              <div class="s-slot">
+                <div class="s-slot-lbl">Mængdeord</div>
+                <div class="s-slot-txt">Der er meget</div>
+              </div>
+              <div class="s-slot focus">
+                <div class="s-slot-lbl">Ren masse (0 artikel)</div>
+                <div class="s-slot-txt">kaffe og vand</div>
+              </div>
+              <div class="s-slot">
+                <div class="s-slot-lbl">Sted</div>
+                <div class="s-slot-txt">i kanden.</div>
+              </div>
+            </div>
+
+            <div class="s-explain">
+              <strong>UTÆLLELIG MASSE:</strong> Flydende stoffer og masser (<em>vand, kaffe, mælk, mel, sukker</em>) har ingen fast ydre skal. Derfor står de uden <em>en/et</em>, tager <strong>meget</strong> (ikke mange) og kan ikke tælles.
+            </div>
+
+            <div class="s-lab-footer">
+              <span class="s-ghost-btn">${ICON_AUDIO}<span>Lyt: »Der er meget kaffe og vand i kanden.«</span></span>
+              <span class="s-ghost-btn">${ICON_ANCHOR}<span>Grounding: Substantiv-anker</span></span>
+              <span class="s-primary-btn"><span>Træn Station 1.1 i dybden</span><span>→</span></span>
+            </div>
+          </div>
+
+          <!-- Mini preview of clean station cards below -->
+          <div class="s-cards-grid">
+            <div class="s-card-mini">
+              <h4>1.1 Masse vs. form</h4>
+              <p>Utælleligt stof (kaffe, mel) over for tællelig beholder og fast form (en kop, to boller).</p>
+            </div>
+            <div class="s-card-mini">
+              <h4>1.5 Fra aktivitet til ting</h4>
+              <p>Støb en handling i bevægelse (at træne, at læse) om til en fast ting (træning, læsning).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  const stage = document.getElementById('stage');
+  stage.innerHTML = themes.map(buildMockup).join('');
+
+  document.querySelectorAll('.sw-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.sw-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const view = btn.dataset.view;
+      if (view === 'compare') {
+        stage.classList.add('compare-grid');
+        stage.querySelectorAll('.theme-panel').forEach(p => p.classList.add('visible'));
+      } else {
+        stage.classList.remove('compare-grid');
+        stage.querySelectorAll('.theme-panel').forEach(p => {
+          p.classList.toggle('visible', p.dataset.panel === view);
+        });
+      }
+    };
+  });
+</script>
+</body>
+</html>

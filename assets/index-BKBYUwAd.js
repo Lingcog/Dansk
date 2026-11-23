@@ -47919,7 +47919,7 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
                         ${h.starts[v].options.map(M=>`
                             <button type="button" class="sh-chip ${F.start===M?"active":""}" data-pick-start="${M}" style="${jr(ge,F.start===M,_)}">${M}</button>
                         `).join("")}
-                        <input type="text" class="sh-custom-input" id="sh-inp-start" value="${xr(F.start)}" placeholder="${xr(Ie("sh_ph_start",b))}" />
+                        <input type="text" class="sh-custom-input" id="sh-inp-start" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${xr(F.start)}" placeholder="${xr(Ie("sh_ph_start",b))}" />
                     </div>
                 </div>
 
@@ -47950,7 +47950,7 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
                             ${h.atVerbs.map(M=>`
                                 <button type="button" class="sh-chip ${F.atVerb===M?"active":""}" data-pick-atverb="${M}" style="${jr(Gt.verb,F.atVerb===M,_)}">${M}</button>
                             `).join("")}
-                            <input type="text" class="sh-custom-input" id="sh-inp-atverb" value="${xr(F.atVerb)}" placeholder="${xr(Ie("sh_ph_verb",b))}" />
+                            <input type="text" class="sh-custom-input" id="sh-inp-atverb" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${xr(F.atVerb)}" placeholder="${xr(Ie("sh_ph_verb",b))}" />
                         </div>
                     `:z?`
                         <div class="sh-options-wrap" dir="ltr" style="margin-bottom:0.55rem;">
@@ -47976,14 +47976,14 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
                             ${(h.kanLideInfinitives||["lide at spise"]).map(M=>`
                                 <button type="button" class="sh-chip ${F.kanInf===M?"active":""}" data-pick-kaninf="${M}" style="${jr(Gt.verb,F.kanInf===M,_)}">${M}</button>
                             `).join("")}
-                            <input type="text" class="sh-custom-input" id="sh-inp-kaninf" value="${xr(F.kanInf)}" placeholder="lide at ..." />
+                            <input type="text" class="sh-custom-input" id="sh-inp-kaninf" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${xr(F.kanInf)}" placeholder="lide at ..." />
                         </div>
                     `:`
                         <div class="sh-options-wrap" dir="ltr">
                             ${h.verbs.map(M=>`
                                 <button type="button" class="sh-chip ${F.verb===M?"active":""}" data-pick-verb="${M}" style="${jr(Gt.verb,F.verb===M,_)}">${M}</button>
                             `).join("")}
-                            <input type="text" class="sh-custom-input" id="sh-inp-verb" value="${xr(F.verb)}" placeholder="${xr(Ie("sh_ph_verb",b))}" />
+                            <input type="text" class="sh-custom-input" id="sh-inp-verb" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${xr(F.verb)}" placeholder="${xr(Ie("sh_ph_verb",b))}" />
                         </div>
                     `}
                 </div>
@@ -48007,7 +48007,7 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
                     `:""}
                     <div class="sh-options-wrap" dir="ltr">
                         ${h.objects.map(M=>{const O=Ca(M);return`<button type="button" class="sh-chip ${F.object===M?"active":""}" data-pick-obj="${M}" style="${jr(O,F.object===M,_)}">${M}</button>`}).join("")}
-                        <input type="text" class="sh-custom-input" id="sh-inp-obj" value="${xr(F.object)}" placeholder="${xr(Ie("sh_ph_obj",b))}" style="flex:1; min-width:210px;" />
+                        <input type="text" class="sh-custom-input" id="sh-inp-obj" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${xr(F.object)}" placeholder="${xr(Ie("sh_ph_obj",b))}" style="flex:1; min-width:210px;" />
                     </div>
                 </div>
 
@@ -48030,7 +48030,7 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
                         ${J.map(M=>`
                             <button type="button" class="sh-chip ${F.ext===M.text?"active":""}" data-pick-ext="${M.text}">${M.text===""?Ie("ext_none",b):M.label}</button>
                         `).join("")}
-                        <input type="text" class="sh-custom-input" id="sh-inp-ext" value="${xr(F.ext)}" placeholder="${xr(Ie("sh_ph_ext",b))}" style="flex:1; min-width:210px;" />
+                        <input type="text" class="sh-custom-input" id="sh-inp-ext" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${xr(F.ext)}" placeholder="${xr(Ie("sh_ph_ext",b))}" style="flex:1; min-width:210px;" />
                     </div>
                 </div>
             </div>
@@ -48613,7 +48613,7 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
                         ${k.starts[C].options.map(ve=>`
                             <button type="button" class="mb-sw-chip ${I.start===ve?"active":""}" data-start-opt="${ve}" style="${jr(re,I.start===ve,F)}">${ve}</button>
                         `).join("")}
-                        <input type="text" class="mb-sw-input" id="mb-sw-start-inp" placeholder="${fr(Ie("ph_start",h))}" value="${k.starts[C].options.includes(I.start)?"":fr(I.start)}" />
+                        <input type="text" class="mb-sw-input" id="mb-sw-start-inp" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="${fr(Ie("ph_start",h))}" value="${k.starts[C].options.includes(I.start)?"":fr(I.start)}" />
                     </div>
                 </div>
 
@@ -48642,14 +48642,14 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
                             ${k.atVerbs.map(ve=>`
                                 <button type="button" class="mb-sw-chip ${I.atVerb===ve?"active":""}" data-atverb="${ve}" style="${jr(Gt.verb,I.atVerb===ve,F)}">${ve}</button>
                             `).join("")}
-                            <input type="text" class="mb-sw-input" id="mb-sw-atverb-inp" placeholder="${fr(Ie("ph_verb",h))}" value="${k.atVerbs.includes(I.atVerb)?"":fr(I.atVerb)}" />
+                            <input type="text" class="mb-sw-input" id="mb-sw-atverb-inp" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="${fr(Ie("ph_verb",h))}" value="${k.atVerbs.includes(I.atVerb)?"":fr(I.atVerb)}" />
                         </div>
                     `:`
                         <div class="mb-sw-options" dir="ltr">
                             ${k.verbs.map(ve=>`
                                 <button type="button" class="mb-sw-chip ${I.verb===ve?"active":""}" data-verb-opt="${ve}" style="${jr(Gt.verb,I.verb===ve,F)}">${ve}</button>
                             `).join("")}
-                            <input type="text" class="mb-sw-input" id="mb-sw-verb-inp" placeholder="${fr(Ie("ph_verb",h))}" value="${k.verbs.includes(I.verb)?"":fr(I.verb)}" />
+                            <input type="text" class="mb-sw-input" id="mb-sw-verb-inp" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="${fr(Ie("ph_verb",h))}" value="${k.verbs.includes(I.verb)?"":fr(I.verb)}" />
                         </div>
                         ${j==="inversion"?`
                             <div dir="ltr" style="margin-top:0.65rem; padding-top:0.65rem; border-top:1px dashed rgba(203,213,225,0.12); display:flex; flex-wrap:wrap; align-items:center; gap:0.4rem;">
@@ -48671,7 +48671,7 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
                     </div>
                     <div class="mb-sw-options" dir="ltr">
                         ${k.objects.map(ve=>{const H=Ca(ve);return`<button type="button" class="mb-sw-chip ${I.object===ve?"active":""}" data-obj-opt="${ve}" style="${jr(H,I.object===ve,F)}">${ve}</button>`}).join("")}
-                        <input type="text" class="mb-sw-input" id="mb-sw-obj-inp" placeholder="${fr(Ie("ph_obj",h))}" value="${k.objects.includes(I.object)?"":fr(I.object)}" />
+                        <input type="text" class="mb-sw-input" id="mb-sw-obj-inp" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="${fr(Ie("ph_obj",h))}" value="${k.objects.includes(I.object)?"":fr(I.object)}" />
                     </div>
                 </div>
 
@@ -48688,7 +48688,7 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
                         ${ge.map(ve=>`
                             <button type="button" class="mb-sw-chip ${I.ext===ve.text?"active":""}" data-ext-opt="${ve.text}">${ve.text===""?Ie("ext_none",h):ve.label}</button>
                         `).join("")}
-                        <input type="text" class="mb-sw-input" id="mb-sw-ext-inp" placeholder="${fr(Ie("ph_ext",h))}" value="${ge.some(ve=>ve.text===I.ext)?"":fr(I.ext)}" />
+                        <input type="text" class="mb-sw-input" id="mb-sw-ext-inp" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="${fr(Ie("ph_ext",h))}" value="${ge.some(ve=>ve.text===I.ext)?"":fr(I.ext)}" />
                     </div>
                 </div>
             </div>

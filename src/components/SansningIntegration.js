@@ -693,6 +693,47 @@ export const SANSNING_REALMS = {
                         svgType: 'social_buffer'
                     }
                 ]
+            },
+            {
+                num: '3.6',
+                route: 'sansning_hypotese_datid',
+                short: 'Forestilling & hypoteser',
+                title: 'Forestilling og hypoteser: Virkelighed (nutid) vs. ønske & afstand (datid)',
+                storyStep: 'Kapitel 6: Drømmen om huset ved havet',
+                storyTilstand: 'Realistisk plan: "Hvis jeg har tid i morgen, kommer jeg forbi."',
+                storyForvandling: 'Forestilling & ønske: "Hvis jeg havde tid, ville jeg rejse jorden rundt."',
+                tactileTitle: 'Virkelighedens afstand: Fast grund (NUTID) vs. Usikker forestilling og ønske (DATID)',
+                tactilePrompt: 'Mærk hvordan dansk flytter verbet fra nutid til datid, når noget er usikkert, ønsket eller har mindre hold i virkeligheden:',
+                modes: [
+                    {
+                        id: 'hypotese_virkelig',
+                        btnLabel: 'Nærhed til virkeligheden (NUTID: har / kommer)',
+                        badge: 'Fast grund • Realistisk mulighed',
+                        color: '#38bdf8',
+                        slots: [
+                            { label: 'Betingelse', text: 'Hvis jeg', role: 'subj' },
+                            { label: 'Nutid (virkelighed)', text: 'har tid i morgen,', role: 'verb-cool' },
+                            { label: 'Realistisk følge', text: 'kommer jeg forbi.', role: 'pred' }
+                        ],
+                        sentence: 'Hvis jeg har tid i morgen, kommer jeg forbi.',
+                        explain: '<strong>NUTID = NÆRHED TIL VIRKELIGHEDEN:</strong> Når situationen er sandsynlig og kan ske lige om lidt, bliver verbet i nutid.',
+                        svgType: 'hypotese_virkelig'
+                    },
+                    {
+                        id: 'hypotese_droem',
+                        btnLabel: 'Afstand til virkeligheden (DATID: havde / ville)',
+                        badge: 'Mindre hold i virkeligheden • Ønske & hypotese',
+                        color: '#fb923c',
+                        slots: [
+                            { label: 'Betingelse', text: 'Hvis jeg', role: 'subj' },
+                            { label: 'Datid (afstand)', text: 'havde tid,', role: 'verb-warm' },
+                            { label: 'Ønske / drøm', text: 'ville jeg rejse jorden rundt.', role: 'obj-warm' }
+                        ],
+                        sentence: 'Hvis jeg havde tid, ville jeg rejse jorden rundt.',
+                        explain: '<strong>DATID = FORESTILLING & AFSTAND:</strong> Her handler datid ikke om i går, men om at ønsket er usikkert og ligger langt fra virkeligheden lige nu.',
+                        svgType: 'hypotese_droem'
+                    }
+                ]
             }
         ]
     },
@@ -2397,6 +2438,33 @@ function renderTactileSvgScene(svgType) {
                     <circle cx="275" cy="75" r="18" fill="#ea580c"/>
                 </svg>
             `;
+        case 'hypotese_virkelig':
+            return `
+                <svg viewBox="0 0 360 125" width="100%" height="125">
+                    <rect width="360" height="125" rx="12" fill="#0b1528"/>
+                    <text x="20" y="24" fill="#7dd3fc" font-size="11" font-weight="800">VIRKELIGHEDSNÆR (NUTID): Fast grund under fødderne</text>
+                    <line x1="30" y1="88" x2="330" y2="88" stroke="#38bdf8" stroke-width="3"/>
+                    <circle cx="115" cy="68" r="16" fill="#0284c7"/>
+                    <line x1="135" y1="68" x2="215" y2="68" stroke="#7dd3fc" stroke-width="3"/>
+                    <polygon points="223,68 211,62 211,74" fill="#7dd3fc"/>
+                    <rect x="229" y="52" width="94" height="32" rx="8" fill="rgba(56,189,248,0.22)" stroke="#38bdf8" stroke-width="1.8"/>
+                    <text x="276" y="72" text-anchor="middle" fill="#ffffff" font-size="10.5" font-weight="800">Kan ske nu</text>
+                    <text x="180" y="113" text-anchor="middle" fill="#7dd3fc" font-size="11" font-weight="900">»Hvis jeg har tid, kommer jeg forbi.«</text>
+                </svg>
+            `;
+        case 'hypotese_droem':
+            return `
+                <svg viewBox="0 0 360 125" width="100%" height="125">
+                    <rect width="360" height="125" rx="12" fill="#1a1118"/>
+                    <text x="20" y="24" fill="#fdba74" font-size="11" font-weight="800">FORESTILLING &amp; ØNSKE (DATID): Afstand til virkeligheden</text>
+                    <circle cx="72" cy="72" r="16" fill="#475569"/>
+                    <line x1="94" y1="72" x2="200" y2="72" stroke="#fb923c" stroke-width="2.5" stroke-dasharray="5,4"/>
+                    <polygon points="208,72 196,66 196,78" fill="#fb923c"/>
+                    <rect x="216" y="48" width="118" height="44" rx="22" fill="rgba(251,146,60,0.18)" stroke="#fb923c" stroke-width="2" stroke-dasharray="4,3"/>
+                    <text x="275" y="74" text-anchor="middle" fill="#fde047" font-size="10.5" font-weight="900">Drøm / Hypotese</text>
+                    <text x="180" y="113" text-anchor="middle" fill="#fdba74" font-size="11" font-weight="900">»Hvis jeg havde tid, ville jeg rejse.«</text>
+                </svg>
+            `;
 
         // 3.1 Klippe vs. Plankebro vs. Tynd is
         case 'ground_cliff':
@@ -2837,6 +2905,7 @@ function getStationRouteFromHash() {
         denne_den: 'sansning_denne_den',
         sin_hans: 'sansning_sin_hans',
         social_deiksis: 'sansning_social_deiksis',
+        hypotese_datid: 'sansning_hypotese_datid',
         form_masse: 'sansning_form_masse',
         stof_enhed: 'sansning_stof_enhed',
         bestemthed: 'sansning_bestemthed',

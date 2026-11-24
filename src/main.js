@@ -134,6 +134,7 @@ import { renderSansningIPaaView } from './views/SansningIPaaView.js';
 import { renderSansningDenneDenView } from './views/SansningDenneDenView.js';
 import { renderSansningSinHansView } from './views/SansningSinHansView.js';
 import { renderSansningSocialDeiksisView } from './views/SansningSocialDeiksisView.js';
+import { renderSansningHypoteseDatidView } from './views/SansningHypoteseDatidView.js';
 import { renderSansningVaereBliveView } from './views/SansningVaereBliveView.js';
 import { renderSansningFormMasseView } from './views/SansningFormMasseView.js';
 import { renderSansningAspektMaadeView } from './views/SansningAspektMaadeView.js';
@@ -635,6 +636,8 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
       renderSansningSinHansView(appDiv, navigate, extraData);
     } else if (sub === 'social_deiksis' || sub === 'station2_6') {
       renderSansningSocialDeiksisView(appDiv, navigate, extraData);
+    } else if (sub === 'hypotese_datid' || sub === 'station3_6') {
+      renderSansningHypoteseDatidView(appDiv, navigate, extraData);
     } else if (sub === 'form_masse' || sub === 'masse' || sub === 'station1_1') {
       renderSansningFormMasseView(appDiv, navigate, extraData);
     } else if (sub === 'aspekt_maade' || sub === 'aspekt' || sub === 'station1_5') {
@@ -835,6 +838,19 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
     }
     appState.currentView = 'sansning_social_deiksis';
     renderSansningSocialDeiksisView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'sansning_hypotese_datid' || viewTarget === 'hypotese_datid') {
+    const isLocalhost = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === '0.0.0.0' ||
+      window.location.hostname.endsWith('.local')
+    );
+    if (!isLocalhost) {
+      navigate('dagens_opgave', {}, true);
+      return;
+    }
+    appState.currentView = 'sansning_hypotese_datid';
+    renderSansningHypoteseDatidView(appDiv, navigate, extraData);
   } else if (viewTarget === 'sansning_form_masse' || viewTarget === 'form_masse') {
     const isLocalhost = typeof window !== 'undefined' && (
       window.location.hostname === 'localhost' ||

@@ -735,6 +735,11 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
             topic: '3.5 Social deiksis: nærhed vs. buffer',
             tilstand: 'Kom indenfor, hvad vil du have?',
             forvandling: 'Undskyld, havde du et øjeblik – var der andet?'
+        },
+        {
+            topic: '3.6 Forestilling og hypoteser: nutid vs. datid',
+            tilstand: 'Hvis jeg har tid i morgen, kommer jeg forbi.',
+            forvandling: 'Hvis jeg havde tid, ville jeg rejse jorden rundt.'
         }
     ];
 
@@ -852,6 +857,21 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
             leftEx: 'Hvad vil du have?',
             rightEx: 'Var der andet?',
             vrimmelBadge: 'Café- og diskscener'
+        },
+        {
+            num: '3.6',
+            id: 'sansning_hypotese_datid',
+            tag: 'Virkelighed vs. ønske',
+            accent: '#fb923c',
+            title: 'Forestilling og hypoteser: nutid vs. datid',
+            sub: 'Når noget er usikkert eller et ønske med mindre hold i virkeligheden, flytter dansk verbet fra nutid til datid ("Hvis jeg havde tid...").',
+            leftImg: `${baseUrl}assets/sansning_verber_tider_venstre.jpg`,
+            rightImg: `${baseUrl}assets/sansning_verber_tider_hoejre.jpg`,
+            leftLabel: 'Virkelighed (nutid)',
+            rightLabel: 'Forestilling (datid)',
+            leftEx: 'Hvis jeg har tid, kommer jeg',
+            rightEx: 'Hvis jeg havde tid, ville jeg...',
+            vrimmelBadge: 'Virkeligheds-stige & quiz'
         }
     ];
 
@@ -923,7 +943,7 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
     const divider = document.createElement('div');
     divider.className = 'gs-section-divider';
     divider.innerHTML = `
-        <h2>Alle 5 stationer i Hovedflade 3 (Rum, Tid & Relationer)</h2>
+        <h2>Alle 6 stationer i Hovedflade 3 (Rum, Tid & Relationer)</h2>
         <p>Vælg en station og mærk forskellen mellem nærhed og afstand</p>
     `;
     viewContainer.appendChild(divider);

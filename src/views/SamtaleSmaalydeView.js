@@ -2,6 +2,7 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { shuffleArray } from '../utils/shuffle.js';
 import { samtaleIcons, samtaleRoleIcon } from '../utils/samtaleIcons.js';
 import { st, stSub, stRtlAttr, isSamtaleLangLoaded, ensureSamtaleLang, SAMTALE_TR_CSS } from '../utils/samtale_translations.js';
+import { attachVrimmelControls } from '../utils/vrimmelPegefeltStandard.js';
 
 /**
  * SamtaleSmaalydeView — "Små lyde der får en samtale til at fungere"
@@ -2234,8 +2235,7 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
     const panel1 = makePanel('tab_vrimmel');
     let activeRoleFilter = 'alle';
     let selectedSound = DIALOG_SOUNDS[0];
-    let compactPins = false;
-    let zoomed = false;
+    let compactPins = true;
     let showSortDrill = false;
 
     const card1 = document.createElement('div');
@@ -2247,10 +2247,6 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
                 <button type="button" class="sl-filter-btn" data-rfilter="taler" style="border-color:rgba(245,158,11,0.65); color:#fde68a;">${samtaleRoleIcon('taler', 14)} ${st('Taler (4)', lang)}</button>
                 <button type="button" class="sl-filter-btn" data-rfilter="lytter" style="border-color:rgba(6,182,212,0.65); color:#67e8f9;">${samtaleRoleIcon('lytter', 14)} ${st('Lytter (7)', lang)}</button>
                 <button type="button" class="sl-filter-btn" data-rfilter="begge" style="border-color:rgba(192,132,252,0.75); color:#e9d5ff;">${samtaleRoleIcon('begge', 14)} ${st('Begge (9)', lang)}</button>
-            </div>
-            <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
-                <button type="button" class="sl-btn-secondary" id="sl-toggle-pinmode">${st('Kun tal', lang)}</button>
-                <button type="button" class="sl-btn-secondary" id="sl-zoom-btn">${st('Zoom 135%', lang)}</button>
             </div>
         </div>
 
@@ -2266,19 +2262,7 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
 
     const pegefelterLayer = card1.querySelector('#sl-pegefelter-layer');
     const detailBox = card1.querySelector('#sl-detail-box');
-    const stageInner = card1.querySelector('#sl-stage-inner');
-
-    card1.querySelector('#sl-zoom-btn').onclick = (e) => {
-        zoomed = !zoomed;
-        stageInner.style.transform = zoomed ? 'scale(1.35)' :'scale(1)';
-        e.currentTarget.textContent = zoomed ? st('Zoom 100%', lang) : st('Zoom 135%', lang);
-    };
-
-    card1.querySelector('#sl-toggle-pinmode').onclick = (e) => {
-        compactPins = !compactPins;
-        e.currentTarget.textContent = compactPins ? st('Vis ord', lang) : st('Kun tal', lang);
-        renderPegefelter();
-    };
+    attachVrimmelControls(card1.querySelector('.sl-stage-wrap'), pegefelterLayer, { lang });
 
     function roleIcon(role, size = 13) {
         return samtaleRoleIcon(role, size);
@@ -3490,6 +3474,7 @@ export function renderSamtaleSmaalydeView(container, navigateFn, extraData = {})
         `;
 
         const detPinsLayer = card7.querySelector('#sl-det-pins');
+        attachVrimmelControls(card7.querySelector('.sl-stage-wrap'), detPinsLayer, { lang });
         DIALOG_SOUNDS.forEach(sig => {
             const btn = document.createElement('button');
             btn.type = 'button';

@@ -27,7 +27,7 @@ export function renderMainView(container, navigateFn) {
             descKey: 'mitSprogSammenlignetDesc',
             fallbackTitle: 'Mit sprog sammenlignet med dansk',
             fallbackDesc: 'Fra mindste lydtræk til hel samtale — se forskellen mellem dansk og dit eget sprog trin for trin.',
-            requiresLang: 'zh',
+            badgeText: '🇩🇰 🇬🇧 🇸🇦 🇺🇦 🇻🇳 🇵🇰 🇮🇷 🇪🇸 🇵🇹 🇨🇳',
             action: () => navigateFn('mit_sprog_sammenlignet')
         },
         {

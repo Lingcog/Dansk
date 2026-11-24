@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Klods-Hans — 3 Skandinaviske Farveforslag</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+    background: #0d1117;
+    color: #e6edf3;
+    min-height: 100vh;
+  }
+
+  /* Top switcher bar */
+  .switcher-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(13, 17, 23, 0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .switcher-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #cbd5e1;
+    letter-spacing: 0.01em;
+  }
+  .switcher-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .sw-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: #cbd5e1;
+    padding: 0.48rem 0.95rem;
+    border-radius: 9px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .sw-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+  .sw-btn.active {
+    background: #e2e8f0;
+    color: #0f172a;
+    border-color: #e2e8f0;
+  }
+
+  /* Layout container */
+  .preview-stage {
+    padding: 1.5rem 1.25rem 3.5rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .preview-stage.compare-grid {
+    max-width: 1580px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    align-items: start;
+  }
+  @media (max-width: 1180px) {
+    .preview-stage.compare-grid { grid-template-columns: 1fr; max-width: 900px; }
+  }
+
+  .theme-panel { display: none; }
+  .theme-panel.visible { display: block; }
+  .preview-stage.compare-grid .theme-panel { display: block; }
+
+  .theme-caption {
+    margin-bottom: 0.9rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .theme-caption h2 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #f8fafc;
+  }
+  .theme-caption p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #94a3b8;
+    line-height: 1.45;
+  }
+  .swatches {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.55rem;
+  }
+  .swatch {
+    width: 22px;
+    height: 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  /* ===================================================================== */
+  /* SHARED MOCKUP COMPONENT STRUCTURE (styled via CSS custom properties)  */
+  /* ===================================================================== */
+  .page-mock {
+    background: var(--bg-page);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: 1.35rem;
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+  }
+
+  .m-header {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 1.15rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .m-title {
+    margin: 0;
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--title-color);
+    letter-spacing: -0.01em;
+  }
+  .m-sub {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .m-sub strong { color: var(--level-color); font-weight: 700; }
+  .m-quote {
+    background: var(--quote-bg);
+    border-left: 3px solid var(--quote-border);
+    padding: 0.55rem 0.9rem;
+    border-radius: 0 8px 8px 0;
+    color: var(--quote-text);
+    font-size: 0.88rem;
+    font-style: italic;
+  }
+
+  .m-toolbar {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 0.65rem 0.85rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .m-btn-listen {
+    background: var(--listen-bg);
+    border: 1px solid var(--listen-border);
+    color: var(--listen-text);
+    padding: 0.45rem 0.9rem;
+    border-radius: 9px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .m-seg {
+    display: inline-flex;
+    background: var(--seg-bg);
+    border: 1px solid var(--border-subtle);
+    border-radius: 9px;
+    padding: 2px;
+  }
+  .m-seg span {
+    padding: 0.34rem 0.7rem;
+    border-radius: 7px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  .m-seg span.active {
+    background: var(--seg-active-bg);
+    color: var(--seg-active-text);
+    font-weight: 700;
+  }
+  .m-fonts {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+  .m-font-btn {
+    padding: 0.28rem 0.52rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-subtle);
+    background: transparent;
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 0.76rem;
+  }
+  .m-font-btn.active {
+    background: var(--font-active-bg);
+    border-color: var(--font-active-border);
+    color: var(--font-active-text);
+  }
+
+  .m-steps-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    align-items: center;
+  }
+  .m-pill {
+    padding: 0.4rem 0.85rem;
+    border-radius: 9px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-muted);
+  }
+  .m-pill.active {
+    background: var(--pill-active-bg);
+    border-color: var(--pill-active-border);
+    color: var(--pill-active-text);
+    font-weight: 700;
+  }
+  .m-pill.talemaader {
+    margin-left: auto;
+    border-style: dashed;
+  }
+
+  .m-scene-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .m-scene-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .m-scene-head h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--title-color);
+  }
+  .m-ghost-btn {
+    padding: 0.34rem 0.72rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .m-vrimmel {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+  }
+  .m-vrimmel img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+  }
+
+  .m-flow-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+  .m-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex: 1;
+  }
+  .m-bar-track {
+    flex: 1;
+    max-width: 140px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--border-subtle);
+    overflow: hidden;
+  }
+  .m-bar-fill {
+    width: 20%;
+    height: 100%;
+    background: var(--primary-bg);
+  }
+
+  .m-prose-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 0.95rem 1.1rem;
+  }
+  .m-sentence {
+    border-left: 3px solid var(--sentence-accent);
+    padding-left: 0.75rem;
+    font-size: 0.98rem;
+    line-height: 1.72;
+    color: var(--text-main);
+  }
+  /* Ordklasse-farver forbliver letlæselige og tydelige */
+  .tok-sub { color: #7dd3fc; font-weight: 600; }
+  .tok-vrb { color: #86efac; font-weight: 600; }
+  .tok-adj { color: #fde68a; font-weight: 600; }
+  .tok-pro { color: #f9a8d4; font-weight: 600; }
+  .tok-adv { color: #c4b5fd; font-weight: 600; }
+
+  /* Indlejret visuel forklaringsboks i temaets farver */
+  .m-explain-box {
+    margin-top: 0.85rem;
+    background: var(--explain-bg);
+    border: 1.5px solid var(--explain-border);
+    border-radius: 12px;
+    padding: 0.75rem;
+  }
+  .m-explain-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.55rem;
+  }
+  .m-explain-pill {
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 0.22rem 0.68rem;
+    border-radius: 999px;
+    background: var(--bg-surface);
+    border: 1px solid var(--explain-border);
+    color: var(--text-main);
+  }
+  .m-explain-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .m-pic {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 9px;
+    padding: 0.4rem;
+  }
+  .m-pic-lbl {
+    font-size: 0.73rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+  }
+  .m-pic img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+  }
+  .m-vs {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    border: 1.5px solid var(--explain-border);
+    color: var(--explain-accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+
+  /* Primær handling */
+  .m-primary-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.2rem;
+  }
+  .m-btn-primary {
+    background: var(--primary-bg);
+    border: 1px solid var(--primary-border);
+    color: var(--primary-text);
+    padding: 0.68rem 1.45rem;
+    border-radius: 11px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+  .m-hint {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  .m-bottom-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .m-nav-btn {
+    padding: 0.5rem 0.95rem;
+    border-radius: 9px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .m-nav-btn.accent {
+    background: var(--secondary-accent-bg);
+    border-color: var(--secondary-accent-border);
+    color: var(--secondary-accent-text);
+  }
+
+  /* ===================================================================== */
+  /* FORSLAG 1: NORDISK AKVAREL & HIMMELBLÅ (fra vrimlebilledet)           */
+  /* ===================================================================== */
+  .theme-1 {
+    --bg-page: #111921;
+    --bg-card: #16202a;
+    --bg-surface: #1b2733;
+    --border-subtle: rgba(186, 210, 226, 0.16);
+    --text-main: #edf3f7;
+    --text-muted: #9eb3c2;
+    --title-color: #dfd0a8;
+    --level-color: #8ab398;
+    --quote-bg: rgba(216, 194, 138, 0.08);
+    --quote-border: #c5b07c;
+    --quote-text: #dfd0a8;
+    --listen-bg: rgba(92, 127, 103, 0.22);
+    --listen-border: rgba(138, 179, 152, 0.45);
+    --listen-text: #cbe0d2;
+    --seg-bg: #111921;
+    --seg-active-bg: rgba(74, 124, 155, 0.34);
+    --seg-active-text: #e6f2f9;
+    --font-active-bg: rgba(74, 124, 155, 0.3);
+    --font-active-border: #7aa8c4;
+    --font-active-text: #edf3f7;
+    --pill-active-bg: rgba(74, 124, 155, 0.34);
+    --pill-active-border: #7aa8c4;
+    --pill-active-text: #edf3f7;
+    --sentence-accent: #c5b07c;
+    --explain-bg: #131d27;
+    --explain-border: rgba(122, 168, 196, 0.55);
+    --explain-accent: #dfd0a8;
+    --primary-bg: #4a7c9b;
+    --primary-border: #6295b5;
+    --primary-text: #ffffff;
+    --secondary-accent-bg: rgba(74, 124, 155, 0.22);
+    --secondary-accent-border: rgba(122, 168, 196, 0.45);
+    --secondary-accent-text: #dcecf5;
+  }
+
+  /* ===================================================================== */
+  /* FORSLAG 2: GAMMEL NORDISK BOG & JERNBLÆK                              */
+  /* ===================================================================== */
+  .theme-2 {
+    --bg-page: #141517;
+    --bg-card: #1a1b1f;
+    --bg-surface: #202227;
+    --border-subtle: rgba(226, 218, 203, 0.14);
+    --text-main: #f0ebe1;
+    --text-muted: #a6a095;
+    --title-color: #d6c39c;
+    --level-color: #b89b6a;
+    --quote-bg: rgba(184, 155, 106, 0.08);
+    --quote-border: #b89b6a;
+    --quote-text: #d6c39c;
+    --listen-bg: transparent;
+    --listen-border: rgba(226, 218, 203, 0.28);
+    --listen-text: #ddd6c8;
+    --seg-bg: #141517;
+    --seg-active-bg: rgba(184, 155, 106, 0.24);
+    --seg-active-text: #f3ede0;
+    --font-active-bg: rgba(184, 155, 106, 0.24);
+    --font-active-border: #b89b6a;
+    --font-active-text: #f3ede0;
+    --pill-active-bg: rgba(47, 75, 99, 0.45);
+    --pill-active-border: #6c8da8;
+    --pill-active-text: #f3ede0;
+    --sentence-accent: #b89b6a;
+    --explain-bg: #17181c;
+    --explain-border: rgba(184, 155, 106, 0.5);
+    --explain-accent: #d6c39c;
+    --primary-bg: #2f4b63;
+    --primary-border: #4d6f8c;
+    --primary-text: #f5f0e6;
+    --secondary-accent-bg: rgba(184, 155, 106, 0.15);
+    --secondary-accent-border: rgba(184, 155, 106, 0.42);
+    --secondary-accent-text: #e6d7b9;
+  }
+
+  /* ===================================================================== */
+  /* FORSLAG 3: KØLIG SKANDINAVISK MINIMALISME (Skifer + Én Petrol Accent) */
+  /* ===================================================================== */
+  .theme-3 {
+    --bg-page: #101419;
+    --bg-card: #151a21;
+    --bg-surface: #1a212b;
+    --border-subtle: rgba(203, 213, 225, 0.13);
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --title-color: #f1f5f9;
+    --level-color: #cbd5e1;
+    --quote-bg: rgba(203, 213, 225, 0.04);
+    --quote-border: #64748b;
+    --quote-text: #cbd5e1;
+    --listen-bg: transparent;
+    --listen-border: rgba(203, 213, 225, 0.26);
+    --listen-text: #e2e8f0;
+    --seg-bg: #101419;
+    --seg-active-bg: #e2e8f0;
+    --seg-active-text: #0f172a;
+    --font-active-bg: #e2e8f0;
+    --font-active-border: #e2e8f0;
+    --font-active-text: #0f172a;
+    --pill-active-bg: #e2e8f0;
+    --pill-active-border: #e2e8f0;
+    --pill-active-text: #0f172a;
+    --sentence-accent: #4c9ba6;
+    --explain-bg: #12171e;
+    --explain-border: rgba(76, 155, 166, 0.55);
+    --explain-accent: #7ec4ce;
+    --primary-bg: #2b6e78;
+    --primary-border: #3d8b96;
+    --primary-text: #ffffff;
+    --secondary-accent-bg: rgba(43, 110, 120, 0.22);
+    --secondary-accent-border: rgba(76, 155, 166, 0.5);
+    --secondary-accent-text: #d7f0f4;
+  }
+</style>
+</head>
+<body>
+
+<div class="switcher-bar">
+  <div class="switcher-title">Klods-Hans · Farveprøver (kølig skandinavisk stil)</div>
+  <div class="switcher-tabs">
+    <button class="sw-btn active" data-view="compare">Alle 3 side om side</button>
+    <button class="sw-btn" data-view="t1">1. Nordisk Akvarel</button>
+    <button class="sw-btn" data-view="t2">2. Gammel Nordisk Bog</button>
+    <button class="sw-btn" data-view="t3">3. Skandinavisk Minimalisme</button>
+  </div>
+</div>
+
+<div class="preview-stage compare-grid" id="stage"></div>
+
+<script>
+  const themes = [
+    {
+      id: 't1',
+      cls: 'theme-1',
+      name: 'Forslag 1 · Nordisk Akvarel & Himmelblå',
+      desc: 'Farver hentet direkte fra vrimlebilledet: støvet fjordblå, salviegrøn og afdæmpet stråtag-okker.',
+      swatches: ['#16202a', '#4a7c9b', '#5c7f67', '#c5b07c']
+    },
+    {
+      id: 't2',
+      cls: 'theme-2',
+      name: 'Forslag 2 · Gammel Nordisk Bog & Jernblæk',
+      desc: 'Inspireret af 1800-tallets danske eventyrbøger: dyb blæk-antracit, preusserblå bogbind og antik messing.',
+      swatches: ['#1a1b1f', '#2f4b63', '#b89b6a', '#f0ebe1']
+    },
+    {
+      id: 't3',
+      cls: 'theme-3',
+      name: 'Forslag 3 · Kølig Skandinavisk Minimalisme',
+      desc: '100 % monokrome sekundære værktøjer (skifer + lys gråhvid) og kun én rolig petrol-accent til hovedknappen.',
+      swatches: ['#151a21', '#e2e8f0', '#2b6e78', '#4c9ba6']
+    }
+  ];
+
+  function buildMockup(theme) {
+    return `
+      <div class="theme-panel visible" data-panel="${theme.id}">
+        <div class="theme-caption">
+          <h2>${theme.name}</h2>
+          <p>${theme.desc}</p>
+          <div class="swatches">
+            ${theme.swatches.map(c => `<span class="swatch" style="background:${c};" title="${c}"></span>`).join('')}
+          </div>
+        </div>
+
+        <div class="page-mock ${theme.cls}">
+          <!-- Header -->
+          <div class="m-header">
+            <div>
+              <h1 class="m-title">Klods-Hans</h1>
+              <div class="m-sub">Clumsy Hans &bull; <strong>Let (A2)</strong> &bull; 3 min</div>
+            </div>
+            <div class="m-quote">»Hov! Se hvad jeg har fundet: en død krage og en gammel træsko!«</div>
+          </div>
+
+          <!-- Toolbar -->
+          <div class="m-toolbar">
+            <span class="m-btn-listen">Lyt til historien</span>
+            <span class="m-seg">
+              <span class="active">Afsnit for afsnit</span>
+              <span>Hele teksten</span>
+            </span>
+            <span class="m-fonts">
+              <span>Tekst:</span>
+              <span class="m-font-btn active">A</span>
+              <span class="m-font-btn">A+</span>
+              <span class="m-font-btn">A++</span>
+            </span>
+          </div>
+
+          <!-- Step pills -->
+          <div class="m-steps-row">
+            <span class="m-pill active">Del 1</span>
+            <span class="m-pill">Del 2</span>
+            <span class="m-pill">Del 3</span>
+            <span class="m-pill talemaader">Eventyrets talemåder (B1/B2)</span>
+          </div>
+
+          <!-- Scene 1 Card -->
+          <div class="m-scene-card">
+            <div class="m-scene-head">
+              <h3>Scene 1: På bondegården</h3>
+              <span class="m-ghost-btn">Lyt</span>
+            </div>
+
+            <div class="m-vrimmel">
+              <img src="assets/klods_hans_scene1.jpg" alt="Scene 1: På bondegården" />
+            </div>
+
+            <div class="m-flow-top">
+              <div class="m-bar-wrap">
+                <span>Sætning 1 af 6</span>
+                <div class="m-bar-track"><div class="m-bar-fill"></div></div>
+              </div>
+              <span class="m-ghost-btn">Vis samlet tekst</span>
+            </div>
+
+            <div class="m-prose-box">
+              <div class="m-sentence">
+                <span class="tok-adv">Ude</span> på <span class="tok-sub">landet</span> <span class="tok-vrb">var</span> der en <span class="tok-adj">gammel</span> <span class="tok-sub">gård</span>, og i <span class="tok-pro">den</span> <span class="tok-vrb">var</span> der en <span class="tok-adj">gammel</span> <span class="tok-sub">far</span>, <span class="tok-pro">som</span> <span class="tok-vrb">havde</span> tre <span class="tok-sub">sønner</span>, <span class="tok-pro">der</span> <span class="tok-vrb">var</span> så <span class="tok-adj">kloge</span>.
+              </div>
+
+              <!-- Prøve på den visuelle forklaringsboks i samme farvetema -->
+              <div class="m-explain-box">
+                <div class="m-explain-top">
+                  <span class="m-explain-pill">far, som havde tre sønner</span>
+                  <span class="m-ghost-btn">Luk</span>
+                </div>
+                <div class="m-explain-grid">
+                  <div class="m-pic">
+                    <div class="m-pic-lbl">Havde 3 sønner</div>
+                    <img src="assets/klods_hans_s1/far_tre_soenner.jpg" alt="Havde 3 sønner" />
+                  </div>
+                  <span class="m-vs">≠</span>
+                  <div class="m-pic">
+                    <div class="m-pic-lbl">Alene (0)</div>
+                    <img src="assets/klods_hans_s1/far_alene.jpg" alt="Alene" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Primær handling -->
+            <div class="m-primary-wrap">
+              <span class="m-btn-primary">
+                <span>Jeg forstår sætningen – Næste sætning</span>
+                <span>→</span>
+              </span>
+              <span class="m-hint">Tryk når du har forstået sætningen og er klar til at gå videre i handlingen.</span>
+            </div>
+          </div>
+
+          <!-- Bundnavigation -->
+          <div class="m-bottom-nav">
+            <span class="m-nav-btn">← Tilbage til alle eventyr</span>
+            <span class="m-nav-btn accent">Næste afsnit →</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  const stage = document.getElementById('stage');
+  stage.innerHTML = themes.map(buildMockup).join('');
+
+  document.querySelectorAll('.sw-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.sw-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const view = btn.dataset.view;
+      if (view === 'compare') {
+        stage.classList.add('compare-grid');
+        stage.querySelectorAll('.theme-panel').forEach(p => p.classList.add('visible'));
+      } else {
+        stage.classList.remove('compare-grid');
+        stage.querySelectorAll('.theme-panel').forEach(p => {
+          p.classList.toggle('visible', p.dataset.panel === view);
+        });
+      }
+    };
+  });
+</script>
+</body>
+</html>

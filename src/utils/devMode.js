@@ -8,6 +8,11 @@
 export function isHCDevMode(extraData = {}) {
     if (typeof window === 'undefined') return false;
 
+    const host = window.location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || host.endsWith('.local')) {
+        return true;
+    }
+
     // 1. Query param or hash flag (e.g. ?dev=true or ?dev=1 or &dev=true)
     const href = window.location.href;
     if (href.includes('dev=true') || href.includes('dev=1') || href.includes('dev=antigravity')) {

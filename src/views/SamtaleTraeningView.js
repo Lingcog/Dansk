@@ -23,6 +23,11 @@ export function renderSamtaleTraeningView(container, navigateFn) {
     // Cards
     const cardsData = [
         {
+            iconSvg: `<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="13" y2="13"/></svg>`,
+            title: 'Samtalehjælp (PD2 mundtlig)',
+            action: () => navigateFn('samtale_hjaelp')
+        },
+        {
             icon: '🔊',
             title: 'Små lyde der får en samtale til at fungere',
             action: () => navigateFn('samtale_smaalyde')
@@ -70,7 +75,11 @@ export function renderSamtaleTraeningView(container, navigateFn) {
 
         const icon = document.createElement('div');
         icon.className = 'card-icon';
-        icon.textContent = data.icon;
+        if (data.iconSvg) {
+            icon.innerHTML = data.iconSvg;
+        } else {
+            icon.textContent = data.icon;
+        }
 
         const cardTitle = document.createElement('div');
         cardTitle.className = 'card-title';

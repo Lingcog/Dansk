@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <linearGradient id="skyL" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#bae6fd"/>
+      <stop offset="100%" stop-color="#fef9c3"/>
+    </linearGradient>
+    <linearGradient id="pathL" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="100%" stop-color="#fed7aa"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#skyL)"/>
+  <!-- Calm lake behind promenade -->
+  <path d="M0 370 L1200 370 L1200 500 L0 500 Z" fill="#38bdf8" opacity="0.6"/>
+  <!-- Copenhagen skyline silhouette in background -->
+  <g fill="#f59e0b" opacity="0.32" stroke="#78350f" stroke-width="1.5">
+    <rect x="70" y="255" width="95" height="115"/>
+    <polygon points="70,255 117,215 165,255"/>
+    <rect x="175" y="235" width="85" height="135"/>
+    <rect x="275" y="270" width="110" height="100"/>
+  </g>
+  <!-- Lush park trees -->
+  <g stroke="#1e293b" stroke-width="2.5">
+    <circle cx="885" cy="310" r="85" fill="#4ade80" opacity="0.85"/>
+    <circle cx="1010" cy="290" r="95" fill="#22c55e" opacity="0.85"/>
+    <circle cx="1115" cy="335" r="72" fill="#86efac" opacity="0.9"/>
+  </g>
+
+  <!-- Grass & straight lakeside promenade (Lige frem!) -->
+  <rect x="0" y="485" width="1200" height="415" fill="#86efac"/>
+  <rect x="0" y="545" width="1200" height="185" fill="url(#pathL)" stroke="#57534e" stroke-width="3"/>
+  <!-- Three subtle stepping stones showing calm left-to-right SVO procession -->
+  <ellipse cx="265" cy="675" rx="110" ry="26" fill="#e0f2fe" opacity="0.7" stroke="#0284c7" stroke-width="2.5"/>
+  <ellipse cx="605" cy="675" rx="115" ry="26" fill="#dcfce7" opacity="0.75" stroke="#16a34a" stroke-width="2.5"/>
+  <ellipse cx="945" cy="675" rx="115" ry="26" fill="#fef3c7" opacity="0.75" stroke="#d97706" stroke-width="2.5"/>
+
+  <!-- Slot 1: Subjekt walking calmly right -->
+  <g stroke="#1e293b" stroke-width="3" stroke-linecap="round">
+    <path d="M245 585 L235 660" stroke="#1e3a8a" stroke-width="14"/>
+    <path d="M275 585 L292 660" stroke="#1e3a8a" stroke-width="14"/>
+    <path d="M232 490 L286 490 L282 590 L236 590 Z" fill="#0284c7"/>
+    <circle cx="259" cy="458" r="24" fill="#fed7aa"/>
+    <path d="M236 450 Q260 432 284 452 Z" fill="#7c2d12"/>
+  </g>
+
+  <!-- Slot 2: Verb (green bicycle gliding straight rightward) -->
+  <g stroke="#1e293b" stroke-width="4" fill="none">
+    <circle cx="535" cy="635" r="44" stroke="#334155" stroke-width="5"/>
+    <circle cx="675" cy="635" r="44" stroke="#334155" stroke-width="5"/>
+    <path d="M535 635 L585 570 L650 570 L605 635 Z" stroke="#16a34a" stroke-width="6"/>
+    <path d="M650 570 L675 635" stroke="#16a34a" stroke-width="6"/>
+    <path d="M638 545 L665 545" stroke="#334155" stroke-width="5"/>
+    <path d="M570 558 L598 558" stroke="#78350f" stroke-width="6"/>
+    <!-- Motion arrow rightward -->
+    <path d="M400 540 L455 540" stroke="#0284c7" stroke-width="5"/>
+    <polygon points="452,530 472,540 452,550" fill="#0284c7" stroke="none"/>
+  </g>
+
+  <!-- Slot 3: Tid & Sted (park bench & sunny lamppost ahead) -->
+  <g stroke="#1e293b" stroke-width="3">
+    <line x1="875" y1="560" x2="875" y2="395" stroke-width="6"/>
+    <circle cx="875" cy="382" r="18" fill="#fde047"/>
+    <rect x="920" y="555" width="130" height="18" rx="4" fill="#b45309"/>
+    <rect x="920" y="582" width="130" height="14" rx="4" fill="#d97706"/>
+    <line x1="935" y1="596" x2="935" y2="635" stroke-width="5"/>
+    <line x1="1035" y1="596" x2="1035" y2="635" stroke-width="5"/>
+  </g>
+</svg>

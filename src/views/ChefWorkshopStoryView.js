@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { baseUrl } from '../utils/config.js';
+import { attachArbejdeEmojiCleaner } from '../utils/arbejdeMonoIcons.js';
 
 export function renderChefWorkshopStoryView(container, navigateFn) {
     const isEn = getLang() === 'en';
@@ -92,6 +93,9 @@ export function renderChefWorkshopStoryView(container, navigateFn) {
     downloadLinks.style.flexWrap = 'wrap';
 
     downloadLinks.innerHTML = `
+        <a href="${baseUrl}docs/Dialog_Samtale2_Chef.pdf" download="Dialog_Samtale2_Chef.pdf" class="back-btn" style="text-decoration: none; font-size: 0.85rem; padding: 0.35rem 0.8rem; display: inline-flex; align-items: center; gap: 0.3rem;">
+            <span>📄</span> ${isEn ? 'Dialogue-PDF' : 'Dialog-PDF'}
+        </a>
         <a href="${baseUrl}docs/Makker_Lytteark_Samtale2_Dansk.docx" download class="back-btn" style="text-decoration: none; font-size: 0.85rem; padding: 0.35rem 0.8rem; display: inline-flex; align-items: center; gap: 0.3rem;">
             <span>📄</span> ${isEn ? 'Download Word (Danish)' : 'Hent Word (Dansk)'}
         </a>
@@ -272,6 +276,7 @@ export function renderChefWorkshopStoryView(container, navigateFn) {
     };
 
     function renderStartScreen() {
+        resetBtn.style.display = 'none';
         contentArea.innerHTML = '';
         const card = document.createElement('div');
         card.className = 'exercise-card';
@@ -281,28 +286,16 @@ export function renderChefWorkshopStoryView(container, navigateFn) {
         card.style.padding = '2.5rem 2rem';
 
         const h1 = document.createElement('h2');
-        h1.textContent = isEn ? 'The employee calls the boss' : 'Den ansatte ringer til chefen';
-        h1.style.marginBottom = '1rem';
-
-        const p = document.createElement('p');
-        p.textContent = isEn
-            ? 'Series: Illness & Job (Part 2 of 4) • Step-by-step dialogue practice in 7 exchanges: Listen to pronunciation, practice with the microphone, and learn lenition of D, R, and G.'
-            : 'Serie: Sygdom & job (Del 2 af 4) • Trinvis samtaletræning i 7 replikskifter: Lyt til udtalen, træn med mikrofonen og lær lenisering af D, R og G uden puslespil.';
-        p.style.marginBottom = '1.8rem';
-        p.style.color = 'var(--text-muted)';
-        p.style.lineHeight = '1.6';
+        h1.textContent = isEn ? 'Welcome. Write your name here.' : 'Velkommen til. Skriv dit navn her.';
+        h1.style.marginBottom = '1.2rem';
 
         const input = document.createElement('input');
         input.type = 'text';
-        input.placeholder = isEn ? 'Enter your first name...' : 'Indtast dit fornavn...';
+        input.placeholder = isEn ? 'Write your name...' : 'Skriv dit navn...';
         input.className = 'story-input';
         if (userName) input.value = userName;
 
-        const btn = document.createElement('button');
-        btn.className = 'gemini-btn';
-        btn.textContent = isEn ? 'Start Conversation ➔' : 'Start Samtalen ➔';
-        btn.style.marginTop = '1.5rem';
-        btn.onclick = () => {
+        const startConversation = () => {
             const val = input.value.trim();
             userName = val.length > 0 ? val : (isEn ? 'Student' : 'Kursist');
             localStorage.setItem('story_username', userName);
@@ -310,12 +303,22 @@ export function renderChefWorkshopStoryView(container, navigateFn) {
             renderStory();
         };
 
+        input.onkeydown = (e) => {
+            if (e.key === 'Enter') startConversation();
+        };
+
+        const btn = document.createElement('button');
+        btn.className = 'gemini-btn';
+        btn.textContent = isEn ? 'Start Conversation ➔' : 'Start samtalen ➔';
+        btn.style.marginTop = '1.5rem';
+        btn.onclick = startConversation;
+
         card.appendChild(h1);
-        card.appendChild(p);
         card.appendChild(input);
         card.appendChild(document.createElement('br'));
         card.appendChild(btn);
         contentArea.appendChild(card);
+        setTimeout(() => input.focus(), 50);
     }
 
     function renderStory() {
@@ -560,6 +563,27 @@ export function renderChefWorkshopStoryView(container, navigateFn) {
         statusText.textContent = isEn ? 'Press the microphone and speak...' : 'Tryk på mikrofonen og tal...';
         pronCont.appendChild(statusText);
 
+        const actionBtnsRow = document.createElement('div');
+        actionBtnsRow.style.cssText = 'display:flex; flex-wrap:wrap; gap:0.75rem; justify-content:center; align-items:center;';
+
+        const retryBtn = document.createElement('button');
+        retryBtn.type = 'button';
+        retryBtn.textContent = isEn ? 'Try again' : 'Prøv igen';
+        retryBtn.style.cssText = 'display:none; padding:0.85rem 1.5rem; border-radius:999px; font-weight:800; font-size:1rem; cursor:pointer; transition:all 0.2s ease; background:rgba(255,255,255,0.12); border:2px solid rgba(255,255,255,0.3); color:#ffffff;';
+        retryBtn.onclick = () => {
+            sentenceDisplay.querySelectorAll('.udtale-word').forEach(sp => {
+                sp.classList.remove('correct', 'incorrect');
+            });
+            progressBar.style.width = '0%';
+            scoreText.textContent = '0%';
+            progressContainer.style.display = 'none';
+            micBtn.style.display = '';
+            skipBtn.style.display = '';
+            retryBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            statusText.textContent = isEn ? 'Press the microphone and speak...' : 'Tryk på mikrofonen og tal...';
+        };
+
         const nextBtn = document.createElement('button');
         nextBtn.className = 'gemini-btn';
         nextBtn.textContent = isEn ? 'Next exchange ➔' : 'Videre i samtalen ➔';
@@ -570,7 +594,9 @@ export function renderChefWorkshopStoryView(container, navigateFn) {
             appState.pronunciationFails = 0;
             renderStory();
         };
-        pronCont.appendChild(nextBtn);
+        actionBtnsRow.appendChild(retryBtn);
+        actionBtnsRow.appendChild(nextBtn);
+        pronCont.appendChild(actionBtnsRow);
 
         const skipBtn = document.createElement('button');
         skipBtn.className = 'back-btn';
@@ -661,15 +687,33 @@ export function renderChefWorkshopStoryView(container, navigateFn) {
                     scoreText.textContent = score + '%';
                     const spokenHTML = `<div style="margin-top: 0.8rem; padding: 0.8rem 1.2rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; font-size: 1.05rem; color: #ffffff; text-align: center;">${isEn ? 'You said:' : 'Du sagde:'}<br/><span style="color: #ffcc00; font-size: 1.2rem; font-weight: bold;">"${spoken}"</span></div>`;
                     
+                    const styleRetryBtn = () => {
+                        retryBtn.style.display = 'inline-flex';
+                        retryBtn.style.alignItems = 'center';
+                        retryBtn.style.justifyContent = 'center';
+                        if (score < 100) {
+                            retryBtn.style.background = '#dc2626';
+                            retryBtn.style.border = '2px solid #fca5a5';
+                            retryBtn.style.color = '#ffffff';
+                            retryBtn.style.boxShadow = '0 0 22px rgba(239, 68, 68, 0.85)';
+                        } else {
+                            retryBtn.style.background = 'rgba(255,255,255,0.12)';
+                            retryBtn.style.border = '2px solid rgba(255,255,255,0.3)';
+                            retryBtn.style.color = '#ffffff';
+                            retryBtn.style.boxShadow = 'none';
+                        }
+                    };
                     if (score >= 60) {
                         progressBar.style.background = '#4caf50';
                         statusText.innerHTML = `<span style="color:#4caf50; font-weight: bold;">${isEn ? '✓ Great pronunciation!' : '✓ Flot udtalt!'}</span>${spokenHTML}`;
                         micBtn.style.display = 'none';
                         skipBtn.style.display = 'none';
+                        styleRetryBtn();
                         nextBtn.style.display = 'inline-block';
                     } else {
                         progressBar.style.background = '#ff5e5b';
                         appState.pronunciationFails++;
+                        styleRetryBtn();
                         statusText.innerHTML = `<span style="color:#ff5e5b; font-weight: bold;">${isEn ? 'Almost! Try again and focus on the highlighted words.' : 'Næsten! Prøv igen og fokuser på de markerede ord.'}</span>${spokenHTML}`;
                     }
                 }, 100);
@@ -679,13 +723,10 @@ export function renderChefWorkshopStoryView(container, navigateFn) {
         container.appendChild(pronCont);
     }
 
-    // Initialize View
+    // Initialize View — vis altid velkomstboksen ved tryk på fladen
     initStoryData(userName);
-    if (userName) {
-        renderStory();
-    } else {
-        renderStartScreen();
-    }
+    renderStartScreen();
+    attachArbejdeEmojiCleaner(viewContainer);
 
     container.appendChild(viewContainer);
 }

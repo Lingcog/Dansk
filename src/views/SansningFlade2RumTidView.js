@@ -1,5 +1,11 @@
 import { baseUrl } from '../utils/config.js';
 import { getActiveVerbNuance, applyVerbNuance } from '../components/DesignSystemToggle.js';
+import {
+    renderSansningGlobalNav,
+    renderRedThreadStoryStrip,
+    renderSansningTactileLab,
+    renderSansningFooterBridge
+} from '../components/SansningIntegration.js';
 
 /**
  * SansningFlade2RumTidView - Hovedflade 2: Rum, tid og relationer (nærhed vs. afstand)
@@ -243,6 +249,7 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
             color: #ffffff;
         }
 
+        .gs-card-thumb-split, .gs-station-thumb, .gs-card-split-preview { display: none !important; }
         .gs-showcase-box {
             background: #5C0812;
             border: 1.5px solid #851825;
@@ -608,14 +615,15 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
 
     const fladeBadge = document.createElement('span');
     fladeBadge.className = 'gs-hero-badge';
-    fladeBadge.textContent = 'Hovedflade 2 • Kamera og perspektiv';
+    fladeBadge.textContent = 'Hovedflade 3 • Kamera og perspektiv';
     topBar.appendChild(fladeBadge);
-    viewContainer.appendChild(topBar);
+    // topBar fjernet (erstattet af global nav)
+    viewContainer.appendChild(renderSansningGlobalNav('flade3', navigateFn));
 
     const hero = document.createElement('div');
     hero.className = 'gs-hero';
     hero.innerHTML = `
-        <div class="gs-hero-badge">Hovedflade 2 • Rum, tid og relationer</div>
+        <div class="gs-hero-badge">Hovedflade 3 • Rum, tid og relationer</div>
         <h1>Rum, tid og relationer – (nærhed vs. afstand)</h1>
         <p>
             Hvor står dit kamera på dansk? Står det helt tæt ved <strong>gribekroppen, hulen og hjertet</strong> (nærhed her og nu),
@@ -623,6 +631,11 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
         </p>
     `;
     viewContainer.appendChild(hero);
+
+    const tactileLab = renderSansningTactileLab('flade3', navigateFn, 0, false);
+    const redThreadCard = renderRedThreadStoryStrip('flade3', navigateFn, (idx) => tactileLab.setStationIdx(idx));
+    // redThreadCard fjernet (undgår dobbelt-information)
+    viewContainer.appendChild(tactileLab);
 
     const compass = document.createElement('div');
     compass.className = 'gs-compass-wrapper';
@@ -647,10 +660,6 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
                 <div class="gs-realm-ex-item">
                     <span>Levende nu-scene:</span>
                     <span class="gs-realm-ex-word">Jeg HAR SPIST frokost</span>
-                </div>
-                <div class="gs-realm-ex-item">
-                    <span>Ro i zonen:</span>
-                    <span class="gs-realm-ex-word">Vi bliver HJEMME</span>
                 </div>
                 <div class="gs-realm-ex-item">
                     <span>Kroppens egen sfære:</span>
@@ -685,10 +694,6 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
                     <span class="gs-realm-ex-word">Jeg SPISTE i går</span>
                 </div>
                 <div class="gs-realm-ex-item">
-                    <span>Retning over tærsklen:</span>
-                    <span class="gs-realm-ex-word">Vi tager HJEM</span>
-                </div>
-                <div class="gs-realm-ex-item">
                     <span>Udenforstående ejer:</span>
                     <span class="gs-realm-ex-word">Han kysser HANS kone</span>
                 </div>
@@ -699,7 +704,7 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
             </div>
         </div>
     `;
-    viewContainer.appendChild(compass);
+    // compass fjernet (undgår dobbelt-information)
 
     const simulator = document.createElement('div');
     simulator.className = 'gs-simulator-box';
@@ -707,32 +712,27 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
 
     const simData = [
         {
-            topic: '2.1 Præpositioner: i vs. på',
+            topic: '3.1 Præpositioner: i vs. på',
             tilstand: 'Nøglerne ligger trygt i tasken.',
             forvandling: 'Nøglerne ligger åbent på bordet.'
         },
         {
-            topic: '2.2 Pronominal deiksis: denne vs. den',
+            topic: '3.2 Pronominal deiksis: denne vs. den',
             tilstand: 'Jeg holder denne bog her i hånden.',
             forvandling: 'Kan du se den røde bil derovre?'
         },
         {
-            topic: '2.3 Tempus og tidens rum',
+            topic: '3.3 Tempus og tidens rum',
             tilstand: 'Jeg har spist, og bordet er stadig varmt.',
             forvandling: 'Jeg spiste klokken seks i går.'
         },
         {
-            topic: '2.4 Rummet og tærsklen',
-            tilstand: 'Børnene leger trygt inde i stuen.',
-            forvandling: 'Børnene løber ind gennem døren.'
-        },
-        {
-            topic: '2.5 Kroppens sfære: sin vs. hans',
+            topic: '3.4 Kroppens sfære: sin vs. hans',
             tilstand: 'Manden vasker sin egen bil i indkørslen.',
             forvandling: 'Manden vasker hans bil for naboen.'
         },
         {
-            topic: '2.6 Social deiksis: nærhed vs. buffer',
+            topic: '3.5 Social deiksis: nærhed vs. buffer',
             tilstand: 'Kom indenfor, hvad vil du have?',
             forvandling: 'Undskyld, havde du et øjeblik – var der andet?'
         }
@@ -775,11 +775,11 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
     }
 
     renderSimulator();
-    viewContainer.appendChild(simulator);
+    // simulator fjernet (erstattet af Det Blå Taktile Laboratorium)
 
     const stations = [
         {
-            num: '2.1',
+            num: '3.1',
             id: 'sansning_i_paa',
             tag: 'Hule vs. flade',
             accent: '#38bdf8',
@@ -794,7 +794,7 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
             vrimmelBadge: 'Dobbelt vrimlebillede og ø-regel'
         },
         {
-            num: '2.2',
+            num: '3.2',
             id: 'sansning_denne_den',
             tag: 'Hånd vs. pegefinger',
             accent: '#60a5fa',
@@ -809,7 +809,7 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
             vrimmelBadge: '5 par på vrimlebillede'
         },
         {
-            num: '2.3',
+            num: '3.3',
             id: 'sansning_verber_tider',
             tag: 'Scenen vs. kikkerten',
             accent: '#f59e0b',
@@ -824,22 +824,7 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
             vrimmelBadge: 'Interaktiv tids-scene'
         },
         {
-            num: '2.4',
-            id: 'sansning_rummet_taersklen',
-            tag: 'Zone vs. tærskel',
-            accent: '#34d399',
-            title: 'Rummet og tærsklen (-e vs. kort)',
-            sub: 'Roen inden for en kendt zone (hjemme, inde, oppe) over for bevægelsen der krydser tærsklen (hjem, ind, op).',
-            leftImg: `${baseUrl}assets/sansning_rummet_venstre.jpg`,
-            rightImg: `${baseUrl}assets/sansning_rummet_hoejre.jpg`,
-            leftLabel: 'Ro (-e form)',
-            rightLabel: 'Retning (kort)',
-            leftEx: 'Vi er hjemme / inde',
-            rightEx: 'Vi går hjem / ind',
-            vrimmelBadge: 'Dobbelt rum-vrimlebillede'
-        },
-        {
-            num: '2.5',
+            num: '3.4',
             id: 'sansning_sin_hans',
             tag: 'Kroppens sfære',
             accent: '#a78bfa',
@@ -854,7 +839,7 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
             vrimmelBadge: '5 scener incl. fordelingsental'
         },
         {
-            num: '2.6',
+            num: '3.5',
             id: 'sansning_social_deiksis',
             tag: 'Social distance',
             accent: '#f472b6',
@@ -933,12 +918,12 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
     }
 
     renderShowcaseStage();
-    viewContainer.appendChild(showcaseBox);
+    // Vrimlebillede-showcase fjernet — taktile diagrammer er i hovedrollen
 
     const divider = document.createElement('div');
     divider.className = 'gs-section-divider';
     divider.innerHTML = `
-        <h2>Alle 6 stationer i hovedflade 2</h2>
+        <h2>Alle 5 stationer i Hovedflade 3 (Rum, Tid & Relationer)</h2>
         <p>Vælg en station og mærk forskellen mellem nærhed og afstand</p>
     `;
     viewContainer.appendChild(divider);
@@ -994,5 +979,6 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
     });
 
     viewContainer.appendChild(grid);
+    // footerBridge fjernet (undgår dobbelt navigation)
     container.appendChild(viewContainer);
 }

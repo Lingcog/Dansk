@@ -1,6 +1,8 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { hcAndersenStories } from '../data/hc_andersen_stories.js';
 import { renderKlodsHansFinaleActivities } from '../components/KlodsHansFinaleActivities.js';
+import { createSentence1VisualLab, findVisualNodeForBrotherToken, findSentence2NodeByToken } from '../components/KlodsHansVisualSentence1Lab.js';
+import { createSentencePartsLab } from '../components/KlodsHansSentencePartsLab.js';
 import { allNounsRegistry, wordToNounKey, openNounQuickPeekModal } from '../utils/nounQuickPeekModal.js';
 import { byrumVerbsRegistry, openVerbQuickPeekModal } from '../utils/verbQuickPeekModal.js';
 import { openPronounQuickPeekModal } from '../utils/pronounQuickPeekModal.js';
@@ -149,6 +151,8 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         }
     }
 
+    const availableStories = hcAndersenStories;
+
     function renderView() {
         updateTopBar();
         mainContent.innerHTML = '';
@@ -156,7 +160,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         if (!activeStoryId) {
             renderCatalog();
         } else {
-            const story = hcAndersenStories.find(s => s.id === activeStoryId);
+            const story = availableStories.find(s => s.id === activeStoryId);
             if (story) {
                 if (activeStorySubView === 'talemaader' && story.talemaaderChallenge) {
                     renderStoryTalemaader(story);
@@ -200,14 +204,19 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         const grid = document.createElement('div');
         grid.className = 'hc-stories-grid';
 
-        hcAndersenStories.forEach(story => {
+        availableStories.forEach(story => {
             const card = document.createElement('div');
             card.className = 'hc-story-card';
+            card.dataset.storyId = story.id;
             card.onclick = () => {
                 activeStoryId = story.id;
                 currentStepIdx = 0;
                 renderView();
             };
+
+            const previewImage = (story.id === 'klods_hans' && story.sections?.[0]?.vrimmelImage)
+                ? story.sections[0].vrimmelImage
+                : null;
 
             card.innerHTML = `
                 <div class="hc-card-header">
@@ -220,8 +229,13 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 </div>
                 <h3 class="hc-card-title">${story.title}</h3>
                 <div class="hc-card-subtitle">${story.titleEn}</div>
-                <blockquote class="hc-card-quote">»${story.quote}«</blockquote>
-                <p class="hc-card-teaser">${isEn ? story.teaserEn : story.teaser}</p>
+                ${previewImage
+                    ? `<div class="hc-card-vrimmel-preview">
+                           <img src="${previewImage}" alt="${story.title}" class="hc-card-vrimmel-img" />
+                       </div>`
+                    : `<blockquote class="hc-card-quote">»${story.quote}«</blockquote>
+                       <p class="hc-card-teaser">${isEn ? story.teaserEn : story.teaser}</p>`
+                }
                 <div class="hc-card-footer">
                     <button class="hc-read-btn">
                         <span>${isEn ? 'Read Tale' : 'Læs eventyr'}</span>
@@ -238,7 +252,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
     // --- 2. READER / LÆSEFLADE ---
     function renderReader(story) {
         const readerWrapper = document.createElement('div');
-        readerWrapper.className = `hc-reader-wrapper font-size-${fontSizeLevel}`;
+        readerWrapper.className = `hc-reader-wrapper font-size-${fontSizeLevel}${story.id === 'klods_hans' ? ' hc-theme-nordic' : ''}`;
 
         // Story Header
         const headerCard = document.createElement('div');
@@ -251,100 +265,17 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     <div class="hc-reader-sub">${story.titleEn} &bull; <span class="hc-level-tag-inline">${story.level}</span> &bull; ${story.readingTime}</div>
                 </div>
             </div>
-            <div class="hc-reader-quote-banner">
-                <div class="quote-text">»${story.quote}«</div>
-            </div>
         `;
         readerWrapper.appendChild(headerCard);
-
-        // Control Toolbar
-        const toolbar = document.createElement('div');
-        toolbar.className = 'hc-toolbar';
-
-        // Listen main button
-        const fullAudioBtn = document.createElement('button');
-        fullAudioBtn.className = 'main-listen-btn';
-        fullAudioBtn.innerHTML = `<span>${SVG_AUDIO}</span> <span>${isEn ? 'Listen to story' : 'Lyt til historien'}</span>`;
-        fullAudioBtn.onclick = () => {
-            if (isPlaying) {
-                stopSpeech();
-            } else {
-                if (readingMode === 'steps') {
-                    // Play current step
-                    if (story.sections[currentStepIdx]) {
-                        speakDanish(story.sections[currentStepIdx].audioText);
-                    } else if (story.id === 'klods_hans') {
-                        speakDanish('Afslutningsaktiviteter til Klods-Hans. Kortlæg karakterernes indre liv eller gæt den hemmelige bejler i speeddating!');
-                    }
-                } else {
-                    // Play all chapters
-                    const fullText = story.sections.map(s => `${s.chapter}. ${s.audioText}`).join('. ');
-                    speakDanish(fullText);
-                }
-            }
-        };
-
-        // Reading mode toggle
-        const modeToggle = document.createElement('div');
-        modeToggle.className = 'hc-mode-toggle';
-        modeToggle.innerHTML = `
-            <button class="mode-tab-btn ${readingMode === 'steps' ? 'active' : ''}" data-mode="steps">
-                ${isEn ? 'Step-by-step' : 'Afsnit for afsnit'}
-            </button>
-            <button class="mode-tab-btn ${readingMode === 'full' ? 'active' : ''}" data-mode="full">
-                ${isEn ? 'Full text' : 'Hele teksten'}
-            </button>
-        `;
-        modeToggle.querySelectorAll('.mode-tab-btn').forEach(btn => {
-            btn.onclick = () => {
-                readingMode = btn.dataset.mode;
-                renderView();
-            };
-        });
-
-        // Font size control
-        const fontControl = document.createElement('div');
-        fontControl.className = 'hc-font-control';
-        fontControl.innerHTML = `
-            <span class="font-label">Tekst:</span>
-            <button class="font-btn ${fontSizeLevel === 0 ? 'active' : ''}" data-size="0">A</button>
-            <button class="font-btn ${fontSizeLevel === 1 ? 'active' : ''}" data-size="1">A+</button>
-            <button class="font-btn ${fontSizeLevel === 2 ? 'active' : ''}" data-size="2">A++</button>
-        `;
-        fontControl.querySelectorAll('.font-btn').forEach(btn => {
-            btn.onclick = () => {
-                fontSizeLevel = parseInt(btn.dataset.size, 10);
-                readerWrapper.className = `hc-reader-wrapper font-size-${fontSizeLevel}`;
-                fontControl.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            };
-        });
-
-        toolbar.appendChild(fullAudioBtn);
-        toolbar.appendChild(modeToggle);
-        toolbar.appendChild(fontControl);
-
-        if (story.talemaaderChallenge) {
-            const talemaaderTabBtn = document.createElement('button');
-            talemaaderTabBtn.className = 'hc-talemaader-nav-btn';
-            talemaaderTabBtn.innerHTML = `<span>${isEn ? 'Fairy Tale Idioms (B1/B2)' : 'Eventyrets talemåder (B1/B2)'}</span>`;
-            talemaaderTabBtn.onclick = () => {
-                stopSpeech();
-                activeStorySubView = 'talemaader';
-                renderView();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            };
-            toolbar.appendChild(talemaaderTabBtn);
-        }
-
-        readerWrapper.appendChild(toolbar);
 
         // Sections content
         const sectionsContainer = document.createElement('div');
         sectionsContainer.className = 'hc-sections-container';
+        let activeQuizCard = null;
+        let isActiveSectionUnlocked = true;
 
         if (readingMode === 'steps') {
-            const hasFinale = story.id === 'klods_hans';
+            const hasFinale = false;
             const finaleStepIdx = story.sections.length;
 
             // Navigation pills for steps
@@ -417,12 +348,22 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             } else {
                 // Active section card
                 const activeSec = story.sections[currentStepIdx];
-                const secCard = createSectionCard(activeSec, currentStepIdx, story);
+                const hasStepFlow = activeSec && activeSec.dialogue && activeSec.dialogue.length > 0;
+                const activeSceneKey = `hc_scene_${story?.id || 'story'}_${currentStepIdx}`;
+                isActiveSectionUnlocked = !hasStepFlow || !!completedScenes[activeSceneKey];
+
+                const secCard = createSectionCard(activeSec, currentStepIdx, story, (unlocked) => {
+                    isActiveSectionUnlocked = unlocked;
+                    if (activeQuizCard) {
+                        activeQuizCard.hidden = !unlocked;
+                    }
+                });
                 sectionsContainer.appendChild(secCard);
 
-                // Step Action Buttons
+                // Step Action Buttons (uden "Næste afsnit →")
                 const stepActions = document.createElement('div');
                 stepActions.className = 'hc-step-actions';
+                let hasAnyStepAction = false;
 
                 if (currentStepIdx > 0) {
                     const prevBtn = document.createElement('button');
@@ -435,33 +376,12 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                         window.scrollTo({ top: 180, behavior: 'smooth' });
                     };
                     stepActions.appendChild(prevBtn);
+                    hasAnyStepAction = true;
                 } else {
                     stepActions.appendChild(document.createElement('div'));
                 }
 
-                if (currentStepIdx < story.sections.length - 1) {
-                    const nextBtn = document.createElement('button');
-                    nextBtn.className = 'step-action-btn next';
-                    nextBtn.innerHTML = `${isEn ? 'Next section' : 'Næste afsnit'} →`;
-                    nextBtn.onclick = () => {
-                        stopSpeech();
-                        currentStepIdx++;
-                        renderView();
-                        window.scrollTo({ top: 180, behavior: 'smooth' });
-                    };
-                    stepActions.appendChild(nextBtn);
-                } else if (hasFinale) {
-                    const finaleNextBtn = document.createElement('button');
-                    finaleNextBtn.className = 'step-action-btn next finale-next';
-                    finaleNextBtn.innerHTML = `🎭 ${isEn ? 'Go to Finale Activities' : 'Gå til afslutningsopgaverne'} →`;
-                    finaleNextBtn.onclick = () => {
-                        stopSpeech();
-                        currentStepIdx = finaleStepIdx;
-                        renderView();
-                        window.scrollTo({ top: 180, behavior: 'smooth' });
-                    };
-                    stepActions.appendChild(finaleNextBtn);
-                } else {
+                if (currentStepIdx >= story.sections.length - 1) {
                     const quizJumpBtn = document.createElement('button');
                     quizJumpBtn.className = 'step-action-btn quiz-jump';
                     quizJumpBtn.innerHTML = `${isEn ? 'Take Comprehension Quiz' : 'Tag forståelsesquizzen'} ↓`;
@@ -470,9 +390,12 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                         if (quizEl) quizEl.scrollIntoView({ behavior: 'smooth' });
                     };
                     stepActions.appendChild(quizJumpBtn);
+                    hasAnyStepAction = true;
                 }
 
-                sectionsContainer.appendChild(stepActions);
+                if (hasAnyStepAction) {
+                    sectionsContainer.appendChild(stepActions);
+                }
             }
         } else {
             // Full text mode: display all sections sequentially
@@ -480,26 +403,13 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 const secCard = createSectionCard(sec, idx, story);
                 sectionsContainer.appendChild(secCard);
             });
-
-            if (story.id === 'klods_hans') {
-                const finaleCard = document.createElement('div');
-                finaleCard.className = 'hc-finale-wrapper-card';
-                renderKlodsHansFinaleActivities(finaleCard, {
-                    isEn,
-                    speakDanish,
-                    onJumpToQuiz: () => {
-                        const quizEl = readerWrapper.querySelector('.hc-quiz-card');
-                        if (quizEl) quizEl.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-                sectionsContainer.appendChild(finaleCard);
-            }
         }
 
         readerWrapper.appendChild(sectionsContainer);
 
         // Grammar Spot Card
-        if (story.grammarFocus) {
+        // Grammar Spot (skjules på Klods-Hans, som bruger den visuelle forklaringsboks)
+        if (story.id !== 'klods_hans' && story.grammarFocus) {
             const grammarSpot = document.createElement('div');
             grammarSpot.className = 'hc-grammar-spot';
             grammarSpot.innerHTML = `
@@ -512,8 +422,8 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             readerWrapper.appendChild(grammarSpot);
         }
 
-        // Vocabulary List
-        if (story.vocabulary && story.vocabulary.length > 0) {
+        // Vocabulary List (skjules på Klods-Hans, som bruger den visuelle forklaringsboks)
+        if (story.id !== 'klods_hans' && story.vocabulary && story.vocabulary.length > 0) {
             const vocabCard = document.createElement('div');
             vocabCard.className = 'hc-vocab-card';
             vocabCard.innerHTML = `
@@ -548,13 +458,23 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         }
 
         // Interactive Comprehension Quiz
+        // I trinvis visning vises kun forståelsesspørgsmålet for den pågældende del,
+        // og først når alle sætninger i delen er læst eller "Vis samlet tekst" er trykket.
         if (story.quiz && story.quiz.length > 0) {
-            const quizCard = createQuizSection(story.quiz);
+            const quizItemsToRender = (readingMode === 'steps' && story.quiz[currentStepIdx])
+                ? [story.quiz[currentStepIdx]]
+                : story.quiz;
+            const quizCard = createQuizSection(quizItemsToRender);
+            if (readingMode === 'steps') {
+                quizCard.hidden = !isActiveSectionUnlocked;
+                activeQuizCard = quizCard;
+            }
             readerWrapper.appendChild(quizCard);
         }
 
-        // Optional Advanced Feature: Fairy Tale Idioms Challenge Banner
-        if (story.talemaaderChallenge) {
+        // Optional Advanced Feature: Fairy Tale Idioms Challenge Banner (kun i sidste / 3. del)
+        const isLastStepOrAll = (readingMode !== 'steps') || (currentStepIdx === story.sections.length - 1);
+        if (story.talemaaderChallenge && isLastStepOrAll) {
             const talemaaderBanner = document.createElement('div');
             talemaaderBanner.className = 'hc-talemaader-invitation-card';
             talemaaderBanner.innerHTML = `
@@ -578,7 +498,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             readerWrapper.appendChild(talemaaderBanner);
         }
 
-        // Bottom Actions (Back to list, Next story)
+        // Bottom Actions (Back to list + diskret Hovedsiden-knap)
         const bottomNav = document.createElement('div');
         bottomNav.className = 'hc-bottom-nav';
 
@@ -594,22 +514,21 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         };
         bottomNav.appendChild(backToListBtn);
 
-        // Next story button if available
-        const currentIdx = hcAndersenStories.findIndex(s => s.id === story.id);
-        if (currentIdx < hcAndersenStories.length - 1) {
-            const nextStory = hcAndersenStories[currentIdx + 1];
-            const nextStoryBtn = document.createElement('button');
-            nextStoryBtn.className = 'next-story-btn';
-            nextStoryBtn.innerHTML = `${isEn ? 'Next Fairy Tale' : 'Næste eventyr'}: ${nextStory.title} →`;
-            nextStoryBtn.onclick = () => {
-                stopSpeech();
-                activeStoryId = nextStory.id;
-                currentStepIdx = 0;
-                renderView();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            };
-            bottomNav.appendChild(nextStoryBtn);
-        }
+        const homeBtn = document.createElement('button');
+        homeBtn.type = 'button';
+        homeBtn.className = 'back-to-list-btn hc-home-nav-btn';
+        homeBtn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/>
+            </svg>
+            <span>${isEn ? 'Home' : 'Hovedsiden'}</span>
+        `;
+        homeBtn.onclick = () => {
+            stopSpeech();
+            navigateFn('home');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        bottomNav.appendChild(homeBtn);
 
         readerWrapper.appendChild(bottomNav);
 
@@ -636,6 +555,23 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         const currentQuestionIdx = {};
         const catScores = {};
         const userAnswers = {};
+        const shuffledOptionsMap = {};
+
+        function getShuffledQuestion(catKey, idx, q) {
+            const cacheKey = `${catKey}_${idx}`;
+            if (!shuffledOptionsMap[cacheKey] && Array.isArray(q.options)) {
+                const indices = q.options.map((_, i) => i);
+                for (let i = indices.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [indices[i], indices[j]] = [indices[j], indices[i]];
+                }
+                shuffledOptionsMap[cacheKey] = {
+                    options: indices.map(origIdx => q.options[origIdx]),
+                    correct: indices.indexOf(q.correct)
+                };
+            }
+            return shuffledOptionsMap[cacheKey] || { options: q.options || [], correct: q.correct };
+        }
 
         categories.forEach(c => {
             currentQuestionIdx[c.key] = 0;
@@ -661,24 +597,47 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         tasksHeader.className = 'hc-tasks-header';
 
         function renderHeader() {
-            const isAllUnlocked = isAllLinesMode || currentRevealedCount >= totalLines;
             tasksHeader.innerHTML = `
                 <div>
                     <div class="hc-tasks-title">
                         <span>${isEn ? 'Scene Exercises & Detective' : 'Opgaver til scenen'}</span>
                     </div>
-                    <div class="hc-tasks-subtitle">${isEn ? 'Practice observation and grammar step-by-step as you read:' : 'Træn visuel opmærksomhed og ordklasser trin for trin i takt med læsningen:'}</div>
-                </div>
-                <div class="hc-tasks-flow-badge">
-                    
-                    <span>${isAllUnlocked 
-                        ? (isEn ? `All ${totalLines} sentences read – All tasks unlocked!` : `Alle ${totalLines} sætninger læst – Alle opgaver er åbne!`) 
-                        : (isEn ? `Unlocked for sentence 1-${currentRevealedCount} of ${totalLines}` : `Låst op til og med sætning ${currentRevealedCount} af ${totalLines}`)}</span>
+                    <div class="hc-tasks-subtitle">${isEn ? 'Practice words and sentence parts from this scene:' : 'Træn ord, ordklasser og sætningsdele fra denne scene:'}</div>
                 </div>
             `;
         }
         renderHeader();
         tasksWrap.appendChild(tasksHeader);
+
+        // 2-lags omskifter i Scene 1: 1. Ord (ordklasser) vs. 2. Sætningsdele (byggeklodser)
+        const layer1Wrap = document.createElement('div');
+        layer1Wrap.className = 'hc-tasks-layer-1';
+        let layer2Wrap = null;
+
+        if (index === 0) {
+            const layerSwitch = document.createElement('div');
+            layerSwitch.className = 'hc-task-layer-switch';
+            layerSwitch.innerHTML = `
+                <button type="button" class="hc-task-layer-btn active" data-layer="1">${isEn ? '1. Words' : '1. Ord'}</button>
+                <button type="button" class="hc-task-layer-btn" data-layer="2">${isEn ? '2. Sentence Parts' : '2. Sætningsdele'}</button>
+            `;
+
+            layer2Wrap = document.createElement('div');
+            layer2Wrap.className = 'hc-tasks-layer-2';
+            layer2Wrap.hidden = true;
+            layer2Wrap.appendChild(createSentencePartsLab());
+
+            layerSwitch.querySelectorAll('.hc-task-layer-btn').forEach(btn => {
+                btn.onclick = () => {
+                    const chosen = btn.dataset.layer;
+                    layerSwitch.querySelectorAll('.hc-task-layer-btn').forEach(b => b.classList.toggle('active', b === btn));
+                    layer1Wrap.hidden = (chosen !== '1');
+                    layer2Wrap.hidden = (chosen !== '2');
+                };
+            });
+
+            tasksWrap.appendChild(layerSwitch);
+        }
 
         // Tab buttons container
         const tabsRow = document.createElement('div');
@@ -725,7 +684,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             tabButtons[cat.key] = btn;
             tabsRow.appendChild(btn);
         });
-        tasksWrap.appendChild(tabsRow);
+        layer1Wrap.appendChild(tabsRow);
 
         tasksWrap.switchCategory = (key) => {
             if (tabButtons[key]) {
@@ -736,7 +695,11 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         // Panel holder
         const panelHolder = document.createElement('div');
         panelHolder.className = 'hc-task-panel-holder';
-        tasksWrap.appendChild(panelHolder);
+        layer1Wrap.appendChild(panelHolder);
+        tasksWrap.appendChild(layer1Wrap);
+        if (layer2Wrap) {
+            tasksWrap.appendChild(layer2Wrap);
+        }
 
         function renderActivePanel() {
             panelHolder.innerHTML = '';
@@ -768,6 +731,9 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     currentQuestionIdx[activeCatKey] = 0;
                     catScores[activeCatKey] = 0;
                     userAnswers[activeCatKey] = {};
+                    Object.keys(shuffledOptionsMap)
+                        .filter(k => k.startsWith(`${activeCatKey}_`))
+                        .forEach(k => delete shuffledOptionsMap[k]);
                     renderActivePanel();
                 };
                 panelHolder.appendChild(panel);
@@ -860,8 +826,9 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
 
             const savedAnswer = userAnswers[activeCatKey][qIdx];
             let isAnswered = savedAnswer !== undefined;
+            const shuffledQ = getShuffledQuestion(activeCatKey, qIdx, currentQ);
 
-            currentQ.options.forEach((optText, optIdx) => {
+            shuffledQ.options.forEach((optText, optIdx) => {
                 const optBtn = document.createElement('button');
                 optBtn.type = 'button';
                 optBtn.className = 'hc-task-opt-btn';
@@ -872,7 +839,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
 
                 if (isAnswered) {
                     optBtn.disabled = true;
-                    if (optIdx === currentQ.correct) {
+                    if (optIdx === shuffledQ.correct) {
                         optBtn.classList.add('correct');
                     } else if (optIdx === savedAnswer.selectedIdx) {
                         optBtn.classList.add('incorrect');
@@ -882,7 +849,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 optBtn.onclick = () => {
                     if (isAnswered) return;
                     isAnswered = true;
-                    const isCorrect = optIdx === currentQ.correct;
+                    const isCorrect = optIdx === shuffledQ.correct;
                     if (isCorrect) {
                         catScores[activeCatKey]++;
                     }
@@ -890,7 +857,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
 
                     optionsGrid.querySelectorAll('.hc-task-opt-btn').forEach((b, idx) => {
                         b.disabled = true;
-                        if (idx === currentQ.correct) {
+                        if (idx === shuffledQ.correct) {
                             b.classList.add('correct');
                         } else if (idx === optIdx && !isCorrect) {
                             b.classList.add('incorrect');
@@ -1206,7 +1173,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         return card;
     }
 
-    function createSentenceFlow(section, sectionIndex, onProgressChange) {
+    function createSentenceFlow(section, sectionIndex, onProgressChange, vrimmelStageEl = null, isProseFlow = false) {
         const flowContainer = document.createElement('div');
         flowContainer.className = 'hc-sentence-flow-wrapper';
 
@@ -1214,6 +1181,11 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         const totalLines = section.dialogue.length;
         const solvedChallenges = {};
         let isAllViewMode = false;
+        const sentence1VisualLab = createSentence1VisualLab(vrimmelStageEl);
+        let activeLabLineIndex = (sectionIndex === 0) ? 0 : -1;
+        if (sectionIndex !== 0 && sentence1VisualLab.close) {
+            sentence1VisualLab.close(true);
+        }
 
         function renderFlow() {
             flowContainer.innerHTML = '';
@@ -1252,7 +1224,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             flowContainer.appendChild(headerEl);
 
             const dialogueList = document.createElement('div');
-            dialogueList.className = 'hc-dialogue-list';
+            dialogueList.className = isProseFlow ? 'hc-dialogue-list hc-prose-book' : 'hc-dialogue-list';
 
             const linesToShow = isAllViewMode ? totalLines : revealedCount;
 
@@ -1260,36 +1232,39 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 const line = section.dialogue[i];
                 const isLatestLine = (i === revealedCount - 1) && !isAllViewMode;
                 const lineEl = document.createElement('div');
-                lineEl.className = `hc-dialogue-line ${isLatestLine ? 'latest-revealed' : ''}`;
+                lineEl.className = `hc-dialogue-line ${isProseFlow ? 'prose-line' : ''} ${isLatestLine ? 'latest-revealed' : ''}`;
 
-                const speakerHeader = document.createElement('div');
-                speakerHeader.className = 'hc-speaker-header';
-                speakerHeader.innerHTML = `
-                    <span class="hc-speaker-badge">
-                        <span>${line.speaker}:</span>
-                    </span>
-                    <button type="button" class="hc-speaker-audio-btn" title="${isEn ? 'Listen to line' : 'Lyt til replik'}">
-                        <span>${SVG_AUDIO}</span> <span>${isEn ? 'Listen' : 'Lyt'}</span>
-                    </button>
-                `;
                 const isChallengeSolved = solvedChallenges[i] === true;
                 const showCompletedChallenge = isChallengeSolved || isAllViewMode;
 
-                let fullLineAudio = line.audioText;
-                if (showCompletedChallenge && line.challenge && line.challenge.targetSentence) {
-                    fullLineAudio = `${line.audioText} ${line.challenge.targetSentence}`;
-                }
+                if (!isProseFlow) {
+                    const speakerHeader = document.createElement('div');
+                    speakerHeader.className = 'hc-speaker-header';
+                    speakerHeader.innerHTML = `
+                        <span class="hc-speaker-badge">
+                            <span>${line.speaker}:</span>
+                        </span>
+                        <button type="button" class="hc-speaker-audio-btn" title="${isEn ? 'Listen to line' : 'Lyt til replik'}">
+                            <span>${SVG_AUDIO}</span> <span>${isEn ? 'Listen' : 'Lyt'}</span>
+                        </button>
+                    `;
 
-                speakerHeader.querySelector('.hc-speaker-audio-btn').onclick = () => {
-                    speakDanish(fullLineAudio);
-                };
-                lineEl.appendChild(speakerHeader);
+                    let fullLineAudio = line.audioText;
+                    if (showCompletedChallenge && line.challenge && line.challenge.targetSentence) {
+                        fullLineAudio = `${line.audioText} ${line.challenge.targetSentence}`;
+                    }
+
+                    speakerHeader.querySelector('.hc-speaker-audio-btn').onclick = () => {
+                        speakDanish(fullLineAudio);
+                    };
+                    lineEl.appendChild(speakerHeader);
+                }
 
                 const speechEl = document.createElement('div');
                 speechEl.className = 'hc-line-speech';
 
                 if (line.tokens && line.tokens.length > 0) {
-                    line.tokens.forEach(token => {
+                    line.tokens.forEach((token, tokenIdx) => {
                         if (token.type === 'plain') {
                             const span = document.createElement('span');
                             span.textContent = token.text;
@@ -1308,10 +1283,34 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                             tokenBtn.className = `hc-word-token token-${token.type} token-class-${normalizedType}`;
                             tokenBtn.dataset.wordType = normalizedType;
                             tokenBtn.textContent = token.text;
-                            tokenBtn.title = `${token.type.toUpperCase()}: Klik for detaljer og udtale`;
+                            const brotherNode = findVisualNodeForBrotherToken(token);
+                            const s2Node = (sectionIndex === 0 && i === 1) ? findSentence2NodeByToken(token) : null;
+                            tokenBtn.title = (sectionIndex === 0 && (i === 0 || i === 1)) || brotherNode
+                                ? 'Klik for visuel forklaring'
+                                : `${token.type.toUpperCase()}: Klik for detaljer`;
                             tokenBtn.onclick = (e) => {
                                 e.stopPropagation();
-                                speakDanish(token.text);
+                                if (brotherNode && sentence1VisualLab) {
+                                    activeLabLineIndex = i;
+                                    lineEl.appendChild(sentence1VisualLab);
+                                    sentence1VisualLab.selectNodeById(brotherNode.id);
+                                    return;
+                                }
+                                if (s2Node && sentence1VisualLab) {
+                                    activeLabLineIndex = 1;
+                                    lineEl.appendChild(sentence1VisualLab);
+                                    sentence1VisualLab.selectNodeById(s2Node.id);
+                                    return;
+                                }
+                                if (sectionIndex === 0 && i === 0 && sentence1VisualLab) {
+                                    activeLabLineIndex = 0;
+                                    lineEl.appendChild(sentence1VisualLab);
+                                    sentence1VisualLab.selectToken(token, tokenIdx);
+                                    return;
+                                }
+                                if (!isProseFlow) {
+                                    speakDanish(token.text);
+                                }
                                 handleWordClick(token, line.audioText);
                             };
                             speechEl.appendChild(tokenBtn);
@@ -1366,6 +1365,11 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 }
 
                 lineEl.appendChild(speechEl);
+
+                // Indsæt den visuelle forklaringsboks under den aktive sætning
+                if (sentence1VisualLab && i === activeLabLineIndex) {
+                    lineEl.appendChild(sentence1VisualLab);
+                }
 
                 // Challenge check
                 if (line.challenge) {
@@ -1438,6 +1442,9 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     `;
                     compCard.querySelector('.hc-restart-flow-btn').onclick = () => {
                         revealedCount = 1;
+                        if (sentence1VisualLab && sentence1VisualLab.close) {
+                            sentence1VisualLab.close(false);
+                        }
                         renderFlow();
                     };
                     navBar.appendChild(compCard);
@@ -1449,6 +1456,9 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
 
         flowContainer.advanceSentence = () => {
             if (revealedCount < totalLines) {
+                if (sentence1VisualLab && sentence1VisualLab.close) {
+                    sentence1VisualLab.close(true);
+                }
                 revealedCount++;
                 renderFlow();
                 setTimeout(() => {
@@ -1482,7 +1492,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         return flowContainer;
     }
 
-    function createSectionCard(section, index, story) {
+    function createSectionCard(section, index, story, onUnlockChange = null) {
         const card = document.createElement('div');
         card.className = 'hc-section-card';
 
@@ -1516,14 +1526,19 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
 
         // 1. Render Vrimlebillede Stage if present
         let legendBar = null;
+        let vrimmelStage = null;
         if (section.vrimmelImage) {
-            const vrimmelStage = document.createElement('div');
+            vrimmelStage = document.createElement('div');
             vrimmelStage.className = 'hc-vrimmel-stage';
             vrimmelStage.innerHTML = `
                 <img src="${section.vrimmelImage}" alt="${section.chapter}" class="hc-vrimmel-img" />
             `;
 
             if (section.hotspots && section.hotspots.length > 0) {
+                let hotspotsHidden = false;
+                try { hotspotsHidden = localStorage.getItem('hc_hotspots_hidden_v1') === '1'; } catch {}
+                if (hotspotsHidden) vrimmelStage.classList.add('hotspots-hidden');
+
                 section.hotspots.forEach(spot => {
                     const pin = document.createElement('button');
                     pin.type = 'button';
@@ -1542,29 +1557,57 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                     };
                     vrimmelStage.appendChild(pin);
                 });
+
+                card.appendChild(vrimmelStage);
+
+                const eyeOpenSvg = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>`;
+                const eyeOffSvg = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c6.5 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3.5 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>`;
+
+                const stageControlRow = document.createElement('div');
+                stageControlRow.className = 'hc-vrimmel-controls';
+                const togglePinsBtn = document.createElement('button');
+                togglePinsBtn.type = 'button';
+                togglePinsBtn.className = 'hc-pins-toggle-btn';
+                const syncPinsBtn = () => {
+                    const hidden = vrimmelStage.classList.contains('hotspots-hidden');
+                    togglePinsBtn.innerHTML = hidden
+                        ? `${eyeOpenSvg}<span>${isEn ? 'Show markers' : 'Vis pegefelter'}</span>`
+                        : `${eyeOffSvg}<span>${isEn ? 'Hide markers' : 'Skjul pegefelter'}</span>`;
+                };
+                syncPinsBtn();
+                togglePinsBtn.onclick = () => {
+                    const nowHidden = vrimmelStage.classList.toggle('hotspots-hidden');
+                    try { localStorage.setItem('hc_hotspots_hidden_v1', nowHidden ? '1' : '0'); } catch {}
+                    syncPinsBtn();
+                };
+                stageControlRow.appendChild(togglePinsBtn);
+                card.appendChild(stageControlRow);
+            } else {
+                card.appendChild(vrimmelStage);
             }
-            card.appendChild(vrimmelStage);
 
             }
 
-        // 2. Render "Teksten" heading & text body (lige under vrimlebilledet)
+        // 2. Render text heading & text body (lige under vrimlebilledet)
         const textHeading = document.createElement('div');
         textHeading.className = 'hc-text-heading';
         textHeading.innerHTML = `
             <div class="hc-text-badge-row">
-                <span class="hc-text-badge">Teksten</span>
                 <h4 class="hc-text-title">${section.chapter}</h4>
             </div>
-            <p class="hc-text-hint">${isEn ? 'Read the dialogue sentence by sentence, master the key lines, and tap any word to inspect its grammar:' : 'Læs replikkerne sætning for sætning, løs Mesterens replik undervejs og tryk på ordene for bøjning og ordbogsopslag:'}</p>
+            <p class="hc-text-hint">${isEn ? 'Read the dialogue sentence by sentence and tap the words you do not understand.' : 'Læs replikkerne sætning for sætning og tryk på de ord du ikke forstår.'}</p>
         `;
         card.appendChild(textHeading);
 
         const textBody = document.createElement('div');
         textBody.className = 'section-text-body';
 
-        // 3. Render Interactive Tasks for Scene (Opgaver til scenen - under teksten)
+        // 3. Render Interactive Tasks for Scene (Løsning B: minimalistisk fold-ud i bunden)
         let flowEl = null;
         let tasksEl = null;
+        let drawerToggleBtn = null;
+        let tasksDrawerEl = null;
+        let lastUnlockedState = false;
 
         if (section.tasks) {
             tasksEl = createSectionTasks(section, index, (newCatKey) => {
@@ -1584,10 +1627,25 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 if (tasksEl && tasksEl.updateFlowProgress) {
                     tasksEl.updateFlowProgress(progress);
                 }
-                if (progress.isCompleted) {
+                const isUnlocked = !!(progress.isCompleted || progress.isAllViewMode);
+                lastUnlockedState = isUnlocked;
+                if (isUnlocked) {
                     completedScenes[sceneKey] = true;
                 }
-            });
+                if (tasksDrawerEl) {
+                    tasksDrawerEl.hidden = !isUnlocked;
+                }
+                if (drawerToggleBtn) {
+                    drawerToggleBtn.classList.toggle('is-ready', isUnlocked);
+                    const statusEl = drawerToggleBtn.querySelector('.hc-drawer-status');
+                    if (statusEl) {
+                        statusEl.textContent = isUnlocked ? (isEn ? 'Ready' : 'Klar') : '';
+                    }
+                }
+                if (onUnlockChange) {
+                    onUnlockChange(isUnlocked);
+                }
+            }, vrimmelStage, !!story?.proseFlow);
             textBody.appendChild(flowEl);
         } else {
             // Standard fairy tale prose paragraphs
@@ -1625,7 +1683,73 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         card.appendChild(textBody);
 
         if (tasksEl) {
-            card.appendChild(tasksEl);
+            const totalTaskCount = Object.values(section.tasks || {}).reduce(
+                (sum, cat) => sum + (cat?.questions?.length || 0),
+                0
+            );
+
+            const drawer = document.createElement('div');
+            drawer.className = 'hc-tasks-drawer';
+            const initiallyUnlocked = !hasDialogue || lastUnlockedState || !!completedScenes[sceneKey];
+            drawer.hidden = !initiallyUnlocked;
+            tasksDrawerEl = drawer;
+
+            drawerToggleBtn = document.createElement('button');
+            drawerToggleBtn.type = 'button';
+            drawerToggleBtn.className = 'hc-tasks-drawer-toggle';
+            drawerToggleBtn.setAttribute('aria-expanded', 'false');
+            drawerToggleBtn.innerHTML = `
+                <span class="hc-drawer-left">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+                        <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+                    </svg>
+                    <span>${isEn ? `Optional practice · ${totalTaskCount} exercises` : `Valgfri træning · ${totalTaskCount} opgaver`}</span>
+                </span>
+                <span class="hc-drawer-right">
+                    <span class="hc-drawer-status"></span>
+                    <svg class="hc-drawer-chevron" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </span>
+            `;
+
+            const drawerBody = document.createElement('div');
+            drawerBody.className = 'hc-tasks-drawer-body';
+            drawerBody.hidden = true;
+            drawerBody.appendChild(tasksEl);
+
+            drawerToggleBtn.onclick = () => {
+                const willOpen = drawerBody.hidden;
+                drawerBody.hidden = !willOpen;
+                drawerToggleBtn.classList.toggle('is-open', willOpen);
+                drawerToggleBtn.setAttribute('aria-expanded', String(willOpen));
+            };
+
+            // Hvis scenen allerede er fuldført ved render, marker knappen klar
+            if (completedScenes[sceneKey]) {
+                drawerToggleBtn.classList.add('is-ready');
+                const statusEl = drawerToggleBtn.querySelector('.hc-drawer-status');
+                if (statusEl) statusEl.textContent = isEn ? 'Ready' : 'Klar';
+            }
+
+            drawer.appendChild(drawerToggleBtn);
+            drawer.appendChild(drawerBody);
+            card.appendChild(drawer);
+        }
+
+        // Diskret download-knap til den oprindelige skuespiltekst med replikker i 3. del af Klods-Hans
+        if (story?.id === 'klods_hans' && index === 2) {
+            const downloadRow = document.createElement('div');
+            downloadRow.className = 'hc-script-download-row';
+            const downloadSvg = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
+            downloadRow.innerHTML = `
+                <a class="hc-script-download-btn" href="downloads/Klods_Hans_Skuespil.docx" download="Klods_Hans_Skuespil.docx">
+                    ${downloadSvg}
+                    <span>${isEn ? 'Download original play script (.docx)' : 'Hent skuespil med replikker (.docx)'}</span>
+                </a>
+            `;
+            card.appendChild(downloadRow);
         }
 
         return card;
@@ -2431,42 +2555,42 @@ function injectStyles() {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
-        /* Hero */
+        /* Hero — Kølig Skandinavisk Minimalisme (Forslag 3) */
         .hc-hero-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
-            border: 2px solid #eab308;
-            border-radius: 20px;
+            background: #151a21;
+            border: 1px solid rgba(203, 213, 225, 0.14);
+            border-radius: 18px;
             padding: 2.2rem 2rem;
             text-align: center;
-            margin-bottom: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(234, 179, 8, 0.3);
+            margin-bottom: 2.4rem;
+            box-shadow: none;
             position: relative;
             overflow: hidden;
         }
         .hc-hero-badge {
             display: inline-block;
-            background: rgba(234, 179, 8, 0.15);
-            border: 1px solid rgba(234, 179, 8, 0.4);
-            color: #fde047;
+            background: rgba(43, 110, 120, 0.2);
+            border: 1px solid rgba(76, 155, 166, 0.45);
+            color: #7ec4ce;
             padding: 0.35rem 1rem;
-            border-radius: 20px;
-            font-size: 0.88rem;
+            border-radius: 999px;
+            font-size: 0.82rem;
             font-weight: 700;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
             margin-bottom: 1rem;
         }
         .hc-hero-title {
-            color: #fef08a;
-            font-size: clamp(2rem, 4vw, 2.8rem);
-            margin: 0 0 1rem 0;
+            color: #f1f5f9;
+            font-size: clamp(2rem, 4vw, 2.7rem);
+            margin: 0 0 0.9rem 0;
             font-weight: 800;
-            letter-spacing: -0.5px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            letter-spacing: -0.02em;
+            text-shadow: none;
         }
         .hc-hero-desc {
-            color: #e2e8f0;
-            font-size: 1.15rem;
+            color: #94a3b8;
+            font-size: 1.08rem;
             line-height: 1.65;
             max-width: 720px;
             margin: 0 auto 1.6rem auto;
@@ -2474,21 +2598,24 @@ function injectStyles() {
         .hc-features-pills {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.6rem 0.8rem;
+            gap: 0.55rem 0.7rem;
             justify-content: center;
         }
         .hc-pill {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: #1a212b;
+            border: 1px solid rgba(203, 213, 225, 0.13);
             color: #cbd5e1;
-            padding: 0.4rem 0.9rem;
-            border-radius: 12px;
-            font-size: 0.9rem;
+            padding: 0.38rem 0.85rem;
+            border-radius: 10px;
+            font-size: 0.86rem;
             font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
         }
 
         .hc-section-title {
-            font-size: 1.45rem;
+            font-size: 1.35rem;
             color: #f1f5f9;
             margin: 0 0 1.2rem 0;
             font-weight: 700;
@@ -2501,26 +2628,26 @@ function injectStyles() {
         .hc-stories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-            gap: 1.5rem;
+            gap: 1.4rem;
             margin-bottom: 3rem;
         }
         .hc-story-card {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1.5px solid rgba(255, 255, 255, 0.12);
-            border-radius: 18px;
-            padding: 1.6rem;
+            background: #151a21;
+            border: 1px solid rgba(203, 213, 225, 0.13);
+            border-radius: 16px;
+            padding: 1.5rem;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 0.75rem;
             position: relative;
         }
         .hc-story-card:hover {
-            transform: translateY(-4px);
-            border-color: #eab308;
-            background: rgba(30, 41, 59, 0.95);
-            box-shadow: 0 8px 24px rgba(234, 179, 8, 0.2);
+            transform: translateY(-3px);
+            border-color: rgba(76, 155, 166, 0.55);
+            background: #1a212b;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.32);
         }
         .hc-card-header {
             display: flex;
@@ -2528,93 +2655,86 @@ function injectStyles() {
             align-items: center;
         }
         .hc-card-icon {
-            font-size: 2.4rem;
+            font-size: 2.2rem;
+            color: #94a3b8;
         }
         .hc-card-badges {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.45rem;
             align-items: center;
         }
         .hc-wimmel-tag {
-            background: rgba(234, 179, 8, 0.2);
-            border: 1px solid #eab308;
-            color: #fde047;
-            padding: 0.25rem 0.65rem;
+            background: rgba(43, 110, 120, 0.22);
+            border: 1px solid rgba(76, 155, 166, 0.48);
+            color: #7ec4ce;
+            padding: 0.24rem 0.62rem;
             border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 800;
-        }
-        .hc-level-tag {
-            background: rgba(34, 197, 94, 0.18);
-            border: 1px solid rgba(34, 197, 94, 0.4);
-            color: #4ade80;
-            padding: 0.25rem 0.6rem;
-            border-radius: 8px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 700;
         }
+        .hc-level-tag,
         .hc-time-tag {
-            background: rgba(2, 132, 199, 0.18);
-            border: 1px solid rgba(2, 132, 199, 0.4);
-            color: #60a5fa;
-            padding: 0.25rem 0.6rem;
+            background: #1a212b;
+            border: 1px solid rgba(203, 213, 225, 0.15);
+            color: #94a3b8;
+            padding: 0.24rem 0.6rem;
             border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 700;
+            font-size: 0.78rem;
+            font-weight: 600;
         }
         .hc-card-title {
-            font-size: 1.5rem;
-            color: #f8fafc;
+            font-size: 1.45rem;
+            color: #f1f5f9;
             margin: 0;
             font-weight: 700;
         }
         .hc-card-subtitle {
             color: #94a3b8;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             font-style: italic;
-            margin-top: -0.4rem;
+            margin-top: -0.35rem;
         }
         .hc-card-quote {
-            margin: 0.4rem 0;
-            padding: 0.6rem 0.9rem;
-            background: rgba(234, 179, 8, 0.08);
-            border-left: 3px solid #eab308;
-            color: #fde047;
-            font-size: 0.95rem;
+            margin: 0.35rem 0;
+            padding: 0.58rem 0.85rem;
+            background: rgba(203, 213, 225, 0.04);
+            border-left: 3px solid #64748b;
+            color: #cbd5e1;
+            font-size: 0.92rem;
             font-style: italic;
             border-radius: 0 8px 8px 0;
-            line-height: 1.4;
+            line-height: 1.45;
         }
         .hc-card-teaser {
-            color: #cbd5e1;
-            font-size: 0.98rem;
-            line-height: 1.5;
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.55;
             margin: 0;
             flex-grow: 1;
         }
         .hc-card-footer {
-            margin-top: 0.6rem;
+            margin-top: 0.55rem;
             display: flex;
             justify-content: flex-end;
         }
         .hc-read-btn {
-            background: #eab308;
-            border: none;
-            color: #0f172a;
-            padding: 0.6rem 1.2rem;
-            border-radius: 12px;
+            background: #2b6e78;
+            border: 1px solid #3d8b96;
+            color: #ffffff;
+            padding: 0.56rem 1.15rem;
+            border-radius: 10px;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: all 0.2s;
+            gap: 0.45rem;
+            transition: background 0.2s ease, border-color 0.2s ease;
         }
         .hc-story-card:hover .hc-read-btn {
-            background: #fde047;
-            transform: translateX(3px);
+            background: #35838f;
+            border-color: #4c9ba6;
         }
 
         /* Reader Area */
@@ -2906,6 +3026,80 @@ function injectStyles() {
             opacity: 1;
             border-color: #ffffff;
             box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+        }
+        .hc-vrimmel-stage.hotspots-hidden .hc-hotspot-pin {
+            display: none !important;
+        }
+        .hc-vrimmel-controls {
+            display: flex;
+            justify-content: flex-end;
+            margin: 0.45rem 0 0.2rem;
+        }
+        .hc-pins-toggle-btn {
+            background: #151a21;
+            border: 1px solid rgba(203, 213, 225, 0.16);
+            color: #94a3b8;
+            padding: 0.3rem 0.7rem;
+            border-radius: 999px;
+            font-size: 0.74rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.16s ease;
+        }
+        .hc-pins-toggle-btn:hover {
+            border-color: #4c9ba6;
+            color: #f1f5f9;
+        }
+        .hc-script-download-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1.15rem;
+            padding-top: 0.85rem;
+            border-top: 1px solid rgba(203, 213, 225, 0.08);
+        }
+        .hc-script-download-btn {
+            background: #151a21;
+            border: 1px solid rgba(203, 213, 225, 0.16);
+            color: #94a3b8;
+            padding: 0.36rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.16s ease;
+        }
+        .hc-script-download-btn:hover {
+            border-color: #4c9ba6;
+            color: #f1f5f9;
+            background: rgba(76, 155, 166, 0.1);
+        }
+        @media (max-width: 640px) {
+            .hc-hotspot-pin {
+                width: 14px;
+                height: 14px;
+                border-width: 1.5px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+                animation: none;
+                opacity: 0.88;
+            }
+            .hc-hotspot-pin::before {
+                content: '';
+                position: absolute;
+                inset: -9px;
+            }
+            .hc-hotspot-pin .pin-dot {
+                width: 3px;
+                height: 3px;
+            }
+            .hc-hotspot-pill {
+                display: none;
+            }
         }
 
         /* Grammar Color Legend */
@@ -3758,9 +3952,309 @@ function injectStyles() {
             transform: translateX(3px);
         }
 
+        .hc-card-vrimmel-preview {
+            margin: 0.6rem 0 0.85rem;
+            border-radius: 11px;
+            overflow: hidden;
+            border: 1px solid rgba(203, 213, 225, 0.16);
+            box-shadow: none;
+            flex: 1;
+            display: flex;
+        }
+        .hc-card-vrimmel-img {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.35s ease;
+        }
+        .hc-story-card:hover .hc-card-vrimmel-img {
+            transform: scale(1.03);
+        }
+
+        /* ========================================= */
+        /* PROSA-BOG LAYOUT (Klods-Hans uden separate replikbokse) */
+        /* ========================================= */
+        .hc-dialogue-list.hc-prose-book {
+            gap: 0.45rem;
+            background: rgba(15, 23, 42, 0.55);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 16px;
+            padding: 1.25rem 1.45rem;
+        }
+        .hc-dialogue-line.prose-line {
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            padding: 0.32rem 0.55rem;
+            box-shadow: none;
+            margin: 0;
+        }
+        .hc-dialogue-line.prose-line.latest-revealed {
+            background: rgba(56, 189, 248, 0.08);
+            border-left: 3px solid #fde047;
+            padding-left: 0.75rem;
+            box-shadow: none;
+        }
+        .hc-dialogue-line.prose-line .hc-line-speech {
+            font-size: 1.08rem;
+            line-height: 1.78;
+        }
+
+        /* ========================================= */
+        /* FORSLAG 3: KØLIG SKANDINAVISK MINIMALISME (Klods-Hans) */
+        /* Skifer + monokrome værktøjer + én rolig petrol-accent  */
+        /* ========================================= */
+        .hc-theme-nordic .hc-reader-header,
+        .hc-theme-nordic .hc-section-card,
+        .hc-theme-nordic .hc-quiz-card,
+        .hc-theme-nordic .hc-talemaader-invitation-card {
+            background: #151a21;
+            border: 1px solid rgba(203, 213, 225, 0.13);
+            box-shadow: none;
+        }
+        .hc-theme-nordic .hc-reader-title,
+        .hc-theme-nordic .section-header h3 {
+            color: #f1f5f9;
+        }
+        .hc-theme-nordic .hc-reader-sub,
+        .hc-theme-nordic .hc-text-hint,
+        .hc-theme-nordic .hc-next-sentence-hint {
+            color: #94a3b8;
+        }
+        .hc-theme-nordic .hc-level-tag-inline {
+            color: #cbd5e1;
+        }
+        .hc-theme-nordic .hc-reader-quote-banner {
+            background: rgba(203, 213, 225, 0.04);
+            border-left: 3px solid #64748b;
+            color: #cbd5e1;
+        }
+        .hc-theme-nordic .hc-toolbar {
+            background: #1a212b;
+            border: 1px solid rgba(203, 213, 225, 0.13);
+        }
+        .hc-theme-nordic .main-listen-btn,
+        .hc-theme-nordic .section-audio-btn {
+            background: transparent;
+            border: 1px solid rgba(203, 213, 225, 0.26);
+            color: #e2e8f0;
+            box-shadow: none;
+        }
+        .hc-theme-nordic .main-listen-btn:hover,
+        .hc-theme-nordic .section-audio-btn:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(203, 213, 225, 0.45);
+            color: #ffffff;
+            transform: none;
+        }
+        .hc-theme-nordic .main-listen-btn.playing {
+            background: #2b6e78;
+            border-color: #3d8b96;
+            color: #ffffff;
+        }
+        .hc-theme-nordic .hc-mode-toggle {
+            background: #101419;
+            border: 1px solid rgba(203, 213, 225, 0.13);
+        }
+        .hc-theme-nordic .mode-tab-btn,
+        .hc-theme-nordic .font-btn,
+        .hc-theme-nordic .hc-step-pill,
+        .hc-theme-nordic .hc-flow-toggle-btn,
+        .hc-theme-nordic .hc-talemaader-tab-btn,
+        .hc-theme-nordic .step-action-btn,
+        .hc-theme-nordic .back-to-list-btn {
+            background: #1a212b;
+            border: 1px solid rgba(203, 213, 225, 0.15);
+            color: #94a3b8;
+            box-shadow: none;
+        }
+        .hc-theme-nordic .mode-tab-btn:hover,
+        .hc-theme-nordic .font-btn:hover,
+        .hc-theme-nordic .hc-step-pill:hover,
+        .hc-theme-nordic .hc-flow-toggle-btn:hover,
+        .hc-theme-nordic .hc-talemaader-tab-btn:hover,
+        .hc-theme-nordic .step-action-btn:hover,
+        .hc-theme-nordic .back-to-list-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(203, 213, 225, 0.35);
+            color: #f1f5f9;
+            transform: none;
+        }
+        .hc-theme-nordic .mode-tab-btn.active,
+        .hc-theme-nordic .font-btn.active,
+        .hc-theme-nordic .hc-step-pill.active {
+            background: #e2e8f0;
+            border-color: #e2e8f0;
+            color: #0f172a;
+            box-shadow: none;
+        }
+        .hc-theme-nordic .hc-dialogue-list.hc-prose-book {
+            background: #1a212b;
+            border: 1px solid rgba(203, 213, 225, 0.13);
+        }
+        .hc-theme-nordic .hc-dialogue-line.prose-line.latest-revealed {
+            background: rgba(76, 155, 166, 0.09);
+            border-left: 3px solid #4c9ba6;
+        }
+        .hc-theme-nordic .hc-flow-step-badge {
+            background: #1a212b;
+            border: 1px solid rgba(203, 213, 225, 0.15);
+            color: #cbd5e1;
+        }
+        .hc-theme-nordic .hc-flow-bar-track {
+            background: rgba(203, 213, 225, 0.12);
+        }
+        .hc-theme-nordic .hc-flow-bar-fill {
+            background: #2b6e78;
+        }
+        /* Primær handling: én rolig petrol-accent */
+        .hc-theme-nordic .hc-next-sentence-btn,
+        .hc-theme-nordic .step-action-btn.next,
+        .hc-theme-nordic .step-action-btn.quiz-jump,
+        .hc-theme-nordic .next-story-btn,
+        .hc-theme-nordic .invitation-start-btn {
+            background: #2b6e78;
+            border: 1px solid #3d8b96;
+            color: #ffffff;
+            box-shadow: none;
+        }
+        .hc-theme-nordic .hc-next-sentence-btn:hover,
+        .hc-theme-nordic .step-action-btn.next:hover,
+        .hc-theme-nordic .step-action-btn.quiz-jump:hover,
+        .hc-theme-nordic .next-story-btn:hover,
+        .hc-theme-nordic .invitation-start-btn:hover {
+            background: #35838f;
+            border-color: #4c9ba6;
+            color: #ffffff;
+            transform: none;
+        }
+        .hc-theme-nordic .hc-flow-completion-card {
+            background: #1a212b;
+            border: 1px solid rgba(76, 155, 166, 0.45);
+        }
+        .hc-theme-nordic .hc-flow-completion-card h4 {
+            color: #f1f5f9;
+        }
+        .hc-theme-nordic .hc-restart-flow-btn {
+            background: transparent;
+            border: 1px solid rgba(203, 213, 225, 0.25);
+            color: #cbd5e1;
+        }
+        .hc-theme-nordic .hc-restart-flow-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+        .hc-theme-nordic .hc-tasks-drawer-toggle.is-ready {
+            border-color: rgba(76, 155, 166, 0.55);
+            color: #7ec4ce;
+            background: rgba(43, 110, 120, 0.14);
+        }
+        .hc-theme-nordic .hc-section-tasks {
+            background: #151a21;
+            border: 1px solid rgba(203, 213, 225, 0.13);
+            box-shadow: none;
+        }
+        .hc-task-layer-switch {
+            display: inline-flex;
+            background: #101419;
+            border: 1px solid rgba(203, 213, 225, 0.15);
+            border-radius: 10px;
+            padding: 3px;
+            margin-bottom: 1rem;
+            gap: 3px;
+        }
+        .hc-task-layer-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            padding: 0.45rem 1rem;
+            border-radius: 8px;
+            font-size: 0.86rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.16s ease;
+        }
+        .hc-task-layer-btn:hover {
+            color: #f1f5f9;
+        }
+        .hc-task-layer-btn.active {
+            background: #2b6e78;
+            color: #ffffff;
+        }
+        .hc-theme-nordic .hc-drawer-status {
+            color: #7ec4ce;
+        }
+        .hc-theme-nordic .invitation-badge {
+            background: rgba(43, 110, 120, 0.22);
+            border: 1px solid rgba(76, 155, 166, 0.45);
+            color: #7ec4ce;
+        }
+        .hc-theme-nordic .invitation-title {
+            color: #f1f5f9;
+        }
+
         /* ========================================= */
         /* SCENE TASKS (DETEKTIV & GRAMMATIK OPGAVER) */
         /* ========================================= */
+        .hc-tasks-drawer {
+            margin-top: 1.25rem;
+        }
+        .hc-tasks-drawer-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.68rem 1rem;
+            background: transparent;
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            border-radius: 12px;
+            color: #94a3b8;
+            font-size: 0.84rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+        }
+        .hc-tasks-drawer-toggle:hover {
+            border-color: rgba(148, 163, 184, 0.55);
+            color: #e2e8f0;
+            background: rgba(15, 23, 42, 0.45);
+        }
+        .hc-tasks-drawer-toggle.is-ready {
+            border-color: rgba(253, 224, 71, 0.55);
+            color: #fde047;
+            background: rgba(253, 224, 71, 0.06);
+        }
+        .hc-tasks-drawer-toggle.is-ready:hover {
+            border-color: rgba(253, 224, 71, 0.85);
+            background: rgba(253, 224, 71, 0.12);
+        }
+        .hc-drawer-left,
+        .hc-drawer-right {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .hc-drawer-status {
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            color: #fde047;
+        }
+        .hc-drawer-chevron {
+            transition: transform 0.2s ease;
+        }
+        .hc-tasks-drawer-toggle.is-open .hc-drawer-chevron {
+            transform: rotate(180deg);
+        }
+        .hc-tasks-drawer-body {
+            margin-top: 0.75rem;
+        }
+        .hc-tasks-drawer-body .hc-section-tasks {
+            margin: 0.4rem 0 0.8rem;
+        }
         .hc-section-tasks {
             margin: 1.8rem 0 2.2rem;
             background: rgba(15, 23, 42, 0.85);

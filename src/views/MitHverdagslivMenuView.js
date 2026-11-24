@@ -3,6 +3,7 @@ import { renderArbejdeBilvaerkstedView } from './ArbejdeBilvaerkstedView.js';
 import { renderArbejdeKoekkenView } from './ArbejdeKoekkenView.js';
 import { renderAarstiderVinterView } from './AarstiderVinterView.js';
 import { renderMinBoligView } from './MinBoligView.js';
+import { ARBEJDE_ICONS, stripArbejdeEmojis } from '../utils/arbejdeMonoIcons.js';
 
 export { renderArbejdeBilvaerkstedView, renderArbejdeKoekkenView, renderAarstiderVinterView, renderMinBoligView };
 
@@ -210,7 +211,7 @@ export function renderMitHverdagslivMenuView(container, navigateFn) {
             badge: '🏠 Scenarie 4 • DU1 Modul 4 Mindmap',
             icon: '🏠',
             title: 'Min bolig',
-            desc: 'Lær centrale bolig-ord ud over de 600 mest almindelige ord og træn DU1 Modul 4 mundtlig test ud fra det officielle mindmap (sted/by, hus/lejlighed, værelser/m², alene/sammen med, naboer & område), pusleøvelser og min/mit/mine.',
+            desc: 'Lær centrale bolig-ord ud fra emnerne sted/by, hus/lejlighed, værelser/m², alene/sammen med, naboer & område.',
             btnText: 'Åbn Min bolig ➔',
             img: 'assets/min_bolig_vrimmel.jpg',
             accent: '#14b8a6'
@@ -377,12 +378,11 @@ export function renderMitHverdagslivArbejdeView(container, navigateFn, extraData
             margin-bottom: 2.5rem;
         }
         .mit-hverdagsliv-hub .hub-hero h1 {
-            font-size: 2.35rem;
+            font-size: 2.25rem;
             font-weight: 800;
-            margin-bottom: 0.8rem;
-            background: linear-gradient(135deg, #38bdf8, #fb923c, #22c55e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.75rem;
+            color: #f8fafc;
+            letter-spacing: -0.02em;
         }
         .mit-hverdagsliv-hub .hub-hero p {
             color: #94a3b8;
@@ -518,32 +518,32 @@ export function renderMitHverdagslivArbejdeView(container, navigateFn, extraData
     const hero = document.createElement('div');
     hero.className = 'hub-hero';
     hero.innerHTML = `
-        <div class="hub-badge">${getTranslation('arbejde_hub_badge', '💼 Mit hverdagsliv • Arbejde')}</div>
-        <h1 style="margin-top: 0.8rem;">${getTranslation('arbejde_hub_title', 'Vælg arbejdsplads')}</h1>
-        <p>${getTranslation('arbejde_hub_desc', 'Træn de vigtigste målord, fagudtryk, historier, mundtlige dialoger og faste automatiserede sætninger med dansk betoning til de første 3 måneder på jobbet.')}</p>
+        <div class="hub-badge">${ARBEJDE_ICONS.briefcase} <span>${stripArbejdeEmojis(getTranslation('arbejde_hub_badge', 'Mit hverdagsliv · Arbejde'))}</span></div>
+        <h1 style="margin-top: 0.8rem;">${stripArbejdeEmojis(getTranslation('arbejde_hub_title', 'Vælg arbejdsplads'))}</h1>
+        <p>${stripArbejdeEmojis(getTranslation('arbejde_hub_desc', 'Træn de vigtigste målord, fagudtryk, historier, mundtlige dialoger og faste automatiserede sætninger med dansk betoning til de første 3 måneder på jobbet.'))}</p>
     `;
     viewContainer.appendChild(hero);
 
     const workplaces = [
         {
             id: 'mit_hverdagsliv_arbejde_bilvaerksted',
-            badge: getTranslation('arbejde_bilvaerksted_badge', '🔧 Arbejdsplads 1 • Bilværksted'),
-            icon: '🔧',
-            title: getTranslation('arbejde_bilvaerksted_title', 'På bilværkstedet'),
-            desc: getTranslation('arbejde_bilvaerksted_desc', 'Arbejd som mekaniker eller værkstedsassistent: Lær 32 centrale ord fra autoværkstedet, læs 4 praksisnære historier med klikbare ord, sæt værkstedsdialoger i rækkefølge og træn udtale med dansk betoning.'),
-            tags: ['🖼️ 32 Målord', '🕵️‍♂️ Ord-detektiv', '📖 4 Historier', '🗣️ 5 Dialoger', '🎙️ Sig det højt (Betoning)'],
-            btnText: getTranslation('arbejde_bilvaerksted_btn', 'Åbn Bilværkstedet ➔'),
+            badge: stripArbejdeEmojis(getTranslation('arbejde_bilvaerksted_badge', 'Arbejdsplads 1 · Bilværksted')),
+            icon: ARBEJDE_ICONS.wrench,
+            title: stripArbejdeEmojis(getTranslation('arbejde_bilvaerksted_title', 'På bilværkstedet')),
+            desc: stripArbejdeEmojis(getTranslation('arbejde_bilvaerksted_desc', 'Arbejd som mekaniker eller værkstedsassistent: Lær 32 centrale ord fra autoværkstedet, læs 4 praksisnære historier med klikbare ord, sæt værkstedsdialoger i rækkefølge og træn udtale med dansk betoning.')),
+            tags: ['32 Målord', 'Ord-detektiv', '4 Historier', '5 Dialoger', 'Sig det højt (Betoning)'],
+            btnText: stripArbejdeEmojis(getTranslation('arbejde_bilvaerksted_btn', 'Åbn Bilværkstedet')),
             img: 'assets/bilvaerksted_vrimmel.jpg',
             accent: '#38bdf8'
         },
         {
             id: 'mit_hverdagsliv_arbejde_koekken',
-            badge: getTranslation('arbejde_koekken_badge', '👩‍🍳 Arbejdsplads 2 • Storkøkken & Kantine'),
-            icon: '👩‍🍳',
-            title: getTranslation('arbejde_koekken_title', 'Som køkkenassistent'),
-            desc: getTranslation('arbejde_koekken_desc', 'Arbejd i et dansk storkøkken og kantine: Lær 32 vigtige ord om fødevaresikkerhed, hygiejne, køkkenudstyr og opvask, læs 4 historier med klikbare ord, løs køkkendialoger og træn faste sætninger med betoning.'),
-            tags: ['🖼️ 32 Målord', '🕵️‍♂️ Ord-detektiv', '📖 4 Historier', '🗣️ 5 Dialoger', '🎙️ Sig det højt (Betoning)'],
-            btnText: getTranslation('arbejde_koekken_btn', 'Åbn Køkkenassistent ➔'),
+            badge: stripArbejdeEmojis(getTranslation('arbejde_koekken_badge', 'Arbejdsplads 2 · Storkøkken & Kantine')),
+            icon: ARBEJDE_ICONS.utensils,
+            title: stripArbejdeEmojis(getTranslation('arbejde_koekken_title', 'Som køkkenassistent')),
+            desc: stripArbejdeEmojis(getTranslation('arbejde_koekken_desc', 'Arbejd i et dansk storkøkken og kantine: Lær 32 vigtige ord om fødevaresikkerhed, hygiejne, køkkenudstyr og opvask, læs 4 historier med klikbare ord, løs køkkendialoger og træn faste sætninger med betoning.')),
+            tags: ['32 Målord', 'Ord-detektiv', '4 Historier', '5 Dialoger', 'Sig det højt (Betoning)'],
+            btnText: stripArbejdeEmojis(getTranslation('arbejde_koekken_btn', 'Åbn Køkkenassistent')),
             img: 'assets/koekkenassistent_vrimmel.jpg',
             accent: '#fb923c'
         }
@@ -562,12 +562,12 @@ export function renderMitHverdagslivArbejdeView(container, navigateFn, extraData
                 <span class="scene-pill-badge" style="border-color: ${wp.accent}; color: ${wp.accent};">${wp.badge}</span>
             </div>
             <div class="scene-card-content">
-                <h3><span>${wp.icon}</span> <span>${wp.title}</span></h3>
+                <h3>${wp.icon} <span>${wp.title}</span></h3>
                 <p>${wp.desc}</p>
                 <div class="scene-feature-tags">
                     ${wp.tags.map(t => `<span class="scene-feature-tag">${t}</span>`).join('')}
                 </div>
-                <button class="scene-action-btn">${wp.btnText}</button>
+                <button class="scene-action-btn"><span>${wp.btnText}</span> ${ARBEJDE_ICONS.arrowRight}</button>
             </div>
         `;
         card.onclick = () => navigateFn(wp.id);

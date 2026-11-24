@@ -169,6 +169,9 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
 
     const style = document.createElement('style');
     style.textContent = `
+        /* Skjul vrimlebillede på abstrakt station */
+        .contrast-split-stage, .split-stage, .stage-split-wrapper, .vrimmel-split-stage { display: none !important; }
+
         .sansning-station-view {
             max-width: 1180px;
             margin: 0 auto;
@@ -744,10 +747,14 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
     backBtn.className = 'ss-back-btn';
     backBtn.innerHTML = (extraData && extraData.from === 'overview')
         ? '← Tilbage til sansningsoversigten'
-        : '← Tilbage til hovedflade 1';
+        : (extraData && extraData.from === 'flade3')
+            ? '← Tilbage til hovedflade 3'
+            : '← Tilbage til hovedflade 1';
     backBtn.onclick = () => {
         if (extraData && extraData.from === 'overview') {
             navigateFn('grammatik_sansning');
+        } else if (extraData && extraData.from === 'flade3') {
+            navigateFn('sansning_flade3');
         } else {
             navigateFn('sansning_flade1');
         }
@@ -756,7 +763,9 @@ export function renderSansningSindetView(container, navigateFn, extraData = {}) 
 
     const badge = document.createElement('span');
     badge.className = 'ss-station-badge';
-    badge.innerHTML = `Station 6 • Sindets sansning`;
+    badge.innerHTML = (extraData && extraData.from === 'flade3')
+        ? `Station 3.3 • Sindets sansning`
+        : `Station 6 • Sindets sansning`;
     topBar.appendChild(badge);
 
     viewContainer.appendChild(topBar);

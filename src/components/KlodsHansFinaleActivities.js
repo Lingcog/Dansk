@@ -18,6 +18,32 @@ export function renderKlodsHansFinaleActivities(container, options = {}) {
     container.innerHTML = '';
 
     let currentActivity = initialTab; // 'indre_liv' | 'speeddating'
+    let traitLevel = 'basis'; // 'basis' (A2) | 'udvidet' (B1/B2)
+
+    function createLevelSwitcherBar(onSwitch) {
+        const levelBar = document.createElement('div');
+        levelBar.className = 'kh-level-bar';
+        levelBar.innerHTML = `
+            <span class="kh-level-label">${isEn ? 'Word level:' : 'Ordniveau:'}</span>
+            <div class="kh-level-switcher">
+                <button type="button" class="kh-level-btn ${traitLevel === 'basis' ? 'active' : ''}" data-level="basis">
+                    ${isEn ? 'Basis (A2) · Top 100 words & idioms' : 'Basis (A2) · Top 100-ord & talemåder'}
+                </button>
+                <button type="button" class="kh-level-btn ${traitLevel === 'udvidet' ? 'active' : ''}" data-level="udvidet">
+                    ${isEn ? 'Extended (B1/B2)' : 'Udvidet (B1/B2)'}
+                </button>
+            </div>
+        `;
+        levelBar.querySelectorAll('.kh-level-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const nextLevel = btn.dataset.level;
+                if (nextLevel === traitLevel) return;
+                traitLevel = nextLevel;
+                onSwitch();
+            });
+        });
+        return levelBar;
+    }
 
     const rootWrapper = document.createElement('div');
     rootWrapper.className = 'kh-finale-root';
@@ -69,6 +95,8 @@ export function renderKlodsHansFinaleActivities(container, options = {}) {
         const indreContainer = document.createElement('div');
         indreContainer.className = 'kh-indre-container';
 
+        const activeCharacters = klodsHansIndreLivData.levels?.[traitLevel] || klodsHansIndreLivData.characters;
+
         // State for placements
         // Map trait.id -> character.id
         const userPlacements = {};
@@ -76,9 +104,9 @@ export function renderKlodsHansFinaleActivities(container, options = {}) {
         let lastFeedbackMessage = '';
         let feedbackIsError = false;
 
-        // Collect all traits from all 4 characters
+        // Collect all traits from all 4 characters for active level
         const allTraits = [];
-        klodsHansIndreLivData.characters.forEach(char => {
+        activeCharacters.forEach(char => {
             char.traits.forEach(trait => {
                 allTraits.push({
                     ...trait,
@@ -95,13 +123,19 @@ export function renderKlodsHansFinaleActivities(container, options = {}) {
         const header = document.createElement('div');
         header.className = 'kh-sec-header';
         header.innerHTML = `
-            <div class="kh-badge-gold">${isEn ? 'Character Mapping · Adjectives & Traits' : 'Karakterkortlægning · Adjektiver & Personlighed'}</div>
-            <h2>${isEn ? 'Map the Inner Life of the Characters' : 'Kortlæg karakterernes indre liv'}</h2>
+            <div class="kh-badge-gold">${isEn ? 'Character mapping · Adjectives & traits' : 'Karakterkortlægning · Adjektiver & personlighed'}</div>
+            <h2>${isEn ? 'Map the inner life of the characters' : 'Kortlæg karakterernes indre liv'}</h2>
             <p>${isEn 
-                ? 'Who are the characters on the inside? Select an adjective or phrase from the pool below and assign it to the right person. Click the speaker to hear the word!'
-                : 'Hvem er personerne inderst inde? Vælg et adjektiv, adverbium eller udtryk fra puljen forneden og placer det hos den rigtige person. Klik på højttaleren for at høre udtalen!'}</p>
+                ? 'Who are the characters on the inside? Select an adjective, grading adverb, or idiom from the pool below and assign it to the right person. Click the speaker to hear the word!'
+                : 'Hvem er personerne inderst inde? Vælg et højfrekvent adjektiv, gradsadverbium eller udtryk fra puljen forneden og placer det hos den rigtige person. Klik på højttaleren for at høre udtalen!'}</p>
         `;
         indreContainer.appendChild(header);
+
+        // Level Switcher (Basis (A2) vs. Udvidet (B1/B2))
+        indreContainer.appendChild(createLevelSwitcherBar(() => {
+            targetEl.innerHTML = '';
+            renderIndreLivActivity(targetEl);
+        }));
 
         // Progress bar & Score tracker
         const progressCard = document.createElement('div');
@@ -130,7 +164,7 @@ export function renderKlodsHansFinaleActivities(container, options = {}) {
 
         const charCards = {};
 
-        klodsHansIndreLivData.characters.forEach(char => {
+        activeCharacters.forEach(char => {
             const card = document.createElement('div');
             card.className = 'kh-char-card';
             card.dataset.charId = char.id;
@@ -192,7 +226,7 @@ export function renderKlodsHansFinaleActivities(container, options = {}) {
 
         // Render slots inside each char card
         function renderSlots() {
-            klodsHansIndreLivData.characters.forEach(char => {
+            activeCharacters.forEach(char => {
                 const slotsEl = indreContainer.querySelector(`#slots-${char.id}`);
                 if (!slotsEl) return;
                 slotsEl.innerHTML = '';
@@ -233,11 +267,11 @@ export function renderKlodsHansFinaleActivities(container, options = {}) {
         poolCard.className = 'kh-pool-card';
         poolCard.innerHTML = `
             <div class="kh-pool-header">
-                <h3>${isEn ? 'Word Pool: Select a trait to place' : 'Ordpulje: Vælg en egenskab til en af personerne'}</h3>
+                <h3>${isEn ? 'Word pool: Select a trait to place' : 'Ordpulje: Vælg en egenskab til en af personerne'}</h3>
                 <div class="kh-type-legend">
-                    <span class="legend-pill tag-adj">Adjektiv (orange)</span>
-                    <span class="legend-pill tag-idiom">Fast udtryk / Idiom (lilla)</span>
-                    <span class="legend-pill tag-phrase">Frase (cyan)</span>
+                    <span class="legend-pill tag-adj">${isEn ? 'Adjective (orange)' : 'Adjektiv (orange)'}</span>
+                    <span class="legend-pill tag-idiom">${isEn ? 'Idiom (purple)' : 'Fast udtryk / idiom (lilla)'}</span>
+                    <span class="legend-pill tag-phrase">${isEn ? 'Phrase (cyan)' : 'Frase (cyan)'}</span>
                 </div>
             </div>
             <div class="kh-pool-chips" id="kh-pool-chips"></div>
@@ -372,30 +406,42 @@ export function renderKlodsHansFinaleActivities(container, options = {}) {
     // AKTIVITET 2: SPEEDDATING-DETEKTIVEN (20 SPØRGSMÅL)
     // =========================================================================
     function renderSpeeddatingActivity(targetEl) {
-        const speedContainer = document.createElement('div');
-        speedContainer.className = 'kh-speed-container';
+        const speedLevelData = klodsHansSpeeddatingData.levels?.[traitLevel] || klodsHansSpeeddatingData;
 
         // State for speeddating game
         let currentRound = 0; // 0..3 (4 characters)
-        const charQueue = [...klodsHansSpeeddatingData.characters].sort(() => Math.random() - 0.5);
-        let activeMysteryChar = charQueue[currentRound];
-        let score = 100;
-        let askedQuestionIds = new Set();
-        let dialogHistory = [];
-        let isResolved = false;
-        let penaltyCount = 0;
+        const charQueue = [...speedLevelData.characters].sort(() => Math.random() - 0.5);
 
-        // Header
-        const header = document.createElement('div');
-        header.className = 'kh-sec-header';
-        header.innerHTML = `
-            <div class="kh-badge-purple">${isEn ? 'Mystery Suitor · 20 Questions Game' : '20 spørgsmål til bejleren · Speeddating'}</div>
-            <h2>${isEn ? 'The Speed Dating Detective' : 'Speeddating-detektiven: Hvem gemmer sig bag gardinet?'}</h2>
-            <p>${isEn 
-                ? 'A mystery character from the fairy tale has entered the great hall for speed dating! Ask sharp questions to reveal their identity. You score maximum points by guessing with the fewest questions possible!'
-                : 'En hemmelig person fra eventyret er trådt ind i riddersalen til speeddating! Stil skarpe spørgsmål for at gennemskue personens identitet. Du får flest point ved at gætte rigtigt med færrest mulige spørgsmål!'}</p>
-        `;
-        speedContainer.appendChild(header);
+        function renderSpeeddatingRound() {
+            targetEl.innerHTML = '';
+            const speedContainer = document.createElement('div');
+            speedContainer.className = 'kh-speed-container';
+
+            const activeMysteryChar = charQueue[currentRound];
+            let score = 100;
+            let askedQuestionIds = new Set();
+            let isResolved = false;
+            let penaltyCount = 0;
+
+            // Header
+            const header = document.createElement('div');
+            header.className = 'kh-sec-header';
+            header.innerHTML = `
+                <div class="kh-badge-purple">${isEn ? 'Mystery Suitor · 20 Questions Game' : '20 spørgsmål til bejleren · Speeddating'}</div>
+                <h2>${isEn ? 'The Speed Dating Detective' : 'Speeddating-detektiven: Hvem gemmer sig bag gardinet?'}</h2>
+                <p>${isEn 
+                    ? 'A mystery character from the fairy tale is hiding behind the curtain! Ask questions, read the answers, and guess who it is with the fewest questions possible.'
+                    : traitLevel === 'basis'
+                        ? 'En hemmelig person fra eventyret gemmer sig bag gardinet! Stil spørgsmål, læs svarene, og gæt hvem det er med så få spørgsmål som muligt.'
+                        : 'En hemmelig person fra eventyret er trådt ind i riddersalen til speeddating! Stil skarpe spørgsmål for at gennemskue personens identitet. Du får flest point ved at gætte rigtigt med færrest mulige spørgsmål!'}</p>
+            `;
+            speedContainer.appendChild(header);
+
+            // Level Switcher (Basis (A2) vs. Udvidet (B1/B2))
+            speedContainer.appendChild(createLevelSwitcherBar(() => {
+                targetEl.innerHTML = '';
+                renderSpeeddatingActivity(targetEl);
+            }));
 
         // Status Banner (Score, round, questions count)
         const statusBanner = document.createElement('div');
@@ -529,9 +575,15 @@ export function renderKlodsHansFinaleActivities(container, options = {}) {
                     <div class="kh-success-btns">
                         ${currentRound < charQueue.length - 1 ? `
                             <button type="button" class="kh-btn-next-round">
-                                <span>${isEn ? 'Next Mystery Character (Round ' + (currentRound + 2) + ')' : 'Næste hemmelige karakter (Runde ' + (currentRound + 2) + ' af ' + charQueue.length + ')'}</span>
+                                <span>${isEn ? 'Next Mystery Character (Round ' + (currentRound + 2) + ' of ' + charQueue.length + ')' : 'Næste hemmelige karakter (Runde ' + (currentRound + 2) + ' af ' + charQueue.length + ')'}</span>
                                 <span>➔</span>
                             </button>
+                            ${currentRound >= 3 ? `
+                                <button type="button" class="kh-btn-finish-all" style="margin-top: 0.65rem; opacity: 0.9;">
+                                    <span>${isEn ? 'Skip remaining & go to Quiz' : 'Eller gå til forståelsesquizzen nu'}</span>
+                                    <span>➔</span>
+                                </button>
+                            ` : ''}
                         ` : `
                             <button type="button" class="kh-btn-finish-all">
                                 <span>🎉 ${isEn ? 'All Characters Solved! Go to Quiz' : 'Alle runder løst! Gå til forståelsesquizzen'}</span>
@@ -545,13 +597,7 @@ export function renderKlodsHansFinaleActivities(container, options = {}) {
                 if (nextBtn) {
                     nextBtn.onclick = () => {
                         currentRound++;
-                        activeMysteryChar = charQueue[currentRound];
-                        score = 100;
-                        askedQuestionIds = new Set();
-                        dialogHistory = [];
-                        isResolved = false;
-                        penaltyCount = 0;
-                        renderSpeeddatingActivity(targetEl);
+                        renderSpeeddatingRound();
                         window.scrollTo({ top: 220, behavior: 'smooth' });
                     };
                 }
@@ -610,7 +656,7 @@ export function renderKlodsHansFinaleActivities(container, options = {}) {
                     : 'Vælg med omhu! Et forkert gæt koster 20 strafpoint, og du må stille flere spørgsmål.'}</p>
                 
                 <div class="kh-guess-cards-grid">
-                    ${klodsHansSpeeddatingData.characters.map(c => `
+                    ${speedLevelData.characters.map(c => `
                         <button type="button" class="kh-guess-card-btn" data-char-id="${c.id}" style="--btn-color: ${c.themeColor}">
                             <div class="guess-icon">${c.avatarIcon}</div>
                             <div class="guess-name">${c.name}</div>
@@ -683,7 +729,7 @@ export function renderKlodsHansFinaleActivities(container, options = {}) {
 
             const gridEl = qGridWrap.querySelector('#kh-q-grid');
 
-            klodsHansSpeeddatingData.questions.forEach((q, idx) => {
+            speedLevelData.questions.forEach((q, idx) => {
                 const isAsked = askedQuestionIds.has(q.id);
                 const qBtn = document.createElement('button');
                 qBtn.type = 'button';
@@ -719,6 +765,9 @@ export function renderKlodsHansFinaleActivities(container, options = {}) {
         renderQuestionsGrid();
 
         targetEl.appendChild(speedContainer);
+        }
+
+        renderSpeeddatingRound();
     }
 
     renderActiveActivity();
@@ -874,10 +923,10 @@ function injectFinaleStyles() {
             transition: width 0.3s ease;
         }
 
-        /* 4 Characters Grid */
+        /* 6 Characters Grid */
         .kh-chars-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.4rem;
             margin-bottom: 2.2rem;
         }
@@ -1758,6 +1807,52 @@ function injectFinaleStyles() {
             font-size: 0.92rem;
             font-weight: 700;
             line-height: 1.4;
+        }
+
+        .kh-level-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: -0.5rem auto 1.4rem;
+        }
+        .kh-level-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .kh-level-switcher {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            padding: 0.3rem;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+        }
+        .kh-level-btn {
+            border: 1px solid transparent;
+            background: transparent;
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 0.45rem 0.95rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .kh-level-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.07);
+        }
+        .kh-level-btn.active {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #052e16;
+            border-color: rgba(134, 239, 172, 0.55);
+            box-shadow: 0 2px 10px rgba(34, 197, 94, 0.28);
         }
 
         @media (max-width: 640px) {

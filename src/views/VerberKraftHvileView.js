@@ -243,7 +243,9 @@ export function renderVerberKraftHvileView(container, navigateFn, extraData = {}
     function switchTab(tabId) {
         currentTab = tabId;
         const lang = getLang();
-        history.pushState(null, '', `#/${lang}/verber_kraft_hvile/${tabId}`);
+        if (!(extraData && extraData.isEmbedded)) {
+            history.pushState(null, '', `#/${lang}/verber_kraft_hvile/${tabId}`);
+        }
         nav.innerHTML = '';
         tabs.forEach(t => {
             const b = document.createElement('button');

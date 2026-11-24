@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { shuffleArray } from '../utils/shuffle.js';
+import { ARBEJDE_ICONS, stripArbejdeEmojis, attachArbejdeEmojiCleaner } from '../utils/arbejdeMonoIcons.js';
 
 /**
  * ArbejdeBilvaerkstedView - Scenarie: "Arbejde – På bilværkstedet" under "Mit hverdagsliv"
@@ -1580,9 +1581,9 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
     const heroHeader = document.createElement('div');
     heroHeader.className = 'bv-hero-header';
     heroHeader.innerHTML = `
-        <div class="bv-hero-badge">${getTranslation('arbejde_bilvaerksted_badge', '💼 Mit hverdagsliv • Scenarie 1: Arbejde')}</div>
-        <h1>${getTranslation('arbejde_bilvaerksted_title', '🔧 På bilværkstedet')}</h1>
-        <p>${getTranslation('arbejde_bilvaerksted_desc', 'Udforsk hverdagen på et dansk autoværksted med 32 målord og faste fagtermer fordelt på alle fire ordklasser.')}</p>
+        <div class="bv-hero-badge">${ARBEJDE_ICONS.briefcase} <span>${stripArbejdeEmojis(getTranslation('arbejde_bilvaerksted_badge', 'Mit hverdagsliv · Arbejde'))}</span></div>
+        <h1 style="background:none; -webkit-text-fill-color:#f8fafc; color:#f8fafc;">${ARBEJDE_ICONS.wrench} <span>${stripArbejdeEmojis(getTranslation('arbejde_bilvaerksted_title', 'På bilværkstedet'))}</span></h1>
+        <p>${stripArbejdeEmojis(getTranslation('arbejde_bilvaerksted_desc', 'Udforsk hverdagen på et dansk autoværksted med 32 målord og faste fagtermer fordelt på alle fire ordklasser.'))}</p>
     `;
     viewContainer.appendChild(heroHeader);
 
@@ -1590,14 +1591,15 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'bv-tabs';
     const tabs = [
-        { id: 'tab_vrimmel', label: getTranslation('arbejde_tab_vrimmel', '1. Vrimlebillede'), icon: '🔍' },
-        { id: 'tab_detektiv', label: getTranslation('arbejde_tab_detektiv', '2. Ord-detektiv'), icon: '🕵️' },
-        { id: 'tab_syn_ant', label: getTranslation('arbejde_tab_synonymer', '3. Synonymer & Antonymer'), icon: '🔄' },
-        { id: 'tab_historie', label: getTranslation('arbejde_tab_historier', '4. Historier'), icon: '📖' },
-        { id: 'tab_saetning', label: getTranslation('arbejde_tab_saetninger', '5. Sætningsbygning'), icon: '✍️' },
-        { id: 'tab_dialog', label: getTranslation('arbejde_tab_dialoger', '6. Mundtlige dialoger'), icon: '💬' },
-        { id: 'tab_udtale', label: getTranslation('arbejde_tab_betoning', '7. Sig det højt (Betoning)'), icon: '🎙️' }
+        { id: 'tab_vrimmel', label: stripArbejdeEmojis(getTranslation('arbejde_tab_vrimmel', '1. Vrimlebillede')), icon: ARBEJDE_ICONS.image },
+        { id: 'tab_detektiv', label: stripArbejdeEmojis(getTranslation('arbejde_tab_detektiv', '2. Ord-detektiv')), icon: ARBEJDE_ICONS.search },
+        { id: 'tab_syn_ant', label: stripArbejdeEmojis(getTranslation('arbejde_tab_synonymer', '3. Synonymer & Antonymer')), icon: ARBEJDE_ICONS.shuffle },
+        { id: 'tab_historie', label: stripArbejdeEmojis(getTranslation('arbejde_tab_historier', '4. Historier')), icon: ARBEJDE_ICONS.book },
+        { id: 'tab_saetning', label: stripArbejdeEmojis(getTranslation('arbejde_tab_saetninger', '5. Sætningsbygning')), icon: ARBEJDE_ICONS.pen },
+        { id: 'tab_dialog', label: stripArbejdeEmojis(getTranslation('arbejde_tab_dialoger', '6. Mundtlige dialoger')), icon: ARBEJDE_ICONS.message },
+        { id: 'tab_udtale', label: stripArbejdeEmojis(getTranslation('arbejde_tab_betoning', '7. Sig det højt (Betoning)')), icon: ARBEJDE_ICONS.mic }
     ];
+    attachArbejdeEmojiCleaner(viewContainer);
 
     let currentTab = extraData?.subPath && tabs.some(t => t.id === extraData.subPath)
         ? extraData.subPath
@@ -1669,45 +1671,7 @@ export function renderArbejdeBilvaerkstedView(container, navigateFn, extraData =
         filterGroup.appendChild(fb);
     });
 
-    const toolsRight = document.createElement('div');
-    toolsRight.className = 'bv-tools-right';
-
-    const zoomLevels = [
-        { id: '10', label: getTranslation('arbejde_zoom_1', '🔍 1x'), cls: '' },
-        { id: '15', label: getTranslation('arbejde_zoom_15', '🔍 1.5x'), cls: 'zoom-15' },
-        { id: '20', label: getTranslation('arbejde_zoom_2', '🔍 2x'), cls: 'zoom-20' }
-    ];
-    let activeZoom = '10';
-    zoomLevels.forEach(z => {
-        const zb = document.createElement('button');
-        zb.className = `bv-zoom-btn ${z.id === activeZoom ? 'active' : ''}`;
-        zb.textContent = z.label;
-        zb.onclick = () => {
-            activeZoom = z.id;
-            toolsRight.querySelectorAll('.bv-zoom-btn').forEach(b => b.classList.remove('active'));
-            zb.classList.add('active');
-            stage.classList.remove('zoom-15', 'zoom-20');
-            if (z.cls) stage.classList.add(z.cls);
-        };
-        toolsRight.appendChild(zb);
-    });
-
-    const pureBtn = document.createElement('button');
-    pureBtn.className = 'bv-pure-btn';
-    let pureMode = false;
-    pureBtn.innerHTML = getTranslation('arbejde_pure_btn_show', '🖼️ Rent billede');
-    pureBtn.onclick = () => {
-        pureMode = !pureMode;
-        stage.classList.toggle('pure-mode', pureMode);
-        pureBtn.classList.toggle('active', pureMode);
-        pureBtn.innerHTML = pureMode
-            ? getTranslation('arbejde_pure_btn_hide', '🔢 Vis alle 32 tal')
-            : getTranslation('arbejde_pure_btn_show', '🖼️ Rent billede');
-    };
-    toolsRight.appendChild(pureBtn);
-
     toolbar.appendChild(filterGroup);
-    toolbar.appendChild(toolsRight);
     vrimmelCard.appendChild(toolbar);
 
     // Viewport & Stage

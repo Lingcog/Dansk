@@ -292,7 +292,9 @@ export function renderVerberHarErView(container, navigateFn, extraData = {}) {
     function switchTab(tabId) {
         currentTab = tabId;
         const lang = getLang();
-        history.pushState(null, '', `#/${lang}/verber_har_er/${tabId}`);
+        if (!(extraData && extraData.isEmbedded)) {
+            history.pushState(null, '', `#/${lang}/verber_har_er/${tabId}`);
+        }
         nav.innerHTML = '';
         tabs.forEach(t => {
             const b = document.createElement('button');

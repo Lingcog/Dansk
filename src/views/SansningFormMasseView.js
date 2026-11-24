@@ -211,6 +211,7 @@ export function renderSansningFormMasseView(container, navigateFn, extraData = {
 
     const style = document.createElement('style');
     style.textContent = `
+
         .sansning-station-view {
             max-width: 1200px;
             margin: 0 auto;

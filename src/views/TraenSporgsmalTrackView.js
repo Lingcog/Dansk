@@ -967,14 +967,18 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
 
             let hadErrorOnPuzzle = false;
             let scoredCurrentPuzzle = false;
-            const originalSentence = sentences[curIdx];
-            const targetWords = originalSentence.split(' ');
+            const originalSentence = sentences[curIdx].trim();
+            const punctMatch = originalSentence.match(/([?!.]+)$/);
+            const fixedPunct = punctMatch ? punctMatch[1] : '?';
+            const sentenceNoPunct = originalSentence.replace(/[?!.]+$/, '').trim();
+            const targetWords = sentenceNoPunct.split(/\s+/).map(w => w.toLowerCase());
+            const normalizedTarget = targetWords.join(' ');
             
             // Scramble words, ensuring it is not already solved if length > 1
             let scrambledWords = [...targetWords];
             if (scrambledWords.length > 1) {
                 let attempts = 0;
-                while (scrambledWords.join(' ') === originalSentence && attempts < 10) {
+                while (scrambledWords.join(' ') === normalizedTarget && attempts < 10) {
                     scrambledWords.sort(() => Math.random() - 0.5);
                     attempts++;
                 }
@@ -1049,7 +1053,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
             intro.textContent = t('traen_wordorder_intro', 'Byg spørgsmålet. Tryk på ordene i den rigtige rækkefølge:');
             exerciseContainer.appendChild(intro);
 
-            // Result sentence area (drop area)
+            // Result sentence area (drop area) med fast spørgsmålstegn til sidst
             const resultArea = document.createElement('div');
             resultArea.className = 'result-sentence-area';
             resultArea.style.minHeight = '75px';
@@ -1061,7 +1065,29 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
             resultArea.style.flexWrap = 'wrap';
             resultArea.style.gap = '0.5rem';
             resultArea.style.alignItems = 'center';
+            resultArea.style.justifyContent = 'space-between';
             resultArea.style.marginBottom = '1.5rem';
+
+            const selectedChipsWrap = document.createElement('div');
+            selectedChipsWrap.className = 'selected-chips-wrap';
+            selectedChipsWrap.style.display = 'flex';
+            selectedChipsWrap.style.flexWrap = 'wrap';
+            selectedChipsWrap.style.gap = '0.5rem';
+            selectedChipsWrap.style.alignItems = 'center';
+            selectedChipsWrap.style.flex = '1';
+
+            const fixedPunctEl = document.createElement('span');
+            fixedPunctEl.className = 'fixed-punctuation-mark';
+            fixedPunctEl.textContent = fixedPunct;
+            fixedPunctEl.style.fontSize = '1.55rem';
+            fixedPunctEl.style.fontWeight = '800';
+            fixedPunctEl.style.color = '#94a3b8';
+            fixedPunctEl.style.padding = '0 0.35rem';
+            fixedPunctEl.style.userSelect = 'none';
+            fixedPunctEl.setAttribute('aria-hidden', 'true');
+
+            resultArea.appendChild(selectedChipsWrap);
+            resultArea.appendChild(fixedPunctEl);
             exerciseContainer.appendChild(resultArea);
 
             // Word pool (source area)
@@ -1122,7 +1148,7 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
 
                 chip.onclick = () => {
                     if (chip.parentElement === wordPool) {
-                        resultArea.appendChild(chip);
+                        selectedChipsWrap.appendChild(chip);
                         chip.style.background = 'rgba(74, 144, 226, 0.4)';
                         chip.style.borderColor = '#4a90e2';
                     } else {
@@ -1137,11 +1163,11 @@ export function renderTraenSporgsmalTrackView(container, navigateFn, extraData =
             });
 
             function checkAnswer() {
-                const selectedWords = Array.from(resultArea.children).map(c => c.textContent);
+                const selectedWords = Array.from(selectedChipsWrap.children).map(c => c.textContent);
                 const remainingInPool = wordPool.children.length;
 
                 if (remainingInPool === 0) {
-                    if (selectedWords.join(' ') === originalSentence) {
+                    if (selectedWords.join(' ') === normalizedTarget) {
                         if (!hadErrorOnPuzzle && !scoredCurrentPuzzle) {
                             correctCount++;
                             scoredCurrentPuzzle = true;

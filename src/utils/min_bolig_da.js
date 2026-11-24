@@ -5,7 +5,7 @@
 export const MIN_BOLIG_DA = {
     // Hero & faner
     hero_title: 'Min bolig',
-    hero_desc: '24 bolig-ord og enkle sætninger til DU1, Modul 4 mundtlig prøve.',
+    hero_desc: 'Lær centrale bolig-ord ud fra emnerne sted/by, hus/lejlighed, værelser/m², alene/sammen med, naboer & område.',
     tab_1: '1. Vrimlebillede (24)',
     tab_2: '2. Byg sætninger',
     tab_3: '3. Min, mit, mine',

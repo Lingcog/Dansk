@@ -380,7 +380,9 @@ export function renderVerberTider4View(container, navigateFn, extraData = {}) {
     function switchTab(tabId) {
         currentTab = tabId;
         const lang = getLang();
-        history.pushState(null, '', `#/${lang}/verber_tider_4/${tabId}`);
+        if (!(extraData && extraData.isEmbedded)) {
+            history.pushState(null, '', `#/${lang}/verber_tider_4/${tabId}`);
+        }
         nav.innerHTML = '';
         tabs.forEach(t => {
             const b = document.createElement('button');

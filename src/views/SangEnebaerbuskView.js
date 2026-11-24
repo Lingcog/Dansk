@@ -1,4 +1,5 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
+import { renderEnebaerVisualBox, ensureEnebaerVisualLabStyles } from '../components/EnebaerbuskVisualLab.js';
 
 /**
  * SangEnebaerbuskView - Sange: "Så går vi rundt om en enebærbusk"
@@ -2176,7 +2177,7 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         { id: 'tab_andet_husarbejde', icon: monoSvgs.chores, label: t('sange_tab_andet_husarbejde', '6. Andet husarbejde') }
     ];
 
-    let currentTab = extraData.activeTab || 'tab_vrimmel';
+    let currentTab = extraData.activeTab || extraData.subPath || 'tab_vrimmel';
 
     tabsData.forEach(t => {
         const btn = document.createElement('button');
@@ -2652,29 +2653,59 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
                 ${t('sange_rhythm_title', isEn ? 'Sentence Rhythm & Word Stress' : 'Dansk rytme og trykfordeling')}
             </strong>
             <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0.25rem 0 0; line-height: 1.4;">
-                De fremhævede stavelser viser trykket i sangen. <strong>💡 Tip:</strong> Klik på det første aktivitets-verbum i hvert vers (f.eks. <span class="clickable-song-verb" style="pointer-events:none; padding: 0.05rem 0.35rem; font-size: 0.85rem;">VÁS-ker 🔍</span>) for at se udsnit af vrimlebilledet!
+                De fremhævede stavelser viser trykket i sangen. Klik på de stiplede ord i omkvædet eller versene for at åbne den visuelle forklaring.
             </p>
         </div>
     `;
     lyricsContainer.appendChild(rhythmBar);
 
+    ensureEnebaerVisualLabStyles();
+
+    function bindVisualWordButtons(cardEl) {
+        const slot = cardEl.querySelector('.eb-lab-slot');
+        if (!slot) return;
+        let activeKey = null;
+        cardEl.querySelectorAll('.eb-word-btn').forEach(btn => {
+            btn.onclick = () => {
+                const key = btn.dataset.wordKey;
+                cardEl.querySelectorAll('.eb-word-btn').forEach(b => b.classList.remove('active'));
+                if (activeKey === key) {
+                    activeKey = null;
+                    slot.innerHTML = '';
+                    return;
+                }
+                activeKey = key;
+                btn.classList.add('active');
+                slot.innerHTML = '';
+                const box = renderEnebaerVisualBox(key, () => {
+                    activeKey = null;
+                    slot.innerHTML = '';
+                    cardEl.querySelectorAll('.eb-word-btn').forEach(b => b.classList.remove('active'));
+                });
+                if (box) slot.appendChild(box);
+            };
+        });
+    }
+
     function createChorusElement(stepNum, totalSteps) {
         const cCard = document.createElement('div');
         cCard.className = 'chorus-card';
         cCard.innerHTML = `
-            <span class="chorus-tag">🌿 ${t('sange_chorus_tag', isEn ? 'Chorus' : 'Omkvæd')} (${stepNum}/${totalSteps})</span>
+            <span class="chorus-tag">${t('sange_chorus_tag', isEn ? 'Chorus' : 'Omkvæd')} (${stepNum}/${totalSteps})</span>
             <div class="chorus-text">
-                Så <span class="stress-syllable">GÅR</span> vi rundt om en <span class="stress-syllable">É</span>-ne-bær-busk,<br>
+                Så <button type="button" class="eb-word-btn" data-word-key="rundt_om"><span class="stress-syllable">GÅR</span> vi rundt om</button> en <button type="button" class="eb-word-btn" data-word-key="enebaerbusk"><span class="stress-syllable">É</span>-ne-bær-busk</button>,<br>
                 <span class="stress-syllable">É</span>-ne-bær-busk, <span class="stress-syllable">É</span>-ne-bær-busk.<br>
                 Så <span class="stress-syllable">GÅR</span> vi rundt om en <span class="stress-syllable">É</span>-ne-bær-busk<br>
-                <span class="stress-syllable">TÍD</span>-lig en <span class="stress-syllable">MÁN</span>-dag <span class="stress-syllable">MÓR</span>-gen!
+                <button type="button" class="eb-word-btn" data-word-key="tidlig_morgen"><span class="stress-syllable">TÍD</span>-lig</button> en <button type="button" class="eb-word-btn" data-word-key="mandag"><span class="stress-syllable">MÁN</span>-dag</button> <button type="button" class="eb-word-btn" data-word-key="tidlig_morgen"><span class="stress-syllable">MÓR</span>-gen</button>!
             </div>
+            <div class="eb-lab-slot"></div>
             <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 0.8rem;">
                 <button class="listen-btn btn-listen-chorus-inst">
-                    <span>🔊</span> ${t('sange_chorus_listen', isEn ? 'Listen to Chorus' : 'Lyt til omkvædet')}
+                    ${t('sange_chorus_listen', isEn ? 'Listen to Chorus' : 'Lyt til omkvædet')}
                 </button>
             </div>
         `;
+        bindVisualWordButtons(cCard);
         cCard.querySelector('.btn-listen-chorus-inst').onclick = () => {
             speakDanish('Så går vi rundt om en enebærbusk, enebærbusk, enebærbusk. Så går vi rundt om en enebærbusk, tidlig en mandag morgen!');
         };
@@ -2787,6 +2818,16 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
     songFlow.className = 'song-sequence-flow';
     const totalChoruses = versesData.length + 1;
 
+    const verseVisualKeyMap = {
+        mandag: { verbKey: 'vasker', objKey: 'toej', objHtml: '<span class="stress-syllable">TØJ</span>', dayKey: 'mandag', dayHtml: '<span class="stress-syllable">MÁN</span>-dag' },
+        tirsdag: { verbKey: 'skyller', objKey: 'toej', objHtml: '<span class="stress-syllable">TØJ</span>', dayKey: 'tirsdag', dayHtml: '<span class="stress-syllable">TÍRS</span>-dag' },
+        onsdag: { verbKey: 'toerrer', objKey: 'toej', objHtml: '<span class="stress-syllable">TØJ</span>', dayKey: 'onsdag', dayHtml: '<span class="stress-syllable">ÓNS</span>-dag' },
+        torsdag: { verbKey: 'ruller', objKey: 'toej', objHtml: '<span class="stress-syllable">TØJ</span>', dayKey: 'torsdag', dayHtml: '<span class="stress-syllable">TÓRS</span>-dag' },
+        fredag: { verbKey: 'stryger', objKey: 'toej', objHtml: '<span class="stress-syllable">TØJ</span>', dayKey: 'fredag', dayHtml: '<span class="stress-syllable">FRÉ</span>-dag' },
+        loerdag: { verbKey: 'skurer', objKey: 'gulv', objHtml: '<span class="stress-syllable">GULV</span>', dayKey: 'loerdag', dayHtml: '<span class="stress-syllable">LØR</span>-dag' },
+        soendag: { verbKey: 'holder_fri', objKey: null, objHtml: null, dayKey: 'soendag', dayHtml: '<span class="stress-syllable">SØN</span>-dag' }
+    };
+
     versesData.forEach((v, idx) => {
         // Place chorus before each verse
         songFlow.appendChild(createChorusElement(idx + 1, totalChoruses));
@@ -2794,46 +2835,38 @@ export function renderSangEnebaerbuskView(container, navigateFn, extraData = {})
         const vCard = document.createElement('div');
         vCard.className = 'verse-card';
         const dayTrans = t(`sange_item_${v.id}_dag`, isEn ? v.dagEn : v.dag);
-        const clickableBtnHtml = `<button type="button" class="clickable-song-verb" title="Klik for at se billede af aktiviteten">${v.clickableLabel} <span class="verb-zoom-icon">🔍</span></button>`;
-        const lyricsHtml = v.textStress.replace('__CLICK_VERB__', clickableBtnHtml);
+        const vm = verseVisualKeyMap[v.id];
+
+        const clickableVerbHtml = `<button type="button" class="eb-word-btn" data-word-key="${vm.verbKey}">${v.clickableLabel}</button>`;
+        let lyricsHtml = v.textStress
+            .replace('__CLICK_VERB__', clickableVerbHtml)
+            .replace('<span class="stress-syllable">GØR</span> vi sådan', '<button type="button" class="eb-word-btn" data-word-key="goer_saadan"><span class="stress-syllable">GØR</span> vi sådan</button>')
+            .replace('når vi', '<button type="button" class="eb-word-btn" data-word-key="naar">når</button> vi')
+            .replace('vort ', '<button type="button" class="eb-word-btn" data-word-key="vort">vort</button> ')
+            .replace('vor ', '<button type="button" class="eb-word-btn" data-word-key="vort">vor</button> ')
+            .replace('<span class="stress-syllable">HÝG</span>-ger os <span class="stress-syllable">BRAVT</span>', '<button type="button" class="eb-word-btn" data-word-key="hygger_bravt"><span class="stress-syllable">HÝG</span>-ger os <span class="stress-syllable">BRAVT</span></button>')
+            .replace('<span class="stress-syllable">TÍD</span>-lig', '<button type="button" class="eb-word-btn" data-word-key="tidlig_morgen"><span class="stress-syllable">TÍD</span>-lig</button>')
+            .replace('<span class="stress-syllable">MÓR</span>-gen', '<button type="button" class="eb-word-btn" data-word-key="tidlig_morgen"><span class="stress-syllable">MÓR</span>-gen</button>')
+            .replace(vm.dayHtml, `<button type="button" class="eb-word-btn" data-word-key="${vm.dayKey}">${vm.dayHtml}</button>`);
+
+        if (vm.objKey && vm.objHtml) {
+            lyricsHtml = lyricsHtml.replace(vm.objHtml, `<button type="button" class="eb-word-btn" data-word-key="${vm.objKey}">${vm.objHtml}</button>`);
+        }
 
         vCard.innerHTML = `
             <div>
                 <div class="verse-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-                    <span class="verse-day-pill">${v.icon} Vers ${idx + 1}: ${v.dag} ${!isDa && dayTrans !== v.dag ? `(${dayTrans})` : ''}</span>
-                    <span style="font-size:0.8rem; color:#fbbf24; font-weight:700;">👆 Klik på det markerede verbum i 1. linje</span>
+                    <span class="verse-day-pill">Vers ${idx + 1}: ${v.dag} ${!isDa && dayTrans !== v.dag ? `(${dayTrans})` : ''}</span>
                 </div>
                 <div class="verse-lyrics">${lyricsHtml}</div>
-                <div class="verse-crop-drawer">
-                    <div class="verse-crop-thumb" style="background-position: ${v.cropBgPos}; background-size: ${v.cropBgSize};"></div>
-                    <div class="verse-crop-info">
-                        <span class="verse-crop-badge">🖼️ Udsnit fra vrimlebilledet</span>
-                        <div class="verse-crop-title">${v.cropTitle}</div>
-                        <div class="verse-crop-desc">${v.cropDesc}</div>
-                        <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
-                            <button type="button" class="verse-crop-close">✕ Luk billede</button>
-                        </div>
-                    </div>
-                </div>
+                <div class="eb-lab-slot"></div>
             </div>
             <button class="verse-listen-btn" style="margin-top:0.9rem;">
-                <span>🔊</span> ${t('sange_verse_listen', isEn ? 'Listen to verse' : 'Lyt til verset')}
+                ${t('sange_verse_listen', isEn ? 'Listen to verse' : 'Lyt til verset')}
             </button>
         `;
 
-        const verbBtn = vCard.querySelector('.clickable-song-verb');
-        const cropDrawer = vCard.querySelector('.verse-crop-drawer');
-        const closeBtn = vCard.querySelector('.verse-crop-close');
-
-        verbBtn.onclick = () => {
-            const isOpen = cropDrawer.classList.toggle('open');
-            if (isOpen) {
-                speakDanish(v.verbSpeak);
-            }
-        };
-        closeBtn.onclick = () => {
-            cropDrawer.classList.remove('open');
-        };
+        bindVisualWordButtons(vCard);
 
         vCard.querySelector('.verse-listen-btn').onclick = () => {
             speakDanish(v.tts);

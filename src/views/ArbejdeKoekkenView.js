@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { shuffleArray } from '../utils/shuffle.js';
+import { ARBEJDE_ICONS, stripArbejdeEmojis, attachArbejdeEmojiCleaner } from '../utils/arbejdeMonoIcons.js';
 
 /**
  * ArbejdeKoekkenView - Scenarie 2 under "Arbejde" i "Mit hverdagsliv":
@@ -1517,9 +1518,9 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
     const heroHeader = document.createElement('div');
     heroHeader.className = 'kk-hero-header';
     heroHeader.innerHTML = `
-        <div class="kk-hero-badge">${getTranslation('arbejde_koekken_badge', '👩‍🍳 Mit hverdagsliv • Arbejde: Storkøkken & Kantine')}</div>
-        <h1>${getTranslation('arbejde_koekken_title', '🥗 Som køkkenassistent')}</h1>
-        <p>${getTranslation('arbejde_koekken_desc', 'Udforsk hverdagen i et dansk storkøkken og kantine med 32 målord, hygiejneudtryk, historier, dialoger og taletræning til dine første 3 måneder.')}</p>
+        <div class="kk-hero-badge">${ARBEJDE_ICONS.briefcase} <span>${stripArbejdeEmojis(getTranslation('arbejde_koekken_badge', 'Mit hverdagsliv · Storkøkken & Kantine'))}</span></div>
+        <h1 style="background:none; -webkit-text-fill-color:#f8fafc; color:#f8fafc;">${ARBEJDE_ICONS.utensils} <span>${stripArbejdeEmojis(getTranslation('arbejde_koekken_title', 'Som køkkenassistent'))}</span></h1>
+        <p>${stripArbejdeEmojis(getTranslation('arbejde_koekken_desc', 'Udforsk hverdagen i et dansk storkøkken og kantine med 32 målord, hygiejneudtryk, historier, dialoger og taletræning til dine første 3 måneder.'))}</p>
     `;
     viewContainer.appendChild(heroHeader);
 
@@ -1527,14 +1528,15 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
     const tabsMenu = document.createElement('div');
     tabsMenu.className = 'kk-tabs';
     const tabs = [
-        { id: 'tab_vrimmel', label: getTranslation('arbejde_tab_vrimmel', '1. Vrimlebillede'), icon: '🔍' },
-        { id: 'tab_detektiv', label: getTranslation('arbejde_tab_detektiv', '2. Ord-detektiv'), icon: '🕵️' },
-        { id: 'tab_syn_ant', label: getTranslation('arbejde_tab_synonymer', '3. Synonymer & Antonymer'), icon: '🔄' },
-        { id: 'tab_historie', label: getTranslation('arbejde_tab_historier', '4. Historier'), icon: '📖' },
-        { id: 'tab_saetning', label: getTranslation('arbejde_tab_saetninger', '5. Sætningsbygning'), icon: '✍️' },
-        { id: 'tab_dialog', label: getTranslation('arbejde_tab_dialoger', '6. Mundtlige dialoger'), icon: '💬' },
-        { id: 'tab_udtale', label: getTranslation('arbejde_tab_betoning', '7. Sig det højt (Betoning)'), icon: '🎙️' }
+        { id: 'tab_vrimmel', label: stripArbejdeEmojis(getTranslation('arbejde_tab_vrimmel', '1. Vrimlebillede')), icon: ARBEJDE_ICONS.image },
+        { id: 'tab_detektiv', label: stripArbejdeEmojis(getTranslation('arbejde_tab_detektiv', '2. Ord-detektiv')), icon: ARBEJDE_ICONS.search },
+        { id: 'tab_syn_ant', label: stripArbejdeEmojis(getTranslation('arbejde_tab_synonymer', '3. Synonymer & Antonymer')), icon: ARBEJDE_ICONS.shuffle },
+        { id: 'tab_historie', label: stripArbejdeEmojis(getTranslation('arbejde_tab_historier', '4. Historier')), icon: ARBEJDE_ICONS.book },
+        { id: 'tab_saetning', label: stripArbejdeEmojis(getTranslation('arbejde_tab_saetninger', '5. Sætningsbygning')), icon: ARBEJDE_ICONS.pen },
+        { id: 'tab_dialog', label: stripArbejdeEmojis(getTranslation('arbejde_tab_dialoger', '6. Mundtlige dialoger')), icon: ARBEJDE_ICONS.message },
+        { id: 'tab_udtale', label: stripArbejdeEmojis(getTranslation('arbejde_tab_betoning', '7. Sig det højt (Betoning)')), icon: ARBEJDE_ICONS.mic }
     ];
+    attachArbejdeEmojiCleaner(viewContainer);
 
     let currentTab = extraData?.subPath && tabs.some(t => t.id === extraData.subPath)
         ? extraData.subPath
@@ -1607,41 +1609,6 @@ export function renderArbejdeKoekkenView(container, navigateFn, extraData = {}) 
         filterGroup.appendChild(fb);
     });
     toolbar.appendChild(filterGroup);
-
-    const toolsRight = document.createElement('div');
-    toolsRight.className = 'kk-tools-right';
-
-    [
-        { label: getTranslation('arbejde_zoom_1', '🔍 1x'), cls: '' },
-        { label: getTranslation('arbejde_zoom_15', '🔍 1.5x'), cls: 'zoom-15x' },
-        { label: getTranslation('arbejde_zoom_2', '🔍 2x (Mobil)'), cls: 'zoom-2x' }
-    ].forEach((z, idx) => {
-        const zb = document.createElement('button');
-        zb.className = `kk-zoom-btn ${idx === 0 ? 'active' : ''}`;
-        zb.textContent = z.label;
-        zb.onclick = () => {
-            toolsRight.querySelectorAll('.kk-zoom-btn').forEach(b => b.classList.remove('active'));
-            zb.classList.add('active');
-            stage.classList.remove('zoom-15x', 'zoom-2x');
-            if (z.cls) stage.classList.add(z.cls);
-        };
-        toolsRight.appendChild(zb);
-    });
-
-    const pureBtn = document.createElement('button');
-    pureBtn.className = 'kk-pure-btn';
-    let isPure = false;
-    pureBtn.innerHTML = getTranslation('arbejde_pure_btn_show', '🖼️ Vis rent billede');
-    pureBtn.onclick = () => {
-        isPure = !isPure;
-        stage.classList.toggle('pure-mode', isPure);
-        pureBtn.classList.toggle('active', isPure);
-        pureBtn.innerHTML = isPure
-            ? getTranslation('arbejde_pure_btn_hide', '🔢 Vis alle 32 tal')
-            : getTranslation('arbejde_pure_btn_show', '🖼️ Vis rent billede');
-    };
-    toolsRight.appendChild(pureBtn);
-    toolbar.appendChild(toolsRight);
     vrimmelCard.appendChild(toolbar);
 
     const viewport = document.createElement('div');

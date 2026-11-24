@@ -812,11 +812,17 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
     // Styles
     const style = document.createElement('style');
     style.textContent = `
+        .adverbier-smaaord-view,
+        .adverbier-smaaord-view * {
+            box-sizing: border-box;
+        }
         .adverbier-smaaord-view {
             max-width: 1200px;
+            width: 100%;
             margin: 0 auto;
             padding: 1.5rem 1.5rem 5rem;
             color: #f8fafc;
+            overflow-x: hidden;
         }
 
         /* Hero Header */
@@ -2275,9 +2281,309 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
 
+        .vaerksted-hero-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .vaerksted-hero-title {
+            font-size: 2.2rem;
+            color: #FFFFFF;
+            margin: 0 0 0.5rem 0;
+            line-height: 1.2;
+        }
+        .vaerksted-hero-desc {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.55;
+        }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobil-optimering: Aha-værkstedet & hele Småord-fladen */
+        @media (max-width: 780px) {
+            .adverbier-smaaord-view {
+                padding: 0.2rem 0.15rem 4.5rem;
+            }
+            .adv-localhost-toggle-bar {
+                display: none;
+            }
+            .smaaord-hero {
+                margin-bottom: 0.75rem;
+            }
+            .smaaord-hero-tag {
+                font-size: 0.7rem;
+                padding: 0.24rem 0.7rem;
+                margin-bottom: 0.4rem;
+            }
+            .smaaord-hero h1 {
+                font-size: 1.35rem;
+                line-height: 1.18;
+                margin-bottom: 0.35rem;
+            }
+            .smaaord-hero p {
+                font-size: 0.86rem;
+                line-height: 1.4;
+                margin-bottom: 0.7rem;
+            }
+            .golden-rule-banner {
+                flex-direction: row;
+                text-align: left;
+                align-items: flex-start;
+                padding: 0.65rem 0.8rem;
+                gap: 0.6rem;
+                margin-bottom: 0.85rem;
+                border-radius: 12px;
+            }
+            .rule-icon {
+                font-size: 1.35rem;
+                margin-top: 0.1rem;
+            }
+            .rule-content h4 {
+                font-size: 0.9rem;
+                margin-bottom: 0.2rem;
+            }
+            .rule-content p {
+                font-size: 0.8rem;
+                line-height: 1.35;
+            }
+            .adverbier-smaaord-view .adv-tabs-nav {
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                padding: 0.35rem !important;
+                gap: 0.35rem !important;
+                margin-bottom: 0.95rem;
+                border-radius: 12px !important;
+            }
+            .adverbier-smaaord-view .adv-tabs-nav::-webkit-scrollbar {
+                display: none;
+            }
+            .adverbier-smaaord-view .adv-tab-btn {
+                flex: 0 0 auto;
+                justify-content: center !important;
+                text-align: center;
+                white-space: nowrap;
+                padding: 0.45rem 0.72rem !important;
+                font-size: 0.78rem !important;
+                line-height: 1.2;
+                border-radius: 9px !important;
+            }
+            .vaerksted-hero-header {
+                margin-bottom: 0.8rem;
+            }
+            .vaerksted-hero-title {
+                font-size: 1.22rem;
+                margin-bottom: 0.3rem;
+            }
+            .vaerksted-hero-desc {
+                font-size: 0.85rem;
+                line-height: 1.4;
+            }
+            [data-theme="vinroed-praecision"] .vaerksted-subtabs,
+            .vaerksted-subtabs {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr;
+                padding: 4px !important;
+                gap: 4px !important;
+                margin-bottom: 0.85rem !important;
+            }
+            [data-theme="vinroed-praecision"] .vaerksted-subtab-btn,
+            .vaerksted-subtab-btn {
+                width: 100% !important;
+                text-align: center !important;
+                padding: 0.5rem 0.4rem !important;
+                font-size: 0.78rem !important;
+                line-height: 1.25;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .radar-card {
+                padding: 0.75rem;
+                border-radius: 14px;
+                gap: 0.75rem;
+                margin-bottom: 0.95rem;
+            }
+            .radar-top-controls {
+                gap: 0.55rem;
+                padding-bottom: 0.65rem;
+            }
+            .radar-title-group h3 {
+                font-size: 1.02rem;
+                margin-bottom: 0.15rem;
+            }
+            .radar-title-group p {
+                font-size: 0.8rem;
+            }
+            .radar-pills-row {
+                display: grid;
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+                width: 100%;
+                gap: 0.3rem;
+            }
+            .radar-pill-btn {
+                padding: 0.38rem 0.2rem;
+                font-size: 0.8rem;
+                text-align: center;
+                border-radius: 9px;
+                white-space: nowrap;
+            }
+            .radar-stage-box {
+                padding: 0.35rem;
+                border-radius: 12px;
+                touch-action: pan-x pan-y pinch-zoom;
+            }
+            .radar-svg-canvas {
+                display: block;
+                width: 100%;
+                height: auto;
+            }
+            .radar-dialogue-box {
+                padding: 0.7rem 0.8rem;
+                gap: 0.55rem;
+            }
+            .radar-quote-text {
+                font-size: 0.98rem;
+                line-height: 1.35;
+            }
+            .radar-listen-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 0.45rem 0.75rem;
+                font-size: 0.82rem;
+            }
+            .radar-meta-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.6rem;
+                font-size: 0.82rem;
+                padding-top: 0.6rem;
+            }
+            .radar-meta-item strong {
+                font-size: 0.7rem;
+                margin-bottom: 0.12rem;
+            }
+            .matrix-table-wrap {
+                padding: 0.75rem;
+                border-radius: 14px;
+                overflow-x: visible;
+                margin-bottom: 1rem;
+            }
+            .matrix-table thead {
+                display: none;
+            }
+            .matrix-table,
+            .matrix-table tbody,
+            .matrix-table tr,
+            .matrix-table td {
+                display: block;
+                width: 100%;
+            }
+            .matrix-table tr.matrix-row {
+                background: rgba(15, 23, 42, 0.78);
+                border: 1.5px solid rgba(148, 163, 184, 0.22);
+                border-radius: 12px;
+                padding: 0.7rem 0.8rem;
+                margin-bottom: 0.6rem;
+            }
+            .matrix-table tr.matrix-row:last-child {
+                margin-bottom: 0;
+            }
+            .matrix-table tr.matrix-row.radar-active-row {
+                border-color: var(--adv-border-focus, #93C5FD);
+                border-left: 4px solid var(--adv-border-focus, #93C5FD);
+            }
+            .matrix-table td {
+                border-bottom: none;
+                padding: 0.22rem 0;
+                font-size: 0.84rem;
+                line-height: 1.35;
+            }
+            .matrix-table td.matrix-word-cell {
+                padding: 0 0 0.4rem 0;
+                margin-bottom: 0.35rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .matrix-word-badge {
+                font-size: 0.95rem;
+                padding: 0.2rem 0.65rem;
+            }
+            .matrix-table td[data-label]::before {
+                content: attr(data-label);
+                display: block;
+                font-size: 0.66rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                color: #93c5fd;
+                margin-bottom: 0.08rem;
+            }
+            .transformer-card {
+                padding: 0.85rem;
+                border-radius: 14px;
+            }
+            .transformer-base {
+                font-size: 0.9rem;
+                margin-bottom: 0.85rem;
+                line-height: 1.35;
+            }
+            .transformer-buttons-grid {
+                display: grid;
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+                gap: 0.3rem;
+                margin-bottom: 0.9rem;
+            }
+            .trans-opt-btn {
+                padding: 0.42rem 0.2rem;
+                font-size: 0.84rem;
+                border-radius: 9px;
+            }
+            .trans-display-box {
+                padding: 0.85rem;
+                border-radius: 12px;
+                margin-bottom: 0.85rem;
+            }
+            .trans-quote {
+                font-size: 1.1rem;
+                line-height: 1.35;
+            }
+            .trans-explanation {
+                font-size: 0.86rem;
+            }
+            .detektiv-container,
+            .builder-card {
+                padding: 0.9rem;
+                border-radius: 14px;
+            }
+            .detektiv-card {
+                padding: 0.9rem;
+            }
+            .detektiv-sentence-quote,
+            .sb-sentence-display {
+                font-size: 1.1rem;
+                padding: 0.85rem;
+            }
+            .special-intro-box h2 {
+                font-size: 1.35rem;
+            }
+            .special-intro-box p {
+                font-size: 0.88rem;
+            }
+            .adverbier-smaaord-view .action-btn-primary {
+                width: 100%;
+                justify-content: center;
+                padding: 0.75rem 1rem;
+                font-size: 0.92rem;
+            }
         }
     `;
     viewContainer.appendChild(style);
@@ -2343,7 +2649,14 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         history.pushState(null, '', '#/' + lang + '/adverbier_smaaord/' + tabId);
         nav.querySelectorAll('.adv-tab-btn').forEach(b => b.classList.remove('active'));
         const activeBtn = nav.querySelector(`#tab-btn-${tabId}`);
-        if (activeBtn) activeBtn.classList.add('active');
+        if (activeBtn) {
+            activeBtn.classList.add('active');
+            requestAnimationFrame(() => {
+                if (activeBtn.isConnected) {
+                    activeBtn.scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
+                }
+            });
+        }
 
         tabContent.innerHTML = '';
         if (tabId === 'vrimmel') {
@@ -2616,7 +2929,7 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             pillBg: 'rgba(16, 185, 129, 0.22)',
             pillGlow: 'rgba(16, 185, 129, 0.45)',
             x: 450,
-            y: 95,
+            y: 102,
             desc: 'Taleren appellerer til en viden, som begge parter i virkeligheden allerede kender ("vi er enige – kig på kalenderen").',
             radarHint: 'Fælles viden & 100% vished (begge parter ved det)',
             arrowSummary: 'Fælles viden forbinder taler & lytter'
@@ -2632,8 +2945,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             color: '#06B6D4',
             pillBg: 'rgba(6, 182, 212, 0.22)',
             pillGlow: 'rgba(6, 182, 212, 0.45)',
-            x: 290,
-            y: 95,
+            x: 285,
+            y: 102,
             desc: 'Lytteren tøver eller er usikker. Taleren har 100% overskud og skubber tvivlen væk: "Selvfølgelig må/kan du!"',
             radarHint: 'Taler har 100% vished (skubber lytterens tøven væk)',
             arrowSummary: 'Kraftig pil fra taler bryder lytterens tøve-sky'
@@ -2649,8 +2962,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             color: '#3B82F6',
             pillBg: 'rgba(59, 130, 246, 0.22)',
             pillGlow: 'rgba(59, 130, 246, 0.45)',
-            x: 320,
-            y: 205,
+            x: 340,
+            y: 200,
             desc: 'Taleren har gjort en observation (f.eks. kigget på vejret eller skærmen) og drager en personlig, beroligende konklusion.',
             radarHint: 'Talerens eget logiske gæt baseret på observation',
             arrowSummary: 'Observation ➔ taler ➔ blød bølgepil til lytter'
@@ -2666,8 +2979,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             color: '#A855F7',
             pillBg: 'rgba(168, 85, 247, 0.22)',
             pillGlow: 'rgba(168, 85, 247, 0.45)',
-            x: 610,
-            y: 190,
+            x: 555,
+            y: 208,
             desc: 'Taleren regner situationen ud, men anerkender, at lytteren er den sande autoritet og skal bekræfte: "Det er rigtigt, ikke?"',
             radarHint: 'Lytteren ejer facit / taler appellerer til bekræftelse',
             arrowSummary: 'Spørgepil til lytter, stor bekræftelsespil retur'
@@ -2683,8 +2996,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
             color: '#F59E0B',
             pillBg: 'rgba(245, 158, 11, 0.22)',
             pillGlow: 'rgba(245, 158, 11, 0.45)',
-            x: 300,
-            y: 285,
+            x: 365,
+            y: 294,
             desc: 'Taleren har oplysningen udefra (radio, opslag, rygtebørs) og lægger ikke hovedet på blokken for sandhedsværdien.',
             radarHint: 'Ekstern kilde / rygte (taler fralægger sig ansvaret)',
             arrowSummary: 'Stiplet pil fra ekstern kilde ➔ taler ➔ lytter'
@@ -2736,9 +3049,9 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         wrap.className = 'vaerksted-container';
 
         wrap.innerHTML = `
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="font-size: 2.2rem; color: #FFFFFF; margin-bottom: 0.5rem;">Aha-værkstedet: "Hvem ved hvad?"</h2>
-                <p style="color: #cbd5e1; font-size: 1.1rem; max-width: 750px; margin: 0 auto;">
+            <div class="vaerksted-hero-header">
+                <h2 class="vaerksted-hero-title">Aha-værkstedet: "Hvem ved hvad?"</h2>
+                <p class="vaerksted-hero-desc">
                     Få det fulde overblik over de 5 magiske småord, og se hvordan en enkelt stavelse forvandler en sætnings sociale betydning.
                     ${advTransBlock('smaa_vk_intro')}
                 </p>
@@ -2785,34 +3098,34 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
         let vectorOverlay = '';
         if (selectedRadarWord === 'jo') {
             vectorOverlay = `
-                <line x1="105" y1="175" x2="415" y2="98" stroke="#10B981" stroke-width="3.5" stroke-dasharray="5,5" marker-end="url(#radar-arrow-jo)" />
-                <line x1="795" y1="175" x2="485" y2="98" stroke="#10B981" stroke-width="3.5" stroke-dasharray="5,5" marker-end="url(#radar-arrow-jo)" />
-                <text x="450" y="58" text-anchor="middle" fill="#10B981" font-size="12" font-weight="800">🤝 Begge parter ved det (fælles viden)</text>
+                <line x1="105" y1="175" x2="415" y2="104" stroke="#10B981" stroke-width="3.5" stroke-dasharray="5,5" marker-end="url(#radar-arrow-jo)" />
+                <line x1="795" y1="175" x2="485" y2="104" stroke="#10B981" stroke-width="3.5" stroke-dasharray="5,5" marker-end="url(#radar-arrow-jo)" />
+                <text x="450" y="62" text-anchor="middle" fill="#10B981" font-size="12" font-weight="800">🤝 Begge parter ved det (fælles viden)</text>
             `;
         } else if (selectedRadarWord === 'da') {
             vectorOverlay = `
-                <line x1="105" y1="175" x2="255" y2="105" stroke="#06B6D4" stroke-width="4" marker-end="url(#radar-arrow-da)" />
-                <line x1="325" y1="95" x2="525" y2="95" stroke="#06B6D4" stroke-width="4.5" marker-end="url(#radar-arrow-da)" />
-                <text x="425" y="80" text-anchor="middle" fill="#06B6D4" font-size="11" font-weight="bold">➡️ Opmuntrer / fjerner lytterens tøven</text>
+                <line x1="105" y1="175" x2="252" y2="112" stroke="#06B6D4" stroke-width="4" marker-end="url(#radar-arrow-da)" />
+                <path d="M 318 112 Q 430 155 550 135" fill="none" stroke="#06B6D4" stroke-width="4.5" marker-end="url(#radar-arrow-da)" />
+                <text x="605" y="122" text-anchor="middle" fill="#06B6D4" font-size="11" font-weight="bold">➡️ Opmuntrer / fjerner lytterens tøven</text>
             `;
         } else if (selectedRadarWord === 'nok') {
             vectorOverlay = `
-                <line x1="105" y1="175" x2="285" y2="202" stroke="#3B82F6" stroke-width="3.5" marker-end="url(#radar-arrow-nok)" />
-                <path d="M 355 205 Q 405 190 455 205" fill="none" stroke="#3B82F6" stroke-width="3.5" stroke-dasharray="4,4" marker-end="url(#radar-arrow-nok)" />
-                <text x="405" y="225" text-anchor="middle" fill="#60A5FA" font-size="11" font-weight="bold">Talerens personlige gæt (~75%)</text>
+                <path d="M 105 175 Q 195 232 308 208" fill="none" stroke="#3B82F6" stroke-width="3.5" marker-end="url(#radar-arrow-nok)" />
+                <path d="M 374 200 Q 422 184 470 200" fill="none" stroke="#3B82F6" stroke-width="3.5" stroke-dasharray="4,4" marker-end="url(#radar-arrow-nok)" />
+                <text x="452" y="170" text-anchor="middle" fill="#60A5FA" font-size="11" font-weight="bold">Talerens personlige gæt (~75%)</text>
             `;
         } else if (selectedRadarWord === 'vel') {
             vectorOverlay = `
-                <line x1="105" y1="175" x2="575" y2="190" stroke="#C084FC" stroke-width="2.5" stroke-dasharray="4,4" marker-end="url(#radar-arrow-vel)" />
-                <line x1="795" y1="175" x2="645" y2="190" stroke="#A855F7" stroke-width="5" marker-end="url(#radar-arrow-vel)" />
-                <text x="720" y="165" text-anchor="middle" fill="#C084FC" font-size="11" font-weight="bold">⬅️ Lytteren ejer facit!</text>
+                <path d="M 105 175 Q 315 128 520 202" fill="none" stroke="#C084FC" stroke-width="2.5" stroke-dasharray="4,4" marker-end="url(#radar-arrow-vel)" />
+                <path d="M 795 175 Q 700 128 590 198" fill="none" stroke="#A855F7" stroke-width="5" marker-end="url(#radar-arrow-vel)" />
+                <text x="682" y="138" text-anchor="middle" fill="#C084FC" font-size="11" font-weight="bold">⬅️ Lytteren ejer facit!</text>
             `;
         } else if (selectedRadarWord === 'vist') {
             vectorOverlay = `
-                <line x1="240" y1="276" x2="265" y2="283" stroke="#F59E0B" stroke-width="3" stroke-dasharray="3,3" marker-end="url(#radar-arrow-vist)" />
-                <line x1="105" y1="175" x2="270" y2="275" stroke="#F59E0B" stroke-width="2" stroke-dasharray="4,4" />
-                <line x1="335" y1="285" x2="485" y2="285" stroke="#F59E0B" stroke-width="3" stroke-dasharray="4,4" marker-end="url(#radar-arrow-vist)" />
-                <text x="410" y="305" text-anchor="middle" fill="#F59E0B" font-size="11" font-weight="bold">Stærkt forbehold: Har kun hørt det</text>
+                <line x1="240" y1="276" x2="328" y2="290" stroke="#F59E0B" stroke-width="3" stroke-dasharray="3,3" marker-end="url(#radar-arrow-vist)" />
+                <path d="M 105 175 Q 205 245 332 284" fill="none" stroke="#F59E0B" stroke-width="2" stroke-dasharray="4,4" />
+                <line x1="400" y1="294" x2="545" y2="294" stroke="#F59E0B" stroke-width="3" stroke-dasharray="4,4" marker-end="url(#radar-arrow-vist)" />
+                <text x="505" y="314" text-anchor="middle" fill="#F59E0B" font-size="11" font-weight="bold">Stærkt forbehold: Har kun hørt det</text>
             `;
         }
 
@@ -2900,12 +3213,17 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     <line x1="140" y1="185" x2="760" y2="185" stroke="#1E3A66" stroke-width="2" stroke-dasharray="4,4" />
 
                     <!-- Axis Labels -->
-                    <text x="160" y="66" fill="#10B981" font-size="11" font-weight="800" letter-spacing="0.05em">⬆️ 100% SIKKERHED</text>
-                    <text x="160" y="315" fill="#EF4444" font-size="11" font-weight="800" letter-spacing="0.05em">⬇️ USIKKERHED / RYGTE</text>
+                    <text x="154" y="60" fill="#10B981" font-size="11" font-weight="800" letter-spacing="0.05em">⬆️ 100% SIKKERHED</text>
+                    <text x="154" y="318" fill="#EF4444" font-size="11" font-weight="800" letter-spacing="0.05em">⬇️ USIKKERHED / RYGTE</text>
 
-                    <text x="210" y="198" fill="#93C5FD" font-size="11" font-weight="800">TALERENS DOMÆNE</text>
-                    <text x="450" y="65" text-anchor="middle" fill="#FCD34D" font-size="11" font-weight="800">🤝 FÆLLES VIDEN</text>
-                    <text x="690" y="198" text-anchor="end" fill="#C4B5FD" font-size="11" font-weight="800">LYTTERENS DOMÆNE</text>
+                    <rect x="380" y="26" width="140" height="22" rx="11" fill="#071326" stroke="#1E3A66" stroke-width="1.5" />
+                    <text x="450" y="41" text-anchor="middle" fill="#FCD34D" font-size="11" font-weight="800">🤝 FÆLLES VIDEN</text>
+
+                    <rect x="148" y="175" width="128" height="20" rx="6" fill="#071326" stroke="#1E3A66" stroke-width="1" />
+                    <text x="212" y="189" text-anchor="middle" fill="#93C5FD" font-size="11" font-weight="800">TALERENS DOMÆNE</text>
+
+                    <rect x="624" y="175" width="128" height="20" rx="6" fill="#071326" stroke="#1E3A66" stroke-width="1" />
+                    <text x="688" y="189" text-anchor="middle" fill="#C4B5FD" font-size="11" font-weight="800">LYTTERENS DOMÆNE</text>
 
                     <!-- TALER Silhouette Left -->
                     <g transform="translate(60, 135)">
@@ -2936,8 +3254,8 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                     ${nodesSvg}
 
                     <!-- Active Node Location Pill -->
-                    <rect x="${curr.x - 140}" y="${curr.y + 42}" width="280" height="26" rx="6" fill="#0F172A" stroke="${curr.color}" stroke-width="1.5" />
-                    <text x="${curr.x}" y="${curr.y + 59}" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="800">${curr.radarHint}</text>
+                    <rect x="${Math.max(146, curr.x - 152)}" y="${selectedRadarWord === 'vist' ? 336 : (selectedRadarWord === 'nok' ? curr.y + 38 : curr.y + 42)}" width="304" height="26" rx="6" fill="#0F172A" stroke="${curr.color}" stroke-width="1.5" />
+                    <text x="${Math.max(146, curr.x - 152) + 152}" y="${(selectedRadarWord === 'vist' ? 336 : (selectedRadarWord === 'nok' ? curr.y + 38 : curr.y + 42)) + 17}" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="800">${curr.radarHint}</text>
                 </svg>
             </div>
 
@@ -3000,39 +3318,39 @@ export function renderAdverbierSmaaordView(container, navigateFn, extraData = {}
                 </thead>
                 <tbody>
                     <tr class="matrix-row ${selectedRadarWord === 'jo' ? 'radar-active-row' : ''}" data-word="jo" style="cursor: pointer;">
-                        <td><span class="matrix-word-badge" style="border-color: #10B981; color: #10B981; background: rgba(16, 185, 129, 0.15);">jo</span></td>
-                        <td>Ved det ${advTransBlock('smaa_mx_1_t')}</td>
-                        <td>Forventes at vide det ${advTransBlock('smaa_mx_1_l')}</td>
-                        <td>Fælles viden / erfaring ${advTransBlock('smaa_mx_1_k')}</td>
-                        <td>"Vi har <strong>jo</strong> fri i morgen, for det er helligdag!" ${advTransBlock('smaa_mx_1_e')}</td>
+                        <td class="matrix-word-cell"><span class="matrix-word-badge" style="border-color: #10B981; color: #10B981; background: rgba(16, 185, 129, 0.15);">jo</span></td>
+                        <td data-label="Talerens viden">Ved det ${advTransBlock('smaa_mx_1_t')}</td>
+                        <td data-label="Lytterens viden">Forventes at vide det ${advTransBlock('smaa_mx_1_l')}</td>
+                        <td data-label="Videnskilde">Fælles viden / erfaring ${advTransBlock('smaa_mx_1_k')}</td>
+                        <td data-label="Eksempel">"Vi har <strong>jo</strong> fri i morgen, for det er helligdag!" ${advTransBlock('smaa_mx_1_e')}</td>
                     </tr>
                     <tr class="matrix-row ${selectedRadarWord === 'da' ? 'radar-active-row' : ''}" data-word="da" style="cursor: pointer;">
-                        <td><span class="matrix-word-badge" style="border-color: #06B6D4; color: #06B6D4; background: rgba(6, 182, 212, 0.15);">da</span></td>
-                        <td>100% sikker ${advTransBlock('smaa_mx_2_t')}</td>
-                        <td>Tøver / tvivler ${advTransBlock('smaa_mx_2_l')}</td>
-                        <td>Selvindlysende / opmuntring ${advTransBlock('smaa_mx_2_k')}</td>
-                        <td>"Du må <strong>da</strong> gerne smage et stykke kage!" ${advTransBlock('smaa_mx_2_e')}</td>
+                        <td class="matrix-word-cell"><span class="matrix-word-badge" style="border-color: #06B6D4; color: #06B6D4; background: rgba(6, 182, 212, 0.15);">da</span></td>
+                        <td data-label="Talerens viden">100% sikker ${advTransBlock('smaa_mx_2_t')}</td>
+                        <td data-label="Lytterens viden">Tøver / tvivler ${advTransBlock('smaa_mx_2_l')}</td>
+                        <td data-label="Videnskilde">Selvindlysende / opmuntring ${advTransBlock('smaa_mx_2_k')}</td>
+                        <td data-label="Eksempel">"Du må <strong>da</strong> gerne smage et stykke kage!" ${advTransBlock('smaa_mx_2_e')}</td>
                     </tr>
                     <tr class="matrix-row ${selectedRadarWord === 'nok' ? 'radar-active-row' : ''}" data-word="nok" style="cursor: pointer;">
-                        <td><span class="matrix-word-badge" style="border-color: #3B82F6; color: #3B82F6; background: rgba(59, 130, 246, 0.15);">nok</span></td>
-                        <td>Eget logisk gæt ${advTransBlock('smaa_mx_3_t')}</td>
-                        <td>Ved det ikke ${advTransBlock('smaa_mx_3_l')}</td>
-                        <td>Egne observationer / trøst ${advTransBlock('smaa_mx_3_k')}</td>
-                        <td>"Der er mange skyer, så det regner <strong>nok</strong> snart." ${advTransBlock('smaa_mx_3_e')}</td>
+                        <td class="matrix-word-cell"><span class="matrix-word-badge" style="border-color: #3B82F6; color: #3B82F6; background: rgba(59, 130, 246, 0.15);">nok</span></td>
+                        <td data-label="Talerens viden">Eget logisk gæt ${advTransBlock('smaa_mx_3_t')}</td>
+                        <td data-label="Lytterens viden">Ved det ikke ${advTransBlock('smaa_mx_3_l')}</td>
+                        <td data-label="Videnskilde">Egne observationer / trøst ${advTransBlock('smaa_mx_3_k')}</td>
+                        <td data-label="Eksempel">"Der er mange skyer, så det regner <strong>nok</strong> snart." ${advTransBlock('smaa_mx_3_e')}</td>
                     </tr>
                     <tr class="matrix-row ${selectedRadarWord === 'vel' ? 'radar-active-row' : ''}" data-word="vel" style="cursor: pointer;">
-                        <td><span class="matrix-word-badge" style="border-color: #A855F7; color: #A855F7; background: rgba(168, 85, 247, 0.15);">vel</span></td>
-                        <td>Formoder det ${advTransBlock('smaa_mx_4_t')}</td>
-                        <td>Ved det bedst ${advTransBlock('smaa_mx_4_l')}</td>
-                        <td>Appel om bekræftelse ${advTransBlock('smaa_mx_4_k')}</td>
-                        <td>"Av, du slog foden! Det gør <strong>vel</strong> ondt?" ${advTransBlock('smaa_mx_4_e')}</td>
+                        <td class="matrix-word-cell"><span class="matrix-word-badge" style="border-color: #A855F7; color: #A855F7; background: rgba(168, 85, 247, 0.15);">vel</span></td>
+                        <td data-label="Talerens viden">Formoder det ${advTransBlock('smaa_mx_4_t')}</td>
+                        <td data-label="Lytterens viden">Ved det bedst ${advTransBlock('smaa_mx_4_l')}</td>
+                        <td data-label="Videnskilde">Appel om bekræftelse ${advTransBlock('smaa_mx_4_k')}</td>
+                        <td data-label="Eksempel">"Av, du slog foden! Det gør <strong>vel</strong> ondt?" ${advTransBlock('smaa_mx_4_e')}</td>
                     </tr>
                     <tr class="matrix-row ${selectedRadarWord === 'vist' ? 'radar-active-row' : ''}" data-word="vist" style="cursor: pointer;">
-                        <td><span class="matrix-word-badge" style="border-color: #F59E0B; color: #F59E0B; background: rgba(245, 158, 11, 0.15);">vist</span></td>
-                        <td>Har hørt det ${advTransBlock('smaa_mx_5_t')}</td>
-                        <td>Ved det ikke ${advTransBlock('smaa_mx_5_l')}</td>
-                        <td>Ekstern kilde / rygte ${advTransBlock('smaa_mx_5_k')}</td>
-                        <td>"Jeg hørte i radioen, at toget <strong>vist</strong> er aflyst." ${advTransBlock('smaa_mx_5_e')}</td>
+                        <td class="matrix-word-cell"><span class="matrix-word-badge" style="border-color: #F59E0B; color: #F59E0B; background: rgba(245, 158, 11, 0.15);">vist</span></td>
+                        <td data-label="Talerens viden">Har hørt det ${advTransBlock('smaa_mx_5_t')}</td>
+                        <td data-label="Lytterens viden">Ved det ikke ${advTransBlock('smaa_mx_5_l')}</td>
+                        <td data-label="Videnskilde">Ekstern kilde / rygte ${advTransBlock('smaa_mx_5_k')}</td>
+                        <td data-label="Eksempel">"Jeg hørte i radioen, at toget <strong>vist</strong> er aflyst." ${advTransBlock('smaa_mx_5_e')}</td>
                     </tr>
                 </tbody>
             </table>

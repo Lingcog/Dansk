@@ -1,4 +1,5 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
+import { monoIconSvg } from '../utils/arbejdeMonoIcons.js';
 
 export function renderDialogerSygdomJobView(container, navigateFn) {
     const isEn = getLang() === 'en';
@@ -17,7 +18,11 @@ export function renderDialogerSygdomJobView(container, navigateFn) {
 
     // Header Title
     const title = document.createElement('h1');
-    title.textContent = isEn ? '🩺 Illness & Job' : '🩺 Sygdom & job';
+    title.style.display = 'inline-flex';
+    title.style.alignItems = 'center';
+    title.style.justifyContent = 'center';
+    title.style.gap = '0.55rem';
+    title.innerHTML = `${monoIconSvg('stethoscope', 26)} <span>${isEn ? 'Illness & Job' : 'Sygdom & job'}</span>`;
     viewContainer.appendChild(title);
 
     const subtitle = document.createElement('p');
@@ -30,24 +35,24 @@ export function renderDialogerSygdomJobView(container, navigateFn) {
     // Cards Data
     const cardsData = [
         {
-            icon: '🩺',
+            iconSvg: monoIconSvg('stethoscope', 28),
             title: isEn ? '1. An employee calls the doctor' : '1. En ansat ringer til lægen',
             status: 'active',
             action: () => navigateFn('dialog_laege')
         },
         {
-            icon: '📞',
+            iconSvg: monoIconSvg('phone', 28),
             title: isEn ? '2. The employee calls the boss' : '2. Den ansatte ringer til chefen',
             status: 'active',
             action: () => navigateFn('dialog_chef')
         },
         {
-            icon: '💊',
+            iconSvg: monoIconSvg('pill', 28),
             title: isEn ? '3. At the pharmacy' : '3. På apoteket',
             status: 'coming_soon'
         },
         {
-            icon: '💼',
+            iconSvg: monoIconSvg('briefcase', 28),
             title: isEn ? '4. Back to work after illness' : '4. Tilbage på job efter sygdom',
             status: 'active',
             action: () => navigateFn('dialog_job')
@@ -69,7 +74,7 @@ export function renderDialogerSygdomJobView(container, navigateFn) {
 
         const icon = document.createElement('div');
         icon.className = 'card-icon';
-        icon.textContent = data.icon;
+        icon.innerHTML = data.iconSvg;
 
         const cardTitle = document.createElement('div');
         cardTitle.className = 'card-title';

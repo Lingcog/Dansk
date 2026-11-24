@@ -1,6 +1,10 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { renderDsIcon } from '../utils/designSystemIcons.js';
 import { getActiveVerbNuance, applyVerbNuance } from '../components/DesignSystemToggle.js';
+import {
+    renderSansningGlobalNav,
+    renderOverordnetVrimmelMaster
+} from '../components/SansningIntegration.js';
 
 /**
  * GrammatikSansningView - "Grammatik og min sansning af verdenen"
@@ -280,6 +284,9 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
 
     viewContainer.appendChild(topBar);
 
+    // 1b. Global Hovedflade- & Grounding-navigation
+    viewContainer.appendChild(renderSansningGlobalNav('overview', navigateFn));
+
     // 2. Hero Header
     const hero = document.createElement('div');
     hero.className = 'gs-hero';
@@ -287,34 +294,36 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
         <div class="gs-hero-badge">Fænomenologisk og sanselig grammatik</div>
         <h1>Grammatik og min sansning af verden</h1>
         <p>
-            Udforsk det danske sprog gennem kroppens fire fundamentale måder at sanse virkeligheden på.
-            Vælg en hovedflade nedenunder for at opleve de interaktive vrimlebilleder og træningsbaner.
+            Udforsk det danske sprog gennem kroppens fire koncentriske måder at sanse virkeligheden på —
+            fra håndens kraft ved bordet over rummets tærskel og føddernes fundament ud til vejen og sætningshængslerne.
         </p>
     `;
     viewContainer.appendChild(hero);
 
-    // 5. De 4 Kropslige Hovedflader (Det store arkitektur-overblik)
+    // 3. Overordnet 4-Zoners Krops- & Verdens-Vrimlebillede + Den Røde Tråd
+    viewContainer.appendChild(renderOverordnetVrimmelMaster(navigateFn));
+
+    // 5. De 5 Kognitive Hovedflader (Model B: Fra substans til bevægelse, rum/tid, sind og flow)
     const realmsSection = document.createElement('div');
     realmsSection.className = 'gs-realms-section';
     realmsSection.innerHTML = `
         <div class="gs-section-header">
             <div>
-                <h2>Appens 4 kropslige hovedflader</h2>
-                <p>Udforsk grammatikken gennem kroppens fire primære sansninger af virkeligheden.</p>
+                <h2>Appens 5 kognitive hovedflader (Model B)</h2>
+                <p>Fra substansen og tingenes grænser (Flade 1) til tilstand og bevægelse (Flade 2), rum og tid (Flade 3), sindets fundament (Flade 4) og sætningsflow (Flade 5).</p>
             </div>
         </div>
         <div class="gs-hovedflader-grid">
             <div class="gs-hovedflade-card active-flade" id="btn-open-flade1">
                 <div>
-                    <span class="gs-hf-tag ready">Aktiv</span>
-                    <h3 class="gs-hf-title">Flade 1: Dynamik og form</h3>
-                    <p class="gs-hf-sub">Inde i tingen og kroppen: Stilstand vs. forvandling.</p>
+                    <span class="gs-hf-tag ready">Aktiv • 4 stationer + Taktilt Lab</span>
+                    <h3 class="gs-hf-title">Flade 1: Substans, form og bestemthed</h3>
+                    <p class="gs-hf-sub">Tingene i verden: Stof vs. enhed, ubestemt søgekegle vs. bestemt spotlight og adjektiv-kilen.</p>
                     <ul class="gs-hf-bullets">
-                        <li>Være vs. blive (verbernes grundkerne)</li>
-                        <li>Ligge vs. lægge (positionsverber)</li>
-                        <li>Form og masse (utællelig vs. tællelig)</li>
-                        <li>Har vs. er i førnutid (motoren vs. døren)</li>
-                        <li>Aspekt, måde og diatese (dvælen vs. fart)</li>
+                        <li>1.1 Masse vs. form (kaffe/mel vs. en kop/to boller)</li>
+                        <li>1.2 Stof vs. individ (træ/et træ • fisk/en fisk • meget/mange)</li>
+                        <li>1.3 Ubestemt vs. bestemt (en kop/stole vs. koppen/stolene)</li>
+                        <li>1.4 Adjektiv-kilen (huset vs. det røde hus)</li>
                     </ul>
                 </div>
                 <button class="gs-hf-btn">
@@ -324,16 +333,15 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
 
             <div class="gs-hovedflade-card active-flade" id="btn-open-flade2">
                 <div>
-                    <span class="gs-hf-tag ready">Aktiv</span>
-                    <h3 class="gs-hf-title">Flade 2: Rum, tid og relationer</h3>
-                    <p class="gs-hf-sub">Hvor står mit kamera? Nærhed i hånden vs. afstand i kikkerten.</p>
+                    <span class="gs-hf-tag ready">Aktiv • 5 stationer + Taktilt Lab</span>
+                    <h3 class="gs-hf-title">Flade 2: Tilstand og bevægelse</h3>
+                    <p class="gs-hf-sub">Hvad sker der med tingene og kroppen? Hvile i ro vs. kraft, tærskelskift, faseovergang og tempo.</p>
                     <ul class="gs-hf-bullets">
-                        <li>I vs. på (hulen vs. fladen)</li>
-                        <li>Denne vs. den (hånden vs. pegefingeren)</li>
-                        <li>Nutid vs. datid (scenen vs. kikkerten)</li>
-                        <li>Hjemme vs. hjem (zonen vs. tærsklen)</li>
-                        <li>Sin vs. hans (kroppens intime sfære)</li>
-                        <li>Social deiksis (nærhed vs. høflighedsbuffer)</li>
+                        <li>2.1 Være vs. blive (tilstand i ro vs. faseovergang)</li>
+                        <li>2.2 Ligge vs. lægge (hvile 0 N vs. håndens kraft)</li>
+                        <li>2.3 Hjemme vs. hjem (-e-hvile i rummet vs. bevægelse over tærsklen)</li>
+                        <li>2.4 Har vs. er i førnutid (proces-motor vs. grænseskift)</li>
+                        <li>2.5 Aspekt og fart (sidder og læser vs. sætter sig til)</li>
                     </ul>
                 </div>
                 <button class="gs-hf-btn">
@@ -341,45 +349,67 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
                 </button>
             </div>
 
-            <div class="gs-hovedflade-card">
+            <div class="gs-hovedflade-card active-flade" id="btn-open-flade3">
                 <div>
-                    <span class="gs-hf-tag planned">Planlagt</span>
-                    <h3 class="gs-hf-title">Flade 3: Modalitet og evidens</h3>
-                    <p class="gs-hf-sub">Hvor fast er grunden under mine fødder? Vished vs. tvivl.</p>
+                    <span class="gs-hf-tag ready">Aktiv • 5 stationer + Taktilt Lab</span>
+                    <h3 class="gs-hf-title">Flade 3: Rum, tid og relationer</h3>
+                    <p class="gs-hf-sub">Hvor står mit kamera? Nærhed i hånden vs. afstand i kikkerten.</p>
                     <ul class="gs-hf-bullets">
-                        <li>Klippegrund vs. tynd is (sikkert, måske)</li>
-                        <li>Evidensens kilde: nok, jo, vel, vist</li>
-                        <li>Kroppens mærken: synes vs. tror</li>
-                        <li>Modalverbernes pres: skal, vil, må, kan</li>
+                        <li>3.1 I vs. på (3D-hulen vs. 2D-fladen)</li>
+                        <li>3.2 Denne vs. den (gribehånden vs. pegefingeren)</li>
+                        <li>3.3 Nutid vs. datid (nu-scenen vs. kikkerten)</li>
+                        <li>3.4 Sin vs. hans (refleksiv elastik vs. pil udad)</li>
+                        <li>3.5 Social deiksis (nærhed vs. høflig datidsbuffer)</li>
                     </ul>
                 </div>
+                <button class="gs-hf-btn">
+                    Åbn hovedflade 3 →
+                </button>
             </div>
 
-            <div class="gs-hovedflade-card">
+            <div class="gs-hovedflade-card active-flade" id="btn-open-flade4">
                 <div>
-                    <span class="gs-hf-tag planned">Planlagt</span>
-                    <h3 class="gs-hf-title">Flade 4: Kraft og tekstflow</h3>
-                    <p class="gs-hf-sub">Hængslerne mellem scenerne. Kausalitet og sætningsdans.</p>
+                    <span class="gs-hf-tag ready">Aktiv • 4 stationer + Taktilt Lab</span>
+                    <h3 class="gs-hf-title">Flade 4: Sindets fundament og holdning</h3>
+                    <p class="gs-hf-sub">Hvor fast er grunden under mine fødder? Vished, kilde, sansning og modalt pres.</p>
                     <ul class="gs-hf-bullets">
-                        <li>Fri bane: fordi (kilde) vs. derfor (fremdrift)</li>
-                        <li>Modstand: selvom (muren) vs. alligevel (gennembrud)</li>
-                        <li>Betingelser: hvis (springbræt) vs. eller</li>
-                        <li>Sætningsdansen og inversion (felt 1 og 2)</li>
+                        <li>4.1 Klippegrund vs. tynd is (sikkert, formentlig, måske)</li>
+                        <li>4.2 Evidensens kilde: jo, nok, vel, vist</li>
+                        <li>4.3 Kroppens sansning vs. tankegæt: synes vs. tror</li>
+                        <li>4.4 Modalverbernes pres: skal, vil, må, kan</li>
                     </ul>
                 </div>
+                <button class="gs-hf-btn">Åbn hovedflade 4 →</button>
+            </div>
+
+            <div class="gs-hovedflade-card active-flade" id="btn-open-flade5">
+                <div>
+                    <span class="gs-hf-tag ready">Aktiv • 4 stationer + Taktilt Lab</span>
+                    <h3 class="gs-hf-title">Flade 5: Tankens vej og tekstflow</h3>
+                    <p class="gs-hf-sub">Hængslerne mellem scenerne. Årsag, modstand, skilleveje og V2-sætningsdans.</p>
+                    <ul class="gs-hf-bullets">
+                        <li>5.1 Uhindret fremdrift: og, derfor / så, fordi / for</li>
+                        <li>5.2 Kraft mod modstand: selvom, alligevel & men</li>
+                        <li>5.3 Valg & skilleveje: hvis (hængebro) vs. eller</li>
+                        <li>5.4 Sætningsdansen & V2-fjederen (felt 1–3)</li>
+                    </ul>
+                </div>
+                <button class="gs-hf-btn">Åbn hovedflade 5 →</button>
             </div>
         </div>
     `;
 
     const openFlade1Btn = realmsSection.querySelector('#btn-open-flade1');
-    if (openFlade1Btn) {
-        openFlade1Btn.onclick = () => navigateFn('sansning_flade1');
-    }
+    if (openFlade1Btn) openFlade1Btn.onclick = () => navigateFn('sansning_flade1');
     const openFlade2Btn = realmsSection.querySelector('#btn-open-flade2');
-    if (openFlade2Btn) {
-        openFlade2Btn.onclick = () => navigateFn('sansning_flade2');
-    }
-    viewContainer.appendChild(realmsSection);
+    if (openFlade2Btn) openFlade2Btn.onclick = () => navigateFn('sansning_flade2');
+    const openFlade3Btn = realmsSection.querySelector('#btn-open-flade3');
+    if (openFlade3Btn) openFlade3Btn.onclick = () => navigateFn('sansning_flade3');
+    const openFlade4Btn = realmsSection.querySelector('#btn-open-flade4');
+    if (openFlade4Btn) openFlade4Btn.onclick = () => navigateFn('sansning_flade4');
+    const openFlade5Btn = realmsSection.querySelector('#btn-open-flade5');
+    if (openFlade5Btn) openFlade5Btn.onclick = () => navigateFn('sansning_flade5');
+    // realmsSection ("Appens 5 kognitive hovedflader (Model B)") fjernet — links til hovedfladerne ligger allerede under vrimlebilledet og i top-navigationen.
 
     // 4. Pedagogical Guide for Teachers and Students
     const guide = document.createElement('details');
@@ -421,7 +451,7 @@ export function renderGrammatikSansningView(container, navigateFn, extraData = {
             </div>
         </div>
     `;
-    viewContainer.appendChild(guide);
+    // guide-boks fjernet (undgår dobbelt-information)
 
     container.appendChild(viewContainer);
 }

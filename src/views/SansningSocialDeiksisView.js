@@ -136,6 +136,9 @@ export function renderSansningSocialDeiksisView(container, navigateFn, extraData
 
     const style = document.createElement('style');
     style.textContent = `
+        /* Skjul vrimlebillede på abstrakt station */
+        .contrast-split-stage, .split-stage, .stage-split-wrapper, .vrimmel-split-stage { display: none !important; }
+
         .sansning-station-view {
             max-width: 1200px;
             margin: 0 auto;

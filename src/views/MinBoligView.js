@@ -3,6 +3,10 @@ import { shuffleArray } from '../utils/shuffle.js';
 import { createPromptFlowSection } from '../utils/aiPromptHelper.js';
 import { samtaleIcons } from '../utils/samtaleIcons.js';
 import { mbT, mbSub, isMbRtl } from '../utils/min_bolig_translations.js';
+import { swT } from '../utils/mb_skrive_translations.js';
+import { createMinBoligSkrivevaerksted } from '../components/MinBoligSkrivevaerksted.js';
+import { createMinBoligUdtaleTab } from '../components/MinBoligUdtaleTab.js';
+import { attachVrimmelControls } from '../utils/vrimmelPegefeltStandard.js';
 
 /**
  * MinBoligView — "Min bolig" under hovedfladen "Mit hverdagsliv".
@@ -1179,13 +1183,16 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     `;
     viewContainer.appendChild(hero);
 
+    const renumberTab = (label, num) => String(label || '').replace(/^\d+\.\s*/, `${num}. `);
     const tabs = [
-        { id: 'tab_vrimmel', label: mbT('tab_1', lang) },
-        { id: 'tab_pusle', label: mbT('tab_2', lang) },
-        { id: 'tab_possessiv', label: mbT('tab_3', lang) },
-        { id: 'tab_mindmap', label: mbT('tab_4', lang) },
-        { id: 'tab_del2_dialog', label: mbT('tab_5', lang) },
-        { id: 'tab_detektiv', label: mbT('tab_6', lang) }
+        { id: 'tab_vrimmel', label: renumberTab(mbT('tab_1', lang), 1) },
+        { id: 'tab_detektiv', label: renumberTab(mbT('tab_6', lang), 2) },
+        { id: 'tab_possessiv', label: renumberTab(mbT('tab_3', lang), 3) },
+        { id: 'tab_pusle', label: renumberTab(mbT('tab_2', lang), 4) },
+        { id: 'tab_skrivehjaelp', label: swT('tab_5_skrivehjaelp', lang) },
+        { id: 'tab_mindmap', label: renumberTab(mbT('tab_4', lang), 6) },
+        { id: 'tab_udtale', label: lang === 'en' ? '7. Practice pronunciation' : '7. Træn udtale' },
+        { id: 'tab_del2_dialog', label: renumberTab(mbT('tab_5', lang), 8) }
     ];
 
     let currentTab = extraData?.subPath && tabs.some(t => t.id === extraData.subPath)
@@ -1208,6 +1215,10 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     const panelsHolder = document.createElement('div');
     viewContainer.appendChild(panelsHolder);
 
+    let skrivevaerkstedEl = null;
+    let refreshMindmapBuilder = null;
+    let udtaleTabEl = null;
+
     function switchTab(tabId) {
         currentTab = tabId;
         const activeLang = getLang() || 'da';
@@ -1218,6 +1229,12 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         panelsHolder.querySelectorAll('.mb-panel').forEach(p => {
             p.classList.toggle('active', p.dataset.panel === tabId);
         });
+        if (tabId === 'tab_skrivehjaelp' && skrivevaerkstedEl?.refreshFromMindmap) {
+            skrivevaerkstedEl.refreshFromMindmap();
+        }
+        if (tabId === 'tab_mindmap' && typeof refreshMindmapBuilder === 'function') {
+            refreshMindmapBuilder();
+        }
     }
 
     function makePanel(id) {
@@ -1233,8 +1250,7 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     const panel1 = makePanel('tab_vrimmel');
     let activeBoxFilter = 'alle';
     let selectedWord = BOLIG_WORDS[0];
-    let compactPins = false;
-    let zoomed = false;
+    let compactPins = true;
     let showSortDrill = false;
 
     const card1 = document.createElement('div');
@@ -1248,10 +1264,6 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
                         ${b.title}
                     </button>
                 `).join('')}
-            </div>
-            <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
-                <button type="button" class="mb-btn-secondary" id="mb-toggle-pinmode">${mbT('btn_only_nums', lang)}</button>
-                <button type="button" class="mb-btn-secondary" id="mb-zoom-btn">${mbT('btn_zoom_in', lang)}</button>
             </div>
         </div>
 
@@ -1267,19 +1279,7 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
 
     const pegefelterLayer = card1.querySelector('#mb-pegefelter-layer');
     const detailBox = card1.querySelector('#mb-detail-box');
-    const stageInner = card1.querySelector('#mb-stage-inner');
-
-    card1.querySelector('#mb-zoom-btn').onclick = (e) => {
-        zoomed = !zoomed;
-        stageInner.style.transform = zoomed ? 'scale(1.35)' : 'scale(1)';
-        e.currentTarget.textContent = zoomed ? mbT('btn_zoom_out', lang) : mbT('btn_zoom_in', lang);
-    };
-
-    card1.querySelector('#mb-toggle-pinmode').onclick = (e) => {
-        compactPins = !compactPins;
-        e.currentTarget.textContent = compactPins ? mbT('btn_show_words', lang) : mbT('btn_only_nums', lang);
-        renderPegefelter();
-    };
+    attachVrimmelControls(card1.querySelector('.mb-stage-wrap'), pegefelterLayer, { lang });
 
     function renderWordDetail(w) {
         const boxMeta = MINDMAP_BOXES[w.mindmapBox];
@@ -1998,6 +1998,9 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         stikordCard.style.display = mmMode === 'quiz' ? 'block' : 'none';
     }
 
+    const MM_KW_STORAGE_KEY = 'lingcog_min_bolig_mindmap_kw_v1';
+    const SW_STORAGE_KEY = 'lingcog_min_bolig_skrivevaerksted_v1';
+
     const userKeywords = {
         sted_by: 'Odense · stille vej · 2 år',
         hus_lejlighed: 'lejlighed · 2. sal · altan',
@@ -2006,6 +2009,68 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         naboer: 'søde · rolige · hilser i opgangen',
         omraade: 'grønt · tæt på indkøb og bus'
     };
+    try {
+        const savedKw = JSON.parse(localStorage.getItem(MM_KW_STORAGE_KEY) || 'null');
+        if (savedKw && typeof savedKw === 'object') {
+            Object.keys(userKeywords).forEach(k => {
+                if (typeof savedKw[k] === 'string') userKeywords[k] = savedKw[k];
+            });
+        }
+    } catch {}
+
+    function persistKeywords() {
+        try { localStorage.setItem(MM_KW_STORAGE_KEY, JSON.stringify(userKeywords)); } catch {}
+    }
+
+    const MM_STOPWORDS = new Set([
+        'jeg', 'vi', 'du', 'han', 'hun', 'de', 'man', 'det', 'den', 'der', 'her', 'som', 'at',
+        'er', 'var', 'har', 'havde', 'bor', 'boet', 'ligger', 'bliver', 'blev', 'kan', 'vil', 'skal',
+        'i', 'på', 'til', 'med', 'om', 'for', 'af', 'fra', 'ved', 'hos', 'over', 'under',
+        'en', 'et', 'min', 'mit', 'mine', 'vores', 'sin', 'sit', 'sine', 'din', 'dit', 'dine',
+        'og', 'men', 'fordi', 'selvom', 'derfor', 'desuden', 'derudover', 'heldigvis', 'også', 'så',
+        'nu', 'meget', 'rigtig', 'lidt', 'godt', 'god', 'gode', 'alle', 'nogle', 'noget', 'os', 'mig',
+        'sammen', 'synes', 'glad', 'dejligt', 'rart', 'alt', 'sidst', 'hvor', 'når', 'ikke'
+    ]);
+
+    function loadWorkshopSentencesByBox() {
+        const byBox = {};
+        try {
+            const raw = JSON.parse(localStorage.getItem(SW_STORAGE_KEY) || '[]');
+            if (Array.isArray(raw)) {
+                raw.forEach(it => {
+                    if (it && typeof it === 'object' && it.boxId && it.text) {
+                        if (!byBox[it.boxId]) byBox[it.boxId] = [];
+                        byBox[it.boxId].push(it.text);
+                    }
+                });
+            }
+        } catch {}
+        return byBox;
+    }
+
+    function tokenizeForKeywords(text) {
+        return (text || '')
+            .replace(/[.,!?;:»«"()]/g, ' ')
+            .split(/\s+/)
+            .map(w => w.trim())
+            .filter(w => w.length >= 2);
+    }
+
+    function extractSuggestedKeywords(sentencesList) {
+        const words = tokenizeForKeywords(sentencesList.join(' '));
+        const seen = new Set();
+        const picked = [];
+        for (const w of words) {
+            const low = w.toLowerCase();
+            if (MM_STOPWORDS.has(low) || seen.has(low)) continue;
+            seen.add(low);
+            picked.push(w);
+            if (picked.length >= 4) break;
+        }
+        return picked.join(' · ');
+    }
+
+    let hideSentencesInMindmap = false;
 
     const presetOptions = {
         sted_by: ['Odense · stille vej · 2 år', 'Aarhus · tæt på centrum · 1 år', 'København · rolig bydel'],
@@ -2016,76 +2081,264 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         omraade: ['grønt · tæt på indkøb og bus', 'stille · legeplads · skole', 'tæt på centrum · cykelsti']
     };
 
+    function buildUdtaleEntriesFromMindmap() {
+        const wsByBox = loadWorkshopSentencesByBox();
+        const entries = [];
+        const fallbackTemplates = {
+            sted_by: kw => `Jeg bor i ${kw}.`,
+            hus_lejlighed: kw => `Jeg bor i ${kw}.`,
+            vaerelser_m2: kw => `Min bolig har ${kw}.`,
+            alene_sammen: kw => `Jeg bor sammen med ${kw}.`,
+            naboer: kw => `Mine naboer er ${kw}.`,
+            omraade: kw => `Mit område er ${kw}.`
+        };
+
+        // Hvis brugeren har skrevet egne sætninger i 5. Skrivehjælp, importér hver sætning i sin egen boks
+        let hasAnyWorkshop = false;
+        Object.keys(MINDMAP_BOXES).forEach(boxId => {
+            const list = wsByBox[boxId] || [];
+            list.forEach(text => {
+                hasAnyWorkshop = true;
+                entries.push({ boxId, text });
+            });
+        });
+
+        // Hvis brugeren endnu ikke har skrevet i 5. Skrivehjælp, importér 1 sætning pr. mindmap-boks
+        if (!hasAnyWorkshop) {
+            Object.keys(MINDMAP_BOXES).forEach(boxId => {
+                const kw = (userKeywords[boxId] || '').replace(/\s*·\s*/g, ', ').trim();
+                const text = kw ? fallbackTemplates[boxId](kw) : MINDMAP_BOXES[boxId].modelSentence;
+                entries.push({ boxId, text });
+            });
+        }
+        return entries;
+    }
+
     function renderMyMindmapBuilder() {
+        const wsByBox = loadWorkshopSentencesByBox();
+        const hasWorkshopSentences = Object.keys(wsByBox).length > 0;
+
         myMindmapCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem;">
                 <h3 style="margin:0; font-size:1.08rem; font-weight:900;"${rtlAttr}>${mbT('mm_title', lang)}</h3>
-                <button type="button" class="mb-btn-primary" id="mb-speak-full-presentation" style="display:inline-flex; align-items:center; gap:0.35rem;">
-                    ${samtaleIcons.audio(14)} ${mbT('btn_listen_ex', lang)}
-                </button>
+                <div style="display:flex; flex-wrap:wrap; gap:0.45rem; align-items:center;">
+                    <button type="button" class="mb-btn-secondary" id="mb-mm-toggle-exam"${rtlAttr} style="font-size:0.8rem; padding:0.42rem 0.78rem;">
+                        ${hideSentencesInMindmap ? swT('mm_btn_show_sent', lang) : swT('mm_btn_exam_hide', lang)}
+                    </button>
+                    <button type="button" class="mb-btn-primary" id="mb-mm-to-udtale" style="font-size:0.8rem; padding:0.42rem 0.8rem;">
+                        ${lang === 'en' ? 'Import to 7. Pronunciation →' : 'Importér til 7. Træn udtale →'}
+                    </button>
+                    <button type="button" class="mb-btn-primary" id="mb-speak-full-presentation" style="display:inline-flex; align-items:center; gap:0.35rem;">
+                        ${samtaleIcons.audio(14)} ${mbT('btn_listen_ex', lang)}
+                    </button>
+                </div>
             </div>
 
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:0.75rem; margin-bottom:0.95rem;">
-                ${Object.values(MINDMAP_BOXES).map(b => `
-                    <div style="padding:0.8rem 0.9rem; border-radius:14px; background:rgba(9,14,26,0.92); border:1.5px solid ${b.border};">
-                        <div style="font-weight:900; font-size:0.92rem; color:${b.color}; margin-bottom:0.4rem;"${rtlAttr}>
-                            ${mbT('box_' + b.id, lang)}
+            ${hasWorkshopSentences ? `
+                <div${rtlAttr} style="padding:0.8rem 1rem; border-radius:13px; background:#101419; border:1px solid rgba(76,155,166,0.48); margin-bottom:0.9rem; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:0.65rem;">
+                    <div>
+                        <div style="font-size:0.78rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#7ec4ce; margin-bottom:0.15rem;">
+                            ${swT('mm_bridge_title', lang)}
                         </div>
-                        <input
-                            type="text"
-                            data-mm-input="${b.id}"
-                            value="${userKeywords[b.id].replace(/"/g, '&quot;')}"
-                            placeholder="${mbT('mm_placeholder', lang)}"
-                            style="width:100%; box-sizing:border-box; padding:0.48rem 0.7rem; border-radius:9px; border:1px solid rgba(148,163,184,0.35); background:rgba(30,41,59,0.9); color:#ffffff; font-weight:800; font-size:0.85rem; margin-bottom:0.4rem;"
-                        />
-                        <div style="display:flex; flex-wrap:wrap; gap:0.28rem;">
-                            ${presetOptions[b.id].map(p => `
-                                <button type="button" class="mb-btn-secondary" data-mm-preset="${b.id}" data-mm-val="${p}" style="padding:0.2rem 0.48rem; font-size:0.72rem;">
-                                    ${p}
-                                </button>
-                            `).join('')}
+                        <div style="font-size:0.84rem; color:#cbd5e1; line-height:1.45;">
+                            ${hideSentencesInMindmap
+                                ? swT('mm_bridge_exam_desc', lang)
+                                : swT('mm_bridge_pick_desc', lang)}
                         </div>
                     </div>
-                `).join('')}
+                    <div style="display:flex; flex-wrap:wrap; gap:0.45rem;">
+                        <button type="button" class="mb-btn-primary" id="mb-mm-auto-all" style="font-size:0.8rem; padding:0.42rem 0.8rem;">
+                            ${swT('mm_btn_auto_all', lang)}
+                        </button>
+                    </div>
+                </div>
+            ` : `
+                <div${rtlAttr} style="padding:0.7rem 0.95rem; border-radius:12px; background:#101419; border:1px solid rgba(203,213,225,0.14); margin-bottom:0.85rem; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:0.5rem;">
+                    <span style="font-size:0.83rem; color:#94a3b8;">${swT('mm_tip_empty', lang)}</span>
+                    <button type="button" class="mb-btn-secondary" id="mb-mm-go-sw" style="font-size:0.78rem; padding:0.32rem 0.7rem;">${swT('mm_btn_go_sw', lang)}</button>
+                </div>
+            `}
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:0.75rem; margin-bottom:0.95rem;">
+                ${Object.values(MINDMAP_BOXES).map(b => {
+                    const boxSentences = wsByBox[b.id] || [];
+                    const currentKwList = (userKeywords[b.id] || '').split('·').map(s => s.trim().toLowerCase()).filter(Boolean);
+                    const tokens = boxSentences.length > 0 ? tokenizeForKeywords(boxSentences.join(' ')) : [];
+                    return `
+                        <div style="padding:0.8rem 0.9rem; border-radius:14px; background:rgba(9,14,26,0.92); border:1.5px solid ${b.border};">
+                            <div style="display:flex; justify-content:space-between; align-items:center; gap:0.4rem; margin-bottom:0.4rem;">
+                                <div style="font-weight:900; font-size:0.92rem; color:${b.color};"${rtlAttr}>
+                                    ${mbT('box_' + b.id, lang)}
+                                </div>
+                                ${boxSentences.length > 0 && !hideSentencesInMindmap ? `
+                                    <button type="button" class="mb-btn-secondary" data-mm-auto-box="${b.id}" style="padding:0.16rem 0.45rem; font-size:0.7rem;">
+                                        ${swT('mm_btn_auto_box', lang)}
+                                    </button>
+                                ` : ''}
+                            </div>
+
+                            ${boxSentences.length > 0 && !hideSentencesInMindmap ? `
+                                <div style="margin-bottom:0.5rem; padding:0.45rem 0.55rem; border-radius:9px; background:rgba(16,20,25,0.9); border:1px solid rgba(203,213,225,0.14);">
+                                    <div${rtlAttr} style="font-size:0.7rem; font-weight:700; color:#94a3b8; margin-bottom:0.32rem;">${swT('mm_click_words_lbl', lang)}</div>
+                                    <div dir="ltr" style="display:flex; flex-wrap:wrap; gap:0.26rem;">
+                                        ${tokens.map(tok => {
+                                            const isPicked = currentKwList.includes(tok.toLowerCase());
+                                            return `
+                                                <button
+                                                    type="button"
+                                                    data-kw-box="${b.id}"
+                                                    data-kw-word="${tok.replace(/"/g, '&quot;')}"
+                                                    style="padding:0.16rem 0.44rem; border-radius:7px; font-size:0.75rem; font-weight:700; cursor:pointer; border:1px solid ${isPicked ? b.color : 'rgba(203,213,225,0.2)'}; background:${isPicked ? b.bg : '#151a21'}; color:${isPicked ? '#ffffff' : '#cbd5e1'};"
+                                                >${tok}</button>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            <input
+                                type="text"
+                                data-mm-input="${b.id}"
+                                dir="ltr"
+                                value="${userKeywords[b.id].replace(/"/g, '&quot;')}"
+                                placeholder="${mbT('mm_placeholder', lang)}"
+                                style="width:100%; box-sizing:border-box; padding:0.48rem 0.7rem; border-radius:9px; border:1px solid rgba(148,163,184,0.35); background:rgba(30,41,59,0.9); color:#ffffff; font-weight:800; font-size:0.85rem; margin-bottom:0.4rem;"
+                            />
+                            ${!hideSentencesInMindmap ? `
+                                <div dir="ltr" style="display:flex; flex-wrap:wrap; gap:0.28rem;">
+                                    ${presetOptions[b.id].map(p => `
+                                        <button type="button" class="mb-btn-secondary" data-mm-preset="${b.id}" data-mm-val="${p}" style="padding:0.2rem 0.48rem; font-size:0.72rem;">
+                                            ${p}
+                                        </button>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }).join('')}
             </div>
 
-            <div style="padding:0.95rem 1.1rem; border-radius:14px; background:linear-gradient(135deg, rgba(13,148,136,0.16), rgba(15,23,42,0.95)); border:1.5px solid #2dd4bf;">
-                <div style="font-size:0.8rem; font-weight:900; color:#5eead4; text-transform:uppercase; margin-bottom:0.45rem;"${rtlAttr}>
-                    ${mbT('mm_guide_title', lang)}
+            ${!hideSentencesInMindmap ? `
+                <div style="padding:0.95rem 1.1rem; border-radius:14px; background:linear-gradient(135deg, rgba(13,148,136,0.16), rgba(15,23,42,0.95)); border:1.5px solid #2dd4bf;">
+                    <div style="font-size:0.8rem; font-weight:900; color:#5eead4; text-transform:uppercase; margin-bottom:0.45rem;"${rtlAttr}>
+                        ${hasWorkshopSentences ? swT('mm_full_pres_support', lang) : mbT('mm_guide_title', lang)}
+                    </div>
+                    <div dir="ltr" style="display:grid; gap:0.45rem; font-size:0.94rem; color:#f8fafc; line-height:1.5;">
+                        <div>1. ${wsByBox.sted_by?.length ? wsByBox.sted_by.join(' ') : `Jeg bor i <strong>${userKeywords.sted_by}</strong>.${mbSub('mm_line_1', 'mb-tr', lang)}`}</div>
+                        <div>2. ${wsByBox.hus_lejlighed?.length ? wsByBox.hus_lejlighed.join(' ') : `Jeg bor i <strong>${userKeywords.hus_lejlighed}</strong>.${mbSub('mm_line_2', 'mb-tr', lang)}`}</div>
+                        <div>3. ${wsByBox.vaerelser_m2?.length ? wsByBox.vaerelser_m2.join(' ') : `Min bolig har <strong>${userKeywords.vaerelser_m2}</strong>.${mbSub('mm_line_3', 'mb-tr', lang)}`}</div>
+                        <div>4. ${wsByBox.alene_sammen?.length ? wsByBox.alene_sammen.join(' ') : `Jeg bor med / alene: <strong>${userKeywords.alene_sammen}</strong>.${mbSub('mm_line_4', 'mb-tr', lang)}`}</div>
+                        <div>5. ${wsByBox.naboer?.length ? wsByBox.naboer.join(' ') : `Mine naboer er <strong>${userKeywords.naboer}</strong>.${mbSub('mm_line_5', 'mb-tr', lang)}`}</div>
+                        <div>6. ${wsByBox.omraade?.length ? wsByBox.omraade.join(' ') : `Mit område er <strong>${userKeywords.omraade}</strong>.${mbSub('mm_line_6', 'mb-tr', lang)}`}</div>
+                    </div>
                 </div>
-                <div style="display:grid; gap:0.45rem; font-size:0.94rem; color:#f8fafc; line-height:1.5;">
-                    <div>1. Jeg bor i <strong>${userKeywords.sted_by}</strong>.${mbSub('mm_line_1', 'mb-tr', lang)}</div>
-                    <div>2. Jeg bor i <strong>${userKeywords.hus_lejlighed}</strong>.${mbSub('mm_line_2', 'mb-tr', lang)}</div>
-                    <div>3. Min bolig har <strong>${userKeywords.vaerelser_m2}</strong>.${mbSub('mm_line_3', 'mb-tr', lang)}</div>
-                    <div>4. Jeg bor med / alene: <strong>${userKeywords.alene_sammen}</strong>.${mbSub('mm_line_4', 'mb-tr', lang)}</div>
-                    <div>5. Mine naboer er <strong>${userKeywords.naboer}</strong>.${mbSub('mm_line_5', 'mb-tr', lang)}</div>
-                    <div>6. Mit område er <strong>${userKeywords.omraade}</strong>.${mbSub('mm_line_6', 'mb-tr', lang)}</div>
+            ` : `
+                <div${rtlAttr} style="padding:0.85rem 1.05rem; border-radius:12px; background:#101419; border:1px solid rgba(76,155,166,0.4); font-size:0.86rem; color:#cbd5e1;">
+                    ${swT('mm_exam_banner', lang)}
                 </div>
-            </div>
+            `}
         `;
 
+        const toggleExamBtn = myMindmapCard.querySelector('#mb-mm-toggle-exam');
+        if (toggleExamBtn) {
+            toggleExamBtn.onclick = () => {
+                hideSentencesInMindmap = !hideSentencesInMindmap;
+                renderMyMindmapBuilder();
+            };
+        }
+        const toUdtaleBtn = myMindmapCard.querySelector('#mb-mm-to-udtale');
+        if (toUdtaleBtn) {
+            toUdtaleBtn.onclick = () => {
+                const entries = buildUdtaleEntriesFromMindmap();
+                if (udtaleTabEl?.importAndRefresh) {
+                    udtaleTabEl.importAndRefresh(entries);
+                }
+                switchTab('tab_udtale');
+            };
+        }
+        const goSwBtn = myMindmapCard.querySelector('#mb-mm-go-sw');
+        if (goSwBtn) goSwBtn.onclick = () => switchTab('tab_skrivehjaelp');
+
+        const autoAllBtn = myMindmapCard.querySelector('#mb-mm-auto-all');
+        if (autoAllBtn) {
+            autoAllBtn.onclick = () => {
+                Object.entries(wsByBox).forEach(([boxId, sList]) => {
+                    const suggested = extractSuggestedKeywords(sList);
+                    if (suggested) userKeywords[boxId] = suggested;
+                });
+                persistKeywords();
+                renderMyMindmapBuilder();
+            };
+        }
+
+        myMindmapCard.querySelectorAll('[data-mm-auto-box]').forEach(btn => {
+            btn.onclick = () => {
+                const boxId = btn.dataset.mmAutoBox;
+                const suggested = extractSuggestedKeywords(wsByBox[boxId] || []);
+                if (suggested) {
+                    userKeywords[boxId] = suggested;
+                    persistKeywords();
+                    renderMyMindmapBuilder();
+                }
+            };
+        });
+
+        myMindmapCard.querySelectorAll('[data-kw-box]').forEach(btn => {
+            btn.onclick = () => {
+                const boxId = btn.dataset.kwBox;
+                const word = btn.dataset.kwWord;
+                const existing = (userKeywords[boxId] || '').split('·').map(s => s.trim()).filter(Boolean);
+                const idx = existing.findIndex(w => w.toLowerCase() === word.toLowerCase());
+                // Hvis feltet stadig indeholder standard-eksemplet og intet fra brugerens sætning er valgt endnu, start frisk med det klikkede ord
+                const boxTokensLower = new Set(tokenizeForKeywords((wsByBox[boxId] || []).join(' ')).map(t => t.toLowerCase()));
+                const hasAnyFromSentence = existing.some(w => boxTokensLower.has(w.toLowerCase()));
+                let nextList;
+                if (!hasAnyFromSentence && idx === -1) {
+                    nextList = [word];
+                } else if (idx >= 0) {
+                    nextList = existing.filter((_, i) => i !== idx);
+                } else {
+                    nextList = [...existing, word];
+                }
+                userKeywords[boxId] = nextList.join(' · ');
+                persistKeywords();
+                renderMyMindmapBuilder();
+            };
+        });
+
         myMindmapCard.querySelectorAll('[data-mm-input]').forEach(inp => {
-            inp.oninput = () => { userKeywords[inp.dataset.mmInput] = inp.value; };
+            inp.oninput = () => {
+                userKeywords[inp.dataset.mmInput] = inp.value;
+                persistKeywords();
+            };
             inp.onchange = () => renderMyMindmapBuilder();
         });
         myMindmapCard.querySelectorAll('[data-mm-preset]').forEach(btn => {
             btn.onclick = () => {
                 userKeywords[btn.dataset.mmPreset] = btn.dataset.mmVal;
+                persistKeywords();
                 renderMyMindmapBuilder();
             };
         });
         myMindmapCard.querySelector('#mb-speak-full-presentation').onclick = () => {
+            const customSpoken = Object.keys(MINDMAP_BOXES)
+                .map(id => (wsByBox[id] && wsByBox[id].length) ? wsByBox[id].join(' ') : '')
+                .filter(Boolean)
+                .join(' ');
             speakBolig(
-                'Jeg vil fortælle om min bolig. ' +
-                'Jeg bor i Odense på en stille vej. Jeg har boet her i to år. ' +
-                'Jeg bor til leje i en lejlighed på anden sal. Jeg har en lille altan. ' +
-                'Min lejlighed er 75 kvadratmeter. Den har tre værelser, et køkken og et badeværelse. ' +
-                'Jeg bor sammen med min mand og mine to børn. Vi har også en kat. ' +
-                'Mine naboer er søde og rolige. Vi hilser i opgangen. ' +
-                'Mit område er grønt og stille. Jeg bor tæt på indkøb og bus.'
+                customSpoken || (
+                    'Jeg vil fortælle om min bolig. ' +
+                    'Jeg bor i Odense på en stille vej. Jeg har boet her i to år. ' +
+                    'Jeg bor til leje i en lejlighed på anden sal. Jeg har en lille altan. ' +
+                    'Min lejlighed er 75 kvadratmeter. Den har tre værelser, et køkken og et badeværelse. ' +
+                    'Jeg bor sammen med min mand og mine to børn. Vi har også en kat. ' +
+                    'Mine naboer er søde og rolige. Vi hilser i opgangen. ' +
+                    'Mit område er grønt og stille. Jeg bor tæt på indkøb og bus.'
+                )
             );
         };
     }
+    refreshMindmapBuilder = renderMyMindmapBuilder;
 
     let stIdx = 0;
     let stAns = null;
@@ -2267,6 +2520,11 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
 
     function renderDetective() {
         const m = BOLIG_DETECTIVE_MISSIONS[detIdx];
+        const targetWord = BOLIG_WORDS.find(w => w.id === m.answerId);
+        const activeBoxId = targetWord?.mindmapBox || null;
+        const activeBoxMeta = activeBoxId ? MINDMAP_BOXES[activeBoxId] : null;
+        const visibleWords = activeBoxId ? BOLIG_WORDS.filter(w => w.mindmapBox === activeBoxId) : BOLIG_WORDS;
+
         detCard.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem;">
                 <div>
@@ -2280,7 +2538,12 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
                 </div>
             </div>
 
-            <div style="padding:0.85rem 1.05rem; border-radius:14px; background:rgba(30,41,59,0.85); border-left:4px solid #14b8a6; margin-bottom:0.8rem;">
+            <div style="padding:0.85rem 1.05rem; border-radius:14px; background:rgba(30,41,59,0.85); border-left:4px solid ${activeBoxMeta ? activeBoxMeta.color : '#14b8a6'}; margin-bottom:0.8rem;">
+                ${activeBoxMeta ? `
+                    <div style="display:inline-flex; align-items:center; gap:0.35rem; font-size:0.74rem; font-weight:800; color:${activeBoxMeta.color}; background:${activeBoxMeta.bg}; border:1px solid ${activeBoxMeta.border}; padding:0.16rem 0.55rem; border-radius:999px; margin-bottom:0.42rem;">
+                        ${mbT('box_' + activeBoxId, lang)} (${visibleWords.length})
+                    </div>
+                ` : ''}
                 <div style="font-size:0.98rem; font-weight:900; color:#ffffff;">${m.prompt}</div>
                 ${detShowHint ? `
                     <div style="margin-top:0.35rem; font-size:0.84rem; color:#fde68a;">
@@ -2309,7 +2572,8 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
         `;
 
         const detLayer = detCard.querySelector('#mb-det-layer');
-        BOLIG_WORDS.forEach(w => {
+        attachVrimmelControls(detCard.querySelector('.mb-stage-wrap'), detLayer, { lang });
+        visibleWords.forEach(w => {
             const boxMeta = MINDMAP_BOXES[w.mindmapBox];
             const isCorrectPick = detFeedback?.ok && w.id === m.answerId;
             const btn = document.createElement('button');
@@ -2355,6 +2619,30 @@ export function renderMinBoligView(container, navigateFn, extraData = {}) {
     renderDetective();
     panel6.appendChild(detCard);
     panelsHolder.appendChild(panel6);
+
+    // =========================================================================
+    // FANE 7: SKRIVEHJÆLP (KOBLET TIL MINDMAPPET I FANE 4)
+    // =========================================================================
+    const panel7 = makePanel('tab_skrivehjaelp');
+    skrivevaerkstedEl = createMinBoligSkrivevaerksted({
+        userKeywords,
+        navigateFn,
+        switchTab
+    });
+    panel7.appendChild(skrivevaerkstedEl);
+    panelsHolder.appendChild(panel7);
+
+    // =========================================================================
+    // FANE 7: TRÆN UDTALE (IMPORTERET FRA MINDMAP / SKRIVEHJÆLP)
+    // =========================================================================
+    const panelUdtale = makePanel('tab_udtale');
+    udtaleTabEl = createMinBoligUdtaleTab({
+        boxMetaMap: MINDMAP_BOXES,
+        getImportedCandidates: buildUdtaleEntriesFromMindmap,
+        switchTab
+    });
+    panelUdtale.appendChild(udtaleTabEl);
+    panelsHolder.appendChild(panelUdtale);
 
     container.appendChild(viewContainer);
 }

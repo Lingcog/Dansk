@@ -233,7 +233,9 @@ export function renderVerberLiggerLaeserView(container, navigateFn, extraData = 
     function switchTab(tabId) {
         currentTab = tabId;
         const lang = getLang();
-        history.pushState(null, '', `#/${lang}/verber_ligger_og_laeser/${tabId}`);
+        if (!(extraData && extraData.isEmbedded)) {
+            history.pushState(null, '', `#/${lang}/verber_ligger_og_laeser/${tabId}`);
+        }
         nav.innerHTML = '';
         tabs.forEach(t => {
             const b = document.createElement('button');

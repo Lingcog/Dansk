@@ -1,6 +1,12 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { renderDsIcon } from '../utils/designSystemIcons.js';
 import { getActiveVerbNuance, applyVerbNuance } from '../components/DesignSystemToggle.js';
+import {
+    renderSansningGlobalNav,
+    renderRedThreadStoryStrip,
+    renderSansningTactileLab,
+    renderSansningFooterBridge
+} from '../components/SansningIntegration.js';
 
 /**
  * SansningFlade1DynamikView - Hovedflade 1: Dynamik & Form (Væren og tilblivelse)
@@ -256,6 +262,7 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
         }
 
         /* Large Split-Stage Showcase */
+        .gs-card-thumb-split, .gs-station-thumb, .gs-card-split-preview { display: none !important; }
         .gs-showcase-box {
             background: #5C0812;
             border: 1.5px solid #851825;
@@ -670,96 +677,104 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
 
     const fladeBadge = document.createElement('span');
     fladeBadge.className = 'gs-hero-badge';
-    fladeBadge.innerHTML = `Hovedflade 1 • Kropslig fysik`;
+    fladeBadge.innerHTML = `Hovedflade 2 • Tilstand & bevægelse`;
     topBar.appendChild(fladeBadge);
 
-    viewContainer.appendChild(topBar);
+    // topBar fjernet (erstattet af global nav)
+
+    // 1b. Global Hovedflade- & Stations-navigation (Den røde tråd)
+    viewContainer.appendChild(renderSansningGlobalNav('flade2', navigateFn));
 
     // 2. Hero Header
     const hero = document.createElement('div');
     hero.className = 'gs-hero';
     hero.innerHTML = `
-        <div class="gs-hero-badge">Hovedflade 1 • Dynamik og form</div>
-        <h1>Dynamik og form – (væren og tilblivelse)</h1>
+        <div class="gs-hero-badge">Hovedflade 2 • Tilstand og bevægelse</div>
+        <h1>Tilstand og bevægelse – (hvile, kraft og forandring)</h1>
         <p>
-            På dansk afslører dine verber og ord, om universet befinder sig i en <strong>stabil, uforandret tilstand</strong> 
-            (Det blå rige), eller om der overføres <strong>muskulær kraft, bevægelse og forvandling</strong> (Det gyldne rige).
-            Se de diktomiske vrimlebilleder og udforsk de 5 sansestationer nedenunder.
+            På dansk har alle disse 4 stationer én fælles kognitiv kerne: Befinder kroppen og tingen sig i en <strong>stabil tilstand i hvile</strong> 
+            (Det blå rige: <em>er, ligger, har arbejdet, sidder og læser</em>), eller sker der en <strong>bevægelse, muskulær kraftoverførsel og faseforandring</strong> (Det gyldne rige: <em>bliver, lægger, er gået, sætter sig til</em>)?
         </p>
     `;
     viewContainer.appendChild(hero);
 
-    // 3. Compass Cards (Det Blå Rige vs. Det Gyldne Rige - Nøjagtig som anmodet)
+    // 2b. Den Røde Tråd + Taktilt Grounding-Laboratorium (Etape 1 + Etape 2)
+    const tactileLab = renderSansningTactileLab('flade2', navigateFn, 0, false);
+    const redThreadCard = renderRedThreadStoryStrip('flade2', navigateFn, (idx) => tactileLab.setStationIdx(idx));
+    // redThreadCard fjernet (undgår dobbelt-information)
+    viewContainer.appendChild(tactileLab);
+
+    // 3. Compass Cards (1:1 afstemt med Flade 2's 5 rene tilstand/bevægelse-stationer: 2.1 – 2.5)
     const compass = document.createElement('div');
     compass.className = 'gs-compass-wrapper';
     compass.innerHTML = `
         <div class="gs-realm-card tilstand">
             <div class="gs-realm-head">
-                <span class="gs-realm-badge">Det blå rige</span>
+                <span class="gs-realm-badge">🔵 Det blå rige • Tilstand & Hvile</span>
             </div>
-            <h2 class="gs-realm-title">Væren og stilstand (tilstand i ro)</h2>
+            <h2 class="gs-realm-title">Væren, hvile, ro i rummet (-e), proces & dvælen</h2>
             <p class="gs-realm-desc">
-                Når verden hviler. Tingen befinder sig et sted, tilstanden er uforandret, kroppen sanser smagen indefra, og handlingen er stabil.
+                Når verden hviler i en uforandret tilstand: temperaturen står stille (2.1), tingen hviler på fladen (2.2), kroppen er i ro i zonen med -e (2.3), proces-motoren arbejder på stedet (2.4), og kroppen dvæler i nuet (2.5).
             </p>
             <div class="gs-realm-examples">
                 <div class="gs-realm-ex-item">
-                    <span>Væren i ro:</span>
-                    <span class="gs-realm-ex-word">Kaffen ER kold</span>
+                    <span>2.1 Væren i ro:</span>
+                    <span class="gs-realm-ex-word">Kaffen ER varm</span>
                 </div>
                 <div class="gs-realm-ex-item">
-                    <span>Fastfrosset fortid:</span>
-                    <span class="gs-realm-ex-word">Vejret HAVDE VÆRET koldt</span>
-                </div>
-                <div class="gs-realm-ex-item">
-                    <span>Tingens hvile:</span>
+                    <span>2.2 Tingens hvile (0 N):</span>
                     <span class="gs-realm-ex-word">Bogen LIGGER på bordet</span>
                 </div>
                 <div class="gs-realm-ex-item">
-                    <span>Ro i rummet:</span>
-                    <span class="gs-realm-ex-word">Vi er HJEMME</span>
+                    <span>2.3 Ro i rummet (-e):</span>
+                    <span class="gs-realm-ex-word">Vi bliver HJEMME og INDE</span>
                 </div>
                 <div class="gs-realm-ex-item">
-                    <span>Kroppens sansning:</span>
-                    <span class="gs-realm-ex-word">Jeg SYNES suppen smager godt</span>
+                    <span>2.4 Proces-motoren på stedet:</span>
+                    <span class="gs-realm-ex-word">Mads HAR cyklet rundt ude</span>
+                </div>
+                <div class="gs-realm-ex-item">
+                    <span>2.5 Kroppens dvælen:</span>
+                    <span class="gs-realm-ex-word">Mads SIDDER OG drikker kaffe</span>
                 </div>
             </div>
         </div>
 
         <div class="gs-realm-card forvandling">
             <div class="gs-realm-head">
-                <span class="gs-realm-badge">Det gyldne rige</span>
+                <span class="gs-realm-badge">🟠 Det gyldne rige • Bevægelse & Forandring</span>
             </div>
-            <h2 class="gs-realm-title">Tilblivelse og forvandling (bevægelse og kraft)</h2>
+            <h2 class="gs-realm-title">Tilblivelse, kraft, tærskelskift, grænse & fart</h2>
             <p class="gs-realm-desc">
-                Når verden er i bevægelse. Der sker et omslag, en overgang, en kraft anbringer en genstand, tærsklen krydses, eller tanken gætter fremad.
+                Når bevægelsen og kraften griber ind: tilstanden skifter fase (2.1), hånden overfører kraft til et objekt (2.2), foden krydser tærsklen uden -e (2.3), subjektet krydser grænsen til et nyt sted/resultat (2.4), og en ny handling skydes i gang (2.5).
             </p>
             <div class="gs-realm-examples">
                 <div class="gs-realm-ex-item">
-                    <span>Overgang i nuet:</span>
+                    <span>2.1 Fase-overgang:</span>
                     <span class="gs-realm-ex-word">Kaffen BLIVER kold</span>
                 </div>
                 <div class="gs-realm-ex-item">
-                    <span>Omslaget der indtræffer:</span>
-                    <span class="gs-realm-ex-word">Vejret VAR BLEVET koldt</span>
+                    <span>2.2 Håndens kraft (+objekt):</span>
+                    <span class="gs-realm-ex-word">Jeg LÆGGER bogen på bordet</span>
                 </div>
                 <div class="gs-realm-ex-item">
-                    <span>Håndens kraft:</span>
-                    <span class="gs-realm-ex-word">Jeg LÆGGER bogen</span>
+                    <span>2.3 Retning over tærsklen (0):</span>
+                    <span class="gs-realm-ex-word">Vi går HJEM og IND</span>
                 </div>
                 <div class="gs-realm-ex-item">
-                    <span>Krydser tærsklen:</span>
-                    <span class="gs-realm-ex-word">Vi tager HJEM</span>
+                    <span>2.4 Grænseskift & ny tilstand:</span>
+                    <span class="gs-realm-ex-word">Huset ER malet / Han ER cyklet hjem</span>
                 </div>
                 <div class="gs-realm-ex-item">
-                    <span>Hovedets gæt:</span>
-                    <span class="gs-realm-ex-word">Jeg TROR det regner i morgen</span>
+                    <span>2.5 Retningsskift & fart:</span>
+                    <span class="gs-realm-ex-word">Mads SÆTTER SIG TIL AT arbejde</span>
                 </div>
             </div>
         </div>
     `;
-    viewContainer.appendChild(compass);
+    // compass fjernet (undgår dobbelt-information)
 
-    // 4. Sanse-Simulatoren (Nøjagtig de 6 emner fra brugerens specifikation)
+    // 4. Sanse-Simulatoren (1:1 afstemt med Station 2.1 – 2.5)
     const simulator = document.createElement('div');
     simulator.className = 'gs-simulator-box';
 
@@ -767,47 +782,42 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
 
     const simData = [
         {
-            topic: '1. Væren vs. tilblivelse',
-            tilstand: 'Kaffen er kold.',
-            forvandling: 'Kaffen bliver kold.'
+            topic: '2.1 Væren vs. tilblivelse (er vs. bliver)',
+            tilstand: 'Kaffen er varm i kanden.',
+            forvandling: 'Kaffen bliver kold på bordet.'
         },
         {
-            topic: '2. Tidens sansning',
-            tilstand: 'Vejret havde været koldt længe.',
-            forvandling: 'Vejret var blevet koldt, da bilen ankom.'
+            topic: '2.2 Tingens hvile vs. håndens kraft (ligger vs. lægger)',
+            tilstand: 'Nøglerne ligger stille på bordet.',
+            forvandling: 'Hun lægger nøglerne ned på bordet.'
         },
         {
-            topic: '3. Aktivitet vs. resultat',
-            tilstand: 'Huset er malet nu.',
-            forvandling: 'Malerne har malet facaden.'
+            topic: '2.3 Rummet og tærsklen: ro (-e) vs. bevægelse (0)',
+            tilstand: 'Børnene leger trygt hjemme og inde i stuen.',
+            forvandling: 'Børnene løber hjem og ind gennem døren.'
         },
         {
-            topic: '4. Tingens hvile vs. kraft',
-            tilstand: 'Nøglerne ligger på bordet.',
-            forvandling: 'Hun lægger nøglerne på bordet.'
+            topic: '2.4 Proces-motor vs. grænseskift og resultat (har vs. er)',
+            tilstand: 'Malerne har malet facaden (og Mads har cyklet ude).',
+            forvandling: 'Huset er nymalet nu, og Mads er cyklet hjem.'
         },
         {
-            topic: '5. Rummet og tærsklen',
-            tilstand: 'Børnene leger inde i stuen.',
-            forvandling: 'Børnene løber ind i stuen.'
-        },
-        {
-            topic: '6. Sindets sansning',
-            tilstand: 'Jeg synes, kagen er lækker.',
-            forvandling: 'Jeg tror, kagen smager sødt.'
+            topic: '2.5 Kroppens dvælen vs. retningsskift og fart',
+            tilstand: 'Mads ligger og læser i roligt tempo.',
+            forvandling: 'Mads sætter sig til at læse og arbejder hurtigt.'
         }
     ];
 
     function renderSimulatorContent() {
         simulator.innerHTML = `
             <div class="gs-sim-header">
-                <span class="gs-sim-title">Sanse-simulatoren: Oplev forvandlingen i 1 klik</span>
+                <span class="gs-sim-title">Sanse-simulatoren: Oplev skiftet mellem tilstand og bevægelse i 1 klik</span>
                 <div class="gs-sim-toggle-group">
                     <button class="gs-sim-toggle-btn tilstand ${simState.activeMode === 'tilstand' ? 'active' : ''}" id="btn-sim-tilstand">
-                        Væren og stilstand
+                        🔵 Tilstand og stilstand
                     </button>
                     <button class="gs-sim-toggle-btn forvandling ${simState.activeMode === 'forvandling' ? 'active' : ''}" id="btn-sim-forvandling">
-                        Tilblivelse og forvandling
+                        🟠 Bevægelse og forandring
                     </button>
                 </div>
             </div>
@@ -838,14 +848,14 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
     }
 
     renderSimulatorContent();
-    viewContainer.appendChild(simulator);
+    // simulator fjernet (erstattet af Det Blå Taktile Laboratorium)
 
-    // 5. Stations Data med billeder og vrimlebilleder
+    // 5. De 5 rene Tilstand/Bevægelse-stationer i Hovedflade 2
     const stations = [
         {
             id: 'vaere_blive',
             route: 'sansning_vaere_blive',
-            num: '1.1',
+            num: '2.1',
             tag: 'Verbernes Kerne',
             title: 'Væren vs. Tilblivelse (Er vs. Bliver)',
             sub: 'At være vs. At blive i ren form. Roen i havnebyen over for morgensolens forvandling.',
@@ -863,7 +873,7 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
         {
             id: 'kraft_hvile',
             route: 'sansning_kraft_hvile',
-            num: '1.2',
+            num: '2.2',
             tag: 'Positionsverber',
             title: 'Tingens hvile vs. kroppens kraft (ligge vs. lægge)',
             sub: 'Lægge/ligge, sætte/sidde, stille/stå. Hånden der flytter over for tingen der hviler i ro.',
@@ -879,35 +889,35 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
             rightCaption: 'Jeg lægger bogen / stiller vasen med håndkraft'
         },
         {
-            id: 'form_masse',
-            route: 'sansning_form_masse',
-            num: '1.3',
-            tag: 'Form og masse',
-            title: 'Utællelig masse vs. tællelig form',
-            sub: 'Den uafgrænsede masse (vand, kaffe, mel) over for genstanden med klar form (en kop, to æbler, tre boller).',
-            accent: '#10b981',
-            tilstandLabel: 'Utællelig masse',
-            tilstandSent: 'Der er koldt vand og mel.',
-            forvandlingLabel: 'Tællelig form',
-            forvandlingSent: 'Hun køber en flaske og to æbler.',
-            vrimmel: 'Bageriet og køkkenbordet',
-            leftImg: 'assets/sansning_masse_venstre.jpg',
-            rightImg: 'assets/sansning_form_hoejre.jpg',
-            leftCaption: 'Uafgrænset flydende masse: vand, kaffe og mel',
-            rightCaption: 'Formstøbte genstande: en flaske, to kopper, tre boller'
+            id: 'rummet_taersklen',
+            route: 'sansning_rummet_taersklen',
+            num: '2.3',
+            tag: 'Rummet & tærsklen',
+            title: 'Rummet og tærsklen: hjemme vs. hjem / inde vs. ind',
+            sub: 'På dansk afslører det lille bogstav -e, om du er i ro i rummet (hjemme, inde, ude, oppe, nede), eller om din krop krydser tærsklen i en retningsbevægelse (hjem, ind, ud, op, ned).',
+            accent: '#34d399',
+            tilstandLabel: 'Ro i zonen (-e)',
+            tilstandSent: 'Vi er hjemme / Bogen ligger inde.',
+            forvandlingLabel: 'Over tærsklen (0)',
+            forvandlingSent: 'Vi går hjem / Jeg bærer den ind.',
+            vrimmel: 'Dobbelt rum-vrimlebillede & 5 dimensioner',
+            leftImg: 'assets/sansning_rummet_venstre.jpg',
+            rightImg: 'assets/sansning_rummet_hoejre.jpg',
+            leftCaption: 'Tilstand i ro med -e: hjemme, inde, ude, oppe, nede',
+            rightCaption: 'Bevægelse over tærsklen uden -e: hjem, ind, ud, op, ned'
         },
         {
             id: 'har_er',
             route: 'sansning_har_er',
-            num: '1.4',
+            num: '2.4',
             tag: 'Førnutid',
-            title: 'Aktivitet vs. resultat (har vs. er)',
-            sub: 'Har (motoren der arbejder forud) vs. Er (den nye tilstand og flyttede grænse).',
+            title: 'Aktivitet vs. tilstandsskift (har vs. er)',
+            sub: 'Har (motoren der arbejder på stedet: har løbet ude) vs. Er (den nye tilstand og flyttede grænse: er løbet ud / er malet).',
             accent: '#f59e0b',
             tilstandLabel: 'Motoren (Har)',
             tilstandSent: 'Malerne har malet facaden.',
-            forvandlingLabel: 'Resultatet (Er)',
-            forvandlingSent: 'Huset er malet / Hun er cyklet på arbejde.',
+            forvandlingLabel: 'Grænseskiftet (Er)',
+            forvandlingSent: 'Huset er malet / Hun er cyklet hjem.',
             vrimmel: 'Bykvarteret og gaden',
             leftImg: 'assets/sansning_har_er_venstre.jpg',
             rightImg: 'assets/sansning_har_er_hoejre.jpg',
@@ -917,7 +927,7 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
         {
             id: 'aspekt_maade',
             route: 'sansning_aspekt_maade',
-            num: '1.5',
+            num: '2.5',
             tag: 'Aspekt og fart',
             title: 'Kroppens dvælen vs. retningsskift og fart',
             sub: 'Uafgrænset dvælen ("ligger og læser") og roligt tempo vs. bevidst retningsskift ("sætter sig til") og høj fart.',
@@ -1019,15 +1029,15 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
     }
 
     renderShowcaseStage();
-    viewContainer.appendChild(showcaseBox);
+    // Vrimlebillede-showcase fjernet — taktile diagrammer er i hovedrollen
 
     // 7. Sektions-overskrift for stationerne
     const sectionDivider = document.createElement('div');
     sectionDivider.className = 'gs-section-divider';
     sectionDivider.innerHTML = `
         <div>
-            <h2>Alle 5 sansestationer i hovedflade 1</h2>
-            <p>Hver station har sit eget interaktive vrimlebillede, didaktiske aha-boks og træningsbane.</p>
+            <h2>Alle 5 sansestationer i Hovedflade 2 (Tilstand & Bevægelse)</h2>
+            <p>Hver station har sit eget interaktive vrimlebillede, taktilt Grounding-laboratorium og træningsbane.</p>
         </div>
     `;
     viewContainer.appendChild(sectionDivider);
@@ -1093,6 +1103,7 @@ export function renderSansningFlade1DynamikView(container, navigateFn, extraData
     });
 
     viewContainer.appendChild(grid);
+    // footerBridge fjernet (undgår dobbelt navigation)
 
     container.appendChild(viewContainer);
 }

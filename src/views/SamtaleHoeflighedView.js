@@ -2,6 +2,8 @@ import { getTranslation, getLang } from '../utils/i18n.js';
 import { shuffleArray } from '../utils/shuffle.js';
 import { samtaleIcons, hoeflighedPillarIcon } from '../utils/samtaleIcons.js';
 import { st, stSub, stRtlAttr, isSamtaleLangLoaded, ensureSamtaleLang, SAMTALE_TR_CSS } from '../utils/samtale_translations.js';
+import { createSamtalePrincipperTab } from '../components/SamtalePrincipperTab.js';
+import { attachVrimmelControls } from '../utils/vrimmelPegefeltStandard.js';
 
 /**
  * SamtaleHoeflighedView — "Høflighed på dansk"
@@ -1980,6 +1982,23 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
     `;
     viewContainer.appendChild(hero);
 
+    // Meget kort introboks: Effektivitet vs. Høflighed
+    const introBox = document.createElement('div');
+    introBox.style.cssText = 'display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.6rem; margin:0 0 0.85rem; padding:0.65rem 1rem; border-radius:12px; background:rgba(15,23,42,0.72); border:1px solid rgba(148,163,184,0.2); font-size:0.84rem; color:#cbd5e1; line-height:1.45;';
+    introBox.innerHTML = `
+        <div style="flex:1; min-width:220px;">
+            <strong style="color:#f8fafc;">To regler i samtalens kunst:</strong>
+            <span style="color:#fbbf24; font-weight:700;">Effektivitet</span> (kort, sandt, direkte) og
+            <span style="color:#7dd3fc; font-weight:700;">Høflighed</span> (hensynsfuld, gavmild, positiv, beskeden, enig).
+            På dansk bøjer vi ofte effektiviteten for at passe på relationen.
+        </div>
+        <button type="button" id="sh-open-principper" style="background:#151a21; border:1px solid rgba(203,213,225,0.2); color:#e2e8f0; padding:0.32rem 0.72rem; border-radius:999px; font-size:0.76rem; font-weight:700; cursor:pointer; white-space:nowrap;">
+            8. Effektivitet vs. Høflighed →
+        </button>
+    `;
+    introBox.querySelector('#sh-open-principper').onclick = () => switchTab('tab_principper');
+    viewContainer.appendChild(introBox);
+
     const tabs = [
         { id:'tab_vrimmel', label: st('1. Vrimlebillede (20)', lang) },
         { id:'tab_kontekst', label: st('2. Social kontekst (30)', lang) },
@@ -1987,7 +2006,8 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
         { id:'tab_video_tak', label: st('4. Video: Tak & svar', lang) },
         { id:'tab_video_afslag', label: st('5. Video: Afslag & tid', lang) },
         { id:'tab_video_shorts', label: st('6. Video: 6 hverdags-klip', lang) },
-        { id:'tab_detektiv', label: st('7. Detektiv', lang) }
+        { id:'tab_detektiv', label: st('7. Detektiv', lang) },
+        { id:'tab_principper', label: st('8. Effektivitet vs. Høflighed', lang) }
     ];
 
     let currentTab = extraData?.subPath && tabs.some(t => t.id === extraData.subPath)
@@ -2035,8 +2055,7 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
     const panel1 = makePanel('tab_vrimmel');
     let activePillarFilter = 'alle';
     let selectedExpr = POLITENESS_EXPRESSIONS[0];
-    let compactPins = false;
-    let zoomed = false;
+    let compactPins = true;
     let showSortDrill = false;
 
     const card1 = document.createElement('div');
@@ -2049,10 +2068,6 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
                 <button type="button" class="sh-filter-btn" data-pfilter="bloedgoer" style="border-color:rgba(6,182,212,0.65); color:#67e8f9;">${hoeflighedPillarIcon('bloedgoer', 14)} ${st('Blødgør & hjælp (5)', lang)}</button>
                 <button type="button" class="sh-filter-btn" data-pfilter="tak" style="border-color:rgba(16,185,129,0.65); color:#6ee7b7;">${hoeflighedPillarIcon('tak', 14)} ${st('Tak & svar (6)', lang)}</button>
                 <button type="button" class="sh-filter-btn" data-pfilter="afslag" style="border-color:rgba(192,132,252,0.75); color:#e9d5ff;">${hoeflighedPillarIcon('afslag', 14)} ${st('Afslag & takt (3)', lang)}</button>
-            </div>
-            <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
-                <button type="button" class="sh-btn-secondary" id="sh-toggle-pinmode">${st('Kun tal', lang)}</button>
-                <button type="button" class="sh-btn-secondary" id="sh-zoom-btn">${st('Zoom 135%', lang)}</button>
             </div>
         </div>
 
@@ -2068,19 +2083,7 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
 
     const pegefelterLayer = card1.querySelector('#sh-pegefelter-layer');
     const detailBox = card1.querySelector('#sh-detail-box');
-    const stageInner = card1.querySelector('#sh-stage-inner');
-
-    card1.querySelector('#sh-zoom-btn').onclick = (e) => {
-        zoomed = !zoomed;
-        stageInner.style.transform = zoomed ? 'scale(1.35)' :'scale(1)';
-        e.currentTarget.textContent = zoomed ? st('Zoom 100%', lang) : st('Zoom 135%', lang);
-    };
-
-    card1.querySelector('#sh-toggle-pinmode').onclick = (e) => {
-        compactPins = !compactPins;
-        e.currentTarget.textContent = compactPins ? st('Vis tekst', lang) : st('Kun tal', lang);
-        renderPegefelter();
-    };
+    attachVrimmelControls(card1.querySelector('.sh-stage-wrap'), pegefelterLayer, { lang });
 
     function renderExprDetail(expr) {
         const meta = PILLAR_META[expr.pillar];
@@ -2924,6 +2927,7 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
         `;
 
         const detLayer = detCard.querySelector('#sh-det-layer');
+        attachVrimmelControls(detCard.querySelector('.sh-stage-wrap'), detLayer, { lang });
         POLITENESS_EXPRESSIONS.forEach(expr => {
             const btn = document.createElement('button');
             btn.type = 'button';
@@ -2968,6 +2972,13 @@ export function renderSamtaleHoeflighedView(container, navigateFn, extraData = {
     renderDetective();
     panel7.appendChild(detCard);
     panelsHolder.appendChild(panel7);
+
+    // =========================================================================
+    // TAB 8: EFFEKTIVITET VS. HØFLIGHED (VÆGTSKÅL, 5 REGLER & JO–MEN-BYGGER)
+    // =========================================================================
+    const panel8 = makePanel('tab_principper');
+    panel8.appendChild(createSamtalePrincipperTab());
+    panelsHolder.appendChild(panel8);
 
     container.appendChild(viewContainer);
 }

@@ -1,4 +1,5 @@
 import { getLang, getTranslation as t } from '../utils/i18n.js';
+import { renderGodmorgenVisualBox } from '../components/GodmorgenVisualLab.js';
 
 /**
  * SangGodmorgenLilleLandView.js
@@ -1407,7 +1408,7 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     `;
     viewContainer.appendChild(hero);
 
-    // Højskolesangbogen Official Link & Copyright Credit Banner (Løsning A)
+    // Copyright Credit Banner
     const hsbBanner = document.createElement('div');
     hsbBanner.className = 'hsb-reference-banner';
     hsbBanner.innerHTML = `
@@ -1417,9 +1418,6 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
                 ${t('gm_hsb_sub', 'Skrevet til indvielsen af Storebæltsbroen den 14. juni 1998 (Højskolesangbogen nr. 24). Her på siden arbejder vi pædagogisk med sangens nøgleudtryk og Danmarks geografi (jf. citatretten).')}
             </div>
         </div>
-        <a href="https://hojskolesangbogen.dk/sange/g/godmorgen-lille-land" target="_blank" rel="noopener noreferrer" class="hsb-ref-link">
-            ${t('gm_hsb_link', 'Læs hele sangteksten på Højskolesangbogen.dk ↗')}
-        </a>
     `;
     viewContainer.appendChild(hsbBanner);
 
@@ -1445,7 +1443,7 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
         { id: 'tab_samtale', icon: monoSvgs.chat, label: t('gm_tab_samtale', '6. Samtale & Puslesætninger: Dit Danmark (Byg svar)') }
     ];
 
-    let currentTab = extraData.activeTab || 'tab_vrimmel';
+    let currentTab = extraData.activeTab || extraData.subPath || 'tab_vrimmel';
     if (!tabsData.some(t => t.id === currentTab)) {
         currentTab = 'tab_vrimmel';
     }
@@ -1898,9 +1896,6 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
                 ${t('gm_sang_intro_sub', t('gm_t2_banner_desc', 'Lær de vigtige geografiord med udtale og tryk. Klik på et nøgleudtryk for at høre udtalen og se udsnittet på Danmarkskortet. Læs hele den samlede originaltekst og lyt til melodien på Højskolesangbogens officielle hjemmeside.'))}
             </div>
         </div>
-        <a href="https://hojskolesangbogen.dk/sange/g/godmorgen-lille-land" target="_blank" rel="noopener noreferrer" class="hsb-ref-link">
-            ${t('gm_hsb_link', 'Åbn sangteksten på Højskolesangbogen.dk ↗')}
-        </a>
     `;
     panelSang.appendChild(sangIntroBanner);
 
@@ -2074,6 +2069,41 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     const seqFlow = document.createElement('div');
     seqFlow.className = 'song-sequence-flow';
 
+    const gmTermVisualKeys = [
+        ['kyst_sten_sand', 'havets_boelger', 'bakker_is', 'dis', 'sol'],
+        ['oe_ved_oe', 'broer', 'blink_hav_soe', 'fra_egn_til_egn'],
+        ['skagens_gren', 'gedsers_odde', 'prik_mod_nord', 'fra_nord_til_syd'],
+        ['bro_sind_til_sind', 'ingen_alene', 'gletsjer_bison']
+    ];
+
+    const gmExplanationWordLinks = [
+        [
+            ['morgendis', 'dis'],
+            ['kyst med sand og sten', 'kyst_sten_sand'],
+            ['bølgernes skvulpen', 'havets_boelger'],
+            ['bløde bakker', 'bakker_is'],
+            ['isen', 'bakker_is']
+        ],
+        [
+            ['over 400 øer', 'oe_ved_oe'],
+            ['slanke, lyse broer', 'broer'],
+            ['Storebæltsbroen og Lillebæltsbroen', 'broer'],
+            ['blæst og regn', 'blaest_regn'],
+            ['fra egn til egn', 'fra_egn_til_egn'],
+            ['hav og sø', 'blink_hav_soe']
+        ],
+        [
+            ['Skagens hvide gren', 'skagens_gren'],
+            ['Gedser Odde', 'gedsers_odde'],
+            ['prik mod nord', 'prik_mod_nord'],
+            ['i nord', 'fra_nord_til_syd']
+        ],
+        [
+            ['Ingen i landet er alene', 'ingen_alene'],
+            ['bygger vi bro fra sind til sind', 'bro_sind_til_sind']
+        ]
+    ];
+
     themesData.forEach((themeItem, themeIdx) => {
         const card = document.createElement('div');
         card.className = 'verse-card';
@@ -2084,14 +2114,21 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
         const partTrans = t(`gm_t2_part_${themeIdx + 1}`, themeItem.themeNum);
         const meaningLabelTrans = t('gm_meaning_label', t('gm_t2_meaning_label', 'Betydning & Geografi'));
 
+        const termKeys = gmTermVisualKeys[themeIdx] || [];
         // Chips HTML
         const chipsHtml = themeItem.terms.map((term, idx) => `
-            <button type="button" class="clickable-song-verb" data-idx="${idx}" title="Klik for at høre udtale og se kortudsnit">
+            <button type="button" class="clickable-song-verb" data-idx="${idx}" data-word-key="${termKeys[idx] || ''}" title="Klik for at høre udtale og se visuel forklaring">
                 ${term.html}
             </button>
         `).join('');
 
-        const firstTerm = themeItem.terms[0];
+        let interactiveExpl = themeItem.explanation;
+        (gmExplanationWordLinks[themeIdx] || []).forEach(([phrase, key]) => {
+            interactiveExpl = interactiveExpl.replace(
+                phrase,
+                `<button type="button" class="eb-word-btn" data-word-key="${key}">${phrase}</button>`
+            );
+        });
 
         card.innerHTML = `
             <div class="verse-card-header">
@@ -2102,27 +2139,19 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
                 <span class="verse-theme-tag">${tagTrans}</span>
             </div>
             <div class="key-expr-box">
-                <div class="key-expr-label">${t('gm_t2_banner_badge', 'Nøgleudtryk med udtalerytme & stavelser (klik for udtale & kort):')}</div>
+                <div class="key-expr-label">${t('gm_t2_banner_badge', 'Nøgleudtryk med udtalerytme & stavelser (klik for udtale & visuel forklaring):')}</div>
                 <div class="key-expr-chips">
                     ${chipsHtml}
                 </div>
             </div>
-            <div style="font-size: 0.94rem; color: #cbd5e1; line-height: 1.5; background: rgba(15, 23, 42, 0.55); padding: 0.85rem 1.1rem; border-radius: 10px;">
-                <strong style="color: #38bdf8;">${t('gm_meaning_label', 'Betydning & Geografi')}:</strong> ${themeItem.explanation}
+            <div style="font-size: 0.94rem; color: #cbd5e1; line-height: 1.55; background: rgba(15, 23, 42, 0.55); padding: 0.85rem 1.1rem; border-radius: 10px;">
+                <strong style="color: #38bdf8;">${t('gm_meaning_label', 'Betydning & Geografi')}:</strong> ${interactiveExpl}
                 ${!isDa && expTrans !== themeItem.explanation ? `
                     <div style="color: #94a3b8; font-size: 0.88rem; margin-top: 0.35rem; line-height: 1.45; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 0.35rem;">
                         <strong style="color: #7dd3fc;">${meaningLabelTrans}:</strong> ${expTrans}
                     </div>` : ''}
             </div>
-            <div class="verse-crop-drawer">
-                <div class="verse-crop-thumb" style="background-size: 380% 380%; background-position: ${firstTerm.cropX}% ${firstTerm.cropY}%;"></div>
-                <div class="verse-crop-info">
-                    <span class="verse-crop-badge">${t('gm_t2_crop_title', 'Udsnit fra Danmarkskortet')} · ${partTrans}</span>
-                    <div class="verse-crop-title">${firstTerm.cropTitle}</div>
-                    <div class="verse-crop-desc">${firstTerm.cropDesc}</div>
-                    <button type="button" class="verse-crop-close">${t('gm_t2_crop_close', 'Luk udsnit')}</button>
-                </div>
-            </div>
+            <div class="eb-lab-slot"></div>
             <div>
                 <button type="button" class="listen-btn btn-theme-speak" style="padding: 0.55rem 1.1rem; font-size: 0.88rem;">
                     ${t('gm_btn_listen_keywords', t('gm_btn_listen_sentence', 'Lyt til temaets nøgleudtryk'))} (${partTrans})
@@ -2130,35 +2159,42 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
             </div>
         `;
 
-        const drawer = card.querySelector('.verse-crop-drawer');
-        const cropThumb = card.querySelector('.verse-crop-thumb');
-        const cropTitle = card.querySelector('.verse-crop-title');
-        const cropDesc = card.querySelector('.verse-crop-desc');
-        const closeBtn = card.querySelector('.verse-crop-close');
-        const termBtns = card.querySelectorAll('.clickable-song-verb');
+        const labSlot = card.querySelector('.eb-lab-slot');
+        const allVisualTriggers = card.querySelectorAll('.clickable-song-verb, .eb-word-btn');
+        let activeVisualKey = null;
 
-        termBtns.forEach(btn => {
+        function openVisualFor(key, clickedEl, speakText = null) {
+            allVisualTriggers.forEach(el => el.classList.remove('active'));
+            if (activeVisualKey === key && clickedEl) {
+                activeVisualKey = null;
+                labSlot.innerHTML = '';
+                return;
+            }
+            activeVisualKey = key;
+            if (clickedEl) clickedEl.classList.add('active');
+            labSlot.innerHTML = '';
+            const box = renderGodmorgenVisualBox(key, () => {
+                activeVisualKey = null;
+                labSlot.innerHTML = '';
+                allVisualTriggers.forEach(el => el.classList.remove('active'));
+            });
+            if (box) labSlot.appendChild(box);
+            if (speakText) speakDanish(speakText);
+        }
+
+        card.querySelectorAll('.clickable-song-verb').forEach(btn => {
             btn.onclick = () => {
                 const idx = Number(btn.dataset.idx);
                 const selectedTerm = themeItem.terms[idx];
-                termBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                cropThumb.style.backgroundPosition = `${selectedTerm.cropX}% ${selectedTerm.cropY}%`;
-                cropTitle.textContent = selectedTerm.cropTitle;
-                cropDesc.textContent = selectedTerm.cropDesc;
-
-                drawer.classList.add('open');
-                speakDanish(selectedTerm.speakText);
+                openVisualFor(btn.dataset.wordKey, btn, selectedTerm?.speakText);
             };
         });
 
-        if (closeBtn && drawer) {
-            closeBtn.onclick = () => {
-                drawer.classList.remove('open');
-                termBtns.forEach(b => b.classList.remove('active'));
+        card.querySelectorAll('.eb-word-btn').forEach(btn => {
+            btn.onclick = () => {
+                openVisualFor(btn.dataset.wordKey, btn, btn.textContent.trim());
             };
-        }
+        });
 
         card.querySelector('.btn-theme-speak').onclick = (e) => {
             speakDanish(themeItem.spokenKeywords, e.currentTarget, 0.85);
@@ -2376,9 +2412,9 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     introBanner.className = 'saetning-intro-banner';
     introBanner.innerHTML = `
         <span class="saetning-intro-badge">${t('gm_t4_banner_badge', 'Sætningsbygning & Danmarks geografi')}</span>
-        <h2 class="saetning-intro-title">${t('gm_t4_banner_title', 'Byg sætninger om Danmark med verbet på 2. plads')}</h2>
+        <h2 class="saetning-intro-title">${t('gm_t4_banner_title', 'Byg sætninger om Danmark: Subjekt først & "hvor" til sidst')}</h2>
         <p class="saetning-intro-desc">
-            ${t('gm_t4_banner_desc', 'Når sætningen begynder med et sted eller en tid (f.eks. "I Danmark" eller "Mod nord"), står verbet altid på 2. plads.')}
+            ${t('gm_t4_banner_desc', 'Sætningen begynder med subjektet på 1. plads, derefter verbet på 2. plads, resten på 3. plads – og "hvor?" til sidst på 4. plads.')}
         </p>
     `;
     builderCard.appendChild(introBanner);
@@ -2423,51 +2459,51 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
         const tasks = [
             {
                 question: 'Hvad forbinder Storebæltsbroen?',
-                correct: ['Over Storebælt', 'forbinder', 'broen', 'Fyn og Sjælland.'],
-                scrambled: ['broen', 'Fyn og Sjælland.', 'Over Storebælt', 'forbinder'],
-                ruleTip: 'Stedet "Over Storebælt" står på 1. plads, og verbet "forbinder" står på 2. plads.'
+                correct: ['Broen', 'forbinder', 'Fyn og Sjælland', 'over Storebælt.'],
+                scrambled: ['Fyn og Sjælland', 'over Storebælt.', 'forbinder', 'Broen'],
+                ruleTip: 'Broen (1: Subjekt) + forbinder (2: Verbum) + Fyn og Sjælland (3) + over Storebælt (4: Hvor?).'
             },
             {
                 question: 'Hvor ligger Skagen?',
-                correct: ['Mod nord', 'ligger', 'Skagen', 'i Jylland.'],
-                scrambled: ['Skagen', 'i Jylland.', 'Mod nord', 'ligger'],
-                ruleTip: 'Mod nord (1) + ligger (2) + Skagen (3) + i Jylland (4).'
+                correct: ['Skagen', 'ligger', 'som en hvid spids', 'mod nord i Jylland.'],
+                scrambled: ['mod nord i Jylland.', 'som en hvid spids', 'Skagen', 'ligger'],
+                ruleTip: 'Skagen (1: Subjekt) + ligger (2: Verbum) + som en hvid spids (3) + mod nord i Jylland (4: Hvor?).'
             },
             {
                 question: 'Hvad gør bølgerne ved kysten?',
-                correct: ['Ved kysten', 'rammer', 'bølgerne', 'sten og sand.'],
-                scrambled: ['bølgerne', 'Ved kysten', 'sten og sand.', 'rammer'],
-                ruleTip: 'Ved kysten (1) + rammer (2) + bølgerne (3) + sten og sand (4).'
+                correct: ['Bølgerne', 'rammer', 'sten og sand', 'ved kysten.'],
+                scrambled: ['sten og sand', 'ved kysten.', 'rammer', 'Bølgerne'],
+                ruleTip: 'Bølgerne (1: Subjekt) + rammer (2: Verbum) + sten og sand (3) + ved kysten (4: Hvor?).'
             },
             {
                 question: 'Hvordan er vejret i Danmark?',
-                correct: ['I Danmark', 'skifter', 'vejret', 'meget hurtigt.'],
-                scrambled: ['vejret', 'meget hurtigt.', 'I Danmark', 'skifter'],
-                ruleTip: 'I Danmark (1) + skifter (2) + vejret (3) + meget hurtigt (4).'
+                correct: ['Vejret', 'skifter', 'meget hurtigt', 'i Danmark.'],
+                scrambled: ['meget hurtigt', 'skifter', 'i Danmark.', 'Vejret'],
+                ruleTip: 'Vejret (1: Subjekt) + skifter (2: Verbum) + meget hurtigt (3) + i Danmark (4: Hvor?).'
             },
             {
                 question: 'Hvad gør familien om morgenen?',
-                correct: ['Om morgenen', 'sidder', 'vi', 'ved morgenbordet.'],
-                scrambled: ['vi', 'ved morgenbordet.', 'Om morgenen', 'sidder'],
-                ruleTip: 'Om morgenen (1) + sidder (2) + vi (3) + ved morgenbordet (4).'
+                correct: ['Vi', 'sidder', 'sammen om morgenen', 'ved morgenbordet.'],
+                scrambled: ['ved morgenbordet.', 'sammen om morgenen', 'Vi', 'sidder'],
+                ruleTip: 'Vi (1: Subjekt) + sidder (2: Verbum) + sammen om morgenen (3) + ved morgenbordet (4: Hvor?).'
             },
             {
                 question: 'Hvor ligger København?',
-                correct: ['På Sjælland', 'ligger', 'hovedstaden', 'København.'],
-                scrambled: ['København.', 'ligger', 'På Sjælland', 'hovedstaden'],
-                ruleTip: 'På Sjælland (1) + ligger (2) + hovedstaden (3) + København (4).'
+                correct: ['København', 'ligger', 'som Danmarks hovedstad', 'på Sjælland.'],
+                scrambled: ['på Sjælland.', 'ligger', 'København', 'som Danmarks hovedstad'],
+                ruleTip: 'København (1: Subjekt) + ligger (2: Verbum) + som Danmarks hovedstad (3) + på Sjælland (4: Hvor?).'
             },
             {
                 question: 'Hvad har skabt de danske bakker?',
-                correct: ['Under istiden', 'skabte', 'isen', 'de grønne bakker.'],
-                scrambled: ['isen', 'de grønne bakker.', 'Under istiden', 'skabte'],
-                ruleTip: 'Under istiden (1) + skabte (2) + isen (3) + de grønne bakker (4).'
+                correct: ['Isen', 'skabte', 'de grønne bakker', 'i Danmark.'],
+                scrambled: ['de grønne bakker', 'i Danmark.', 'Isen', 'skabte'],
+                ruleTip: 'Isen (1: Subjekt) + skabte (2: Verbum) + de grønne bakker (3) + i Danmark (4: Hvor?).'
             },
             {
                 question: 'Hvad gør vi, når vi taler sammen?',
-                correct: ['I hverdagen', 'bygger', 'vi', 'bro mellem mennesker.'],
-                scrambled: ['vi', 'bro mellem mennesker.', 'bygger', 'I hverdagen'],
-                ruleTip: 'I hverdagen (1) + bygger (2) + vi (3) + bro mellem mennesker (4).'
+                correct: ['Vi', 'bygger', 'en stærk bro', 'mellem mennesker.'],
+                scrambled: ['mellem mennesker.', 'bygger', 'en stærk bro', 'Vi'],
+                ruleTip: 'Vi (1: Subjekt) + bygger (2: Verbum) + en stærk bro (3) + mellem mennesker (4: Hvor?).'
             }
         ];
 
@@ -2479,10 +2515,10 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
         wrap.className = 'puzzle-wrapper';
 
         const slotPrompts = [
-            { text: t('gm_t4_slot_time_place', 'Hvor / Hvornår?'), grammar: 'Sted / Tid (1)', colorClass: 'slot-tid', tagClass: 'tag-tid' },
+            { text: t('gm_t4_slot_subject', 'Hvem / Hvad?'), grammar: 'Subjekt (1)', colorClass: 'slot-subjekt', tagClass: 'tag-subjekt' },
             { text: t('gm_t4_slot_verb', 'Verbum'), grammar: 'Verbum (2)', colorClass: 'slot-verbum', tagClass: 'tag-verbum' },
-            { text: t('gm_t4_slot_subject', 'Hvem / Hvad?'), grammar: 'Subjekt (3)', colorClass: 'slot-subjekt', tagClass: 'tag-subjekt' },
-            { text: t('gm_t4_slot_rest', 'Resten'), grammar: 'Led (4)', colorClass: 'slot-objekt', tagClass: 'tag-objekt' }
+            { text: t('gm_t4_slot_rest', 'Resten'), grammar: 'Objekt / Led (3)', colorClass: 'slot-objekt', tagClass: 'tag-objekt' },
+            { text: t('gm_t4_slot_where', 'Hvor?'), grammar: 'Hvor? (4)', colorClass: 'slot-tid', tagClass: 'tag-tid' }
         ];
 
         function renderTask() {
@@ -2627,36 +2663,36 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
     (function setupGeoStepBuilder(containerEl) {
         const categories = [
             {
-                q: t('gm_t4_step_cat_time', '1. Hvor i Danmark? (1. plads)'),
-                grammar: 'Sted (1)',
-                rowClass: 'row-tid',
-                selClass: 'sel-tid',
-                options: ['I Jylland', 'På Fyn', 'På Sjælland', 'Ved Vesterhavet', 'Over Storebælt', 'I Skagen']
+                q: t('gm_t4_step_cat_sub', '1. Hvem eller hvad? (Subjekt på 1. plads)'),
+                grammar: 'Subjekt (1)',
+                rowClass: 'row-subjekt',
+                selClass: 'sel-subjekt',
+                options: ['Jeg', 'Vi', 'Familien', 'Kursisterne', 'Turisterne']
             },
             {
                 q: t('gm_t4_step_cat_verb', '2. Hvad gør man? (Verbum på 2. plads)'),
                 grammar: 'Verbum (2)',
                 rowClass: 'row-verbum',
                 selClass: 'sel-verbum',
-                options: ['kører', 'ser', 'besøger', 'oplever', 'nyder', 'går']
+                options: ['ser', 'oplever', 'nyder', 'husker', 'tegner']
             },
             {
-                q: t('gm_t4_step_cat_sub', '3. Hvem? (Subjekt på 3. plads)'),
-                grammar: 'Subjekt (3)',
-                rowClass: 'row-subjekt',
-                selClass: 'sel-subjekt',
-                options: ['jeg', 'vi', 'familien', 'kursisterne', 'turisterne']
-            },
-            {
-                q: t('gm_t4_step_cat_rest', '4. Hvad eller hvor? (4. plads)'),
-                grammar: 'Objekt / Sted (4)',
+                q: t('gm_t4_step_cat_rest', '3. Hvad? (Objekt / Rest på 3. plads)'),
+                grammar: 'Objekt (3)',
                 rowClass: 'row-objekt',
                 selClass: 'sel-objekt',
-                options: ['over den lyse bro', 'kysten af sten og sand', 'de grønne bakker', 'morgensolen ved vandet', 'de to have mødes']
+                options: ['solopgangen', 'naturen', 'de grønne bakker', 'kysten af sten og sand', 'de slanke broer', 'havets bølger']
+            },
+            {
+                q: t('gm_t4_step_cat_where', '4. Hvor? (Sted på 4. plads til sidst)'),
+                grammar: 'Hvor? (4)',
+                rowClass: 'row-tid',
+                selClass: 'sel-tid',
+                options: ['i Jylland', 'på Fyn', 'på Sjælland', 'ved Storebælt', 'i Skagen', 'ved Gedser Odde']
             }
         ];
 
-        let selections = ['Over Storebælt', 'kører', 'vi', 'over den lyse bro'];
+        let selections = ['Vi', 'ser', 'de slanke broer', 'ved Storebælt'];
 
         const wrapper = document.createElement('div');
         wrapper.className = 'step-builder-wrapper';
@@ -2668,10 +2704,10 @@ export function renderSangGodmorgenLilleLandView(container, navigateFn, extraDat
             outputBox.innerHTML = `
                 <div class="live-badge-label">${t('gm_t4_step_live_label', 'Din sætning om Danmarks geografi')}</div>
                 <div class="live-sentence-text">
-                    <span class="word-color-tid">${selections[0]}</span>
+                    <span class="word-color-subjekt">${selections[0]}</span>
                     <span class="word-color-verbum">${selections[1]}</span>
-                    <span class="word-color-subjekt">${selections[2]}</span>
-                    <span class="word-color-objekt">${selections[3]}</span>.
+                    <span class="word-color-objekt">${selections[2]}</span>
+                    <span class="word-color-tid">${selections[3]}</span>.
                 </div>
                 <button type="button" class="listen-btn" id="btn-gm-live-listen">
                     ${t('gm_t4_step_btn_listen', 'Lyt til sætningen')}

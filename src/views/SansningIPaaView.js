@@ -200,6 +200,8 @@ export function renderSansningIPaaView(container, navigateFn, extraData = {}) {
 
     const style = document.createElement('style');
     style.textContent = `
+        /* Skjul vrimlebillede på 3.1 I vs. på */
+        .contrast-split-stage, .split-stage, .stage-split-wrapper, .vrimmel-split-stage { display: none !important; }
         .sansning-station-view {
             max-width: 1200px;
             margin: 0 auto;

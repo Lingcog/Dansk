@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Samtale 1: En ansat ringer til lægen — Fuld dialog (D, R og G)</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 14mm 15mm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px 16px 48px;
+      background: #e2e8f0;
+      color: #0f172a;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Skærm-værktøjslinje (skjules ved print/PDF) */
+    .screen-toolbar {
+      max-width: 210mm;
+      margin: 0 auto 14px;
+      padding: 10px 16px;
+      background: #0f172a;
+      color: #f8fafc;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 13px;
+    }
+    .screen-toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .screen-toolbar input {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-size: 13px;
+      width: 150px;
+    }
+    .screen-toolbar button {
+      background: #16a34a;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .screen-toolbar button:hover {
+      background: #15803d;
+    }
+
+    /* A4-ark */
+    .page {
+      width: 210mm;
+      max-width: 100%;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 12px 36px rgba(15, 23, 42, 0.14);
+      padding: 14mm 15mm 13mm;
+    }
+
+    /* Header */
+    .doc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      border-bottom: 2px solid #0f172a;
+    }
+    .doc-kicker {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #15803d;
+      margin-bottom: 3px;
+    }
+    .doc-title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+    }
+    .doc-legend {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #334155;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      padding: 5px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .scene-line {
+      font-size: 11.5px;
+      color: #475569;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 7px 11px;
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+
+    /* Samtale-område */
+    .chat-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .row {
+      display: flex;
+      width: 100%;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .row.left {
+      justify-content: flex-start;
+    }
+    .row.right {
+      justify-content: flex-end;
+    }
+
+    .bubble {
+      position: relative;
+      max-width: 72%;
+      padding: 9px 13px 8px;
+      border-radius: 14px;
+      line-height: 1.45;
+    }
+
+    /* Venstre: Ansat (kursist) */
+    .row.left .bubble {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-bottom-left-radius: 4px;
+      color: #0f172a;
+    }
+    .row.left .bubble::before {
+      content: "";
+      position: absolute;
+      left: -7px;
+      bottom: 8px;
+      width: 12px;
+      height: 12px;
+      background: #f8fafc;
+      border-left: 1.5px solid #cbd5e1;
+      border-bottom: 1.5px solid #cbd5e1;
+      transform: rotate(45deg);
+    }
+
+    /* Højre: Læge */
+    .row.right .bubble {
+      background: #f1f5f9;
+      border: 1.5px solid #94a3b8;
+      border-bottom-right-radius: 4px;
+      color: #1e293b;
+    }
+    .row.right .bubble::before {
+      content: "";
+      position: absolute;
+      right: -7px;
+      bottom: 8px;
+      width: 12px;
+      height: 12px;
+      background: #f1f5f9;
+      border-right: 1.5px solid #94a3b8;
+      border-bottom: 1.5px solid #94a3b8;
+      transform: rotate(-45deg);
+    }
+
+    .speaker-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 3px;
+    }
+    .speaker-name {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #475569;
+    }
+    .row.left .speaker-name {
+      color: #0f766e;
+    }
+    .step-num {
+      font-size: 10px;
+      font-weight: 800;
+      color: #64748b;
+    }
+
+    .line-text {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    /* Grøn understregning af fokus-bogstaver/orddele fra lyttearket */
+    .g-u {
+      text-decoration: none;
+      border-bottom: 2.6px solid #16a34a;
+      background: rgba(22, 163, 74, 0.13);
+      color: #14532d;
+      padding: 0 1px;
+      border-radius: 2px;
+      font-weight: 800;
+    }
+
+    .focus-note {
+      margin-top: 5px;
+      padding-top: 4px;
+      border-top: 1px dashed #cbd5e1;
+      font-size: 10.2px;
+      color: #475569;
+      line-height: 1.35;
+    }
+    .focus-note strong {
+      color: #15803d;
+      font-weight: 700;
+    }
+
+    /* Bund-opsamling */
+    .doc-footer {
+      margin-top: 14px;
+      padding-top: 9px;
+      border-top: 1.5px solid #cbd5e1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 10.5px;
+      color: #475569;
+      break-inside: avoid;
+    }
+    .check-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .check-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+    .box {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      border: 1.4px solid #334155;
+      border-radius: 2px;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .screen-toolbar {
+        display: none !important;
+      }
+      .page {
+        width: auto;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="screen-toolbar">
+    <div class="screen-toolbar-left">
+      <strong>HTML-udkast til finpudsning</strong>
+      <label>
+        Navn i dialogen:
+        <input type="text" id="nameInput" value="[Navn]" placeholder="Fx Sara" />
+      </label>
+    </div>
+    <button type="button" onclick="window.print()">Print / Gem som PDF</button>
+  </div>
+
+  <main class="page">
+    <header class="doc-header">
+      <div>
+        <div class="doc-kicker">Samtale 1 · Sygdom &amp; job · Træning af D, R og G</div>
+        <h1 class="doc-title">En ansat ringer til lægen</h1>
+      </div>
+      <div class="doc-legend">
+        <span class="g-u">grøn streg</span> = fokuslyd fra lyttearket
+      </div>
+    </header>
+
+    <div class="scene-line">
+      <strong>Scene:</strong> Mandag morgen. Den ansatte er vågnet med høj feber og ringer til lægen for at få en vurdering og rådgivning.
+    </div>
+
+    <section class="chat-flow">
+
+      <!-- 1. ANSAT -->
+      <div class="row left">
+        <div class="bubble">
+          <div class="speaker-row">
+            <span class="speaker-name">Ansat</span>
+            <span class="step-num">1</span>
+          </div>
+          <div class="line-text">Hej, je<span class="g-u">g</span> he<span class="g-u">dd</span><span class="g-u">er</span> <span class="user-name">[Navn]</span>.</div>
+          <div class="focus-note"><strong>Fokus:</strong> Stumt <em>g</em> i <em>jeg</em> [ja] · Blødt <em>d</em> i <em>hedder</em> · Vokalisk <em>r</em> i <em>hedder</em></div>
+        </div>
+      </div>
+
+      <!-- LÆGE 1 -->
+      <div class="row right">
+        <div class="bubble">
+          <div class="speaker-row">
+            <span class="speaker-name">Læge</span>
+          </div>
+          <div class="line-text">Hej <span class="user-name">[Navn]</span>. Hvad kan jeg gøre for dig?</div>
+        </div>
+      </div>
+
+      <!-- 2. ANSAT -->
+      <div class="row left">
+        <div class="bubble">
+          <div class="speaker-row">
+            <span class="speaker-name">Ansat</span>
+            <span class="step-num">2</span>
+          </div>
+          <div class="line-text">Je<span class="g-u">g</span> <span class="g-u">r</span>inger fordi je<span class="g-u">g</span> ha<span class="g-u">r</span> det virkeli<span class="g-u">g</span> dårligt.</div>
+          <div class="focus-note"><strong>Fokus:</strong> Stumt <em>g</em> i <em>jeg</em> og <em>virkelig</em> · Hårdt hals-<em>r</em> i <em>ringer</em> · Vokalisk <em>r</em> i <em>har</em></div>
+        </div>
+      </div>
+
+      <!-- LÆGE 2 -->
+      <div class="row right">
+        <div class="bubble">
+          <div class="speaker-row">
+            <span class="speaker-name">Læge</span>
+          </div>
+          <div class="line-text">Hvad er dine symptomer?</div>
+        </div>
+      </div>
+
+      <!-- 3. ANSAT -->
+      <div class="row left">
+        <div class="bubble">
+          <div class="speaker-row">
+            <span class="speaker-name">Ansat</span>
+            <span class="step-num">3</span>
+          </div>
+          <div class="line-text">Jeg ha<span class="g-u">r</span> høj feb<span class="g-u">er</span>, hove<span class="g-u">d</span>pine og muskelsmert<span class="g-u">er</span>.</div>
+          <div class="focus-note"><strong>Fokus:</strong> Vokalisk <em>r</em> i <em>har</em>, <em>feber</em> og <em>muskelsmerter</em> · Blødt <em>d</em> i <em>hovedpine</em></div>
+        </div>
+      </div>
+
+      <!-- LÆGE 3 -->
+      <div class="row right">
+        <div class="bubble">
+          <div class="speaker-row">
+            <span class="speaker-name">Læge</span>
+          </div>
+          <div class="line-text">Hoster du også?</div>
+        </div>
+      </div>
+
+      <!-- 4. ANSAT -->
+      <div class="row left">
+        <div class="bubble">
+          <div class="speaker-row">
+            <span class="speaker-name">Ansat</span>
+            <span class="step-num">4</span>
+          </div>
+          <div class="line-text">Ja, det gø<span class="g-u">r</span> je<span class="g-u">g</span>.</div>
+          <div class="focus-note"><strong>Fokus:</strong> Vokalisk <em>r</em> i <em>gør</em> · Stumt <em>g</em> i <em>jeg</em> [ja]</div>
+        </div>
+      </div>
+
+      <!-- LÆGE 4 -->
+      <div class="row right">
+        <div class="bubble">
+          <div class="speaker-row">
+            <span class="speaker-name">Læge</span>
+          </div>
+          <div class="line-text">Hoster du slim op?</div>
+        </div>
+      </div>
+
+      <!-- 5. ANSAT -->
+      <div class="row left">
+        <div class="bubble">
+          <div class="speaker-row">
+            <span class="speaker-name">Ansat</span>
+            <span class="step-num">5</span>
+          </div>
+          <div class="line-text">Ja, de<span class="g-u">r</span> e<span class="g-u">r</span> lidt <span class="g-u">gr</span>ønt slim.</div>
+          <div class="focus-note"><strong>Fokus:</strong> Hårdt <em>g</em> + hårdt hals-<em>r</em> i <em>grønt</em> · Vokalisk <em>r</em> i <em>der</em> og <em>er</em></div>
+        </div>
+      </div>
+
+      <!-- LÆGE 5 -->
+      <div class="row right">
+        <div class="bubble">
+          <div class="speaker-row">
+            <span class="speaker-name">Læge</span>
+          </div>
+          <div class="line-text">Har du andre symptomer som kvalme eller diarré?</div>
+        </div>
+      </div>
+
+      <!-- 6. ANSAT -->
+      <div class="row left">
+        <div class="bubble">
+          <div class="speaker-row">
+            <span class="speaker-name">Ansat</span>
+            <span class="step-num">6</span>
+          </div>
+          <div class="line-text">Nej, kun t<span class="g-u">r</span>æthe<span class="g-u">d</span> og on<span class="g-u">d</span>t i halsen.</div>
+          <div class="focus-note"><strong>Fokus:</strong> Hårdt hals-<em>r</em> i <em>træthed</em> · Blødt <em>d</em> i <em>træthed</em> · Stumt <em>d</em> i <em>ondt</em></div>
+        </div>
+      </div>
+
+      <!-- LÆGE 6 -->
+      <div class="row right">
+        <div class="bubble">
+          <div class="speaker-row">
+            <span class="speaker-name">Læge</span>
+          </div>
+          <div class="line-text">Jeg vil udskrive nogle medikamenter til dig mod feberen og hosten. Sørg for at drikke masser af væske og få hvile.</div>
+        </div>
+      </div>
+
+      <!-- 7. ANSAT -->
+      <div class="row left">
+        <div class="bubble">
+          <div class="speaker-row">
+            <span class="speaker-name">Ansat</span>
+            <span class="step-num">7</span>
+          </div>
+          <div class="line-text">Tak, det vil je<span class="g-u">g</span> gø<span class="g-u">re</span>.</div>
+          <div class="focus-note"><strong>Fokus:</strong> Stumt <em>g</em> i <em>jeg</em> [ja] · Vokalisk <em>r</em> i <em>gøre</em></div>
+        </div>
+      </div>
+
+      <!-- LÆGE 7 -->
+      <div class="row right">
+        <div class="bubble">
+          <div class="speaker-row">
+            <span class="speaker-name">Læge</span>
+          </div>
+          <div class="line-text">Rigtig god bedring, <span class="user-name">[Navn]</span>. Ring endelig igen, hvis det bliver værre!</div>
+        </div>
+      </div>
+
+    </section>
+
+    <footer class="doc-footer">
+      <div><strong>Ekstra fokus i appen:</strong></div>
+      <div class="check-pills">
+        <span class="check-pill"><span class="box"></span> Bogstav D (blødt / stumt)</span>
+        <span class="check-pill"><span class="box"></span> Bogstav R (hals-R / vokalisk)</span>
+        <span class="check-pill"><span class="box"></span> Bogstav G (stumt / hårdt)</span>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const input = document.getElementById('nameInput');
+    if (input) {
+      input.addEventListener('input', () => {
+        const val = input.value.trim() || '[Navn]';
+        document.querySelectorAll('.user-name').forEach(el => { el.textContent = val; });
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
-import { swT, isSwRtl } from '../utils/mb_skrive_translations.js';
+import { swT } from '../utils/mb_skrive_translations.js';
+import { shT, isShRtl } from '../utils/samtalehjaelp_translations.js';
 import { injectSkrivehjaelpStyles } from './SkrivehjaelpView.js';
 import {
     ORDSTILLING_COLORS,
@@ -39,9 +40,9 @@ function speakDanish(text) {
     window.speechSynthesis.speak(u);
 }
 
-function copyTextWithFeedback(text, btn, defaultHtml) {
+function copyTextWithFeedback(text, btn, defaultHtml, copiedText) {
     const done = () => {
-        btn.textContent = 'Kopieret';
+        btn.textContent = copiedText;
         setTimeout(() => { btn.innerHTML = defaultHtml; }, 2000);
     };
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -65,31 +66,31 @@ function copyTextWithFeedback(text, btn, defaultHtml) {
 const ORAL_GENRES = {
     beskriv: {
         id: 'beskriv',
-        label: '1. Beskriv billedet',
-        promptTip: 'PD2 Del 2 · Eksaminator spørger: "Vil du godt beskrive situationen på billedet?" — Start med overblik, fortæl hvem der er på billedet, hvad de laver, og hvordan stemningen er.',
+        labelKey: 'genre_beskriv_label',
+        promptTipKey: 'genre_beskriv_tip',
         starts: {
             sted: {
-                label: 'Overblik / Sted (V2)',
+                labelKey: 'cat_overblik',
                 mode: 'inversion',
                 options: ['På billedet', 'I forgrunden', 'I baggrunden', 'Til venstre', 'Til højre', 'I midten']
             },
             person: {
-                label: 'Personer (Plads 1)',
+                labelKey: 'cat_personer',
                 mode: 'normal',
                 options: ['Nogle børn', 'Drengene', 'Pigerne', 'De', 'En dreng', 'Billedet']
             },
             sammenhaeng: {
-                label: 'Sammenhæng (V2)',
+                labelKey: 'cat_sammenhaeng',
                 mode: 'inversion',
                 options: ['Samtidig', 'Desuden', 'Her', 'Bagved']
             },
             at_clause: {
-                label: 'Stemning / Indtryk (at-sætning)',
+                labelKey: 'cat_stemning',
                 mode: 'at_clause',
                 options: ['Det ser ud til, at', 'Jeg kan se, at', 'Jeg tror, at', 'Det virker som om, at']
             },
             kan_lide: {
-                label: 'Kan lide (Del 3)',
+                labelKey: 'cat_kan_lide',
                 mode: 'kan_lide',
                 options: ['Børnene', 'De', 'Drengene']
             }
@@ -125,36 +126,36 @@ const ORAL_GENRES = {
 
     mening: {
         id: 'mening',
-        label: '2. Udtryk din mening om situationen (generelt spørgsmål)',
-        promptTip: 'PD2 Del 2 · Eksaminator spørger: "Synes du, det er en god idé, at ...? Hvorfor / hvorfor ikke?" — Udtryk din holdning tydeligt, begrund med "fordi" og nuancér evt. med "på den ene side / på den anden side".',
+        labelKey: 'genre_mening_label',
+        promptTipKey: 'genre_mening_tip',
         starts: {
             at_clause: {
-                label: 'Min mening (at-sætning)',
+                labelKey: 'cat_min_mening',
                 mode: 'at_clause',
                 options: ['Jeg synes, at', 'Jeg mener, at', 'Jeg tror, at', 'Det er en god idé, at', 'Det er vigtigt, at']
             },
             person: {
-                label: 'Generelt (Plads 1)',
+                labelKey: 'cat_generelt',
                 mode: 'normal',
                 options: ['Man', 'Børn og unge', 'Forældre', 'Mange familier', 'Det']
             },
             sammenhaeng: {
-                label: 'Argument / Nuancering (V2)',
+                labelKey: 'cat_argument',
                 mode: 'inversion',
                 options: ['På den ene side', 'På den anden side', 'Derfor', 'Alligevel', 'Samtidig', 'Alt i alt']
             },
             sted: {
-                label: 'Kontekst / Sted (V2)',
+                labelKey: 'cat_kontekst',
                 mode: 'inversion',
                 options: ['I fritiden', 'I Danmark', 'I skolen', 'Derhjemme', 'I en forening']
             },
             tid: {
-                label: 'Tid / I dag (V2)',
+                labelKey: 'cat_tid_idag',
                 mode: 'inversion',
                 options: ['I dag', 'I hverdagen', 'Ofte', 'Nogle gange']
             },
             kan_lide: {
-                label: 'Kan lide (Del 3)',
+                labelKey: 'cat_kan_lide',
                 mode: 'kan_lide',
                 options: ['Mange børn', 'De fleste unge', 'Jeg', 'Man']
             }
@@ -190,36 +191,36 @@ const ORAL_GENRES = {
 
     erfaring: {
         id: 'erfaring',
-        label: '3. Fortæl lidt om dine egne erfaringer',
-        promptTip: 'PD2 Del 2 · Eksaminator spørger: "Har du selv børn? Hvad laver de i fritiden?" eller "Hvad lavede du selv i fritiden, da du var barn?" — Brug nutid om i dag eller datid om din barndom.',
+        labelKey: 'genre_erfaring_label',
+        promptTipKey: 'genre_erfaring_tip',
         starts: {
             person: {
-                label: 'Person (Plads 1)',
+                labelKey: 'cat_person',
                 mode: 'normal',
                 options: ['Jeg', 'Mine børn', 'Vi', 'Min søn', 'Min datter', 'Min familie']
             },
             tid: {
-                label: 'Tid / Da jeg var barn (V2)',
+                labelKey: 'cat_tid_barn',
                 mode: 'inversion',
                 options: ['Da jeg var barn', 'I min fritid', 'I weekenden', 'Før i tiden', 'Nu om dage', 'Hver uge']
             },
             sted: {
-                label: 'Sted (V2)',
+                labelKey: 'cat_sted',
                 mode: 'inversion',
                 options: ['I mit hjemland', 'I Danmark', 'Udenfor', 'Derhjemme', 'I en sportsklub']
             },
             sammenhaeng: {
-                label: 'Sammenhæng (V2)',
+                labelKey: 'cat_sammenhaeng',
                 mode: 'inversion',
                 options: ['Derfor', 'Bagefter', 'Ofte', 'Heldigvis', 'Desuden']
             },
             at_clause: {
-                label: 'Erfaring / Minde (at-sætning)',
+                labelKey: 'cat_erfaring_minde',
                 mode: 'at_clause',
                 options: ['Jeg husker, at', 'Jeg oplever, at', 'Jeg synes, at', 'Jeg håber, at']
             },
             kan_lide: {
-                label: 'Kan lide (Del 3)',
+                labelKey: 'cat_kan_lide',
                 mode: 'kan_lide',
                 options: ['Jeg', 'Mine børn', 'Vi']
             }
@@ -253,34 +254,14 @@ const ORAL_GENRES = {
 };
 
 const ORAL_REVIEW_QUESTIONS = [
-    {
-        id: 'v2',
-        title: '1. Verbum på plads 2 (V2)',
-        question: 'Når du starter med sted, tid eller sammenhæng (fx "På billedet", "Da jeg var barn", "Derfor"), kommer verbet så lige efter?'
-    },
-    {
-        id: 'reason',
-        title: '2. Begrundelse og bindeord',
-        question: 'Har du begrundet din mening eller din oplevelse med et bindeord som "fordi", "men", "selvom" eller "så"?'
-    },
-    {
-        id: 'nuance',
-        title: '3. Nuancering og detaljer',
-        question: 'Har du uddybet med mindst én ekstra detalje (fx "som/der", "samtidig" eller "på den ene side / på den anden side")?'
-    },
-    {
-        id: 'tense',
-        title: '4. Tid (nutid vs. datid)',
-        question: 'Bruger du nutid til billedbeskrivelse og holdninger — og datid, hvis du fortæller om din egen barndom?'
-    },
-    {
-        id: 'speak',
-        title: '5. Sig svaret højt',
-        question: 'Tryk på "Lyt til hele svaret", og prøv derefter at sige hele svaret højt uden at kigge på skærmen.'
-    }
+    { id: 'v2', titleKey: 'rev_q1_title', textKey: 'rev_q1_text' },
+    { id: 'reason', titleKey: 'rev_q2_title', textKey: 'rev_q2_text' },
+    { id: 'nuance', titleKey: 'rev_q3_title', textKey: 'rev_q3_text' },
+    { id: 'tense', titleKey: 'rev_q4_title', textKey: 'rev_q4_text' },
+    { id: 'speak', titleKey: 'rev_q5_title', textKey: 'rev_q5_text' }
 ];
 
-function analyzeOralHints(sentences, genreId) {
+function analyzeOralHints(sentences, genreId, lang) {
     const joined = sentences.join(' ').trim();
     const lower = joined.toLowerCase();
     const hints = [];
@@ -288,33 +269,33 @@ function analyzeOralHints(sentences, genreId) {
     if (sentences.length === 0) {
         if (genreId === 'beskriv') {
             hints.push({
-                title: 'Start med overblikket',
-                text: 'Begynd gerne med "På billedet ser jeg ..." eller "På billedet er der ...", så eksaminator straks hører situationen.'
+                title: shT('hint_beskriv_1_title', lang),
+                text: shT('hint_beskriv_1_text', lang)
             });
             hints.push({
-                title: 'Husk V2 efter sted',
-                text: 'Når du starter med "På billedet" eller "I baggrunden", står verbet på plads 2: "På billedet spiller nogle børn ...".',
-                link: { label: 'Øv V2 i Ordstilling →', route: 'ordstilling' }
+                title: shT('hint_beskriv_2_title', lang),
+                text: shT('hint_beskriv_2_text', lang),
+                link: { label: shT('hint_beskriv_2_link', lang), route: 'ordstilling' }
             });
         } else if (genreId === 'mening') {
             hints.push({
-                title: 'Sig din holdning tydeligt',
-                text: 'Start med "Jeg synes, at ..." eller "Jeg mener, at ...", og følg op med en begrundelse med "fordi".'
+                title: shT('hint_mening_1_title', lang),
+                text: shT('hint_mening_1_text', lang)
             });
             hints.push({
-                title: 'Nuancér dit svar (PD2-plus)',
-                text: 'Brug gerne "På den ene side ..." og "På den anden side ..." for at vise begge sider af sagen.',
-                link: { label: 'Se bindeord og konjunktioner →', route: 'top_konjunktioner' }
+                title: shT('hint_mening_2_title', lang),
+                text: shT('hint_mening_2_text', lang),
+                link: { label: shT('hint_mening_2_link', lang), route: 'top_konjunktioner' }
             });
         } else {
             hints.push({
-                title: 'Nutid eller datid?',
-                text: 'Fortæller du om dine børn i dag, så brug nutid ("spiller", "går til"). Fortæller du om din barndom, så brug datid ("spillede", "lavede").',
-                link: { label: 'Øv datid vs. nutid →', route: 'punktet_og_broen' }
+                title: shT('hint_erfaring_1_title', lang),
+                text: shT('hint_erfaring_1_text', lang),
+                link: { label: shT('hint_erfaring_1_link', lang), route: 'punktet_og_broen' }
             });
             hints.push({
-                title: 'Start med tidsudtryk',
-                text: 'Prøv "Da jeg var barn spillede jeg ..." — så viser du både datid og sikker V2-ordstilling.'
+                title: shT('hint_erfaring_2_title', lang),
+                text: shT('hint_erfaring_2_text', lang)
             });
         }
         return hints;
@@ -323,33 +304,33 @@ function analyzeOralHints(sentences, genreId) {
     const hasBecause = /\b(fordi|men|selvom|så)\b/i.test(lower);
     if (!hasBecause) {
         hints.push({
-            title: 'Tilføj en begrundelse',
-            text: 'Prøv at udvide din næste sætning i Trin 4 med ", fordi ..." eller ", men ..." — det løfter dit svar ved PD2.',
-            link: { label: 'Øv konjunktioner →', route: 'top_konjunktioner' }
+            title: shT('hint_dyn_reason_title', lang),
+            text: shT('hint_dyn_reason_text', lang),
+            link: { label: shT('hint_dyn_reason_link', lang), route: 'top_konjunktioner' }
         });
     }
 
     const lastTwo = sentences.slice(-2);
     if (lastTwo.length >= 2 && lastTwo.every(s => /^jeg\b/i.test(s.trim()))) {
         hints.push({
-            title: 'Variér starten af dine sætninger',
-            text: 'Dine sidste to sætninger starter med "Jeg". Prøv en V2-start som "Derfor ...", "På den anden side ..." eller "I fritiden ...".',
-            link: { label: 'Øv Ordstilling →', route: 'ordstilling' }
+            title: shT('hint_dyn_jeg_title', lang),
+            text: shT('hint_dyn_jeg_text', lang),
+            link: { label: shT('hint_dyn_jeg_link', lang), route: 'ordstilling' }
         });
     }
 
     const hasRel = /\b(som|der)\b/i.test(lower);
     if (sentences.length >= 2 && !hasRel && hints.length < 2) {
         hints.push({
-            title: 'Uddyb med "som" eller "der"',
-            text: 'I Trin 4 kan du skifte til fanen "Uddybning (som / der)" for at gøre din beskrivelse mere levende.'
+            title: shT('hint_dyn_rel_title', lang),
+            text: shT('hint_dyn_rel_text', lang)
         });
     }
 
     if (hints.length < 2) {
         hints.push({
-            title: 'Øv rytmen højt',
-            text: 'Brug knappen "Lyt til hele svaret", og gentag sætningerne højt med naturlige pauser.'
+            title: shT('hint_dyn_rhythm_title', lang),
+            text: shT('hint_dyn_rhythm_text', lang)
         });
     }
 
@@ -373,7 +354,7 @@ function formatSentenceFocus(sentence, focusId) {
 }
 
 // ============================================================================
-// HOVEDKOMPONENT: SAMTALEHJÆLP (PD2 MUNDTLIG)
+// HOVEDKOMPONENT: SAMTALEHJÆLP (PD2 MUNDTLIG) — 18 SPROG + RTL
 // ============================================================================
 export function renderSamtalehjaelpView(container, navigateFn) {
     injectSkrivehjaelpStyles();
@@ -471,7 +452,7 @@ export function renderSamtalehjaelpView(container, navigateFn) {
         viewContainer.innerHTML = '';
 
         const lang = getLang() || 'da';
-        const rtlAttr = isSwRtl(lang) ? ' dir="rtl"' : '';
+        const rtlAttr = isShRtl(lang) ? ' dir="rtl"' : '';
 
         // Top bar
         const topBar = document.createElement('div');
@@ -490,8 +471,8 @@ export function renderSamtalehjaelpView(container, navigateFn) {
         const header = document.createElement('div');
         header.className = 'sh-header';
         header.innerHTML = `
-            <h1>Samtalehjælp (PD2 mundtlig)</h1>
-            <p>Opbyg mundtlige sætninger og sproghandlinger trin for trin i den rigtige rækkefølge — til billedbeskrivelse, begrundede holdninger og egne erfaringer.</p>
+            <h1${rtlAttr}>${escapeHtml(shT('page_title', lang))}</h1>
+            <p${rtlAttr}>${escapeHtml(shT('page_subtitle', lang))}</p>
         `;
         viewContainer.appendChild(header);
 
@@ -501,7 +482,7 @@ export function renderSamtalehjaelpView(container, navigateFn) {
         const isAt = mode === 'at_clause';
         const isKanLide = mode === 'kan_lide';
         const totalWords = sentences.join(' ').trim().split(/\s+/).filter(Boolean).length;
-        const hints = analyzeOralHints(sentences, activeGenreId);
+        const hints = analyzeOralHints(sentences, activeGenreId, lang);
         const checkedCount = ORAL_REVIEW_QUESTIONS.filter(q => checkedReviewIds[q.id]).length;
 
         // 1. ØVERST: DIT MUNDTLIGE SVAR
@@ -509,44 +490,44 @@ export function renderSamtalehjaelpView(container, navigateFn) {
         docCard.className = 'sh-card';
         docCard.innerHTML = `
             <div class="sh-card-head">
-                <h2 class="sh-card-title">${SVG_MSG}<span>Dit mundtlige svar</span></h2>
-                <span class="sh-meta-pill">${sentences.length} ${sentences.length === 1 ? 'sætning' : 'sætninger'} · ${totalWords} ord</span>
+                <h2 class="sh-card-title"${rtlAttr}>${SVG_MSG}<span>${escapeHtml(shT('doc_title', lang))}</span></h2>
+                <span class="sh-meta-pill"${rtlAttr}>${sentences.length} ${escapeHtml(sentences.length === 1 ? shT('meta_sent_one', lang) : shT('meta_sent_many', lang))} · ${totalWords} ${escapeHtml(shT('meta_words', lang))}</span>
             </div>
             <div class="sh-doc-surface" id="sh-doc-surface" dir="ltr">
                 ${sentences.length === 0
-                    ? `<span class="sh-doc-empty">Byg din første mundtlige sætning nedenfor, og tryk på "Indsæt øverst".</span>`
-                    : sentences.map((s, idx) => `<span class="sh-doc-sentence" data-edit-idx="${idx}" title="Klik for at rette eller slette sætningen">${formatSentenceFocus(s, isReviewOpen ? activeReviewFocus : null)}</span>`).join(' ')
+                    ? `<span class="sh-doc-empty"${rtlAttr}>${escapeHtml(shT('doc_empty', lang))}</span>`
+                    : sentences.map((s, idx) => `<span class="sh-doc-sentence" data-edit-idx="${idx}" title="${escapeHtml(shT('doc_edit_title', lang))}">${formatSentenceFocus(s, isReviewOpen ? activeReviewFocus : null)}</span>`).join(' ')
                 }
             </div>
             ${editingSentenceIdx !== null && sentences[editingSentenceIdx] !== undefined ? `
                 <div class="sh-inline-edit-row">
                     <input type="text" class="sh-custom-input" id="sh-inline-edit-inp" dir="ltr" value="${escapeHtml(sentences[editingSentenceIdx])}" style="flex:1; min-width:220px;" />
-                    <button type="button" class="sh-btn-primary" id="sh-inline-save-btn" style="padding:0.42rem 0.85rem; font-size:0.8rem;">Gem</button>
-                    <button type="button" class="sh-btn-ghost" id="sh-inline-del-btn" style="padding:0.4rem 0.75rem; font-size:0.78rem;">${SVG_TRASH}<span>Fjern</span></button>
-                    <button type="button" class="sh-btn-ghost" id="sh-inline-cancel-btn" style="padding:0.4rem 0.75rem; font-size:0.78rem;">Annuller</button>
+                    <button type="button" class="sh-btn-primary" id="sh-inline-save-btn" style="padding:0.42rem 0.85rem; font-size:0.8rem;">${escapeHtml(shT('btn_save', lang))}</button>
+                    <button type="button" class="sh-btn-ghost" id="sh-inline-del-btn" style="padding:0.4rem 0.75rem; font-size:0.78rem;">${SVG_TRASH}<span>${escapeHtml(shT('btn_remove', lang))}</span></button>
+                    <button type="button" class="sh-btn-ghost" id="sh-inline-cancel-btn" style="padding:0.4rem 0.75rem; font-size:0.78rem;">${escapeHtml(shT('btn_cancel', lang))}</button>
                 </div>
             ` : ''}
             ${!isReviewOpen ? `
                 <div class="sh-hints-grid">
                     ${hints.map(h => `
-                        <div class="sh-hint-box">
+                        <div class="sh-hint-box"${rtlAttr}>
                             <span class="sh-hint-icon">${SVG_HINT}</span>
                             <div>
-                                <div class="sh-hint-title">${h.title}</div>
-                                <div class="sh-hint-text">${h.text}</div>
-                                ${h.link ? `<button type="button" class="sh-hint-link" data-hint-route="${h.link.route}">${h.link.label}</button>` : ''}
+                                <div class="sh-hint-title">${escapeHtml(h.title)}</div>
+                                <div class="sh-hint-text">${escapeHtml(h.text)}</div>
+                                ${h.link ? `<button type="button" class="sh-hint-link" data-hint-route="${h.link.route}">${escapeHtml(h.link.label)}</button>` : ''}
                             </div>
                         </div>
                     `).join('')}
                 </div>
             ` : `
-                <div class="sh-review-panel" id="sh-review-panel">
+                <div class="sh-review-panel" id="sh-review-panel"${rtlAttr}>
                     <div class="sh-review-head">
                         <div>
-                            <div style="font-size:0.9rem; font-weight:800; color:#f1f5f9;">PD2-tjek af dit mundtlige svar</div>
-                            <div style="font-size:0.78rem; color:#94a3b8;">Klik på et punkt for at fremhæve det i dit svar, og kryds af når du er klar.</div>
+                            <div style="font-size:0.9rem; font-weight:800; color:#f1f5f9;">${escapeHtml(shT('rev_title', lang))}</div>
+                            <div style="font-size:0.78rem; color:#94a3b8;">${escapeHtml(shT('rev_subtitle', lang))}</div>
                         </div>
-                        <span class="sh-meta-pill">${checkedCount} / ${ORAL_REVIEW_QUESTIONS.length} tjekket</span>
+                        <span class="sh-meta-pill">${checkedCount} / ${ORAL_REVIEW_QUESTIONS.length} ${escapeHtml(shT('rev_checked_of', lang))}</span>
                     </div>
                     ${ORAL_REVIEW_QUESTIONS.map(rq => {
                         const isDone = !!checkedReviewIds[rq.id];
@@ -554,11 +535,11 @@ export function renderSamtalehjaelpView(container, navigateFn) {
                         return `
                             <div class="sh-review-item ${isFocused ? 'focused' : ''} ${isDone ? 'checked' : ''}" data-rev-focus="${rq.id}">
                                 <div>
-                                    <div style="font-size:0.84rem; font-weight:800; color:${isFocused ? '#7ec4ce' : '#f1f5f9'}; margin-bottom:0.2rem;">${rq.title}</div>
-                                    <div style="font-size:0.82rem; color:#cbd5e1; line-height:1.45;">${rq.question}</div>
+                                    <div style="font-size:0.84rem; font-weight:800; color:${isFocused ? '#7ec4ce' : '#f1f5f9'}; margin-bottom:0.2rem;">${escapeHtml(shT(rq.titleKey, lang))}</div>
+                                    <div style="font-size:0.82rem; color:#cbd5e1; line-height:1.45;">${escapeHtml(shT(rq.textKey, lang))}</div>
                                 </div>
                                 <button type="button" class="sh-review-check-btn ${isDone ? 'done' : ''}" data-rev-check="${rq.id}">
-                                    ${SVG_CHECK}<span>${isDone ? 'Tjekket' : 'Tjek'}</span>
+                                    ${SVG_CHECK}<span>${escapeHtml(isDone ? shT('rev_btn_checked', lang) : shT('rev_btn_check', lang))}</span>
                                 </button>
                             </div>
                         `;
@@ -568,18 +549,18 @@ export function renderSamtalehjaelpView(container, navigateFn) {
             <div class="sh-doc-actions">
                 <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
                     <button type="button" class="sh-btn-primary" id="sh-speak-all-btn" ${sentences.length === 0 ? 'disabled' : ''}>
-                        ${SVG_SPEAK}<span>Lyt til hele svaret</span>
+                        ${SVG_SPEAK}<span>${escapeHtml(shT('btn_speak_all', lang))}</span>
                     </button>
                     <button type="button" class="sh-btn-ghost" id="sh-copy-doc-btn" ${sentences.length === 0 ? 'disabled' : ''}>
-                        ${SVG_COPY}<span>Kopiér</span>
+                        ${SVG_COPY}<span>${escapeHtml(shT('btn_copy', lang))}</span>
                     </button>
                     <button type="button" class="sh-btn-ghost" id="sh-clear-doc-btn" ${sentences.length === 0 ? 'disabled' : ''}>
-                        ${SVG_TRASH}<span>Ryd</span>
+                        ${SVG_TRASH}<span>${escapeHtml(shT('btn_clear', lang))}</span>
                     </button>
                 </div>
                 ${sentences.length > 0 ? `
                     <button type="button" class="${isReviewOpen ? 'sh-btn-ghost' : 'sh-btn-primary'}" id="sh-toggle-review-btn">
-                        ${SVG_CHECK}<span>${isReviewOpen ? 'Luk PD2-tjek' : 'Tjek dit svar'}</span>
+                        ${SVG_CHECK}<span>${escapeHtml(isReviewOpen ? shT('btn_review_close', lang) : shT('btn_review_open', lang))}</span>
                     </button>
                 ` : ''}
             </div>
@@ -633,7 +614,12 @@ export function renderSamtalehjaelpView(container, navigateFn) {
         }
         const copyDocBtn = docCard.querySelector('#sh-copy-doc-btn');
         if (copyDocBtn && sentences.length > 0) {
-            copyDocBtn.onclick = () => copyTextWithFeedback(sentences.join(' '), copyDocBtn, `${SVG_COPY}<span>Kopiér</span>`);
+            copyDocBtn.onclick = () => copyTextWithFeedback(
+                sentences.join(' '),
+                copyDocBtn,
+                `${SVG_COPY}<span>${escapeHtml(shT('btn_copy', lang))}</span>`,
+                shT('btn_copied', lang)
+            );
         }
         const clearDocBtn = docCard.querySelector('#sh-clear-doc-btn');
         if (clearDocBtn) {
@@ -690,19 +676,19 @@ export function renderSamtalehjaelpView(container, navigateFn) {
 
         flowCard.innerHTML = `
             <div class="sh-card-head">
-                <h2 class="sh-card-title">${SVG_FLOW}<span>Byg din sætning (sproghandling)</span></h2>
-                <label class="sh-topic-picker">
-                    <span class="sh-topic-label">Vælg genre (PD2):</span>
+                <h2 class="sh-card-title"${rtlAttr}>${SVG_FLOW}<span>${escapeHtml(shT('flow_title', lang))}</span></h2>
+                <label class="sh-topic-picker"${rtlAttr}>
+                    <span class="sh-topic-label">${escapeHtml(shT('genre_label', lang))}</span>
                     <select class="sh-topic-select" id="sh-genre-select">
                         ${Object.values(ORAL_GENRES).map(gen => `
-                            <option value="${gen.id}" ${gen.id === activeGenreId ? 'selected' : ''}>${gen.label}</option>
+                            <option value="${gen.id}" ${gen.id === activeGenreId ? 'selected' : ''}>${escapeHtml(shT(gen.labelKey, lang))}</option>
                         `).join('')}
                     </select>
                 </label>
             </div>
 
-            <div style="background:#101419; border:1px solid rgba(76, 155, 166, 0.35); border-left:3px solid #4c9ba6; border-radius:10px; padding:0.7rem 0.95rem; margin-bottom:0.95rem; font-size:0.84rem; color:#cbd5e1; line-height:1.5;">
-                ${escapeHtml(g.promptTip)}
+            <div${rtlAttr} style="background:#101419; border:1px solid rgba(76, 155, 166, 0.35); border-left:3px solid #4c9ba6; border-radius:10px; padding:0.7rem 0.95rem; margin-bottom:0.95rem; font-size:0.84rem; color:#cbd5e1; line-height:1.5;">
+                ${escapeHtml(shT(g.promptTipKey, lang))}
             </div>
 
             ${renderColorLegendHtml(colorCodesEnabled, colorLabels)}
@@ -710,10 +696,10 @@ export function renderSamtalehjaelpView(container, navigateFn) {
             <div class="sh-flow-steps">
                 <!-- TRIN 1 -->
                 <div class="sh-flow-node active-node" style="${step1BorderStyle}">
-                    <div class="sh-flow-node-head">
+                    <div class="sh-flow-node-head"${rtlAttr}>
                         <div>
                             <span class="sh-step-num">1</span>
-                            <strong>Vælg sproghandling og start på sætningen</strong>
+                            <strong>${escapeHtml(shT('step1_q', lang))}</strong>
                         </div>
                         <div style="display:flex; gap:0.35rem; flex-wrap:wrap;">
                             ${Object.entries(g.starts).map(([k, cfg]) => {
@@ -721,7 +707,7 @@ export function renderSamtalehjaelpView(container, navigateFn) {
                                 const dotHtml = (colorCodesEnabled && cObj) ? `<span class="ord-col-dot" style="background:${cObj.dot}; margin-right:0.32rem;"></span>` : '';
                                 return `
                                     <button type="button" class="sh-chip ${startCategory === k ? 'petrol-active' : ''}" data-start-cat="${k}" style="padding:0.28rem 0.65rem; font-size:0.76rem; display:inline-flex; align-items:center;">
-                                        ${dotHtml}${cfg.label}
+                                        ${dotHtml}${escapeHtml(shT(cfg.labelKey, lang))}
                                     </button>
                                 `;
                             }).join('')}
@@ -731,7 +717,7 @@ export function renderSamtalehjaelpView(container, navigateFn) {
                         ${g.starts[startCategory].options.map(opt => `
                             <button type="button" class="sh-chip ${draft.start === opt ? 'active' : ''}" data-pick-start="${opt}" style="${chipColorStyle(startColor, draft.start === opt, colorCodesEnabled)}">${opt}</button>
                         `).join('')}
-                        <input type="text" class="sh-custom-input" id="sh-inp-start" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${g.starts[startCategory].options.includes(draft.start) ? '' : escapeHtml(draft.start)}" placeholder="Eller skriv din egen start..." />
+                        <input type="text" class="sh-custom-input" id="sh-inp-start" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${g.starts[startCategory].options.includes(draft.start) ? '' : escapeHtml(draft.start)}" placeholder="${escapeHtml(shT('ph_start', lang))}" />
                     </div>
                 </div>
 
@@ -739,20 +725,20 @@ export function renderSamtalehjaelpView(container, navigateFn) {
 
                 <!-- TRIN 2 -->
                 <div class="sh-flow-node active-node" style="${step2BorderStyle}">
-                    <div class="sh-flow-node-head">
+                    <div class="sh-flow-node-head"${rtlAttr}>
                         <div style="display:inline-flex; align-items:center; gap:0.35rem;">
                             <span class="sh-step-num">2</span>
                             ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:${ORDSTILLING_COLORS.verb.dot};"></span>` : ''}
-                            <strong>${isAt ? 'Hvem og hvad i at-sætningen?' : isKanLide ? 'Kan / kunne + godt + lide at ...' : 'Verbum (Plads 2)'}</strong>
+                            <strong>${escapeHtml(isAt ? shT('step2_at', lang) : isKanLide ? shT('step2_kan_lide', lang) : shT('step2_normal', lang))}</strong>
                         </div>
-                        ${isInv ? `<span class="sh-v2-tag">V2-inversion aktiv: verbum før subjekt</span>` : ''}
-                        ${isAt ? `<span class="sh-v2-tag">at-sætning: subjekt + verbum</span>` : ''}
-                        ${isKanLide ? `<span class="sh-v2-tag">Del 3: kan godt lide at ...</span>` : ''}
+                        ${isInv ? `<span class="sh-v2-tag">${escapeHtml(shT('tag_v2', lang))}</span>` : ''}
+                        ${isAt ? `<span class="sh-v2-tag">${escapeHtml(shT('tag_at', lang))}</span>` : ''}
+                        ${isKanLide ? `<span class="sh-v2-tag">${escapeHtml(shT('tag_kan_lide', lang))}</span>` : ''}
                     </div>
                     ${isAt ? `
                         <div class="sh-options-wrap" dir="ltr" style="margin-bottom:0.55rem;">
-                            <span style="font-size:0.78rem; color:${colorCodesEnabled ? ORDSTILLING_COLORS.noun.text : '#7ec4ce'}; font-weight:700; display:inline-flex; align-items:center; gap:0.3rem;">
-                                ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:${ORDSTILLING_COLORS.noun.dot};"></span>` : ''}Subjekt efter "at":
+                            <span${rtlAttr} style="font-size:0.78rem; color:${colorCodesEnabled ? ORDSTILLING_COLORS.noun.text : '#7ec4ce'}; font-weight:700; display:inline-flex; align-items:center; gap:0.3rem;">
+                                ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:${ORDSTILLING_COLORS.noun.dot};"></span>` : ''}${escapeHtml(shT('lbl_at_subj', lang))}
                             </span>
                             ${g.atSubjects.map(sub => `
                                 <button type="button" class="sh-chip ${draft.atSubj === sub ? 'petrol-active' : ''}" data-pick-atsubj="${sub}" style="${chipColorStyle(ORDSTILLING_COLORS.noun, draft.atSubj === sub, colorCodesEnabled)}">${sub}</button>
@@ -762,28 +748,28 @@ export function renderSamtalehjaelpView(container, navigateFn) {
                             ${g.atVerbs.map(v => `
                                 <button type="button" class="sh-chip ${draft.atVerb === v ? 'active' : ''}" data-pick-atverb="${v}" style="${chipColorStyle(ORDSTILLING_COLORS.verb, draft.atVerb === v, colorCodesEnabled)}">${v}</button>
                             `).join('')}
-                            <input type="text" class="sh-custom-input" id="sh-inp-atverb" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${g.atVerbs.includes(draft.atVerb) ? '' : escapeHtml(draft.atVerb)}" placeholder="Eget verbum..." />
+                            <input type="text" class="sh-custom-input" id="sh-inp-atverb" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${g.atVerbs.includes(draft.atVerb) ? '' : escapeHtml(draft.atVerb)}" placeholder="${escapeHtml(shT('ph_verb', lang))}" />
                         </div>
                     ` : isKanLide ? `
                         <div class="sh-options-wrap" dir="ltr" style="margin-bottom:0.55rem;">
-                            <span style="font-size:0.78rem; color:${colorCodesEnabled ? ORDSTILLING_COLORS.verb.text : '#7ec4ce'}; font-weight:700; display:inline-flex; align-items:center; gap:0.3rem;">
-                                ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:${ORDSTILLING_COLORS.verb.dot};"></span>` : ''}Modalverbum:
+                            <span${rtlAttr} style="font-size:0.78rem; color:${colorCodesEnabled ? ORDSTILLING_COLORS.verb.text : '#7ec4ce'}; font-weight:700; display:inline-flex; align-items:center; gap:0.3rem;">
+                                ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:${ORDSTILLING_COLORS.verb.dot};"></span>` : ''}${escapeHtml(shT('lbl_modal', lang))}
                             </span>
                             ${['kan', 'kunne'].map(m => `
                                 <button type="button" class="sh-chip ${draft.kanModal === m ? 'active' : ''}" data-pick-kanmodal="${m}" style="${chipColorStyle(ORDSTILLING_COLORS.verb, draft.kanModal === m, colorCodesEnabled)}">${m}</button>
                             `).join('')}
                         </div>
                         <div class="sh-options-wrap" dir="ltr" style="margin-bottom:0.55rem;">
-                            <span style="font-size:0.78rem; color:${colorCodesEnabled ? '#38bdf8' : '#7ec4ce'}; font-weight:700; display:inline-flex; align-items:center; gap:0.3rem;">
-                                ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:#38bdf8;"></span>` : ''}Midterord:
+                            <span${rtlAttr} style="font-size:0.78rem; color:${colorCodesEnabled ? '#38bdf8' : '#7ec4ce'}; font-weight:700; display:inline-flex; align-items:center; gap:0.3rem;">
+                                ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:#38bdf8;"></span>` : ''}${escapeHtml(shT('lbl_mid_adv', lang))}
                             </span>
                             ${['godt', 'rigtig godt', 'virkelig godt', 'ikke', 'bedst'].map(adv => `
                                 <button type="button" class="sh-chip ${draft.kanAdv === adv ? 'active' : ''}" data-pick-kanadv="${adv}" style="${chipColorStyle({ dot: '#38bdf8', bg: 'rgba(56, 189, 248, 0.14)', border: 'rgba(56, 189, 248, 0.5)' }, draft.kanAdv === adv, colorCodesEnabled)}">${adv}</button>
                             `).join('')}
                         </div>
                         <div class="sh-options-wrap" dir="ltr">
-                            <span style="font-size:0.78rem; color:${colorCodesEnabled ? ORDSTILLING_COLORS.verb.text : '#7ec4ce'}; font-weight:700; display:inline-flex; align-items:center; gap:0.3rem;">
-                                ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:${ORDSTILLING_COLORS.verb.dot};"></span>` : ''}Infinitiv:
+                            <span${rtlAttr} style="font-size:0.78rem; color:${colorCodesEnabled ? ORDSTILLING_COLORS.verb.text : '#7ec4ce'}; font-weight:700; display:inline-flex; align-items:center; gap:0.3rem;">
+                                ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:${ORDSTILLING_COLORS.verb.dot};"></span>` : ''}${escapeHtml(shT('lbl_infinitive', lang))}
                             </span>
                             ${(g.kanLideInfinitives || []).map(inf => `
                                 <button type="button" class="sh-chip ${draft.kanInf === inf ? 'active' : ''}" data-pick-kaninf="${inf}" style="${chipColorStyle(ORDSTILLING_COLORS.verb, draft.kanInf === inf, colorCodesEnabled)}">${inf}</button>
@@ -795,7 +781,7 @@ export function renderSamtalehjaelpView(container, navigateFn) {
                             ${g.verbs.map(v => `
                                 <button type="button" class="sh-chip ${draft.verb === v ? 'active' : ''}" data-pick-verb="${v}" style="${chipColorStyle(ORDSTILLING_COLORS.verb, draft.verb === v, colorCodesEnabled)}">${v}</button>
                             `).join('')}
-                            <input type="text" class="sh-custom-input" id="sh-inp-verb" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${g.verbs.includes(draft.verb) ? '' : escapeHtml(draft.verb)}" placeholder="Eget verbum..." />
+                            <input type="text" class="sh-custom-input" id="sh-inp-verb" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${g.verbs.includes(draft.verb) ? '' : escapeHtml(draft.verb)}" placeholder="${escapeHtml(shT('ph_verb', lang))}" />
                         </div>
                     `}
                 </div>
@@ -804,19 +790,19 @@ export function renderSamtalehjaelpView(container, navigateFn) {
 
                 <!-- TRIN 3 -->
                 <div class="sh-flow-node ${mode === 'normal' && draft.skipStep3 ? '' : 'active-node'}" style="${mode === 'normal' && draft.skipStep3 ? 'opacity:0.65;' : ''}">
-                    <div class="sh-flow-node-head">
-                        <div><span class="sh-step-num">3</span><strong>${isInv ? 'Subjekt (Plads 3) + indhold' : 'Indhold / detaljer (hvad, hvem, hvor)'}</strong></div>
+                    <div class="sh-flow-node-head"${rtlAttr}>
+                        <div><span class="sh-step-num">3</span><strong>${escapeHtml(isInv ? shT('step3_inv', lang) : shT('step3_normal', lang))}</strong></div>
                         ${mode === 'normal' ? `
                             <button type="button" class="sh-chip" id="sh-toggle-skip-step3" aria-pressed="${draft.skipStep3 ? 'true' : 'false'}" style="display:inline-flex; align-items:center; gap:0.35rem; padding:0.26rem 0.65rem; font-size:0.75rem; ${draft.skipStep3 ? 'border-color:#ef4444; background:rgba(239,68,68,0.18); color:#fecaca;' : ''}">
-                                ${SVG_STOP}<span>${draft.skipStep3 ? 'Trin 3 slået fra' : 'Slå trin 3 fra'}</span>
+                                ${SVG_STOP}<span>${escapeHtml(draft.skipStep3 ? shT('btn_step3_off', lang) : shT('btn_skip_step3', lang))}</span>
                             </button>
                         ` : ''}
                     </div>
                     ${!(mode === 'normal' && draft.skipStep3) ? `
                         ${isInv ? `
                             <div class="sh-options-wrap" dir="ltr" style="margin-bottom:0.55rem;">
-                                <span style="font-size:0.78rem; color:${colorCodesEnabled ? ORDSTILLING_COLORS.noun.text : '#7ec4ce'}; font-weight:700; display:inline-flex; align-items:center; gap:0.3rem;">
-                                    ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:${ORDSTILLING_COLORS.noun.dot};"></span>` : ''}Plads 3 (subjekt):
+                                <span${rtlAttr} style="font-size:0.78rem; color:${colorCodesEnabled ? ORDSTILLING_COLORS.noun.text : '#7ec4ce'}; font-weight:700; display:inline-flex; align-items:center; gap:0.3rem;">
+                                    ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:${ORDSTILLING_COLORS.noun.dot};"></span>` : ''}${escapeHtml(shT('lbl_place3_subj', lang))}
                                 </span>
                                 ${g.invertedSubjects.map(sub => `
                                     <button type="button" class="sh-chip ${draft.invSubj === sub ? 'petrol-active' : ''}" data-pick-invsubj="${sub}" style="${chipColorStyle(ORDSTILLING_COLORS.noun, draft.invSubj === sub, colorCodesEnabled)}">${sub}</button>
@@ -828,7 +814,7 @@ export function renderSamtalehjaelpView(container, navigateFn) {
                                 const objColor = classifyObjectColor(obj);
                                 return `<button type="button" class="sh-chip ${draft.object === obj ? 'active' : ''}" data-pick-obj="${obj}" style="${chipColorStyle(objColor, draft.object === obj, colorCodesEnabled)}">${obj}</button>`;
                             }).join('')}
-                            <input type="text" class="sh-custom-input" id="sh-inp-obj" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${g.objects.includes(draft.object) ? '' : escapeHtml(draft.object)}" placeholder="Skriv din egen detalje..." style="flex:1; min-width:210px;" />
+                            <input type="text" class="sh-custom-input" id="sh-inp-obj" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${g.objects.includes(draft.object) ? '' : escapeHtml(draft.object)}" placeholder="${escapeHtml(shT('ph_obj', lang))}" style="flex:1; min-width:210px;" />
                         </div>
                     ` : ''}
                 </div>
@@ -837,22 +823,22 @@ export function renderSamtalehjaelpView(container, navigateFn) {
 
                 <!-- TRIN 4 -->
                 <div class="sh-flow-node">
-                    <div class="sh-flow-node-head">
-                        <div><span class="sh-step-num">4</span><strong>Begrund eller uddyb sætningen (valgfrit)</strong></div>
+                    <div class="sh-flow-node-head"${rtlAttr}>
+                        <div><span class="sh-step-num">4</span><strong>${escapeHtml(shT('step4_title', lang))}</strong></div>
                         <div style="display:flex; gap:0.35rem; flex-wrap:wrap;">
                             <button type="button" class="sh-chip ${extTab === 'conj' ? 'petrol-active' : ''}" data-ext-tab="conj" style="padding:0.26rem 0.62rem; font-size:0.75rem;">
-                                Begrundelse &amp; kontrast (fordi / men)
+                                ${escapeHtml(shT('ext_tab_conj', lang))}
                             </button>
                             <button type="button" class="sh-chip ${extTab === 'rel' ? 'petrol-active' : ''}" data-ext-tab="rel" style="padding:0.26rem 0.62rem; font-size:0.75rem;">
-                                Uddybning (som / der)
+                                ${escapeHtml(shT('ext_tab_rel', lang))}
                             </button>
                         </div>
                     </div>
                     <div class="sh-options-wrap" dir="ltr">
                         ${activeExtList.map(ex => `
-                            <button type="button" class="sh-chip ${draft.ext === ex.text ? 'active' : ''}" data-pick-ext="${ex.text}">${ex.label}</button>
+                            <button type="button" class="sh-chip ${draft.ext === ex.text ? 'active' : ''}" data-pick-ext="${ex.text}">${ex.text === '' ? escapeHtml(shT('ext_none', lang)) : ex.label}</button>
                         `).join('')}
-                        <input type="text" class="sh-custom-input" id="sh-inp-ext" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${activeExtList.some(e => e.text === draft.ext) ? '' : escapeHtml(draft.ext)}" placeholder="Fx , fordi ..." style="flex:1; min-width:210px;" />
+                        <input type="text" class="sh-custom-input" id="sh-inp-ext" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${activeExtList.some(e => e.text === draft.ext) ? '' : escapeHtml(draft.ext)}" placeholder="${escapeHtml(shT('ph_ext', lang))}" style="flex:1; min-width:210px;" />
                     </div>
                 </div>
             </div>
@@ -860,16 +846,16 @@ export function renderSamtalehjaelpView(container, navigateFn) {
             <!-- LIVE PREVIEW + LYT + INDSÆT -->
             <div class="sh-preview-bar">
                 <div style="flex:1; min-width:240px;">
-                    <div style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:#7ec4ce; margin-bottom:0.2rem;">Din mundtlige sætning lige nu</div>
-                    <div class="sh-preview-text" id="sh-preview-text" dir="ltr">${previewHtml || 'Vælg byggesten ovenfor...'}</div>
+                    <div${rtlAttr} style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:#7ec4ce; margin-bottom:0.2rem;">${escapeHtml(shT('preview_title', lang))}</div>
+                    <div class="sh-preview-text" id="sh-preview-text" dir="ltr">${previewHtml || escapeHtml(shT('preview_empty', lang))}</div>
                 </div>
                 <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
                     <button type="button" class="sh-btn-ghost" id="sh-speak-draft-btn" ${!previewStr ? 'disabled' : ''}>
-                        ${SVG_SPEAK}<span>Lyt</span>
+                        ${SVG_SPEAK}<span>${escapeHtml(shT('btn_speak_draft', lang))}</span>
                     </button>
-                    <button type="button" class="sh-btn-ghost" id="sh-reset-draft-btn">Nulstil</button>
+                    <button type="button" class="sh-btn-ghost" id="sh-reset-draft-btn">${escapeHtml(shT('btn_reset', lang))}</button>
                     <button type="button" class="sh-btn-primary" id="sh-add-sentence-btn" ${!previewStr ? 'disabled' : ''}>
-                        ${SVG_ARROW_UP}<span>Indsæt øverst</span>
+                        ${SVG_ARROW_UP}<span>${escapeHtml(shT('btn_add', lang))}</span>
                     </button>
                 </div>
             </div>
@@ -942,7 +928,7 @@ export function renderSamtalehjaelpView(container, navigateFn) {
             const speakBtn = flowCard.querySelector('#sh-speak-draft-btn');
             const s = buildDraftSentence();
             const html = buildColoredPreviewHtml({ mode, startCategory, draft, enabled: colorCodesEnabled });
-            if (p) p.innerHTML = html || 'Vælg byggesten ovenfor...';
+            if (p) p.innerHTML = html || escapeHtml(shT('preview_empty', lang));
             if (addBtn) addBtn.disabled = !s;
             if (speakBtn) speakBtn.disabled = !s;
         };
@@ -982,7 +968,6 @@ export function renderSamtalehjaelpView(container, navigateFn) {
             if (!built) return;
             sentences.push(built);
             persist();
-            // Slet alle alternative indtastningsbokse ved indsættelse og foreslå næste naturlige sproghandling
             let nextCat = startCategory;
             if (activeGenreId === 'beskriv' && startCategory === 'sted' && sentences.length === 1) {
                 nextCat = 'person';

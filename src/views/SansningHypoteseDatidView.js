@@ -737,7 +737,7 @@ export function renderSansningHypoteseDatidView(container, navigateFn) {
                     </div>
                     <div class="ss-ladder-detail">${activeStep.expl}</div>
                     <div class="ss-insp-aha" style="margin-top: 1rem; margin-bottom: 0;">
-                        <strong>Hovedregel:</strong> Datid betyder ikke kun <em>fortid</em> — datid betyder <strong>afstand</strong>. I Station 3.3 er det afstand i <em>tid</em>, i Station 3.5 er det afstand i <em>høflighed</em>, og her i Station 3.6 er det afstand til <em>virkeligheden</em>.
+                        <strong>Hovedregel:</strong> Datid betyder ikke kun <em>fortid</em> — datid betyder <strong>afstand</strong>. I Station 3.3 er det afstand i <em>høflighed</em>, i Station 3.5 er det afstand i <em>tid</em>, og her i Station 3.6 er det afstand til <em>virkeligheden</em>.
                     </div>
                 </div>
 

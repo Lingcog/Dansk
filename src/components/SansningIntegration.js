@@ -573,42 +573,42 @@ export const SANSNING_REALMS = {
             },
             {
                 num: '3.3',
-                route: 'sansning_verber_tider',
-                short: 'Nutid vs. datid',
-                title: 'Tempus og tidens rum: Nu-scenen vs. datids-kikkerten',
-                storyStep: 'Kapitel 3: Tidens kamera',
-                storyTilstand: 'Jeg drikker kaffe nu — og jeg har lige spist morgenmad.',
-                storyForvandling: 'I går drak jeg te klokken syv.',
-                tactileTitle: 'Tids-linsen: Scvelyset Her-og-Nu (-R / HAR) vs. Den lukkede Datids-kikkert (-EDE / -TE)',
-                tactilePrompt: 'Hold begivenheden inde på den levende nutidsscene, eller skub den bagud gennem datids-kikkerten til et lukket tidspunkt i går:',
+                route: 'sansning_social_deiksis',
+                short: 'Social deiksis',
+                title: 'Social deiksis: Direkte nutids-nærhed vs. høflig datids-buffer',
+                storyStep: 'Kapitel 3: Samtalen hos bageren',
+                storyTilstand: 'Til vennen: "Hvad vil du have til kaffen?"',
+                storyForvandling: 'Til kunden: "Var der andet? Kunne du tænke dig en bolle?"',
+                tactileTitle: 'Høfligheds-bufferen: Tæt social kontakt (NUTID) vs. Blød træde-et-skridt-tilbage-buffer (DATID)',
+                tactilePrompt: 'Se hvordan dansk bruger tids-afstand (datid) som en blød luftpude, så man ikke træder for tæt på en fremmed:',
                 modes: [
                     {
-                        id: 'nu_scene',
-                        btnLabel: '🔵 Tænd Nu-scenen (NUTID & FØRNUTID)',
-                        badge: 'Forbundet med NU • Åben tidslinje',
+                        id: 'social_naer',
+                        btnLabel: '🔵 Direkte nærhed blandt venner (NUTID: vil / kan)',
+                        badge: '0 m social buffer • Direkte her-og-nu',
                         color: '#38bdf8',
                         slots: [
-                            { label: 'Subjekt', text: 'Jeg', role: 'subj' },
-                            { label: 'Nu-forbundet verbum', text: 'har brygget', role: 'verb-cool' },
-                            { label: 'Spor i nuet', text: 'frisk kaffe (den dufter nu!).', role: 'pred' }
+                            { label: 'Nutids-verbum', text: 'Vil', role: 'verb-cool' },
+                            { label: 'Samtalepartner', text: 'du have', role: 'subj' },
+                            { label: 'Tilbud', text: 'en kop kaffe mere?', role: 'pred' }
                         ],
-                        sentence: 'Jeg har brygget frisk kaffe.',
-                        explain: '<strong>NUTID (-r) & FØRNUTID (har/er + -t):</strong> Scenen er stadig varm! Selv om brygningen startede før, står den varme kaffe lige foran os nu.',
-                        svgType: 'time_now'
+                        sentence: 'Vil du have en kop kaffe mere?',
+                        explain: '<strong>DIREKTE NUTID:</strong> Mellem familie og venner er vi allerede i samme intime rum — nutid (<em>Vil du..., Kan du...</em>) føles varmt og ligefremt.',
+                        svgType: 'social_close'
                     },
                     {
-                        id: 'datid_kikkert',
-                        btnLabel: '🟠 Kig gennem Datids-kikkerten (DATID: i går kl. 8)',
-                        badge: 'Afsluttet & forseglet i fortiden',
+                        id: 'social_buffer',
+                        btnLabel: '🟠 Indsæt høflig luftpude (DATIDS-BUFFER: ville / kunne / var)',
+                        badge: 'Høflig afstand • Ingen socialt pres',
                         color: '#fb923c',
                         slots: [
-                            { label: 'Låst fortids-anker', text: 'I går morges', role: 'obj-warm' },
-                            { label: 'Datids-verbum', text: 'bryggede', role: 'verb-warm' },
-                            { label: 'Resten', text: 'jeg kaffe klokken syv.', role: 'subj' }
+                            { label: 'Datids-buffer', text: 'Kunne du måske', role: 'verb-warm' },
+                            { label: 'Bøn / Service', text: 'hjælpe mig —', role: 'subj' },
+                            { label: 'Ekspedient-datid', text: 'var der andet?', role: 'obj-warm' }
                         ],
-                        sentence: 'I går morges bryggede jeg kaffe klokken syv.',
-                        explain: '<strong>DATID (-ede / -te / stærk):</strong> En dør er smækket mellem dengang og nu (<em>i går, i 2020, da jeg var barn</em>). Vi ser kun scenen på afstand gennem kikkerten.',
-                        svgType: 'time_past'
+                        sentence: 'Kunne du måske hjælpe mig — var der andet?',
+                        explain: '<strong>DATID SOM HØFLIGHEDSBUFFER:</strong> Ved at træde et lille skridt bagud i tid (<em>Kunne du..., Ville det være muligt..., Var der andet?</em>) giver du modtageren plads til at trække vejret frit.',
+                        svgType: 'social_buffer'
                     }
                 ]
             },
@@ -655,42 +655,42 @@ export const SANSNING_REALMS = {
             },
             {
                 num: '3.5',
-                route: 'sansning_social_deiksis',
-                short: 'Social deiksis',
-                title: 'Social deiksis: Direkte nutids-nærhed vs. høflig datids-buffer',
-                storyStep: 'Kapitel 5: Samtalen hos bageren',
-                storyTilstand: 'Til vennen: "Hvad vil du have til kaffen?"',
-                storyForvandling: 'Til kunden: "Var der andet? Kunne du tænke dig en bolle?"',
-                tactileTitle: 'Høfligheds-bufferen: Tæt social kontakt (NUTID) vs. Blød træde-et-skridt-tilbage-buffer (DATID)',
-                tactilePrompt: 'Se hvordan dansk bruger tids-afstand (datid) som en blød luftpude, så man ikke træder for tæt på en fremmed:',
+                route: 'sansning_verber_tider',
+                short: 'Nutid vs. datid',
+                title: 'Tempus og tidens rum: Nu-scenen vs. datids-kikkerten',
+                storyStep: 'Kapitel 5: Tidens kamera',
+                storyTilstand: 'Jeg drikker kaffe nu — og jeg har lige spist morgenmad.',
+                storyForvandling: 'I går drak jeg te klokken syv.',
+                tactileTitle: 'Tids-linsen: Scenelyset Her-og-Nu (-R / HAR) vs. Den lukkede Datids-kikkert (-EDE / -TE)',
+                tactilePrompt: 'Hold begivenheden inde på den levende nutidsscene, eller skub den bagud gennem datids-kikkerten til et lukket tidspunkt i går:',
                 modes: [
                     {
-                        id: 'social_naer',
-                        btnLabel: '🔵 Direkte nærhed blandt venner (NUTID: vil / kan)',
-                        badge: '0 m social buffer • Direkte her-og-nu',
+                        id: 'nu_scene',
+                        btnLabel: '🔵 Tænd Nu-scenen (NUTID & FØRNUTID)',
+                        badge: 'Forbundet med NU • Åben tidslinje',
                         color: '#38bdf8',
                         slots: [
-                            { label: 'Nutids-verbum', text: 'Vil', role: 'verb-cool' },
-                            { label: 'Samtalepartner', text: 'du have', role: 'subj' },
-                            { label: 'Tilbud', text: 'en kop kaffe mere?', role: 'pred' }
+                            { label: 'Subjekt', text: 'Jeg', role: 'subj' },
+                            { label: 'Nu-forbundet verbum', text: 'har brygget', role: 'verb-cool' },
+                            { label: 'Spor i nuet', text: 'frisk kaffe (den dufter nu!).', role: 'pred' }
                         ],
-                        sentence: 'Vil du have en kop kaffe mere?',
-                        explain: '<strong>DIREKTE NUTID:</strong> Mellem familie og venner er vi allerede i samme intime rum — nutid (<em>Vil du..., Kan du...</em>) føles varmt og ligefremt.',
-                        svgType: 'social_close'
+                        sentence: 'Jeg har brygget frisk kaffe.',
+                        explain: '<strong>NUTID (-r) & FØRNUTID (har/er + -t):</strong> Scenen er stadig varm! Selv om brygningen startede før, står den varme kaffe lige foran os nu.',
+                        svgType: 'time_now'
                     },
                     {
-                        id: 'social_buffer',
-                        btnLabel: '🟠 Indsæt høflig luftpude (DATIDS-BUFFER: ville / kunne / var)',
-                        badge: 'Høflig afstand • Ingen socialt pres',
+                        id: 'datid_kikkert',
+                        btnLabel: '🟠 Kig gennem Datids-kikkerten (DATID: i går kl. 8)',
+                        badge: 'Afsluttet & forseglet i fortiden',
                         color: '#fb923c',
                         slots: [
-                            { label: 'Datids-buffer', text: 'Kunne du måske', role: 'verb-warm' },
-                            { label: 'Bøn / Service', text: 'hjælpe mig —', role: 'subj' },
-                            { label: 'Ekspedient-datid', text: 'var der andet?', role: 'obj-warm' }
+                            { label: 'Låst fortids-anker', text: 'I går morges', role: 'obj-warm' },
+                            { label: 'Datids-verbum', text: 'bryggede', role: 'verb-warm' },
+                            { label: 'Resten', text: 'jeg kaffe klokken syv.', role: 'subj' }
                         ],
-                        sentence: 'Kunne du måske hjælpe mig — var der andet?',
-                        explain: '<strong>DATID SOM HØFLIGHEDSBUFFER:</strong> Ved at træde et lille skridt bagud i tid (<em>Kunne du..., Ville det være muligt..., Var der andet?</em>) giver du modtageren plads til at trække vejret frit.',
-                        svgType: 'social_buffer'
+                        sentence: 'I går morges bryggede jeg kaffe klokken syv.',
+                        explain: '<strong>DATID (-ede / -te / stærk):</strong> En dør er smækket mellem dengang og nu (<em>i går, i 2020, da jeg var barn</em>). Vi ser kun scenen på afstand gennem kikkerten.',
+                        svgType: 'time_past'
                     }
                 ]
             },

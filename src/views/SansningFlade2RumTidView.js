@@ -722,9 +722,9 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
             forvandling: 'Kan du se den røde bil derovre?'
         },
         {
-            topic: '3.3 Tempus og tidens rum',
-            tilstand: 'Jeg har spist, og bordet er stadig varmt.',
-            forvandling: 'Jeg spiste klokken seks i går.'
+            topic: '3.3 Social deiksis: nærhed vs. buffer',
+            tilstand: 'Kom indenfor, hvad vil du have?',
+            forvandling: 'Undskyld, havde du et øjeblik – var der andet?'
         },
         {
             topic: '3.4 Kroppens sfære: sin vs. hans',
@@ -732,9 +732,9 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
             forvandling: 'Manden vasker hans bil for naboen.'
         },
         {
-            topic: '3.5 Social deiksis: nærhed vs. buffer',
-            tilstand: 'Kom indenfor, hvad vil du have?',
-            forvandling: 'Undskyld, havde du et øjeblik – var der andet?'
+            topic: '3.5 Tempus og tidens rum',
+            tilstand: 'Jeg har spist, og bordet er stadig varmt.',
+            forvandling: 'Jeg spiste klokken seks i går.'
         },
         {
             topic: '3.6 Forestilling og hypoteser: nutid vs. datid',
@@ -815,18 +815,18 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
         },
         {
             num: '3.3',
-            id: 'sansning_verber_tider',
-            tag: 'Scenen vs. kikkerten',
-            accent: '#f59e0b',
-            title: 'Tempus og tidens rum',
-            sub: 'Nutid og førnutid holder scenen levende foran dig, mens datid og førdatid lukker fortiden i kikkerten.',
-            leftImg: `${baseUrl}assets/sansning_verber_tider_venstre.jpg`,
-            rightImg: `${baseUrl}assets/sansning_verber_tider_hoejre.jpg`,
-            leftLabel: 'Nu og førnutid',
-            rightLabel: 'Datid i kikkerten',
-            leftEx: 'Jeg har spist (nu)',
-            rightEx: 'Jeg spiste / havde spist',
-            vrimmelBadge: 'Interaktiv tids-scene'
+            id: 'sansning_social_deiksis',
+            tag: 'Social distance',
+            accent: '#f472b6',
+            title: 'Social deiksis: nærhed vs. buffer',
+            sub: 'Hvordan dansk bruger nutid til nære relationer ("Hvad vil du have?") og datidsbuffer til høflig afstand ("Var der andet?").',
+            leftImg: `${baseUrl}assets/sansning_social_naerhed_venstre.jpg`,
+            rightImg: `${baseUrl}assets/sansning_social_afstand_hoejre.jpg`,
+            leftLabel: 'Direkte nærhed',
+            rightLabel: 'Høflighedsbuffer',
+            leftEx: 'Hvad vil du have?',
+            rightEx: 'Var der andet?',
+            vrimmelBadge: 'Café- og diskscener'
         },
         {
             num: '3.4',
@@ -845,18 +845,18 @@ export function renderSansningFlade2RumTidView(container, navigateFn, extraData 
         },
         {
             num: '3.5',
-            id: 'sansning_social_deiksis',
-            tag: 'Social distance',
-            accent: '#f472b6',
-            title: 'Social deiksis: nærhed vs. buffer',
-            sub: 'Hvordan dansk bruger nutid til nære relationer ("Hvad vil du have?") og datidsbuffer til høflig afstand ("Var der andet?").',
-            leftImg: `${baseUrl}assets/sansning_social_naerhed_venstre.jpg`,
-            rightImg: `${baseUrl}assets/sansning_social_afstand_hoejre.jpg`,
-            leftLabel: 'Direkte nærhed',
-            rightLabel: 'Høflighedsbuffer',
-            leftEx: 'Hvad vil du have?',
-            rightEx: 'Var der andet?',
-            vrimmelBadge: 'Café- og diskscener'
+            id: 'sansning_verber_tider',
+            tag: 'Scenen vs. kikkerten',
+            accent: '#f59e0b',
+            title: 'Tempus og tidens rum',
+            sub: 'Nutid og førnutid holder scenen levende foran dig, mens datid og førdatid lukker fortiden i kikkerten.',
+            leftImg: `${baseUrl}assets/sansning_verber_tider_venstre.jpg`,
+            rightImg: `${baseUrl}assets/sansning_verber_tider_hoejre.jpg`,
+            leftLabel: 'Nu og førnutid',
+            rightLabel: 'Datid i kikkerten',
+            leftEx: 'Jeg har spist (nu)',
+            rightEx: 'Jeg spiste / havde spist',
+            vrimmelBadge: 'Interaktiv tids-scene'
         },
         {
             num: '3.6',

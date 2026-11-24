@@ -1,4 +1,4 @@
-import { renderSansningGlobalNav } from '../components/SansningIntegration.js';
+import { renderSansningGlobalNav, renderSansningTactileLab } from '../components/SansningIntegration.js';
 
 /**
  * Station 3.6: Forestilling og hypoteser – virkelighed (nutid) vs. ønske & afstand (datid)
@@ -567,6 +567,9 @@ export function renderSansningHypoteseDatidView(container, navigateFn) {
         </p>
     `;
     viewContainer.appendChild(hero);
+
+    // Taktil 3-trins øvelse (Nærhed · Afstand · Dobbelt afstand)
+    viewContainer.appendChild(renderSansningTactileLab('flade3', navigateFn, 5, true));
 
     const tabsNav = document.createElement('div');
     tabsNav.className = 'ss-tabs-nav';

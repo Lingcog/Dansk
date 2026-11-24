@@ -702,12 +702,12 @@ export const SANSNING_REALMS = {
                 storyStep: 'Kapitel 6: Drømmen om huset ved havet',
                 storyTilstand: 'Realistisk plan: "Hvis jeg har tid i morgen, kommer jeg forbi."',
                 storyForvandling: 'Forestilling & ønske: "Hvis jeg havde tid, ville jeg rejse jorden rundt."',
-                tactileTitle: 'Virkelighedens afstand: Fast grund (NUTID) vs. Usikker forestilling og ønske (DATID)',
-                tactilePrompt: 'Mærk hvordan dansk flytter verbet fra nutid til datid, når noget er usikkert, ønsket eller har mindre hold i virkeligheden:',
+                tactileTitle: 'Virkelighedens afstand: Nutid (fast grund) · Datid (ønske/hypotese) · Førdatid (dobbelt afstand)',
+                tactilePrompt: 'Mærk hvordan dansk flytter verbet fra nutid til datid — og videre til førdatid ved dobbelt afstand (tid + virkelighed):',
                 modes: [
                     {
                         id: 'hypotese_virkelig',
-                        btnLabel: 'Nærhed til virkeligheden (NUTID: har / kommer)',
+                        btnLabel: 'Nærhed (NUTID: har / kommer)',
                         badge: 'Fast grund • Realistisk mulighed',
                         color: '#38bdf8',
                         slots: [
@@ -721,7 +721,7 @@ export const SANSNING_REALMS = {
                     },
                     {
                         id: 'hypotese_droem',
-                        btnLabel: 'Afstand til virkeligheden (DATID: havde / ville)',
+                        btnLabel: 'Afstand (DATID: havde / ville)',
                         badge: 'Mindre hold i virkeligheden • Ønske & hypotese',
                         color: '#fb923c',
                         slots: [
@@ -732,6 +732,20 @@ export const SANSNING_REALMS = {
                         sentence: 'Hvis jeg havde tid, ville jeg rejse jorden rundt.',
                         explain: '<strong>DATID = FORESTILLING & AFSTAND:</strong> Her handler datid ikke om i går, men om at ønsket er usikkert og ligger langt fra virkeligheden lige nu.',
                         svgType: 'hypotese_droem'
+                    },
+                    {
+                        id: 'hypotese_dobbelt',
+                        btnLabel: 'Dobbelt afstand (FØRDATID: havde læst / ville have)',
+                        badge: 'Dobbelt afstand • Forbi i tid & skete ikke',
+                        color: '#a78bfa',
+                        slots: [
+                            { label: 'Betingelse', text: 'Hvis jeg', role: 'subj' },
+                            { label: 'Førdatid (dobbelt afstand)', text: 'havde læst mere,', role: 'verb-warm' },
+                            { label: 'Umulig følge', text: 'ville jeg have bestået.', role: 'obj-warm' }
+                        ],
+                        sentence: 'Hvis jeg havde læst mere, ville jeg have bestået.',
+                        explain: '<strong>FØRDATID = DOBBELT AFSTAND:</strong> Her er afstanden dobbelt — både i <em>tid</em> (prøven er allerede forbi) og til <em>virkeligheden</em> (du læste ikke mere).',
+                        svgType: 'hypotese_dobbelt'
                     }
                 ]
             }
@@ -2442,27 +2456,43 @@ function renderTactileSvgScene(svgType) {
             return `
                 <svg viewBox="0 0 360 125" width="100%" height="125">
                     <rect width="360" height="125" rx="12" fill="#0b1528"/>
-                    <text x="20" y="24" fill="#7dd3fc" font-size="11" font-weight="800">VIRKELIGHEDSNÆR (NUTID): Fast grund under fødderne</text>
-                    <line x1="30" y1="88" x2="330" y2="88" stroke="#38bdf8" stroke-width="3"/>
-                    <circle cx="115" cy="68" r="16" fill="#0284c7"/>
-                    <line x1="135" y1="68" x2="215" y2="68" stroke="#7dd3fc" stroke-width="3"/>
-                    <polygon points="223,68 211,62 211,74" fill="#7dd3fc"/>
-                    <rect x="229" y="52" width="94" height="32" rx="8" fill="rgba(56,189,248,0.22)" stroke="#38bdf8" stroke-width="1.8"/>
-                    <text x="276" y="72" text-anchor="middle" fill="#ffffff" font-size="10.5" font-weight="800">Kan ske nu</text>
-                    <text x="180" y="113" text-anchor="middle" fill="#7dd3fc" font-size="11" font-weight="900">»Hvis jeg har tid, kommer jeg forbi.«</text>
+                    <text x="180" y="22" text-anchor="middle" fill="#7dd3fc" font-size="10.5" font-weight="800">VIRKELIGHEDSNÆR (NUTID): Fast grund under fødderne</text>
+                    <line x1="28" y1="86" x2="332" y2="86" stroke="#38bdf8" stroke-width="2.5"/>
+                    <circle cx="105" cy="64" r="15" fill="#0284c7"/>
+                    <line x1="126" y1="64" x2="206" y2="64" stroke="#7dd3fc" stroke-width="2.5"/>
+                    <polygon points="214,64 202,58 202,70" fill="#7dd3fc"/>
+                    <rect x="220" y="48" width="96" height="32" rx="8" fill="rgba(56,189,248,0.2)" stroke="#38bdf8" stroke-width="1.8"/>
+                    <text x="268" y="68" text-anchor="middle" fill="#ffffff" font-size="10.5" font-weight="800">Kan ske nu</text>
+                    <text x="180" y="109" text-anchor="middle" fill="#7dd3fc" font-size="10.5" font-weight="900">»Hvis jeg har tid, kommer jeg forbi.«</text>
                 </svg>
             `;
         case 'hypotese_droem':
             return `
                 <svg viewBox="0 0 360 125" width="100%" height="125">
                     <rect width="360" height="125" rx="12" fill="#1a1118"/>
-                    <text x="20" y="24" fill="#fdba74" font-size="11" font-weight="800">FORESTILLING &amp; ØNSKE (DATID): Afstand til virkeligheden</text>
-                    <circle cx="72" cy="72" r="16" fill="#475569"/>
-                    <line x1="94" y1="72" x2="200" y2="72" stroke="#fb923c" stroke-width="2.5" stroke-dasharray="5,4"/>
-                    <polygon points="208,72 196,66 196,78" fill="#fb923c"/>
-                    <rect x="216" y="48" width="118" height="44" rx="22" fill="rgba(251,146,60,0.18)" stroke="#fb923c" stroke-width="2" stroke-dasharray="4,3"/>
-                    <text x="275" y="74" text-anchor="middle" fill="#fde047" font-size="10.5" font-weight="900">Drøm / Hypotese</text>
-                    <text x="180" y="113" text-anchor="middle" fill="#fdba74" font-size="11" font-weight="900">»Hvis jeg havde tid, ville jeg rejse.«</text>
+                    <text x="180" y="22" text-anchor="middle" fill="#fdba74" font-size="10.5" font-weight="800">FORESTILLING &amp; ØNSKE (DATID): 1 skridts afstand</text>
+                    <circle cx="68" cy="64" r="15" fill="#475569"/>
+                    <line x1="88" y1="64" x2="196" y2="64" stroke="#fb923c" stroke-width="2.5" stroke-dasharray="5,4"/>
+                    <polygon points="204,64 192,58 192,70" fill="#fb923c"/>
+                    <rect x="212" y="44" width="118" height="40" rx="20" fill="rgba(251,146,60,0.18)" stroke="#fb923c" stroke-width="1.8" stroke-dasharray="4,3"/>
+                    <text x="271" y="68" text-anchor="middle" fill="#fde047" font-size="10.5" font-weight="900">Drøm / Hypotese</text>
+                    <text x="180" y="109" text-anchor="middle" fill="#fdba74" font-size="10.5" font-weight="900">»Hvis jeg havde tid, ville jeg rejse.«</text>
+                </svg>
+            `;
+        case 'hypotese_dobbelt':
+            return `
+                <svg viewBox="0 0 360 125" width="100%" height="125">
+                    <rect width="360" height="125" rx="12" fill="#161124"/>
+                    <text x="180" y="22" text-anchor="middle" fill="#c4b5fd" font-size="10.5" font-weight="800">DOBBELT AFSTAND (FØRDATID): Forbi i tid + skete ikke</text>
+                    <circle cx="48" cy="64" r="14" fill="#475569"/>
+                    <line x1="66" y1="64" x2="136" y2="64" stroke="#a78bfa" stroke-width="2.2" stroke-dasharray="4,4"/>
+                    <line x1="144" y1="44" x2="144" y2="84" stroke="#f43f5e" stroke-width="2.5"/>
+                    <text x="144" y="39" text-anchor="middle" fill="#fda4af" font-size="8.5" font-weight="800">Lukket tid</text>
+                    <line x1="152" y1="64" x2="218" y2="64" stroke="#a78bfa" stroke-width="2.2" stroke-dasharray="4,4"/>
+                    <polygon points="226,64 214,58 214,70" fill="#a78bfa"/>
+                    <rect x="232" y="44" width="106" height="40" rx="18" fill="rgba(167,139,250,0.16)" stroke="#a78bfa" stroke-width="1.8" stroke-dasharray="4,3"/>
+                    <text x="285" y="68" text-anchor="middle" fill="#ddd6fe" font-size="10" font-weight="900">Skete aldrig</text>
+                    <text x="180" y="109" text-anchor="middle" fill="#c4b5fd" font-size="10.2" font-weight="900">»Hvis jeg havde læst mere, ville jeg have bestået.«</text>
                 </svg>
             `;
 

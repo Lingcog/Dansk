@@ -563,10 +563,18 @@ function injectStyles() {
     style.id = 'skrivehjaelp-nordic-styles';
     style.textContent = `
         .skrivehjaelp-container {
+            width: 100%;
             max-width: 960px;
             margin: 0 auto;
             padding: 0.75rem 1rem 4rem;
             color: #f1f5f9;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+        .skrivehjaelp-container *,
+        .skrivehjaelp-container *::before,
+        .skrivehjaelp-container *::after {
+            box-sizing: border-box;
         }
         .sh-header {
             margin: 0.6rem 0 1.2rem;
@@ -653,11 +661,14 @@ function injectStyles() {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            max-width: 100%;
+            min-width: 0;
         }
         .sh-topic-label {
             font-size: 0.8rem;
             font-weight: 700;
             color: #94a3b8;
+            flex-shrink: 0;
         }
         .sh-topic-select {
             background: #101419;
@@ -668,7 +679,9 @@ function injectStyles() {
             font-size: 0.85rem;
             font-weight: 700;
             cursor: pointer;
-            min-width: 230px;
+            min-width: 0;
+            max-width: 100%;
+            text-overflow: ellipsis;
         }
         .sh-topic-select:focus {
             outline: none;
@@ -1035,6 +1048,95 @@ function injectStyles() {
             background: #101419;
             border-radius: 10px;
             border: 1px solid rgba(203, 213, 225, 0.12);
+        }
+
+        @media (max-width: 640px) {
+            .skrivehjaelp-container {
+                padding: 0.5rem 0.65rem 3rem;
+            }
+            .sh-header h1 {
+                font-size: 1.45rem;
+            }
+            .sh-header p {
+                font-size: 0.88rem;
+            }
+            .sh-card {
+                padding: 0.9rem 0.8rem;
+                border-radius: 13px;
+            }
+            .sh-card-head {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.55rem;
+            }
+            .sh-topic-picker {
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.35rem;
+            }
+            .sh-topic-select {
+                width: 100%;
+                max-width: 100%;
+                min-width: 0;
+                font-size: 0.84rem;
+            }
+            .sh-hints-grid {
+                grid-template-columns: 1fr;
+            }
+            .sh-flow-node {
+                padding: 0.78rem 0.75rem;
+            }
+            .sh-chip {
+                max-width: 100%;
+                white-space: normal;
+                text-align: left;
+                line-height: 1.3;
+                padding: 0.4rem 0.68rem;
+                font-size: 0.8rem;
+            }
+            .sh-custom-input {
+                width: 100% !important;
+                min-width: 0 !important;
+                flex: 1 1 100% !important;
+                font-size: 16px;
+            }
+            .sh-preview-bar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0.85rem;
+            }
+            .sh-preview-bar > div {
+                min-width: 0 !important;
+                width: 100%;
+            }
+            .sh-preview-text {
+                font-size: 0.96rem;
+                line-height: 1.5;
+                overflow-wrap: break-word;
+            }
+            .sh-doc-surface {
+                padding: 0.85rem 0.9rem;
+                font-size: 0.95rem;
+                overflow-wrap: break-word;
+            }
+            .sh-doc-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .sh-doc-actions > div {
+                width: 100%;
+            }
+            .sh-btn-primary,
+            .sh-btn-ghost {
+                justify-content: center;
+                font-size: 0.82rem;
+                padding: 0.5rem 0.8rem;
+            }
+            .sh-review-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
     `;
     document.head.appendChild(style);

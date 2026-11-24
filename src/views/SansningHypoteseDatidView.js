@@ -221,6 +221,51 @@ export function renderSansningHypoteseDatidView(container, navigateFn) {
             ],
             correct: 'Hvis jeg havde øvet mere, ville jeg have fået en bedre karakter.',
             expl: 'Førdatid ("havde øvet") udtrykker dobbelt afstand: både at tiden er forbi, og at det ikke skete i virkeligheden.'
+        },
+        {
+            prompt: 'Du sidder i din lejlighed i byen og leger med tanken om et helt andet liv. Hvilken sætning åbner et tankeeksperiment?',
+            options: [
+                'Tænk, hvis vi bor lige ved havet!',
+                'Tænk, hvis vi boede lige ved havet!'
+            ],
+            correct: 'Tænk, hvis vi boede lige ved havet!',
+            expl: '"Tænk, hvis..." åbner en forestillet verden, og datiden "boede" viser tydeligt, at det er en drøm og ikke virkelighed.'
+        },
+        {
+            prompt: 'En kollega opfører sig, som om han bestemmer alt, selvom han ikke er chef. Hvilken sætning viser, at det kun er en forestilling?',
+            options: [
+                'Han taler, som om han ejede hele firmaet.',
+                'Han taler, fordi han ejer hele firmaet.'
+            ],
+            correct: 'Han taler, som om han ejede hele firmaet.',
+            expl: 'Efter "som om" bruger dansk datid ("ejede") for at markere, at det ikke passer i virkeligheden.'
+        },
+        {
+            prompt: 'Du har meget travlt i hverdagen og savner fritid. Hvordan udtrykker du et ønske, der ikke er virkelighed lige nu?',
+            options: [
+                'Jeg ville ønske, at jeg havde mere tid i hverdagen.',
+                'Jeg ønsker, at jeg har mere tid i går.'
+            ],
+            correct: 'Jeg ville ønske, at jeg havde mere tid i hverdagen.',
+            expl: 'Kombinationen "ville ønske" + datid ("havde") udtrykker et ønske i nutiden, som har mindre hold i virkeligheden.'
+        },
+        {
+            prompt: 'Vejrudsigten er usikker, men du håber forsigtigt på godt vejr til jeres udflugt i morgen:',
+            options: [
+                'Det ville være dejligt, hvis solen skinnede i morgen.',
+                'Solen skinner sikkert i går.'
+            ],
+            correct: 'Det ville være dejligt, hvis solen skinnede i morgen.',
+            expl: 'Datidsformerne "ville" og "skinnede" markerer en blød, usikker forhåbning om fremtiden — ikke fortid.'
+        },
+        {
+            prompt: 'I kom for sent til toget, og det er allerede kørt. Hvilken sætning udtrykker dobbelt afstand (både forbi i tid og skete ikke)?',
+            options: [
+                'Hvis vi tager af sted tidligere, når vi toget.',
+                'Hvis vi var taget af sted tidligere, ville vi have nået toget.'
+            ],
+            correct: 'Hvis vi var taget af sted tidligere, ville vi have nået toget.',
+            expl: 'Førdatid ("var taget af sted") + "ville have nået" udtrykker dobbelt afstand: tiden er lukket, og det skete ikke i virkeligheden.'
         }
     ];
 

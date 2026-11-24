@@ -47481,10 +47481,18 @@ Eksempel på din feedback med link:
 
 Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så spild ikke tiden med rettelser, men giv blot stor og motiverende ros.`,ts='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',kg='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>',gn='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',xg='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>',Bi='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>',qi='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="5" rx="1"/><rect x="14" y="16" width="7" height="5" rx="1"/><path d="M6.5 8v4a2 2 0 0 0 2 2h7a2 2 0 0 1 2 2"/></svg>',Ii='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>',rs=[{id:"v2",titleKey:"sh_rev_q1_title",questionKey:"sh_rev_q1_text"},{id:"tense",titleKey:"sh_rev_q2_title",questionKey:"sh_rev_q2_text"},{id:"connectors",titleKey:"sh_rev_q3_title",questionKey:"sh_rev_q3_text"},{id:"nouns",titleKey:"sh_rev_q4_title",questionKey:"sh_rev_q4_text"},{id:"whole",titleKey:"sh_rev_q5_title",questionKey:"sh_rev_q5_text"}];function zr(o){return(o||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}function yg(o,g){const r=zr(o);return g?g==="v2"?/^(jeg|vi|du|han|hun|de|min|mit|mine|mange)\b/i.test(o.trim())?r:`<mark class="sh-rev-mark">${r}</mark>`:g==="connectors"?r.replace(/\b(fordi|men|selvom|derfor|derefter|bagefter|alligevel|desuden|heldigvis|samtidig|og|så|som|der|at)\b/gi,'<mark class="sh-rev-mark">$1</mark>'):g==="nouns"?r.replace(/\b(en|et|den|det|de|min|mit|mine|nogle)\s+([a-zæøå]+)/gi,'<mark class="sh-rev-mark">$1 $2</mark>'):g==="whole"?`<mark class="sh-rev-mark-soft">${r}</mark>`:r:r}const co={dag:{id:"dag",labelKey:"sh_sc_dag",starts:{person:{labelKey:"cat_person",mode:"normal",options:["Jeg","Vi","Min ven og jeg","Min familie"]},tid:{labelKey:"cat_tid",mode:"inversion",options:["I går","I weekenden","Om morgenen","Om aftenen"]},sted:{labelKey:"cat_sted",mode:"inversion",options:["I parken","Ved vandet","Derhjemme","På café"]},sammenhaeng:{labelKey:"cat_sammenhaeng",mode:"inversion",options:["Derefter","Bagefter","Derfor","Til sidst"]},at_clause:{labelKey:"sh_cat_at_dag",mode:"at_clause",options:["Jeg synes, at","Jeg håber, at","Jeg følte, at","Det var dejligt, at"]},kan_lide:{labelKey:"sh_cat_kan_lide",mode:"kan_lide",options:["Jeg","Vi","Min ven og jeg","Min familie"]}},verbs:["gik","var","spiste","mødte","cyklede","lavede","slappede af"],kanLideInfinitives:["lide at spise","lide at gå","lide at cykle","lide at møde","lide at lave","lide at slappe af"],atSubjects:["dagen","weekenden","det","vi","vejret"],atVerbs:["var","blev","gik","gav os"],invertedSubjects:["jeg","vi","min ven og jeg","min familie"],objects:["en lang tur ved vandet","god mad derhjemme","nogle venner på café","en spændende film","en rigtig hyggelig aften","en god pause"],extensionsConj:[{label:"Ingen udvidelse",text:""},{label:", fordi det var hyggeligt",text:", fordi det var hyggeligt"},{label:", men det regnede lidt",text:", men det regnede lidt"},{label:", og vi snakkede længe",text:", og vi snakkede længe"},{label:", selvom jeg var træt",text:", selvom jeg var træt"}],extensionsRel:[{label:", som lå lige ved vandet",text:", som lå lige ved vandet"},{label:", som jeg havde glædet mig til",text:", som jeg havde glædet mig til"},{label:", der smagte fantastisk",text:", der smagte fantastisk"},{label:", som gav mig ny energi",text:", som gav mig ny energi"}]},mail:{id:"mail",labelKey:"sh_sc_mail",starts:{hilsen:{labelKey:"sh_cat_hilsen",labelFallback:"Hilsen (Kære ...)",mode:"greeting",options:["Kære ven","Kære lærer","Kære chef","Kære kollega","Kære nabo"]},person:{labelKey:"cat_person",mode:"normal",options:["Jeg","Vi","Mit navn"]},tid:{labelKey:"cat_tid",mode:"inversion",options:["I dag","I morgen","På fredag","Næste uge"]},sted:{labelKey:"cat_sted",mode:"inversion",options:["På sprogskolen","På arbejdet","Derhjemme"]},sammenhaeng:{labelKey:"cat_sammenhaeng",mode:"inversion",options:["Desværre","Derfor","Heldigvis","Til sidst"]},at_clause:{labelKey:"sh_cat_at_mail",mode:"at_clause",options:["Jeg håber, at","Jeg vil gerne fortælle, at","Jeg tror, at","Det er vigtigt, at"]},kan_lide:{labelKey:"sh_cat_kan_lide",mode:"kan_lide",options:["Jeg","Vi"]}},verbs:["skriver","vil gerne","kan desværre ikke","har","kommer","sender"],kanLideInfinitives:["lide at lære","lide at komme","lide at samarbejde","lide at skrive","lide at tale"],atSubjects:["vi","jeg","det","mødet"],atVerbs:["kan finde","er tilbage","passer","bliver"],invertedSubjects:["jeg","vi"],objects:["for at melde mig syg","spørge om mødet i morgen","komme til undervisning","et spørgsmål om opgaven","en ny tid næste uge","mandag morgen"],extensionsConj:[{label:"Ingen udvidelse",text:""},{label:", fordi jeg har feber",text:", fordi jeg har feber"},{label:", men jeg læser opgaven hjemme",text:", men jeg læser opgaven hjemme"},{label:", og jeg glæder mig til svar",text:", og jeg glæder mig til svar"},{label:". Venlig hilsen",text:". Venlig hilsen"}],extensionsRel:[{label:", som vi aftalte i sidste uge",text:", som vi aftalte i sidste uge"},{label:", der passer os begge",text:", der passer os begge"},{label:", som jeg sender her",text:", som jeg sender her"}]},mening:{id:"mening",labelKey:"sh_sc_mening",starts:{person:{labelKey:"cat_person",mode:"normal",options:["Jeg","Mange mennesker","Vi"]},tid:{labelKey:"cat_tid",mode:"inversion",options:["I hverdagen","I dag","Ofte"]},sted:{labelKey:"cat_sted",mode:"inversion",options:["I Danmark","I skolen","På arbejdet"]},sammenhaeng:{labelKey:"cat_sammenhaeng",mode:"inversion",options:["På den ene side","På den anden side","Derfor","Alt i alt"]},at_clause:{labelKey:"cat_at_mening",mode:"at_clause",options:["Jeg synes, at","Jeg mener, at","Det er vigtigt, at","Jeg tror, at"]},kan_lide:{labelKey:"sh_cat_kan_lide",mode:"kan_lide",options:["Jeg","Mange mennesker","Vi"]}},verbs:["mener","oplever","ser","bruger","foretrækker","støtter"],kanLideInfinitives:["lide at spise","lide at bruge","lide at cykle","lide at have","lide at støtte"],atSubjects:["man","vi","alle","det","børn og unge"],atVerbs:["skal have","lærer bedst","har brug for","er vigtigt for"],invertedSubjects:["jeg","vi","mange"],objects:["mere tid til familien","cyklen hver dag","gode rammer i skolen","et stærkt fællesskab","sund mad i hverdagen","balance mellem arbejde og fritid"],extensionsConj:[{label:"Ingen udvidelse",text:""},{label:", fordi det giver ro i hverdagen",text:", fordi det giver ro i hverdagen"},{label:", men det kræver også tid",text:", men det kræver også tid"},{label:", selvom det ikke altid er let",text:", selvom det ikke altid er let"}],extensionsRel:[{label:", som styrker fællesskabet",text:", som styrker fællesskabet"},{label:", der gør en forskel i hverdagen",text:", der gør en forskel i hverdagen"},{label:", som alle kan have glæde af",text:", som alle kan have glæde af"}]},person:{id:"person",labelKey:"sh_sc_person",starts:{person:{labelKey:"cat_person",mode:"normal",options:["Hun","Han","Min bedste ven","Vi"]},tid:{labelKey:"cat_tid",mode:"inversion",options:["Hver uge","Når vi mødes","Altid"]},sted:{labelKey:"cat_sted",mode:"inversion",options:["På arbejdet","På café","Hjemme hos os"]},sammenhaeng:{labelKey:"cat_sammenhaeng",mode:"inversion",options:["Derfor","Desuden","Heldigvis"]},at_clause:{labelKey:"cat_at_foelelse",mode:"at_clause",options:["Jeg sætter pris på, at","Jeg synes, at","Jeg er glad for, at"]},kan_lide:{labelKey:"sh_cat_kan_lide",mode:"kan_lide",options:["Jeg","Hun","Han","Vi"]}},verbs:["er","har","hjælper","laver","fortæller","lytter"],kanLideInfinitives:["lide at drikke","lide at snakke med","lide at lave","lide at lytte til","lide at møde"],atSubjects:["hun","han","vi","min ven"],atVerbs:["altid er","har tid til","kan tale om","får mig til at"],invertedSubjects:["vi","hun","han","jeg"],objects:["et varmt og åbent menneske","et spændende arbejde","en god humor","tid til en kop kaffe","gode historier","mig, når noget er svært"],extensionsConj:[{label:"Ingen udvidelse",text:""},{label:", fordi vi forstår hinanden",text:", fordi vi forstår hinanden"},{label:", og vi griner altid meget",text:", og vi griner altid meget"},{label:", selvom vi har travlt",text:", selvom vi har travlt"}],extensionsRel:[{label:", som altid lytter og hjælper",text:", som altid lytter og hjælper"},{label:", som bor tæt på mig",text:", som bor tæt på mig"},{label:", der skaber god stemning",text:", der skaber god stemning"},{label:", som jeg har kendt i mange år",text:", som jeg har kendt i mange år"}]},arbejde:{id:"arbejde",labelKey:"sh_sc_arbejde",starts:{person:{labelKey:"cat_person",mode:"normal",options:["Jeg","Min plan","Vi"]},tid:{labelKey:"cat_tid",mode:"inversion",options:["Lige nu","Næste år","I fremtiden"]},sted:{labelKey:"cat_sted",mode:"inversion",options:["På mit arbejde","På sprogskolen","I Danmark"]},sammenhaeng:{labelKey:"cat_sammenhaeng",mode:"inversion",options:["Derfor","Derefter","Samtidig"]},at_clause:{labelKey:"sh_cat_at_arbejde",mode:"at_clause",options:["Jeg håber, at","Jeg drømmer om, at","Jeg tror, at","Det er mit mål, at"]},kan_lide:{labelKey:"sh_cat_kan_lide",mode:"kan_lide",options:["Jeg","Vi"]}},verbs:["vil gerne","arbejder","drømmer om","lærer","søger","glæder mig til"],kanLideInfinitives:["lide at arbejde med","lide at lære","lide at bruge","lide at hjælpe","lide at udvikle"],atSubjects:["jeg","min uddannelse","fremtiden"],atVerbs:["kan finde","giver mig","bliver","åbner for"],invertedSubjects:["jeg","vi"],objects:["en spændende uddannelse","et godt job i Danmark","bedre dansk hver uge","nye kolleger og opgaver","en fast stilling","at bruge mine erfaringer"],extensionsConj:[{label:"Ingen udvidelse",text:""},{label:", fordi jeg gerne vil udvikle mig",text:", fordi jeg gerne vil udvikle mig"},{label:", selvom det kræver hårdt arbejde",text:", selvom det kræver hårdt arbejde"},{label:", og jeg øver mig hver dag",text:", og jeg øver mig hver dag"}],extensionsRel:[{label:", som giver mig ansvar",text:", som giver mig ansvar"},{label:", der passer til mine styrker",text:", der passer til mine styrker"},{label:", som jeg kan være stolt af",text:", som jeg kan være stolt af"}]},rejse:{id:"rejse",labelKey:"sh_sc_rejse",starts:{person:{labelKey:"cat_person",mode:"normal",options:["Jeg","Vi","Min familie"]},tid:{labelKey:"cat_tid",mode:"inversion",options:["Sidste sommer","Første dag","Om aftenen"]},sted:{labelKey:"cat_sted",mode:"inversion",options:["Ved kysten","På stranden","I bjergene"]},sammenhaeng:{labelKey:"cat_sammenhaeng",mode:"inversion",options:["Derefter","Pludselig","Til sidst"]},at_clause:{labelKey:"sh_cat_at_rejse",mode:"at_clause",options:["Jeg opdagede, at","Vi syntes, at","Jeg glemmer aldrig, at"]},kan_lide:{labelKey:"sh_cat_kan_lide",mode:"kan_lide",options:["Jeg","Vi","Min familie"]}},verbs:["rejste","besøgte","oplevede","smagte","så","boede"],kanLideInfinitives:["lide at rejse til","lide at smage","lide at besøge","lide at opleve","lide at se"],atSubjects:["stedet","naturen","menneskerne","turen"],atVerbs:["var","føltes","gav os","blev"],invertedSubjects:["vi","jeg","min familie"],objects:["en lille by ved havet","en smuk nationalpark","lokal mad på markedet","solnedgangen fra stranden","et uforglemmeligt minde","en stille og venlig stemning"],extensionsConj:[{label:"Ingen udvidelse",text:""},{label:", fordi vejret var helt klart",text:", fordi vejret var helt klart"},{label:", men turen gik alt for hurtigt",text:", men turen gik alt for hurtigt"},{label:", og vi tog mange billeder",text:", og vi tog mange billeder"}],extensionsRel:[{label:", som jeg aldrig glemmer",text:", som jeg aldrig glemmer"},{label:", der lå gemt mellem bakkerne",text:", der lå gemt mellem bakkerne"},{label:", som var helt anderledes end derhjemme",text:", som var helt anderledes end derhjemme"}]}},wg=new Set(["ikke","fordi","selvom","derfor","derefter","bagefter","hele","aldrig","altid","også","meget","rigtig","lidt","mere","mest","alle","mange","nogle","noget","hver","hvad","hvor","hvornår","hvordan","efter","inden","under","over","mellem","uden","gennem","omkring","skal","ville","kunne","måtte","burde","have","havde","være","blev","bliver","blive","dette","disse","mine","dine","sine","vores","deres","hans","hendes","hende","eller","samt","aften","aftenen","morgen","dagen"]),_g=["råbte","råber","gik","går","cyklede","cykler","spiste","spiser","mødte","møder","lavede","laver","skriver","skrev","arbejder","arbejdede","rejste","rejser","besøgte","besøger","boede","bor","snakkede","snakker","kørte","kører","løb","løber","læste","læser","købte","køber","sendte","sender","hørte","hører"],jg=["hyggelig","træt","glad","spændende","dejlig","god","dårlig","sur","kedelig","rar","smuk","flot","svær","nem","varm","kold","travlt","travl"];function zg(o){for(const g of o){const r=(g.toLowerCase().match(/[a-zæøå]+/g)||[]).filter(t=>t.length>=4&&!wg.has(t));for(let t=0;t<r.length;t++)for(let s=t+1;s<r.length;s++){const d=r[t],m=r[s];if(d===m)return[d,m];const h=d.length<=m.length?d:m,L=d.length<=m.length?m:d;if(h.length>=5&&L.startsWith(h)&&L.length-h.length<=3)return[d,m]}}return null}function Eg(o){const g=["fordi","men","selvom","derfor","derefter","bagefter"],r=o.map(t=>{const s=t.toLowerCase().match(/[a-zæøå]+/g)||[];return g.filter(d=>s.includes(d))});for(let t=1;t<r.length;t++){const s=r[t].find(d=>r[t-1].includes(d));if(s)return{connector:s,consecutive:!0}}for(const t of g){const s=r.filter(d=>d.includes(t)).length;if(o.length<=3&&s>=2||s>=3)return{connector:t,consecutive:!1,usedCount:s}}return null}function $g(o){const g=_g.join("|"),r=jg.join("|"),t=new RegExp(`(?:^|[^a-zæøå])((?:${g})(?:\\s+(?:jeg|vi|du|han|hun|de|man))?\\s+(?:rigtig\\s+|meget\\s+|lidt\\s+|helt\\s+)?(?:${r}))(?=$|[,.!?]|\\s+(?:fordi|men|og|selvom|som|der|da|når)\\b)`,"i");for(const s of o){const d=s.match(t);if(d&&d[1])return d[1].trim()}return null}function Sg(o,g,r){const t=[],s=[],d=o.length;if(d===0)return[{title:Me("sh_h_empty_title",r),text:Me("sh_h_empty_text",r),link:{label:Me("sh_h_empty_link",r),route:"ordstilling"}}];const h=o.join(" ").toLowerCase();o.find(q=>/^(i går|i weekenden|om morgenen|om aftenen|i dag|i morgen|derefter|derfor|desværre|sidste sommer|næste år|lige nu)\s+(jeg|vi|han|hun|de)\b/i.test(q.trim()))&&t.push({title:Me("hint_v2_title",r),text:Me("sh_h_v2_text",r),link:{label:Me("hint_v2_link",r),route:"ordstilling"}});const $=$g(o);$&&t.push({title:Me("sh_h_verbadj_title",r),text:Me("sh_h_verbadj_text",r,{phrase:$}),link:{label:Me("sh_h_verbadj_link",r),route:"adjective_comparison"}});const S=zg(o);if(S){const[q,I]=S,z=q===I?`»${q}« × 2`:`»${q}« / »${I}«`;t.push({title:Me("sh_h_repword_title",r),text:Me("sh_h_repword_text",r,{pair:z}),link:{label:Me("sh_h_repword_link",r),route:"adjective_comparison"}})}const E=Eg(o);if(E){const q=["men","selvom","derfor","som / der"].filter(I=>I!==E.connector).slice(0,3).join("«, »");t.push({title:Me("hint_repconn_title",r,{conn:E.connector}),text:Me("hint_repconn_text",r,{conn:E.connector,alts:q}),link:{label:Me("hint_repconn_link",r),route:"top_konjunktioner"}})}if(d===1)return s.push({title:Me("sh_h_s1_title",r),text:Me("sh_h_s1_text",r),link:{label:Me("hint_v2_link",r),route:"ordstilling"}}),s.push({title:Me("sh_h_meaning_title",r),text:Me("sh_h_meaning_text",r),link:{label:Me("sh_h_meaning_link",r),route:"top100_verber"}}),[...t,...s].slice(0,2);if(o.slice(-2).every(q=>/^jeg\b/i.test(q.trim()))&&t.push({title:Me("hint_jeg_title",r),text:Me("hint_jeg_text",r),link:{label:Me("hint_jeg_link",r),route:"ordstilling"}}),(h.match(/(?:^|[^a-zæøå])god(?:t|e)?(?=$|[^a-zæøå])/g)||[]).length>=2&&t.push({title:Me("sh_h_god_title",r),text:Me("sh_h_god_text",r),link:{label:Me("sh_h_repword_link",r),route:"adjective_comparison"}}),t.length>0)return t.slice(0,3);const D=/\b(fordi|men|selvom|og|så)\b/i.test(h);d>=2&&!D&&s.push({title:Me("hint_conj_title",r),text:Me("hint_conj_text",r),link:{label:Me("hint_conj_link",r),route:"top_konjunktioner"}});const V=/\b(som|der)\b/i.test(h),F=/,\s*at\b/i.test(h);d>=3&&!V?s.push({title:Me("hint_rel_title",r),text:Me("hint_rel_text",r),link:{label:Me("hint_rel_link",r),route:"ordstilling"}}):d>=3&&!F&&s.push({title:Me("hint_at_title",r),text:Me("hint_at_text",r),link:{label:Me("hint_at_link",r),route:"top_konjunktioner"}});const B=o.filter(q=>q.trim().split(/\s+/).length<=5).length;return d>=3&&B>=3&&s.length<2&&s.push({title:Me("sh_h_short_title",r),text:Me("sh_h_short_text",r),link:{label:Me("hint_conj_link",r),route:"top_konjunktioner"}}),d>=4&&s.length<2&&s.push({title:Me("sh_h_tense_title",r),text:Me("sh_h_tense_text",r),link:{label:Me("sh_h_tense_link",r),route:"punktet_og_broen"}}),s.length<2&&s.push({title:Me("sh_h_meaning_title",r),text:Me("sh_h_meaning_text",r),link:{label:Me("sh_h_meaning_link",r),route:"top100_verber"}}),s.length<2&&s.push({title:Me("sh_h_nextvar_title",r),text:Me("sh_h_nextvar_text",r),link:{label:Me("sh_h_nextvar_link",r),route:"traen_tidsudtryk"}}),s.slice(0,2)}function Cg(){_d()}function _d(){if(document.getElementById("skrivehjaelp-nordic-styles"))return;const o=document.createElement("style");o.id="skrivehjaelp-nordic-styles",o.textContent=`
         .skrivehjaelp-container {
+            width: 100%;
             max-width: 960px;
             margin: 0 auto;
             padding: 0.75rem 1rem 4rem;
             color: #f1f5f9;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+        .skrivehjaelp-container *,
+        .skrivehjaelp-container *::before,
+        .skrivehjaelp-container *::after {
+            box-sizing: border-box;
         }
         .sh-header {
             margin: 0.6rem 0 1.2rem;
@@ -47571,11 +47579,14 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            max-width: 100%;
+            min-width: 0;
         }
         .sh-topic-label {
             font-size: 0.8rem;
             font-weight: 700;
             color: #94a3b8;
+            flex-shrink: 0;
         }
         .sh-topic-select {
             background: #101419;
@@ -47586,7 +47597,9 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
             font-size: 0.85rem;
             font-weight: 700;
             cursor: pointer;
-            min-width: 230px;
+            min-width: 0;
+            max-width: 100%;
+            text-overflow: ellipsis;
         }
         .sh-topic-select:focus {
             outline: none;
@@ -47953,6 +47966,95 @@ Hvis den indsendte tekst er helt fejlfri eller blot handler om præferencer, så
             background: #101419;
             border-radius: 10px;
             border: 1px solid rgba(203, 213, 225, 0.12);
+        }
+
+        @media (max-width: 640px) {
+            .skrivehjaelp-container {
+                padding: 0.5rem 0.65rem 3rem;
+            }
+            .sh-header h1 {
+                font-size: 1.45rem;
+            }
+            .sh-header p {
+                font-size: 0.88rem;
+            }
+            .sh-card {
+                padding: 0.9rem 0.8rem;
+                border-radius: 13px;
+            }
+            .sh-card-head {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.55rem;
+            }
+            .sh-topic-picker {
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.35rem;
+            }
+            .sh-topic-select {
+                width: 100%;
+                max-width: 100%;
+                min-width: 0;
+                font-size: 0.84rem;
+            }
+            .sh-hints-grid {
+                grid-template-columns: 1fr;
+            }
+            .sh-flow-node {
+                padding: 0.78rem 0.75rem;
+            }
+            .sh-chip {
+                max-width: 100%;
+                white-space: normal;
+                text-align: left;
+                line-height: 1.3;
+                padding: 0.4rem 0.68rem;
+                font-size: 0.8rem;
+            }
+            .sh-custom-input {
+                width: 100% !important;
+                min-width: 0 !important;
+                flex: 1 1 100% !important;
+                font-size: 16px;
+            }
+            .sh-preview-bar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0.85rem;
+            }
+            .sh-preview-bar > div {
+                min-width: 0 !important;
+                width: 100%;
+            }
+            .sh-preview-text {
+                font-size: 0.96rem;
+                line-height: 1.5;
+                overflow-wrap: break-word;
+            }
+            .sh-doc-surface {
+                padding: 0.85rem 0.9rem;
+                font-size: 0.95rem;
+                overflow-wrap: break-word;
+            }
+            .sh-doc-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .sh-doc-actions > div {
+                width: 100%;
+            }
+            .sh-btn-primary,
+            .sh-btn-ghost {
+                justify-content: center;
+                font-size: 0.82rem;
+                padding: 0.5rem 0.8rem;
+            }
+            .sh-review-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
     `,document.head.appendChild(o)}function go(o,g,r){const t=()=>{g.textContent="Kopieret",setTimeout(()=>{g.innerHTML=r},2200)};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(o).then(t).catch(t);else{const s=document.createElement("textarea");s.value=o,s.style.position="fixed",s.style.opacity="0",document.body.appendChild(s),s.select();try{document.execCommand("copy")}catch{}document.body.removeChild(s),t()}}function Tg(o,g){_d(),fi();const r="lingcog_skrivevaerksted_v1";let t=[];try{const b=JSON.parse(localStorage.getItem(r)||"[]");Array.isArray(b)&&(t=b)}catch{}function s(){try{localStorage.setItem(r,JSON.stringify(t))}catch{}}let d="workshop",m="dag",h="person",L="conj",$=!1,S=null,E={},_=pi(),H=null,D={start:"Jeg",verb:"gik",invSubj:"jeg",atSubj:"dagen",atVerb:"var",kanModal:"kan",kanAdv:"godt",kanInf:"lide at spise",object:"en lang tur ved vandet",skipStep3:!1,ext:""};function V(b,u=null){const f=co[b],x=u&&f.starts[u]?u:f.starts.hilsen?"hilsen":"person";h=x,L="conj",D={start:f.starts[x].options[0],verb:f.verbs[0],invSubj:f.invertedSubjects[0],atSubj:f.atSubjects[0],atVerb:f.atVerbs[0],kanModal:"kan",kanAdv:"godt",kanInf:f.kanLideInfinitives&&f.kanLideInfinitives[0]||"lide at spise",object:f.objects[0],skipStep3:!1,ext:""}}function F(){const u=co[m].starts[h]?.mode||"normal",f=[];if(u==="greeting"){const k=(D.start||"").trim();if(!k)return"";let T=k.charAt(0).toUpperCase()+k.slice(1);return/[,!.?]$/.test(T)||(T+=","),T}else u==="at_clause"?(D.start.trim()&&f.push(D.start.trim()),D.atSubj.trim()&&f.push(D.atSubj.trim()),D.atVerb.trim()&&f.push(D.atVerb.trim()),D.object.trim()&&f.push(D.object.trim())):u==="kan_lide"?(D.start.trim()&&f.push(D.start.trim()),(D.kanModal||"kan").trim()&&f.push((D.kanModal||"kan").trim()),D.kanAdv.trim()&&f.push(D.kanAdv.trim()),D.kanInf.trim()&&f.push(D.kanInf.trim()),D.object.trim()&&f.push(D.object.trim())):(D.start.trim()&&f.push(D.start.trim()),D.verb.trim()&&f.push(D.verb.trim()),u==="inversion"&&D.invSubj.trim()&&f.push(D.invSubj.trim()),!(u==="normal"&&D.skipStep3)&&D.object.trim()&&f.push(D.object.trim()));let x=f.join(" ").replace(/\s+/g," ").trim();if(!x)return"";if(x=x.charAt(0).toUpperCase()+x.slice(1),D.ext.trim()){const k=D.ext.trim();x+=k.startsWith(",")||k.startsWith(".")?k:" "+k}return/[.!?]$/.test(x)||(x+="."),x}const B=document.createElement("div");B.className="view-container skrivehjaelp-container";function q(){B.innerHTML="";const b=document.createElement("div");b.className="top-bar";const u=document.createElement("button");u.className="back-btn",u.textContent="← "+e("back"),u.onclick=()=>g("main"),b.appendChild(u),B.appendChild(b);const f=De()||"da",x=ai(f)?' dir="rtl"':"",k=document.createElement("div");k.className="sh-header",k.innerHTML=`
             <h1${x}>${e("skriveHjaelp")||"Skrivehjælp"}</h1>

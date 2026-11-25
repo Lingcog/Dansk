@@ -409,22 +409,13 @@ const DEL2_QUESTIONS = [
         tip: 'På dansk bruger vi verbet "går" sammen med skole: "Jeg går på sprogskole".'
     },
     {
-        examinerQ: 'Hvornår starter undervisningen om morgenen?',
+        examinerQ: 'Hvornår starter undervisningen?',
         options: [
-            { text: 'Undervisningen slutter klokken ni om morgenen.', correct: false },
-            { text: 'Undervisningen starter klokken ni om morgenen.', correct: true },
-            { text: 'Undervisningen glemmer klokken ni om morgenen.', correct: false }
+            { text: 'Undervisningen starter kl. 9 på morgenen.', correct: false },
+            { text: 'Undervisningen starter kl. 9 om morgenen.', correct: true },
+            { text: 'Undervisningen starter kl. 9 i morgenen.', correct: false }
         ],
-        tip: '"Starter" betyder at noget begynder — modsat "slutter" (når det er færdigt).'
-    },
-    {
-        examinerQ: 'Hvad gør din lærer, når grammatikken er svær?',
-        options: [
-            { text: 'Min lærer lukker grammatikken stille og roligt.', correct: false },
-            { text: 'Min lærer køber grammatikken stille og roligt.', correct: false },
-            { text: 'Min lærer forklarer grammatikken stille og roligt.', correct: true }
-        ],
-        tip: 'En lærer "forklarer", så kursisterne forstår reglerne.'
+        tip: 'Om faste tidspunkter på dagen bruger dansk "om": "om morgenen", "om aftenen".'
     },
     {
         examinerQ: 'Hvad laver I sammen i en lille gruppe?',
@@ -445,58 +436,40 @@ const DEL2_QUESTIONS = [
         tip: 'I et hæfte "skriver" man nye ord og noter.'
     },
     {
-        examinerQ: 'Hvad laver du på sprogskolens bibliotek efter timen?',
+        examinerQ: 'Hvad drikker du i pausen?',
         options: [
-            { text: 'Efter timen vasker jeg en let bog på biblioteket.', correct: false },
-            { text: 'Efter timen kører jeg en let bog på biblioteket.', correct: false },
-            { text: 'Efter timen låner jeg en let bog på biblioteket.', correct: true }
+            { text: 'I pausen spiser jeg te.', correct: false },
+            { text: 'I pausen kører jeg te.', correct: false },
+            { text: 'I pausen drikker jeg te.', correct: true }
         ],
-        tip: 'På et bibliotek "låner" man bøger gratis og afleverer dem igen.'
+        tip: 'Til te, kaffe og vand bruger vi verbet "drikker" — ikke "spiser".'
     },
     {
-        examinerQ: 'Hvad spiser du i pausen klokken halv elleve?',
+        examinerQ: 'Hvem drikker du kaffe med i pausen?',
         options: [
-            { text: 'I pausen spiser jeg min madpakke i kantinen.', correct: true },
-            { text: 'I pausen læser jeg min madpakke i kantinen.', correct: false },
-            { text: 'I pausen åbner jeg min madpakke i kantinen.', correct: false }
+            { text: 'Jeg drikker en kop kaffe med dine venner.', correct: false },
+            { text: 'Jeg drikker en kop kaffe med mine venner.', correct: true },
+            { text: 'Jeg drikker en kop kaffe med hans venner.', correct: false }
         ],
-        tip: 'Til mad bruger vi "spiser" ("spiser min madpakke").'
+        tip: 'Når "Jeg" er personen, passer ejestedordet "mine" til flertal ("mine venner").'
     },
     {
-        examinerQ: 'Hvad drikker du sammen med dine klassekammerater i pausen?',
+        examinerQ: 'Hvordan kommer du til sprogskolen?',
         options: [
-            { text: 'Jeg skriver en varm kop kaffe med mine venner.', correct: false },
-            { text: 'Jeg drikker en varm kop kaffe med mine venner.', correct: true },
-            { text: 'Jeg løber en varm kop kaffe med mine venner.', correct: false }
+            { text: 'Jeg cykler i sprogskole.', correct: false },
+            { text: 'Jeg cykler på sprogskole.', correct: false },
+            { text: 'Jeg cykler til sprogskole.', correct: true }
         ],
-        tip: 'Om kaffe, te og vand bruger vi verbet "drikker".'
+        tip: 'Når man bevæger sig hen mod et sted, bruger vi "til": "Jeg cykler til sprogskole".'
     },
     {
-        examinerQ: 'Hvordan kommer du til sprogskolen, når vejret er godt?',
+        examinerQ: 'Hvor lang tid tager det?',
         options: [
-            { text: 'Jeg svømmer til sprogskolen på femten minutter.', correct: false },
-            { text: 'Jeg koger til sprogskolen på femten minutter.', correct: false },
-            { text: 'Jeg cykler til sprogskolen på femten minutter.', correct: true }
+            { text: 'Det tager 15 min.', correct: true },
+            { text: 'Det siger 15 min.', correct: false },
+            { text: 'Det spiser 15 min.', correct: false }
         ],
-        tip: 'Verbet "cykler" bruges direkte om at køre på cykel.'
-    },
-    {
-        examinerQ: 'Hvad gør du, når det regner eller sner om vinteren?',
-        options: [
-            { text: 'Om vinteren tager jeg bussen til sprogskolen.', correct: true },
-            { text: 'Om vinteren spiser jeg bussen til sprogskolen.', correct: false },
-            { text: 'Om vinteren vasker jeg bussen til sprogskolen.', correct: false }
-        ],
-        tip: 'Om offentlig transport siger vi "tager bussen" eller "tager toget".'
-    },
-    {
-        examinerQ: 'Hvordan øver du dansk derhjemme efter skole?',
-        options: [
-            { text: 'Jeg køber udtale og læser mine noter derhjemme.', correct: false },
-            { text: 'Jeg øver udtale og læser mine noter derhjemme.', correct: true },
-            { text: 'Jeg lukker udtale og læser mine noter derhjemme.', correct: false }
-        ],
-        tip: 'Når man træner noget for at blive bedre, bruger man "øver" ("øver udtale").'
+        tip: 'Om varighed af en tur bruger dansk altid verbet "tager": "Det tager 15 min.".'
     },
     {
         examinerQ: 'Hvad vil du gerne lave, når du er færdig med sprogskolen?',

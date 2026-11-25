@@ -283,7 +283,176 @@ const HYPOTAKSE_SCENES = [
 ];
 
 // ============================================================================
-// DATA: FANE 4 (ZOOM-VÆRKSTEDET — 8 INTERAKTIVE OPGAVER)
+// DATA: FANE 4 — DEL 1: ZOOM IND (6 INTERAKTIVE SYNTAGME-MANIPULATIONER)
+// ============================================================================
+const ZOOM_IN_TASKS = [
+    {
+        id: 'zi1',
+        tag: 'Nominalsyntagme · Før + Kerne + Efter',
+        instruction: 'Udvid den grønne Plads 1-brik ved at sætte delene i rigtig rækkefølge foran verbet:',
+        fixedBefore: '',
+        fixedAfter: 'cykler på gaden.',
+        targetColor: 'green',
+        targetLabel: 'Plads 1 (Hvem?)',
+        correctSeq: ['Den', 'smilende', 'kvinde', 'med den orange hue'],
+        pool: ['med den orange hue', 'kvinde', 'Den', 'smilende'],
+        fullSentence: 'Den smilende kvinde med den orange hue cykler på gaden.',
+        expl: 'Et nominalsyntagme bygges som: Artikel ("Den") + før-detalje ("smilende") + kerne ("kvinde") + efter-detalje ("med den orange hue"). Alt sammen fylder kun Plads 1!'
+    },
+    {
+        id: 'zi2',
+        tag: 'Nominalsyntagme + som-sætning (Pas på lokkebrik!)',
+        instruction: 'Byg hele Plads 1-brikken med en "som"-sætning indeni — og sæt hovedverbet på Plads 2 (lad lokkebrikken ligge!):',
+        fixedBefore: '',
+        fixedAfter: 'roligt forbi.',
+        targetColor: 'green',
+        targetLabel: 'Plads 1 + Plads 2',
+        correctSeq: ['Kvinden,', 'som har en papirpose i kurven,', 'cykler'],
+        pool: ['cykler', 'hun', 'Kvinden,', 'som har en papirpose i kurven,'],
+        decoyNote: 'Lokkebrikken "hun" skal IKKE med.',
+        fullSentence: 'Kvinden, som har en papirpose i kurven, cykler roligt forbi.',
+        expl: 'Hele "Kvinden, som har en papirpose i kurven," er Plads 1. Der må ikke snige sig et ekstra "hun" ind før hovedverbet "cykler"!'
+    },
+    {
+        id: 'zi3',
+        tag: 'Sted-syntagme · Præposition + beskrevet sted',
+        instruction: 'Zoom ind på stedet ("Hvor?") og byg hele den blå brik efter "En kvinde cykler":',
+        fixedBefore: 'En kvinde cykler',
+        fixedAfter: 'om morgenen.',
+        targetColor: 'blue',
+        targetLabel: 'Hvor? (Sted-syntagme)',
+        correctSeq: ['på', 'den sneklædte cykelsti', 'foran den lille café'],
+        pool: ['foran den lille café', 'på', 'den sneklædte cykelsti'],
+        fullSentence: 'En kvinde cykler på den sneklædte cykelsti foran den lille café om morgenen.',
+        expl: 'Den blå sted-brik starter med præpositionen ("på"), derefter selve stedet ("den sneklædte cykelsti") og til sidst ekstra præcisering ("foran den lille café").'
+    },
+    {
+        id: 'zi4',
+        tag: 'Verbal-kæde · Spaltning af 2 verber',
+        instruction: 'Start med "Om morgenen" (Plads 1) og spalt handlings-brikken ("vil" + "cykle") rigtigt rundt om subjektet:',
+        fixedBefore: 'Om morgenen',
+        fixedAfter: 'gennem byen.',
+        targetColor: 'red',
+        targetLabel: 'Plads 2 + Subjekt + Rest af handling',
+        correctSeq: ['vil', 'hun', 'gerne', 'cykle'],
+        pool: ['cykle', 'hun', 'vil', 'gerne'],
+        fullSentence: 'Om morgenen vil hun gerne cykle gennem byen.',
+        expl: 'Når handlings-brikken har to verber, står modalverbet ("vil") på Plads 2, mens hovedverbet ("cykle") lukker rammen efter subjekt og småord ("hun gerne").'
+    },
+    {
+        id: 'zi5',
+        tag: 'Objekt-syntagme · Før + Kerne + Efter',
+        instruction: 'Udvid det, han drikker ("Hvad?"), med alle detaljerne i rigtig rækkefølge:',
+        fixedBefore: 'Han drikker',
+        fixedAfter: 'hver morgen.',
+        targetColor: 'orange',
+        targetLabel: 'Hvad? (Objekt-syntagme)',
+        correctSeq: ['en varm', 'kop kaffe', 'fra det lille bageri', 'på hjørnet'],
+        pool: ['på hjørnet', 'kop kaffe', 'fra det lille bageri', 'en varm'],
+        fullSentence: 'Han drikker en varm kop kaffe fra det lille bageri på hjørnet hver morgen.',
+        expl: 'Objektet vokser fra kernen ("kop kaffe") med tillægsord foran ("en varm") og stedsdetaljer bagefter ("fra det lille bageri på hjørnet").'
+    },
+    {
+        id: 'zi6',
+        tag: 'Årsags-syntagme på Plads 1 (V2)',
+        instruction: 'Byg hele årsags-brikken ("På grund af...") på Plads 1, og sæt verbet på Plads 2:',
+        fixedBefore: '',
+        fixedAfter: 'den varme hue på.',
+        targetColor: 'purple',
+        targetLabel: 'Plads 1 (Årsag) + Plads 2 (Verbum)',
+        correctSeq: ['På grund af', 'den kraftige sne', 'tager', 'hun'],
+        pool: ['hun', 'den kraftige sne', 'tager', 'På grund af'],
+        fullSentence: 'På grund af den kraftige sne tager hun den varme hue på.',
+        expl: 'Hele præpositionsleddet "På grund af den kraftige sne" tæller som Plads 1 — derfor kommer verbet "tager" straks på Plads 2 før "hun".'
+    }
+];
+
+// ============================================================================
+// DATA: FANE 4 — DEL 2: ZOOM UD (6 INTERAKTIVE SÆTNINGSDELS-MANIPULATIONER)
+// ============================================================================
+const ZOOM_OUT_TASKS = [
+    {
+        id: 'zo1',
+        tag: 'Flyt baggrunden forrest (fordi + V2)',
+        instruction: 'Start med baggrunden ("Fordi det regner i dag,") på Plads 1 — og sæt hovedsætningen i rigtig V2-rækkefølge:',
+        fixedBefore: '',
+        fixedAfter: '.',
+        targetColor: 'purple',
+        targetLabel: 'Baggrund (Plads 1) + Forgrund (V2)',
+        correctSeq: ['Fordi det regner i dag,', 'tager', 'han', 'sin gule regnjakke på'],
+        pool: ['han', 'sin gule regnjakke på', 'Fordi det regner i dag,', 'tager'],
+        fullSentence: 'Fordi det regner i dag, tager han sin gule regnjakke på.',
+        expl: 'Hele ledsætningen "Fordi det regner i dag," fylder Plads 1. Derfor springer verbet "tager" frem på Plads 2 lige efter kommaet!'
+    },
+    {
+        id: 'zo2',
+        tag: '"ikke" inde i baggrunden (fordi + ikke)',
+        instruction: 'Byg baggrunds-brikken efter "Han tager bussen," — husk hvor "ikke" står i en ledsætning:',
+        fixedBefore: 'Han tager bussen,',
+        fixedAfter: '.',
+        targetColor: 'purple',
+        targetLabel: 'Baggrund (Ledsætning med "ikke")',
+        correctSeq: ['fordi', 'han', 'ikke', 'vil', 'blive våd'],
+        pool: ['vil', 'fordi', 'blive våd', 'ikke', 'han'],
+        fullSentence: 'Han tager bussen, fordi han ikke vil blive våd.',
+        expl: 'Inde i en ledsætning (baggrunden) sniger "ikke" sig altid ind FORAN verbet: "fordi han ikke vil blive våd".'
+    },
+    {
+        id: 'zo3',
+        tag: 'Modstand forrest (selvom + ikke + V2)',
+        instruction: 'Kombinér begge regler: "ikke" foran verbet i baggrunden OG verbet på Plads 2 i forgrunden:',
+        fixedBefore: '',
+        fixedAfter: '.',
+        targetColor: 'purple',
+        targetLabel: 'Baggrund (selvom + ikke) + Forgrund (V2)',
+        correctSeq: ['Selvom', 'det', 'ikke er varmt,', 'går', 'hun', 'en lang tur'],
+        pool: ['går', 'en lang tur', 'Selvom', 'hun', 'ikke er varmt,', 'det'],
+        fullSentence: 'Selvom det ikke er varmt, går hun en lang tur.',
+        expl: 'I baggrunden står "ikke" foran verbet ("ikke er varmt"), og i forgrunden efter kommaet står verbet først ("går hun").'
+    },
+    {
+        id: 'zo4',
+        tag: 'Tid som baggrund på Plads 1 (mens + V2)',
+        instruction: 'Sæt tids-baggrunden forrest for at ramme scenen ind, og byg forgrunden rigtigt efter kommaet:',
+        fixedBefore: '',
+        fixedAfter: '.',
+        targetColor: 'blue',
+        targetLabel: 'Tid-baggrund (Plads 1) + Forgrund (V2)',
+        correctSeq: ['Mens han går forbi bageriet,', 'standser', 'den gule bus', 'ved stoppestedet'],
+        pool: ['ved stoppestedet', 'den gule bus', 'Mens han går forbi bageriet,', 'standser'],
+        fullSentence: 'Mens han går forbi bageriet, standser den gule bus ved stoppestedet.',
+        expl: 'Baggrunden ("Mens han går forbi bageriet,") tæller som én brik på Plads 1, så hovedverbet "standser" kommer direkte på Plads 2.'
+    },
+    {
+        id: 'zo5',
+        tag: 'Betingelse med "ikke" (hvis + ikke + V2)',
+        instruction: 'Byg hele betingelses-sætningen med "hvis" forrest — husk både "ikke" før verbet og V2 efter kommaet:',
+        fixedBefore: '',
+        fixedAfter: '.',
+        targetColor: 'purple',
+        targetLabel: 'Betingelse (Plads 1) + Forgrund (V2)',
+        correctSeq: ['Hvis regnen', 'ikke', 'stopper snart,', 'går', 'vi', 'ind på caféen'],
+        pool: ['vi', 'stopper snart,', 'går', 'Hvis regnen', 'ind på caféen', 'ikke'],
+        fullSentence: 'Hvis regnen ikke stopper snart, går vi ind på caféen.',
+        expl: 'Perfekt hypotakse: "ikke" foran "stopper" inde i hvis-sætningen, og "går vi" (V2) lige efter kommaet.'
+    },
+    {
+        id: 'zo6',
+        tag: 'Dobbelt zoom · Udvidet subjekt + baggrund',
+        instruction: 'Saml en rig sætning, hvor både Plads 1 er zoomet ind OG baggrunden forklarer årsagen:',
+        fixedBefore: '',
+        fixedAfter: '.',
+        targetColor: 'green',
+        targetLabel: 'Udvidet Forgrund + Baggrund (fordi)',
+        correctSeq: ['Den unge kvinde med paraplyen', 'skynder sig,', 'fordi', 'bussen', 'allerede', 'holder ved stoppestedet'],
+        pool: ['allerede', 'skynder sig,', 'holder ved stoppestedet', 'fordi', 'Den unge kvinde med paraplyen', 'bussen'],
+        fullSentence: 'Den unge kvinde med paraplyen skynder sig, fordi bussen allerede holder ved stoppestedet.',
+        expl: 'Her kombinerer du begge kamera-greb: et udvidet nominalsyntagme i forgrunden + en baggrunds-ledsætning, hvor centraladverbiet "allerede" står foran verbet "holder"!'
+    }
+];
+
+// ============================================================================
+// DATA: FANE 4 — DEL 3: HURTIG-QUIZ (8 KONTROLSPØRGSMÅL)
 // ============================================================================
 const WORKSHOP_QUIZ = [
     {
@@ -646,6 +815,59 @@ function injectSaetningsdeleStyles() {
         .osd-quiz-opt:hover:not(:disabled) { border-color: #4c9ba6; background: #1a212b; }
         .osd-quiz-opt.correct { border-color: #22c55e; background: rgba(34, 197, 94, 0.18); }
         .osd-quiz-opt.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.18); }
+        .osd-subtrack-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-bottom: 1.1rem;
+        }
+        .osd-dropzone {
+            min-height: 62px;
+            background: #101419;
+            border: 1.5px dashed rgba(76, 155, 166, 0.55);
+            border-radius: 12px;
+            padding: 0.7rem 0.85rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.45rem;
+            margin-bottom: 0.85rem;
+        }
+        .osd-dropzone.correct { border-style: solid; border-color: #22c55e; background: rgba(34, 197, 94, 0.1); }
+        .osd-dropzone.wrong { border-style: solid; border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+        .osd-fixed-anchor {
+            font-size: 0.94rem;
+            font-weight: 700;
+            color: #94a3b8;
+            padding: 0.3rem 0.45rem;
+            background: rgba(148, 163, 184, 0.08);
+            border-radius: 7px;
+        }
+        .osd-placed-brick {
+            background: #2b6e78;
+            border: 1px solid #4c9ba6;
+            color: #ffffff;
+            padding: 0.42rem 0.78rem;
+            border-radius: 9px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .osd-placed-brick:hover { background: #35838f; }
+        .osd-pool-brick {
+            background: #1a212b;
+            border: 1.5px solid rgba(203, 213, 225, 0.22);
+            color: #f1f5f9;
+            padding: 0.46rem 0.85rem;
+            border-radius: 9px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .osd-pool-brick:hover:not(:disabled) { border-color: #4c9ba6; background: #222c38; }
+        .osd-pool-brick:disabled { opacity: 0.3; cursor: not-allowed; }
         @media (max-width: 640px) {
             .osd-view { padding: 0.55rem 0.65rem 3.5rem; }
             .osd-card { padding: 0.95rem 0.85rem; }
@@ -676,7 +898,12 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
     let bgFirst = false;
     let showIkke = false;
 
-    // Fane 4 quiz state
+    // Fane 4 workshop state (3 tracks: zoom_in_build, zoom_out_build, quick_quiz)
+    let workshopTrack = 'zoom_in_build';
+    let buildState = {
+        zoom_in_build: { idx: 0, score: 0, placed: [], status: null },
+        zoom_out_build: { idx: 0, score: 0, placed: [], status: null }
+    };
     let quizIdx = 0;
     let quizScore = 0;
     let quizAnswered = false;
@@ -720,7 +947,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
             { id: 'zoom_in', icon: SVG_ZOOM_IN, label: '1. Zoom ind (Sætningsdele)' },
             { id: 'inside', icon: SVG_LAYERS, label: '2. Inde i brikken' },
             { id: 'zoom_out', icon: SVG_ZOOM_OUT, label: '3. Zoom ud (Hypotakse)' },
-            { id: 'workshop', icon: SVG_CHECK, label: '4. Zoom-værkstedet (Quiz)' }
+            { id: 'workshop', icon: SVG_CHECK, label: '4. Zoom-værkstedet (20 opgaver)' }
         ];
         tabs.innerHTML = tabDefs.map(t => `
             <button type="button" class="osd-tab ${activeTab === t.id ? 'active' : ''}" data-tab="${t.id}">
@@ -991,16 +1218,42 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
     }
 
     // ========================================================================
-    // FANE 4: ZOOM-VÆRKSTEDET (8 INTERAKTIVE OPGAVER)
+    // FANE 4: ZOOM-VÆRKSTEDET (20 OPGAVER: ZOOM IND + ZOOM UD + HURTIG-QUIZ)
     // ========================================================================
     function renderWorkshopTab() {
+        const trackBar = document.createElement('div');
+        trackBar.className = 'osd-subtrack-bar';
+        const tracks = [
+            { id: 'zoom_in_build', icon: SVG_ZOOM_IN, label: `1. Zoom ind · Manipulér syntagmer (${ZOOM_IN_TASKS.length})` },
+            { id: 'zoom_out_build', icon: SVG_ZOOM_OUT, label: `2. Zoom ud · Manipulér sætningsdele (${ZOOM_OUT_TASKS.length})` },
+            { id: 'quick_quiz', icon: SVG_CHECK, label: `3. Hurtig-quiz (${WORKSHOP_QUIZ.length})` }
+        ];
+        trackBar.innerHTML = tracks.map(t => `
+            <button type="button" class="osd-chip ${workshopTrack === t.id ? 'active' : ''}" data-wtrack="${t.id}">
+                ${t.icon}<span>${t.label}</span>
+            </button>
+        `).join('');
+        trackBar.querySelectorAll('[data-wtrack]').forEach(btn => {
+            btn.onclick = () => {
+                workshopTrack = btn.dataset.wtrack;
+                render();
+            };
+        });
+        viewContainer.appendChild(trackBar);
+
+        if (workshopTrack === 'zoom_in_build' || workshopTrack === 'zoom_out_build') {
+            renderBuilderTrack(workshopTrack);
+            return;
+        }
+
+        // Spor 3: Hurtig-quiz (8 opgaver)
         const card = document.createElement('div');
         card.className = 'osd-card';
 
         if (quizIdx >= WORKSHOP_QUIZ.length) {
             card.style.textAlign = 'center';
             card.innerHTML = `
-                <h2 style="margin:0.4rem 0 0.7rem; color:#f1f5f9;">Zoom-værkstedet gennemført</h2>
+                <h2 style="margin:0.4rem 0 0.7rem; color:#f1f5f9;">Hurtig-quiz gennemført</h2>
                 <p style="color:#94a3b8; font-size:1rem; margin-bottom:1.25rem;">
                     Du fik <strong style="color:#4ade80;">${quizScore} af ${WORKSHOP_QUIZ.length}</strong> rigtige.
                 </p>
@@ -1064,6 +1317,157 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
                 quizIdx++;
                 quizAnswered = false;
                 quizPicked = null;
+                render();
+            };
+        }
+
+        viewContainer.appendChild(card);
+    }
+
+    function renderBuilderTrack(trackKey) {
+        const tasks = trackKey === 'zoom_in_build' ? ZOOM_IN_TASKS : ZOOM_OUT_TASKS;
+        const st = buildState[trackKey];
+        const card = document.createElement('div');
+        card.className = 'osd-card';
+
+        if (st.idx >= tasks.length) {
+            const isZoomIn = trackKey === 'zoom_in_build';
+            card.style.textAlign = 'center';
+            card.innerHTML = `
+                <h2 style="margin:0.4rem 0 0.7rem; color:#f1f5f9;">${isZoomIn ? 'Zoom ind-værksted gennemført' : 'Zoom ud-værksted gennemført'}</h2>
+                <p style="color:#94a3b8; font-size:1rem; margin-bottom:1.25rem;">
+                    Du løste <strong style="color:#4ade80;">${st.score} af ${tasks.length}</strong> opgaver rigtigt i første forsøg.
+                </p>
+                <div style="display:flex; justify-content:center; gap:0.6rem; flex-wrap:wrap;">
+                    <button type="button" class="osd-btn-ghost" id="osd-build-restart">Øv dette spor igen</button>
+                    <button type="button" class="osd-btn-primary" id="osd-build-next-track">
+                        ${isZoomIn ? 'Videre til 2. Zoom ud →' : 'Videre til 3. Hurtig-quiz →'}
+                    </button>
+                </div>
+            `;
+            card.querySelector('#osd-build-restart').onclick = () => {
+                buildState[trackKey] = { idx: 0, score: 0, placed: [], status: null };
+                render();
+            };
+            card.querySelector('#osd-build-next-track').onclick = () => {
+                workshopTrack = isZoomIn ? 'zoom_out_build' : 'quick_quiz';
+                render();
+            };
+            viewContainer.appendChild(card);
+            return;
+        }
+
+        const task = tasks[st.idx];
+        const placedIndices = st.placed; // array of indices into task.pool
+        const placedTexts = placedIndices.map(i => task.pool[i]);
+
+        card.innerHTML = `
+            <div class="osd-card-head">
+                <span class="osd-badge" style="margin:0;">${task.tag}</span>
+                <span style="font-size:0.82rem; font-weight:700; color:#94a3b8;">Opgave ${st.idx + 1} af ${tasks.length} · Første-forsøg score: ${st.score}</span>
+            </div>
+
+            <div style="font-size:0.96rem; font-weight:700; color:#f1f5f9; margin-bottom:0.8rem; line-height:1.5;">
+                ${task.instruction}
+                ${task.decoyNote ? `<span style="display:inline-block; margin-left:0.4rem; font-size:0.8rem; color:#fb923c;">(${task.decoyNote})</span>` : ''}
+            </div>
+
+            <div style="font-size:0.74rem; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:#7ec4ce; margin-bottom:0.35rem;">
+                Byg her · ${task.targetLabel} (klik på en placeret brik for at fjerne den)
+            </div>
+            <div class="osd-dropzone ${st.status === 'correct' ? 'correct' : st.status === 'wrong' ? 'wrong' : ''}" id="osd-dropzone">
+                ${task.fixedBefore ? `<span class="osd-fixed-anchor">${task.fixedBefore}</span>` : ''}
+                ${placedIndices.length === 0
+                    ? `<span style="color:#64748b; font-size:0.86rem; font-style:italic;">Klik på brikkerne nedenfor i den rigtige rækkefølge...</span>`
+                    : placedIndices.map((poolIdx, pos) => `
+                        <button type="button" class="osd-placed-brick" data-remove-pos="${pos}">${task.pool[poolIdx]}</button>
+                    `).join('')
+                }
+                ${task.fixedAfter ? `<span class="osd-fixed-anchor">${task.fixedAfter}</span>` : ''}
+            </div>
+
+            <div class="osd-chip-row" style="margin-bottom:1rem;">
+                ${task.pool.map((txt, poolIdx) => `
+                    <button type="button" class="osd-pool-brick" data-pool-idx="${poolIdx}" ${placedIndices.includes(poolIdx) || st.status === 'correct' ? 'disabled' : ''}>
+                        ${txt}
+                    </button>
+                `).join('')}
+            </div>
+
+            <div style="display:flex; gap:0.55rem; flex-wrap:wrap; margin-bottom:0.9rem;">
+                ${st.status !== 'correct' ? `
+                    <button type="button" class="osd-btn-primary" id="osd-check-build" ${placedIndices.length === 0 ? 'disabled' : ''}>
+                        ${SVG_CHECK}<span>Tjek svar</span>
+                    </button>
+                    <button type="button" class="osd-btn-ghost" id="osd-clear-build" ${placedIndices.length === 0 ? 'disabled' : ''}>Ryd</button>
+                ` : `
+                    <button type="button" class="osd-btn-ghost" id="osd-listen-build">${SVG_SPEAK}<span>Lyt til sætningen</span></button>
+                    <button type="button" class="osd-btn-primary" id="osd-next-build">Næste opgave →</button>
+                `}
+            </div>
+
+            ${st.status === 'correct' ? `
+                <div class="osd-note-box" style="border-left-color:#22c55e;">
+                    <strong style="color:#4ade80;">Flot bygget!</strong> ${task.expl}
+                </div>
+            ` : st.status === 'wrong' ? `
+                <div class="osd-note-box" style="border-left-color:#ef4444;">
+                    <strong style="color:#f87171;">Ikke helt endnu.</strong> Prøv at flytte brikkerne (klik på en placeret brik for at fjerne den) — tænk på, hvad der står på Plads 1 og Plads 2!
+                </div>
+            ` : ''}
+        `;
+
+        card.querySelectorAll('[data-pool-idx]').forEach(btn => {
+            btn.onclick = () => {
+                if (st.status === 'correct') return;
+                const pIdx = parseInt(btn.dataset.poolIdx, 10);
+                if (!st.placed.includes(pIdx)) {
+                    st.placed.push(pIdx);
+                    if (st.status === 'wrong') st.status = null;
+                    render();
+                }
+            };
+        });
+        card.querySelectorAll('[data-remove-pos]').forEach(btn => {
+            btn.onclick = () => {
+                if (st.status === 'correct') return;
+                const pos = parseInt(btn.dataset.removePos, 10);
+                st.placed.splice(pos, 1);
+                st.status = null;
+                render();
+            };
+        });
+
+        const checkBtn = card.querySelector('#osd-check-build');
+        if (checkBtn) {
+            checkBtn.onclick = () => {
+                const isRight = placedTexts.length === task.correctSeq.length
+                    && placedTexts.every((t, i) => t === task.correctSeq[i]);
+                if (isRight) {
+                    if (st.status === null) st.score++;
+                    st.status = 'correct';
+                } else {
+                    st.status = 'wrong';
+                }
+                render();
+            };
+        }
+        const clearBtn = card.querySelector('#osd-clear-build');
+        if (clearBtn) {
+            clearBtn.onclick = () => {
+                st.placed = [];
+                st.status = null;
+                render();
+            };
+        }
+        const listenBtn = card.querySelector('#osd-listen-build');
+        if (listenBtn) listenBtn.onclick = () => speakDanish(task.fullSentence);
+        const nextBtn = card.querySelector('#osd-next-build');
+        if (nextBtn) {
+            nextBtn.onclick = () => {
+                st.idx++;
+                st.placed = [];
+                st.status = null;
                 render();
             };
         }

@@ -84,19 +84,6 @@ export function renderOrdstillingView(container, navigateFn) {
     `;
     grid.appendChild(introCard);
 
-    const saetningsdeleCard = document.createElement('div');
-    saetningsdeleCard.className = 'card special-highlight';
-    saetningsdeleCard.style.gridColumn = '1 / -1';
-    saetningsdeleCard.onclick = () => navigateFn('ordstilling_saetningsdele');
-    saetningsdeleCard.innerHTML = `
-        <div class="card-icon" style="font-size: 2.2rem;">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-        </div>
-        <div class="card-title">Sætningsdele (Zoom ind &amp; Zoom ud)</div>
-        <div class="card-desc" style="margin-top: 0.45rem; font-size: 0.93rem;">Zoom ind på én farvet brik for at bygge rige sætningsdele — og zoom ud til forgrund og baggrund (hypotakse).</div>
-    `;
-    grid.appendChild(saetningsdeleCard);
-
     standardLevels.forEach(l => {
         const categoryData = ordstillingData[l.key];
         const card = document.createElement('div');
@@ -144,6 +131,41 @@ export function renderOrdstillingView(container, navigateFn) {
     });
 
     menuArea.appendChild(altGrid);
+
+    // Næste skridt: Sætningsdele (nederst med blød anbefaling)
+    const nextStepHeader = document.createElement('h2');
+    nextStepHeader.textContent = 'Næste skridt: Sætningsdele (A2–B1)';
+    nextStepHeader.style.marginTop = '2.5rem';
+    nextStepHeader.style.marginBottom = '0.45rem';
+    nextStepHeader.style.textAlign = 'center';
+    menuArea.appendChild(nextStepHeader);
+
+    const nextStepSub = document.createElement('p');
+    nextStepSub.className = 'subtitle';
+    nextStepSub.textContent = 'Anbefales efter Introduktion — lær at udvide brikker og kombinere forgrund og baggrund (hypotakse).';
+    nextStepSub.style.marginBottom = '1.25rem';
+    menuArea.appendChild(nextStepSub);
+
+    const nextStepGrid = document.createElement('div');
+    nextStepGrid.className = 'grid';
+
+    const saetningsdeleCard = document.createElement('div');
+    saetningsdeleCard.className = 'card special-highlight';
+    saetningsdeleCard.style.gridColumn = '1 / -1';
+    saetningsdeleCard.onclick = () => navigateFn('ordstilling_saetningsdele');
+    saetningsdeleCard.innerHTML = `
+        <div style="display:inline-flex; align-items:center; gap:0.35rem; font-size:0.75rem; font-weight:700; color:#7ec4ce; background:rgba(43, 110, 120, 0.22); border:1px solid rgba(76, 155, 166, 0.45); padding:0.22rem 0.68rem; border-radius:999px; margin-bottom:0.55rem;">
+            Anbefales efter Introduktion
+        </div>
+        <div class="card-icon" style="font-size: 2.2rem;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+        <div class="card-title">Sætningsdele (Zoom ind &amp; Zoom ud)</div>
+        <div class="card-desc" style="margin-top: 0.45rem; font-size: 0.93rem;">Zoom ind på én farvet brik for at bygge rige sætningsdele — og zoom ud til forgrund og baggrund (hypotakse).</div>
+    `;
+    nextStepGrid.appendChild(saetningsdeleCard);
+    menuArea.appendChild(nextStepGrid);
+
     viewContainer.appendChild(menuArea);
 
     // --- Game Logic ---

@@ -398,6 +398,117 @@ const STIKORD_QUIZ = [
     }
 ];
 
+const DEL2_QUESTIONS = [
+    {
+        examinerQ: 'Hvor går du på sprogskole?',
+        options: [
+            { text: 'Jeg går på sprogskole i Odense tre dage om ugen.', correct: true },
+            { text: 'Jeg køber på sprogskole i Odense tre dage om ugen.', correct: false },
+            { text: 'Jeg sover på sprogskole i Odense tre dage om ugen.', correct: false }
+        ],
+        tip: 'På dansk bruger vi verbet "går" sammen med skole: "Jeg går på sprogskole".'
+    },
+    {
+        examinerQ: 'Hvornår starter undervisningen om morgenen?',
+        options: [
+            { text: 'Undervisningen slutter klokken ni om morgenen.', correct: false },
+            { text: 'Undervisningen starter klokken ni om morgenen.', correct: true },
+            { text: 'Undervisningen glemmer klokken ni om morgenen.', correct: false }
+        ],
+        tip: '"Starter" betyder at noget begynder — modsat "slutter" (når det er færdigt).'
+    },
+    {
+        examinerQ: 'Hvad gør din lærer, når grammatikken er svær?',
+        options: [
+            { text: 'Min lærer lukker grammatikken stille og roligt.', correct: false },
+            { text: 'Min lærer køber grammatikken stille og roligt.', correct: false },
+            { text: 'Min lærer forklarer grammatikken stille og roligt.', correct: true }
+        ],
+        tip: 'En lærer "forklarer", så kursisterne forstår reglerne.'
+    },
+    {
+        examinerQ: 'Hvad laver I sammen i en lille gruppe?',
+        options: [
+            { text: 'Vi taler dansk sammen i en lille gruppe.', correct: true },
+            { text: 'Vi sover dansk sammen i en lille gruppe.', correct: false },
+            { text: 'Vi betaler dansk sammen i en lille gruppe.', correct: false }
+        ],
+        tip: 'Om sprog bruger vi verbet "taler": "Vi taler dansk sammen".'
+    },
+    {
+        examinerQ: 'Hvad laver du med dit hæfte i undervisningen?',
+        options: [
+            { text: 'Jeg drikker nye danske ord i mit hæfte.', correct: false },
+            { text: 'Jeg skriver nye danske ord i mit hæfte.', correct: true },
+            { text: 'Jeg cykler nye danske ord i mit hæfte.', correct: false }
+        ],
+        tip: 'I et hæfte "skriver" man nye ord og noter.'
+    },
+    {
+        examinerQ: 'Hvad laver du på sprogskolens bibliotek efter timen?',
+        options: [
+            { text: 'Efter timen vasker jeg en let bog på biblioteket.', correct: false },
+            { text: 'Efter timen kører jeg en let bog på biblioteket.', correct: false },
+            { text: 'Efter timen låner jeg en let bog på biblioteket.', correct: true }
+        ],
+        tip: 'På et bibliotek "låner" man bøger gratis og afleverer dem igen.'
+    },
+    {
+        examinerQ: 'Hvad spiser du i pausen klokken halv elleve?',
+        options: [
+            { text: 'I pausen spiser jeg min madpakke i kantinen.', correct: true },
+            { text: 'I pausen læser jeg min madpakke i kantinen.', correct: false },
+            { text: 'I pausen åbner jeg min madpakke i kantinen.', correct: false }
+        ],
+        tip: 'Til mad bruger vi "spiser" ("spiser min madpakke").'
+    },
+    {
+        examinerQ: 'Hvad drikker du sammen med dine klassekammerater i pausen?',
+        options: [
+            { text: 'Jeg skriver en varm kop kaffe med mine venner.', correct: false },
+            { text: 'Jeg drikker en varm kop kaffe med mine venner.', correct: true },
+            { text: 'Jeg løber en varm kop kaffe med mine venner.', correct: false }
+        ],
+        tip: 'Om kaffe, te og vand bruger vi verbet "drikker".'
+    },
+    {
+        examinerQ: 'Hvordan kommer du til sprogskolen, når vejret er godt?',
+        options: [
+            { text: 'Jeg svømmer til sprogskolen på femten minutter.', correct: false },
+            { text: 'Jeg koger til sprogskolen på femten minutter.', correct: false },
+            { text: 'Jeg cykler til sprogskolen på femten minutter.', correct: true }
+        ],
+        tip: 'Verbet "cykler" bruges direkte om at køre på cykel.'
+    },
+    {
+        examinerQ: 'Hvad gør du, når det regner eller sner om vinteren?',
+        options: [
+            { text: 'Om vinteren tager jeg bussen til sprogskolen.', correct: true },
+            { text: 'Om vinteren spiser jeg bussen til sprogskolen.', correct: false },
+            { text: 'Om vinteren vasker jeg bussen til sprogskolen.', correct: false }
+        ],
+        tip: 'Om offentlig transport siger vi "tager bussen" eller "tager toget".'
+    },
+    {
+        examinerQ: 'Hvordan øver du dansk derhjemme efter skole?',
+        options: [
+            { text: 'Jeg køber udtale og læser mine noter derhjemme.', correct: false },
+            { text: 'Jeg øver udtale og læser mine noter derhjemme.', correct: true },
+            { text: 'Jeg lukker udtale og læser mine noter derhjemme.', correct: false }
+        ],
+        tip: 'Når man træner noget for at blive bedre, bruger man "øver" ("øver udtale").'
+    },
+    {
+        examinerQ: 'Hvad vil du gerne lave, når du er færdig med sprogskolen?',
+        options: [
+            { text: 'Jeg vil gerne glemme et godt arbejde i Danmark.', correct: false },
+            { text: 'Jeg vil gerne lukke et godt arbejde i Danmark.', correct: false },
+            { text: 'Jeg vil gerne finde et godt arbejde i Danmark.', correct: true }
+        ],
+        tip: 'Efter sprogskolen vil mange "finde et godt arbejde" eller tage en uddannelse.'
+    }
+];
+
 const AI_EXAM_PROMPT = `Du er en venlig og tålmodig dansk-eksaminator til mundtlig prøve (A1/A2 — DU1/DU2).
 Emnet er "Min sprogskole" med de 6 punkter: 1) sprogskole / by, 2) dage / tid, 3) kursister / lærer, 4) aktiviteter, 5) pauser, 6) transport til sprogskolen.
 
@@ -672,8 +783,11 @@ export function renderMinSprogskoleView(container, navigateFn) {
         }
     }
 
-    // Fane 8 Del 2 state
-    let openQHelp = {};
+    // Fane 8 Del 2 state (12 verb-kontrast spørgsmål + AI-eksaminator)
+    let del2Mode = 'quiz';
+    let del2Idx = 0;
+    let del2Ans = null;
+    const del2Solved = new Set();
 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container ms-view';
@@ -1564,44 +1678,79 @@ export function renderMinSprogskoleView(container, navigateFn) {
     }
 
     // ========================================================================
-    // FANE 8: SPØRGSMÅL (DEL 2) + AI-EKSAMINATOR
+    // FANE 8: SPØRGSMÅL (DEL 2) — 12 VERBUM-KONTRAST OPGAVER + AI-EKSAMINATOR
     // ========================================================================
     function renderTab8(lang, rtlAttr) {
-        const card = document.createElement('div');
-        card.className = 'ms-card';
-        card.innerHTML = `
-            <h2${rtlAttr}>${escapeHtml(msT('f8_title', lang))}</h2>
-            <p${rtlAttr} style="margin:0 0 1rem; font-size:0.88rem; color:#94a3b8;">${escapeHtml(msT('f8_sub', lang))}</p>
-            <div style="display:flex; flex-direction:column; gap:0.75rem;">
-                ${[1, 2, 3, 4, 5].map(n => `
-                    <div style="background:#101419; border:1px solid rgba(203,213,225,0.14); border-radius:12px; padding:0.9rem 1rem;">
-                        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.6rem; flex-wrap:wrap;">
-                            <div>
-                                <div style="font-size:1rem; font-weight:800; color:#ffffff;">${n}. ${escapeHtml(msT(`q2_${n}`, 'da'))}</div>
-                                ${msSub(`q2_${n}`, 'ms-sub-tr', lang)}
-                            </div>
-                            <div style="display:flex; gap:0.4rem;">
-                                <button type="button" class="ms-btn-ghost" data-qspk="${n}">${SVG_SPEAK}</button>
-                                <button type="button" class="ms-btn-ghost" data-qtog="${n}">${escapeHtml(openQHelp[n] ? msT('f8_hide_help', lang) : msT('f8_show_help', lang))}</button>
-                            </div>
-                        </div>
-                        ${openQHelp[n] ? `
-                            <div style="margin-top:0.65rem; padding-top:0.65rem; border-top:1px solid rgba(203,213,225,0.12); font-size:0.9rem; color:#5eead4;">
-                                ${escapeHtml(msT(`q2_${n}_help`, 'da'))}
-                                ${msSub(`q2_${n}_help`, 'ms-sub-tr', lang)}
-                            </div>
-                        ` : ''}
-                    </div>
-                `).join('')}
-            </div>
+        const modeBar = document.createElement('div');
+        modeBar.className = 'ms-filter-row';
+        modeBar.innerHTML = `
+            <button type="button" class="ms-pill ${del2Mode === 'quiz' ? 'active' : ''}" data-d2m="quiz">Spørgsmål fra eksaminator (${DEL2_QUESTIONS.length})</button>
+            <button type="button" class="ms-pill ${del2Mode === 'ai' ? 'active' : ''}" data-d2m="ai">AI-eksaminator</button>
         `;
-        card.querySelectorAll('[data-qspk]').forEach(btn => {
-            btn.onclick = () => speakDanish(msT(`q2_${btn.dataset.qspk}`, 'da'));
+        modeBar.querySelectorAll('[data-d2m]').forEach(btn => {
+            btn.onclick = () => { del2Mode = btn.dataset.d2m; render(); };
         });
-        card.querySelectorAll('[data-qtog]').forEach(btn => {
-            btn.onclick = () => { const n = btn.dataset.qtog; openQHelp[n] = !openQHelp[n]; render(); };
-        });
-        viewContainer.appendChild(card);
+        viewContainer.appendChild(modeBar);
+
+        if (del2Mode === 'quiz') {
+            const q = DEL2_QUESTIONS[del2Idx];
+            const card = document.createElement('div');
+            card.className = 'ms-card';
+            card.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.85rem;">
+                    <span style="font-size:0.85rem; color:#94a3b8; font-weight:800;">
+                        Spørgsmål ${del2Idx + 1}/${DEL2_QUESTIONS.length} · Løst: ${del2Solved.size}/${DEL2_QUESTIONS.length}
+                    </span>
+                    <div style="display:flex; gap:0.4rem;">
+                        <button type="button" class="ms-btn-ghost" id="ms-d2-prev" ${del2Idx === 0 ? 'disabled' : ''}>← Forrige</button>
+                        <button type="button" class="ms-btn-ghost" id="ms-d2-next" ${del2Idx === DEL2_QUESTIONS.length - 1 ? 'disabled' : ''}>Næste →</button>
+                    </div>
+                </div>
+
+                <div style="padding:0.95rem 1.1rem; border-radius:14px; background:#101419; border-left:4px solid #ec4899; margin-bottom:0.9rem; display:flex; justify-content:space-between; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+                    <div style="font-size:1.05rem; font-weight:900; color:#ffffff;">${escapeHtml(q.examinerQ)}</div>
+                    <button type="button" class="ms-btn-ghost" id="ms-d2-spk-q">${SVG_SPEAK}</button>
+                </div>
+
+                <div style="display:grid; gap:0.55rem;">
+                    ${q.options.map((opt, idx) => {
+                        let cls = 'ms-opt-btn';
+                        if (del2Ans !== null) {
+                            if (opt.correct) cls += ' correct';
+                            else if (idx === del2Ans) cls += ' wrong';
+                        }
+                        return `
+                            <button type="button" class="${cls}" data-d2-opt="${idx}" style="display:flex; justify-content:space-between; align-items:center; gap:0.6rem;">
+                                <span>»${escapeHtml(opt.text)}«</span>
+                                <span>${del2Ans !== null && opt.correct ? SVG_CHECK : ''}</span>
+                            </button>
+                        `;
+                    }).join('')}
+                </div>
+
+                ${del2Ans !== null ? `
+                    <div style="margin-top:0.85rem; background:#101419; border-left:3px solid ${q.options[del2Ans]?.correct ? '#22c55e' : '#f59e0b'}; border-radius:10px; padding:0.75rem 0.95rem; font-size:0.88rem; color:#cbd5e1;">
+                        <strong>${q.options[del2Ans]?.correct ? 'Rigtigt svar!' : 'Tip:'}</strong> ${escapeHtml(q.tip)}
+                    </div>
+                ` : ''}
+            `;
+
+            card.querySelector('#ms-d2-prev').onclick = () => { if (del2Idx > 0) { del2Idx--; del2Ans = null; render(); } };
+            card.querySelector('#ms-d2-next').onclick = () => { if (del2Idx < DEL2_QUESTIONS.length - 1) { del2Idx++; del2Ans = null; render(); } };
+            card.querySelector('#ms-d2-spk-q').onclick = () => speakDanish(q.examinerQ);
+            card.querySelectorAll('[data-d2-opt]').forEach(btn => {
+                btn.onclick = () => {
+                    del2Ans = Number(btn.dataset.d2Opt);
+                    if (q.options[del2Ans]?.correct) {
+                        del2Solved.add(del2Idx);
+                        speakDanish(q.options[del2Ans].text);
+                    }
+                    render();
+                };
+            });
+            viewContainer.appendChild(card);
+            return;
+        }
 
         // AI-eksaminator kort
         const aiCard = document.createElement('div');

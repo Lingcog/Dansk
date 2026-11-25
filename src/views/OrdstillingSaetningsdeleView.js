@@ -36,8 +36,6 @@ const ZOOM_TRACKS = {
         id: 'hvem',
         label: 'Hvem? (Grøn · Plads 1)',
         color: '#22c55e',
-        bg: 'rgba(34, 197, 94, 0.14)',
-        border: 'rgba(34, 197, 94, 0.5)',
         levels: [
             {
                 zoom: '1×',
@@ -45,12 +43,12 @@ const ZOOM_TRACKS = {
                 origin: '50% 45%',
                 chunk: 'En kvinde',
                 parts: [
-                    { role: 'hvem', label: 'Plads 1 (Hvem?)', text: 'En kvinde', color: 'green', active: true },
-                    { role: 'verb', label: 'Plads 2 (Verbum)', text: 'cykler', color: 'red' },
-                    { role: 'hvor', label: 'Hvor?', text: 'på gaden', color: 'blue' },
-                    { role: 'hvornaar', label: 'Hvornår?', text: 'om morgenen', color: 'purple' }
+                    { label: 'Plads 1 (Hvem?)', text: 'En kvinde', color: 'green', active: true },
+                    { label: 'Plads 2 (Handling)', text: 'cykler', color: 'red' },
+                    { label: 'Hvor?', text: 'på gaden', color: 'blue' },
+                    { label: 'Hvornår?', text: 'om morgenen', color: 'purple' }
                 ],
-                note: 'Grundbilledet fra Ordstilling: 1 enkel brik på Plads 1 (2 ord) — og verbet "cykler" står på Plads 2.'
+                note: 'Grundbilledet fra Ordstilling: 1 enkel grøn brik på Plads 1 — og handlingen "cykler" står på Plads 2.'
             },
             {
                 zoom: '2×',
@@ -58,12 +56,12 @@ const ZOOM_TRACKS = {
                 origin: '49% 38%',
                 chunk: 'En smilende kvinde',
                 parts: [
-                    { role: 'hvem', label: 'Plads 1 (Hvem?)', text: 'En smilende kvinde', color: 'green', active: true },
-                    { role: 'verb', label: 'Plads 2 (Verbum)', text: 'cykler', color: 'red' },
-                    { role: 'hvor', label: 'Hvor?', text: 'på gaden', color: 'blue' },
-                    { role: 'hvornaar', label: 'Hvornår?', text: 'om morgenen', color: 'purple' }
+                    { label: 'Plads 1 (Hvem?)', text: 'En smilende kvinde', color: 'green', active: true },
+                    { label: 'Plads 2 (Handling)', text: 'cykler', color: 'red' },
+                    { label: 'Hvor?', text: 'på gaden', color: 'blue' },
+                    { label: 'Hvornår?', text: 'om morgenen', color: 'purple' }
                 ],
-                note: 'Kameraet zoomer ind: Vi ser et tillægsord foran kernen ("smilende"). Hele den grønne brik er stadig kun Plads 1!'
+                note: 'Kameraet zoomer ind: Vi sætter et beskrivende ord foran ("smilende"). Hele den grønne brik er stadig kun Plads 1!'
             },
             {
                 zoom: '3×',
@@ -71,12 +69,12 @@ const ZOOM_TRACKS = {
                 origin: '50% 40%',
                 chunk: 'En smilende kvinde med orange hue og blå jakke',
                 parts: [
-                    { role: 'hvem', label: 'Plads 1 (Hvem?)', text: 'En smilende kvinde med orange hue og blå jakke', color: 'green', active: true },
-                    { role: 'verb', label: 'Plads 2 (Verbum)', text: 'cykler', color: 'red' },
-                    { role: 'hvor', label: 'Hvor?', text: 'på gaden', color: 'blue' },
-                    { role: 'hvornaar', label: 'Hvornår?', text: 'om morgenen', color: 'purple' }
+                    { label: 'Plads 1 (Hvem?)', text: 'En smilende kvinde med orange hue og blå jakke', color: 'green', active: true },
+                    { label: 'Plads 2 (Handling)', text: 'cykler', color: 'red' },
+                    { label: 'Hvor?', text: 'på gaden', color: 'blue' },
+                    { label: 'Hvornår?', text: 'om morgenen', color: 'purple' }
                 ],
-                note: 'Endnu flere detaljer efter kernen ("med orange hue og blå jakke"). Nu er Plads 1 på 9 ord — men verbet "cykler" står stadig urokkeligt på Plads 2!'
+                note: 'Endnu flere detaljer bagefter ("med orange hue og blå jakke"). Nu er Plads 1 på 9 ord — men "cykler" står stadig fast på Plads 2!'
             },
             {
                 zoom: '4×',
@@ -84,12 +82,12 @@ const ZOOM_TRACKS = {
                 origin: '53% 46%',
                 chunk: 'En smilende kvinde, som har en papirpose i kurven,',
                 parts: [
-                    { role: 'hvem', label: 'Plads 1 (Hvem? + som-sætning)', text: 'En smilende kvinde, som har en papirpose i kurven,', color: 'green', active: true },
-                    { role: 'verb', label: 'Plads 2 (Verbum)', text: 'cykler', color: 'red' },
-                    { role: 'hvor', label: 'Hvor?', text: 'på gaden', color: 'blue' },
-                    { role: 'hvornaar', label: 'Hvornår?', text: 'om morgenen', color: 'purple' }
+                    { label: 'Plads 1 (Hvem? + som-del)', text: 'En smilende kvinde, som har en papirpose i kurven,', color: 'green', active: true },
+                    { label: 'Plads 2 (Handling)', text: 'cykler', color: 'red' },
+                    { label: 'Hvor?', text: 'på gaden', color: 'blue' },
+                    { label: 'Hvornår?', text: 'om morgenen', color: 'purple' }
                 ],
-                note: 'Maksimal zoom: En hel "som"-ledsætning bor inde i den grønne brik! Alt sammen tæller stadig som Plads 1, og verbet "cykler" kommer lige efter kommaet.'
+                note: 'Maksimal zoom: En hel "som"-del bor inde i den grønne brik! Alt sammen tæller stadig som Plads 1, og "cykler" kommer lige efter kommaet.'
             }
         ]
     },
@@ -97,8 +95,6 @@ const ZOOM_TRACKS = {
         id: 'hvor',
         label: 'Hvor? (Blå · Sted)',
         color: '#0284c7',
-        bg: 'rgba(2, 132, 199, 0.14)',
-        border: 'rgba(56, 189, 248, 0.5)',
         levels: [
             {
                 zoom: '1×',
@@ -106,10 +102,10 @@ const ZOOM_TRACKS = {
                 origin: '50% 60%',
                 chunk: 'på gaden',
                 parts: [
-                    { role: 'hvem', label: 'Plads 1 (Hvem?)', text: 'En kvinde', color: 'green' },
-                    { role: 'verb', label: 'Plads 2 (Verbum)', text: 'cykler', color: 'red' },
-                    { role: 'hvor', label: 'Hvor?', text: 'på gaden', color: 'blue', active: true },
-                    { role: 'hvornaar', label: 'Hvornår?', text: 'om morgenen', color: 'purple' }
+                    { label: 'Plads 1 (Hvem?)', text: 'En kvinde', color: 'green' },
+                    { label: 'Plads 2 (Handling)', text: 'cykler', color: 'red' },
+                    { label: 'Hvor?', text: 'på gaden', color: 'blue', active: true },
+                    { label: 'Hvornår?', text: 'om morgenen', color: 'purple' }
                 ],
                 note: 'Stedet er i grundformen bare 2 ord: "på gaden".'
             },
@@ -119,12 +115,12 @@ const ZOOM_TRACKS = {
                 origin: '40% 78%',
                 chunk: 'på den sneklædte cykelsti',
                 parts: [
-                    { role: 'hvem', label: 'Plads 1 (Hvem?)', text: 'En kvinde', color: 'green' },
-                    { role: 'verb', label: 'Plads 2 (Verbum)', text: 'cykler', color: 'red' },
-                    { role: 'hvor', label: 'Hvor?', text: 'på den sneklædte cykelsti', color: 'blue', active: true },
-                    { role: 'hvornaar', label: 'Hvornår?', text: 'om morgenen', color: 'purple' }
+                    { label: 'Plads 1 (Hvem?)', text: 'En kvinde', color: 'green' },
+                    { label: 'Plads 2 (Handling)', text: 'cykler', color: 'red' },
+                    { label: 'Hvor?', text: 'på den sneklædte cykelsti', color: 'blue', active: true },
+                    { label: 'Hvornår?', text: 'om morgenen', color: 'purple' }
                 ],
-                note: 'Vi zoomer ind på stedet: Præpositionen "på" rummer nu en hel beskrevet ting ("den sneklædte cykelsti").'
+                note: 'Vi zoomer ind på stedet: Det lille ord "på" får selskab af et mere præcist sted ("den sneklædte cykelsti").'
             },
             {
                 zoom: '3×',
@@ -132,10 +128,10 @@ const ZOOM_TRACKS = {
                 origin: '18% 54%',
                 chunk: 'på cykelstien foran den lille café og den grønne bus',
                 parts: [
-                    { role: 'hvem', label: 'Plads 1 (Hvem?)', text: 'En kvinde', color: 'green' },
-                    { role: 'verb', label: 'Plads 2 (Verbum)', text: 'cykler', color: 'red' },
-                    { role: 'hvor', label: 'Hvor?', text: 'på cykelstien foran den lille café og den grønne bus', color: 'blue', active: true },
-                    { role: 'hvornaar', label: 'Hvornår?', text: 'om morgenen', color: 'purple' }
+                    { label: 'Plads 1 (Hvem?)', text: 'En kvinde', color: 'green' },
+                    { label: 'Plads 2 (Handling)', text: 'cykler', color: 'red' },
+                    { label: 'Hvor?', text: 'på cykelstien foran den lille café og den grønne bus', color: 'blue', active: true },
+                    { label: 'Hvornår?', text: 'om morgenen', color: 'purple' }
                 ],
                 note: 'Hele den blå brik besvarer stadig ét eneste spørgsmål — "Hvor?" — selvom den nu maler et helt gadebillede.'
             }
@@ -145,8 +141,6 @@ const ZOOM_TRACKS = {
         id: 'hvornaar',
         label: 'Hvornår? (Lilla · Tid)',
         color: '#8b5cf6',
-        bg: 'rgba(139, 92, 246, 0.14)',
-        border: 'rgba(167, 139, 250, 0.5)',
         levels: [
             {
                 zoom: '1×',
@@ -154,10 +148,10 @@ const ZOOM_TRACKS = {
                 origin: '50% 35%',
                 chunk: 'om morgenen',
                 parts: [
-                    { role: 'hvem', label: 'Plads 1 (Hvem?)', text: 'En kvinde', color: 'green' },
-                    { role: 'verb', label: 'Plads 2 (Verbum)', text: 'cykler', color: 'red' },
-                    { role: 'hvor', label: 'Hvor?', text: 'på gaden', color: 'blue' },
-                    { role: 'hvornaar', label: 'Hvornår?', text: 'om morgenen', color: 'purple', active: true }
+                    { label: 'Plads 1 (Hvem?)', text: 'En kvinde', color: 'green' },
+                    { label: 'Plads 2 (Handling)', text: 'cykler', color: 'red' },
+                    { label: 'Hvor?', text: 'på gaden', color: 'blue' },
+                    { label: 'Hvornår?', text: 'om morgenen', color: 'purple', active: true }
                 ],
                 note: 'Et enkelt tidsudtryk: "om morgenen".'
             },
@@ -167,10 +161,10 @@ const ZOOM_TRACKS = {
                 origin: '50% 25%',
                 chunk: 'en kold vintermorgen i snevejr',
                 parts: [
-                    { role: 'hvem', label: 'Plads 1 (Hvem?)', text: 'En kvinde', color: 'green' },
-                    { role: 'verb', label: 'Plads 2 (Verbum)', text: 'cykler', color: 'red' },
-                    { role: 'hvor', label: 'Hvor?', text: 'på gaden', color: 'blue' },
-                    { role: 'hvornaar', label: 'Hvornår?', text: 'en kold vintermorgen i snevejr', color: 'purple', active: true }
+                    { label: 'Plads 1 (Hvem?)', text: 'En kvinde', color: 'green' },
+                    { label: 'Plads 2 (Handling)', text: 'cykler', color: 'red' },
+                    { label: 'Hvor?', text: 'på gaden', color: 'blue' },
+                    { label: 'Hvornår?', text: 'en kold vintermorgen i snevejr', color: 'purple', active: true }
                 ],
                 note: 'Tidsbrikken vokser med flere detaljer — og hvis du flytter hele den lilla brik til Plads 1, kommer "cykler" lige efter!'
             },
@@ -180,281 +174,335 @@ const ZOOM_TRACKS = {
                 origin: '25% 48%',
                 chunk: 'mens det sner stille, og bussen kører forbi',
                 parts: [
-                    { role: 'hvem', label: 'Plads 1 (Hvem?)', text: 'En kvinde', color: 'green' },
-                    { role: 'verb', label: 'Plads 2 (Verbum)', text: 'cykler', color: 'red' },
-                    { role: 'hvor', label: 'Hvor?', text: 'på gaden', color: 'blue' },
-                    { role: 'hvornaar', label: 'Hvornår? (Ledsætning)', text: 'mens det sner stille, og bussen kører forbi', color: 'purple', active: true }
+                    { label: 'Plads 1 (Hvem?)', text: 'En kvinde', color: 'green' },
+                    { label: 'Plads 2 (Handling)', text: 'cykler', color: 'red' },
+                    { label: 'Hvor?', text: 'på gaden', color: 'blue' },
+                    { label: 'Hvornår? (Baggrunds-del)', text: 'mens det sner stille, og bussen kører forbi', color: 'purple', active: true }
                 ],
-                note: 'Her bliver tidsbrikken til en hel ledsætning! Det leder direkte videre til Fane 3 (Zoom ud: Forgrund og baggrund).'
+                note: 'Her bliver tidsbrikken til en hel baggrunds-del! Det leder direkte videre til Fane 3 (Zoom ud: Forgrund og baggrund).'
             }
         ]
     }
 };
 
 // ============================================================================
-// DATA: FANE 3 (ZOOM UD — FORGRUND & BAGGRUND / HYPOTAKSE)
+// DATA: FANE 3 (ZOOM UD — DEN CYKLENDE KVINDE I STØRRE OMGIVELSER)
 // ============================================================================
-const HYPOTAKSE_SCENES = [
+const ZOOM_OUT_SCENES = [
     {
         id: 'fordi',
         question: 'Hvorfor?',
         conj: 'fordi',
-        fgLabel: 'Forgrund (Hovedsætning)',
-        bgLabel: 'Baggrund · Årsag (Ledsætning)',
+        fgLabel: 'Forgrund (Hoved-del)',
+        bgLabel: 'Baggrund · Årsag (fordi)',
         fgFirst: {
-            fg: 'Han tager sin gule regnjakke på',
-            bg: ', fordi det regner i dag.',
-            full: 'Han tager sin gule regnjakke på, fordi det regner i dag.'
+            fg: 'Kvinden har en varm vinterjakke og hue på',
+            bg: ', fordi det sner og er koldt i dag.',
+            full: 'Kvinden har en varm vinterjakke og hue på, fordi det sner og er koldt i dag.'
         },
         bgFirst: {
-            bg: 'Fordi det regner i dag,',
-            v2Verb: 'tager',
-            fgRest: 'han sin gule regnjakke på.',
-            full: 'Fordi det regner i dag, tager han sin gule regnjakke på.'
+            bg: 'Fordi det sner og er koldt i dag,',
+            v2Verb: 'har',
+            fgRest: 'kvinden en varm vinterjakke og hue på.',
+            full: 'Fordi det sner og er koldt i dag, har kvinden en varm vinterjakke og hue på.'
         },
         ikkeDemo: {
-            main: 'Han <strong>tager ikke</strong> cyklen i dag.',
-            sub: 'Han går til fods, fordi han <strong>ikke tager</strong> cyklen i dag.'
+            main: 'Hun <strong>tager ikke</strong> bussen i dag.',
+            sub: 'Hun cykler gennem sneen, fordi hun <strong>ikke tager</strong> bussen i dag.'
         },
-        tip: 'Når baggrunden ("Fordi det regner i dag") står på Plads 1, tæller hele ledsætningen som én brik — derfor står verbet "tager" straks på Plads 2!'
+        tip: 'Når baggrunden ("Fordi det sner og er koldt i dag,") står på Plads 1, tæller hele baggrunds-delen som én stor brik — derfor står handlingen "har" straks på Plads 2!'
     },
     {
         id: 'selvom',
         question: 'Modstand?',
         conj: 'selvom',
-        fgLabel: 'Forgrund (Hovedsætning)',
-        bgLabel: 'Baggrund · Modstand (Ledsætning)',
+        fgLabel: 'Forgrund (Hoved-del)',
+        bgLabel: 'Baggrund · Modstand (selvom)',
         fgFirst: {
-            fg: 'Han smiler og går hurtigt',
-            bg: ', selvom det ikke er godt vejr.',
-            full: 'Han smiler og går hurtigt, selvom det ikke er godt vejr.'
+            fg: 'Hun cykler roligt og smiler',
+            bg: ', selvom det ikke er varmt i vejret.',
+            full: 'Hun cykler roligt og smiler, selvom det ikke er varmt i vejret.'
         },
         bgFirst: {
-            bg: 'Selvom det ikke er godt vejr,',
-            v2Verb: 'smiler',
-            fgRest: 'han og går hurtigt.',
-            full: 'Selvom det ikke er godt vejr, smiler han og går hurtigt.'
+            bg: 'Selvom det ikke er varmt i vejret,',
+            v2Verb: 'cykler',
+            fgRest: 'hun roligt og smiler.',
+            full: 'Selvom det ikke er varmt i vejret, cykler hun roligt og smiler.'
         },
         ikkeDemo: {
-            main: 'Det <strong>er ikke</strong> godt vejr i dag.',
-            sub: 'Han smiler, selvom det <strong>ikke er</strong> godt vejr i dag.'
+            main: 'Det <strong>er ikke</strong> varmt i vejret.',
+            sub: 'Hun cykler gennem byen, selvom det <strong>ikke er</strong> varmt i vejret.'
         },
-        tip: 'Læg mærke til "ikke": I forgrunden står "ikke" efter verbet ("er ikke"), men inde i baggrunds-brikken efter "selvom" flytter "ikke" foran verbet ("ikke er").'
+        tip: 'Læg mærke til "ikke": I forgrunden står "ikke" efter handlingen ("er ikke"), men inde i baggrunden efter "selvom" flytter "ikke" foran handlingen ("ikke er").'
     },
     {
         id: 'mens',
         question: 'Hvornår?',
         conj: 'mens',
-        fgLabel: 'Forgrund (Hovedsætning)',
-        bgLabel: 'Baggrund · Tid (Ledsætning)',
+        fgLabel: 'Forgrund (Hoved-del)',
+        bgLabel: 'Baggrund · Samtidig (mens)',
         fgFirst: {
-            fg: 'Den gule bus standser ved stoppestedet',
-            bg: ', mens han går forbi det varme bageri.',
-            full: 'Den gule bus standser ved stoppestedet, mens han går forbi det varme bageri.'
+            fg: 'Den grønne bus kører forbi den varme café',
+            bg: ', mens kvinden cykler på cykelstien.',
+            full: 'Den grønne bus kører forbi den varme café, mens kvinden cykler på cykelstien.'
         },
         bgFirst: {
-            bg: 'Mens han går forbi det varme bageri,',
-            v2Verb: 'standser',
-            fgRest: 'den gule bus ved stoppestedet.',
-            full: 'Mens han går forbi det varme bageri, standser den gule bus ved stoppestedet.'
+            bg: 'Mens kvinden cykler på cykelstien,',
+            v2Verb: 'kører',
+            fgRest: 'den grønne bus forbi den varme café.',
+            full: 'Mens kvinden cykler på cykelstien, kører den grønne bus forbi den varme café.'
         },
         ikkeDemo: {
-            main: 'Han <strong>har ikke</strong> travlt i morges.',
-            sub: 'Bussen kører forbi, mens han <strong>ikke har</strong> travlt.'
+            main: 'Hun <strong>har ikke</strong> travlt i morges.',
+            sub: 'Bussen kører forbi, mens hun <strong>ikke har</strong> travlt.'
         },
-        tip: 'Med "mens" rammer baggrunden tidsmæssigt ind, hvad der sker i forgrunden. Flyttes baggrunden forrest, kommer verbet "standser" direkte efter kommaet.'
+        tip: 'Med "mens" viser baggrunden, hvad der sker omkring hende i byen. Flyttes baggrunden forrest, kommer handlingen "kører" direkte efter kommaet.'
     },
     {
         id: 'hvis',
         question: 'Betingelse?',
         conj: 'hvis',
-        fgLabel: 'Forgrund (Hovedsætning)',
-        bgLabel: 'Baggrund · Betingelse (Ledsætning)',
+        fgLabel: 'Forgrund (Hoved-del)',
+        bgLabel: 'Baggrund · Betingelse (hvis)',
         fgFirst: {
-            fg: 'Vi drikker en varm kop kaffe på caféen',
-            bg: ', hvis regnen ikke stopper snart.',
-            full: 'Vi drikker en varm kop kaffe på caféen, hvis regnen ikke stopper snart.'
+            fg: 'Hun går ind på den varme café',
+            bg: ', hvis sneen ikke stopper snart.',
+            full: 'Hun går ind på den varme café, hvis sneen ikke stopper snart.'
         },
         bgFirst: {
-            bg: 'Hvis regnen ikke stopper snart,',
-            v2Verb: 'drikker',
-            fgRest: 'vi en varm kop kaffe på caféen.',
-            full: 'Hvis regnen ikke stopper snart, drikker vi en varm kop kaffe på caféen.'
+            bg: 'Hvis sneen ikke stopper snart,',
+            v2Verb: 'går',
+            fgRest: 'hun ind på den varme café.',
+            full: 'Hvis sneen ikke stopper snart, går hun ind på den varme café.'
         },
         ikkeDemo: {
-            main: 'Regnen <strong>stopper ikke</strong> endnu.',
-            sub: 'Vi går ind på caféen, hvis regnen <strong>ikke stopper</strong> snart.'
+            main: 'Sneen <strong>stopper ikke</strong> endnu.',
+            sub: 'Hun tager en pause på caféen, hvis sneen <strong>ikke stopper</strong> snart.'
         },
-        tip: 'Betingelsen ("Hvis regnen ikke stopper snart") sætter rammen for hele sætningen — og inde i ledsætningen står "ikke" foran "stopper".'
+        tip: 'Betingelsen ("Hvis sneen ikke stopper snart,") sætter rammen for hele sætningen — og inde i baggrunden står "ikke" foran "stopper".'
     }
 ];
 
 // ============================================================================
-// DATA: FANE 4 — DEL 1: ZOOM IND (6 INTERAKTIVE SYNTAGME-MANIPULATIONER)
+// DATA: FANE 4 — DEL 1: ZOOM IND (6 FARVEKODEDE BYGGEOPGAVER INDE I ÉN BRIK)
 // ============================================================================
 const ZOOM_IN_TASKS = [
     {
         id: 'zi1',
-        tag: 'Nominalsyntagme · Før + Kerne + Efter',
-        instruction: 'Udvid den grønne Plads 1-brik ved at sætte delene i rigtig rækkefølge foran verbet:',
-        fixedBefore: '',
-        fixedAfter: 'cykler på gaden.',
-        targetColor: 'green',
+        tag: 'Hvem?-brikken · Før + Kerne + Efter',
+        instruction: 'Udvid den grønne Plads 1-brik ved at sætte delene i rigtig rækkefølge foran handlingen:',
+        fixedBefore: null,
+        fixedAfter: { text: 'cykler på gaden.', color: 'red' },
         targetLabel: 'Plads 1 (Hvem?)',
         correctSeq: ['Den', 'smilende', 'kvinde', 'med den orange hue'],
-        pool: ['med den orange hue', 'kvinde', 'Den', 'smilende'],
+        pool: [
+            { text: 'med den orange hue', color: 'blue' },
+            { text: 'kvinde', color: 'green' },
+            { text: 'Den', color: 'green' },
+            { text: 'smilende', color: 'orange' }
+        ],
         fullSentence: 'Den smilende kvinde med den orange hue cykler på gaden.',
-        expl: 'Et nominalsyntagme bygges som: Artikel ("Den") + før-detalje ("smilende") + kerne ("kvinde") + efter-detalje ("med den orange hue"). Alt sammen fylder kun Plads 1!'
+        expl: 'En udvidet Hvem?-brik bygges som: lille ord ("Den") + beskrivelse ("smilende") + kerne ("kvinde") + ekstra detalje ("med den orange hue"). Alt sammen fylder kun Plads 1!'
     },
     {
         id: 'zi2',
-        tag: 'Nominalsyntagme + som-sætning (Pas på lokkebrik!)',
-        instruction: 'Byg hele Plads 1-brikken med en "som"-sætning indeni — og sæt hovedverbet på Plads 2 (lad lokkebrikken ligge!):',
-        fixedBefore: '',
-        fixedAfter: 'roligt forbi.',
-        targetColor: 'green',
+        tag: 'Hvem?-brikken + som-del (Pas på lokkebrik!)',
+        instruction: 'Byg hele Plads 1-brikken med en "som"-del indeni — og sæt handlingen på Plads 2 (lad lokkebrikken ligge!):',
+        fixedBefore: null,
+        fixedAfter: { text: 'roligt forbi.', color: 'purple' },
         targetLabel: 'Plads 1 + Plads 2',
         correctSeq: ['Kvinden,', 'som har en papirpose i kurven,', 'cykler'],
-        pool: ['cykler', 'hun', 'Kvinden,', 'som har en papirpose i kurven,'],
+        pool: [
+            { text: 'cykler', color: 'red' },
+            { text: 'hun', color: 'green' },
+            { text: 'Kvinden,', color: 'green' },
+            { text: 'som har en papirpose i kurven,', color: 'purple' }
+        ],
         decoyNote: 'Lokkebrikken "hun" skal IKKE med.',
         fullSentence: 'Kvinden, som har en papirpose i kurven, cykler roligt forbi.',
-        expl: 'Hele "Kvinden, som har en papirpose i kurven," er Plads 1. Der må ikke snige sig et ekstra "hun" ind før hovedverbet "cykler"!'
+        expl: 'Hele "Kvinden, som har en papirpose i kurven," er Plads 1. Der må ikke snige sig et ekstra "hun" ind før handlingen "cykler"!'
     },
     {
         id: 'zi3',
-        tag: 'Sted-syntagme · Præposition + beskrevet sted',
+        tag: 'Hvor?-brikken · Sted med detaljer',
         instruction: 'Zoom ind på stedet ("Hvor?") og byg hele den blå brik efter "En kvinde cykler":',
-        fixedBefore: 'En kvinde cykler',
-        fixedAfter: 'om morgenen.',
-        targetColor: 'blue',
-        targetLabel: 'Hvor? (Sted-syntagme)',
-        correctSeq: ['på', 'den sneklædte cykelsti', 'foran den lille café'],
-        pool: ['foran den lille café', 'på', 'den sneklædte cykelsti'],
-        fullSentence: 'En kvinde cykler på den sneklædte cykelsti foran den lille café om morgenen.',
-        expl: 'Den blå sted-brik starter med præpositionen ("på"), derefter selve stedet ("den sneklædte cykelsti") og til sidst ekstra præcisering ("foran den lille café").'
+        fixedBefore: { text: 'En kvinde cykler', color: 'green' },
+        fixedAfter: { text: 'om morgenen.', color: 'purple' },
+        targetLabel: 'Hvor? (Sted-brik)',
+        correctSeq: ['på', 'den sneklædte cykelsti', 'foran den varme café'],
+        pool: [
+            { text: 'foran den varme café', color: 'blue' },
+            { text: 'på', color: 'blue' },
+            { text: 'den sneklædte cykelsti', color: 'blue' }
+        ],
+        fullSentence: 'En kvinde cykler på den sneklædte cykelsti foran den varme café om morgenen.',
+        expl: 'Den blå sted-brik starter med det lille stedsord ("på"), derefter selve stedet ("den sneklædte cykelsti") og til sidst ekstra præcisering ("foran den varme café").'
     },
     {
         id: 'zi4',
-        tag: 'Verbal-kæde · Spaltning af 2 verber',
-        instruction: 'Start med "Om morgenen" (Plads 1) og spalt handlings-brikken ("vil" + "cykle") rigtigt rundt om subjektet:',
-        fixedBefore: 'Om morgenen',
-        fixedAfter: 'gennem byen.',
-        targetColor: 'red',
-        targetLabel: 'Plads 2 + Subjekt + Rest af handling',
+        tag: 'Handlings-brikken · 2 udsagnsord som ramme',
+        instruction: 'Start med "Om morgenen" (Plads 1) og placer de to røde handlingsord rigtigt rundt om personen:',
+        fixedBefore: { text: 'Om morgenen', color: 'purple' },
+        fixedAfter: { text: 'gennem byen.', color: 'blue' },
+        targetLabel: 'Plads 2 + Person + Rest af handling',
         correctSeq: ['vil', 'hun', 'gerne', 'cykle'],
-        pool: ['cykle', 'hun', 'vil', 'gerne'],
+        pool: [
+            { text: 'cykle', color: 'red' },
+            { text: 'hun', color: 'green' },
+            { text: 'vil', color: 'red' },
+            { text: 'gerne', color: 'purple' }
+        ],
         fullSentence: 'Om morgenen vil hun gerne cykle gennem byen.',
-        expl: 'Når handlings-brikken har to verber, står modalverbet ("vil") på Plads 2, mens hovedverbet ("cykle") lukker rammen efter subjekt og småord ("hun gerne").'
+        expl: 'Når handlingen har to udsagnsord, står det første ("vil") på Plads 2, mens det andet ("cykle") lukker rammen efter personen og småordet ("hun gerne").'
     },
     {
         id: 'zi5',
-        tag: 'Objekt-syntagme · Før + Kerne + Efter',
-        instruction: 'Udvid det, han drikker ("Hvad?"), med alle detaljerne i rigtig rækkefølge:',
-        fixedBefore: 'Han drikker',
-        fixedAfter: 'hver morgen.',
-        targetColor: 'orange',
-        targetLabel: 'Hvad? (Objekt-syntagme)',
-        correctSeq: ['en varm', 'kop kaffe', 'fra det lille bageri', 'på hjørnet'],
-        pool: ['på hjørnet', 'kop kaffe', 'fra det lille bageri', 'en varm'],
-        fullSentence: 'Han drikker en varm kop kaffe fra det lille bageri på hjørnet hver morgen.',
-        expl: 'Objektet vokser fra kernen ("kop kaffe") med tillægsord foran ("en varm") og stedsdetaljer bagefter ("fra det lille bageri på hjørnet").'
+        tag: 'Hvad?-brikken · Før + Kerne + Efter',
+        instruction: 'Udvid det, hun har med ("Hvad?"), med alle detaljerne i rigtig rækkefølge:',
+        fixedBefore: { text: 'Hun køber', color: 'green' },
+        fixedAfter: { text: 'før arbejde.', color: 'purple' },
+        targetLabel: 'Hvad?-brikken',
+        correctSeq: ['en varm', 'kop kaffe', 'fra den lille café', 'på hjørnet'],
+        pool: [
+            { text: 'på hjørnet', color: 'blue' },
+            { text: 'kop kaffe', color: 'green' },
+            { text: 'fra den lille café', color: 'blue' },
+            { text: 'en varm', color: 'orange' }
+        ],
+        fullSentence: 'Hun køber en varm kop kaffe fra den lille café på hjørnet før arbejde.',
+        expl: 'Hvad?-brikken vokser fra kernen ("kop kaffe") med beskrivelse foran ("en varm") og stedsdetaljer bagefter ("fra den lille café på hjørnet").'
     },
     {
         id: 'zi6',
-        tag: 'Årsags-syntagme på Plads 1 (V2)',
-        instruction: 'Byg hele årsags-brikken ("På grund af...") på Plads 1, og sæt verbet på Plads 2:',
-        fixedBefore: '',
-        fixedAfter: 'den varme hue på.',
-        targetColor: 'purple',
-        targetLabel: 'Plads 1 (Årsag) + Plads 2 (Verbum)',
-        correctSeq: ['På grund af', 'den kraftige sne', 'tager', 'hun'],
-        pool: ['hun', 'den kraftige sne', 'tager', 'På grund af'],
-        fullSentence: 'På grund af den kraftige sne tager hun den varme hue på.',
-        expl: 'Hele præpositionsleddet "På grund af den kraftige sne" tæller som Plads 1 — derfor kommer verbet "tager" straks på Plads 2 før "hun".'
+        tag: 'Årsags-brik på Plads 1 (V2)',
+        instruction: 'Byg hele årsags-brikken ("På grund af...") på Plads 1, og sæt handlingen på Plads 2:',
+        fixedBefore: null,
+        fixedAfter: { text: 'den orange hue på.', color: 'orange' },
+        targetLabel: 'Plads 1 (Årsag) + Plads 2 (Handling)',
+        correctSeq: ['På grund af', 'den kolde sne', 'tager', 'hun'],
+        pool: [
+            { text: 'hun', color: 'green' },
+            { text: 'den kolde sne', color: 'purple' },
+            { text: 'tager', color: 'red' },
+            { text: 'På grund af', color: 'purple' }
+        ],
+        fullSentence: 'På grund af den kolde sne tager hun den orange hue på.',
+        expl: 'Hele årsags-brikken "På grund af den kolde sne" tæller som Plads 1 — derfor kommer handlingen "tager" straks på Plads 2 før "hun".'
     }
 ];
 
 // ============================================================================
-// DATA: FANE 4 — DEL 2: ZOOM UD (6 INTERAKTIVE SÆTNINGSDELS-MANIPULATIONER)
+// DATA: FANE 4 — DEL 2: ZOOM UD (6 FARVEKODEDE SÆTNINGSDELS-MANIPULATIONER)
 // ============================================================================
 const ZOOM_OUT_TASKS = [
     {
         id: 'zo1',
-        tag: 'Flyt baggrunden forrest (fordi + V2)',
-        instruction: 'Start med baggrunden ("Fordi det regner i dag,") på Plads 1 — og sæt hovedsætningen i rigtig V2-rækkefølge:',
-        fixedBefore: '',
-        fixedAfter: '.',
-        targetColor: 'purple',
-        targetLabel: 'Baggrund (Plads 1) + Forgrund (V2)',
-        correctSeq: ['Fordi det regner i dag,', 'tager', 'han', 'sin gule regnjakke på'],
-        pool: ['han', 'sin gule regnjakke på', 'Fordi det regner i dag,', 'tager'],
-        fullSentence: 'Fordi det regner i dag, tager han sin gule regnjakke på.',
-        expl: 'Hele ledsætningen "Fordi det regner i dag," fylder Plads 1. Derfor springer verbet "tager" frem på Plads 2 lige efter kommaet!'
+        tag: 'Flyt baggrunden forrest (fordi + Plads 2)',
+        instruction: 'Start med baggrunden ("Fordi det sner i dag,") på Plads 1 — og byg forgrunden i rigtig rækkefølge:',
+        fixedBefore: null,
+        fixedAfter: { text: '.', color: 'neutral' },
+        targetLabel: 'Baggrund (Plads 1) + Forgrund (Plads 2)',
+        correctSeq: ['Fordi det sner i dag,', 'tager', 'kvinden', 'sin varme vinterjakke på'],
+        pool: [
+            { text: 'kvinden', color: 'green' },
+            { text: 'sin varme vinterjakke på', color: 'orange' },
+            { text: 'Fordi det sner i dag,', color: 'purple' },
+            { text: 'tager', color: 'red' }
+        ],
+        fullSentence: 'Fordi det sner i dag, tager kvinden sin varme vinterjakke på.',
+        expl: 'Hele baggrunden "Fordi det sner i dag," fylder Plads 1. Derfor springer handlingen "tager" frem på Plads 2 lige efter kommaet!'
     },
     {
         id: 'zo2',
         tag: '"ikke" inde i baggrunden (fordi + ikke)',
-        instruction: 'Byg baggrunds-brikken efter "Han tager bussen," — husk hvor "ikke" står i en ledsætning:',
-        fixedBefore: 'Han tager bussen,',
-        fixedAfter: '.',
-        targetColor: 'purple',
-        targetLabel: 'Baggrund (Ledsætning med "ikke")',
-        correctSeq: ['fordi', 'han', 'ikke', 'vil', 'blive våd'],
-        pool: ['vil', 'fordi', 'blive våd', 'ikke', 'han'],
-        fullSentence: 'Han tager bussen, fordi han ikke vil blive våd.',
-        expl: 'Inde i en ledsætning (baggrunden) sniger "ikke" sig altid ind FORAN verbet: "fordi han ikke vil blive våd".'
+        instruction: 'Byg baggrunds-delen efter "Hun cykler på cykelstien," — husk hvor "ikke" står i baggrunden:',
+        fixedBefore: { text: 'Hun cykler på cykelstien,', color: 'green' },
+        fixedAfter: { text: '.', color: 'neutral' },
+        targetLabel: 'Baggrund med "ikke"',
+        correctSeq: ['fordi', 'hun', 'ikke', 'vil', 'tage bussen'],
+        pool: [
+            { text: 'vil', color: 'red' },
+            { text: 'fordi', color: 'purple' },
+            { text: 'tage bussen', color: 'red' },
+            { text: 'ikke', color: 'purple' },
+            { text: 'hun', color: 'green' }
+        ],
+        fullSentence: 'Hun cykler på cykelstien, fordi hun ikke vil tage bussen.',
+        expl: 'Inde i baggrunden sniger "ikke" sig altid ind FORAN handlingen: "fordi hun ikke vil tage bussen".'
     },
     {
         id: 'zo3',
-        tag: 'Modstand forrest (selvom + ikke + V2)',
-        instruction: 'Kombinér begge regler: "ikke" foran verbet i baggrunden OG verbet på Plads 2 i forgrunden:',
-        fixedBefore: '',
-        fixedAfter: '.',
-        targetColor: 'purple',
-        targetLabel: 'Baggrund (selvom + ikke) + Forgrund (V2)',
-        correctSeq: ['Selvom', 'det', 'ikke er varmt,', 'går', 'hun', 'en lang tur'],
-        pool: ['går', 'en lang tur', 'Selvom', 'hun', 'ikke er varmt,', 'det'],
-        fullSentence: 'Selvom det ikke er varmt, går hun en lang tur.',
-        expl: 'I baggrunden står "ikke" foran verbet ("ikke er varmt"), og i forgrunden efter kommaet står verbet først ("går hun").'
+        tag: 'Modstand forrest (selvom + ikke + Plads 2)',
+        instruction: 'Kombinér begge regler: "ikke" foran handlingen i baggrunden OG handlingen på Plads 2 i forgrunden:',
+        fixedBefore: null,
+        fixedAfter: { text: '.', color: 'neutral' },
+        targetLabel: 'Baggrund (selvom + ikke) + Forgrund (Plads 2)',
+        correctSeq: ['Selvom', 'det', 'ikke er varmt,', 'cykler', 'hun', 'gennem byen'],
+        pool: [
+            { text: 'cykler', color: 'red' },
+            { text: 'gennem byen', color: 'blue' },
+            { text: 'Selvom', color: 'purple' },
+            { text: 'hun', color: 'green' },
+            { text: 'ikke er varmt,', color: 'purple' },
+            { text: 'det', color: 'green' }
+        ],
+        fullSentence: 'Selvom det ikke er varmt, cykler hun gennem byen.',
+        expl: 'I baggrunden står "ikke" foran handlingen ("ikke er varmt"), og i forgrunden efter kommaet står handlingen først ("cykler hun").'
     },
     {
         id: 'zo4',
-        tag: 'Tid som baggrund på Plads 1 (mens + V2)',
-        instruction: 'Sæt tids-baggrunden forrest for at ramme scenen ind, og byg forgrunden rigtigt efter kommaet:',
-        fixedBefore: '',
-        fixedAfter: '.',
-        targetColor: 'blue',
-        targetLabel: 'Tid-baggrund (Plads 1) + Forgrund (V2)',
-        correctSeq: ['Mens han går forbi bageriet,', 'standser', 'den gule bus', 'ved stoppestedet'],
-        pool: ['ved stoppestedet', 'den gule bus', 'Mens han går forbi bageriet,', 'standser'],
-        fullSentence: 'Mens han går forbi bageriet, standser den gule bus ved stoppestedet.',
-        expl: 'Baggrunden ("Mens han går forbi bageriet,") tæller som én brik på Plads 1, så hovedverbet "standser" kommer direkte på Plads 2.'
+        tag: 'Tid som baggrund på Plads 1 (mens + Plads 2)',
+        instruction: 'Sæt baggrunden forrest for at ramme scenen ind, og byg forgrunden rigtigt efter kommaet:',
+        fixedBefore: null,
+        fixedAfter: { text: '.', color: 'neutral' },
+        targetLabel: 'Baggrund (Plads 1) + Forgrund (Plads 2)',
+        correctSeq: ['Mens kvinden cykler forbi,', 'kører', 'den grønne bus', 'forbi caféen'],
+        pool: [
+            { text: 'forbi caféen', color: 'blue' },
+            { text: 'den grønne bus', color: 'green' },
+            { text: 'Mens kvinden cykler forbi,', color: 'purple' },
+            { text: 'kører', color: 'red' }
+        ],
+        fullSentence: 'Mens kvinden cykler forbi, kører den grønne bus forbi caféen.',
+        expl: 'Baggrunden ("Mens kvinden cykler forbi,") tæller som én brik på Plads 1, så handlingen "kører" kommer direkte på Plads 2.'
     },
     {
         id: 'zo5',
-        tag: 'Betingelse med "ikke" (hvis + ikke + V2)',
-        instruction: 'Byg hele betingelses-sætningen med "hvis" forrest — husk både "ikke" før verbet og V2 efter kommaet:',
-        fixedBefore: '',
-        fixedAfter: '.',
-        targetColor: 'purple',
-        targetLabel: 'Betingelse (Plads 1) + Forgrund (V2)',
-        correctSeq: ['Hvis regnen', 'ikke', 'stopper snart,', 'går', 'vi', 'ind på caféen'],
-        pool: ['vi', 'stopper snart,', 'går', 'Hvis regnen', 'ind på caféen', 'ikke'],
-        fullSentence: 'Hvis regnen ikke stopper snart, går vi ind på caféen.',
-        expl: 'Perfekt hypotakse: "ikke" foran "stopper" inde i hvis-sætningen, og "går vi" (V2) lige efter kommaet.'
+        tag: 'Betingelse med "ikke" (hvis + ikke + Plads 2)',
+        instruction: 'Byg hele betingelses-sætningen med "hvis" forrest — husk både "ikke" før handlingen og Plads 2 efter kommaet:',
+        fixedBefore: null,
+        fixedAfter: { text: '.', color: 'neutral' },
+        targetLabel: 'Betingelse (Plads 1) + Forgrund (Plads 2)',
+        correctSeq: ['Hvis sneen', 'ikke', 'stopper snart,', 'går', 'hun', 'ind på caféen'],
+        pool: [
+            { text: 'hun', color: 'green' },
+            { text: 'stopper snart,', color: 'red' },
+            { text: 'går', color: 'red' },
+            { text: 'Hvis sneen', color: 'purple' },
+            { text: 'ind på caféen', color: 'blue' },
+            { text: 'ikke', color: 'purple' }
+        ],
+        fullSentence: 'Hvis sneen ikke stopper snart, går hun ind på caféen.',
+        expl: 'Perfekt lang sætning: "ikke" foran "stopper" inde i hvis-delen, og "går hun" lige efter kommaet.'
     },
     {
         id: 'zo6',
-        tag: 'Dobbelt zoom · Udvidet subjekt + baggrund',
+        tag: 'Dobbelt zoom · Stor Hvem?-brik + baggrund',
         instruction: 'Saml en rig sætning, hvor både Plads 1 er zoomet ind OG baggrunden forklarer årsagen:',
-        fixedBefore: '',
-        fixedAfter: '.',
-        targetColor: 'green',
+        fixedBefore: null,
+        fixedAfter: { text: '.', color: 'neutral' },
         targetLabel: 'Udvidet Forgrund + Baggrund (fordi)',
-        correctSeq: ['Den unge kvinde med paraplyen', 'skynder sig,', 'fordi', 'bussen', 'allerede', 'holder ved stoppestedet'],
-        pool: ['allerede', 'skynder sig,', 'holder ved stoppestedet', 'fordi', 'Den unge kvinde med paraplyen', 'bussen'],
-        fullSentence: 'Den unge kvinde med paraplyen skynder sig, fordi bussen allerede holder ved stoppestedet.',
-        expl: 'Her kombinerer du begge kamera-greb: et udvidet nominalsyntagme i forgrunden + en baggrunds-ledsætning, hvor centraladverbiet "allerede" står foran verbet "holder"!'
+        correctSeq: ['Den smilende kvinde på cyklen', 'skynder sig,', 'fordi', 'det', 'allerede', 'sner kraftigt'],
+        pool: [
+            { text: 'allerede', color: 'purple' },
+            { text: 'skynder sig,', color: 'red' },
+            { text: 'sner kraftigt', color: 'red' },
+            { text: 'fordi', color: 'purple' },
+            { text: 'Den smilende kvinde på cyklen', color: 'green' },
+            { text: 'det', color: 'green' }
+        ],
+        fullSentence: 'Den smilende kvinde på cyklen skynder sig, fordi det allerede sner kraftigt.',
+        expl: 'Her bruger du begge kamera-greb: en udvidet grøn Hvem?-brik i forgrunden + en baggrunds-del, hvor småordet "allerede" står foran handlingen "sner"!'
     }
 ];
 
@@ -463,86 +511,91 @@ const ZOOM_OUT_TASKS = [
 // ============================================================================
 const WORKSHOP_QUIZ = [
     {
-        type: 'Zoom ind · Plads 1 & V2',
-        prompt: 'Du zoomer ind på "En kvinde" → "Den smilende kvinde med orange hue". Hvilken sætning har verbet på Plads 2?',
+        type: 'Zoom ind · Plads 1 & Plads 2',
+        prompt: 'Du zoomer ind på "En kvinde" → "Den smilende kvinde med orange hue". Hvilken sætning har handlingen på Plads 2?',
         options: [
             'Den smilende kvinde med orange hue cykler på gaden.',
             'Den smilende kvinde cykler med orange hue på gaden i går.'
         ],
         correct: 'Den smilende kvinde med orange hue cykler på gaden.',
-        expl: 'Hele den udvidede grønne brik ("Den smilende kvinde med orange hue") er Plads 1 — og verbet "cykler" står samlet lige bagefter på Plads 2.'
+        expl: 'Hele den udvidede grønne brik ("Den smilende kvinde med orange hue") er Plads 1 — og handlingen "cykler" står samlet lige bagefter på Plads 2.'
     },
     {
-        type: 'Zoom ind · Relativsætning i Plads 1',
-        prompt: 'Vi pakker en "som"-sætning ind i Plads 1. Hvor skal hovedverbet "cykler" stå?',
+        type: 'Zoom ind · som-del i Plads 1',
+        prompt: 'Vi pakker en "som"-del ind i Plads 1. Hvor skal handlingen "cykler" stå?',
         options: [
             'Kvinden, som har en papirpose i kurven, cykler roligt forbi.',
             'Kvinden, som har en papirpose i kurven, hun cykler roligt forbi.'
         ],
         correct: 'Kvinden, som har en papirpose i kurven, cykler roligt forbi.',
-        expl: 'Hele "Kvinden, som har en papirpose i kurven," er stadig én samlet Plads 1-brik. Der skal ikke et ekstra "hun" ind — verbet "cykler" kommer direkte efter kommaet.'
+        expl: 'Hele "Kvinden, som har en papirpose i kurven," er stadig én samlet Plads 1-brik. Der skal ikke et ekstra "hun" ind — handlingen "cykler" kommer direkte efter kommaet.'
     },
     {
-        type: 'Zoom ind · Handlings-rammen',
-        prompt: 'Når handlings-brikken har to verber ("vil" + "cykle") og starter med "Om morgenen", hvor står delene så?',
+        type: 'Zoom ind · 2 handlingsord som ramme',
+        prompt: 'Når handlings-brikken har to udsagnsord ("vil" + "cykle") og starter med "Om morgenen", hvor står delene så?',
         options: [
             'Om morgenen vil hun gerne cykle gennem byen.',
             'Om morgenen hun vil gerne cykle gennem byen.'
         ],
         correct: 'Om morgenen vil hun gerne cykle gennem byen.',
-        expl: 'Det første verbum ("vil") står fast på Plads 2, mens det andet verbum ("cykle") lukker rammen senere i sætningen.'
+        expl: 'Det første udsagnsord ("vil") står fast på Plads 2, mens det andet ("cykle") lukker rammen senere i sætningen.'
     },
     {
-        type: 'Zoom ud · Baggrund først (V2)',
-        prompt: 'Du flytter baggrunden ("Fordi det regner kraftigt") forrest i sætningen. Hvad kommer lige efter kommaet?',
+        type: 'Zoom ud · Baggrund først (Plads 2)',
+        prompt: 'Du flytter baggrunden ("Fordi det sner kraftigt") forrest i sætningen. Hvad kommer lige efter kommaet?',
         options: [
-            'Fordi det regner kraftigt, tager han sin paraply med.',
-            'Fordi det regner kraftigt, han tager sin paraply med.'
+            'Fordi det sner kraftigt, tager hun sin varme hue på.',
+            'Fordi det sner kraftigt, hun tager sin varme hue på.'
         ],
-        correct: 'Fordi det regner kraftigt, tager han sin paraply med.',
-        expl: 'Hele ledsætningen "Fordi det regner kraftigt" fungerer som én samlet Plads 1-brik — så hovedsætningens verbum ("tager") står på Plads 2!'
+        correct: 'Fordi det sner kraftigt, tager hun sin varme hue på.',
+        expl: 'Hele baggrunden "Fordi det sner kraftigt" fungerer som én samlet Plads 1-brik — så forgrundens handling ("tager") står på Plads 2!'
     },
     {
         type: 'Zoom ud · "ikke" i baggrunden',
         prompt: 'Hvor står "ikke" inde i baggrunds-brikken efter "fordi"?',
         options: [
-            'Han tager bussen, fordi han ikke vil blive våd.',
-            'Han tager bussen, fordi han vil ikke blive våd.'
+            'Hun cykler i sneen, fordi hun ikke vil vente på bussen.',
+            'Hun cykler i sneen, fordi hun vil ikke vente på bussen.'
         ],
-        correct: 'Han tager bussen, fordi han ikke vil blive våd.',
-        expl: 'Inde i en ledsætning (baggrunden) sniger "ikke" sig altid ind FORAN verbet: "fordi han ikke vil...".'
+        correct: 'Hun cykler i sneen, fordi hun ikke vil vente på bussen.',
+        expl: 'Inde i en baggrunds-del sniger "ikke" sig altid ind FORAN handlingen: "fordi hun ikke vil...".'
     },
     {
         type: 'Zoom ud · Modstand med "selvom"',
-        prompt: 'Vælg den sætning, hvor både V2 og "ikke"-reglen er helt rigtige:',
+        prompt: 'Vælg den sætning, hvor både Plads 2 og "ikke"-reglen er helt rigtige:',
         options: [
-            'Selvom det ikke er varmt, går hun en lang tur.',
-            'Selvom det er ikke varmt, hun går en lang tur.'
+            'Selvom det ikke er varmt, cykler hun en lang tur.',
+            'Selvom det er ikke varmt, hun cykler en lang tur.'
         ],
-        correct: 'Selvom det ikke er varmt, går hun en lang tur.',
-        expl: 'I baggrunden står "ikke" foran verbet ("ikke er"), og i forgrunden efter kommaet står verbet først ("går hun").'
+        correct: 'Selvom det ikke er varmt, cykler hun en lang tur.',
+        expl: 'I baggrunden står "ikke" foran handlingen ("ikke er"), og i forgrunden efter kommaet står handlingen først ("cykler hun").'
     },
     {
         type: 'Zoom ud · Betingelse med "hvis"',
         prompt: 'Vi sætter en betingelse på Plads 1. Hvilken sætning er korrekt dansk?',
         options: [
-            'Hvis bussen ikke kommer om to minutter, går vi ned på caféen.',
-            'Hvis bussen kommer ikke om to minutter, vi går ned på caféen.'
+            'Hvis sneen ikke stopper snart, går hun ind på den varme café.',
+            'Hvis sneen stopper ikke snart, hun går ind på den varme café.'
         ],
-        correct: 'Hvis bussen ikke kommer om to minutter, går vi ned på caféen.',
-        expl: 'Baggrunden har "ikke" før verbet ("ikke kommer"), og forgrunden starter med verbet ("går vi") på Plads 2.'
+        correct: 'Hvis sneen ikke stopper snart, går hun ind på den varme café.',
+        expl: 'Baggrunden har "ikke" før handlingen ("ikke stopper"), og forgrunden starter med handlingen ("går hun") på Plads 2.'
     },
     {
         type: 'Zoom ind · Størrelse på samme spørgsmål',
-        prompt: 'Hvilken af disse tre besvarer spørgsmålet "Hvorfor?" med en hel ledsætning (hypotakse)?',
+        prompt: 'Hvilken af disse to besvarer spørgsmålet "Hvorfor?" med en hel baggrunds-del (med egen handling)?',
         options: [
             'Fordi det sner og er glat på vejen.',
             'På grund af sneen.'
         ],
         correct: 'Fordi det sner og er glat på vejen.',
-        expl: '"På grund af sneen" er et præpositionsled (uden verbum), mens "Fordi det sner og er glat på vejen" er en hel ledsætning med eget subjekt og verbum.'
+        expl: '"På grund af sneen" er en kortere brik uden udsagnsord, mens "Fordi det sner og er glat på vejen" er en hel baggrunds-del med sin egen handling ("sner / er").'
     }
 ];
+
+function brickColorClass(color, enabled) {
+    if (!enabled || !color || color === 'neutral') return '';
+    return `osd-c-${color}`;
+}
 
 function injectSaetningsdeleStyles() {
     if (document.getElementById('ordstilling-saetningsdele-styles')) return;
@@ -559,7 +612,7 @@ function injectSaetningsdeleStyles() {
             overflow-x: hidden;
         }
         .osd-view *, .osd-view *::before, .osd-view *::after { box-sizing: border-box; }
-        .osd-header { margin: 0.6rem 0 1.25rem; }
+        .osd-header { margin: 0.6rem 0 1.15rem; }
         .osd-badge {
             display: inline-flex;
             align-items: center;
@@ -707,7 +760,8 @@ function injectSaetningsdeleStyles() {
             display: flex;
             flex-direction: column;
             gap: 0.22rem;
-            border: 1.5px solid transparent;
+            border: 1.5px solid rgba(203, 213, 225, 0.2);
+            background: #101419;
             transition: all 0.2s ease;
         }
         .osd-block.green { background: rgba(34, 197, 94, 0.12); border-color: rgba(34, 197, 94, 0.45); }
@@ -716,7 +770,7 @@ function injectSaetningsdeleStyles() {
         .osd-block.purple { background: rgba(139, 92, 246, 0.14); border-color: rgba(167, 139, 250, 0.48); }
         .osd-block.orange { background: rgba(249, 115, 22, 0.14); border-color: rgba(249, 115, 22, 0.5); }
         .osd-block.zoomed { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.28); transform: translateY(-1px); }
-        .osd-block-lbl { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; opacity: 0.85; }
+        .osd-block-lbl { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: #94a3b8; }
         .osd-block.green .osd-block-lbl { color: #4ade80; }
         .osd-block.red .osd-block-lbl { color: #f87171; }
         .osd-block.blue .osd-block-lbl { color: #60a5fa; }
@@ -829,58 +883,80 @@ function injectSaetningsdeleStyles() {
             margin-bottom: 1.1rem;
         }
         .osd-dropzone {
-            min-height: 62px;
+            min-height: 64px;
             background: #101419;
             border: 1.5px dashed rgba(76, 155, 166, 0.55);
             border-radius: 12px;
-            padding: 0.7rem 0.85rem;
+            padding: 0.72rem 0.85rem;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 0.45rem;
-            margin-bottom: 0.85rem;
+            margin-bottom: 0.9rem;
         }
         .osd-dropzone.correct { border-style: solid; border-color: #22c55e; background: rgba(34, 197, 94, 0.1); }
         .osd-dropzone.wrong { border-style: solid; border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
         .osd-fixed-anchor {
             font-size: 0.94rem;
             font-weight: 700;
-            color: #94a3b8;
-            padding: 0.3rem 0.45rem;
-            background: rgba(148, 163, 184, 0.08);
-            border-radius: 7px;
+            color: #cbd5e1;
+            padding: 0.34rem 0.58rem;
+            background: rgba(148, 163, 184, 0.1);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 8px;
+        }
+        .osd-placed-brick, .osd-pool-brick {
+            padding: 0.46rem 0.86rem;
+            border-radius: 9px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            color: #f8fafc;
         }
         .osd-placed-brick {
             background: #2b6e78;
-            border: 1px solid #4c9ba6;
-            color: #ffffff;
-            padding: 0.42rem 0.78rem;
-            border-radius: 9px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.15s ease;
+            border: 1.5px solid #4c9ba6;
         }
-        .osd-placed-brick:hover { background: #35838f; }
         .osd-pool-brick {
             background: #1a212b;
-            border: 1.5px solid rgba(203, 213, 225, 0.22);
-            color: #f1f5f9;
-            padding: 0.46rem 0.85rem;
-            border-radius: 9px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.15s ease;
+            border: 1.5px solid rgba(203, 213, 225, 0.24);
         }
-        .osd-pool-brick:hover:not(:disabled) { border-color: #4c9ba6; background: #222c38; }
-        .osd-pool-brick:disabled { opacity: 0.3; cursor: not-allowed; }
+        .osd-pool-brick:hover:not(:disabled), .osd-placed-brick:hover { filter: brightness(1.14); transform: translateY(-1px); }
+        .osd-pool-brick:disabled { opacity: 0.28; cursor: not-allowed; transform: none; }
+
+        /* Farvekodede manipulations-brikker (deler Ordstilling-systemet) */
+        .osd-c-green {
+            background: rgba(34, 197, 94, 0.18) !important;
+            border-color: rgba(34, 197, 94, 0.68) !important;
+            color: #dcfce7 !important;
+        }
+        .osd-c-red {
+            background: rgba(239, 68, 68, 0.2) !important;
+            border-color: rgba(239, 68, 68, 0.72) !important;
+            color: #fee2e2 !important;
+        }
+        .osd-c-orange {
+            background: rgba(249, 115, 22, 0.2) !important;
+            border-color: rgba(249, 115, 22, 0.7) !important;
+            color: #ffedd5 !important;
+        }
+        .osd-c-blue {
+            background: rgba(2, 132, 199, 0.22) !important;
+            border-color: rgba(56, 189, 248, 0.7) !important;
+            color: #e0f2fe !important;
+        }
+        .osd-c-purple {
+            background: rgba(139, 92, 246, 0.2) !important;
+            border-color: rgba(167, 139, 250, 0.7) !important;
+            color: #f3e8ff !important;
+        }
         @media (max-width: 640px) {
             .osd-view { padding: 0.55rem 0.65rem 3.5rem; }
             .osd-card { padding: 0.95rem 0.85rem; }
             .osd-tab { flex: 1 1 auto; justify-content: center; font-size: 0.8rem; padding: 0.5rem 0.65rem; }
             .osd-block { flex: 1 1 100%; }
-            .osd-chip { white-space: normal; text-align: left; }
+            .osd-chip, .osd-pool-brick, .osd-placed-brick { white-space: normal; text-align: left; }
         }
     `;
     document.head.appendChild(style);
@@ -954,12 +1030,12 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
             <div class="osd-badge">${SVG_CAMERA}<span>Ordstilling · Sætningsdele (Kamera: Zoom ind &amp; Zoom ud)</span></div>
             <h1>Sætningsdele: Fra enkeltord til rige sætninger</h1>
             <p>
-                <strong>Zoom ind</strong> på én farvet brik for at få flere detaljer i samme sætningsdel — og <strong>zoom ud</strong> for at se hele billedet med <strong>forgrund</strong> (hovedsætning) og <strong>baggrund</strong> (ledsætning).
+                <strong>Zoom ind</strong> på én farvet brik for at få flere detaljer i samme sætningsdel — og <strong>zoom ud</strong> for at se hele billedet med <strong>forgrund</strong> (hoved-del) og <strong>baggrund</strong> (årsag, tid, modstand).
             </p>
         `;
         viewContainer.appendChild(header);
 
-        // Bro C: Fælles 1-linjes farvekode-bjælke fra ordstillingColorCodes.js (delt med Skrivehjælp)
+        // Fælles 1-linjes farvekode-bjælke fra ordstillingColorCodes.js
         const lang = getLang() || 'da';
         const legendWrap = document.createElement('div');
         legendWrap.innerHTML = renderColorLegendHtml(colorCodesEnabled, {
@@ -985,9 +1061,9 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
         const tabs = document.createElement('div');
         tabs.className = 'osd-tabs';
         const tabDefs = [
-            { id: 'zoom_in', icon: SVG_ZOOM_IN, label: '1. Zoom ind (Sætningsdele)' },
+            { id: 'zoom_in', icon: SVG_ZOOM_IN, label: '1. Zoom ind (Udvid brikken)' },
             { id: 'inside', icon: SVG_LAYERS, label: '2. Inde i brikken' },
-            { id: 'zoom_out', icon: SVG_ZOOM_OUT, label: '3. Zoom ud (Hypotakse)' },
+            { id: 'zoom_out', icon: SVG_ZOOM_OUT, label: '3. Zoom ud (Forgrund & baggrund)' },
             { id: 'workshop', icon: SVG_CHECK, label: '4. Zoom-værkstedet (20 opgaver)' }
         ];
         tabs.innerHTML = tabDefs.map(t => `
@@ -1022,7 +1098,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
         card.className = 'osd-card';
         card.innerHTML = `
             <div class="osd-card-head">
-                <h2 class="osd-card-title">${SVG_ZOOM_IN}<span>Zoom ind på ét spørgsmål — verbet bliver på Plads 2</span></h2>
+                <h2 class="osd-card-title">${SVG_ZOOM_IN}<span>Zoom ind på ét spørgsmål — handlingen bliver på Plads 2</span></h2>
                 <div class="osd-chip-row">
                     ${Object.values(ZOOM_TRACKS).map(tr => `
                         <button type="button" class="osd-chip ${tr.id === activeTrackId ? 'active' : ''}" data-track="${tr.id}">
@@ -1053,7 +1129,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
 
             <div class="osd-sentence-blocks">
                 ${lv.parts.map(p => `
-                    <div class="osd-block ${p.color} ${p.active ? 'zoomed' : ''}">
+                    <div class="osd-block ${colorCodesEnabled ? p.color : ''} ${p.active ? 'zoomed' : ''}">
                         <span class="osd-block-lbl">${p.label}</span>
                         <span class="osd-block-txt">${p.text}</span>
                     </div>
@@ -1083,7 +1159,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
     }
 
     // ========================================================================
-    // FANE 2: INDE I BRIKKEN (DE 3 BYGGEMØNSTRE PÅ SAMME SIDE)
+    // FANE 2: INDE I BRIKKEN (DE 3 BYGGEMØNSTRE UDEN TUNGE FAGORD)
     // ========================================================================
     function renderInsideTab() {
         const nomParts = [];
@@ -1098,21 +1174,21 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
         card.className = 'osd-card';
         card.innerHTML = `
             <div class="osd-card-head">
-                <h2 class="osd-card-title">${SVG_LAYERS}<span>Inde i de 3 vigtigste sætningsdele</span></h2>
+                <h2 class="osd-card-title">${SVG_LAYERS}<span>Inde i de 3 vigtigste brikker</span></h2>
             </div>
             <p style="margin:0 0 1rem; font-size:0.9rem; color:#94a3b8; line-height:1.55;">
-                Hver sætningsdel har sit eget lille byggemønster indeni — men udefra fungerer den stadig som <strong>én samlet brik</strong> i sætningen.
+                Hver sætningsdel har sit eget enkle byggemønster indeni — men udefra fungerer den stadig som <strong>én samlet brik</strong> i sætningen.
             </p>
 
             <div class="osd-grid-3">
-                <!-- 1. NOMINALSYNTAGME -->
+                <!-- 1. HVEM/HVAD-BRIKKEN -->
                 <div class="osd-mini-card" style="border-top: 3px solid #22c55e;">
-                    <h3>1. Hvem/Hvad-brikken (Nominalsyntagme)</h3>
+                    <h3>1. Hvem/Hvad-brikken</h3>
                     <p>En kerne (<strong>kvinde</strong>) kan få detaljer både <em>før</em> og <em>efter</em> sig. Slå lagene til og fra:</p>
                     <div class="osd-chip-row">
                         <button type="button" class="osd-chip ${nomBefore ? 'active' : ''}" id="tog-nom-before">+ Før-detalje</button>
                         <button type="button" class="osd-chip ${nomAfter ? 'active' : ''}" id="tog-nom-after">+ Efter-detalje</button>
-                        <button type="button" class="osd-chip ${nomRel ? 'active' : ''}" id="tog-nom-rel">+ som-sætning</button>
+                        <button type="button" class="osd-chip ${nomRel ? 'active' : ''}" id="tog-nom-rel">+ som-del</button>
                     </div>
                     <div style="background:#151a21; border:1px solid rgba(34,197,94,0.4); border-radius:10px; padding:0.75rem 0.85rem; font-size:0.95rem; line-height:1.55;">
                         ${nomParts.join(' ')} <span class="osd-v2-pill">køber</span> frisk kaffe.
@@ -1120,13 +1196,13 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
                     <button type="button" class="osd-btn-ghost" id="btn-speak-nom" style="align-self:flex-start;">${SVG_SPEAK}<span>Lyt</span></button>
                 </div>
 
-                <!-- 2. VERBAL-KÆDE -->
+                <!-- 2. HANDLINGS-BRIKKEN -->
                 <div class="osd-mini-card" style="border-top: 3px solid #ef4444;">
-                    <h3>2. Handlings-brikken (Verbal-kæde)</h3>
-                    <p>Med to verber (fx <em>vil + cykle</em> eller <em>har + cyklet</em>) åbner brikken sig som en ramme omkring personen:</p>
+                    <h3>2. Handlings-brikken (1 eller 2 udsagnsord)</h3>
+                    <p>Med to udsagnsord (fx <em>vil + cykle</em> eller <em>har + cyklet</em>) åbner brikken sig som en ramme omkring personen:</p>
                     <div class="osd-chip-row">
-                        <button type="button" class="osd-chip ${!verbSplit ? 'active' : ''}" id="tog-verb-1">1 verbum</button>
-                        <button type="button" class="osd-chip ${verbSplit ? 'active' : ''}" id="tog-verb-2">2 verber (ramme)</button>
+                        <button type="button" class="osd-chip ${!verbSplit ? 'active' : ''}" id="tog-verb-1">1 ord</button>
+                        <button type="button" class="osd-chip ${verbSplit ? 'active' : ''}" id="tog-verb-2">2 ord (ramme)</button>
                     </div>
                     <div style="background:#151a21; border:1px solid rgba(239,68,68,0.45); border-radius:10px; padding:0.75rem 0.85rem; font-size:0.95rem; line-height:1.55;">
                         ${verbSplit
@@ -1134,10 +1210,10 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
                             : `Om morgenen <span class="osd-v2-pill">cykler</span> hun gennem byen.`
                         }
                     </div>
-                    <p style="font-size:0.8rem; color:#cbd5e1;">Det første verbum (Plads 2) bøjes i tid — det andet verbum står i navneform eller kort tillægsform senere i sætningen.</p>
+                    <p style="font-size:0.8rem; color:#cbd5e1;">Det første handlingsord står altid fast på Plads 2 — det andet lukker rammen længere henne i sætningen.</p>
                 </div>
 
-                <!-- 3. RAMME-BRIKKEN (1 ORD -> SYNTAGME -> LEDSÆTNING) -->
+                <!-- 3. RAMME-BRIKKEN (3 STØRRELSER) -->
                 <div class="osd-mini-card" style="border-top: 3px solid #8b5cf6;">
                     <h3>3. Ramme-brikken (3 størrelser)</h3>
                     <p>Det samme spørgsmål — fx <strong>Hvorfor?</strong> eller <strong>Hvornår?</strong> — kan besvares i tre størrelser:</p>
@@ -1147,11 +1223,11 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
                             <strong>Derfor</strong> <span style="color:#f87171; font-weight:800;">tager</span> hun huen på.
                         </div>
                         <div style="background:#151a21; border-left:3px solid #38bdf8; padding:0.5rem 0.7rem; border-radius:8px;">
-                            <div style="font-size:0.7rem; color:#60a5fa; font-weight:800;">PRÆPOSITIONSLED</div>
+                            <div style="font-size:0.7rem; color:#60a5fa; font-weight:800;">LILLE GRUPPE AF ORD</div>
                             <strong>På grund af sneen</strong> <span style="color:#f87171; font-weight:800;">tager</span> hun huen på.
                         </div>
                         <div style="background:#151a21; border-left:3px solid #fb923c; padding:0.5rem 0.7rem; border-radius:8px;">
-                            <div style="font-size:0.7rem; color:#fb923c; font-weight:800;">HEL LEDSÆTNING (HYPOTAKSE)</div>
+                            <div style="font-size:0.7rem; color:#fb923c; font-weight:800;">HEL BAGGRUNDS-DEL</div>
                             <strong>Fordi det sner kraftigt,</strong> <span style="color:#f87171; font-weight:800;">tager</span> hun huen på.
                         </div>
                     </div>
@@ -1169,19 +1245,19 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
     }
 
     // ========================================================================
-    // FANE 3: ZOOM UD — FORGRUND & BAGGRUND (HYPOTAKSE)
+    // FANE 3: ZOOM UD — FORGRUND & BAGGRUND (DEN CYKLENDE KVINDE I OMGIVELSERNE)
     // ========================================================================
     function renderZoomOutTab() {
-        const sc = HYPOTAKSE_SCENES.find(x => x.id === activeSceneId) || HYPOTAKSE_SCENES[0];
+        const sc = ZOOM_OUT_SCENES.find(x => x.id === activeSceneId) || ZOOM_OUT_SCENES[0];
         const spokenText = bgFirst ? sc.bgFirst.full : sc.fgFirst.full;
 
         const card = document.createElement('div');
         card.className = 'osd-card';
         card.innerHTML = `
             <div class="osd-card-head">
-                <h2 class="osd-card-title">${SVG_ZOOM_OUT}<span>Zoom ud: Skarp forgrund (hovedsætning) + baggrund (ledsætning)</span></h2>
+                <h2 class="osd-card-title">${SVG_ZOOM_OUT}<span>Zoom ud: Skarp forgrund + baggrund omkring hende</span></h2>
                 <div class="osd-chip-row">
-                    ${HYPOTAKSE_SCENES.map(item => `
+                    ${ZOOM_OUT_SCENES.map(item => `
                         <button type="button" class="osd-chip ${item.id === activeSceneId ? 'active' : ''}" data-scene="${item.id}">
                             ${item.question} (${item.conj})
                         </button>
@@ -1190,14 +1266,14 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
             </div>
 
             <div class="osd-camera-frame">
-                <img class="osd-camera-img" src="${baseUrl}assets/saetningsdele_zoom_ud.jpg" alt="Person i gul regnjakke i forgrunden med café og bus i baggrunden" />
-                <div class="osd-viewfinder-badge">${SVG_CAMERA}<span>Kamera zoomet ud · Forgrund + Baggrund</span></div>
+                <img class="osd-camera-img" src="${baseUrl}assets/saetningsdele_zoom_ud.jpg" alt="Kvinden cykler i et bredt vintergadebillede med café, grøn bus og snevejr omkring hende" />
+                <div class="osd-viewfinder-badge">${SVG_CAMERA}<span>Kamera zoomet ud · Kvinden + omgivelserne</span></div>
             </div>
 
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.6rem;">
                 <div class="osd-chip-row">
                     <button type="button" class="osd-chip ${bgFirst ? 'light-active' : ''}" id="osd-toggle-bg-first">
-                        ${SVG_SWAP}<span>${bgFirst ? 'Baggrund står forrest (Plads 1 · V2!)' : 'Flyt baggrunden til Plads 1'}</span>
+                        ${SVG_SWAP}<span>${bgFirst ? 'Baggrund står forrest (Plads 1 · Plads 2!)' : 'Flyt baggrunden til Plads 1'}</span>
                     </button>
                     <button type="button" class="osd-chip ${showIkke ? 'active' : ''}" id="osd-toggle-ikke">
                         <span>${showIkke ? 'Skjul "ikke"-reglen' : 'Vis "ikke"-reglen i baggrunden'}</span>
@@ -1222,7 +1298,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
                         <div class="osd-block-txt">${sc.bgFirst.bg}</div>
                     </div>
                     <div class="osd-clause-fg">
-                        <div class="osd-block-lbl" style="color:#4ade80; margin-bottom:0.25rem;">Plads 2 (V2) · ${sc.fgLabel}</div>
+                        <div class="osd-block-lbl" style="color:#4ade80; margin-bottom:0.25rem;">Plads 2 · ${sc.fgLabel}</div>
                         <div class="osd-block-txt"><span class="osd-v2-pill">${sc.bgFirst.v2Verb}</span> ${sc.bgFirst.fgRest}</div>
                     </div>
                 `}
@@ -1231,11 +1307,11 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
             ${showIkke ? `
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:0.75rem; margin-bottom:0.9rem;">
                     <div style="background:#101419; border:1px solid rgba(34,197,94,0.4); border-radius:11px; padding:0.75rem 0.9rem; font-size:0.88rem;">
-                        <div style="font-size:0.72rem; font-weight:800; color:#4ade80; margin-bottom:0.25rem;">FORGRUND (HOVEDSÆTNING): VERBUM + IKKE</div>
+                        <div style="font-size:0.72rem; font-weight:800; color:#4ade80; margin-bottom:0.25rem;">FORGRUND (HOVED-DEL): HANDLING + IKKE</div>
                         <div>${sc.ikkeDemo.main}</div>
                     </div>
                     <div style="background:#101419; border:1px dashed rgba(167,139,250,0.55); border-radius:11px; padding:0.75rem 0.9rem; font-size:0.88rem;">
-                        <div style="font-size:0.72rem; font-weight:800; color:#c084fc; margin-bottom:0.25rem;">BAGGRUND (LEDSÆTNING): IKKE + VERBUM</div>
+                        <div style="font-size:0.72rem; font-weight:800; color:#c084fc; margin-bottom:0.25rem;">BAGGRUND: IKKE + HANDLING</div>
                         <div>${sc.ikkeDemo.sub}</div>
                     </div>
                 </div>
@@ -1263,14 +1339,14 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
     }
 
     // ========================================================================
-    // FANE 4: ZOOM-VÆRKSTEDET (20 OPGAVER: ZOOM IND + ZOOM UD + HURTIG-QUIZ)
+    // FANE 4: ZOOM-VÆRKSTEDET (20 FARVEKODEDE OPGAVER)
     // ========================================================================
     function renderWorkshopTab() {
         const trackBar = document.createElement('div');
         trackBar.className = 'osd-subtrack-bar';
         const tracks = [
-            { id: 'zoom_in_build', icon: SVG_ZOOM_IN, label: `1. Zoom ind · Manipulér syntagmer (${ZOOM_IN_TASKS.length})` },
-            { id: 'zoom_out_build', icon: SVG_ZOOM_OUT, label: `2. Zoom ud · Manipulér sætningsdele (${ZOOM_OUT_TASKS.length})` },
+            { id: 'zoom_in_build', icon: SVG_ZOOM_IN, label: `1. Zoom ind · Udvid én brik (${ZOOM_IN_TASKS.length})` },
+            { id: 'zoom_out_build', icon: SVG_ZOOM_OUT, label: `2. Zoom ud · Flyt sætningsdele (${ZOOM_OUT_TASKS.length})` },
             { id: 'quick_quiz', icon: SVG_CHECK, label: `3. Hurtig-quiz (${WORKSHOP_QUIZ.length})` }
         ];
         trackBar.innerHTML = tracks.map(t => `
@@ -1407,8 +1483,8 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
         }
 
         const task = tasks[st.idx];
-        const placedIndices = st.placed; // array of indices into task.pool
-        const placedTexts = placedIndices.map(i => task.pool[i]);
+        const placedIndices = st.placed;
+        const placedTexts = placedIndices.map(i => task.pool[i].text);
 
         card.innerHTML = `
             <div class="osd-card-head">
@@ -1425,20 +1501,21 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
                 Byg her · ${task.targetLabel} (klik på en placeret brik for at fjerne den)
             </div>
             <div class="osd-dropzone ${st.status === 'correct' ? 'correct' : st.status === 'wrong' ? 'wrong' : ''}" id="osd-dropzone">
-                ${task.fixedBefore ? `<span class="osd-fixed-anchor">${task.fixedBefore}</span>` : ''}
+                ${task.fixedBefore ? `<span class="osd-fixed-anchor ${brickColorClass(task.fixedBefore.color, colorCodesEnabled)}">${task.fixedBefore.text}</span>` : ''}
                 ${placedIndices.length === 0
-                    ? `<span style="color:#64748b; font-size:0.86rem; font-style:italic;">Klik på brikkerne nedenfor i den rigtige rækkefølge...</span>`
-                    : placedIndices.map((poolIdx, pos) => `
-                        <button type="button" class="osd-placed-brick" data-remove-pos="${pos}">${task.pool[poolIdx]}</button>
-                    `).join('')
+                    ? `<span style="color:#64748b; font-size:0.86rem; font-style:italic;">Klik på de farvede brikker nedenfor i den rigtige rækkefølge...</span>`
+                    : placedIndices.map((poolIdx, pos) => {
+                        const item = task.pool[poolIdx];
+                        return `<button type="button" class="osd-placed-brick ${brickColorClass(item.color, colorCodesEnabled)}" data-remove-pos="${pos}">${item.text}</button>`;
+                    }).join('')
                 }
-                ${task.fixedAfter ? `<span class="osd-fixed-anchor">${task.fixedAfter}</span>` : ''}
+                ${task.fixedAfter ? `<span class="osd-fixed-anchor ${brickColorClass(task.fixedAfter.color, colorCodesEnabled)}">${task.fixedAfter.text}</span>` : ''}
             </div>
 
             <div class="osd-chip-row" style="margin-bottom:1rem;">
-                ${task.pool.map((txt, poolIdx) => `
-                    <button type="button" class="osd-pool-brick" data-pool-idx="${poolIdx}" ${placedIndices.includes(poolIdx) || st.status === 'correct' ? 'disabled' : ''}>
-                        ${txt}
+                ${task.pool.map((item, poolIdx) => `
+                    <button type="button" class="osd-pool-brick ${brickColorClass(item.color, colorCodesEnabled)}" data-pool-idx="${poolIdx}" ${placedIndices.includes(poolIdx) || st.status === 'correct' ? 'disabled' : ''}>
+                        ${item.text}
                     </button>
                 `).join('')}
             </div>
@@ -1461,7 +1538,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
                 </div>
             ` : st.status === 'wrong' ? `
                 <div class="osd-note-box" style="border-left-color:#ef4444;">
-                    <strong style="color:#f87171;">Ikke helt endnu.</strong> Prøv at flytte brikkerne (klik på en placeret brik for at fjerne den) — tænk på, hvad der står på Plads 1 og Plads 2!
+                    <strong style="color:#f87171;">Ikke helt endnu.</strong> Klik på en placeret brik for at fjerne den, og tjek farverne — husk at det røde handlingsord står på Plads 2!
                 </div>
             ` : ''}
         `;

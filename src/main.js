@@ -79,6 +79,7 @@ import { renderTraenTidsudtrykView } from './views/TraenTidsudtrykView.js';
 import { renderLavSporgsmalView } from './views/LavSporgsmalView.js';
 import { renderOrdstillingView } from './views/OrdstillingView.js';
 import { renderOrdstillingIntroView } from './views/OrdstillingIntroView.js';
+import { renderOrdstillingSaetningsdeleView } from './views/OrdstillingSaetningsdeleView.js';
 
 import { renderGrammatikView } from './views/GrammatikView.js';
 import { renderUdtaleView } from './views/UdtaleView.js';
@@ -444,6 +445,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'ordstilling_intro') {
     appState.currentView = 'ordstilling_intro';
     renderOrdstillingIntroView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'ordstilling_saetningsdele') {
+    appState.currentView = 'ordstilling_saetningsdele';
+    renderOrdstillingSaetningsdeleView(appDiv, navigate, extraData);
   } else if (viewTarget === 'traen_grammatik') {
     appState.currentView = 'traen_grammatik';
     renderGrammatikView(appDiv, navigate, extraData);

@@ -84,6 +84,19 @@ export function renderOrdstillingView(container, navigateFn) {
     `;
     grid.appendChild(introCard);
 
+    const saetningsdeleCard = document.createElement('div');
+    saetningsdeleCard.className = 'card special-highlight';
+    saetningsdeleCard.style.gridColumn = '1 / -1';
+    saetningsdeleCard.onclick = () => navigateFn('ordstilling_saetningsdele');
+    saetningsdeleCard.innerHTML = `
+        <div class="card-icon" style="font-size: 2.2rem;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+        <div class="card-title">Sætningsdele (Zoom ind &amp; Zoom ud)</div>
+        <div class="card-desc" style="margin-top: 0.45rem; font-size: 0.93rem;">Zoom ind på én farvet brik for at bygge rige sætningsdele — og zoom ud til forgrund og baggrund (hypotakse).</div>
+    `;
+    grid.appendChild(saetningsdeleCard);
+
     standardLevels.forEach(l => {
         const categoryData = ordstillingData[l.key];
         const card = document.createElement('div');

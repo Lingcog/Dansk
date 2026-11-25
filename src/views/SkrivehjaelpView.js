@@ -501,13 +501,13 @@ function analyzeLocalHints(sentences, scenarioId, lang) {
         prompts.push({
             title: swT('hint_rel_title', lang),
             text: swT('hint_rel_text', lang),
-            link: { label: swT('hint_rel_link', lang), route: 'ordstilling' }
+            link: { label: swT('hint_rel_link', lang), route: 'ordstilling_saetningsdele' }
         });
     } else if (count >= 3 && !hasAt) {
         prompts.push({
             title: swT('hint_at_title', lang),
             text: swT('hint_at_text', lang),
-            link: { label: swT('hint_at_link', lang), route: 'top_konjunktioner' }
+            link: { label: swT('hint_at_link', lang), route: 'ordstilling_saetningsdele' }
         });
     }
 
@@ -517,7 +517,7 @@ function analyzeLocalHints(sentences, scenarioId, lang) {
         prompts.push({
             title: swT('sh_h_short_title', lang),
             text: swT('sh_h_short_text', lang),
-            link: { label: swT('hint_conj_link', lang), route: 'top_konjunktioner' }
+            link: { label: swT('hint_conj_link', lang), route: 'ordstilling_saetningsdele' }
         });
     }
 

@@ -1,5 +1,12 @@
 import { baseUrl } from '../utils/config.js';
-import { getTranslation } from '../utils/i18n.js';
+import { getTranslation, getLang } from '../utils/i18n.js';
+import { swT } from '../utils/mb_skrive_translations.js';
+import {
+    getColorCodesEnabled,
+    setColorCodesEnabled,
+    renderColorLegendHtml,
+    ensureOrdstillingColorStyles
+} from '../utils/ordstillingColorCodes.js';
 
 // ============================================================================
 // MONOKROME SVG-IKONER (Kølig nordisk stil — nul emojis)
@@ -881,8 +888,10 @@ function injectSaetningsdeleStyles() {
 
 export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
     injectSaetningsdeleStyles();
+    ensureOrdstillingColorStyles();
     container.innerHTML = '';
 
+    let colorCodesEnabled = getColorCodesEnabled();
     let activeTab = 'zoom_in';
     let activeTrackId = 'hvem';
     let zoomIdx = 0;
@@ -926,6 +935,16 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
             navigateFn('ordstilling');
         };
         topBar.appendChild(backBtn);
+
+        const toWriteBtn = document.createElement('button');
+        toWriteBtn.type = 'button';
+        toWriteBtn.className = 'osd-btn-ghost';
+        toWriteBtn.textContent = 'Prøv selv i Skrivehjælp →';
+        toWriteBtn.onclick = () => {
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            navigateFn('skrive_hjaelp');
+        };
+        topBar.appendChild(toWriteBtn);
         viewContainer.appendChild(topBar);
 
         // Header
@@ -939,6 +958,28 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
             </p>
         `;
         viewContainer.appendChild(header);
+
+        // Bro C: Fælles 1-linjes farvekode-bjælke fra ordstillingColorCodes.js (delt med Skrivehjælp)
+        const lang = getLang() || 'da';
+        const legendWrap = document.createElement('div');
+        legendWrap.innerHTML = renderColorLegendHtml(colorCodesEnabled, {
+            noun: swT('col_noun', lang),
+            verb: swT('col_verb', lang),
+            adj: swT('col_adj', lang),
+            sted: swT('col_sted', lang),
+            tid: swT('col_tid', lang),
+            toggleOn: swT('col_toggle_on', lang),
+            toggleOff: swT('col_toggle_off', lang)
+        });
+        const colToggle = legendWrap.querySelector('[data-toggle-color-codes]');
+        if (colToggle) {
+            colToggle.onclick = () => {
+                colorCodesEnabled = !colorCodesEnabled;
+                setColorCodesEnabled(colorCodesEnabled);
+                render();
+            };
+        }
+        viewContainer.appendChild(legendWrap);
 
         // Tabs
         const tabs = document.createElement('div');
@@ -1203,6 +1244,9 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
             <div class="osd-note-box">
                 <strong>Kamera-indsigt:</strong> ${sc.tip}
             </div>
+            <div style="display:flex; justify-content:flex-end; margin-top:0.85rem;">
+                <button type="button" class="osd-btn-ghost" id="osd-bridge-write-zout">Brug mønstret i Skrivehjælp →</button>
+            </div>
         `;
 
         card.querySelectorAll('[data-scene]').forEach(btn => {
@@ -1214,6 +1258,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
         card.querySelector('#osd-toggle-bg-first').onclick = () => { bgFirst = !bgFirst; render(); };
         card.querySelector('#osd-toggle-ikke').onclick = () => { showIkke = !showIkke; render(); };
         card.querySelector('#osd-listen-hyp').onclick = () => speakDanish(spokenText);
+        card.querySelector('#osd-bridge-write-zout').onclick = () => navigateFn('skrive_hjaelp');
         viewContainer.appendChild(card);
     }
 
@@ -1257,7 +1302,10 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
                 <p style="color:#94a3b8; font-size:1rem; margin-bottom:1.25rem;">
                     Du fik <strong style="color:#4ade80;">${quizScore} af ${WORKSHOP_QUIZ.length}</strong> rigtige.
                 </p>
-                <button type="button" class="osd-btn-primary" id="osd-quiz-restart">Prøv igen</button>
+                <div style="display:flex; justify-content:center; gap:0.6rem; flex-wrap:wrap;">
+                    <button type="button" class="osd-btn-ghost" id="osd-quiz-restart">Prøv igen</button>
+                    <button type="button" class="osd-btn-primary" id="osd-quiz-to-write">Prøv selv i Skrivehjælp →</button>
+                </div>
             `;
             card.querySelector('#osd-quiz-restart').onclick = () => {
                 quizIdx = 0;
@@ -1266,6 +1314,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
                 quizPicked = null;
                 render();
             };
+            card.querySelector('#osd-quiz-to-write').onclick = () => navigateFn('skrive_hjaelp');
             viewContainer.appendChild(card);
             return;
         }

@@ -3,9 +3,10 @@ import { renderArbejdeBilvaerkstedView } from './ArbejdeBilvaerkstedView.js';
 import { renderArbejdeKoekkenView } from './ArbejdeKoekkenView.js';
 import { renderAarstiderVinterView } from './AarstiderVinterView.js';
 import { renderMinBoligView } from './MinBoligView.js';
+import { renderMinSprogskoleView } from './MinSprogskoleView.js';
 import { ARBEJDE_ICONS, stripArbejdeEmojis } from '../utils/arbejdeMonoIcons.js';
 
-export { renderArbejdeBilvaerkstedView, renderArbejdeKoekkenView, renderAarstiderVinterView, renderMinBoligView };
+export { renderArbejdeBilvaerkstedView, renderArbejdeKoekkenView, renderAarstiderVinterView, renderMinBoligView, renderMinSprogskoleView };
 
 /**
  * MitHverdagslivMenuView - Hub for "Mit hverdagsliv" under "Lær nye ord".
@@ -215,6 +216,16 @@ export function renderMitHverdagslivMenuView(container, navigateFn) {
             btnText: 'Åbn Min bolig ➔',
             img: 'assets/min_bolig_vrimmel.jpg',
             accent: '#14b8a6'
+        },
+        {
+            id: 'mit_hverdagsliv_sprogskole',
+            badge: 'Scenarie 5 • Mindmap & Mundtlig prøve',
+            icon: ARBEJDE_ICONS.book,
+            title: 'Min sprogskole',
+            desc: 'Lær 24 centrale ord om sprogskole/by, dage/tid, kursister/lærer, aktiviteter, pauser og transport — med skrivehjælp, mindmap og udtaletræning.',
+            btnText: 'Åbn Min sprogskole ➔',
+            img: 'assets/min_sprogskole_vrimmel.jpg',
+            accent: '#38bdf8'
         }
     ];
 

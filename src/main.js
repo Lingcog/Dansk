@@ -52,7 +52,8 @@ import {
   renderMitHverdagslivAarstiderView,
   renderArbejdeBilvaerkstedView,
   renderArbejdeKoekkenView,
-  renderMinBoligView
+  renderMinBoligView,
+  renderMinSprogskoleView
 } from './views/MitHverdagslivMenuView.js';
 import { renderSamtaleTraeningView } from './views/SamtaleTraeningView.js';
 import { renderSamtalehjaelpView } from './views/SamtalehjaelpView.js';
@@ -347,6 +348,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'mit_hverdagsliv_bolig' || viewTarget === 'min_bolig') {
     appState.currentView = 'mit_hverdagsliv_bolig';
     renderMinBoligView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'mit_hverdagsliv_sprogskole' || viewTarget === 'min_sprogskole') {
+    appState.currentView = 'mit_hverdagsliv_sprogskole';
+    renderMinSprogskoleView(appDiv, navigate, extraData);
   } else if (viewTarget === 'dansk_kultur') {
     appState.currentView = 'dansk_kultur';
     renderDanskKulturView(appDiv, navigate);

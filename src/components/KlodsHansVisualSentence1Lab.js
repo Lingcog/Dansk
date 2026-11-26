@@ -255,8 +255,6 @@ export const SENTENCE_1_VISUAL_NODES = [
         matchTokens: ['jeg', 'tager', 'tage', 'til', 'slottet', 'slot'],
         leftTitle: 'Tager til slottet',
         leftImg: 'assets/klods_hans_s1/et_slot.jpg',
-        rightTitle: 'Bliver på gården',
-        rightImg: 'assets/klods_hans_s1/en_gaard.jpg',
         vrimmelSpot: { x: 59, y: 28, radius: 13, label: 'Slottet' }
     },
     {
@@ -339,12 +337,13 @@ export const SENTENCE_1_VISUAL_NODES = [
     {
         id: 'mange_sange',
         icon: ICON_BARS,
-        chipLabel: 'kender mange sange',
-        matchTokens: ['kender', 'kende', 'mange', 'sange'],
-        leftTitle: 'Mange sange',
-        leftDiagramType: 's4_mange_sange',
+        chipLabel: 'sange / at synge',
+        matchTokens: ['kender', 'kende', 'mange', 'sange', 'sang', 'synge'],
+        leftTitle: 'Synger sange',
+        leftImg: 'assets/klods_hans_s1/synger_sange.jpg',
         rightTitle: 'Ingen sange (0)',
-        rightDiagramType: 's4_ingen_sange'
+        rightDiagramType: 's4_ingen_sange',
+        vrimmelSpot: { x: 46, y: 44, radius: 13, label: 'Synger' }
     },
     {
         id: 'altid',
@@ -1411,14 +1410,15 @@ export function createSentence1VisualLab(vrimmelStageEl) {
                 </div>
             `;
 
-        const rightMedia = node.rightDiagramType
+        const hasRight = Boolean(node.rightDiagramType || node.rightImg);
+        const rightMedia = !hasRight ? '' : (node.rightDiagramType
             ? renderCustomDiagram(node.rightDiagramType)
             : `
                 <div class="kh-s1-hybrid-stage">
                     <img src="${node.rightImg}" alt="${node.rightTitle}" class="kh-s1-illus-img" />
                     ${renderHybridOverlaySvg(node.id, 'right')}
                 </div>
-            `;
+            `);
 
         host.innerHTML = `
             <div class="kh-s1-lab-wrap mode-hybrid">
@@ -1433,20 +1433,21 @@ export function createSentence1VisualLab(vrimmelStageEl) {
                     </button>
                 </div>
 
-                <div class="kh-s1-dichotomy-grid">
+                <div class="kh-s1-dichotomy-grid" ${!hasRight ? 'style="grid-template-columns: minmax(0, 340px); justify-content: center;"' : ''}>
                     <div class="kh-s1-pic-card" id="kh-s1-left-pic">
                         <div class="kh-s1-card-title">${ICON_DOT_SOLID}<span>${node.leftTitle}</span></div>
                         ${leftMedia}
                     </div>
+                    ${hasRight ? `
+                        <div class="kh-s1-vs-pillar">
+                            <span class="kh-s1-vs-badge" aria-label="Modsat">${ICON_NOT_EQUAL}</span>
+                        </div>
 
-                    <div class="kh-s1-vs-pillar">
-                        <span class="kh-s1-vs-badge" aria-label="Modsat">${ICON_NOT_EQUAL}</span>
-                    </div>
-
-                    <div class="kh-s1-pic-card antonym" id="kh-s1-right-pic">
-                        <div class="kh-s1-card-title">${ICON_DOT_RING}<span>${node.rightTitle}</span></div>
-                        ${rightMedia}
-                    </div>
+                        <div class="kh-s1-pic-card antonym" id="kh-s1-right-pic">
+                            <div class="kh-s1-card-title">${ICON_DOT_RING}<span>${node.rightTitle}</span></div>
+                            ${rightMedia}
+                        </div>
+                    ` : ''}
                 </div>
             </div>
         `;

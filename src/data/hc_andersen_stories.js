@@ -551,8 +551,7 @@ export const hcAndersenStories = [
                             },
                             {
                                 "text": "Jeg",
-                                "type": "pro",
-                                "key": "jeg"
+                                "type": "plain"
                             },
                             {
                                 "text": " ",
@@ -605,8 +604,7 @@ export const hcAndersenStories = [
                             },
                             {
                                 "text": "Jeg",
-                                "type": "pro",
-                                "key": "jeg"
+                                "type": "plain"
                             },
                             {
                                 "text": " ",
@@ -777,7 +775,16 @@ export const hcAndersenStories = [
                                 "key": "mange"
                             },
                             {
-                                "text": " sange. Ja, ",
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "sange",
+                                "type": "sub",
+                                "key": "sang"
+                            },
+                            {
+                                "text": ". Ja, ",
                                 "type": "plain"
                             },
                             {
@@ -849,7 +856,16 @@ export const hcAndersenStories = [
                                 "key": "at"
                             },
                             {
-                                "text": " synge!",
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "synge",
+                                "type": "vrb",
+                                "key": "synge"
+                            },
+                            {
+                                "text": "!",
                                 "type": "plain"
                             },
                             {

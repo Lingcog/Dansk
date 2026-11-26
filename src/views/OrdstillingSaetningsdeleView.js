@@ -1,6 +1,7 @@
 import { baseUrl } from '../utils/config.js';
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { swT } from '../utils/mb_skrive_translations.js';
+import { osdT, isOsdRtl } from '../utils/osd_i18n.js';
 import {
     getColorCodesEnabled,
     setColorCodesEnabled,
@@ -292,24 +293,25 @@ const ZOOM_IN_TASKS = [
         tag: 'Hvem?-brikken · Før + Kerne + Efter',
         instruction: 'Udvid den grønne Plads 1-brik ved at sætte delene i rigtig rækkefølge foran handlingen:',
         fixedBefore: null,
-        fixedAfter: { text: 'cykler på gaden.', color: 'red' },
+        fixedAfter: { text: 'cykler på gaden.', color: 'neutral' },
         targetLabel: 'Plads 1 (Hvem?)',
         correctSeq: ['Den', 'smilende', 'kvinde', 'med den orange hue'],
         pool: [
-            { text: 'med den orange hue', color: 'blue' },
+            { text: 'med den orange hue', color: 'orange' },
             { text: 'kvinde', color: 'green' },
             { text: 'Den', color: 'green' },
             { text: 'smilende', color: 'orange' }
         ],
+        wrongHint: 'Start med "Den" + beskrivelse ("smilende") + kernen ("kvinde") + den ekstra detalje ("med den orange hue") til sidst.',
         fullSentence: 'Den smilende kvinde med den orange hue cykler på gaden.',
         expl: 'En udvidet Hvem?-brik bygges som: lille ord ("Den") + beskrivelse ("smilende") + kerne ("kvinde") + ekstra detalje ("med den orange hue"). Alt sammen fylder kun Plads 1!'
     },
     {
         id: 'zi2',
         tag: 'Hvem?-brikken + som-del (Pas på lokkebrik!)',
-        instruction: 'Byg hele Plads 1-brikken med en "som"-del indeni — og sæt handlingen på Plads 2 (lad lokkebrikken ligge!):',
+        instruction: 'Byg hele Plads 1-brikken med en "som"-del indeni — og sæt handlingen på Plads 2:',
         fixedBefore: null,
-        fixedAfter: { text: 'roligt forbi.', color: 'purple' },
+        fixedAfter: { text: 'roligt forbi.', color: 'neutral' },
         targetLabel: 'Plads 1 + Plads 2',
         correctSeq: ['Kvinden,', 'som har en papirpose i kurven,', 'cykler'],
         pool: [
@@ -318,7 +320,8 @@ const ZOOM_IN_TASKS = [
             { text: 'Kvinden,', color: 'green' },
             { text: 'som har en papirpose i kurven,', color: 'purple' }
         ],
-        decoyNote: 'Lokkebrikken "hun" skal IKKE med.',
+        decoyNote: 'Pas på: én lokkebrik skal IKKE med.',
+        wrongHint: 'Hele "Kvinden, som ..." er Plads 1 — sæt handlingen ("cykler") direkte på Plads 2 og lad lokkebrikken ligge!',
         fullSentence: 'Kvinden, som har en papirpose i kurven, cykler roligt forbi.',
         expl: 'Hele "Kvinden, som har en papirpose i kurven," er Plads 1. Der må ikke snige sig et ekstra "hun" ind før handlingen "cykler"!'
     },
@@ -326,7 +329,7 @@ const ZOOM_IN_TASKS = [
         id: 'zi3',
         tag: 'Hvor?-brikken · Sted med detaljer',
         instruction: 'Zoom ind på stedet ("Hvor?") og byg hele den blå brik efter "En kvinde cykler":',
-        fixedBefore: { text: 'En kvinde cykler', color: 'green' },
+        fixedBefore: { text: 'En kvinde cykler', color: 'neutral' },
         fixedAfter: { text: 'om morgenen.', color: 'purple' },
         targetLabel: 'Hvor? (Sted-brik)',
         correctSeq: ['på', 'den sneklædte cykelsti', 'foran den varme café'],
@@ -335,6 +338,7 @@ const ZOOM_IN_TASKS = [
             { text: 'på', color: 'blue' },
             { text: 'den sneklædte cykelsti', color: 'blue' }
         ],
+        wrongHint: 'Start sted-brikken med det lille stedsord ("på"), så selve stedet og til sidst den ekstra detalje ("foran...").',
         fullSentence: 'En kvinde cykler på den sneklædte cykelsti foran den varme café om morgenen.',
         expl: 'Den blå sted-brik starter med det lille stedsord ("på"), derefter selve stedet ("den sneklædte cykelsti") og til sidst ekstra præcisering ("foran den varme café").'
     },
@@ -352,6 +356,7 @@ const ZOOM_IN_TASKS = [
             { text: 'vil', color: 'red' },
             { text: 'gerne', color: 'purple' }
         ],
+        wrongHint: 'Sæt det første røde handlingsord ("vil") på Plads 2, så personen ("hun") + småordet ("gerne") — og luk rammen med "cykle".',
         fullSentence: 'Om morgenen vil hun gerne cykle gennem byen.',
         expl: 'Når handlingen har to udsagnsord, står det første ("vil") på Plads 2, mens det andet ("cykle") lukker rammen efter personen og småordet ("hun gerne").'
     },
@@ -359,7 +364,7 @@ const ZOOM_IN_TASKS = [
         id: 'zi5',
         tag: 'Hvad?-brikken · Før + Kerne + Efter',
         instruction: 'Udvid det, hun har med ("Hvad?"), med alle detaljerne i rigtig rækkefølge:',
-        fixedBefore: { text: 'Hun køber', color: 'green' },
+        fixedBefore: { text: 'Hun køber', color: 'neutral' },
         fixedAfter: { text: 'før arbejde.', color: 'purple' },
         targetLabel: 'Hvad?-brikken',
         correctSeq: ['en varm', 'kop kaffe', 'fra den lille café', 'på hjørnet'],
@@ -369,6 +374,7 @@ const ZOOM_IN_TASKS = [
             { text: 'fra den lille café', color: 'blue' },
             { text: 'en varm', color: 'orange' }
         ],
+        wrongHint: 'Byg Hvad?-brikken med beskrivelse foran ("en varm") + kerne ("kop kaffe") + stedsdetaljerne bagefter ("fra..." + "på...").',
         fullSentence: 'Hun køber en varm kop kaffe fra den lille café på hjørnet før arbejde.',
         expl: 'Hvad?-brikken vokser fra kernen ("kop kaffe") med beskrivelse foran ("en varm") og stedsdetaljer bagefter ("fra den lille café på hjørnet").'
     },
@@ -377,7 +383,7 @@ const ZOOM_IN_TASKS = [
         tag: 'Årsags-brik på Plads 1 (V2)',
         instruction: 'Byg hele årsags-brikken ("På grund af...") på Plads 1, og sæt handlingen på Plads 2:',
         fixedBefore: null,
-        fixedAfter: { text: 'den orange hue på.', color: 'orange' },
+        fixedAfter: { text: 'den orange hue på.', color: 'neutral' },
         targetLabel: 'Plads 1 (Årsag) + Plads 2 (Handling)',
         correctSeq: ['På grund af', 'den kolde sne', 'tager', 'hun'],
         pool: [
@@ -386,6 +392,7 @@ const ZOOM_IN_TASKS = [
             { text: 'tager', color: 'red' },
             { text: 'På grund af', color: 'purple' }
         ],
+        wrongHint: 'Byg hele årsags-brikken ("På grund af" + "den kolde sne") på Plads 1 — så kommer det røde handlingsord ("tager") på Plads 2 før "hun".',
         fullSentence: 'På grund af den kolde sne tager hun den orange hue på.',
         expl: 'Hele årsags-brikken "På grund af den kolde sne" tæller som Plads 1 — derfor kommer handlingen "tager" straks på Plads 2 før "hun".'
     }
@@ -405,10 +412,11 @@ const ZOOM_OUT_TASKS = [
         correctSeq: ['Fordi det sner i dag,', 'tager', 'kvinden', 'sin varme vinterjakke på'],
         pool: [
             { text: 'kvinden', color: 'green' },
-            { text: 'sin varme vinterjakke på', color: 'orange' },
+            { text: 'sin varme vinterjakke på', color: 'green' },
             { text: 'Fordi det sner i dag,', color: 'purple' },
             { text: 'tager', color: 'red' }
         ],
+        wrongHint: 'Sæt baggrunden ("Fordi det sner i dag,") på Plads 1 — så kommer det røde handlingsord ("tager") på Plads 2 før "kvinden".',
         fullSentence: 'Fordi det sner i dag, tager kvinden sin varme vinterjakke på.',
         expl: 'Hele baggrunden "Fordi det sner i dag," fylder Plads 1. Derfor springer handlingen "tager" frem på Plads 2 lige efter kommaet!'
     },
@@ -416,7 +424,7 @@ const ZOOM_OUT_TASKS = [
         id: 'zo2',
         tag: '"ikke" inde i baggrunden (fordi + ikke)',
         instruction: 'Byg baggrunds-delen efter "Hun cykler på cykelstien," — husk hvor "ikke" står i baggrunden:',
-        fixedBefore: { text: 'Hun cykler på cykelstien,', color: 'green' },
+        fixedBefore: { text: 'Hun cykler på cykelstien,', color: 'neutral' },
         fixedAfter: { text: '.', color: 'neutral' },
         targetLabel: 'Baggrund med "ikke"',
         correctSeq: ['fordi', 'hun', 'ikke', 'vil', 'tage bussen'],
@@ -427,6 +435,7 @@ const ZOOM_OUT_TASKS = [
             { text: 'ikke', color: 'purple' },
             { text: 'hun', color: 'green' }
         ],
+        wrongHint: 'Start med "fordi" + personen ("hun") — og husk at "ikke" står FORAN handlingen ("vil" + "tage bussen") i baggrunden!',
         fullSentence: 'Hun cykler på cykelstien, fordi hun ikke vil tage bussen.',
         expl: 'Inde i baggrunden sniger "ikke" sig altid ind FORAN handlingen: "fordi hun ikke vil tage bussen".'
     },
@@ -437,15 +446,17 @@ const ZOOM_OUT_TASKS = [
         fixedBefore: null,
         fixedAfter: { text: '.', color: 'neutral' },
         targetLabel: 'Baggrund (selvom + ikke) + Forgrund (Plads 2)',
-        correctSeq: ['Selvom', 'det', 'ikke er varmt,', 'cykler', 'hun', 'gennem byen'],
+        correctSeq: ['Selvom', 'det', 'ikke', 'er varmt,', 'cykler', 'hun', 'gennem byen'],
         pool: [
             { text: 'cykler', color: 'red' },
             { text: 'gennem byen', color: 'blue' },
             { text: 'Selvom', color: 'purple' },
             { text: 'hun', color: 'green' },
-            { text: 'ikke er varmt,', color: 'purple' },
+            { text: 'er varmt,', color: 'red' },
+            { text: 'ikke', color: 'purple' },
             { text: 'det', color: 'green' }
         ],
+        wrongHint: 'Byg baggrunden som "Selvom det ikke er varmt," ("ikke" før "er varmt,"), og sæt så "cykler" på Plads 2 før "hun gennem byen".',
         fullSentence: 'Selvom det ikke er varmt, cykler hun gennem byen.',
         expl: 'I baggrunden står "ikke" foran handlingen ("ikke er varmt"), og i forgrunden efter kommaet står handlingen først ("cykler hun").'
     },
@@ -463,6 +474,7 @@ const ZOOM_OUT_TASKS = [
             { text: 'Mens kvinden cykler forbi,', color: 'purple' },
             { text: 'kører', color: 'red' }
         ],
+        wrongHint: 'Sæt baggrunden ("Mens kvinden cykler forbi,") på Plads 1 — så kommer "kører" på Plads 2 før "den grønne bus" og "forbi caféen".',
         fullSentence: 'Mens kvinden cykler forbi, kører den grønne bus forbi caféen.',
         expl: 'Baggrunden ("Mens kvinden cykler forbi,") tæller som én brik på Plads 1, så handlingen "kører" kommer direkte på Plads 2.'
     },
@@ -482,6 +494,7 @@ const ZOOM_OUT_TASKS = [
             { text: 'ind på caféen', color: 'blue' },
             { text: 'ikke', color: 'purple' }
         ],
+        wrongHint: 'Start med "Hvis sneen ikke stopper snart," ("ikke" før "stopper"), og sæt så "går" på Plads 2 før "hun ind på caféen".',
         fullSentence: 'Hvis sneen ikke stopper snart, går hun ind på caféen.',
         expl: 'Perfekt lang sætning: "ikke" foran "stopper" inde i hvis-delen, og "går hun" lige efter kommaet.'
     },
@@ -501,6 +514,7 @@ const ZOOM_OUT_TASKS = [
             { text: 'Den smilende kvinde på cyklen', color: 'green' },
             { text: 'det', color: 'green' }
         ],
+        wrongHint: 'Start med forgrunden ("Den smilende kvinde på cyklen" + "skynder sig,"), og byg så baggrunden: "fordi det allerede sner kraftigt" ("allerede" før "sner").',
         fullSentence: 'Den smilende kvinde på cyklen skynder sig, fordi det allerede sner kraftigt.',
         expl: 'Her bruger du begge kamera-greb: en udvidet grøn Hvem?-brik i forgrunden + en baggrunds-del, hvor småordet "allerede" står foran handlingen "sner"!'
     }
@@ -515,7 +529,7 @@ const WORKSHOP_QUIZ = [
         prompt: 'Du zoomer ind på "En kvinde" → "Den smilende kvinde med orange hue". Hvilken sætning har handlingen på Plads 2?',
         options: [
             'Den smilende kvinde med orange hue cykler på gaden.',
-            'Den smilende kvinde cykler med orange hue på gaden i går.'
+            'Den smilende kvinde med orange hue på gaden cykler.'
         ],
         correct: 'Den smilende kvinde med orange hue cykler på gaden.',
         expl: 'Hele den udvidede grønne brik ("Den smilende kvinde med orange hue") er Plads 1 — og handlingen "cykler" står samlet lige bagefter på Plads 2.'
@@ -1031,19 +1045,46 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
     // Ensure address bar reflects canonical sub-page URL on initial load
     syncUrl(false);
     let buildState = {
-        zoom_in_build: { idx: 0, score: 0, placed: [], status: null },
-        zoom_out_build: { idx: 0, score: 0, placed: [], status: null }
+        zoom_in_build: { idx: 0, score: 0, placed: [], status: null, hadWrong: false },
+        zoom_out_build: { idx: 0, score: 0, placed: [], status: null, hadWrong: false }
     };
     let quizIdx = 0;
     let quizScore = 0;
     let quizAnswered = false;
     let quizPicked = null;
+    let quizShuffledOptions = {};
+
+    function getShuffledQuizOptions(idx, options) {
+        if (!quizShuffledOptions[idx]) {
+            const copy = [...options];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            quizShuffledOptions[idx] = copy;
+        }
+        return quizShuffledOptions[idx];
+    }
 
     const viewContainer = document.createElement('div');
     viewContainer.className = 'view-container osd-view';
 
+    const BLOCK_LABEL_KEYS = {
+        'Plads 1 (Hvem?)': 'lbl_p1_hvem',
+        'Plads 1 (Hvem? + som-del)': 'lbl_p1_hvem_som',
+        'Plads 2 (Handling)': 'lbl_p2_handling',
+        'Hvor?': 'lbl_hvor',
+        'Hvornår?': 'lbl_hvornaar',
+        'Hvornår? (Baggrunds-del)': 'lbl_hvornaar_bg'
+    };
+
     function render() {
         viewContainer.innerHTML = '';
+        const lang = getLang() || 'da';
+        const rtl = isOsdRtl(lang);
+        const rtlAttr = rtl ? ' dir="rtl"' : '';
+        const t = (key, vars) => osdT(key, lang, vars);
+        const tBlockLbl = (lbl) => BLOCK_LABEL_KEYS[lbl] ? t(BLOCK_LABEL_KEYS[lbl]) : lbl;
 
         // Top bar
         const topBar = document.createElement('div');
@@ -1060,7 +1101,8 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
         const toWriteBtn = document.createElement('button');
         toWriteBtn.type = 'button';
         toWriteBtn.className = 'osd-btn-ghost';
-        toWriteBtn.textContent = 'Prøv selv i Skrivehjælp →';
+        toWriteBtn.textContent = t('btn_try_write');
+        if (rtl) toWriteBtn.dir = 'rtl';
         toWriteBtn.onclick = () => {
             if ('speechSynthesis' in window) window.speechSynthesis.cancel();
             navigateFn('skrive_hjaelp');
@@ -1071,17 +1113,15 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
         // Header
         const header = document.createElement('div');
         header.className = 'osd-header';
+        if (rtl) header.dir = 'rtl';
         header.innerHTML = `
-            <div class="osd-badge">${SVG_CAMERA}<span>Ordstilling · Sætningsdele (Kamera: Zoom ind &amp; Zoom ud)</span></div>
-            <h1>Sætningsdele: Fra enkeltord til rige sætninger</h1>
-            <p>
-                <strong>Zoom ind</strong> på én farvet brik for at få flere detaljer i samme sætningsdel — og <strong>zoom ud</strong> for at se hele billedet med <strong>forgrund</strong> (hoved-del) og <strong>baggrund</strong> (årsag, tid, modstand).
-            </p>
+            <div class="osd-badge">${SVG_CAMERA}<span>${t('badge')}</span></div>
+            <h1>${t('title')}</h1>
+            <p>${t('subtitle')}</p>
         `;
         viewContainer.appendChild(header);
 
         // Fælles 1-linjes farvekode-bjælke fra ordstillingColorCodes.js
-        const lang = getLang() || 'da';
         const legendWrap = document.createElement('div');
         legendWrap.innerHTML = renderColorLegendHtml(colorCodesEnabled, {
             noun: swT('col_noun', lang),
@@ -1105,15 +1145,16 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
         // Tabs
         const tabs = document.createElement('div');
         tabs.className = 'osd-tabs';
+        if (rtl) tabs.dir = 'rtl';
         const tabDefs = [
-            { id: 'zoom_in', icon: SVG_ZOOM_IN, label: '1. Zoom ind (Udvid brikken)' },
-            { id: 'inside', icon: SVG_LAYERS, label: '2. Inde i brikken' },
-            { id: 'zoom_out', icon: SVG_ZOOM_OUT, label: '3. Zoom ud (Forgrund & baggrund)' },
-            { id: 'workshop', icon: SVG_CHECK, label: '4. Zoom-værkstedet (20 opgaver)' }
+            { id: 'zoom_in', icon: SVG_ZOOM_IN, label: t('tab_zoom_in') },
+            { id: 'inside', icon: SVG_LAYERS, label: t('tab_inside') },
+            { id: 'zoom_out', icon: SVG_ZOOM_OUT, label: t('tab_zoom_out') },
+            { id: 'workshop', icon: SVG_CHECK, label: t('tab_workshop') }
         ];
-        tabs.innerHTML = tabDefs.map(t => `
-            <button type="button" class="osd-tab ${activeTab === t.id ? 'active' : ''}" data-tab="${t.id}">
-                ${t.icon}<span>${t.label}</span>
+        tabs.innerHTML = tabDefs.map(td => `
+            <button type="button" class="osd-tab ${activeTab === td.id ? 'active' : ''}" data-tab="${td.id}">
+                ${td.icon}<span>${td.label}</span>
             </button>
         `).join('');
         tabs.querySelectorAll('[data-tab]').forEach(btn => {
@@ -1125,31 +1166,32 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
         });
         viewContainer.appendChild(tabs);
 
-        if (activeTab === 'zoom_in') renderZoomInTab();
-        else if (activeTab === 'inside') renderInsideTab();
-        else if (activeTab === 'zoom_out') renderZoomOutTab();
-        else renderWorkshopTab();
+        if (activeTab === 'zoom_in') renderZoomInTab(lang, rtlAttr, t, tBlockLbl);
+        else if (activeTab === 'inside') renderInsideTab(lang, rtlAttr, t);
+        else if (activeTab === 'zoom_out') renderZoomOutTab(lang, rtlAttr, t);
+        else renderWorkshopTab(lang, rtlAttr, t);
     }
 
     // ========================================================================
     // FANE 1: ZOOM IND (DET KENDTE CYKELBILLEDE MED RIGTIG KAMERA-ZOOM)
     // ========================================================================
-    function renderZoomInTab() {
+    function renderZoomInTab(lang, rtlAttr, t, tBlockLbl) {
         const track = ZOOM_TRACKS[activeTrackId];
         const safeIdx = Math.min(zoomIdx, track.levels.length - 1);
         const lv = track.levels[safeIdx];
         const fullSentence = lv.parts.map(p => p.text).join(' ') + '.';
+        const noteKey = `t1_${track.id}_${safeIdx + 1}`;
 
         const card = document.createElement('div');
         card.className = 'osd-card';
         card.innerHTML = `
-            <div class="osd-card-head">
-                <h2 class="osd-card-title">${SVG_ZOOM_IN}<span>Zoom ind på ét spørgsmål — handlingen bliver på Plads 2</span></h2>
+            <div class="osd-card-head"${rtlAttr}>
+                <h2 class="osd-card-title">${SVG_ZOOM_IN}<span>${t('t1_title')}</span></h2>
                 <div class="osd-chip-row">
                     ${Object.values(ZOOM_TRACKS).map(tr => `
                         <button type="button" class="osd-chip ${tr.id === activeTrackId ? 'active' : ''}" data-track="${tr.id}">
                             <span style="width:9px; height:9px; border-radius:999px; background:${tr.color}; display:inline-block;"></span>
-                            <span>${tr.label}</span>
+                            <span>${t(`t1_track_${tr.id}`)}</span>
                         </button>
                     `).join('')}
                 </div>
@@ -1158,32 +1200,32 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
             <div class="osd-camera-frame">
                 <img class="osd-camera-img" src="${baseUrl}assets/foto_metafor_clean.jpg" alt="Kvinde cykler på gaden i snevejr"
                      style="transform: scale(${lv.scale}); transform-origin: ${lv.origin};" />
-                <div class="osd-viewfinder-badge">${SVG_CAMERA}<span>Kamera-zoom: ${lv.zoom}</span></div>
+                <div class="osd-viewfinder-badge"${rtlAttr}>${SVG_CAMERA}<span>${t('t1_cam_zoom')} ${lv.zoom}</span></div>
             </div>
 
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.75rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.75rem;"${rtlAttr}>
                 <div class="osd-chip-row">
-                    <span style="font-size:0.8rem; font-weight:700; color:#94a3b8;">Vælg zoom-trin:</span>
+                    <span style="font-size:0.8rem; font-weight:700; color:#94a3b8;">${t('t1_pick_step')}</span>
                     ${track.levels.map((l, idx) => `
                         <button type="button" class="osd-chip ${idx === safeIdx ? 'light-active' : ''}" data-zoom-idx="${idx}">
-                            ${l.zoom} (${l.chunk.split(/\s+/).length} ord)
+                            ${l.zoom} (${l.chunk.split(/\s+/).length} ${t('t1_words')})
                         </button>
                     `).join('')}
                 </div>
-                <button type="button" class="osd-btn-primary" id="osd-listen-zoom">${SVG_SPEAK}<span>Lyt til sætningen</span></button>
+                <button type="button" class="osd-btn-primary" id="osd-listen-zoom">${SVG_SPEAK}<span>${t('btn_listen_sent')}</span></button>
             </div>
 
-            <div class="osd-sentence-blocks">
+            <div class="osd-sentence-blocks" dir="ltr">
                 ${lv.parts.map(p => `
                     <div class="osd-block ${colorCodesEnabled ? p.color : ''} ${p.active ? 'zoomed' : ''}">
-                        <span class="osd-block-lbl">${p.label}</span>
+                        <span class="osd-block-lbl"${rtlAttr}>${tBlockLbl(p.label)}</span>
                         <span class="osd-block-txt">${p.text}</span>
                     </div>
                 `).join('')}
             </div>
 
-            <div class="osd-note-box">
-                <strong>Kamera-indsigt:</strong> ${lv.note}
+            <div class="osd-note-box"${rtlAttr}>
+                <strong>${t('lbl_cam_insight')}</strong> ${t(noteKey)}
             </div>
         `;
 
@@ -1208,7 +1250,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
     // ========================================================================
     // FANE 2: INDE I BRIKKEN (DE 3 BYGGEMØNSTRE UDEN TUNGE FAGORD)
     // ========================================================================
-    function renderInsideTab() {
+    function renderInsideTab(lang, rtlAttr, t) {
         const nomParts = [];
         if (nomBefore) nomParts.push('<span style="color:#fb923c;">Den smilende</span>');
         else nomParts.push('<span style="color:#4ade80;">En</span>');
@@ -1220,62 +1262,62 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
         const card = document.createElement('div');
         card.className = 'osd-card';
         card.innerHTML = `
-            <div class="osd-card-head">
-                <h2 class="osd-card-title">${SVG_LAYERS}<span>Inde i de 3 vigtigste brikker</span></h2>
+            <div class="osd-card-head"${rtlAttr}>
+                <h2 class="osd-card-title">${SVG_LAYERS}<span>${t('t2_title')}</span></h2>
             </div>
-            <p style="margin:0 0 1rem; font-size:0.9rem; color:#94a3b8; line-height:1.55;">
-                Hver sætningsdel har sit eget enkle byggemønster indeni — men udefra fungerer den stadig som <strong>én samlet brik</strong> i sætningen.
+            <p style="margin:0 0 1rem; font-size:0.9rem; color:#94a3b8; line-height:1.55;"${rtlAttr}>
+                ${t('t2_intro')}
             </p>
 
             <div class="osd-grid-3">
                 <!-- 1. HVEM/HVAD-BRIKKEN -->
-                <div class="osd-mini-card" style="border-top: 3px solid #22c55e;">
-                    <h3>1. Hvem/Hvad-brikken</h3>
-                    <p>En kerne (<strong>kvinde</strong>) kan få detaljer både <em>før</em> og <em>efter</em> sig. Slå lagene til og fra:</p>
+                <div class="osd-mini-card" style="border-top: 3px solid #22c55e;"${rtlAttr}>
+                    <h3>${t('t2_c1_title')}</h3>
+                    <p>${t('t2_c1_desc')}</p>
                     <div class="osd-chip-row">
-                        <button type="button" class="osd-chip ${nomBefore ? 'active' : ''}" id="tog-nom-before">+ Før-detalje</button>
-                        <button type="button" class="osd-chip ${nomAfter ? 'active' : ''}" id="tog-nom-after">+ Efter-detalje</button>
-                        <button type="button" class="osd-chip ${nomRel ? 'active' : ''}" id="tog-nom-rel">+ som-del</button>
+                        <button type="button" class="osd-chip ${nomBefore ? 'active' : ''}" id="tog-nom-before">${t('t2_c1_before')}</button>
+                        <button type="button" class="osd-chip ${nomAfter ? 'active' : ''}" id="tog-nom-after">${t('t2_c1_after')}</button>
+                        <button type="button" class="osd-chip ${nomRel ? 'active' : ''}" id="tog-nom-rel">${t('t2_c1_rel')}</button>
                     </div>
-                    <div style="background:#151a21; border:1px solid rgba(34,197,94,0.4); border-radius:10px; padding:0.75rem 0.85rem; font-size:0.95rem; line-height:1.55;">
+                    <div dir="ltr" style="background:#151a21; border:1px solid rgba(34,197,94,0.4); border-radius:10px; padding:0.75rem 0.85rem; font-size:0.95rem; line-height:1.55;">
                         ${nomParts.join(' ')} <span class="osd-v2-pill">køber</span> frisk kaffe.
                     </div>
-                    <button type="button" class="osd-btn-ghost" id="btn-speak-nom" style="align-self:flex-start;">${SVG_SPEAK}<span>Lyt</span></button>
+                    <button type="button" class="osd-btn-ghost" id="btn-speak-nom" style="align-self:flex-start;">${SVG_SPEAK}<span>${t('btn_listen')}</span></button>
                 </div>
 
                 <!-- 2. HANDLINGS-BRIKKEN -->
-                <div class="osd-mini-card" style="border-top: 3px solid #ef4444;">
-                    <h3>2. Handlings-brikken (1 eller 2 udsagnsord)</h3>
-                    <p>Med to udsagnsord (fx <em>vil + cykle</em> eller <em>har + cyklet</em>) åbner brikken sig som en ramme omkring personen:</p>
+                <div class="osd-mini-card" style="border-top: 3px solid #ef4444;"${rtlAttr}>
+                    <h3>${t('t2_c2_title')}</h3>
+                    <p>${t('t2_c2_desc')}</p>
                     <div class="osd-chip-row">
-                        <button type="button" class="osd-chip ${!verbSplit ? 'active' : ''}" id="tog-verb-1">1 ord</button>
-                        <button type="button" class="osd-chip ${verbSplit ? 'active' : ''}" id="tog-verb-2">2 ord (ramme)</button>
+                        <button type="button" class="osd-chip ${!verbSplit ? 'active' : ''}" id="tog-verb-1">${t('t2_c2_1word')}</button>
+                        <button type="button" class="osd-chip ${verbSplit ? 'active' : ''}" id="tog-verb-2">${t('t2_c2_2words')}</button>
                     </div>
-                    <div style="background:#151a21; border:1px solid rgba(239,68,68,0.45); border-radius:10px; padding:0.75rem 0.85rem; font-size:0.95rem; line-height:1.55;">
+                    <div dir="ltr" style="background:#151a21; border:1px solid rgba(239,68,68,0.45); border-radius:10px; padding:0.75rem 0.85rem; font-size:0.95rem; line-height:1.55;">
                         ${verbSplit
                             ? `Om morgenen <span class="osd-v2-pill">vil</span> hun gerne <span class="osd-v2-pill">cykle</span> gennem byen.`
                             : `Om morgenen <span class="osd-v2-pill">cykler</span> hun gennem byen.`
                         }
                     </div>
-                    <p style="font-size:0.8rem; color:#cbd5e1;">Det første handlingsord står altid fast på Plads 2 — det andet lukker rammen længere henne i sætningen.</p>
+                    <p style="font-size:0.8rem; color:#cbd5e1;">${t('t2_c2_foot')}</p>
                 </div>
 
                 <!-- 3. RAMME-BRIKKEN (3 STØRRELSER) -->
-                <div class="osd-mini-card" style="border-top: 3px solid #8b5cf6;">
-                    <h3>3. Ramme-brikken (3 størrelser)</h3>
-                    <p>Det samme spørgsmål — fx <strong>Hvorfor?</strong> eller <strong>Hvornår?</strong> — kan besvares i tre størrelser:</p>
+                <div class="osd-mini-card" style="border-top: 3px solid #8b5cf6;"${rtlAttr}>
+                    <h3>${t('t2_c3_title')}</h3>
+                    <p>${t('t2_c3_desc')}</p>
                     <div style="display:flex; flex-direction:column; gap:0.45rem; font-size:0.86rem;">
                         <div style="background:#151a21; border-left:3px solid #8b5cf6; padding:0.5rem 0.7rem; border-radius:8px;">
-                            <div style="font-size:0.7rem; color:#c084fc; font-weight:800;">1 ORD</div>
-                            <strong>Derfor</strong> <span style="color:#f87171; font-weight:800;">tager</span> hun huen på.
+                            <div style="font-size:0.7rem; color:#c084fc; font-weight:800;">${t('t2_c3_s1')}</div>
+                            <div dir="ltr"><strong>Derfor</strong> <span style="color:#f87171; font-weight:800;">tager</span> hun huen på.</div>
                         </div>
                         <div style="background:#151a21; border-left:3px solid #38bdf8; padding:0.5rem 0.7rem; border-radius:8px;">
-                            <div style="font-size:0.7rem; color:#60a5fa; font-weight:800;">LILLE GRUPPE AF ORD</div>
-                            <strong>På grund af sneen</strong> <span style="color:#f87171; font-weight:800;">tager</span> hun huen på.
+                            <div style="font-size:0.7rem; color:#60a5fa; font-weight:800;">${t('t2_c3_s2')}</div>
+                            <div dir="ltr"><strong>På grund af sneen</strong> <span style="color:#f87171; font-weight:800;">tager</span> hun huen på.</div>
                         </div>
                         <div style="background:#151a21; border-left:3px solid #fb923c; padding:0.5rem 0.7rem; border-radius:8px;">
-                            <div style="font-size:0.7rem; color:#fb923c; font-weight:800;">HEL BAGGRUNDS-DEL</div>
-                            <strong>Fordi det sner kraftigt,</strong> <span style="color:#f87171; font-weight:800;">tager</span> hun huen på.
+                            <div style="font-size:0.7rem; color:#fb923c; font-weight:800;">${t('t2_c3_s3')}</div>
+                            <div dir="ltr"><strong>Fordi det sner kraftigt,</strong> <span style="color:#f87171; font-weight:800;">tager</span> hun huen på.</div>
                         </div>
                     </div>
                 </div>
@@ -1294,19 +1336,21 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
     // ========================================================================
     // FANE 3: ZOOM UD — FORGRUND & BAGGRUND (DEN CYKLENDE KVINDE I OMGIVELSERNE)
     // ========================================================================
-    function renderZoomOutTab() {
+    function renderZoomOutTab(lang, rtlAttr, t) {
         const sc = ZOOM_OUT_SCENES.find(x => x.id === activeSceneId) || ZOOM_OUT_SCENES[0];
         const spokenText = bgFirst ? sc.bgFirst.full : sc.fgFirst.full;
+        const fgLabel = t('t3_fg_label');
+        const bgLabel = t(`t3_${sc.id}_bg`);
 
         const card = document.createElement('div');
         card.className = 'osd-card';
         card.innerHTML = `
-            <div class="osd-card-head">
-                <h2 class="osd-card-title">${SVG_ZOOM_OUT}<span>Zoom ud: Skarp forgrund + baggrund omkring hende</span></h2>
+            <div class="osd-card-head"${rtlAttr}>
+                <h2 class="osd-card-title">${SVG_ZOOM_OUT}<span>${t('t3_title')}</span></h2>
                 <div class="osd-chip-row">
                     ${ZOOM_OUT_SCENES.map(item => `
                         <button type="button" class="osd-chip ${item.id === activeSceneId ? 'active' : ''}" data-scene="${item.id}">
-                            ${item.question} (${item.conj})
+                            ${t(`t3_${item.id}_q`)} (${item.conj})
                         </button>
                     `).join('')}
                 </div>
@@ -1314,38 +1358,38 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
 
             <div class="osd-camera-frame">
                 <img class="osd-camera-img" src="${baseUrl}assets/saetningsdele_zoom_ud.jpg" alt="Kvinden cykler i et bredt vintergadebillede med café, grøn bus og snevejr omkring hende" />
-                <div class="osd-viewfinder-badge">${SVG_CAMERA}<span>Kamera zoomet ud · Kvinden + omgivelserne</span></div>
+                <div class="osd-viewfinder-badge"${rtlAttr}>${SVG_CAMERA}<span>${t('t3_cam_badge')}</span></div>
             </div>
 
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.6rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.6rem;"${rtlAttr}>
                 <div class="osd-chip-row">
                     <button type="button" class="osd-chip ${bgFirst ? 'light-active' : ''}" id="osd-toggle-bg-first">
-                        ${SVG_SWAP}<span>${bgFirst ? 'Baggrund står forrest (Plads 1 · Plads 2!)' : 'Flyt baggrunden til Plads 1'}</span>
+                        ${SVG_SWAP}<span>${bgFirst ? t('t3_bg_first_on') : t('t3_bg_first_off')}</span>
                     </button>
                     <button type="button" class="osd-chip ${showIkke ? 'active' : ''}" id="osd-toggle-ikke">
-                        <span>${showIkke ? 'Skjul "ikke"-reglen' : 'Vis "ikke"-reglen i baggrunden'}</span>
+                        <span>${showIkke ? t('t3_ikke_hide') : t('t3_ikke_show')}</span>
                     </button>
                 </div>
-                <button type="button" class="osd-btn-primary" id="osd-listen-hyp">${SVG_SPEAK}<span>Lyt</span></button>
+                <button type="button" class="osd-btn-primary" id="osd-listen-hyp">${SVG_SPEAK}<span>${t('btn_listen')}</span></button>
             </div>
 
-            <div class="osd-clause-bar">
+            <div class="osd-clause-bar" dir="ltr">
                 ${!bgFirst ? `
                     <div class="osd-clause-fg">
-                        <div class="osd-block-lbl" style="color:#4ade80; margin-bottom:0.25rem;">${sc.fgLabel}</div>
+                        <div class="osd-block-lbl" style="color:#4ade80; margin-bottom:0.25rem;"${rtlAttr}>${fgLabel}</div>
                         <div class="osd-block-txt">${sc.fgFirst.fg}</div>
                     </div>
                     <div class="osd-clause-bg">
-                        <div class="osd-block-lbl" style="color:#c084fc; margin-bottom:0.25rem;">${sc.bgLabel}</div>
+                        <div class="osd-block-lbl" style="color:#c084fc; margin-bottom:0.25rem;"${rtlAttr}>${bgLabel}</div>
                         <div class="osd-block-txt">${sc.fgFirst.bg}</div>
                     </div>
                 ` : `
                     <div class="osd-clause-bg">
-                        <div class="osd-block-lbl" style="color:#c084fc; margin-bottom:0.25rem;">Plads 1 · ${sc.bgLabel}</div>
+                        <div class="osd-block-lbl" style="color:#c084fc; margin-bottom:0.25rem;"${rtlAttr}>${t('t3_p1_prefix')} ${bgLabel}</div>
                         <div class="osd-block-txt">${sc.bgFirst.bg}</div>
                     </div>
                     <div class="osd-clause-fg">
-                        <div class="osd-block-lbl" style="color:#4ade80; margin-bottom:0.25rem;">Plads 2 · ${sc.fgLabel}</div>
+                        <div class="osd-block-lbl" style="color:#4ade80; margin-bottom:0.25rem;"${rtlAttr}>${t('t3_p2_prefix')} ${fgLabel}</div>
                         <div class="osd-block-txt"><span class="osd-v2-pill">${sc.bgFirst.v2Verb}</span> ${sc.bgFirst.fgRest}</div>
                     </div>
                 `}
@@ -1354,21 +1398,21 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
             ${showIkke ? `
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:0.75rem; margin-bottom:0.9rem;">
                     <div style="background:#101419; border:1px solid rgba(34,197,94,0.4); border-radius:11px; padding:0.75rem 0.9rem; font-size:0.88rem;">
-                        <div style="font-size:0.72rem; font-weight:800; color:#4ade80; margin-bottom:0.25rem;">FORGRUND (HOVED-DEL): HANDLING + IKKE</div>
-                        <div>${sc.ikkeDemo.main}</div>
+                        <div style="font-size:0.72rem; font-weight:800; color:#4ade80; margin-bottom:0.25rem;"${rtlAttr}>${t('t3_ikke_fg')}</div>
+                        <div dir="ltr">${sc.ikkeDemo.main}</div>
                     </div>
                     <div style="background:#101419; border:1px dashed rgba(167,139,250,0.55); border-radius:11px; padding:0.75rem 0.9rem; font-size:0.88rem;">
-                        <div style="font-size:0.72rem; font-weight:800; color:#c084fc; margin-bottom:0.25rem;">BAGGRUND: IKKE + HANDLING</div>
-                        <div>${sc.ikkeDemo.sub}</div>
+                        <div style="font-size:0.72rem; font-weight:800; color:#c084fc; margin-bottom:0.25rem;"${rtlAttr}>${t('t3_ikke_bg')}</div>
+                        <div dir="ltr">${sc.ikkeDemo.sub}</div>
                     </div>
                 </div>
             ` : ''}
 
-            <div class="osd-note-box">
-                <strong>Kamera-indsigt:</strong> ${sc.tip}
+            <div class="osd-note-box"${rtlAttr}>
+                <strong>${t('lbl_cam_insight')}</strong> ${t(`t3_${sc.id}_tip`)}
             </div>
             <div style="display:flex; justify-content:flex-end; margin-top:0.85rem;">
-                <button type="button" class="osd-btn-ghost" id="osd-bridge-write-zout">Brug mønstret i Skrivehjælp →</button>
+                <button type="button" class="osd-btn-ghost" id="osd-bridge-write-zout"${rtlAttr}>${t('t3_btn_bridge')}</button>
             </div>
         `;
 
@@ -1389,17 +1433,18 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
     // ========================================================================
     // FANE 4: ZOOM-VÆRKSTEDET (20 FARVEKODEDE OPGAVER)
     // ========================================================================
-    function renderWorkshopTab() {
+    function renderWorkshopTab(lang, rtlAttr, t) {
         const trackBar = document.createElement('div');
         trackBar.className = 'osd-subtrack-bar';
+        if (rtlAttr) trackBar.dir = 'rtl';
         const tracks = [
-            { id: 'zoom_in_build', icon: SVG_ZOOM_IN, label: `1. Zoom ind · Udvid én brik (${ZOOM_IN_TASKS.length})` },
-            { id: 'zoom_out_build', icon: SVG_ZOOM_OUT, label: `2. Zoom ud · Flyt sætningsdele (${ZOOM_OUT_TASKS.length})` },
-            { id: 'quick_quiz', icon: SVG_CHECK, label: `3. Hurtig-quiz (${WORKSHOP_QUIZ.length})` }
+            { id: 'zoom_in_build', icon: SVG_ZOOM_IN, label: t('t4_track_1', { n: ZOOM_IN_TASKS.length }) },
+            { id: 'zoom_out_build', icon: SVG_ZOOM_OUT, label: t('t4_track_2', { n: ZOOM_OUT_TASKS.length }) },
+            { id: 'quick_quiz', icon: SVG_CHECK, label: t('t4_track_3', { n: WORKSHOP_QUIZ.length }) }
         ];
-        trackBar.innerHTML = tracks.map(t => `
-            <button type="button" class="osd-chip ${workshopTrack === t.id ? 'active' : ''}" data-wtrack="${t.id}">
-                ${t.icon}<span>${t.label}</span>
+        trackBar.innerHTML = tracks.map(tr => `
+            <button type="button" class="osd-chip ${workshopTrack === tr.id ? 'active' : ''}" data-wtrack="${tr.id}">
+                ${tr.icon}<span>${tr.label}</span>
             </button>
         `).join('');
         trackBar.querySelectorAll('[data-wtrack]').forEach(btn => {
@@ -1412,7 +1457,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
         viewContainer.appendChild(trackBar);
 
         if (workshopTrack === 'zoom_in_build' || workshopTrack === 'zoom_out_build') {
-            renderBuilderTrack(workshopTrack);
+            renderBuilderTrack(workshopTrack, lang, rtlAttr, t);
             return;
         }
 
@@ -1423,13 +1468,13 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
         if (quizIdx >= WORKSHOP_QUIZ.length) {
             card.style.textAlign = 'center';
             card.innerHTML = `
-                <h2 style="margin:0.4rem 0 0.7rem; color:#f1f5f9;">Hurtig-quiz gennemført</h2>
-                <p style="color:#94a3b8; font-size:1rem; margin-bottom:1.25rem;">
-                    Du fik <strong style="color:#4ade80;">${quizScore} af ${WORKSHOP_QUIZ.length}</strong> rigtige.
+                <h2 style="margin:0.4rem 0 0.7rem; color:#f1f5f9;"${rtlAttr}>${t('t4_done_quiz_title')}</h2>
+                <p style="color:#94a3b8; font-size:1rem; margin-bottom:1.25rem;"${rtlAttr}>
+                    ${t('t4_done_quiz_desc', { a: quizScore, b: WORKSHOP_QUIZ.length })}
                 </p>
                 <div style="display:flex; justify-content:center; gap:0.6rem; flex-wrap:wrap;">
-                    <button type="button" class="osd-btn-ghost" id="osd-quiz-restart">Prøv igen</button>
-                    <button type="button" class="osd-btn-primary" id="osd-quiz-to-write">Prøv selv i Skrivehjælp →</button>
+                    <button type="button" class="osd-btn-ghost" id="osd-quiz-restart">${t('t4_btn_retry')}</button>
+                    <button type="button" class="osd-btn-primary" id="osd-quiz-to-write">${t('btn_try_write')}</button>
                 </div>
             `;
             card.querySelector('#osd-quiz-restart').onclick = () => {
@@ -1437,6 +1482,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
                 quizScore = 0;
                 quizAnswered = false;
                 quizPicked = null;
+                quizShuffledOptions = {};
                 render();
             };
             card.querySelector('#osd-quiz-to-write').onclick = () => navigateFn('skrive_hjaelp');
@@ -1445,16 +1491,18 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
         }
 
         const q = WORKSHOP_QUIZ[quizIdx];
+        const qNum = quizIdx + 1;
+        const displayOpts = getShuffledQuizOptions(quizIdx, q.options);
         card.innerHTML = `
-            <div class="osd-card-head">
-                <span class="osd-badge" style="margin:0;">${q.type}</span>
-                <span style="font-size:0.82rem; font-weight:700; color:#94a3b8;">Opgave ${quizIdx + 1} af ${WORKSHOP_QUIZ.length} · Score: ${quizScore}</span>
+            <div class="osd-card-head"${rtlAttr}>
+                <span class="osd-badge" style="margin:0;">${t(`q${qNum}_type`)}</span>
+                <span style="font-size:0.82rem; font-weight:700; color:#94a3b8;">${t('t4_task_of', { a: qNum, b: WORKSHOP_QUIZ.length })} · ${t('t4_score')} ${quizScore}</span>
             </div>
-            <div style="background:#101419; border:1px solid rgba(203,213,225,0.14); border-radius:12px; padding:1rem 1.1rem; font-size:1rem; font-weight:700; color:#f8fafc; line-height:1.5; margin-bottom:0.9rem;">
-                ${q.prompt}
+            <div style="background:#101419; border:1px solid rgba(203,213,225,0.14); border-radius:12px; padding:1rem 1.1rem; font-size:1rem; font-weight:700; color:#f8fafc; line-height:1.5; margin-bottom:0.9rem;"${rtlAttr}>
+                ${t(`q${qNum}_prompt`)}
             </div>
-            <div style="display:flex; flex-direction:column; gap:0.6rem; margin-bottom:0.9rem;">
-                ${q.options.map(opt => {
+            <div dir="ltr" style="display:flex; flex-direction:column; gap:0.6rem; margin-bottom:0.9rem;">
+                ${displayOpts.map(opt => {
                     let cls = 'osd-quiz-opt';
                     if (quizAnswered) {
                         if (opt === q.correct) cls += ' correct';
@@ -1464,12 +1512,12 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
                 }).join('')}
             </div>
             ${quizAnswered ? `
-                <div class="osd-note-box" style="margin-bottom:0.9rem; border-left-color:${quizPicked === q.correct ? '#22c55e' : '#f97316'};">
-                    <strong>${quizPicked === q.correct ? 'Rigtigt!' : 'Se strukturen:'}</strong> ${q.expl}
+                <div class="osd-note-box" style="margin-bottom:0.9rem; border-left-color:${quizPicked === q.correct ? '#22c55e' : '#f97316'};"${rtlAttr}>
+                    <strong>${quizPicked === q.correct ? t('t4_quiz_ok') : t('t4_quiz_see')}</strong> ${t(`q${qNum}_expl`)}
                 </div>
-                <div style="display:flex; gap:0.55rem; flex-wrap:wrap;">
-                    <button type="button" class="osd-btn-ghost" id="osd-quiz-listen">${SVG_SPEAK}<span>Lyt til rigtigt svar</span></button>
-                    <button type="button" class="osd-btn-primary" id="osd-quiz-next">Næste opgave →</button>
+                <div style="display:flex; gap:0.55rem; flex-wrap:wrap;"${rtlAttr}>
+                    <button type="button" class="osd-btn-ghost" id="osd-quiz-listen">${SVG_SPEAK}<span>${t('t4_btn_listen_correct')}</span></button>
+                    <button type="button" class="osd-btn-primary" id="osd-quiz-next">${t('t4_btn_next')}</button>
                 </div>
             ` : ''}
         `;
@@ -1498,7 +1546,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
         viewContainer.appendChild(card);
     }
 
-    function renderBuilderTrack(trackKey) {
+    function renderBuilderTrack(trackKey, lang, rtlAttr, t) {
         const tasks = trackKey === 'zoom_in_build' ? ZOOM_IN_TASKS : ZOOM_OUT_TASKS;
         const st = buildState[trackKey];
         const card = document.createElement('div');
@@ -1508,23 +1556,24 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
             const isZoomIn = trackKey === 'zoom_in_build';
             card.style.textAlign = 'center';
             card.innerHTML = `
-                <h2 style="margin:0.4rem 0 0.7rem; color:#f1f5f9;">${isZoomIn ? 'Zoom ind-værksted gennemført' : 'Zoom ud-værksted gennemført'}</h2>
-                <p style="color:#94a3b8; font-size:1rem; margin-bottom:1.25rem;">
-                    Du løste <strong style="color:#4ade80;">${st.score} af ${tasks.length}</strong> opgaver rigtigt i første forsøg.
+                <h2 style="margin:0.4rem 0 0.7rem; color:#f1f5f9;"${rtlAttr}>${isZoomIn ? t('t4_done_zi_title') : t('t4_done_zo_title')}</h2>
+                <p style="color:#94a3b8; font-size:1rem; margin-bottom:1.25rem;"${rtlAttr}>
+                    ${t('t4_done_build_desc', { a: st.score, b: tasks.length })}
                 </p>
                 <div style="display:flex; justify-content:center; gap:0.6rem; flex-wrap:wrap;">
-                    <button type="button" class="osd-btn-ghost" id="osd-build-restart">Øv dette spor igen</button>
+                    <button type="button" class="osd-btn-ghost" id="osd-build-restart">${t('t4_btn_retry_track')}</button>
                     <button type="button" class="osd-btn-primary" id="osd-build-next-track">
-                        ${isZoomIn ? 'Videre til 2. Zoom ud →' : 'Videre til 3. Hurtig-quiz →'}
+                        ${isZoomIn ? t('t4_btn_to_t2') : t('t4_btn_to_t3')}
                     </button>
                 </div>
             `;
             card.querySelector('#osd-build-restart').onclick = () => {
-                buildState[trackKey] = { idx: 0, score: 0, placed: [], status: null };
+                buildState[trackKey] = { idx: 0, score: 0, placed: [], status: null, hadWrong: false };
                 render();
             };
             card.querySelector('#osd-build-next-track').onclick = () => {
                 workshopTrack = isZoomIn ? 'zoom_out_build' : 'quick_quiz';
+                syncUrl(true);
                 render();
             };
             viewContainer.appendChild(card);
@@ -1532,27 +1581,28 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
         }
 
         const task = tasks[st.idx];
+        const tid = task.id;
         const placedIndices = st.placed;
         const placedTexts = placedIndices.map(i => task.pool[i].text);
 
         card.innerHTML = `
-            <div class="osd-card-head">
-                <span class="osd-badge" style="margin:0;">${task.tag}</span>
-                <span style="font-size:0.82rem; font-weight:700; color:#94a3b8;">Opgave ${st.idx + 1} af ${tasks.length} · Første-forsøg score: ${st.score}</span>
+            <div class="osd-card-head"${rtlAttr}>
+                <span class="osd-badge" style="margin:0;">${t(`${tid}_tag`)}</span>
+                <span style="font-size:0.82rem; font-weight:700; color:#94a3b8;">${t('t4_task_of', { a: st.idx + 1, b: tasks.length })} · ${t('t4_first_try_score')} ${st.score}</span>
             </div>
 
-            <div style="font-size:0.96rem; font-weight:700; color:#f1f5f9; margin-bottom:0.8rem; line-height:1.5;">
-                ${task.instruction}
-                ${task.decoyNote ? `<span style="display:inline-block; margin-left:0.4rem; font-size:0.8rem; color:#fb923c;">(${task.decoyNote})</span>` : ''}
+            <div style="font-size:0.96rem; font-weight:700; color:#f1f5f9; margin-bottom:0.8rem; line-height:1.5;"${rtlAttr}>
+                ${t(`${tid}_instr`)}
+                ${task.decoyNote ? `<span style="display:inline-block; margin-left:0.4rem; font-size:0.8rem; color:#fb923c;">(${t(`${tid}_decoy`)})</span>` : ''}
             </div>
 
-            <div style="font-size:0.74rem; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:#7ec4ce; margin-bottom:0.35rem;">
-                Byg her · ${task.targetLabel} (klik på en placeret brik for at fjerne den)
+            <div style="font-size:0.74rem; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:#7ec4ce; margin-bottom:0.35rem;"${rtlAttr}>
+                ${t('t4_build_here', { label: t(`${tid}_target`) })}
             </div>
-            <div class="osd-dropzone ${st.status === 'correct' ? 'correct' : st.status === 'wrong' ? 'wrong' : ''}" id="osd-dropzone">
+            <div class="osd-dropzone ${st.status === 'correct' ? 'correct' : st.status === 'wrong' ? 'wrong' : ''}" id="osd-dropzone" dir="ltr">
                 ${task.fixedBefore ? `<span class="osd-fixed-anchor ${brickColorClass(task.fixedBefore.color, colorCodesEnabled)}">${task.fixedBefore.text}</span>` : ''}
                 ${placedIndices.length === 0
-                    ? `<span style="color:#64748b; font-size:0.86rem; font-style:italic;">Klik på de farvede brikker nedenfor i den rigtige rækkefølge...</span>`
+                    ? `<span style="color:#64748b; font-size:0.86rem; font-style:italic;"${rtlAttr}>${t('t4_drop_placeholder')}</span>`
                     : placedIndices.map((poolIdx, pos) => {
                         const item = task.pool[poolIdx];
                         return `<button type="button" class="osd-placed-brick ${brickColorClass(item.color, colorCodesEnabled)}" data-remove-pos="${pos}">${item.text}</button>`;
@@ -1561,7 +1611,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
                 ${task.fixedAfter ? `<span class="osd-fixed-anchor ${brickColorClass(task.fixedAfter.color, colorCodesEnabled)}">${task.fixedAfter.text}</span>` : ''}
             </div>
 
-            <div class="osd-chip-row" style="margin-bottom:1rem;">
+            <div class="osd-chip-row" dir="ltr" style="margin-bottom:1rem;">
                 ${task.pool.map((item, poolIdx) => `
                     <button type="button" class="osd-pool-brick ${brickColorClass(item.color, colorCodesEnabled)}" data-pool-idx="${poolIdx}" ${placedIndices.includes(poolIdx) || st.status === 'correct' ? 'disabled' : ''}>
                         ${item.text}
@@ -1569,25 +1619,27 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
                 `).join('')}
             </div>
 
-            <div style="display:flex; gap:0.55rem; flex-wrap:wrap; margin-bottom:0.9rem;">
+            <div style="display:flex; gap:0.55rem; flex-wrap:wrap; margin-bottom:0.9rem;"${rtlAttr}>
                 ${st.status !== 'correct' ? `
                     <button type="button" class="osd-btn-primary" id="osd-check-build" ${placedIndices.length === 0 ? 'disabled' : ''}>
-                        ${SVG_CHECK}<span>Tjek svar</span>
+                        ${SVG_CHECK}<span>${t('t4_btn_check')}</span>
                     </button>
-                    <button type="button" class="osd-btn-ghost" id="osd-clear-build" ${placedIndices.length === 0 ? 'disabled' : ''}>Ryd</button>
+                    <button type="button" class="osd-btn-ghost" id="osd-clear-build" ${placedIndices.length === 0 ? 'disabled' : ''}>${t('t4_btn_clear')}</button>
                 ` : `
-                    <button type="button" class="osd-btn-ghost" id="osd-listen-build">${SVG_SPEAK}<span>Lyt til sætningen</span></button>
-                    <button type="button" class="osd-btn-primary" id="osd-next-build">Næste opgave →</button>
+                    <button type="button" class="osd-btn-ghost" id="osd-listen-build">${SVG_SPEAK}<span>${t('btn_listen_sent')}</span></button>
+                    <button type="button" class="osd-btn-primary" id="osd-next-build">${t('t4_btn_next')}</button>
                 `}
             </div>
 
             ${st.status === 'correct' ? `
-                <div class="osd-note-box" style="border-left-color:#22c55e;">
-                    <strong style="color:#4ade80;">Flot bygget!</strong> ${task.expl}
+                <div class="osd-note-box" style="border-left-color:#22c55e;"${rtlAttr}>
+                    <strong style="color:#4ade80;">${t('t4_ok_lead')}</strong> ${t(`${tid}_expl`)}
                 </div>
             ` : st.status === 'wrong' ? `
-                <div class="osd-note-box" style="border-left-color:#ef4444;">
-                    <strong style="color:#f87171;">Ikke helt endnu.</strong> Klik på en placeret brik for at fjerne den, og tjek farverne — husk at det røde handlingsord står på Plads 2!
+                <div class="osd-note-box" style="border-left-color:#ef4444;"${rtlAttr}>
+                    <strong style="color:#f87171;">${t('t4_wrong_lead')}</strong> ${placedTexts.length < task.correctSeq.length
+                        ? t('t4_missing_bricks')
+                        : t(`${tid}_wrong`)}
                 </div>
             ` : ''}
         `;
@@ -1619,9 +1671,10 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
                 const isRight = placedTexts.length === task.correctSeq.length
                     && placedTexts.every((t, i) => t === task.correctSeq[i]);
                 if (isRight) {
-                    if (st.status === null) st.score++;
+                    if (!st.hadWrong) st.score++;
                     st.status = 'correct';
                 } else {
+                    st.hadWrong = true;
                     st.status = 'wrong';
                 }
                 render();
@@ -1643,6 +1696,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
                 st.idx++;
                 st.placed = [];
                 st.status = null;
+                st.hadWrong = false;
                 render();
             };
         }

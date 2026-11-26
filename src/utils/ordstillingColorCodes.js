@@ -64,8 +64,8 @@ export function setColorCodesEnabled(enabled) {
 }
 
 export function getStartCategoryColor(catKey) {
-    if (catKey === 'person' || catKey === 'kan_lide') return ORDSTILLING_COLORS.noun;
-    if (catKey === 'tid') return ORDSTILLING_COLORS.tid;
+    if (catKey === 'person' || catKey === 'kan_lide' || catKey === 'to_verber') return ORDSTILLING_COLORS.noun;
+    if (catKey === 'tid' || catKey === 'baggrund' || catKey === 'droem_ramme') return ORDSTILLING_COLORS.tid;
     if (catKey === 'sted') return ORDSTILLING_COLORS.sted;
     return null;
 }
@@ -112,18 +112,29 @@ export function buildColoredPreviewHtml({ mode, startCategory, draft, enabled })
         segments.push({ text: clean, color: colorObj });
     };
 
+    const MID_ADV_COLOR = { dot: '#38bdf8', bg: 'rgba(56, 189, 248, 0.14)' };
+
     if (mode === 'greeting') {
         pushSeg(draft.start, ORDSTILLING_COLORS.noun);
     } else if (mode === 'at_clause') {
         pushSeg(draft.start, null);
         pushSeg(draft.atSubj, ORDSTILLING_COLORS.noun);
+        if (draft.midAdv) pushSeg(draft.midAdv, MID_ADV_COLOR);
         pushSeg(draft.atVerb, ORDSTILLING_COLORS.verb);
         pushSeg(draft.object, classifyObjectColor(draft.object));
     } else if (mode === 'kan_lide') {
         pushSeg(draft.start, ORDSTILLING_COLORS.noun);
         pushSeg(draft.kanModal || 'kan', ORDSTILLING_COLORS.verb);
-        pushSeg(draft.kanAdv, { dot: '#38bdf8', bg: 'rgba(56, 189, 248, 0.14)' });
+        pushSeg(draft.kanAdv, MID_ADV_COLOR);
         pushSeg(draft.kanInf, ORDSTILLING_COLORS.verb);
+        pushSeg(draft.object, classifyObjectColor(draft.object));
+    } else if (mode === 'two_verbs') {
+        const isInv2 = !!draft.twoVerbInv;
+        pushSeg(draft.start, isInv2 ? ORDSTILLING_COLORS.tid : ORDSTILLING_COLORS.noun);
+        pushSeg(draft.twoVerb1 || 'vil', ORDSTILLING_COLORS.verb);
+        if (isInv2) pushSeg(draft.invSubj, ORDSTILLING_COLORS.noun);
+        if (draft.midAdv) pushSeg(draft.midAdv, MID_ADV_COLOR);
+        pushSeg(draft.twoVerb2, ORDSTILLING_COLORS.verb);
         pushSeg(draft.object, classifyObjectColor(draft.object));
     } else {
         pushSeg(draft.start, getStartCategoryColor(startCategory));
@@ -131,6 +142,7 @@ export function buildColoredPreviewHtml({ mode, startCategory, draft, enabled })
         if (mode === 'inversion') {
             pushSeg(draft.invSubj, ORDSTILLING_COLORS.noun);
         }
+        if (draft.midAdv) pushSeg(draft.midAdv, MID_ADV_COLOR);
         if (!(mode === 'normal' && draft.skipStep3)) {
             pushSeg(draft.object, classifyObjectColor(draft.object));
         }

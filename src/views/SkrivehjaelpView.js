@@ -132,10 +132,13 @@ const SCENARIOS = {
             tid: { labelKey: 'cat_tid', mode: 'inversion', options: ['I går', 'I weekenden', 'Om morgenen', 'Om aftenen'] },
             sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['I parken', 'Ved vandet', 'Derhjemme', 'På café'] },
             sammenhaeng: { labelKey: 'cat_sammenhaeng', mode: 'inversion', options: ['Derefter', 'Bagefter', 'Derfor', 'Til sidst'] },
+            baggrund: { labelKey: 'sh_cat_baggrund', labelFallback: 'Baggrund først (V2)', mode: 'inversion', options: ['Fordi vejret var godt,', 'Da vi kom hjem,', 'Selvom jeg var træt,', 'Når jeg har fri,'] },
+            to_verber: { labelKey: 'sh_cat_to_verber', labelFallback: 'To verber (Ramme)', mode: 'two_verbs', options: ['Jeg', 'Vi', 'I går', 'I morgen'] },
             at_clause: { labelKey: 'sh_cat_at_dag', mode: 'at_clause', options: ['Jeg synes, at', 'Jeg håber, at', 'Jeg følte, at', 'Det var dejligt, at'] },
             kan_lide: { labelKey: 'sh_cat_kan_lide', mode: 'kan_lide', options: ['Jeg', 'Vi', 'Min ven og jeg', 'Min familie'] }
         },
         verbs: ['gik', 'var', 'spiste', 'mødte', 'cyklede', 'lavede', 'slappede af'],
+        twoVerb2Options: ['gå', 'spise', 'møde', 'cykle', 'lave', 'slappe af'],
         kanLideInfinitives: ['lide at spise', 'lide at gå', 'lide at cykle', 'lide at møde', 'lide at lave', 'lide at slappe af'],
         atSubjects: ['dagen', 'weekenden', 'det', 'vi', 'vejret'],
         atVerbs: ['var', 'blev', 'gik', 'gav os'],
@@ -164,10 +167,13 @@ const SCENARIOS = {
             tid: { labelKey: 'cat_tid', mode: 'inversion', options: ['I dag', 'I morgen', 'På fredag', 'Næste uge'] },
             sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['På sprogskolen', 'På arbejdet', 'Derhjemme'] },
             sammenhaeng: { labelKey: 'cat_sammenhaeng', mode: 'inversion', options: ['Desværre', 'Derfor', 'Heldigvis', 'Til sidst'] },
+            baggrund: { labelKey: 'sh_cat_baggrund', labelFallback: 'Baggrund først (V2)', mode: 'inversion', options: ['Fordi jeg har feber,', 'Hvis det passer dig,', 'Selvom jeg er syg,', 'Når jeg er rask,'] },
+            to_verber: { labelKey: 'sh_cat_to_verber', labelFallback: 'To verber (Ramme)', mode: 'two_verbs', options: ['Jeg', 'Vi', 'I morgen', 'På fredag'] },
             at_clause: { labelKey: 'sh_cat_at_mail', mode: 'at_clause', options: ['Jeg håber, at', 'Jeg vil gerne fortælle, at', 'Jeg tror, at', 'Det er vigtigt, at'] },
             kan_lide: { labelKey: 'sh_cat_kan_lide', mode: 'kan_lide', options: ['Jeg', 'Vi'] }
         },
         verbs: ['skriver', 'vil gerne', 'kan desværre ikke', 'har', 'kommer', 'sender'],
+        twoVerb2Options: ['møde', 'komme', 'sende', 'spørge om', 'læse', 'aftale'],
         kanLideInfinitives: ['lide at lære', 'lide at komme', 'lide at samarbejde', 'lide at skrive', 'lide at tale'],
         atSubjects: ['vi', 'jeg', 'det', 'mødet'],
         atVerbs: ['kan finde', 'er tilbage', 'passer', 'bliver'],
@@ -194,10 +200,14 @@ const SCENARIOS = {
             tid: { labelKey: 'cat_tid', mode: 'inversion', options: ['I hverdagen', 'I dag', 'Ofte'] },
             sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['I Danmark', 'I skolen', 'På arbejdet'] },
             sammenhaeng: { labelKey: 'cat_sammenhaeng', mode: 'inversion', options: ['På den ene side', 'På den anden side', 'Derfor', 'Alt i alt'] },
-            at_clause: { labelKey: 'cat_at_mening', mode: 'at_clause', options: ['Jeg synes, at', 'Jeg mener, at', 'Det er vigtigt, at', 'Jeg tror, at'] },
+            baggrund: { labelKey: 'sh_cat_baggrund', labelFallback: 'Baggrund først (V2)', mode: 'inversion', options: ['Fordi det er vigtigt,', 'Selvom det kræver tid,', 'Hvis vi samarbejder,', 'Når alle hjælper hinanden,'] },
+            droem_ramme: { labelKey: 'sh_cat_droem', labelFallback: 'Plan vs. Drøm (nutid/datid)', mode: 'inversion', options: ['Hvis vi har tid,', 'Hvis vi havde mere tid,', 'Hvis det var muligt,', 'Hvis alle hjalp til,'] },
+            to_verber: { labelKey: 'sh_cat_to_verber', labelFallback: 'To verber (Ramme)', mode: 'two_verbs', options: ['Vi', 'Mange mennesker', 'I hverdagen', 'I Danmark'] },
+            at_clause: { labelKey: 'cat_at_mening', mode: 'at_clause', options: ['Jeg synes, at', 'Jeg mener, at', 'Jeg ville ønske, at', 'Det er vigtigt, at'] },
             kan_lide: { labelKey: 'sh_cat_kan_lide', mode: 'kan_lide', options: ['Jeg', 'Mange mennesker', 'Vi'] }
         },
-        verbs: ['mener', 'oplever', 'ser', 'bruger', 'foretrækker', 'støtter'],
+        verbs: ['mener', 'oplever', 'ser', 'bruger', 'foretrækker', 'støtter', 'ville', 'kunne'],
+        twoVerb2Options: ['bruge', 'støtte', 'finde', 'skabe', 'vælge', 'prioritere'],
         kanLideInfinitives: ['lide at spise', 'lide at bruge', 'lide at cykle', 'lide at have', 'lide at støtte'],
         atSubjects: ['man', 'vi', 'alle', 'det', 'børn og unge'],
         atVerbs: ['skal have', 'lærer bedst', 'har brug for', 'er vigtigt for'],
@@ -223,10 +233,13 @@ const SCENARIOS = {
             tid: { labelKey: 'cat_tid', mode: 'inversion', options: ['Hver uge', 'Når vi mødes', 'Altid'] },
             sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['På arbejdet', 'På café', 'Hjemme hos os'] },
             sammenhaeng: { labelKey: 'cat_sammenhaeng', mode: 'inversion', options: ['Derfor', 'Desuden', 'Heldigvis'] },
+            baggrund: { labelKey: 'sh_cat_baggrund', labelFallback: 'Baggrund først (V2)', mode: 'inversion', options: ['Fordi vi forstår hinanden,', 'Selvom vi har travlt,', 'Når vi mødes,'] },
+            to_verber: { labelKey: 'sh_cat_to_verber', labelFallback: 'To verber (Ramme)', mode: 'two_verbs', options: ['Vi', 'Hun', 'Han', 'Hver uge'] },
             at_clause: { labelKey: 'cat_at_foelelse', mode: 'at_clause', options: ['Jeg sætter pris på, at', 'Jeg synes, at', 'Jeg er glad for, at'] },
             kan_lide: { labelKey: 'sh_cat_kan_lide', mode: 'kan_lide', options: ['Jeg', 'Hun', 'Han', 'Vi'] }
         },
         verbs: ['er', 'har', 'hjælper', 'laver', 'fortæller', 'lytter'],
+        twoVerb2Options: ['møde', 'hjælpe', 'tale med', 'lave', 'besøge'],
         kanLideInfinitives: ['lide at drikke', 'lide at snakke med', 'lide at lave', 'lide at lytte til', 'lide at møde'],
         atSubjects: ['hun', 'han', 'vi', 'min ven'],
         atVerbs: ['altid er', 'har tid til', 'kan tale om', 'får mig til at'],
@@ -253,10 +266,14 @@ const SCENARIOS = {
             tid: { labelKey: 'cat_tid', mode: 'inversion', options: ['Lige nu', 'Næste år', 'I fremtiden'] },
             sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['På mit arbejde', 'På sprogskolen', 'I Danmark'] },
             sammenhaeng: { labelKey: 'cat_sammenhaeng', mode: 'inversion', options: ['Derfor', 'Derefter', 'Samtidig'] },
-            at_clause: { labelKey: 'sh_cat_at_arbejde', mode: 'at_clause', options: ['Jeg håber, at', 'Jeg drømmer om, at', 'Jeg tror, at', 'Det er mit mål, at'] },
+            baggrund: { labelKey: 'sh_cat_baggrund', labelFallback: 'Baggrund først (V2)', mode: 'inversion', options: ['Når jeg er færdig,', 'Hvis jeg får chancen,', 'Fordi jeg vil udvikle mig,', 'Selvom det er svært,'] },
+            droem_ramme: { labelKey: 'sh_cat_droem', labelFallback: 'Plan vs. Drøm (nutid/datid)', mode: 'inversion', options: ['Hvis jeg har tid,', 'Hvis jeg havde mere tid,', 'Hvis jeg fik drømmejobbet,', 'Hvis det var muligt,'] },
+            to_verber: { labelKey: 'sh_cat_to_verber', labelFallback: 'To verber (Ramme)', mode: 'two_verbs', options: ['Jeg', 'Vi', 'Næste år', 'I fremtiden'] },
+            at_clause: { labelKey: 'sh_cat_at_arbejde', mode: 'at_clause', options: ['Jeg håber, at', 'Jeg ville ønske, at', 'Jeg drømmer om, at', 'Det er mit mål, at'] },
             kan_lide: { labelKey: 'sh_cat_kan_lide', mode: 'kan_lide', options: ['Jeg', 'Vi'] }
         },
-        verbs: ['vil gerne', 'arbejder', 'drømmer om', 'lærer', 'søger', 'glæder mig til'],
+        verbs: ['arbejder', 'søger', 'lærer', 'drømmer om', 'planlægger', 'ville', 'kunne'],
+        twoVerb2Options: ['møde', 'finde', 'lære', 'arbejde med', 'bruge', 'søge'],
         kanLideInfinitives: ['lide at arbejde med', 'lide at lære', 'lide at bruge', 'lide at hjælpe', 'lide at udvikle'],
         atSubjects: ['jeg', 'min uddannelse', 'fremtiden'],
         atVerbs: ['kan finde', 'giver mig', 'bliver', 'åbner for'],
@@ -282,10 +299,13 @@ const SCENARIOS = {
             tid: { labelKey: 'cat_tid', mode: 'inversion', options: ['Sidste sommer', 'Første dag', 'Om aftenen'] },
             sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['Ved kysten', 'På stranden', 'I bjergene'] },
             sammenhaeng: { labelKey: 'cat_sammenhaeng', mode: 'inversion', options: ['Derefter', 'Pludselig', 'Til sidst'] },
+            baggrund: { labelKey: 'sh_cat_baggrund', labelFallback: 'Baggrund først (V2)', mode: 'inversion', options: ['Da vi ankom,', 'Fordi vejret var varmt,', 'Selvom turen var lang,'] },
+            to_verber: { labelKey: 'sh_cat_to_verber', labelFallback: 'To verber (Ramme)', mode: 'two_verbs', options: ['Jeg', 'Vi', 'Sidste sommer', 'Næste sommer'] },
             at_clause: { labelKey: 'sh_cat_at_rejse', mode: 'at_clause', options: ['Jeg opdagede, at', 'Vi syntes, at', 'Jeg glemmer aldrig, at'] },
             kan_lide: { labelKey: 'sh_cat_kan_lide', mode: 'kan_lide', options: ['Jeg', 'Vi', 'Min familie'] }
         },
         verbs: ['rejste', 'besøgte', 'oplevede', 'smagte', 'så', 'boede'],
+        twoVerb2Options: ['rejse til', 'besøge', 'opleve', 'smage', 'se'],
         kanLideInfinitives: ['lide at rejse til', 'lide at smage', 'lide at besøge', 'lide at opleve', 'lide at se'],
         atSubjects: ['stedet', 'naturen', 'menneskerne', 'turen'],
         atVerbs: ['var', 'føltes', 'gav os', 'blev'],
@@ -1050,9 +1070,65 @@ function injectStyles() {
             border: 1px solid rgba(203, 213, 225, 0.12);
         }
 
+        .sh-doc-br {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            color: #7ec4ce;
+            background: rgba(76, 155, 166, 0.14);
+            border: 1px solid rgba(76, 155, 166, 0.3);
+            border-radius: 5px;
+            padding: 0 0.3rem;
+            margin: 0 0.15rem;
+            cursor: pointer;
+            vertical-align: baseline;
+            line-height: 1.35;
+        }
+        .sh-doc-br:hover {
+            background: rgba(76, 155, 166, 0.3);
+            color: #f1f5f9;
+        }
+        .sh-reorder-btn {
+            background: #171d26;
+            color: #cbd5e1;
+            border: 1px solid rgba(203, 213, 225, 0.22);
+            border-radius: 7px;
+            padding: 0.36rem 0.56rem;
+            font-size: 0.82rem;
+            font-weight: 800;
+            cursor: pointer;
+            line-height: 1;
+            transition: background 0.14s ease, border-color 0.14s ease;
+        }
+        .sh-reorder-btn:hover:not(:disabled) {
+            background: rgba(76, 155, 166, 0.2);
+            border-color: #4c9ba6;
+            color: #f8fafc;
+        }
+        .sh-reorder-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+        .sh-cog-note {
+            margin-top: 0.55rem;
+            padding: 0.48rem 0.72rem;
+            border-radius: 8px;
+            background: rgba(76, 155, 166, 0.1);
+            border: 1px solid rgba(76, 155, 166, 0.28);
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            line-height: 1.45;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.45rem;
+        }
+
         @media (max-width: 640px) {
             .skrivehjaelp-container {
-                padding: 0.5rem 0.65rem 3rem;
+                padding: 0.5rem 0.65rem 4.5rem;
             }
             .sh-header h1 {
                 font-size: 1.45rem;
@@ -1102,17 +1178,25 @@ function injectStyles() {
                 font-size: 16px;
             }
             .sh-preview-bar {
+                position: sticky;
+                bottom: 0;
+                z-index: 25;
                 flex-direction: column;
                 align-items: stretch;
-                padding: 0.85rem;
+                padding: 0.72rem 0.8rem;
+                background: rgba(16, 20, 25, 0.96);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                border: 1px solid rgba(76, 155, 166, 0.55);
+                box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.45);
             }
             .sh-preview-bar > div {
                 min-width: 0 !important;
                 width: 100%;
             }
             .sh-preview-text {
-                font-size: 0.96rem;
-                line-height: 1.5;
+                font-size: 0.94rem;
+                line-height: 1.45;
                 overflow-wrap: break-word;
             }
             .sh-doc-surface {
@@ -1186,12 +1270,77 @@ export function renderSkrivehjaelpView(container, navigateFn) {
     let checkedReviewIds = {};
     let colorCodesEnabled = getColorCodesEnabled();
     let editingSentenceIdx = null;
+    function detectTwoVerbInversion(startStr) {
+        const s = (startStr || '').trim().toLowerCase();
+        if (!s) return false;
+        return /^(i\s|på\s|om\s|næste\s|sidste\s|hver\s|derfor|derefter|bagefter|snart|ofte|normalt|heldigvis|desværre|til\s+sommer|til\s+vinter|efter\s|før\s|først\b|her\b|der\b)/.test(s) || s.endsWith(',');
+    }
+
+    function isGreetingSentence(s) {
+        if (!s || s === '__BR__') return false;
+        const t = s.trim();
+        return /^(kære|hej|goddag)\b/i.test(t) || (t.endsWith(',') && t.length < 48);
+    }
+
+    function isSignoffSentence(s) {
+        if (!s || s === '__BR__') return false;
+        return /^(med\s+)?venlig\s+hilsen|^bedste\s+hilsner|^kærlig\s+hilsen|^hilsen\b/i.test(s.trim());
+    }
+
+    function formatDocHtml(list, focusId, editTitle) {
+        let out = '';
+        for (let i = 0; i < list.length; i++) {
+            const s = list[i];
+            const prev = i > 0 ? list[i - 1] : null;
+            if (s === '__BR__') {
+                out += `<span class="sh-doc-br" data-edit-idx="${i}" title="${escapeHtml(editTitle)}">¶</span><br/>`;
+                continue;
+            }
+            if (i > 0 && prev !== '__BR__') {
+                if (isGreetingSentence(prev)) {
+                    out += '<br/><br/>';
+                } else if (isSignoffSentence(s)) {
+                    out += '<br/><br/>';
+                } else {
+                    out += ' ';
+                }
+            }
+            out += `<span class="sh-doc-sentence" data-edit-idx="${i}" title="${escapeHtml(editTitle)}">${formatSentenceForReviewFocus(s, focusId)}</span>`;
+        }
+        return out;
+    }
+
+    function formatDocPlain(list) {
+        let out = '';
+        for (let i = 0; i < list.length; i++) {
+            const s = list[i];
+            const prev = i > 0 ? list[i - 1] : null;
+            if (s === '__BR__') {
+                if (!out.endsWith('\n\n')) out += '\n\n';
+                continue;
+            }
+            if (i > 0 && prev !== '__BR__') {
+                if (isGreetingSentence(prev) || isSignoffSentence(s)) {
+                    out += '\n\n';
+                } else {
+                    out += ' ';
+                }
+            }
+            out += s;
+        }
+        return out.trim();
+    }
+
     let draft = {
         start: 'Jeg',
         verb: 'gik',
         invSubj: 'jeg',
         atSubj: 'dagen',
         atVerb: 'var',
+        midAdv: '',
+        twoVerb1: 'vil',
+        twoVerb2: 'møde',
+        twoVerbInv: false,
         kanModal: 'kan',
         kanAdv: 'godt',
         kanInf: 'lide at spise',
@@ -1207,12 +1356,17 @@ export function renderSkrivehjaelpView(container, navigateFn) {
             : (sc.starts.hilsen ? 'hilsen' : 'person');
         startCategory = defaultCat;
         extTab = 'conj';
+        const firstStart = sc.starts[defaultCat].options[0];
         draft = {
-            start: sc.starts[defaultCat].options[0],
+            start: firstStart,
             verb: sc.verbs[0],
             invSubj: sc.invertedSubjects[0],
             atSubj: sc.atSubjects[0],
             atVerb: sc.atVerbs[0],
+            midAdv: '',
+            twoVerb1: 'vil',
+            twoVerb2: (sc.twoVerb2Options && sc.twoVerb2Options[0]) || 'møde',
+            twoVerbInv: detectTwoVerbInversion(firstStart),
             kanModal: 'kan',
             kanAdv: 'godt',
             kanInf: (sc.kanLideInfinitives && sc.kanLideInfinitives[0]) || 'lide at spise',
@@ -1226,6 +1380,7 @@ export function renderSkrivehjaelpView(container, navigateFn) {
         const sc = SCENARIOS[activeScenarioId];
         const mode = sc.starts[startCategory]?.mode || 'normal';
         const parts = [];
+        const midAdv = (draft.midAdv || '').trim();
 
         if (mode === 'greeting') {
             const g = (draft.start || '').trim();
@@ -1236,7 +1391,15 @@ export function renderSkrivehjaelpView(container, navigateFn) {
         } else if (mode === 'at_clause') {
             if (draft.start.trim()) parts.push(draft.start.trim());
             if (draft.atSubj.trim()) parts.push(draft.atSubj.trim());
+            if (midAdv) parts.push(midAdv);
             if (draft.atVerb.trim()) parts.push(draft.atVerb.trim());
+            if (draft.object.trim()) parts.push(draft.object.trim());
+        } else if (mode === 'two_verbs') {
+            if (draft.start.trim()) parts.push(draft.start.trim());
+            if ((draft.twoVerb1 || 'vil').trim()) parts.push((draft.twoVerb1 || 'vil').trim());
+            if (draft.twoVerbInv && draft.invSubj.trim()) parts.push(draft.invSubj.trim());
+            if (midAdv) parts.push(midAdv);
+            if ((draft.twoVerb2 || '').trim()) parts.push(draft.twoVerb2.trim());
             if (draft.object.trim()) parts.push(draft.object.trim());
         } else if (mode === 'kan_lide') {
             if (draft.start.trim()) parts.push(draft.start.trim());
@@ -1248,6 +1411,7 @@ export function renderSkrivehjaelpView(container, navigateFn) {
             if (draft.start.trim()) parts.push(draft.start.trim());
             if (draft.verb.trim()) parts.push(draft.verb.trim());
             if (mode === 'inversion' && draft.invSubj.trim()) parts.push(draft.invSubj.trim());
+            if (midAdv) parts.push(midAdv);
             if (!(mode === 'normal' && draft.skipStep3) && draft.object.trim()) parts.push(draft.object.trim());
         }
 
@@ -1319,32 +1483,40 @@ export function renderSkrivehjaelpView(container, navigateFn) {
         const isGreeting = mode === 'greeting';
         const isInv = mode === 'inversion';
         const isAt = mode === 'at_clause';
+        const isTwoVerbs = mode === 'two_verbs';
         const isKanLide = mode === 'kan_lide';
         const SVG_STOP = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="8" y1="12" x2="16" y2="12"/></svg>`;
-        const totalWords = sentences.join(' ').trim().split(/\s+/).filter(Boolean).length;
-        const hints = analyzeLocalHints(sentences, activeScenarioId, lang);
+        const realSentences = sentences.filter(s => s !== '__BR__');
+        const totalWords = realSentences.join(' ').trim().split(/\s+/).filter(Boolean).length;
+        const hints = analyzeLocalHints(realSentences, activeScenarioId, lang);
 
         // 1. ØVERST: DET LEVENDE DOKUMENT ("Din tekst") + GRADVISE HINTS + GENNEMLÆS DIN TEKST
         const docCard = document.createElement('div');
         docCard.className = 'sh-card';
         const checkedCount = REVIEW_QUESTIONS.filter(q => checkedReviewIds[q.id]).length;
-        const connectorCount = (sentences.join(' ').toLowerCase().match(/\b(fordi|men|selvom|derfor|derefter|bagefter|alligevel|desuden|heldigvis|samtidig|og|så|som|der|at)\b/g) || []).length;
+        const connectorCount = (realSentences.join(' ').toLowerCase().match(/\b(fordi|men|selvom|derfor|derefter|bagefter|alligevel|desuden|heldigvis|samtidig|og|så|som|der|at)\b/g) || []).length;
 
         docCard.innerHTML = `
             <div class="sh-card-head">
                 <h2 class="sh-card-title"${rtlAttr}>${SVG_PEN}<span>${swT('sh_doc_title', lang)}</span></h2>
-                <span class="sh-meta-pill"${rtlAttr}>${sentences.length} ${sentences.length === 1 ? swT('doc_meta_sent_one', lang) : swT('doc_meta_sent_many', lang)} · ${totalWords} ${swT('doc_meta_words', lang)}</span>
+                <span class="sh-meta-pill"${rtlAttr}>${realSentences.length} ${realSentences.length === 1 ? swT('doc_meta_sent_one', lang) : swT('doc_meta_sent_many', lang)} · ${totalWords} ${swT('doc_meta_words', lang)}</span>
             </div>
             <div class="sh-doc-surface" id="sh-doc-surface" dir="ltr">
-                ${sentences.length === 0
+                ${realSentences.length === 0
                     ? `<span class="sh-doc-empty"${rtlAttr}>${swT('sh_doc_empty', lang)}</span>`
-                    : sentences.map((s, idx) => `<span class="sh-doc-sentence" data-edit-idx="${idx}" title="${escapeHtml(swT('doc_edit_title', lang))}">${formatSentenceForReviewFocus(s, isReviewOpen ? activeReviewFocus : null)}</span>`).join(' ')
+                    : formatDocHtml(sentences, isReviewOpen ? activeReviewFocus : null, swT('doc_edit_title', lang))
                 }
             </div>
             ${editingSentenceIdx !== null && sentences[editingSentenceIdx] !== undefined ? `
                 <div class="sh-inline-edit-row">
-                    <input type="text" class="sh-custom-input" id="sh-inline-edit-inp" dir="ltr" value="${escapeHtml(sentences[editingSentenceIdx])}" style="flex:1; min-width:220px;" />
-                    <button type="button" class="sh-btn-primary" id="sh-inline-save-btn" style="padding:0.42rem 0.85rem; font-size:0.8rem;">${swT('btn_save_edit', lang)}</button>
+                    <button type="button" class="sh-reorder-btn" id="sh-inline-up-btn" title="${lang === 'en' ? 'Move up' : 'Flyt op'}" ${editingSentenceIdx === 0 ? 'disabled' : ''}>↑</button>
+                    <button type="button" class="sh-reorder-btn" id="sh-inline-down-btn" title="${lang === 'en' ? 'Move down' : 'Flyt ned'}" ${editingSentenceIdx === sentences.length - 1 ? 'disabled' : ''}>↓</button>
+                    ${sentences[editingSentenceIdx] === '__BR__' ? `
+                        <span style="flex:1; font-size:0.84rem; color:#94a3b8; font-weight:600;">¶ ${lang === 'en' ? 'Paragraph break' : 'Afsnitsskift'}</span>
+                    ` : `
+                        <input type="text" class="sh-custom-input" id="sh-inline-edit-inp" dir="ltr" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${escapeHtml(sentences[editingSentenceIdx])}" style="flex:1; min-width:200px;" />
+                        <button type="button" class="sh-btn-primary" id="sh-inline-save-btn" style="padding:0.42rem 0.85rem; font-size:0.8rem;">${swT('btn_save_edit', lang)}</button>
+                    `}
                     <button type="button" class="sh-btn-ghost" id="sh-inline-del-btn" style="padding:0.4rem 0.75rem; font-size:0.78rem;">${SVG_TRASH}<span>${swT('btn_remove', lang)}</span></button>
                     <button type="button" class="sh-btn-ghost" id="sh-inline-cancel-btn" style="padding:0.4rem 0.75rem; font-size:0.78rem;">${swT('btn_cancel', lang)}</button>
                 </div>
@@ -1398,14 +1570,17 @@ export function renderSkrivehjaelpView(container, navigateFn) {
             `}
             <div class="sh-doc-actions">
                 <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
-                    <button type="button" class="sh-btn-ghost" id="sh-copy-doc-btn" ${sentences.length === 0 ? 'disabled' : ''}>
+                    <button type="button" class="sh-btn-ghost" id="sh-add-br-btn" ${realSentences.length === 0 || sentences[sentences.length - 1] === '__BR__' ? 'disabled' : ''}>
+                        <span>¶ ${lang === 'en' ? 'New paragraph' : 'Nyt afsnit'}</span>
+                    </button>
+                    <button type="button" class="sh-btn-ghost" id="sh-copy-doc-btn" ${realSentences.length === 0 ? 'disabled' : ''}>
                         ${SVG_COPY}<span>${swT('btn_copy_text', lang)}</span>
                     </button>
                     <button type="button" class="sh-btn-ghost" id="sh-clear-doc-btn" ${sentences.length === 0 ? 'disabled' : ''}>
                         ${SVG_TRASH}<span>${swT('btn_clear_text', lang)}</span>
                     </button>
                 </div>
-                ${sentences.length > 0 ? `
+                ${realSentences.length > 0 ? `
                     <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
                         <button type="button" class="${isReviewOpen ? 'sh-btn-ghost' : 'sh-btn-primary'}" id="sh-toggle-review-btn">
                             ${SVG_CHECK}<span>${isReviewOpen ? swT('btn_review_close', lang) : swT('btn_review_open', lang)}</span>
@@ -1430,12 +1605,38 @@ export function renderSkrivehjaelpView(container, navigateFn) {
                 if (route && typeof navigateFn === 'function') navigateFn(route);
             };
         });
+        const inlineUpBtn = docCard.querySelector('#sh-inline-up-btn');
+        if (inlineUpBtn) {
+            inlineUpBtn.onclick = () => {
+                if (editingSentenceIdx > 0) {
+                    const tmp = sentences[editingSentenceIdx - 1];
+                    sentences[editingSentenceIdx - 1] = sentences[editingSentenceIdx];
+                    sentences[editingSentenceIdx] = tmp;
+                    editingSentenceIdx -= 1;
+                    persist();
+                    render();
+                }
+            };
+        }
+        const inlineDownBtn = docCard.querySelector('#sh-inline-down-btn');
+        if (inlineDownBtn) {
+            inlineDownBtn.onclick = () => {
+                if (editingSentenceIdx < sentences.length - 1) {
+                    const tmp = sentences[editingSentenceIdx + 1];
+                    sentences[editingSentenceIdx + 1] = sentences[editingSentenceIdx];
+                    sentences[editingSentenceIdx] = tmp;
+                    editingSentenceIdx += 1;
+                    persist();
+                    render();
+                }
+            };
+        }
         const inlineSaveBtn = docCard.querySelector('#sh-inline-save-btn');
         if (inlineSaveBtn) {
             const saveEdit = () => {
                 const val = (docCard.querySelector('#sh-inline-edit-inp')?.value || '').trim();
                 if (val) {
-                    sentences[editingSentenceIdx] = /[.!?]$/.test(val) ? val : val + '.';
+                    sentences[editingSentenceIdx] = /[,!.?]$/.test(val) ? val : val + '.';
                 } else {
                     sentences.splice(editingSentenceIdx, 1);
                 }
@@ -1463,6 +1664,14 @@ export function renderSkrivehjaelpView(container, navigateFn) {
                 render();
             };
         }
+        const addBrBtn = docCard.querySelector('#sh-add-br-btn');
+        if (addBrBtn && realSentences.length > 0 && sentences[sentences.length - 1] !== '__BR__') {
+            addBrBtn.onclick = () => {
+                sentences.push('__BR__');
+                persist();
+                render();
+            };
+        }
         const toggleRevBtn = docCard.querySelector('#sh-toggle-review-btn');
         if (toggleRevBtn) {
             toggleRevBtn.onclick = () => {
@@ -1487,8 +1696,8 @@ export function renderSkrivehjaelpView(container, navigateFn) {
             };
         });
         const copyDocBtn = docCard.querySelector('#sh-copy-doc-btn');
-        if (copyDocBtn && sentences.length > 0) {
-            copyDocBtn.onclick = () => copyTextWithFeedback(sentences.join(' '), copyDocBtn, `${SVG_COPY}<span>${swT('btn_copy_text', lang)}</span>`);
+        if (copyDocBtn && realSentences.length > 0) {
+            copyDocBtn.onclick = () => copyTextWithFeedback(formatDocPlain(sentences), copyDocBtn, `${SVG_COPY}<span>${swT('btn_copy_text', lang)}</span>`);
         }
         const clearDocBtn = docCard.querySelector('#sh-clear-doc-btn');
         if (clearDocBtn) {
@@ -1529,6 +1738,27 @@ export function renderSkrivehjaelpView(container, navigateFn) {
             toggleOn: swT('col_toggle_on', lang),
             toggleOff: swT('col_toggle_off', lang)
         };
+
+        const MID_ADV_OPTIONS = [
+            { label: lang === 'en' ? 'None' : 'Ingen', val: '' },
+            { label: 'ikke', val: 'ikke' },
+            { label: 'gerne', val: 'gerne' },
+            { label: 'ofte', val: 'ofte' },
+            { label: 'altid', val: 'altid' },
+            { label: 'desværre', val: 'desværre' }
+        ];
+        const midAdvColorObj = { dot: '#38bdf8', bg: 'rgba(56, 189, 248, 0.14)', border: 'rgba(56, 189, 248, 0.5)' };
+        const renderMidAdvRow = (labelText) => `
+            <div class="sh-options-wrap" dir="ltr" style="margin-top:0.55rem;">
+                <span${rtlAttr} style="font-size:0.76rem; color:${colorCodesEnabled ? '#38bdf8' : '#7ec4ce'}; font-weight:700; display:inline-flex; align-items:center; gap:0.3rem;">
+                    ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:#38bdf8;"></span>` : ''}${labelText}
+                </span>
+                ${MID_ADV_OPTIONS.map(o => `
+                    <button type="button" class="sh-chip ${draft.midAdv === o.val ? 'active' : ''}" data-pick-midadv="${o.val}" style="${o.val ? chipColorStyle(midAdvColorObj, draft.midAdv === o.val, colorCodesEnabled) : ''}">${o.label}</button>
+                `).join('')}
+            </div>
+        `;
+        const isDroemDatid = startCategory === 'droem_ramme' && /\b(havde|var|fik|hjalp)\b/i.test(draft.start || '');
 
         flowCard.innerHTML = `
             <div class="sh-card-head">
@@ -1571,6 +1801,15 @@ export function renderSkrivehjaelpView(container, navigateFn) {
                         `).join('')}
                         <input type="text" class="sh-custom-input" id="sh-inp-start" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${sc.starts[startCategory].options.includes(draft.start) ? '' : escapeHtml(draft.start)}" placeholder="${escapeHtml(isGreeting ? 'Kære ...' : swT('sh_ph_start', lang))}" />
                     </div>
+                    ${startCategory === 'droem_ramme' ? `
+                        <div class="sh-cog-note"${rtlAttr}>
+                            <span>${isDroemDatid
+                                ? (lang === 'en' ? 'Distance (past tense): Imagine/wish — combine with "ville" or "kunne" in step 2.' : 'Afstand (datid): Drøm eller ønske — kombinér gerne med "ville" eller "kunne" i trin 2.')
+                                : (lang === 'en' ? 'Closeness (present tense): Real plan — combine with a present-tense verb in step 2.' : 'Nærhed (nutid): Fast plan — kombinér med nutidsverbum i trin 2.')
+                            }</span>
+                            <button type="button" class="sh-hint-link" data-cog-route="sansning_hypotese_datid" style="margin-top:0;">${lang === 'en' ? 'See Station 3.6 →' : 'Se Station 3.6 (Nutid vs. Datid) →'}</button>
+                        </div>
+                    ` : ''}
                 </div>
 
                 ${!isGreeting ? `
@@ -1582,10 +1821,11 @@ export function renderSkrivehjaelpView(container, navigateFn) {
                         <div style="display:inline-flex; align-items:center; gap:0.35rem;">
                             <span class="sh-step-num">2</span>
                             ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:${ORDSTILLING_COLORS.verb.dot};"></span>` : ''}
-                            <strong>${isAt ? swT('sh_step2_at', lang) : isKanLide ? swT('sh_step2_kan_lide', lang) : swT('sh_step2_normal', lang)}</strong>
+                            <strong>${isAt ? swT('sh_step2_at', lang) : isKanLide ? swT('sh_step2_kan_lide', lang) : isTwoVerbs ? (lang === 'en' ? 'Two verbs (frame): modal + action' : 'To verber (handlings-rammen)') : swT('sh_step2_normal', lang)}</strong>
                         </div>
                         ${isInv ? `<span class="sh-v2-tag">${swT('sh_v2_active', lang)}</span>` : ''}
                         ${isAt ? `<span class="sh-v2-tag">${swT('sh_at_active', lang)}</span>` : ''}
+                        ${isTwoVerbs ? `<span class="sh-v2-tag">${draft.twoVerbInv ? (lang === 'en' ? 'V2 split frame' : 'V2-spaltet ramme') : (lang === 'en' ? 'Verb 1 + Verb 2' : 'Verbum 1 + Verbum 2')}</span>` : ''}
                         ${isKanLide ? `<span class="sh-v2-tag">${swT('sh_kan_lide_tag', lang)}</span>` : ''}
                     </div>
                     ${isAt ? `
@@ -1597,11 +1837,41 @@ export function renderSkrivehjaelpView(container, navigateFn) {
                                 <button type="button" class="sh-chip ${draft.atSubj === sub ? 'petrol-active' : ''}" data-pick-atsubj="${sub}" style="${chipColorStyle(ORDSTILLING_COLORS.noun, draft.atSubj === sub, colorCodesEnabled)}">${sub}</button>
                             `).join('')}
                         </div>
-                        <div class="sh-options-wrap" dir="ltr">
+                        ${renderMidAdvRow(lang === 'en' ? 'Small word (before verb in at-clause):' : 'Småord (foran verbet i at-sætning):')}
+                        <div class="sh-options-wrap" dir="ltr" style="margin-top:0.55rem;">
                             ${sc.atVerbs.map(v => `
                                 <button type="button" class="sh-chip ${draft.atVerb === v ? 'active' : ''}" data-pick-atverb="${v}" style="${chipColorStyle(ORDSTILLING_COLORS.verb, draft.atVerb === v, colorCodesEnabled)}">${v}</button>
                             `).join('')}
                             <input type="text" class="sh-custom-input" id="sh-inp-atverb" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${sc.atVerbs.includes(draft.atVerb) ? '' : escapeHtml(draft.atVerb)}" placeholder="${escapeHtml(swT('sh_ph_verb', lang))}" />
+                        </div>
+                    ` : isTwoVerbs ? `
+                        <div class="sh-options-wrap" dir="ltr" style="margin-bottom:0.55rem;">
+                            <span${rtlAttr} style="font-size:0.78rem; color:${colorCodesEnabled ? ORDSTILLING_COLORS.verb.text : '#7ec4ce'}; font-weight:700; display:inline-flex; align-items:center; gap:0.3rem;">
+                                ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:${ORDSTILLING_COLORS.verb.dot};"></span>` : ''}${lang === 'en' ? '1. verb (place 2):' : '1. verbum (Plads 2):'}
+                            </span>
+                            ${['vil', 'skal', 'kan', 'har', 'ville', 'kunne'].map(m => `
+                                <button type="button" class="sh-chip ${draft.twoVerb1 === m ? 'active' : ''}" data-pick-tv1="${m}" style="${chipColorStyle(ORDSTILLING_COLORS.verb, draft.twoVerb1 === m, colorCodesEnabled)}">${m}</button>
+                            `).join('')}
+                        </div>
+                        ${draft.twoVerbInv ? `
+                            <div class="sh-options-wrap" dir="ltr" style="margin-bottom:0.55rem;">
+                                <span${rtlAttr} style="font-size:0.78rem; color:${colorCodesEnabled ? ORDSTILLING_COLORS.noun.text : '#7ec4ce'}; font-weight:700; display:inline-flex; align-items:center; gap:0.3rem;">
+                                    ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:${ORDSTILLING_COLORS.noun.dot};"></span>` : ''}${swT('lbl_place3_subj', lang)}
+                                </span>
+                                ${sc.invertedSubjects.map(sub => `
+                                    <button type="button" class="sh-chip ${draft.invSubj === sub ? 'petrol-active' : ''}" data-pick-invsubj="${sub}" style="${chipColorStyle(ORDSTILLING_COLORS.noun, draft.invSubj === sub, colorCodesEnabled)}">${sub}</button>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                        ${renderMidAdvRow(lang === 'en' ? 'Small word (between the two verbs):' : 'Småord (mellem de to verber):')}
+                        <div class="sh-options-wrap" dir="ltr" style="margin-top:0.55rem;">
+                            <span${rtlAttr} style="font-size:0.78rem; color:${colorCodesEnabled ? ORDSTILLING_COLORS.verb.text : '#7ec4ce'}; font-weight:700; display:inline-flex; align-items:center; gap:0.3rem;">
+                                ${colorCodesEnabled ? `<span class="ord-col-dot" style="background:${ORDSTILLING_COLORS.verb.dot};"></span>` : ''}${lang === 'en' ? '2. verb (action):' : '2. verbum (handling):'}
+                            </span>
+                            ${(sc.twoVerb2Options || ['møde', 'finde', 'lave']).map(v2 => `
+                                <button type="button" class="sh-chip ${draft.twoVerb2 === v2 ? 'active' : ''}" data-pick-tv2="${v2}" style="${chipColorStyle(ORDSTILLING_COLORS.verb, draft.twoVerb2 === v2, colorCodesEnabled)}">${v2}</button>
+                            `).join('')}
+                            <input type="text" class="sh-custom-input" id="sh-inp-tv2" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${(sc.twoVerb2Options || []).includes(draft.twoVerb2) ? '' : escapeHtml(draft.twoVerb2)}" placeholder="${lang === 'en' ? '2. verb ...' : '2. verbum ...'}" />
                         </div>
                     ` : isKanLide ? `
                         <div class="sh-options-wrap" dir="ltr" style="margin-bottom:0.55rem;">
@@ -1636,6 +1906,7 @@ export function renderSkrivehjaelpView(container, navigateFn) {
                             `).join('')}
                             <input type="text" class="sh-custom-input" id="sh-inp-verb" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" value="${sc.verbs.includes(draft.verb) ? '' : escapeHtml(draft.verb)}" placeholder="${escapeHtml(swT('sh_ph_verb', lang))}" />
                         </div>
+                        ${renderMidAdvRow(lang === 'en' ? 'Small word (after verb):' : 'Småord (efter verbet):')}
                     `}
                 </div>
 
@@ -1735,7 +2006,16 @@ export function renderSkrivehjaelpView(container, navigateFn) {
             b.onclick = () => {
                 startCategory = b.dataset.startCat;
                 draft.start = sc.starts[startCategory].options[0];
+                if (sc.starts[startCategory]?.mode === 'two_verbs') {
+                    draft.twoVerbInv = detectTwoVerbInversion(draft.start);
+                }
                 render();
+            };
+        });
+        flowCard.querySelectorAll('[data-cog-route]').forEach(btn => {
+            btn.onclick = () => {
+                const route = btn.dataset.cogRoute;
+                if (route && typeof navigateFn === 'function') navigateFn(route);
             };
         });
         flowCard.querySelectorAll('[data-ext-tab]').forEach(b => {
@@ -1745,10 +2025,32 @@ export function renderSkrivehjaelpView(container, navigateFn) {
             };
         });
         flowCard.querySelectorAll('[data-pick-start]').forEach(b => {
-            b.onclick = () => { draft.start = b.dataset.pickStart; render(); };
+            b.onclick = () => {
+                draft.start = b.dataset.pickStart;
+                if (mode === 'two_verbs') {
+                    draft.twoVerbInv = detectTwoVerbInversion(draft.start);
+                }
+                if (startCategory === 'droem_ramme') {
+                    if (/\b(havde|var|fik|hjalp)\b/i.test(draft.start) && sc.verbs.includes('ville')) {
+                        draft.verb = 'ville';
+                    } else if (!/\b(havde|var|fik|hjalp)\b/i.test(draft.start) && (draft.verb === 'ville' || draft.verb === 'kunne')) {
+                        draft.verb = sc.verbs[0];
+                    }
+                }
+                render();
+            };
         });
         flowCard.querySelectorAll('[data-pick-verb]').forEach(b => {
             b.onclick = () => { draft.verb = b.dataset.pickVerb; render(); };
+        });
+        flowCard.querySelectorAll('[data-pick-midadv]').forEach(b => {
+            b.onclick = () => { draft.midAdv = b.dataset.pickMidadv; render(); };
+        });
+        flowCard.querySelectorAll('[data-pick-tv1]').forEach(b => {
+            b.onclick = () => { draft.twoVerb1 = b.dataset.pickTv1; render(); };
+        });
+        flowCard.querySelectorAll('[data-pick-tv2]').forEach(b => {
+            b.onclick = () => { draft.twoVerb2 = b.dataset.pickTv2; render(); };
         });
         flowCard.querySelectorAll('[data-pick-atsubj]').forEach(b => {
             b.onclick = () => { draft.atSubj = b.dataset.pickAtsubj; render(); };
@@ -1792,11 +2094,19 @@ export function renderSkrivehjaelpView(container, navigateFn) {
             };
         }
 
-        flowCard.querySelector('#sh-inp-start').oninput = (e) => { draft.start = e.target.value; liveUpdatePreview(); };
+        flowCard.querySelector('#sh-inp-start').oninput = (e) => {
+            draft.start = e.target.value;
+            if (mode === 'two_verbs') {
+                draft.twoVerbInv = detectTwoVerbInversion(draft.start);
+            }
+            liveUpdatePreview();
+        };
         const inpVerb = flowCard.querySelector('#sh-inp-verb');
         if (inpVerb) inpVerb.oninput = (e) => { draft.verb = e.target.value; liveUpdatePreview(); };
         const inpAtVerb = flowCard.querySelector('#sh-inp-atverb');
         if (inpAtVerb) inpAtVerb.oninput = (e) => { draft.atVerb = e.target.value; liveUpdatePreview(); };
+        const inpTv2 = flowCard.querySelector('#sh-inp-tv2');
+        if (inpTv2) inpTv2.oninput = (e) => { draft.twoVerb2 = e.target.value; liveUpdatePreview(); };
         const inpKanInf = flowCard.querySelector('#sh-inp-kaninf');
         if (inpKanInf) inpKanInf.oninput = (e) => { draft.kanInf = e.target.value; liveUpdatePreview(); };
         const inpObj = flowCard.querySelector('#sh-inp-obj');
@@ -1818,7 +2128,7 @@ export function renderSkrivehjaelpView(container, navigateFn) {
             let nextCat = startCategory;
             if (startCategory === 'hilsen') {
                 nextCat = 'person';
-            } else if (startCategory === 'person' && sentences.length === 1) {
+            } else if (startCategory === 'person' && sentences.filter(x => x !== '__BR__').length === 1) {
                 nextCat = 'sammenhaeng';
             }
             resetDraftForScenario(activeScenarioId, nextCat);
@@ -1829,20 +2139,20 @@ export function renderSkrivehjaelpView(container, navigateFn) {
     }
 
     function renderPromptSubView(lang, rtlAttr) {
-        if (sentences.length > 0) {
+        const plainUserText = formatDocPlain(sentences);
+        if (plainUserText) {
             const draftCarryCard = document.createElement('div');
             draftCarryCard.className = 'sh-card';
             draftCarryCard.style.borderColor = 'rgba(76, 155, 166, 0.5)';
-            const fullUserText = sentences.join(' ');
             draftCarryCard.innerHTML = `
                 <div class="sh-card-head">
                     <h2 class="sh-card-title"${rtlAttr}>${SVG_PEN}<span>${swT('prompt_draft_label', lang)}</span></h2>
                     <button type="button" class="sh-btn-primary" id="sh-copy-user-text-btn">${SVG_COPY}<span>${swT('btn_copy_my_text', lang)}</span></button>
                 </div>
-                <div class="sh-doc-surface" dir="ltr" style="min-height:auto;">${escapeHtml(fullUserText)}</div>
+                <div class="sh-doc-surface" dir="ltr" style="min-height:auto; white-space:pre-wrap;">${escapeHtml(plainUserText)}</div>
             `;
             const copyUserBtn = draftCarryCard.querySelector('#sh-copy-user-text-btn');
-            copyUserBtn.onclick = () => copyTextWithFeedback(fullUserText, copyUserBtn, `${SVG_COPY}<span>${swT('btn_copy_my_text', lang)}</span>`);
+            copyUserBtn.onclick = () => copyTextWithFeedback(plainUserText, copyUserBtn, `${SVG_COPY}<span>${swT('btn_copy_my_text', lang)}</span>`);
             viewContainer.appendChild(draftCarryCard);
         }
 

@@ -969,7 +969,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraD
 
     const VALID_TABS = new Set(['zoom_in', 'inside', 'zoom_out', 'workshop']);
     const VALID_ZOOM_TRACKS = new Set(Object.keys(ZOOM_TRACKS));
-    const VALID_SCENES = new Set(HYPOTAXIS_SCENES.map(s => s.id));
+    const VALID_SCENES = new Set(ZOOM_OUT_SCENES.map(s => s.id));
     const VALID_WORKSHOP_TRACKS = new Set(['zoom_in_build', 'zoom_out_build', 'quick_quiz']);
 
     let colorCodesEnabled = getColorCodesEnabled();

@@ -114,44 +114,40 @@ const MINDMAP_BOXES = [
 const BOX_MAP = Object.fromEntries(MINDMAP_BOXES.map(b => [b.id, b]));
 
 // ============================================================================
-// 2. DE 24 MÅLORD (4 ORD × 6 MINDMAP-BOKSE) MED PRÆCISE (X, Y) PINS
+// 2. DE 20 MÅLORD (6 MINDMAP-BOKSE) MED PRÆCISE (X, Y) PINS
 // ============================================================================
 const WORDS = [
     // Boks 1: sprogskole / by
     { num: 1, id: 'sprogskole', word: 'en sprogskole', gender: 'en', forms: 'en sprogskole · sprogskolen · sprogskoler', mindmapBox: 'sprogskole_by', x: 29, y: 78, stikord: 'sprogskole · 3 gange/uge' },
     { num: 2, id: 'by', word: 'en by', gender: 'en', forms: 'en by · byen · byer', mindmapBox: 'sprogskole_by', x: 4, y: 45, stikord: 'stor by · centrum' },
     { num: 3, id: 'klassevaerelse', word: 'et klasseværelse', gender: 'et', forms: 'et klasseværelse · klasseværelset · klasseværelser', mindmapBox: 'sprogskole_by', x: 38, y: 45, stikord: 'lyst klasseværelse' },
-    { num: 4, id: 'bibliotek', word: 'et bibliotek', gender: 'et', forms: 'et bibliotek · biblioteket · biblioteker', mindmapBox: 'sprogskole_by', x: 63, y: 18, stikord: 'bibliotek · låne bøger' },
 
     // Boks 2: dage / tid
-    { num: 5, id: 'skema', word: 'et skema', gender: 'et', forms: 'et skema · skemaet · skemaer', mindmapBox: 'dage_tid', x: 47, y: 16, stikord: 'skema · mandag/onsdag' },
-    { num: 6, id: 'ur', word: 'et ur', gender: 'et', forms: 'et ur · uret · ure', mindmapBox: 'dage_tid', x: 28, y: 7, stikord: 'kl. 9–12 · 3 timer' },
-    { num: 7, id: 'morgen', word: 'en morgen', gender: 'en', forms: 'en morgen · morgenen · morgener', mindmapBox: 'dage_tid', x: 14, y: 19, stikord: 'om morgenen · daghold' },
-    { num: 8, id: 'kalender', word: 'en kalender', gender: 'en', forms: 'en kalender · kalenderen · kalendere', mindmapBox: 'dage_tid', x: 40, y: 18, stikord: 'kalender · prøvedato' },
+    { num: 4, id: 'ur', word: 'et ur', gender: 'et', forms: 'et ur · uret · ure', mindmapBox: 'dage_tid', x: 28, y: 7, stikord: 'kl. 9 · undervisning' },
+    { num: 5, id: 'morgen', word: 'en morgen', gender: 'en', forms: 'en morgen · morgenen · morgener', mindmapBox: 'dage_tid', x: 14, y: 19, stikord: 'om morgenen · kl. 9' },
+    { num: 6, id: 'kalender', word: 'en kalender', gender: 'en', forms: 'en kalender · kalenderen · kalendere', mindmapBox: 'dage_tid', x: 40, y: 18, stikord: 'kalender · prøvedato' },
 
     // Boks 3: kursister / lærer
-    { num: 9, id: 'laerer', word: 'en lærer', gender: 'en', forms: 'en lærer · læreren · lærere', mindmapBox: 'kursister_laerer', x: 35, y: 27, stikord: 'venlig lærer · hjælper' },
-    { num: 10, id: 'kursist', word: 'en kursist', gender: 'en', forms: 'en kursist · kursisten · kursister', mindmapBox: 'kursister_laerer', x: 52, y: 61, stikord: '12 kursister · mange lande' },
-    { num: 11, id: 'klassekammerat', word: 'en klassekammerat', gender: 'en', forms: 'en klassekammerat · klassekammeraten · klassekammerater', mindmapBox: 'kursister_laerer', x: 52, y: 33, stikord: 'klassekammerat · dialoger' },
-    { num: 12, id: 'gruppe', word: 'en gruppe', gender: 'en', forms: 'en gruppe · gruppen · grupper', mindmapBox: 'kursister_laerer', x: 69, y: 46, stikord: 'lille gruppe · tale dansk' },
+    { num: 7, id: 'laerer', word: 'en lærer', gender: 'en', forms: 'en lærer · læreren · lærere', mindmapBox: 'kursister_laerer', x: 35, y: 27, stikord: 'sjov og venlig lærer' },
+    { num: 8, id: 'kursist', word: 'en kursist', gender: 'en', forms: 'en kursist · kursisten · kursister', mindmapBox: 'kursister_laerer', x: 52, y: 61, stikord: 'hold med 12 personer' },
+    { num: 9, id: 'klassekammerat', word: 'en klassekammerat', gender: 'en', forms: 'en klassekammerat · klassekammeraten · klassekammerater', mindmapBox: 'kursister_laerer', x: 52, y: 33, stikord: 'klassekammerat · dialoger' },
+    { num: 10, id: 'gruppe', word: 'en gruppe', gender: 'en', forms: 'en gruppe · gruppen · grupper', mindmapBox: 'kursister_laerer', x: 69, y: 46, stikord: 'lille gruppe · tale dansk' },
 
     // Boks 4: aktiviteter
-    { num: 13, id: 'tavle', word: 'en tavle', gender: 'en', forms: 'en tavle · tavlen · tavler', mindmapBox: 'aktiviteter', x: 25, y: 23, stikord: 'nye ord · tavlen' },
-    { num: 14, id: 'bog', word: 'en bog', gender: 'en', forms: 'en bog · bogen · bøger', mindmapBox: 'aktiviteter', x: 30, y: 47, stikord: 'læse tekster · bog' },
-    { num: 15, id: 'computer', word: 'en computer', gender: 'en', forms: 'en computer · computeren · computere', mindmapBox: 'aktiviteter', x: 67, y: 51, stikord: 'skrive · computer' },
-    { num: 16, id: 'haefte', word: 'et hæfte', gender: 'et', forms: 'et hæfte · hæftet · hæfter', mindmapBox: 'aktiviteter', x: 46, y: 60, stikord: 'hæfte · nye ord' },
+    { num: 11, id: 'tavle', word: 'en tavle', gender: 'en', forms: 'en tavle · tavlen · tavler', mindmapBox: 'aktiviteter', x: 25, y: 23, stikord: 'nye ord · tavlen' },
+    { num: 12, id: 'telefon', word: 'en telefon', gender: 'en', forms: 'en telefon · telefonen · telefoner', mindmapBox: 'aktiviteter', x: 30, y: 47, stikord: 'nye ord · telefonen' },
+    { num: 13, id: 'computer', word: 'en computer', gender: 'en', forms: 'en computer · computeren · computere', mindmapBox: 'aktiviteter', x: 67, y: 51, stikord: 'skrive · computer' },
+    { num: 14, id: 'haefte', word: 'et hæfte', gender: 'et', forms: 'et hæfte · hæftet · hæfter', mindmapBox: 'aktiviteter', x: 46, y: 60, stikord: 'hæfte · nye ord' },
 
     // Boks 5: pauser
-    { num: 17, id: 'kantine', word: 'en kantine', gender: 'en', forms: 'en kantine · kantinen · kantiner', mindmapBox: 'pauser', x: 84, y: 15, stikord: 'kantine · hygge' },
-    { num: 18, id: 'kaffe', word: 'en kop kaffe', gender: 'en', forms: 'kaffe · en kop kaffe', mindmapBox: 'pauser', x: 84, y: 28, stikord: 'kaffe · snakke' },
-    { num: 19, id: 'madpakke', word: 'en madpakke', gender: 'en', forms: 'en madpakke · madpakken · madpakker', mindmapBox: 'pauser', x: 82, y: 35, stikord: 'madpakke · rugbrød' },
-    { num: 20, id: 'pause', word: 'en pause', gender: 'en', forms: 'en pause · pausen · pauser', mindmapBox: 'pauser', x: 76, y: 24, stikord: '15 min. pause · venner' },
+    { num: 15, id: 'kaffe', word: 'en kop kaffe', gender: 'en', forms: 'kaffe · en kop kaffe', mindmapBox: 'pauser', x: 84, y: 28, stikord: 'kaffe · klassekammerater' },
+    { num: 16, id: 'pause', word: 'en pause', gender: 'en', forms: 'en pause · pausen · pauser', mindmapBox: 'pauser', x: 76, y: 24, stikord: '15 min. pause · formiddag' },
 
     // Boks 6: transport til sprogskolen
-    { num: 21, id: 'cykel', word: 'en cykel', gender: 'en', forms: 'en cykel · cyklen · cykler', mindmapBox: 'transport', x: 77, y: 89, stikord: 'cykel · 15 min.' },
-    { num: 22, id: 'bus', word: 'en bus', gender: 'en', forms: 'en bus · bussen · busser', mindmapBox: 'transport', x: 94, y: 80, stikord: 'bus · i regnvejr' },
-    { num: 23, id: 'tog', word: 'et tog', gender: 'et', forms: 'et tog · toget · tog', mindmapBox: 'transport', x: 96, y: 41, stikord: 'tog · fra nabobyen' },
-    { num: 24, id: 'bil', word: 'en bil', gender: 'en', forms: 'en bil · bilen · biler', mindmapBox: 'transport', x: 7, y: 88, stikord: 'bil · parkering' }
+    { num: 17, id: 'cykel', word: 'en cykel', gender: 'en', forms: 'en cykel · cyklen · cykler', mindmapBox: 'transport', x: 77, y: 89, stikord: 'cykel · til sprogskolen' },
+    { num: 18, id: 'bus', word: 'en bus', gender: 'en', forms: 'en bus · bussen · busser', mindmapBox: 'transport', x: 94, y: 80, stikord: 'bus · om vinteren' },
+    { num: 19, id: 'tog', word: 'et tog', gender: 'et', forms: 'et tog · toget · tog', mindmapBox: 'transport', x: 96, y: 41, stikord: 'tog · fra nabobyen' },
+    { num: 20, id: 'bil', word: 'en bil', gender: 'en', forms: 'en bil · bilen · biler', mindmapBox: 'transport', x: 7, y: 88, stikord: 'bil · til sprogskolen' }
 ];
 
 // ============================================================================
@@ -159,15 +155,15 @@ const WORDS = [
 // ============================================================================
 const DETECTIVE_MISSIONS = [
     { wordId: 'sprogskole', box: 'sprogskole_by', prompt: 'Find indgangen til den bygning, hvor voksne lærer dansk.', hint: 'Kig nederst til venstre ved hoveddøren.' },
-    { wordId: 'bibliotek', box: 'sprogskole_by', prompt: 'Find rummet med de mange bogreoler bag glasvæggen.', hint: 'Kig øverst i midten/højre.' },
-    { wordId: 'skema', box: 'dage_tid', prompt: 'Find planen på væggen med farvede felter for ugens timer.', hint: 'Hænger på bagvæggen til højre for den grønne tavle.' },
     { wordId: 'ur', box: 'dage_tid', prompt: 'Find det runde ur, der viser hvad klokken er.', hint: 'Hænger helt oppe over tavlen.' },
-    { wordId: 'laerer', box: 'kursister_laerer', prompt: 'Find personen, der står ved tavlen og forklarer.', hint: 'Hun står til venstre i klasseværelset.' },
+    { wordId: 'kalender', box: 'dage_tid', prompt: 'Find den lille grønne kalender på væggen ved siden af tavlen.', hint: 'Hænger lige til højre for den grønne tavle.' },
+    { wordId: 'laerer', box: 'kursister_laerer', prompt: 'Find den sjove og venlige lærer, der står ved tavlen.', hint: 'Hun står til venstre i klasseværelset.' },
     { wordId: 'gruppe', box: 'kursister_laerer', prompt: 'Find de fire kursister, der sidder sammen om ét bord.', hint: 'Kig i midten til højre.' },
+    { wordId: 'telefon', box: 'aktiviteter', prompt: 'Find telefonen på bordet, hvor man kan lære nye ord.', hint: 'Ligger på det lille bord forrest til venstre under tavlen.' },
     { wordId: 'computer', box: 'aktiviteter', prompt: 'Find den bærbare computer på gruppebordet.', hint: 'Den står åben på bordet hos de fire kursister.' },
-    { wordId: 'bog', box: 'aktiviteter', prompt: 'Find den store åbne lærebog på bordet forrest til venstre.', hint: 'Ligger på det lille bord under tavlen.' },
-    { wordId: 'madpakke', box: 'pauser', prompt: 'Find den åbne blå madkasse med rugbrødsmadder.', hint: 'Står på bordet i kantinen øverst til højre.' },
-    { wordId: 'kaffe', box: 'pauser', prompt: 'Find den dampende kop kaffe i pausen.', hint: 'Står på kantinebordet ved siden af madpakken.' },
+    { wordId: 'kaffe', box: 'pauser', prompt: 'Find den dampende kop kaffe på pausebordet.', hint: 'Står på bordet øverst til højre.' },
+    { wordId: 'pause', box: 'pauser', prompt: 'Find de tre kursister, der hygger sig sammen i pausen.', hint: 'Kig øverst til højre i rummet.' },
+    { wordId: 'cykel', box: 'transport', prompt: 'Find cyklen på den grønne cykelsti foran skolen.', hint: 'Kig nederst på vejen.' },
     { wordId: 'bus', box: 'transport', prompt: 'Find den gule bybus, der kører forbi stoppestedet.', hint: 'Kig helt nederst til højre.' },
     { wordId: 'tog', box: 'transport', prompt: 'Find toget, der kører på skinner i baggrunden.', hint: 'Kig til højre uden for bygningen.' }
 ];
@@ -193,30 +189,30 @@ const GRAMMAR_REWRITE = [
 ];
 
 const GRAMMAR_CONTEXT = [
-    { before: 'Jeg går ', after: ' sprogskole i Odense.', opts: ['på', 'i', 'om'], ans: 'på', exp: 'Altid "på sprogskole".' },
-    { before: 'Jeg har undervisning ', after: ' morgenen fra kl. 9 til 12.', opts: ['om', 'på', 'til'], ans: 'om', exp: 'Vane om morgenen: "om morgenen".' },
-    { before: 'I pausen sidder jeg ', after: ' kantinen med mine venner.', opts: ['i', 'om', 'til'], ans: 'i', exp: 'Inde i rummet: "i kantinen".' },
-    { before: 'Om vinteren kommer jeg ', after: ' bus til skolen.', opts: ['med', 'på', 'i'], ans: 'med', exp: 'Offentlig transport: "med bus".' },
-    { before: 'Læreren skriver nye ord ', after: ' tavlen.', opts: ['på', 'i', 'om'], ans: 'på', exp: 'Flade: "på tavlen".' }
+    { before: 'Jeg går ', after: ' sprogskole tre gange om ugen.', opts: ['på', 'i', 'om'], ans: 'på', exp: 'Altid "på sprogskole".' },
+    { before: 'Undervisningen starter kl. 9 ', after: ' morgenen.', opts: ['om', 'på', 'til'], ans: 'om', exp: 'Vane om morgenen: "om morgenen".' },
+    { before: 'Vi lærer nye ord ', after: ' telefonen.', opts: ['på', 'i', 'om'], ans: 'på', exp: 'Skærm/app: "på telefonen".' },
+    { before: 'Om vinteren tager jeg ', after: ' bus til skolen.', opts: ['med', 'på', 'i'], ans: 'med', exp: 'Offentlig transport: "med bus".' },
+    { before: 'Læreren skriver de nye ord ', after: ' tavlen.', opts: ['på', 'i', 'om'], ans: 'på', exp: 'Flade: "på tavlen".' }
 ];
 
 // ============================================================================
 // 5. FANE 4: BYG SÆTNINGER (PUSLEOPGAVER + TRIN-FOR-TRIN)
 // ============================================================================
 const PUZZLES = [
-    { target: ['Jeg', 'går', 'på sprogskole', 'i Odense'], pool: ['i Odense', 'går', 'Jeg', 'på sprogskole'] },
-    { target: ['Vi', 'har', 'undervisning', 'mandag og onsdag'], pool: ['mandag og onsdag', 'Vi', 'undervisning', 'har'] },
-    { target: ['Min lærer', 'skriver', 'nye ord', 'på tavlen'], pool: ['på tavlen', 'Min lærer', 'nye ord', 'skriver'] },
-    { target: ['Jeg', 'drikker', 'en kop kaffe', 'i pausen'], pool: ['i pausen', 'en kop kaffe', 'Jeg', 'drikker'] },
-    { target: ['Vi', 'taler', 'dansk', 'i en lille gruppe'], pool: ['i en lille gruppe', 'taler', 'dansk', 'Vi'] },
-    { target: ['Jeg', 'cykler', 'til sprogskolen', 'om morgenen'], pool: ['om morgenen', 'cykler', 'Jeg', 'til sprogskolen'] }
+    { target: ['Jeg', 'går', 'på sprogskole', 'tre gange om ugen'], pool: ['tre gange om ugen', 'går', 'Jeg', 'på sprogskole'] },
+    { target: ['Undervisningen', 'starter', 'klokken ni', 'om morgenen'], pool: ['om morgenen', 'Undervisningen', 'klokken ni', 'starter'] },
+    { target: ['Vores lærer', 'er', 'sjov og venlig', 'i klassen'], pool: ['i klassen', 'Vores lærer', 'sjov og venlig', 'er'] },
+    { target: ['Vi', 'lærer', 'nye ord', 'på telefonen'], pool: ['på telefonen', 'Vi', 'nye ord', 'lærer'] },
+    { target: ['Jeg', 'drikker', 'en kop kaffe', 'med mine klassekammerater'], pool: ['med mine klassekammerater', 'en kop kaffe', 'Jeg', 'drikker'] },
+    { target: ['Jeg', 'kører', 'på cykel', 'til sprogskolen'], pool: ['til sprogskolen', 'kører', 'Jeg', 'på cykel'] }
 ];
 
 const STEP_BUILDER = {
-    s1: ['Jeg', 'Vi', 'Min lærer', 'Mine klassekammerater'],
-    s2: ['går', 'taler', 'læser', 'drikker', 'cykler', 'skriver'],
-    s3: ['på sprogskole', 'dansk', 'en kort tekst', 'kaffe', 'nye ord', 'til sprogskolen'],
-    s4: ['om morgenen', 'i pausen', 'i klasseværelset', 'på 15 minutter', 'med mine venner']
+    s1: ['Jeg', 'Vi', 'Vores lærer', 'Min klassekammerat'],
+    s2: ['går', 'lærer', 'skriver', 'drikker', 'taler', 'kører'],
+    s3: ['på sprogskole', 'nye ord', 'en kop kaffe', 'dansk', 'på cykel', 'en tekst'],
+    s4: ['på telefonen', 'i pausen', 'på tavlen', 'i en lille gruppe', 'til sprogskolen', 'om morgenen']
 };
 
 // ============================================================================
@@ -227,16 +223,16 @@ const SKRIVE_SCENARIOS = {
         id: 'sprogskole_by',
         starts: {
             person: { labelKey: 'cat_person', mode: 'normal', options: ['Jeg', 'Min sprogskole', 'Vores klasseværelse'] },
-            sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['I Odense', 'Tæt på centrum', 'På skolen'] },
+            sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['I en stor by', 'Tæt på centrum', 'På skolen'] },
             tid: { labelKey: 'cat_tid', mode: 'inversion', options: ['Nu', 'I dag', 'Siden august'] },
             sammenhaeng: { labelKey: 'cat_sammenhaeng', mode: 'inversion', options: ['Derfor', 'Desuden', 'Heldigvis'] },
             at_clause: { labelKey: 'cat_at_mening', mode: 'at_clause', options: ['Jeg er glad for, at', 'Jeg synes, at'] }
         },
         verbs: ['går', 'ligger', 'er', 'har'],
-        atSubjects: ['min sprogskole', 'jeg', 'klasseværelset'],
+        atSubjects: ['min sprogskole', 'jeg', 'vores klasseværelse'],
         atVerbs: ['ligger', 'er', 'har'],
         invertedSubjects: ['jeg', 'min sprogskole', 'vi'],
-        objects: ['på sprogskole i Odense', 'tæt på centrum', 'et stort og lyst klasseværelse', 'et godt bibliotek'],
+        objects: ['på sprogskole tre gange om ugen', 'i en stor by', 'lyst og pænt', 'tæt på centrum'],
         extConj: [
             { label: 'Ingen udvidelse', text: '' },
             { label: ', fordi det er tæt på min bolig', text: ', fordi det er tæt på min bolig' },
@@ -256,11 +252,11 @@ const SKRIVE_SCENARIOS = {
             sammenhaeng: { labelKey: 'cat_sammenhaeng', mode: 'inversion', options: ['Derfor', 'Derefter', 'Bagefter'] },
             at_clause: { labelKey: 'cat_at_mening', mode: 'at_clause', options: ['Jeg synes, at', 'Det er godt, at'] }
         },
-        verbs: ['går', 'har', 'starter', 'slutter', 'møder'],
-        atSubjects: ['vi', 'jeg', 'skemaet'],
+        verbs: ['går', 'har', 'starter', 'møder', 'skriver'],
+        atSubjects: ['vi', 'jeg', 'undervisningen'],
         atVerbs: ['starter', 'passer godt', 'har tid'],
         invertedSubjects: ['jeg', 'vi', 'undervisningen'],
-        objects: ['i skole fra kl. 9 til 12', 'undervisning tre dage om ugen', 'klokken ni om morgenen', 'på dagholdet'],
+        objects: ['på skolen klokken ni', 'klokken ni om morgenen', 'prøvedatoen i min kalender', 'undervisning tre dage om ugen'],
         extConj: [
             { label: 'Ingen udvidelse', text: '' },
             { label: ', så jeg har tid til lektier', text: ', så jeg har tid til lektier' },
@@ -274,23 +270,23 @@ const SKRIVE_SCENARIOS = {
     kursister_laerer: {
         id: 'kursister_laerer',
         starts: {
-            person: { labelKey: 'cat_person', mode: 'normal', options: ['Min lærer', 'Mine klassekammerater', 'Vi', 'Jeg'] },
-            sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['På mit hold', 'I klassen'] },
+            person: { labelKey: 'cat_person', mode: 'normal', options: ['Vores lærer', 'Jeg', 'Vi', 'Mine klassekammerater'] },
+            sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['På mit hold', 'I klassen', 'I en lille gruppe'] },
             sammenhaeng: { labelKey: 'cat_sammenhaeng', mode: 'inversion', options: ['Desuden', 'Derfor', 'Heldigvis'] },
             at_clause: { labelKey: 'cat_at_mening', mode: 'at_clause', options: ['Jeg er glad for, at', 'Jeg synes, at'] }
         },
-        verbs: ['er', 'kommer', 'hjælper', 'taler', 'har'],
-        atSubjects: ['min lærer', 'vi', 'kursisterne'],
-        atVerbs: ['er', 'hjælper hinanden', 'er tålmodig'],
+        verbs: ['er', 'øver', 'taler', 'hjælper', 'kommer'],
+        atSubjects: ['vores lærer', 'vi', 'kursisterne'],
+        atVerbs: ['er sjov og venlig', 'hjælper hinanden', 'taler dansk'],
         invertedSubjects: ['vi', 'jeg', 'kursisterne'],
-        objects: ['meget venlig og tålmodig', 'fra mange forskellige lande', 'tolv kursister på holdet', 'mig med udtale og grammatik'],
+        objects: ['sjov og venlig', 'kursist på et hold med tolv personer', 'dialoger med min klassekammerat', 'dansk i en lille gruppe'],
         extConj: [
             { label: 'Ingen udvidelse', text: '' },
             { label: ', fordi alle hjælper hinanden', text: ', fordi alle hjælper hinanden' },
             { label: ', og vi griner meget sammen', text: ', og vi griner meget sammen' }
         ],
         extRel: [
-            { label: ', som altid forklarer roligt', text: ', som altid forklarer roligt' },
+            { label: ', som er sjov og venlig', text: ', som er sjov og venlig' },
             { label: ', der kommer fra hele verden', text: ', der kommer fra hele verden' }
         ]
     },
@@ -299,15 +295,15 @@ const SKRIVE_SCENARIOS = {
         starts: {
             person: { labelKey: 'cat_person', mode: 'normal', options: ['Vi', 'Jeg', 'Læreren'] },
             tid: { labelKey: 'cat_tid', mode: 'inversion', options: ['I undervisningen', 'Hver dag', 'Først', 'Bagefter'] },
-            sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['På tavlen', 'I klassen', 'I grupper'] },
+            sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['På tavlen', 'På telefonen', 'I en lille gruppe'] },
             sammenhaeng: { labelKey: 'cat_sammenhaeng', mode: 'inversion', options: ['Desuden', 'Derefter', 'Også'] },
             at_clause: { labelKey: 'cat_at_mening', mode: 'at_clause', options: ['Jeg synes, at', 'Jeg kan godt lide, at'] }
         },
-        verbs: ['læser', 'skriver', 'taler', 'øver', 'laver'],
+        verbs: ['lærer', 'skriver', 'taler', 'øver', 'laver'],
         atSubjects: ['vi', 'jeg'],
-        atVerbs: ['taler dansk', 'øver udtale', 'laver gruppearbejde'],
+        atVerbs: ['lærer nye ord', 'taler dansk', 'øver udtale'],
         invertedSubjects: ['vi', 'jeg', 'læreren'],
-        objects: ['korte tekster i bogen', 'dansk i små grupper', 'nye ord i mit hæfte', 'opgaver på computeren', 'dialoger med min klassekammerat'],
+        objects: ['nye ord på telefonen', 'de nye ord på tavlen', 'en tekst på min computer', 'nye danske ord i mit hæfte', 'dialoger med min klassekammerat'],
         extConj: [
             { label: 'Ingen udvidelse', text: '' },
             { label: ', fordi jeg lærer meget af at tale', text: ', fordi jeg lærer meget af at tale' },
@@ -321,17 +317,17 @@ const SKRIVE_SCENARIOS = {
     pauser: {
         id: 'pauser',
         starts: {
-            person: { labelKey: 'cat_person', mode: 'normal', options: ['Jeg', 'Vi', 'Mine venner og jeg'] },
-            tid: { labelKey: 'cat_tid', mode: 'inversion', options: ['I pausen', 'Klokken halv elleve', 'Midt på formiddagen'] },
-            sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['I kantinen', 'Udenfor'] },
+            person: { labelKey: 'cat_person', mode: 'normal', options: ['Jeg', 'Vi', 'Mine klassekammerater og jeg'] },
+            tid: { labelKey: 'cat_tid', mode: 'inversion', options: ['I pausen', 'Midt på formiddagen', 'Klokken halv elleve'] },
+            sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['På skolen', 'Udenfor', 'Ved bordet'] },
             sammenhaeng: { labelKey: 'cat_sammenhaeng', mode: 'inversion', options: ['Derfor', 'Bagefter', 'Samtidig'] },
             at_clause: { labelKey: 'cat_at_mening', mode: 'at_clause', options: ['Jeg synes, at', 'Det er hyggeligt, at'] }
         },
-        verbs: ['drikker', 'spiser', 'snakker', 'sidder', 'har'],
+        verbs: ['drikker', 'har', 'snakker', 'sidder'],
         atSubjects: ['vi', 'jeg'],
         atVerbs: ['kan slappe af', 'snakker dansk', 'hygger os'],
         invertedSubjects: ['jeg', 'vi'],
-        objects: ['en kop kaffe i kantinen', 'min madpakke med rugbrød', 'femten minutters pause', 'med mine klassekammerater'],
+        objects: ['en kop kaffe med mine klassekammerater', 'femten minutters pause midt på formiddagen', 'en kop te i pausen', 'med mine venner'],
         extConj: [
             { label: 'Ingen udvidelse', text: '' },
             { label: ', fordi vi trænger til frisk energi', text: ', fordi vi trænger til frisk energi' },
@@ -345,25 +341,25 @@ const SKRIVE_SCENARIOS = {
     transport: {
         id: 'transport',
         starts: {
-            person: { labelKey: 'cat_person', mode: 'normal', options: ['Jeg', 'Det', 'Turen'] },
+            person: { labelKey: 'cat_person', mode: 'normal', options: ['Jeg', 'Min klassekammerat', 'Nogle kursister', 'Det'] },
             tid: { labelKey: 'cat_tid', mode: 'inversion', options: ['Om morgenen', 'Om vinteren', 'Når det regner', 'Hver dag'] },
-            sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['På cykelstien', 'Fra mit hjem'] },
+            sted: { labelKey: 'cat_sted', mode: 'inversion', options: ['På cykelstien', 'Fra nabobyen'] },
             sammenhaeng: { labelKey: 'cat_sammenhaeng', mode: 'inversion', options: ['Derfor', 'Heldigvis', 'Men'] },
             at_clause: { labelKey: 'cat_at_mening', mode: 'at_clause', options: ['Jeg er glad for, at', 'Jeg synes, at'] }
         },
-        verbs: ['cykler', 'tager', 'kører', 'går', 'varer'],
+        verbs: ['kører', 'tager', 'cykler', 'går'],
         atSubjects: ['det', 'jeg', 'bussen'],
         atVerbs: ['er hurtigt', 'kan cykle', 'stopper tæt på'],
-        invertedSubjects: ['jeg', 'det', 'turen'],
-        objects: ['på cykel til sprogskolen', 'bussen tæt på min bolig', 'kun femten minutter', 'til fods gennem byen', 'toget fra nabobyen'],
+        invertedSubjects: ['jeg', 'min klassekammerat', 'det'],
+        objects: ['på cykel til sprogskolen', 'med bus til skolen', 'toget fra nabobyen', 'i bil til sprogskolen', 'kun femten minutter'],
         extConj: [
             { label: 'Ingen udvidelse', text: '' },
             { label: ', fordi det giver frisk luft', text: ', fordi det giver frisk luft' },
-            { label: ', men i regnvejr tager jeg bussen', text: ', men i regnvejr tager jeg bussen' }
+            { label: ', men om vinteren tager jeg med bus', text: ', men om vinteren tager jeg med bus' }
         ],
         extRel: [
             { label: ', som stopper lige foran skolen', text: ', som stopper lige foran skolen' },
-            { label: ', der kun tager ti minutter', text: ', der kun tager ti minutter' }
+            { label: ', der kun tager femten minutter', text: ', der kun tager femten minutter' }
         ]
     }
 };

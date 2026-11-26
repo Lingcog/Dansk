@@ -443,6 +443,81 @@ export const SENTENCE_1_VISUAL_NODES = [
         rightTitle: 'Nej / forbudt',
         rightDiagramType: 's6_forbud',
         vrimmelSpot: { x: 72, y: 66, radius: 14, label: 'Tag geden' }
+    },
+    // --- NYE HUMOR-SÆTNINGER I DEL 1 (Linje 4–8) ---
+    {
+        id: 'tredje_bror',
+        icon: ICON_LINK,
+        chipLabel: 'den tredje bror',
+        matchTokens: ['kom', 'komme', 'tredje', 'bror', 'brødre'],
+        leftTitle: 'Den tredje bror (yngst)',
+        leftDiagramType: 'family_bottom',
+        rightTitle: 'De to ældste',
+        rightDiagramType: 'family_not_bottom',
+        vrimmelSpot: { x: 68, y: 48, radius: 13, label: 'Tredje bror' }
+    },
+    {
+        id: 'ingen_regnede_med',
+        icon: ICON_PERSON,
+        chipLabel: 'ingen regnede ham med',
+        matchTokens: ['ingen', 'regnede', 'regne'],
+        leftTitle: 'Udenfor (ikke regnet med)',
+        leftDiagramType: 's7_udenfor',
+        rightTitle: 'Alle 3 med sammen',
+        rightDiagramType: 's7_alle_med',
+        vrimmelSpot: { x: 68, y: 48, radius: 13, label: 'Ikke regnet med' }
+    },
+    {
+        id: 'lo_hoejt',
+        icon: ICON_SPEECH,
+        chipLabel: 'lo højt af ham',
+        matchTokens: ['lo', 'le', 'højt', 'høj'],
+        leftTitle: 'Lo højt (grinede)',
+        leftDiagramType: 's7_lo',
+        rightTitle: 'Alvorlig / tavs',
+        rightDiagramType: 's3_genert',
+        vrimmelSpot: { x: 42, y: 45, radius: 14, label: 'Brødrene ler' }
+    },
+    {
+        id: 'red_af_sted',
+        icon: ICON_LANDSCAPE,
+        chipLabel: 'red af sted på fine heste',
+        matchTokens: ['red', 'ride', 'af sted', 'fine', 'fin', 'heste', 'hest', 'giv', 'give'],
+        leftTitle: 'Red af sted på heste',
+        leftImg: 'assets/klods_hans_s1/hest.jpg',
+        rightTitle: 'Blev stående (0)',
+        rightDiagramType: 's5_giver_op',
+        vrimmelSpot: { x: 44, y: 52, radius: 14, label: 'Fine heste' }
+    },
+    {
+        id: 'blive_gift',
+        icon: ICON_TROPHY,
+        chipLabel: 'lyst til at blive gift',
+        matchTokens: ['lyst', 'blive gift', 'gift', 'vil have'],
+        leftTitle: 'Blive gift (par)',
+        leftDiagramType: 's2_finde_mand',
+        rightTitle: 'Blive alene',
+        rightDiagramType: 's2_blive_alene'
+    },
+    {
+        id: 'tager_alligevel',
+        icon: ICON_BARS,
+        chipLabel: 'hvis ... alligevel!',
+        matchTokens: ['hvis', 'alligevel'],
+        leftTitle: 'Alligevel (trods nej!)',
+        leftDiagramType: 's5_proever',
+        rightTitle: 'Stopper ved nej',
+        rightDiagramType: 's6_forbud',
+        vrimmelSpot: { x: 68, y: 48, radius: 13, label: 'Klods-Hans' }
+    },
+    {
+        id: 'kan_baere',
+        icon: ICON_PERSON,
+        chipLabel: 'min egen ged kan bære mig',
+        matchTokens: ['tager', 'tage', 'egen', 'ged', 'geden', 'bære', 'sprang', 'springe', 'kommer', 'vejen', 'vej'],
+        leftTitle: 'Geden bærer Klods-Hans',
+        leftImg: 'assets/klods_hans_s1/ged.jpg',
+        vrimmelSpot: { x: 72, y: 64, radius: 15, label: 'På geden!' }
     }
 ];
 
@@ -474,14 +549,35 @@ export function findDel1VisualNodeByToken(lineIndex, token) {
     const lineNodeMap = {
         2: ['storebror', 'tager_til_slottet', 'sagde_stolt', 'kan_tale', 'store_komplicerede', 'meget_klog'],
         3: ['mellembror', 'traadte_frem', 'glad_smilede', 'vil_ogsaa_gaa', 'mange_sange', 'altid', 'god_til'],
-        4: ['klods_hans_yngst', 'proever_ogsaa', 'raabte', 'hest_vs_ged'],
-        5: ['gammel_far', 'rystede_paa_hovedet', 'svarede', 'tag_du_bare', 'klods_hans_yngst']
+        4: ['tredje_bror', 'ingen_regnede_med', 'der_var_saa_kloge', 'klods_hans_yngst'],
+        5: ['storebror', 'mellembror', 'klods_hans_yngst', 'vil_ogsaa_gaa', 'raabte', 'lo_hoejt', 'red_af_sted'],
+        6: ['gammel_far', 'red_af_sted', 'raabte', 'blive_gift', 'tager_alligevel'],
+        7: ['gammel_far', 'rystede_paa_hovedet', 'svarede', 'hest_vs_ged', 'kan_tale', 'der_var_saa_kloge', 'tredje_bror'],
+        8: ['mange_sange', 'raabte', 'kan_baere']
     };
     const ids = lineNodeMap[lineIndex];
     if (!ids) return null;
 
-    if (lineIndex === 5 && (rawText === 'faren' || rawKey === 'far')) {
+    if ((lineIndex === 6 || lineIndex === 7) && (rawText === 'faren' || rawText === 'far' || rawKey === 'far')) {
         return SENTENCE_1_VISUAL_NODES.find(n => n.id === 'gammel_far') || null;
+    }
+    if (lineIndex === 4 && (rawText === 'ikke' || rawText === 'klog' || rawKey === 'klog')) {
+        return SENTENCE_1_VISUAL_NODES.find(n => n.id === 'der_var_saa_kloge') || null;
+    }
+    if (lineIndex === 4 && (rawText === 'kaldte' || rawKey === 'kalde')) {
+        return SENTENCE_1_VISUAL_NODES.find(n => n.id === 'klods_hans_yngst') || null;
+    }
+    if (lineIndex === 7 && (rawText === 'får' || rawText === 'ingen' || rawText === 'hest' || rawKey === 'hest')) {
+        return SENTENCE_1_VISUAL_NODES.find(n => n.id === 'hest_vs_ged') || null;
+    }
+    if (lineIndex === 7 && (rawText === 'kan' || rawText === 'ikke' || rawText === 'tale' || rawKey === 'tale')) {
+        return SENTENCE_1_VISUAL_NODES.find(n => n.id === 'kan_tale') || null;
+    }
+    if (lineIndex === 8 && (rawText === 'syngende' || rawKey === 'synge')) {
+        return SENTENCE_1_VISUAL_NODES.find(n => n.id === 'mange_sange') || null;
+    }
+    if (lineIndex === 8 && (rawText === 'red' || rawKey === 'ride')) {
+        return SENTENCE_1_VISUAL_NODES.find(n => n.id === 'kan_baere') || null;
     }
 
     for (const id of ids) {
@@ -913,6 +1009,39 @@ function renderCustomDiagram(variant) {
                     <line x1="60" y1="91" x2="92" y2="59" stroke="#fb923c" stroke-width="3.5"/>
                 </svg>
             `;
+        case 's7_udenfor':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <circle cx="88" cy="75" r="46" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="2.5"/>
+                    <circle cx="72" cy="64" r="12" fill="#38bdf8"/>
+                    <circle cx="104" cy="86" r="12" fill="#38bdf8"/>
+                    <line x1="142" y1="75" x2="176" y2="75" stroke="#fb923c" stroke-width="2.5" stroke-dasharray="4,4"/>
+                    <circle cx="196" cy="75" r="14" fill="rgba(253,224,71,0.22)" stroke="#fde047" stroke-width="3"/>
+                </svg>
+            `;
+        case 's7_alle_med':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <circle cx="120" cy="75" r="50" fill="rgba(148,163,184,0.12)" stroke="#94a3b8" stroke-width="2.5"/>
+                    <circle cx="98" cy="64" r="11" fill="#fb923c"/>
+                    <circle cx="142" cy="64" r="11" fill="#fb923c"/>
+                    <circle cx="120" cy="96" r="11" fill="#fb923c"/>
+                </svg>
+            `;
+        case 's7_lo':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <circle cx="96" cy="75" r="36" fill="rgba(253,224,71,0.15)" stroke="#fde047" stroke-width="3"/>
+                    <path d="M 80 65 Q 86 58 92 65" fill="none" stroke="#fde047" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M 100 65 Q 106 58 112 65" fill="none" stroke="#fde047" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M 78 80 Q 96 102 114 80 Z" fill="#38bdf8"/>
+                    <path d="M 146 52 Q 162 75 146 98" fill="none" stroke="#fde047" stroke-width="3.5" stroke-linecap="round"/>
+                    <path d="M 164 40 Q 186 75 164 110" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            `;
         default:
             return '';
     }
@@ -929,8 +1058,10 @@ function renderFamilyTreeDiagram(variant) {
     const isLit = (key) => {
         if (variant === 'family_top') return key === 'top';
         if (variant === 'family_middle') return key === 'middle';
+        if (variant === 'family_bottom') return key === 'bottom';
         if (variant === 'family_not_top') return key !== 'top';
         if (variant === 'family_not_middle') return key !== 'middle';
+        if (variant === 'family_not_bottom') return key !== 'bottom';
         return false;
     };
 

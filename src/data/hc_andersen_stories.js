@@ -26,8 +26,8 @@ export const hcAndersenStories = [
                 "chapter": "Scene 1: På bondegården",
                 "chapterEn": "Scene 1: At the Farm",
                 "vrimmelImage": "assets/klods_hans_scene1.jpg",
-                "audioText": "Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge. Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende. Storebror sagde: Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog! Mellembror sagde: Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge! Klods-Hans råbte: Jeg prøver også! Jeg har ingen hest, men jeg tager min ged! Faren sagde: Tag du bare geden, Klods-Hans.",
-                "text": "Fortæller: »Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge.«\n\nFar: »Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende.«\n\nStorebror: »Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog!«\n\nMellembror: »Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge!«\n\nKlods-Hans: »Jeg prøver også! Jeg har ingen hest, men jeg tager min ged!«\n\nFar: »Tag du bare geden, Klods-Hans.«",
+                "audioText": "Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge. En dag fortalte den gamle far dem: Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende. Jeg tager til slottet, sagde storebror stolt. Jeg kan tale om store og komplicerede ting. Jeg er meget klog! Da trådte mellembror frem og smilede: Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge! I det samme kom den tredje bror. Ingen regnede ham rigtig med, for han var ikke så klog som de to andre — og ham kaldte de bare Klods-Hans. Jeg vil også med! råbte Klods-Hans. Storebror og mellembror lo højt af ham og red af sted på deres fine heste. Far, giv mig en hest! råbte Klods-Hans. Jeg har lyst til at blive gift. Hvis hun vil have mig, så er det godt — og hvis hun ikke vil, så tager jeg hende alligevel! Faren rystede på hovedet og svarede: Du får ingen hest! Du kan jo ikke tale som dine kloge brødre. Så tager jeg min egen ged — den kan godt bære mig! sagde Klods-Hans. Han sprang op på geden, råbte: Her kommer jeg! og red syngende ud ad vejen.",
+                "text": "Fortæller: »Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge.«\n\nFar: »Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende.«\n\nStorebror: »Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog!«\n\nMellembror: »Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge!«\n\nFortæller: I det samme kom den tredje bror. Ingen regnede ham rigtig med, for han var ikke så klog som de to andre — og ham kaldte de bare Klods-Hans.\n\nKlods-Hans: »Jeg vil også med!« Storebror og mellembror lo højt af ham og red af sted på deres fine heste.\n\nKlods-Hans: »Far, giv mig en hest! Jeg har lyst til at blive gift. Hvis hun vil have mig, så er det godt — og hvis hun ikke vil, så tager jeg hende alligevel!«\n\nFar: »Du får ingen hest! Du kan jo ikke tale som dine kloge brødre.«\n\nKlods-Hans: »Så tager jeg min egen ged — den kan godt bære mig!« Han sprang op på geden, råbte: »Her kommer jeg!« og red syngende ud ad vejen.",
                 "hotspots": [
                     {
                         "x": 38,
@@ -875,217 +875,148 @@ export const hcAndersenStories = [
                         ]
                     },
                     {
+                        "speaker": "Fortæller",
+                        "speakerIcon": "",
+                        "audioText": "I det samme kom den tredje bror. Ingen regnede ham rigtig med, for han var ikke så klog som de to andre — og ham kaldte de bare Klods-Hans.",
+                        "tokens": [
+                            { "text": "I det samme ", "type": "plain" },
+                            { "text": "kom", "type": "vrb", "key": "komme" },
+                            { "text": " den ", "type": "plain" },
+                            { "text": "tredje", "type": "adj", "key": "tredje" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "bror", "type": "sub", "key": "bror" },
+                            { "text": ". ", "type": "plain" },
+                            { "text": "Ingen", "type": "pro", "key": "ingen" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "regnede", "type": "vrb", "key": "regne" },
+                            { "text": " ham rigtig med, for han var ", "type": "plain" },
+                            { "text": "ikke", "type": "adv", "key": "ikke" },
+                            { "text": " så ", "type": "plain" },
+                            { "text": "klog", "type": "adj", "key": "klog" },
+                            { "text": " som de to andre — og ham ", "type": "plain" },
+                            { "text": "kaldte", "type": "vrb", "key": "kalde" },
+                            { "text": " de bare ", "type": "plain" },
+                            { "text": "Klods-Hans", "type": "sub", "key": "klods-hans" },
+                            { "text": ".", "type": "plain" }
+                        ]
+                    },
+                    {
                         "speaker": "Klods-Hans",
                         "speakerIcon": "",
-                        "audioText": "Jeg prøver også! råbte Klods-Hans. Jeg har ingen hest, men jeg tager min ged!",
+                        "audioText": "Jeg vil også med! råbte Klods-Hans. Storebror og mellembror lo højt af ham og red af sted på deres fine heste.",
                         "tokens": [
-                            {
-                                "text": "»",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "Jeg",
-                                "type": "pro",
-                                "key": "jeg"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "prøver",
-                                "type": "vrb",
-                                "key": "prøve"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "også",
-                                "type": "adv",
-                                "key": "ogsaa"
-                            },
-                            {
-                                "text": "!",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "« ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "råbte",
-                                "type": "vrb",
-                                "key": "råbe"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "Klods-Hans",
-                                "type": "sub",
-                                "key": "klods-hans"
-                            },
-                            {
-                                "text": ". »",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "Jeg",
-                                "type": "pro",
-                                "key": "jeg"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "har",
-                                "type": "vrb",
-                                "key": "have"
-                            },
-                            {
-                                "text": " ingen hest, ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "men",
-                                "type": "konj",
-                                "key": "men"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "jeg",
-                                "type": "pro",
-                                "key": "jeg"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "tager",
-                                "type": "vrb",
-                                "key": "tage"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "min",
-                                "type": "pro",
-                                "key": "min"
-                            },
-                            {
-                                "text": " ged!",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "«",
-                                "type": "plain"
-                            }
+                            { "text": "»Jeg ", "type": "plain" },
+                            { "text": "vil", "type": "vrb", "key": "ville" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "også", "type": "adv", "key": "ogsaa" },
+                            { "text": " med!« ", "type": "plain" },
+                            { "text": "råbte", "type": "vrb", "key": "råbe" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "Klods-Hans", "type": "sub", "key": "klods-hans" },
+                            { "text": ". ", "type": "plain" },
+                            { "text": "Storebror", "type": "sub", "key": "storebror" },
+                            { "text": " og ", "type": "plain" },
+                            { "text": "mellembror", "type": "sub", "key": "mellembror" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "lo", "type": "vrb", "key": "le" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "højt", "type": "adv", "key": "høj" },
+                            { "text": " af ham og ", "type": "plain" },
+                            { "text": "red", "type": "vrb", "key": "ride" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "af sted", "type": "adv", "key": "af sted" },
+                            { "text": " på deres ", "type": "plain" },
+                            { "text": "fine", "type": "adj", "key": "fin" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "heste", "type": "sub", "key": "hest" },
+                            { "text": ".", "type": "plain" }
+                        ]
+                    },
+                    {
+                        "speaker": "Klods-Hans",
+                        "speakerIcon": "",
+                        "audioText": "Far, giv mig en hest! råbte Klods-Hans. Jeg har lyst til at blive gift. Hvis hun vil have mig, så er det godt — og hvis hun ikke vil, så tager jeg hende alligevel!",
+                        "tokens": [
+                            { "text": "»", "type": "plain" },
+                            { "text": "Far", "type": "sub", "key": "far" },
+                            { "text": ", ", "type": "plain" },
+                            { "text": "giv", "type": "vrb", "key": "give" },
+                            { "text": " mig en ", "type": "plain" },
+                            { "text": "hest", "type": "sub", "key": "hest" },
+                            { "text": "!« ", "type": "plain" },
+                            { "text": "råbte", "type": "vrb", "key": "råbe" },
+                            { "text": " Klods-Hans. »Jeg har ", "type": "plain" },
+                            { "text": "lyst", "type": "sub", "key": "lyst" },
+                            { "text": " til at ", "type": "plain" },
+                            { "text": "blive gift", "type": "vrb", "key": "gift" },
+                            { "text": ". ", "type": "plain" },
+                            { "text": "Hvis", "type": "konj", "key": "hvis" },
+                            { "text": " hun ", "type": "plain" },
+                            { "text": "vil have", "type": "vrb", "key": "have" },
+                            { "text": " mig, så er det godt — og hvis hun ikke vil, så tager jeg hende ", "type": "plain" },
+                            { "text": "alligevel", "type": "adv", "key": "alligevel" },
+                            { "text": "!«", "type": "plain" }
                         ]
                     },
                     {
                         "speaker": "Far",
                         "speakerIcon": "",
-                        "audioText": "Faren rystede på hovedet og svarede: Tag du bare geden, Klods-Hans.",
+                        "audioText": "Faren rystede på hovedet og svarede: Du får ingen hest! Du kan jo ikke tale som dine kloge brødre.",
                         "tokens": [
-                            {
-                                "text": "Faren",
-                                "type": "sub",
-                                "key": "far"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "rystede",
-                                "type": "vrb",
-                                "key": "ryste"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "på",
-                                "type": "prep",
-                                "key": "på"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "hovedet",
-                                "type": "sub",
-                                "key": "hoved"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "og",
-                                "type": "konj",
-                                "key": "og"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "svarede",
-                                "type": "vrb",
-                                "key": "svare"
-                            },
-                            {
-                                "text": ": ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "»",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "Tag",
-                                "type": "vrb",
-                                "key": "tage"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "du",
-                                "type": "pro",
-                                "key": "du"
-                            },
-                            {
-                                "text": " ",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "bare",
-                                "type": "adv",
-                                "key": "bare"
-                            },
-                            {
-                                "text": " geden, Klods-Hans.",
-                                "type": "plain"
-                            },
-                            {
-                                "text": "«",
-                                "type": "plain"
-                            }
+                            { "text": "Faren", "type": "sub", "key": "far" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "rystede", "type": "vrb", "key": "ryste" },
+                            { "text": " på ", "type": "plain" },
+                            { "text": "hovedet", "type": "sub", "key": "hoved" },
+                            { "text": " og ", "type": "plain" },
+                            { "text": "svarede", "type": "vrb", "key": "svare" },
+                            { "text": ": »Du ", "type": "plain" },
+                            { "text": "får", "type": "vrb", "key": "få" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "ingen", "type": "pro", "key": "ingen" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "hest", "type": "sub", "key": "hest" },
+                            { "text": "! Du ", "type": "plain" },
+                            { "text": "kan", "type": "vrb", "key": "kunne" },
+                            { "text": " jo ", "type": "plain" },
+                            { "text": "ikke", "type": "adv", "key": "ikke" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "tale", "type": "vrb", "key": "tale" },
+                            { "text": " som dine ", "type": "plain" },
+                            { "text": "kloge", "type": "adj", "key": "klog" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "brødre", "type": "sub", "key": "bror" },
+                            { "text": ".«", "type": "plain" }
+                        ]
+                    },
+                    {
+                        "speaker": "Klods-Hans",
+                        "speakerIcon": "",
+                        "audioText": "Så tager jeg min egen ged — den kan godt bære mig! sagde Klods-Hans. Han sprang op på geden, råbte: Her kommer jeg! og red syngende ud ad vejen.",
+                        "tokens": [
+                            { "text": "»Så ", "type": "plain" },
+                            { "text": "tager", "type": "vrb", "key": "tage" },
+                            { "text": " jeg min ", "type": "plain" },
+                            { "text": "egen", "type": "adj", "key": "egen" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "ged", "type": "sub", "key": "ged" },
+                            { "text": " — den kan godt ", "type": "plain" },
+                            { "text": "bære", "type": "vrb", "key": "bære" },
+                            { "text": " mig!« sagde Klods-Hans. Han ", "type": "plain" },
+                            { "text": "sprang", "type": "vrb", "key": "springe" },
+                            { "text": " op på ", "type": "plain" },
+                            { "text": "geden", "type": "sub", "key": "ged" },
+                            { "text": ", ", "type": "plain" },
+                            { "text": "råbte", "type": "vrb", "key": "råbe" },
+                            { "text": ": »Her ", "type": "plain" },
+                            { "text": "kommer", "type": "vrb", "key": "komme" },
+                            { "text": " jeg!« og ", "type": "plain" },
+                            { "text": "red", "type": "vrb", "key": "ride" },
+                            { "text": " ", "type": "plain" },
+                            { "text": "syngende", "type": "adj", "key": "synge" },
+                            { "text": " ud ad ", "type": "plain" },
+                            { "text": "vejen", "type": "sub", "key": "vej" },
+                            { "text": ".", "type": "plain" }
                         ]
                     }
                 ],

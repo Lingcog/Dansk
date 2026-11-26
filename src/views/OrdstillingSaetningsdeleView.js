@@ -962,10 +962,15 @@ function injectSaetningsdeleStyles() {
     document.head.appendChild(style);
 }
 
-export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
+export function renderOrdstillingSaetningsdeleView(container, navigateFn, extraData = {}) {
     injectSaetningsdeleStyles();
     ensureOrdstillingColorStyles();
     container.innerHTML = '';
+
+    const VALID_TABS = new Set(['zoom_in', 'inside', 'zoom_out', 'workshop']);
+    const VALID_ZOOM_TRACKS = new Set(Object.keys(ZOOM_TRACKS));
+    const VALID_SCENES = new Set(HYPOTAXIS_SCENES.map(s => s.id));
+    const VALID_WORKSHOP_TRACKS = new Set(['zoom_in_build', 'zoom_out_build', 'quick_quiz']);
 
     let colorCodesEnabled = getColorCodesEnabled();
     let activeTab = 'zoom_in';
@@ -985,6 +990,46 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
 
     // Fane 4 workshop state (3 tracks: zoom_in_build, zoom_out_build, quick_quiz)
     let workshopTrack = 'zoom_in_build';
+
+    // Parse initial URL subPath (e.g. "zoom_in/hvor", "inside", "zoom_out/selvom", "workshop/quick_quiz")
+    const rawSubPath = String(extraData?.subPath || '').trim().toLowerCase();
+    if (rawSubPath) {
+        const parts = rawSubPath.split('/').filter(Boolean);
+        const seg1 = parts[0];
+        const seg2 = parts[1];
+        if (VALID_TABS.has(seg1)) {
+            activeTab = seg1;
+            if (activeTab === 'zoom_in' && seg2 && VALID_ZOOM_TRACKS.has(seg2)) {
+                activeTrackId = seg2;
+            } else if (activeTab === 'zoom_out' && seg2 && VALID_SCENES.has(seg2)) {
+                activeSceneId = seg2;
+            } else if (activeTab === 'workshop' && seg2 && VALID_WORKSHOP_TRACKS.has(seg2)) {
+                workshopTrack = seg2;
+            }
+        }
+    }
+
+    function getCurrentSubPath() {
+        if (activeTab === 'zoom_in') return `zoom_in/${activeTrackId}`;
+        if (activeTab === 'inside') return 'inside';
+        if (activeTab === 'zoom_out') return `zoom_out/${activeSceneId}`;
+        return `workshop/${workshopTrack}`;
+    }
+
+    function syncUrl(push = true) {
+        const lang = getLang() || 'da';
+        const targetHash = `#/${lang}/ordstilling_saetningsdele/${getCurrentSubPath()}`;
+        if (window.location.hash !== targetHash) {
+            if (push) {
+                history.pushState(null, '', targetHash);
+            } else {
+                history.replaceState(null, '', targetHash);
+            }
+        }
+    }
+
+    // Ensure address bar reflects canonical sub-page URL on initial load
+    syncUrl(false);
     let buildState = {
         zoom_in_build: { idx: 0, score: 0, placed: [], status: null },
         zoom_out_build: { idx: 0, score: 0, placed: [], status: null }
@@ -1074,6 +1119,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
         tabs.querySelectorAll('[data-tab]').forEach(btn => {
             btn.onclick = () => {
                 activeTab = btn.dataset.tab;
+                syncUrl(true);
                 render();
             };
         });
@@ -1145,6 +1191,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
             btn.onclick = () => {
                 activeTrackId = btn.dataset.track;
                 zoomIdx = 0;
+                syncUrl(true);
                 render();
             };
         });
@@ -1328,6 +1375,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
         card.querySelectorAll('[data-scene]').forEach(btn => {
             btn.onclick = () => {
                 activeSceneId = btn.dataset.scene;
+                syncUrl(true);
                 render();
             };
         });
@@ -1357,6 +1405,7 @@ export function renderOrdstillingSaetningsdeleView(container, navigateFn) {
         trackBar.querySelectorAll('[data-wtrack]').forEach(btn => {
             btn.onclick = () => {
                 workshopTrack = btn.dataset.wtrack;
+                syncUrl(true);
                 render();
             };
         });

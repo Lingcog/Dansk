@@ -246,6 +246,204 @@ export const SENTENCE_1_VISUAL_NODES = [
         leftImg: 'assets/klods_hans_s1/prinsessen.jpg',
         rightTitle: 'Taber (0)',
         rightDiagramType: 's2_taber'
+    },
+    // --- SÆTNING 3 (Del 1, linje 2): Jeg tager til slottet, sagde storebror stolt. Jeg kan tale om store og komplicerede ting. Jeg er meget klog! ---
+    {
+        id: 'tager_til_slottet',
+        icon: ICON_CROWN,
+        chipLabel: 'tager til slottet',
+        matchTokens: ['jeg', 'tager', 'tage', 'til', 'slottet', 'slot'],
+        leftTitle: 'Tager til slottet',
+        leftImg: 'assets/klods_hans_s1/et_slot.jpg',
+        rightTitle: 'Bliver på gården',
+        rightImg: 'assets/klods_hans_s1/en_gaard.jpg',
+        vrimmelSpot: { x: 59, y: 28, radius: 13, label: 'Slottet' }
+    },
+    {
+        id: 'sagde_stolt',
+        icon: ICON_SPEECH,
+        chipLabel: 'sagde ... stolt',
+        matchTokens: ['sagde', 'sige', 'stolt'],
+        leftTitle: 'Sagde stolt',
+        leftDiagramType: 's3_stolt',
+        rightTitle: 'Genert / stille',
+        rightDiagramType: 's3_genert',
+        vrimmelSpot: { x: 38, y: 46, radius: 13, label: 'Storebror' }
+    },
+    {
+        id: 'kan_tale',
+        icon: ICON_SPEECH,
+        chipLabel: 'kan tale om',
+        matchTokens: ['kan tale', 'tale', 'kan', 'om'],
+        leftTitle: 'Kan tale om (evne)',
+        leftDiagramType: 's3_kan_tale',
+        rightTitle: 'Tavs / kan ikke',
+        rightDiagramType: 's2_ikke_sagt',
+        vrimmelSpot: { x: 38, y: 46, radius: 13, label: 'Storebror taler' }
+    },
+    {
+        id: 'store_komplicerede',
+        icon: ICON_BARS,
+        chipLabel: 'store og komplicerede',
+        matchTokens: ['store', 'stor', 'og', 'komplicerede', 'kompliceret', 'ting'],
+        leftTitle: 'Store & komplicerede',
+        leftDiagramType: 's3_kompliceret',
+        rightTitle: 'Lille & enkelt',
+        rightDiagramType: 's3_enkelt'
+    },
+    {
+        id: 'meget_klog',
+        icon: ICON_BARS,
+        chipLabel: 'meget klog',
+        matchTokens: ['er', 'være', 'meget', 'klog'],
+        leftTitle: 'Meget klog',
+        leftImg: 'assets/klods_hans_s1/saa_kloge.jpg',
+        rightTitle: 'Ikke klog',
+        rightImg: 'assets/klods_hans_s1/ikke_klog.jpg',
+        vrimmelSpot: { x: 38, y: 38, radius: 13, label: 'Meget klog' }
+    },
+    // --- SÆTNING 4 (Del 1, linje 3): Da trådte mellembror frem og smilede: Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge! ---
+    {
+        id: 'traadte_frem',
+        icon: ICON_PERSON,
+        chipLabel: 'trådte frem',
+        matchTokens: ['da', 'trådte', 'træde', 'frem'],
+        leftTitle: 'Trådte frem',
+        leftDiagramType: 's4_frem',
+        rightTitle: 'Trådte tilbage',
+        rightDiagramType: 's4_tilbage',
+        vrimmelSpot: { x: 46, y: 44, radius: 13, label: 'Mellembror' }
+    },
+    {
+        id: 'glad_smilede',
+        icon: ICON_PERSON,
+        chipLabel: 'smilede / glad',
+        matchTokens: ['smilede', 'smile', 'glad'],
+        leftTitle: 'Glad & smilende',
+        leftDiagramType: 's4_glad',
+        rightTitle: 'Ked af det',
+        rightDiagramType: 's4_ked',
+        vrimmelSpot: { x: 46, y: 44, radius: 13, label: 'Smiler' }
+    },
+    {
+        id: 'vil_ogsaa_gaa',
+        icon: ICON_LINK,
+        chipLabel: 'vil også gå',
+        matchTokens: ['og', 'jeg', 'vil', 'ville', 'også', 'ogsaa', 'gå'],
+        leftTitle: 'Vil også gå (+1)',
+        leftDiagramType: 's4_ogsaa',
+        rightTitle: 'Kun én går',
+        rightDiagramType: 's4_kun_en',
+        vrimmelSpot: { x: 46, y: 44, radius: 13, label: 'Mellembror vil også' }
+    },
+    {
+        id: 'mange_sange',
+        icon: ICON_BARS,
+        chipLabel: 'kender mange sange',
+        matchTokens: ['kender', 'kende', 'mange', 'sange'],
+        leftTitle: 'Mange sange',
+        leftDiagramType: 's4_mange_sange',
+        rightTitle: 'Ingen sange (0)',
+        rightDiagramType: 's4_ingen_sange'
+    },
+    {
+        id: 'altid',
+        icon: ICON_CALENDAR,
+        chipLabel: 'altid',
+        matchTokens: ['altid'],
+        leftTitle: 'Altid (100 %)',
+        leftDiagramType: 's2_all_days',
+        rightTitle: 'Aldrig (0 %)',
+        rightDiagramType: 's4_aldrig'
+    },
+    {
+        id: 'god_til',
+        icon: ICON_TROPHY,
+        chipLabel: 'god til at synge',
+        matchTokens: ['er', 'være', 'god', 'til', 'at', 'synge'],
+        leftTitle: 'God til (rammer plet)',
+        leftDiagramType: 's4_god_til',
+        rightTitle: 'Ikke god til',
+        rightDiagramType: 's4_svaer'
+    },
+    // --- SÆTNING 5 (Del 1, linje 4): Jeg prøver også! råbte Klods-Hans. Jeg har ingen hest, men jeg tager min ged! ---
+    {
+        id: 'proever_ogsaa',
+        icon: ICON_TROPHY,
+        chipLabel: 'prøver også',
+        matchTokens: ['prøver', 'prøve', 'også', 'ogsaa'],
+        leftTitle: 'Prøver (tør forsøge)',
+        leftDiagramType: 's5_proever',
+        rightTitle: 'Giver op (0)',
+        rightDiagramType: 's5_giver_op',
+        vrimmelSpot: { x: 68, y: 48, radius: 13, label: 'Klods-Hans prøver' }
+    },
+    {
+        id: 'raabte',
+        icon: ICON_SPEECH,
+        chipLabel: 'råbte',
+        matchTokens: ['råbte', 'råbe'],
+        leftTitle: 'Råbte (højt!)',
+        leftDiagramType: 's5_raabte',
+        rightTitle: 'Hviskede (stille)',
+        rightDiagramType: 's5_hviskede',
+        vrimmelSpot: { x: 68, y: 48, radius: 13, label: 'Klods-Hans råber' }
+    },
+    {
+        id: 'klods_hans_yngst',
+        icon: ICON_PERSON,
+        chipLabel: 'Klods-Hans',
+        matchTokens: ['klods-hans'],
+        leftTitle: 'Klods-Hans (yngst)',
+        leftImg: 'assets/klods_hans_s1/klods_hans.jpg',
+        rightTitle: 'De fine brødre',
+        rightImg: 'assets/klods_hans_s1/hest.jpg',
+        vrimmelSpot: { x: 68, y: 48, radius: 13, label: 'Klods-Hans' }
+    },
+    {
+        id: 'hest_vs_ged',
+        icon: ICON_REF_LOOP,
+        chipLabel: 'ingen hest, men min ged',
+        matchTokens: ['jeg', 'har', 'have', 'ingen', 'hest', 'men', 'tager', 'tage', 'min', 'ged'],
+        leftTitle: 'Min ged (har)',
+        leftImg: 'assets/klods_hans_s1/ged.jpg',
+        rightTitle: 'Ingen hest (0)',
+        rightImg: 'assets/klods_hans_s1/hest.jpg',
+        vrimmelSpot: { x: 72, y: 66, radius: 14, label: 'Geden' }
+    },
+    // --- SÆTNING 6 (Del 1, linje 5): Faren rystede på hovedet og svarede: Tag du bare geden, Klods-Hans. ---
+    {
+        id: 'rystede_paa_hovedet',
+        icon: ICON_PERSON,
+        chipLabel: 'rystede på hovedet',
+        matchTokens: ['rystede', 'ryste', 'på', 'hovedet', 'hoved'],
+        leftTitle: 'Rystede på hovedet (nej / tvivl)',
+        leftDiagramType: 's6_ryste_hoved',
+        rightTitle: 'Nikkede (ja / enig)',
+        rightDiagramType: 's6_nikke',
+        vrimmelSpot: { x: 88, y: 58, radius: 13, label: 'Faren' }
+    },
+    {
+        id: 'svarede',
+        icon: ICON_SPEECH,
+        chipLabel: 'svarede',
+        matchTokens: ['svarede', 'svare', 'og'],
+        leftTitle: 'Svarede (retur)',
+        leftDiagramType: 's6_svarede',
+        rightTitle: 'Tavs (intet svar)',
+        rightDiagramType: 's2_ikke_sagt',
+        vrimmelSpot: { x: 88, y: 58, radius: 13, label: 'Faren svarer' }
+    },
+    {
+        id: 'tag_du_bare',
+        icon: ICON_LINK,
+        chipLabel: 'Tag du bare',
+        matchTokens: ['tag', 'tage', 'du', 'bare', 'geden'],
+        leftTitle: 'Tag du bare (tilladelse)',
+        leftDiagramType: 's6_tilladelse',
+        rightTitle: 'Nej / forbudt',
+        rightDiagramType: 's6_forbud',
+        vrimmelSpot: { x: 72, y: 66, radius: 14, label: 'Tag geden' }
     }
 ];
 
@@ -260,6 +458,34 @@ export function findSentence2NodeByToken(token) {
 
     const s2Ids = ['en_dag', 'fortalte_dem', 'kongen', 'har_sagt', 'hans_datter', 'skal_finde_mand', 'taler_bedst', 'vinder_hende'];
     for (const id of s2Ids) {
+        const node = SENTENCE_1_VISUAL_NODES.find(n => n.id === id);
+        if (node && (node.matchTokens.includes(rawText) || node.matchTokens.includes(rawKey))) {
+            return node;
+        }
+    }
+    return null;
+}
+
+export function findDel1VisualNodeByToken(lineIndex, token) {
+    if (!token) return null;
+    if (lineIndex === 1) return findSentence2NodeByToken(token);
+    const rawText = (token.text || '').toLowerCase().trim();
+    const rawKey = (token.key || '').toLowerCase().trim();
+
+    const lineNodeMap = {
+        2: ['storebror', 'tager_til_slottet', 'sagde_stolt', 'kan_tale', 'store_komplicerede', 'meget_klog'],
+        3: ['mellembror', 'traadte_frem', 'glad_smilede', 'vil_ogsaa_gaa', 'mange_sange', 'altid', 'god_til'],
+        4: ['klods_hans_yngst', 'proever_ogsaa', 'raabte', 'hest_vs_ged'],
+        5: ['gammel_far', 'rystede_paa_hovedet', 'svarede', 'tag_du_bare', 'klods_hans_yngst']
+    };
+    const ids = lineNodeMap[lineIndex];
+    if (!ids) return null;
+
+    if (lineIndex === 5 && (rawText === 'faren' || rawKey === 'far')) {
+        return SENTENCE_1_VISUAL_NODES.find(n => n.id === 'gammel_far') || null;
+    }
+
+    for (const id of ids) {
         const node = SENTENCE_1_VISUAL_NODES.find(n => n.id === id);
         if (node && (node.matchTokens.includes(rawText) || node.matchTokens.includes(rawKey))) {
             return node;
@@ -400,6 +626,294 @@ function renderCustomDiagram(variant) {
                     <line x1="140" y1="55" x2="100" y2="95" stroke="#fb923c" stroke-width="3.5" stroke-linecap="round"/>
                 </svg>
             `;
+        // --- SÆTNING 3 (Linje 2) ---
+        case 's3_stolt':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <circle cx="105" cy="54" r="16" fill="rgba(56,189,248,0.22)" stroke="#38bdf8" stroke-width="3"/>
+                    <path d="M 80 124 Q 105 84 130 124" fill="rgba(56,189,248,0.18)" stroke="#38bdf8" stroke-width="3"/>
+                    <polygon points="92,32 97,20 105,28 113,20 118,32" fill="#fde047"/>
+                    <line x1="142" y1="74" x2="142" y2="34" stroke="#fde047" stroke-width="3.5" stroke-linecap="round"/>
+                    <polygon points="135,38 142,24 149,38" fill="#fde047"/>
+                    <path d="M 164 46 Q 178 62 164 78" fill="none" stroke="#fde047" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M 176 38 Q 196 62 176 86" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+            `;
+        case 's3_genert':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <circle cx="115" cy="82" r="14" fill="rgba(148,163,184,0.18)" stroke="#94a3b8" stroke-width="2.5"/>
+                    <path d="M 96 126 Q 115 104 134 126" fill="none" stroke="#94a3b8" stroke-width="2.5"/>
+                    <line x1="154" y1="54" x2="154" y2="94" stroke="#fb923c" stroke-width="3" stroke-linecap="round"/>
+                    <polygon points="147,90 154,104 161,90" fill="#fb923c"/>
+                </svg>
+            `;
+        case 's3_kan_tale':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <circle cx="58" cy="76" r="18" fill="rgba(56,189,248,0.22)" stroke="#38bdf8" stroke-width="3"/>
+                    <path d="M 88 58 Q 102 76 88 94" fill="none" stroke="#fde047" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M 100 46 Q 120 76 100 106" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+                    <circle cx="154" cy="52" r="13" fill="rgba(253,224,71,0.2)" stroke="#fde047" stroke-width="2.5"/>
+                    <circle cx="188" cy="82" r="16" fill="rgba(56,189,248,0.2)" stroke="#38bdf8" stroke-width="2.5"/>
+                    <circle cx="150" cy="104" r="11" fill="rgba(43,110,120,0.4)" stroke="#7ec4ce" stroke-width="2.5"/>
+                </svg>
+            `;
+        case 's3_kompliceret':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <g stroke="#38bdf8" stroke-width="2.2" opacity="0.85">
+                        <line x1="56" y1="42" x2="120" y2="34"/><line x1="120" y1="34" x2="184" y2="50"/>
+                        <line x1="56" y1="42" x2="88" y2="88"/><line x1="120" y1="34" x2="152" y2="84"/>
+                        <line x1="184" y1="50" x2="152" y2="84"/><line x1="88" y1="88" x2="152" y2="84"/>
+                        <line x1="88" y1="88" x2="62" y2="120"/><line x1="152" y1="84" x2="182" y2="118"/>
+                        <line x1="62" y1="120" x2="124" y2="116"/><line x1="124" y1="116" x2="182" y2="118"/>
+                        <line x1="56" y1="42" x2="152" y2="84"/><line x1="120" y1="34" x2="88" y2="88"/>
+                    </g>
+                    <g fill="#fde047" stroke="#0b1326" stroke-width="2">
+                        <circle cx="56" cy="42" r="9"/><circle cx="120" cy="34" r="11"/><circle cx="184" cy="50" r="9"/>
+                        <circle cx="88" cy="88" r="10"/><circle cx="152" cy="84" r="11"/>
+                        <circle cx="62" cy="120" r="8"/><circle cx="124" cy="116" r="9"/><circle cx="182" cy="118" r="8"/>
+                    </g>
+                </svg>
+            `;
+        case 's3_enkelt':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <line x1="70" y1="75" x2="170" y2="75" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="70" cy="75" r="9" fill="#fb923c"/>
+                    <circle cx="170" cy="75" r="9" fill="#fb923c"/>
+                </svg>
+            `;
+        // --- SÆTNING 4 (Linje 3) ---
+        case 's4_frem':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <circle cx="52" cy="54" r="11" fill="rgba(148,163,184,0.22)" stroke="#64748b" stroke-width="2"/>
+                    <circle cx="52" cy="96" r="11" fill="rgba(148,163,184,0.22)" stroke="#64748b" stroke-width="2"/>
+                    <line x1="78" y1="75" x2="152" y2="75" stroke="#fde047" stroke-width="4" stroke-linecap="round"/>
+                    <polygon points="150,67 166,75 150,83" fill="#fde047"/>
+                    <circle cx="186" cy="75" r="16" fill="#fde047" stroke="#38bdf8" stroke-width="3"/>
+                </svg>
+            `;
+        case 's4_tilbage':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <circle cx="58" cy="75" r="15" fill="rgba(251,146,60,0.3)" stroke="#fb923c" stroke-width="2.5"/>
+                    <line x1="164" y1="75" x2="90" y2="75" stroke="#fb923c" stroke-width="3.5" stroke-dasharray="5,4"/>
+                    <polygon points="92,67 76,75 92,83" fill="#fb923c"/>
+                    <circle cx="182" cy="75" r="13" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="4,4"/>
+                </svg>
+            `;
+        case 's4_glad':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <circle cx="120" cy="75" r="42" fill="rgba(253,224,71,0.14)" stroke="#fde047" stroke-width="3.5"/>
+                    <circle cx="104" cy="64" r="4.5" fill="#fde047"/>
+                    <circle cx="136" cy="64" r="4.5" fill="#fde047"/>
+                    <path d="M 98 84 Q 120 106 142 84" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
+                </svg>
+            `;
+        case 's4_ked':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <circle cx="120" cy="75" r="42" fill="rgba(148,163,184,0.1)" stroke="#94a3b8" stroke-width="3"/>
+                    <circle cx="104" cy="64" r="4" fill="#94a3b8"/>
+                    <circle cx="136" cy="64" r="4" fill="#94a3b8"/>
+                    <path d="M 98 98 Q 120 78 142 98" fill="none" stroke="#fb923c" stroke-width="3.5" stroke-linecap="round"/>
+                </svg>
+            `;
+        case 's4_ogsaa':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <circle cx="56" cy="52" r="14" fill="rgba(56,189,248,0.25)" stroke="#38bdf8" stroke-width="2.5"/>
+                    <line x1="76" y1="52" x2="170" y2="66" stroke="#38bdf8" stroke-width="3"/>
+                    <circle cx="56" cy="100" r="14" fill="#fde047" stroke="#38bdf8" stroke-width="2.5"/>
+                    <line x1="76" y1="100" x2="170" y2="82" stroke="#fde047" stroke-width="3.5"/>
+                    <polygon points="168,75 184,78 169,88" fill="#fde047"/>
+                    <circle cx="196" cy="75" r="14" fill="rgba(253,224,71,0.22)" stroke="#fde047" stroke-width="2.5"/>
+                </svg>
+            `;
+        case 's4_kun_en':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <circle cx="56" cy="52" r="14" fill="rgba(148,163,184,0.25)" stroke="#94a3b8" stroke-width="2.5"/>
+                    <line x1="76" y1="52" x2="174" y2="52" stroke="#94a3b8" stroke-width="3"/>
+                    <polygon points="172,46 186,52 172,58" fill="#94a3b8"/>
+                    <circle cx="56" cy="104" r="14" fill="none" stroke="#fb923c" stroke-width="2.5" stroke-dasharray="4,3"/>
+                    <line x1="82" y1="94" x2="104" y2="114" stroke="#fb923c" stroke-width="3"/>
+                    <line x1="104" y1="94" x2="82" y2="114" stroke="#fb923c" stroke-width="3"/>
+                </svg>
+            `;
+        case 's4_mange_sange':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <g stroke="#fde047" stroke-width="3" fill="#fde047">
+                        <circle cx="52" cy="96" r="7"/><line x1="59" y1="96" x2="59" y2="52"/>
+                        <circle cx="88" cy="88" r="7"/><line x1="95" y1="88" x2="95" y2="44"/>
+                        <line x1="59" y1="52" x2="95" y2="44" stroke-width="4.5"/>
+                    </g>
+                    <g stroke="#38bdf8" stroke-width="3" fill="#38bdf8">
+                        <circle cx="136" cy="76" r="7"/><line x1="143" y1="76" x2="143" y2="34"/>
+                        <circle cx="176" cy="68" r="7"/><line x1="183" y1="68" x2="183" y2="26"/>
+                        <line x1="143" y1="34" x2="183" y2="26" stroke-width="4.5"/>
+                    </g>
+                    <g stroke="#7ec4ce" stroke-width="2.5" fill="#7ec4ce">
+                        <circle cx="146" cy="118" r="6"/><line x1="152" y1="118" x2="152" y2="84"/>
+                        <circle cx="192" cy="110" r="6"/><line x1="198" y1="110" x2="198" y2="76"/>
+                        <line x1="152" y1="84" x2="198" y2="76" stroke-width="3.5"/>
+                    </g>
+                </svg>
+            `;
+        case 's4_ingen_sange':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <circle cx="114" cy="92" r="9" fill="none" stroke="#64748b" stroke-width="2.5"/>
+                    <line x1="123" y1="92" x2="123" y2="48" stroke="#64748b" stroke-width="2.5"/>
+                    <line x1="88" y1="108" x2="152" y2="42" stroke="#fb923c" stroke-width="4" stroke-linecap="round"/>
+                </svg>
+            `;
+        case 's4_aldrig':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <g fill="rgba(51,65,85,0.3)" stroke="#475569" stroke-width="2" stroke-dasharray="4,3">
+                        <rect x="20" y="54" width="26" height="42" rx="5"/>
+                        <rect x="54" y="54" width="26" height="42" rx="5"/>
+                        <rect x="88" y="54" width="26" height="42" rx="5"/>
+                        <rect x="122" y="54" width="26" height="42" rx="5"/>
+                        <rect x="156" y="54" width="26" height="42" rx="5"/>
+                        <rect x="190" y="54" width="26" height="42" rx="5"/>
+                    </g>
+                    <line x1="30" y1="108" x2="210" y2="42" stroke="#fb923c" stroke-width="3.5" stroke-linecap="round"/>
+                </svg>
+            `;
+        case 's4_god_til':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <circle cx="146" cy="75" r="42" fill="none" stroke="#38bdf8" stroke-width="3" opacity="0.5"/>
+                    <circle cx="146" cy="75" r="25" fill="none" stroke="#38bdf8" stroke-width="3"/>
+                    <circle cx="146" cy="75" r="10" fill="#fde047"/>
+                    <line x1="36" y1="75" x2="132" y2="75" stroke="#fde047" stroke-width="4" stroke-linecap="round"/>
+                    <polygon points="128,67 144,75 128,83" fill="#fde047"/>
+                </svg>
+            `;
+        case 's4_svaer':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <circle cx="152" cy="75" r="38" fill="none" stroke="#64748b" stroke-width="2.5" stroke-dasharray="5,4"/>
+                    <circle cx="152" cy="75" r="12" fill="none" stroke="#64748b" stroke-width="2"/>
+                    <path d="M 34 86 Q 82 96 108 118" fill="none" stroke="#fb923c" stroke-width="3.5" stroke-linecap="round"/>
+                    <polygon points="102,122 118,124 110,110" fill="#fb923c"/>
+                </svg>
+            `;
+        // --- SÆTNING 5 (Linje 4) ---
+        case 's5_proever':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <circle cx="48" cy="102" r="14" fill="#fde047" stroke="#38bdf8" stroke-width="2.5"/>
+                    <rect x="108" y="82" width="14" height="44" rx="4" fill="#475569"/>
+                    <path d="M 64 96 Q 115 24 176 62" fill="none" stroke="#fde047" stroke-width="4" stroke-linecap="round"/>
+                    <polygon points="172,54 188,67 170,70" fill="#fde047"/>
+                    <circle cx="196" cy="74" r="13" fill="rgba(56,189,248,0.28)" stroke="#38bdf8" stroke-width="3"/>
+                </svg>
+            `;
+        case 's5_giver_op':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <circle cx="62" cy="102" r="14" fill="rgba(148,163,184,0.25)" stroke="#94a3b8" stroke-width="2.5"/>
+                    <rect x="114" y="42" width="14" height="84" rx="4" fill="#fb923c" opacity="0.65"/>
+                    <line x1="78" y1="102" x2="104" y2="102" stroke="#fb923c" stroke-width="3" stroke-dasharray="4,4"/>
+                </svg>
+            `;
+        case 's5_raabte':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <circle cx="62" cy="75" r="20" fill="rgba(253,224,71,0.22)" stroke="#fde047" stroke-width="3.5"/>
+                    <path d="M 96 54 Q 114 75 96 96" fill="none" stroke="#fde047" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M 116 38 Q 144 75 116 112" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M 140 24 Q 178 75 140 126" fill="none" stroke="#7ec4ce" stroke-width="3.5" stroke-linecap="round"/>
+                </svg>
+            `;
+        case 's5_hviskede':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <circle cx="88" cy="75" r="16" fill="rgba(148,163,184,0.18)" stroke="#94a3b8" stroke-width="2.5"/>
+                    <path d="M 116 68 Q 124 75 116 82" fill="none" stroke="#fb923c" stroke-width="2" stroke-dasharray="3,3"/>
+                </svg>
+            `;
+        // --- SÆTNING 6 (Linje 5) ---
+        case 's6_ryste_hoved':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <circle cx="120" cy="75" r="28" fill="rgba(56,189,248,0.18)" stroke="#38bdf8" stroke-width="3"/>
+                    <line x1="78" y1="75" x2="36" y2="75" stroke="#fde047" stroke-width="4" stroke-linecap="round"/>
+                    <polygon points="40,67 24,75 40,83" fill="#fde047"/>
+                    <line x1="162" y1="75" x2="204" y2="75" stroke="#fde047" stroke-width="4" stroke-linecap="round"/>
+                    <polygon points="200,67 216,75 200,83" fill="#fde047"/>
+                </svg>
+            `;
+        case 's6_nikke':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <circle cx="120" cy="75" r="26" fill="rgba(148,163,184,0.18)" stroke="#94a3b8" stroke-width="2.5"/>
+                    <line x1="120" y1="40" x2="120" y2="18" stroke="#fb923c" stroke-width="3.5" stroke-linecap="round"/>
+                    <polygon points="113,22 120,10 127,22" fill="#fb923c"/>
+                    <line x1="120" y1="110" x2="120" y2="132" stroke="#fb923c" stroke-width="3.5" stroke-linecap="round"/>
+                    <polygon points="113,128 120,140 127,128" fill="#fb923c"/>
+                </svg>
+            `;
+        case 's6_svarede':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <rect x="26" y="34" width="76" height="40" rx="10" fill="rgba(56,189,248,0.18)" stroke="#38bdf8" stroke-width="2.5"/>
+                    <rect x="138" y="76" width="76" height="40" rx="10" fill="rgba(253,224,71,0.22)" stroke="#fde047" stroke-width="3"/>
+                    <path d="M 108 54 Q 134 54 146 72" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="4,3"/>
+                    <path d="M 132 96 Q 94 96 74 82" fill="none" stroke="#fde047" stroke-width="3.5"/>
+                    <polygon points="79,77 65,77 73,88" fill="#fde047"/>
+                </svg>
+            `;
+        case 's6_tilladelse':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <line x1="120" y1="26" x2="120" y2="50" stroke="#7ec4ce" stroke-width="5" stroke-linecap="round"/>
+                    <line x1="120" y1="100" x2="120" y2="124" stroke="#7ec4ce" stroke-width="5" stroke-linecap="round"/>
+                    <line x1="46" y1="75" x2="180" y2="75" stroke="#fde047" stroke-width="4.5" stroke-linecap="round"/>
+                    <polygon points="176,66 196,75 176,84" fill="#fde047"/>
+                </svg>
+            `;
+        case 's6_forbud':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <line x1="128" y1="24" x2="128" y2="126" stroke="#fb923c" stroke-width="6" stroke-linecap="round"/>
+                    <circle cx="76" cy="75" r="22" fill="none" stroke="#fb923c" stroke-width="3.5"/>
+                    <line x1="60" y1="91" x2="92" y2="59" stroke="#fb923c" stroke-width="3.5"/>
+                </svg>
+            `;
         default:
             return '';
     }
@@ -496,7 +1010,8 @@ export function findSentence1NodeByToken(token, tokenIndex = 0) {
 // ============================================================================
 const HYBRID_DIAGRAM_IDS = new Set([
     'var_der', 'i_den', 'far_havde_soenner', 'der_var_saa_kloge',
-    'fortalte_dem', 'hans_datter', 'vinder_hende'
+    'fortalte_dem', 'hans_datter', 'vinder_hende',
+    'tager_til_slottet', 'hest_vs_ged'
 ]);
 
 function renderHybridOverlaySvg(nodeId, side) {
@@ -644,6 +1159,33 @@ function renderHybridOverlaySvg(nodeId, side) {
                     </svg>
                 `
                 : '';
+        case 'tager_til_slottet':
+            return isLeft
+                ? `
+                    <svg class="kh-s1-hybrid-overlay" viewBox="0 0 240 150" preserveAspectRatio="none" aria-hidden="true">
+                        <rect x="0" y="108" width="240" height="42" fill="rgba(6, 11, 25, 0.72)"/>
+                        <circle cx="34" cy="129" r="7" fill="#38bdf8"/>
+                        <line x1="48" y1="129" x2="188" y2="129" stroke="#fde047" stroke-width="4" stroke-linecap="round"/>
+                        <polygon points="184,121 202,129 184,137" fill="#fde047"/>
+                        <circle cx="212" cy="129" r="8" fill="#fde047"/>
+                    </svg>
+                `
+                : '';
+        case 'hest_vs_ged':
+            return isLeft
+                ? `
+                    <svg class="kh-s1-hybrid-overlay" viewBox="0 0 240 150" preserveAspectRatio="none" aria-hidden="true">
+                        <rect x="6" y="6" width="228" height="138" rx="8" fill="none" stroke="#38bdf8" stroke-width="3"/>
+                    </svg>
+                `
+                : `
+                    <svg class="kh-s1-hybrid-overlay" viewBox="0 0 240 150" preserveAspectRatio="none" aria-hidden="true">
+                        <rect width="240" height="150" fill="rgba(16, 20, 25, 0.42)"/>
+                        <circle cx="120" cy="75" r="36" fill="rgba(16, 20, 25, 0.65)" stroke="#fb923c" stroke-width="4"/>
+                        <line x1="94" y1="49" x2="146" y2="101" stroke="#fb923c" stroke-width="4.5" stroke-linecap="round"/>
+                        <line x1="146" y1="49" x2="94" y2="101" stroke="#fb923c" stroke-width="4.5" stroke-linecap="round"/>
+                    </svg>
+                `;
         default:
             return '';
     }

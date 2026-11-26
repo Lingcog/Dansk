@@ -589,7 +589,7 @@ function injectStyles() {
             padding: 0.75rem 1rem 4rem;
             color: #f1f5f9;
             box-sizing: border-box;
-            overflow-x: hidden;
+            overflow-x: clip;
         }
         .skrivehjaelp-container *,
         .skrivehjaelp-container *::before,
@@ -838,6 +838,43 @@ function injectStyles() {
             margin-top: 0.85rem;
         }
 
+        .sh-hints-toggle-row {
+            margin-top: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+        .sh-hints-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: #1a212b;
+            border: 1px solid rgba(76, 155, 166, 0.35);
+            color: #cbd5e1;
+            padding: 0.4rem 0.82rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.16s ease;
+        }
+        .sh-hints-toggle-btn:hover,
+        .sh-hints-toggle-btn.open {
+            background: rgba(43, 110, 120, 0.24);
+            border-color: #7ec4ce;
+            color: #ffffff;
+        }
+        .sh-hints-count {
+            background: rgba(126, 196, 206, 0.2);
+            color: #7ec4ce;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 0.06rem 0.42rem;
+            border-radius: 999px;
+        }
+        .sh-hints-chev {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
         .sh-hints-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -991,8 +1028,13 @@ function injectStyles() {
         }
 
         .sh-preview-bar {
+            position: sticky;
+            bottom: 0.6rem;
+            z-index: 25;
             margin-top: 1rem;
-            background: #12171e;
+            background: rgba(18, 23, 30, 0.96);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border: 1.5px solid rgba(76, 155, 166, 0.55);
             border-radius: 13px;
             padding: 0.95rem 1.1rem;
@@ -1001,6 +1043,7 @@ function injectStyles() {
             justify-content: space-between;
             align-items: center;
             gap: 0.85rem;
+            box-shadow: 0 -6px 22px rgba(0, 0, 0, 0.45);
         }
         .sh-preview-text {
             font-size: 1.05rem;
@@ -1266,6 +1309,7 @@ export function renderSkrivehjaelpView(container, navigateFn) {
     let startCategory = 'person';
     let extTab = 'conj'; // 'conj' | 'rel'
     let isReviewOpen = false;
+    let isHintsOpen = false;
     let activeReviewFocus = null; // 'v2' | 'tense' | 'connectors' | 'nouns' | 'whole' | null
     let checkedReviewIds = {};
     let colorCodesEnabled = getColorCodesEnabled();
@@ -1522,18 +1566,30 @@ export function renderSkrivehjaelpView(container, navigateFn) {
                 </div>
             ` : ''}
             ${!isReviewOpen ? `
-                <div class="sh-hints-grid">
-                    ${hints.map(h => `
-                        <div class="sh-hint-box"${rtlAttr}>
-                            <span class="sh-hint-icon">${SVG_HINT}</span>
-                            <div>
-                                <div class="sh-hint-title">${h.title}</div>
-                                <div class="sh-hint-text">${h.text}</div>
-                                ${h.link ? `<button type="button" class="sh-hint-link" data-hint-route="${h.link.route}">${h.link.label}</button>` : ''}
+                ${hints.length > 0 ? `
+                    <div class="sh-hints-toggle-row"${rtlAttr}>
+                        <button type="button" class="sh-hints-toggle-btn ${isHintsOpen ? 'open' : ''}" id="sh-toggle-hints-btn" aria-expanded="${isHintsOpen}">
+                            ${SVG_HINT}
+                            <span>Hints</span>
+                            <span class="sh-hints-count">${hints.length}</span>
+                            <span class="sh-hints-chev">${isHintsOpen ? '▴' : '▾'}</span>
+                        </button>
+                    </div>
+                ` : ''}
+                ${isHintsOpen ? `
+                    <div class="sh-hints-grid">
+                        ${hints.map(h => `
+                            <div class="sh-hint-box"${rtlAttr}>
+                                <span class="sh-hint-icon">${SVG_HINT}</span>
+                                <div>
+                                    <div class="sh-hint-title">${h.title}</div>
+                                    <div class="sh-hint-text">${h.text}</div>
+                                    ${h.link ? `<button type="button" class="sh-hint-link" data-hint-route="${h.link.route}">${h.link.label}</button>` : ''}
+                                </div>
                             </div>
-                        </div>
-                    `).join('')}
-                </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
             ` : `
                 <div class="sh-review-panel" id="sh-review-panel"${rtlAttr}>
                     <div class="sh-review-head">
@@ -1599,6 +1655,13 @@ export function renderSkrivehjaelpView(container, navigateFn) {
                 render();
             };
         });
+        const toggleHintsBtn = docCard.querySelector('#sh-toggle-hints-btn');
+        if (toggleHintsBtn) {
+            toggleHintsBtn.onclick = () => {
+                isHintsOpen = !isHintsOpen;
+                render();
+            };
+        }
         docCard.querySelectorAll('[data-hint-route]').forEach(btn => {
             btn.onclick = () => {
                 const route = btn.dataset.hintRoute;

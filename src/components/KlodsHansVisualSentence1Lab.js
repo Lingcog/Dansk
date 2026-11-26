@@ -56,7 +56,7 @@ export const SENTENCE_1_VISUAL_NODES = [
         leftImg: 'assets/klods_hans_s1/var_der_dengang.jpg',
         rightTitle: 'ingen (0)',
         rightImg: 'assets/klods_hans_s1/var_der_tom.jpg',
-        vrimmelSpot: { x: 80, y: 28, radius: 14, label: 'var der' }
+        vrimmelSpot: { x: 20, y: 32, radius: 14, label: 'var der' }
     },
     {
         id: 'gammel_gaard',
@@ -67,7 +67,7 @@ export const SENTENCE_1_VISUAL_NODES = [
         leftImg: 'assets/klods_hans_s1/gammel_gaard.jpg',
         rightTitle: 'Ny (bygning)',
         rightImg: 'assets/klods_hans_s1/ny_gaard.jpg',
-        vrimmelSpot: { x: 80, y: 28, radius: 14, label: 'Gammel gård' }
+        vrimmelSpot: { x: 20, y: 32, radius: 14, label: 'Gammel gård' }
     },
     {
         id: 'gaard',
@@ -78,7 +78,7 @@ export const SENTENCE_1_VISUAL_NODES = [
         leftImg: 'assets/klods_hans_s1/en_gaard.jpg',
         rightTitle: 'Et slot',
         rightImg: 'assets/klods_hans_s1/et_slot.jpg',
-        vrimmelSpot: { x: 80, y: 28, radius: 14, label: 'En gård' }
+        vrimmelSpot: { x: 20, y: 32, radius: 14, label: 'En gård' }
     },
     {
         id: 'i_den',
@@ -89,7 +89,7 @@ export const SENTENCE_1_VISUAL_NODES = [
         leftImg: 'assets/klods_hans_s1/i_den.jpg',
         rightTitle: 'uden for den',
         rightImg: 'assets/klods_hans_s1/uden_for_den.jpg',
-        vrimmelSpot: { x: 80, y: 28, radius: 15, label: 'den = gården' }
+        vrimmelSpot: { x: 20, y: 32, radius: 15, label: 'den = gården' }
     },
     {
         id: 'gammel_far',
@@ -117,9 +117,9 @@ export const SENTENCE_1_VISUAL_NODES = [
             radius: 12,
             label: 'Far',
             multiTargets: [
-                { x: 38, y: 48, label: '1. søn' },
-                { x: 52, y: 46, label: '2. søn' },
-                { x: 70, y: 60, label: '3. søn' }
+                { x: 38, y: 44, label: '1. søn' },
+                { x: 46, y: 44, label: '2. søn' },
+                { x: 62, y: 54, label: '3. søn' }
             ]
         }
     },
@@ -391,13 +391,11 @@ export const SENTENCE_1_VISUAL_NODES = [
     {
         id: 'klods_hans_yngst',
         icon: ICON_PERSON,
-        chipLabel: 'Klods-Hans',
+        chipLabel: 'Klods-Hans (klodset)',
         matchTokens: ['klods-hans'],
-        leftTitle: 'Klods-Hans (yngst)',
-        leftImg: 'assets/klods_hans_s1/klods_hans.jpg',
-        rightTitle: 'De fine brødre',
-        rightImg: 'assets/klods_hans_s1/hest.jpg',
-        vrimmelSpot: { x: 68, y: 48, radius: 13, label: 'Klods-Hans' }
+        leftTitle: 'Klods-Hans (klodset)',
+        leftImg: 'assets/klods_hans_s1/klodset.jpg',
+        vrimmelSpot: { x: 62, y: 52, radius: 13, label: 'Klods-Hans' }
     },
     {
         id: 'hest_vs_ged',
@@ -508,16 +506,71 @@ export const SENTENCE_1_VISUAL_NODES = [
         leftDiagramType: 's5_proever',
         rightTitle: 'Stopper ved nej',
         rightDiagramType: 's6_forbud',
-        vrimmelSpot: { x: 68, y: 48, radius: 13, label: 'Klods-Hans' }
+        vrimmelSpot: { x: 62, y: 52, radius: 13, label: 'Klods-Hans' }
     },
     {
         id: 'kan_baere',
         icon: ICON_PERSON,
-        chipLabel: 'min egen ged kan bære mig',
-        matchTokens: ['tager', 'tage', 'egen', 'ged', 'geden', 'bære', 'sprang', 'springe', 'kommer', 'vejen', 'vej'],
-        leftTitle: 'Geden bærer Klods-Hans',
+        chipLabel: 'ged / geden',
+        matchTokens: ['tager', 'tage', 'ged', 'geden'],
+        leftTitle: 'En ged',
         leftImg: 'assets/klods_hans_s1/ged.jpg',
-        vrimmelSpot: { x: 72, y: 64, radius: 15, label: 'På geden!' }
+        vrimmelSpot: { x: 72, y: 66, radius: 14, label: 'Geden' }
+    },
+    {
+        id: 'min_egen',
+        icon: ICON_LINK,
+        chipLabel: 'min egen',
+        matchTokens: ['egen'],
+        leftTitle: 'Min egen (ejer selv)',
+        leftDiagramType: 's8_egen',
+        rightTitle: 'En andens',
+        rightDiagramType: 's8_andens',
+        vrimmelSpot: { x: 72, y: 66, radius: 14, label: 'Min egen ged' }
+    },
+    {
+        id: 'baere_mig',
+        icon: ICON_BARS,
+        chipLabel: 'kan godt bære mig',
+        matchTokens: ['bære'],
+        leftTitle: 'Kan bære (stærk nok)',
+        leftDiagramType: 's8_baere',
+        rightTitle: 'Kan ikke bære (for tung)',
+        rightDiagramType: 's8_for_tung',
+        vrimmelSpot: { x: 72, y: 64, radius: 14, label: 'Bærer ham' }
+    },
+    {
+        id: 'sprang_op',
+        icon: ICON_TROPHY,
+        chipLabel: 'sprang op på geden',
+        matchTokens: ['sprang', 'springe'],
+        leftTitle: 'Sprang op (hurtigt hop)',
+        leftDiagramType: 's8_sprang',
+        rightTitle: 'Blev nede på jorden',
+        rightDiagramType: 's8_blev_nede',
+        vrimmelSpot: { x: 68, y: 50, radius: 14, label: 'Sprang op!' }
+    },
+    {
+        id: 'her_kommer_jeg',
+        icon: ICON_LANDSCAPE,
+        chipLabel: 'Her kommer jeg!',
+        matchTokens: ['kommer', 'komme'],
+        leftTitle: 'Her kommer jeg! (frem)',
+        leftDiagramType: 's8_kommer',
+        rightTitle: 'Går væk / gemmer sig',
+        rightDiagramType: 's8_gaar_vaek',
+        vrimmelSpot: { x: 68, y: 48, radius: 14, label: 'Her kommer jeg!' }
+    },
+    {
+        id: 'red_ud_ad_vejen',
+        icon: ICON_LANDSCAPE,
+        chipLabel: 'red ud ad vejen',
+        matchTokens: ['red', 'ride', 'vejen', 'vej'],
+        leftTitle: 'Red ud ad vejen',
+        leftImg: 'assets/klods_hans_s1/klods_hans.jpg',
+        rightTitle: 'Stod stille',
+        rightDiagramType: 's5_giver_op',
+        vrimmelSpot: { x: 70, y: 58, radius: 15, label: 'Ud ad vejen' }
     }
 ];
 
@@ -553,7 +606,7 @@ export function findDel1VisualNodeByToken(lineIndex, token) {
         5: ['storebror', 'mellembror', 'klods_hans_yngst', 'vil_ogsaa_gaa', 'raabte', 'lo_hoejt', 'red_af_sted'],
         6: ['gammel_far', 'red_af_sted', 'raabte', 'blive_gift', 'tager_alligevel'],
         7: ['gammel_far', 'rystede_paa_hovedet', 'svarede', 'hest_vs_ged', 'kan_tale', 'der_var_saa_kloge', 'tredje_bror'],
-        8: ['mange_sange', 'raabte', 'kan_baere']
+        8: ['min_egen', 'baere_mig', 'sprang_op', 'raabte', 'her_kommer_jeg', 'red_ud_ad_vejen', 'mange_sange', 'kan_baere']
     };
     const ids = lineNodeMap[lineIndex];
     if (!ids) return null;
@@ -573,11 +626,8 @@ export function findDel1VisualNodeByToken(lineIndex, token) {
     if (lineIndex === 7 && (rawText === 'kan' || rawText === 'ikke' || rawText === 'tale' || rawKey === 'tale')) {
         return SENTENCE_1_VISUAL_NODES.find(n => n.id === 'kan_tale') || null;
     }
-    if (lineIndex === 8 && (rawText === 'syngende' || rawKey === 'synge')) {
+    if (lineIndex === 8 && (rawText === 'sang' || rawKey === 'synge')) {
         return SENTENCE_1_VISUAL_NODES.find(n => n.id === 'mange_sange') || null;
-    }
-    if (lineIndex === 8 && (rawText === 'red' || rawKey === 'ride')) {
-        return SENTENCE_1_VISUAL_NODES.find(n => n.id === 'kan_baere') || null;
     }
 
     for (const id of ids) {
@@ -1040,6 +1090,96 @@ function renderCustomDiagram(variant) {
                     <path d="M 78 80 Q 96 102 114 80 Z" fill="#38bdf8"/>
                     <path d="M 146 52 Q 162 75 146 98" fill="none" stroke="#fde047" stroke-width="3.5" stroke-linecap="round"/>
                     <path d="M 164 40 Q 186 75 164 110" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            `;
+        // --- SÆTNING 9 (Linje 8): egen, bære, sprang, kommer ---
+        case 's8_egen':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <rect x="40" y="34" width="160" height="82" rx="41" fill="rgba(56,189,248,0.12)" stroke="#fde047" stroke-width="3"/>
+                    <circle cx="88" cy="75" r="18" fill="rgba(56,189,248,0.28)" stroke="#38bdf8" stroke-width="3"/>
+                    <line x1="108" y1="75" x2="134" y2="75" stroke="#fde047" stroke-width="3.5" stroke-linecap="round"/>
+                    <circle cx="152" cy="75" r="16" fill="#fde047" stroke="#0b1326" stroke-width="2"/>
+                </svg>
+            `;
+        case 's8_andens':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <circle cx="54" cy="75" r="15" fill="rgba(148,163,184,0.2)" stroke="#94a3b8" stroke-width="2.5"/>
+                    <line x1="76" y1="75" x2="106" y2="75" stroke="#fb923c" stroke-width="2.5" stroke-dasharray="4,3"/>
+                    <rect x="116" y="38" width="98" height="74" rx="37" fill="rgba(251,146,60,0.12)" stroke="#fb923c" stroke-width="2.5" stroke-dasharray="5,4"/>
+                    <circle cx="146" cy="75" r="13" fill="#fb923c"/>
+                    <circle cx="186" cy="75" r="13" fill="rgba(148,163,184,0.3)" stroke="#94a3b8" stroke-width="2"/>
+                </svg>
+            `;
+        case 's8_baere':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <circle cx="120" cy="48" r="18" fill="#fde047" stroke="#38bdf8" stroke-width="2.5"/>
+                    <rect x="64" y="74" width="112" height="16" rx="8" fill="#2b6e78" stroke="#7ec4ce" stroke-width="2.5"/>
+                    <line x1="92" y1="126" x2="92" y2="98" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round"/>
+                    <polygon points="85,102 92,90 99,102" fill="#38bdf8"/>
+                    <line x1="148" y1="126" x2="148" y2="98" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round"/>
+                    <polygon points="141,102 148,90 155,102" fill="#38bdf8"/>
+                </svg>
+            `;
+        case 's8_for_tung':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <circle cx="120" cy="54" r="18" fill="rgba(251,146,60,0.3)" stroke="#fb923c" stroke-width="2.5"/>
+                    <path d="M 56 82 Q 120 116 184 82" fill="none" stroke="#fb923c" stroke-width="4" stroke-dasharray="6,4" stroke-linecap="round"/>
+                    <line x1="120" y1="96" x2="120" y2="128" stroke="#fb923c" stroke-width="3.5" stroke-linecap="round"/>
+                    <polygon points="113,124 120,136 127,124" fill="#fb923c"/>
+                </svg>
+            `;
+        case 's8_sprang':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <!-- Jordlinje til venstre + høj ryg/sadel til højre -->
+                    <line x1="22" y1="122" x2="108" y2="122" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
+                    <rect x="132" y="84" width="84" height="22" rx="11" fill="#2b6e78" stroke="#7ec4ce" stroke-width="2.5"/>
+                    <!-- Start-position (stiplet) -->
+                    <circle cx="48" cy="104" r="12" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="4,3"/>
+                    <!-- Høj dynamisk spring-bue op på ryggen -->
+                    <path d="M 54 92 Q 96 14 162 56" fill="none" stroke="#fde047" stroke-width="4.5" stroke-linecap="round"/>
+                    <polygon points="154,58 170,63 163,47" fill="#fde047"/>
+                    <!-- Landings-position øverst -->
+                    <circle cx="174" cy="66" r="14" fill="#fde047" stroke="#38bdf8" stroke-width="3"/>
+                </svg>
+            `;
+        case 's8_blev_nede':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <line x1="22" y1="122" x2="218" y2="122" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="72" cy="104" r="14" fill="rgba(148,163,184,0.25)" stroke="#94a3b8" stroke-width="2.5"/>
+                    <rect x="136" y="84" width="76" height="22" rx="11" fill="none" stroke="#fb923c" stroke-width="2.5" stroke-dasharray="5,4"/>
+                </svg>
+            `;
+        case 's8_kommer':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#0b1326"/>
+                    <line x1="28" y1="62" x2="66" y2="62" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" opacity="0.65"/>
+                    <line x1="20" y1="75" x2="62" y2="75" stroke="#fde047" stroke-width="3.5" stroke-linecap="round"/>
+                    <line x1="28" y1="88" x2="66" y2="88" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" opacity="0.65"/>
+                    <circle cx="96" cy="75" r="18" fill="#fde047" stroke="#38bdf8" stroke-width="3"/>
+                    <line x1="122" y1="75" x2="188" y2="75" stroke="#fde047" stroke-width="4.5" stroke-linecap="round"/>
+                    <polygon points="184,66 204,75 184,84" fill="#fde047"/>
+                </svg>
+            `;
+        case 's8_gaar_vaek':
+            return `
+                <svg viewBox="0 0 240 150" width="100%" style="display:block; aspect-ratio:16/10; border-radius:9px;" aria-hidden="true">
+                    <rect width="240" height="150" rx="9" fill="#18121e"/>
+                    <circle cx="152" cy="75" r="16" fill="rgba(148,163,184,0.22)" stroke="#94a3b8" stroke-width="2.5"/>
+                    <line x1="126" y1="75" x2="54" y2="75" stroke="#fb923c" stroke-width="3.5" stroke-dasharray="5,4" stroke-linecap="round"/>
+                    <polygon points="58,67 42,75 58,83" fill="#fb923c"/>
                 </svg>
             `;
         default:

@@ -26,8 +26,8 @@ export const hcAndersenStories = [
                 "chapter": "Scene 1: På bondegården",
                 "chapterEn": "Scene 1: At the Farm",
                 "vrimmelImage": "assets/klods_hans_scene1.jpg",
-                "audioText": "Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge. En dag fortalte den gamle far dem: Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende. Jeg tager til slottet, sagde storebror stolt. Jeg kan tale om store og komplicerede ting. Jeg er meget klog! Da trådte mellembror frem og smilede: Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge! I det samme kom den tredje bror. Ingen regnede ham rigtig med, for han var ikke så klog som de to andre — og ham kaldte de bare Klods-Hans. Jeg vil også med! råbte Klods-Hans. Storebror og mellembror lo højt af ham og red af sted på deres fine heste. Far, giv mig en hest! råbte Klods-Hans. Jeg har lyst til at blive gift. Hvis hun vil have mig, så er det godt — og hvis hun ikke vil, så tager jeg hende alligevel! Faren rystede på hovedet og svarede: Du får ingen hest! Du kan jo ikke tale som dine kloge brødre. Så tager jeg min egen ged — den kan godt bære mig! sagde Klods-Hans. Han sprang op på geden, råbte: Her kommer jeg! og red syngende ud ad vejen.",
-                "text": "Fortæller: »Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge.«\n\nFar: »Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende.«\n\nStorebror: »Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog!«\n\nMellembror: »Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge!«\n\nFortæller: I det samme kom den tredje bror. Ingen regnede ham rigtig med, for han var ikke så klog som de to andre — og ham kaldte de bare Klods-Hans.\n\nKlods-Hans: »Jeg vil også med!« Storebror og mellembror lo højt af ham og red af sted på deres fine heste.\n\nKlods-Hans: »Far, giv mig en hest! Jeg har lyst til at blive gift. Hvis hun vil have mig, så er det godt — og hvis hun ikke vil, så tager jeg hende alligevel!«\n\nFar: »Du får ingen hest! Du kan jo ikke tale som dine kloge brødre.«\n\nKlods-Hans: »Så tager jeg min egen ged — den kan godt bære mig!« Han sprang op på geden, råbte: »Her kommer jeg!« og red syngende ud ad vejen.",
+                "audioText": "Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge. En dag fortalte den gamle far dem: Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende. Jeg tager til slottet, sagde storebror stolt. Jeg kan tale om store og komplicerede ting. Jeg er meget klog! Da trådte mellembror frem og smilede: Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge! I det samme kom den tredje bror. Ingen regnede ham rigtig med, for han var ikke så klog som de to andre — og ham kaldte de bare Klods-Hans. Jeg vil også med! råbte Klods-Hans. Storebror og mellembror lo højt af ham og red af sted på deres fine heste. Far, giv mig en hest! råbte Klods-Hans. Jeg har lyst til at blive gift. Hvis hun vil have mig, så er det godt — og hvis hun ikke vil, så tager jeg hende alligevel! Faren rystede på hovedet og svarede: Du får ingen hest! Du kan jo ikke tale som dine kloge brødre. Så tager jeg min egen ged — den kan godt bære mig! sagde Klods-Hans. Han sprang op på geden, råbte: Her kommer jeg! og red ud ad vejen, mens han sang.",
+                "text": "Fortæller: »Ude på landet var der en gammel gård, og i den var der en gammel far, som havde tre sønner, der var så kloge.«\n\nFar: »Kongen har sagt, at hans datter skal finde en mand. Den, som taler bedst, vinder hende.«\n\nStorebror: »Jeg tager til slottet. Jeg kan tale om store og komplicerede ting. Jeg er meget klog!«\n\nMellembror: »Og jeg vil også gå! Jeg kender mange sange. Ja, jeg er altid glad og god til at synge!«\n\nFortæller: I det samme kom den tredje bror. Ingen regnede ham rigtig med, for han var ikke så klog som de to andre — og ham kaldte de bare Klods-Hans.\n\nKlods-Hans: »Jeg vil også med!« Storebror og mellembror lo højt af ham og red af sted på deres fine heste.\n\nKlods-Hans: »Far, giv mig en hest! Jeg har lyst til at blive gift. Hvis hun vil have mig, så er det godt — og hvis hun ikke vil, så tager jeg hende alligevel!«\n\nFar: »Du får ingen hest! Du kan jo ikke tale som dine kloge brødre.«\n\nKlods-Hans: »Så tager jeg min egen ged — den kan godt bære mig!« Han sprang op på geden, råbte: »Her kommer jeg!« og red ud ad vejen, mens han sang.",
                 "hotspots": [
                     {
                         "x": 38,
@@ -38,32 +38,32 @@ export const hcAndersenStories = [
                         "info": "Verbum: at ride"
                     },
                     {
-                        "x": 44,
-                        "y": 56,
+                        "x": 45,
+                        "y": 58,
                         "type": "sub",
                         "word": "hest",
                         "label": "en hest",
                         "info": "Substantiv: en hest"
                     },
                     {
-                        "x": 80,
-                        "y": 28,
+                        "x": 20,
+                        "y": 32,
                         "type": "sub",
                         "word": "gård",
                         "label": "en gård",
                         "info": "Substantiv: en gård"
                     },
                     {
-                        "x": 67,
-                        "y": 52,
+                        "x": 62,
+                        "y": 54,
                         "type": "pro",
                         "word": "jeg",
                         "label": "jeg (subjekt)",
                         "info": "Pronomen: jeg"
                     },
                     {
-                        "x": 73,
-                        "y": 72,
+                        "x": 74,
+                        "y": 66,
                         "type": "sub",
                         "word": "ged",
                         "label": "en ged",
@@ -78,8 +78,8 @@ export const hcAndersenStories = [
                         "info": "Substantiv: en far"
                     },
                     {
-                        "x": 36,
-                        "y": 38,
+                        "x": 46,
+                        "y": 40,
                         "type": "adj",
                         "word": "klog",
                         "label": "klog",
@@ -879,25 +879,136 @@ export const hcAndersenStories = [
                         "speakerIcon": "",
                         "audioText": "I det samme kom den tredje bror. Ingen regnede ham rigtig med, for han var ikke så klog som de to andre — og ham kaldte de bare Klods-Hans.",
                         "tokens": [
-                            { "text": "I det samme ", "type": "plain" },
-                            { "text": "kom", "type": "vrb", "key": "komme" },
-                            { "text": " den ", "type": "plain" },
-                            { "text": "tredje", "type": "adj", "key": "tredje" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "bror", "type": "sub", "key": "bror" },
-                            { "text": ". ", "type": "plain" },
-                            { "text": "Ingen", "type": "pro", "key": "ingen" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "regnede", "type": "vrb", "key": "regne" },
-                            { "text": " ham rigtig med, for han var ", "type": "plain" },
-                            { "text": "ikke", "type": "adv", "key": "ikke" },
-                            { "text": " så ", "type": "plain" },
-                            { "text": "klog", "type": "adj", "key": "klog" },
-                            { "text": " som de to andre — og ham ", "type": "plain" },
-                            { "text": "kaldte", "type": "vrb", "key": "kalde" },
-                            { "text": " de bare ", "type": "plain" },
-                            { "text": "Klods-Hans", "type": "sub", "key": "klods-hans" },
-                            { "text": ".", "type": "plain" }
+                            {
+                                "text": "I det samme ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "kom",
+                                "type": "vrb",
+                                "key": "komme"
+                            },
+                            {
+                                "text": " den ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "tredje",
+                                "type": "adj",
+                                "key": "tredje"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "bror",
+                                "type": "sub",
+                                "key": "bror"
+                            },
+                            {
+                                "text": ". ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "Ingen",
+                                "type": "pro",
+                                "key": "ingen"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "regnede",
+                                "type": "vrb",
+                                "key": "regne"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "ham",
+                                "type": "pro",
+                                "key": "ham"
+                            },
+                            {
+                                "text": " rigtig med, for ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "han",
+                                "type": "pro",
+                                "key": "han"
+                            },
+                            {
+                                "text": " var ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "ikke",
+                                "type": "adv",
+                                "key": "ikke"
+                            },
+                            {
+                                "text": " så ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "klog",
+                                "type": "adj",
+                                "key": "klog"
+                            },
+                            {
+                                "text": " som ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "de",
+                                "type": "pro",
+                                "key": "de"
+                            },
+                            {
+                                "text": " to andre — og ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "ham",
+                                "type": "pro",
+                                "key": "ham"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "kaldte",
+                                "type": "vrb",
+                                "key": "kalde"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "de",
+                                "type": "pro",
+                                "key": "de"
+                            },
+                            {
+                                "text": " bare ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "Klods-Hans",
+                                "type": "sub",
+                                "key": "klods-hans"
+                            },
+                            {
+                                "text": ".",
+                                "type": "plain"
+                            }
                         ]
                     },
                     {
@@ -905,31 +1016,136 @@ export const hcAndersenStories = [
                         "speakerIcon": "",
                         "audioText": "Jeg vil også med! råbte Klods-Hans. Storebror og mellembror lo højt af ham og red af sted på deres fine heste.",
                         "tokens": [
-                            { "text": "»Jeg ", "type": "plain" },
-                            { "text": "vil", "type": "vrb", "key": "ville" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "også", "type": "adv", "key": "ogsaa" },
-                            { "text": " med!« ", "type": "plain" },
-                            { "text": "råbte", "type": "vrb", "key": "råbe" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "Klods-Hans", "type": "sub", "key": "klods-hans" },
-                            { "text": ". ", "type": "plain" },
-                            { "text": "Storebror", "type": "sub", "key": "storebror" },
-                            { "text": " og ", "type": "plain" },
-                            { "text": "mellembror", "type": "sub", "key": "mellembror" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "lo", "type": "vrb", "key": "le" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "højt", "type": "adv", "key": "høj" },
-                            { "text": " af ham og ", "type": "plain" },
-                            { "text": "red", "type": "vrb", "key": "ride" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "af sted", "type": "adv", "key": "af sted" },
-                            { "text": " på deres ", "type": "plain" },
-                            { "text": "fine", "type": "adj", "key": "fin" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "heste", "type": "sub", "key": "hest" },
-                            { "text": ".", "type": "plain" }
+                            {
+                                "text": "»",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "Jeg",
+                                "type": "pro",
+                                "key": "jeg"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "vil",
+                                "type": "vrb",
+                                "key": "ville"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "også",
+                                "type": "adv",
+                                "key": "ogsaa"
+                            },
+                            {
+                                "text": " med!« ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "råbte",
+                                "type": "vrb",
+                                "key": "råbe"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "Klods-Hans",
+                                "type": "sub",
+                                "key": "klods-hans"
+                            },
+                            {
+                                "text": ". ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "Storebror",
+                                "type": "sub",
+                                "key": "storebror"
+                            },
+                            {
+                                "text": " og ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "mellembror",
+                                "type": "sub",
+                                "key": "mellembror"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "lo",
+                                "type": "vrb",
+                                "key": "le"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "højt",
+                                "type": "adv",
+                                "key": "høj"
+                            },
+                            {
+                                "text": " af ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "ham",
+                                "type": "pro",
+                                "key": "ham"
+                            },
+                            {
+                                "text": " og ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "red",
+                                "type": "vrb",
+                                "key": "ride"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "af sted",
+                                "type": "adv",
+                                "key": "af sted"
+                            },
+                            {
+                                "text": " på deres ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "fine",
+                                "type": "adj",
+                                "key": "fin"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "heste",
+                                "type": "sub",
+                                "key": "hest"
+                            },
+                            {
+                                "text": ".",
+                                "type": "plain"
+                            }
                         ]
                     },
                     {
@@ -937,25 +1153,154 @@ export const hcAndersenStories = [
                         "speakerIcon": "",
                         "audioText": "Far, giv mig en hest! råbte Klods-Hans. Jeg har lyst til at blive gift. Hvis hun vil have mig, så er det godt — og hvis hun ikke vil, så tager jeg hende alligevel!",
                         "tokens": [
-                            { "text": "»", "type": "plain" },
-                            { "text": "Far", "type": "sub", "key": "far" },
-                            { "text": ", ", "type": "plain" },
-                            { "text": "giv", "type": "vrb", "key": "give" },
-                            { "text": " mig en ", "type": "plain" },
-                            { "text": "hest", "type": "sub", "key": "hest" },
-                            { "text": "!« ", "type": "plain" },
-                            { "text": "råbte", "type": "vrb", "key": "råbe" },
-                            { "text": " Klods-Hans. »Jeg har ", "type": "plain" },
-                            { "text": "lyst", "type": "sub", "key": "lyst" },
-                            { "text": " til at ", "type": "plain" },
-                            { "text": "blive gift", "type": "vrb", "key": "gift" },
-                            { "text": ". ", "type": "plain" },
-                            { "text": "Hvis", "type": "konj", "key": "hvis" },
-                            { "text": " hun ", "type": "plain" },
-                            { "text": "vil have", "type": "vrb", "key": "have" },
-                            { "text": " mig, så er det godt — og hvis hun ikke vil, så tager jeg hende ", "type": "plain" },
-                            { "text": "alligevel", "type": "adv", "key": "alligevel" },
-                            { "text": "!«", "type": "plain" }
+                            {
+                                "text": "»",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "Far",
+                                "type": "sub",
+                                "key": "far"
+                            },
+                            {
+                                "text": ", ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "giv",
+                                "type": "vrb",
+                                "key": "give"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "mig",
+                                "type": "pro",
+                                "key": "mig"
+                            },
+                            {
+                                "text": " en ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "hest",
+                                "type": "sub",
+                                "key": "hest"
+                            },
+                            {
+                                "text": "!« ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "råbte",
+                                "type": "vrb",
+                                "key": "råbe"
+                            },
+                            {
+                                "text": " Klods-Hans. »",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "Jeg",
+                                "type": "pro",
+                                "key": "jeg"
+                            },
+                            {
+                                "text": " har ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "lyst",
+                                "type": "sub",
+                                "key": "lyst"
+                            },
+                            {
+                                "text": " til at ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "blive gift",
+                                "type": "vrb",
+                                "key": "gift"
+                            },
+                            {
+                                "text": ". ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "Hvis",
+                                "type": "konj",
+                                "key": "hvis"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "hun",
+                                "type": "pro",
+                                "key": "hun"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "vil have",
+                                "type": "vrb",
+                                "key": "have"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "mig",
+                                "type": "pro",
+                                "key": "mig"
+                            },
+                            {
+                                "text": ", så er det godt — og hvis ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "hun",
+                                "type": "pro",
+                                "key": "hun"
+                            },
+                            {
+                                "text": " ikke vil, så tager ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "jeg",
+                                "type": "pro",
+                                "key": "jeg"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "hende",
+                                "type": "pro",
+                                "key": "hende"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "alligevel",
+                                "type": "adv",
+                                "key": "alligevel"
+                            },
+                            {
+                                "text": "!«",
+                                "type": "plain"
+                            }
                         ]
                     },
                     {
@@ -963,60 +1308,296 @@ export const hcAndersenStories = [
                         "speakerIcon": "",
                         "audioText": "Faren rystede på hovedet og svarede: Du får ingen hest! Du kan jo ikke tale som dine kloge brødre.",
                         "tokens": [
-                            { "text": "Faren", "type": "sub", "key": "far" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "rystede", "type": "vrb", "key": "ryste" },
-                            { "text": " på ", "type": "plain" },
-                            { "text": "hovedet", "type": "sub", "key": "hoved" },
-                            { "text": " og ", "type": "plain" },
-                            { "text": "svarede", "type": "vrb", "key": "svare" },
-                            { "text": ": »Du ", "type": "plain" },
-                            { "text": "får", "type": "vrb", "key": "få" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "ingen", "type": "pro", "key": "ingen" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "hest", "type": "sub", "key": "hest" },
-                            { "text": "! Du ", "type": "plain" },
-                            { "text": "kan", "type": "vrb", "key": "kunne" },
-                            { "text": " jo ", "type": "plain" },
-                            { "text": "ikke", "type": "adv", "key": "ikke" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "tale", "type": "vrb", "key": "tale" },
-                            { "text": " som dine ", "type": "plain" },
-                            { "text": "kloge", "type": "adj", "key": "klog" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "brødre", "type": "sub", "key": "bror" },
-                            { "text": ".«", "type": "plain" }
+                            {
+                                "text": "Faren",
+                                "type": "sub",
+                                "key": "far"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "rystede",
+                                "type": "vrb",
+                                "key": "ryste"
+                            },
+                            {
+                                "text": " på ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "hovedet",
+                                "type": "sub",
+                                "key": "hoved"
+                            },
+                            {
+                                "text": " og ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "svarede",
+                                "type": "vrb",
+                                "key": "svare"
+                            },
+                            {
+                                "text": ": »",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "Du",
+                                "type": "pro",
+                                "key": "du"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "får",
+                                "type": "vrb",
+                                "key": "få"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "ingen",
+                                "type": "pro",
+                                "key": "ingen"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "hest",
+                                "type": "sub",
+                                "key": "hest"
+                            },
+                            {
+                                "text": "! ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "Du",
+                                "type": "pro",
+                                "key": "du"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "kan",
+                                "type": "vrb",
+                                "key": "kunne"
+                            },
+                            {
+                                "text": " jo ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "ikke",
+                                "type": "adv",
+                                "key": "ikke"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "tale",
+                                "type": "vrb",
+                                "key": "tale"
+                            },
+                            {
+                                "text": " som dine ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "kloge",
+                                "type": "adj",
+                                "key": "klog"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "brødre",
+                                "type": "sub",
+                                "key": "bror"
+                            },
+                            {
+                                "text": ".«",
+                                "type": "plain"
+                            }
                         ]
                     },
                     {
                         "speaker": "Klods-Hans",
                         "speakerIcon": "",
-                        "audioText": "Så tager jeg min egen ged — den kan godt bære mig! sagde Klods-Hans. Han sprang op på geden, råbte: Her kommer jeg! og red syngende ud ad vejen.",
+                        "audioText": "Så tager jeg min egen ged — den kan godt bære mig! sagde Klods-Hans. Han sprang op på geden, råbte: Her kommer jeg! og red ud ad vejen, mens han sang.",
                         "tokens": [
-                            { "text": "»Så ", "type": "plain" },
-                            { "text": "tager", "type": "vrb", "key": "tage" },
-                            { "text": " jeg min ", "type": "plain" },
-                            { "text": "egen", "type": "adj", "key": "egen" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "ged", "type": "sub", "key": "ged" },
-                            { "text": " — den kan godt ", "type": "plain" },
-                            { "text": "bære", "type": "vrb", "key": "bære" },
-                            { "text": " mig!« sagde Klods-Hans. Han ", "type": "plain" },
-                            { "text": "sprang", "type": "vrb", "key": "springe" },
-                            { "text": " op på ", "type": "plain" },
-                            { "text": "geden", "type": "sub", "key": "ged" },
-                            { "text": ", ", "type": "plain" },
-                            { "text": "råbte", "type": "vrb", "key": "råbe" },
-                            { "text": ": »Her ", "type": "plain" },
-                            { "text": "kommer", "type": "vrb", "key": "komme" },
-                            { "text": " jeg!« og ", "type": "plain" },
-                            { "text": "red", "type": "vrb", "key": "ride" },
-                            { "text": " ", "type": "plain" },
-                            { "text": "syngende", "type": "adj", "key": "synge" },
-                            { "text": " ud ad ", "type": "plain" },
-                            { "text": "vejen", "type": "sub", "key": "vej" },
-                            { "text": ".", "type": "plain" }
+                            {
+                                "text": "»Så ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "tager",
+                                "type": "vrb",
+                                "key": "tage"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "jeg",
+                                "type": "pro",
+                                "key": "jeg"
+                            },
+                            {
+                                "text": " min ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "egen",
+                                "type": "adj",
+                                "key": "egen"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "ged",
+                                "type": "sub",
+                                "key": "ged"
+                            },
+                            {
+                                "text": " — den kan godt ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "bære",
+                                "type": "vrb",
+                                "key": "bære"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "mig",
+                                "type": "pro",
+                                "key": "mig"
+                            },
+                            {
+                                "text": "!« sagde Klods-Hans. ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "Han",
+                                "type": "pro",
+                                "key": "han"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "sprang",
+                                "type": "vrb",
+                                "key": "springe"
+                            },
+                            {
+                                "text": " op på ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "geden",
+                                "type": "sub",
+                                "key": "ged"
+                            },
+                            {
+                                "text": ", ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "råbte",
+                                "type": "vrb",
+                                "key": "råbe"
+                            },
+                            {
+                                "text": ": »Her ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "kommer",
+                                "type": "vrb",
+                                "key": "komme"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "jeg",
+                                "type": "pro",
+                                "key": "jeg"
+                            },
+                            {
+                                "text": "!« og ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "red",
+                                "type": "vrb",
+                                "key": "ride"
+                            },
+                            {
+                                "text": " ud ad ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "vejen",
+                                "type": "sub",
+                                "key": "vej"
+                            },
+                            {
+                                "text": ", ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "mens",
+                                "type": "konj",
+                                "key": "mens"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "han",
+                                "type": "pro",
+                                "key": "han"
+                            },
+                            {
+                                "text": " ",
+                                "type": "plain"
+                            },
+                            {
+                                "text": "sang",
+                                "type": "vrb",
+                                "key": "synge"
+                            },
+                            {
+                                "text": ".",
+                                "type": "plain"
+                            }
                         ]
                     }
                 ],
@@ -1071,23 +1652,23 @@ export const hcAndersenStories = [
                             },
                             {
                                 "id": "s1_d5",
-                                "line": 4,
-                                "badge": "Musik & Sang",
-                                "prompt": "Hvad kigger mellembror stolt på, mens han forbereder sine sange til prinsessen?",
+                                "line": 6,
+                                "badge": "Brødrene på hestene",
+                                "prompt": "Hvad gør de to ældste brødre på vrimlebilledet, mens de rider forrest ud ad vejen?",
                                 "options": [
-                                    "En nodepapir-rulle / visebog",
-                                    "Et spejl",
-                                    "En hestesko",
-                                    "Et sværd"
+                                    "De griner overlegent og kigger tilbage mod Klods-Hans på vej mod slottet",
+                                    "De hjælper Klods-Hans op på en hest",
+                                    "De sidder inde i stalden og sover",
+                                    "De giver geden mad"
                                 ],
                                 "correct": 0,
-                                "explanation": "Rigtigt spottet! Mellembror øver sig flittigt på sine sange og viser sin musikalitet."
+                                "explanation": "Rigtigt spottet! Storebror og mellembror rider forrest på deres fine heste og ler højt af Klods-Hans."
                             },
                             {
                                 "id": "s1_d1",
-                                "line": 5,
+                                "line": 9,
                                 "badge": "Dyrespot",
-                                "prompt": "Kig på Klods-Hans i midten. Hvilket dyr rider han stolt på i stedet for en hest?",
+                                "prompt": "Kig på Klods-Hans i midten af billedet. Hvilket dyr peger han på, mens han kigger på sin far?",
                                 "options": [
                                     "En ged / gedebuk med store horn",
                                     "En gris",
@@ -1095,127 +1676,113 @@ export const hcAndersenStories = [
                                     "En stor hund"
                                 ],
                                 "correct": 0,
-                                "explanation": "Rigtigt spottet! Klods-Hans rider stolt på gårdens gedebuk med store horn i stedet for en hest!"
+                                "explanation": "Rigtigt spottet! Klods-Hans peger stolt på sin egen ged, som han vil ride til slottet på i stedet for en hest!"
                             },
                             {
                                 "id": "s1_d6",
-                                "line": 6,
-                                "badge": "Afsked",
-                                "prompt": "Hvordan reagerer faren, da Klods-Hans vil ride afsted på geden?",
+                                "line": 8,
+                                "badge": "Farens reaktion",
+                                "prompt": "Hvordan reagerer faren foran stalddøren, da Klods-Hans beder om en hest?",
                                 "options": [
-                                    "Han smiler overbærende og giver ham lov",
-                                    "Han bliver rasende og råber",
-                                    "Han græder af sorg",
-                                    "Han låser stalden"
+                                    "Han ryster på hovedet og siger nej til en hest",
+                                    "Han giver ham straks den største hvide hest",
+                                    "Han løber efter de to andre brødre",
+                                    "Han låser døren og går ind"
                                 ],
                                 "correct": 0,
-                                "explanation": "Præcis! Faren ryster lidt på hovedet og siger smilende: 'Tag du bare geden, Klods-Hans!'"
+                                "explanation": "Præcis! Faren ryster på hovedet og siger: 'Du får ingen hest! Du kan jo ikke tale som dine kloge brødre.'"
                             }
                         ]
                     },
                     "substantiver": {
-                        "title": "Substantiver: Over- og underbegreber",
-                        "badge": "🟢 Over- & underbegreber",
-                        "icon": "🟢",
-                        "desc": "Træn kategorisering og semantiske relationer for scenens centrale navneord:",
+                        "title": "Substantiver: Ubestemt og bestemt",
+                        "badge": "Ubestemt & bestemt",
+                        "icon": "",
+                        "desc": "Træn bøjning af substantiver og forskellen på ubestemt (en/et) og bestemt (-en/-et/-ne) i eventyret:",
                         "questions": [
                             {
-                                "id": "s1_s3",
+                                "id": "s1_s1",
                                 "line": 1,
-                                "badge": "🟢 Reference i sætningen",
-                                "prompt": "I sætningen »... var der **en gammel gård**, og **i den** var der en gammel far«: Hvad peger ordet **den** i »i den« tilbage på?",
+                                "badge": "Ubestemt → Bestemt",
+                                "prompt": "I sætning 1 står der: \"ude på **landet** lå der en gammel **gård**\". Hvordan bøjer man **en gård** i bestemt form (ental)?",
                                 "options": [
-                                    "Den gamle gård (inde på gården)",
-                                    "Kongens slot",
-                                    "En af de tre sønner",
-                                    "En stor by"
+                                    "gårdet",
+                                    "gården",
+                                    "gårde",
+                                    "gårdene"
                                 ],
-                                "correct": 0,
-                                "explanation": "»En gård« er et n-ord, så »i den« betyder »inde på den gamle gård«."
+                                "correct": 1,
+                                "explanation": "Det hedder **en gård** (fælleskøn). I bestemt form flytter **en** om bag ordet: **gården**."
                             },
                             {
                                 "id": "s1_s2",
-                                "line": 1,
-                                "badge": "🟢 Synonym & Betydning",
-                                "prompt": "Hvilket ord betyder det samme som **en gård** ude på landet (og står i kontrast til kongens **slot**)?",
+                                "line": 2,
+                                "badge": "Betydning & brug",
+                                "prompt": "I teksten står der: \"**Kongen** har sagt, at hans datter skal finde **en mand**.\" Hvorfor står der **en mand** (ubestemt) og ikke **manden**?",
                                 "options": [
-                                    "En bondegård (med stuehus, stald og husdyr)",
-                                    "Et højhus i byen",
-                                    "En butik på gaden",
-                                    "Et kongeslot"
+                                    "Fordi vi allerede ved præcis, hvem manden er",
+                                    "Fordi det handler om mange mænd på én gang",
+                                    "Fordi vi ikke ved endnu, hvem manden bliver (ny / ubestemt)",
+                                    "Fordi \"mand\" altid hedder \"en mand\" og aldrig kan bøjes"
                                 ],
-                                "correct": 0,
-                                "explanation": "I eventyret betyder *en gård* en *bondegård* ude på landet."
+                                "correct": 2,
+                                "explanation": "Vi bruger **ubestemt form** (*en mand*), når personen er ny eller ukendt. Vi bruger **bestemt form** (*Kongen*), når vi ved præcis, hvem det er."
+                            },
+                            {
+                                "id": "s1_s3",
+                                "line": 3,
+                                "badge": "Et-ord (intetkøn)",
+                                "prompt": "Storebror siger: \"Jeg skal ride til **slottet**!\" Hvad er ubestemt form (ental) af **slottet**?",
+                                "options": [
+                                    "en slot",
+                                    "et slot",
+                                    "en slott",
+                                    "et slottet"
+                                ],
+                                "correct": 1,
+                                "explanation": "Endelsen **-et** i *slottet* viser, at det er et **et-ord** (intetkøn): **et slot → slottet** (med dobbelt-t efter kort vokal)."
                             },
                             {
                                 "id": "s1_s4",
-                                "line": 2,
-                                "badge": "🟢 Overbegreb",
-                                "prompt": "Faren taler om **kongen** og **hans datter**. Hvilket overbegreb dækker disse personer?",
+                                "line": 6,
+                                "badge": "Flertal (bestemt)",
+                                "prompt": "Brødrene får **to flotte heste** (ubestemt flertal). Hvordan siger man ordet i bestemt form flertal, når vi taler om præcis de to heste?",
                                 "options": [
-                                    "Kongelige personer / kongelige titler",
-                                    "Håndværkere",
-                                    "Husdyr",
-                                    "Køretøjer"
+                                    "hesten",
+                                    "heste",
+                                    "hestene",
+                                    "hestet"
                                 ],
-                                "correct": 0,
-                                "explanation": "Både en konge, en dronning og en prinsesse tilhører overbegrebet *kongelige personer*."
+                                "correct": 2,
+                                "explanation": "**en hest** (ubestemt ental) → **hesten** (bestemt ental) → **heste** (ubestemt flertal) → **hestene** (bestemt flertal)."
                             },
                             {
                                 "id": "s1_s5",
-                                "line": 3,
-                                "badge": "🟢 Overbegreb",
-                                "prompt": "Storebror vil ride til **slottet**. Hvad er overbegrebet for et slot og en gård?",
+                                "line": 8,
+                                "badge": "Fra ubestemt til bestemt",
+                                "prompt": "I starten af historien møder vi **en gammel far**. I sætning 8 står der: \"**Faren** rystede på hovedet.\" Hvorfor skifter ordet til **Faren**?",
                                 "options": [
-                                    "En bygning / beboelse",
-                                    "Et fartøj",
-                                    "Et haveværktøj",
-                                    "Et stykke legetøj"
+                                    "Fordi faren pludselig er blevet til flere fædre",
+                                    "Fordi vi nu kender ham fra historien (bestemt form)",
+                                    "Fordi \"far\" er et verbum i datid",
+                                    "Fordi \"far\" er et et-ord"
                                 ],
-                                "correct": 0,
-                                "explanation": "Både et slot, en gård og et hus er *bygninger* og *beboelser*."
+                                "correct": 1,
+                                "explanation": "Første gang vi hører om en person eller ting, bruger vi ofte **ubestemt form** (*en far*). Næste gang kender vi personen og bruger **bestemt form** (*Faren*)."
                             },
                             {
                                 "id": "s1_s6",
-                                "line": 4,
-                                "badge": "🟢 Overbegreb",
-                                "prompt": "Mellembror kan mange **sange**. Hvilket overbegreb tilhører en sang?",
+                                "line": 9,
+                                "badge": "Hele bøjningen",
+                                "prompt": "Klods-Hans har sin egen **ged**, og bagefter springer han op på **geden**. Hvilken række viser den rigtige bøjning af **en ged**?",
                                 "options": [
-                                    "Musik (eller et musikværk)",
-                                    "Et køkkenredskab",
-                                    "En beklædningsgenstand",
-                                    "Et husdyr"
+                                    "en ged → gedet → geder → gederne",
+                                    "et ged → gedet → gede → gedene",
+                                    "en ged → geden → geder → gederne",
+                                    "en ged → geden → ged → gedene"
                                 ],
-                                "correct": 0,
-                                "explanation": "En sang, en melodi og en symfoni er underbegreber til overbegrebet *musik*."
-                            },
-                            {
-                                "id": "s1_s1",
-                                "line": 5,
-                                "badge": "🟢 Overbegreb",
-                                "prompt": "Klods-Hans har ingen hest, men tager en ged. Hvad er overbegrebet for **en hest** og **en ged** på en bondegård?",
-                                "options": [
-                                    "Et husdyr (eller pattedyr)",
-                                    "Et køretøj",
-                                    "En bygning",
-                                    "Et møbel"
-                                ],
-                                "correct": 0,
-                                "explanation": "Både en hest og en ged er *husdyr* – dyr som mennesker holder på en gård."
-                            },
-                            {
-                                "id": "s1_s7",
-                                "line": 6,
-                                "badge": "🟢 Bestemthed",
-                                "prompt": "Faren siger: 'Tag du bare **geden**, Klods-Hans.' Hvilken form har substantivet 'geden' her?",
-                                "options": [
-                                    "Bestemt form ental (-en)",
-                                    "Ubestemt form ental (en ged)",
-                                    "Bestemt form flertal (gederne)",
-                                    "Ubestemt form flertal (geder)"
-                                ],
-                                "correct": 0,
-                                "explanation": "'Geden' er bestemt form ental (den konkrete ged på gårdspladsen)."
+                                "correct": 2,
+                                "explanation": "**en ged** (ubestemt ental) → **geden** (bestemt ental) → **geder** (ubestemt flertal) → **gederne** (bestemt flertal)."
                             }
                         ]
                     },
@@ -1283,44 +1850,72 @@ export const hcAndersenStories = [
                             },
                             {
                                 "id": "s1_v4",
-                                "line": 5,
+                                "line": 6,
                                 "badge": "Synonym",
-                                "prompt": "Klods-Hans råber: 'Jeg **prøver** også!' Hvilket verbum er et synonym til at prøve her?",
+                                "prompt": "I sætning 6 står der: 'Storebror og mellembror **lo** højt af ham.' Hvilket verbum er et synonym til **at le** (lo)?",
                                 "options": [
-                                    "at forsøge",
-                                    "at opgive",
-                                    "at vente",
+                                    "at grine",
+                                    "at græde",
+                                    "at hviske",
                                     "at sove"
                                 ],
                                 "correct": 0,
-                                "explanation": "*At prøve* og *at forsøge* er synonymer for at gøre et forsøg på noget nyt."
+                                "explanation": "*At le* (datid: *lo*) og *at grine* (datid: *grinede*) er synonymer."
                             },
                             {
                                 "id": "s1_v5",
-                                "line": 6,
-                                "badge": "Bydeform (Imperativ)",
-                                "prompt": "Faren siger til sønnen: '**Tag** du bare geden, Klods-Hans.' Hvilken form af verbet er 'Tag'?",
+                                "line": 2,
+                                "badge": "Tid: Datid vs. førnutid",
+                                "prompt": "I sætning 2 står der: \"En dag **fortalte** den gamle far dem: Kongen **har sagt**, at hans datter skal finde en mand.\" Hvorfor skifter teksten fra **fortalte** (datid) til **har sagt** (førnutid)?",
                                 "options": [
-                                    "Bydeform (imperativ - opfordring)",
-                                    "Datid (præteritum)",
-                                    "Førnutid (perfektum)",
-                                    "Navneform (infinitiv)"
+                                    "Fordi \"fortalte\" er afsluttet i fortiden, mens \"har sagt\" stadig gælder NU",
+                                    "Fordi \"har sagt\" handler om noget, der først sker i fremtiden",
+                                    "Fordi \"fortalte\" er nutid, og \"har sagt\" er datid",
+                                    "Der er ingen forskel på datid og førnutid på dansk"
                                 ],
                                 "correct": 0,
-                                "explanation": "'Tag' er bydeformen (imperativ) af verbet *at tage*. Det udtrykker en direkte tilladelse eller opfordring."
+                                "explanation": "**Datid** (*fortalte*) beskriver selve hændelsen i fortiden. **Førnutid** (*har sagt*) bygger bro til NU — kongens besked gælder stadig lige nu!"
+                            },
+                            {
+                                "id": "s1_v6",
+                                "line": 3,
+                                "badge": "Tid: (Fremtid)",
+                                "prompt": "Storebror siger: \"Jeg **vil** gerne giftes med hende\" og \"hans datter **skal** finde en mand.\" Hvad viser **skal** og **vil** om tiden?",
+                                "options": [
+                                    "At noget allerede er afsluttet i datid",
+                                    "At det handler om en plan, et ønske eller noget fremad i tiden (fremtid)",
+                                    "At handlingen skete for mange år siden",
+                                    "At handlingen kun kan ske i fortiden"
+                                ],
+                                "correct": 1,
+                                "explanation": "Dansk har ikke en fast fremtidsendelse på verbet. I stedet bruger man **skal** (plan/aftale) eller **vil** (ønske/vilje) til at pege frem i tiden."
+                            },
+                            {
+                                "id": "s1_v7",
+                                "line": 9,
+                                "badge": "Tid: Datid vs. nutid",
+                                "prompt": "I sætning 9 står der: \"Klods-Hans **sprang** op på geden ... og **red** ud ad vejen\", men han råber: \"Her **kommer** jeg!\" Hvorfor er **kommer** i nutid, mens **sprang** og **red** er i datid?",
+                                "options": [
+                                    "Fordi fortælleren beskriver historien i datid, mens replikkerne sker lige NU i nutid",
+                                    "Fordi \"sprang\" og \"red\" er fremtid, og \"kommer\" er datid",
+                                    "Fordi verber der ender på -er altid er datid på dansk",
+                                    "Fordi Klods-Hans taler om noget, der skete i går"
+                                ],
+                                "correct": 0,
+                                "explanation": "Eventyr fortælles normalt i **datid** (*sprang, red*), men inde i replikkerne bruger personerne **nutid** (*kommer*), fordi det sker for dem lige nu."
                             }
                         ]
                     },
                     "adjektiver": {
                         "title": "Adjektiver: Modsætninger og gradbøjning",
-                        "badge": "🟠 Modsætninger & gradbøjning",
-                        "icon": "🟠",
+                        "badge": "Modsætninger & gradbøjning",
+                        "icon": "",
                         "desc": "Træn tillægsord der beskriver personernes egenskaber og genstande i scenen:",
                         "questions": [
                             {
                                 "id": "s1_a0",
                                 "line": 1,
-                                "badge": "🟠 Billed-dikotomi: Gammel (ting vs. menneske)",
+                                "badge": "Billed-dikotomi: Gammel (ting vs. menneske)",
                                 "prompt": "Ordet **gammel** bruges to gange i Sætning 1: »en **gammel** gård« og »en **gammel** far«. Hvad er de to modsatte ord (antonymer) på dansk?",
                                 "options": [
                                     "En NY gård (om ting/bygninger) — og en UNG mand/søn (om mennesker)",
@@ -1334,7 +1929,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_a3",
                                 "line": 2,
-                                "badge": "🟠 Gradbøjning",
+                                "badge": "Gradbøjning",
                                 "prompt": "Hvordan gradbøjes det uregelmæssige adjektiv **god** ('Den der taler bedst...')?",
                                 "options": [
                                     "god – bedre – bedst",
@@ -1348,7 +1943,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_a1",
                                 "line": 3,
-                                "badge": "🟠 Modsætning (Antonym)",
+                                "badge": "Modsætning (Antonym)",
                                 "prompt": "Storebror siger: 'Jeg er meget klog.' Hvad er det modsatte af **klog**?",
                                 "options": [
                                     "dum",
@@ -1362,7 +1957,7 @@ export const hcAndersenStories = [
                             {
                                 "id": "s1_a2",
                                 "line": 4,
-                                "badge": "🟠 Modsætning (Antonym)",
+                                "badge": "Modsætning (Antonym)",
                                 "prompt": "Mellembror siger: 'Ja, jeg er altid glad.' Hvad er det modsatte af **glad**?",
                                 "options": [
                                     "trist / ked af det",
@@ -1375,9 +1970,9 @@ export const hcAndersenStories = [
                             },
                             {
                                 "id": "s1_a4",
-                                "line": 5,
-                                "badge": "🟠 Betydning",
-                                "prompt": "Klods-Hans udbryder: 'Jeg har **ingen** hest'. Hvilken betydning har ordet 'ingen' her?",
+                                "line": 8,
+                                "badge": "Betydning",
+                                "prompt": "Faren ryster på hovedet og siger: 'Du får **ingen** hest!' Hvilken betydning har ordet **ingen** her?",
                                 "options": [
                                     "Nul / ikke én eneste hest (benægtelse)",
                                     "Mange heste",
@@ -1385,13 +1980,13 @@ export const hcAndersenStories = [
                                     "En lånt hest"
                                 ],
                                 "correct": 0,
-                                "explanation": "'Ingen' angiver 0 stk. Klods-Hans ejer ikke en hest, så han må tage til takke med geden."
+                                "explanation": "'Ingen' angiver 0 stk. Faren nægter at give Klods-Hans en hest, så han rider på sin egen ged i stedet."
                             },
                             {
                                 "id": "s1_a5",
-                                "line": 6,
-                                "badge": "🟠 Gradbøjning",
-                                "prompt": "Hvordan gradbøjes det regelmæssige adjektiv **klog** ('brødrene der var så kloge')?",
+                                "line": 8,
+                                "badge": "Gradbøjning",
+                                "prompt": "Hvordan gradbøjes det regelmæssige adjektiv **klog** ('dine kloge brødre')?",
                                 "options": [
                                     "klog – klogere – klogest",
                                     "klog – mere klog – mest klog",
@@ -1424,20 +2019,6 @@ export const hcAndersenStories = [
                                 "explanation": "Kontrasten går både mellem *ude* ⟷ *inde* og mellem *på landet* (åbne marker og bondegård) ⟷ *i byen* (tætte byhuse og gader)."
                             },
                             {
-                                "id": "s1_adv4",
-                                "line": 2,
-                                "badge": "Gradsadverbium",
-                                "prompt": "Faren siger: 'Den, som taler **bedst**, vinder hende.' Hvilken form er 'bedst' af mådesadverbiet **godt**?",
-                                "options": [
-                                    "Superlativ (højeste grad: godt – bedre – bedst)",
-                                    "Positiv (grundform)",
-                                    "Komparativ (højere grad)",
-                                    "Nutidsform"
-                                ],
-                                "correct": 0,
-                                "explanation": "Når man taler *godt*, er rækkefølgen: *godt – bedre – bedst* (superlativ)."
-                            },
-                            {
                                 "id": "s1_adv1",
                                 "line": 3,
                                 "badge": "Gradbøjning",
@@ -1450,6 +2031,20 @@ export const hcAndersenStories = [
                                 ],
                                 "correct": 0,
                                 "explanation": "*Meget* gradbøjes: *meget – mere – mest* (f.eks. 'Han ved meget, men hun ved mest')."
+                            },
+                            {
+                                "id": "s1_adv6",
+                                "line": 3,
+                                "badge": "Meget vs. mange",
+                                "prompt": "Storebror siger: 'Jeg er **meget** klog.' Hvorfor hedder det **meget klog** og ikke **mange klog**?",
+                                "options": [
+                                    "Fordi 'meget' beskriver grad foran et adjektiv (hvor klog?), mens 'mange' kun bruges om ting man kan tælle i flertal (mange sange, mange heste)",
+                                    "Fordi 'mange' kun bruges om personer, og 'meget' kun om dyr",
+                                    "Fordi 'klog' er et verbum i datid",
+                                    "Fordi 'mange' kun må bruges i spørgsmål på dansk"
+                                ],
+                                "correct": 0,
+                                "explanation": "Vi bruger **meget** foran adjektiver (*meget klog, meget glad*) og ved utællelige ord (*meget vand*). **Mange** bruges kun ved tællelige substantiver i flertal (*mange sange, mange heste*)."
                             },
                             {
                                 "id": "s1_adv2",
@@ -1466,32 +2061,104 @@ export const hcAndersenStories = [
                                 "explanation": "*Altid* betyder 100% af tiden. Det modsatte er *aldrig* (0% af tiden)."
                             },
                             {
-                                "id": "s1_adv3",
-                                "line": 5,
-                                "badge": "Synonym",
-                                "prompt": "Klods-Hans råber: 'Jeg prøver også!' Hvilket adverbium kan betyde det samme som **også**?",
+                                "id": "s1_adv5",
+                                "line": 7,
+                                "badge": "Talesprogsadverbium",
+                                "prompt": "Klods-Hans siger: 'Hvis hun ikke vil, så tager jeg hende **alligevel**!' Hvad betyder adverbiet **alligevel** her?",
                                 "options": [
-                                    "ligeledes / tillige",
-                                    "aldrig",
-                                    "måske",
-                                    "kun"
+                                    "På trods af det / uanset hvad hun siger",
+                                    "Aldrig nogensinde",
+                                    "Måske i morgen",
+                                    "Meget stille og forsigtigt"
                                 ],
                                 "correct": 0,
-                                "explanation": "*Også* og *ligeledes* betyder, at der tilføjes endnu en person eller handling."
+                                "explanation": "*Alligevel* bruges, når man gør noget **på trods af** en forhindring — her selv hvis prinsessen ikke vil!"
+                            }
+                        ]
+                    },
+                    "pronominer": {
+                        "title": "Pronominer: Subjekt og objekt",
+                        "badge": "Subjekt & objekt",
+                        "icon": "",
+                        "desc": "Træn forskellen på subjektform (hvem gør noget: jeg, du, han, hun, vi, de) og objektform (hvem det går ud over: mig, dig, ham, hende, os, dem) i nye hverdagssætninger:",
+                        "questions": [
+                            {
+                                "id": "s1_pro1",
+                                "badge": "Objektform (mig)",
+                                "prompt": "Vælg det rigtige pronomen: »Min ven ringer til ___ i aften.«",
+                                "options": [
+                                    "jeg",
+                                    "mig",
+                                    "min",
+                                    "vi"
+                                ],
+                                "correct": 1,
+                                "explanation": "Efter præpositionen *til* (objektplads) bruger dansk objektformen **mig** — ikke subjektformen *jeg*."
                             },
                             {
-                                "id": "s1_adv5",
-                                "line": 6,
-                                "badge": "Talesprogsadverbium",
-                                "prompt": "Faren siger: 'Tag du **bare** geden, Klods-Hans.' Hvilken funktion har det lille talesprogsord 'bare' her?",
+                                "id": "s1_pro2",
+                                "badge": "Objektform (ham)",
+                                "prompt": "Vælg det rigtige pronomen: »Kender du den nye nabo? Ja, jeg mødte ___ i går.«",
                                 "options": [
-                                    "Opmuntring / tilladelse ('gør det roligt uden betænkning')",
-                                    "En benægtelse ('gør det endelig ikke')",
-                                    "En tidsangivelse i går",
-                                    "En advarsel mod fare"
+                                    "han",
+                                    "hans",
+                                    "ham",
+                                    "hende"
                                 ],
-                                "correct": 0,
-                                "explanation": "I dansk talesprog bruges *bare* ofte til at give en venlig tilladelse eller opmuntring ('gør du roligt det')."
+                                "correct": 2,
+                                "explanation": "Her er *jeg* subjektet (den der møder), og naboen er objektet — derfor bruger vi **ham** (ikke *han*)."
+                            },
+                            {
+                                "id": "s1_pro3",
+                                "badge": "Subjekt vs. objekt",
+                                "prompt": "Vælg de to rigtige pronominer: »___ bor i Aarhus, men jeg besøger ___ i weekenden.«",
+                                "options": [
+                                    "Hende ... hun",
+                                    "Hun ... hende",
+                                    "Hun ... hun",
+                                    "Hende ... hende"
+                                ],
+                                "correct": 1,
+                                "explanation": "Først står subjektet (**Hun** bor), og bagefter står objektet efter verbet (jeg besøger **hende**)."
+                            },
+                            {
+                                "id": "s1_pro4",
+                                "badge": "Objektform (dem)",
+                                "prompt": "Vælg det rigtige pronomen: »Børnene leger i haven. Kan du kalde på ___?«",
+                                "options": [
+                                    "de",
+                                    "deres",
+                                    "dem",
+                                    "ham"
+                                ],
+                                "correct": 2,
+                                "explanation": "Efter *kalde på* står flertalsformen i objektform: **dem** (ikke subjektformen *de*)."
+                            },
+                            {
+                                "id": "s1_pro5",
+                                "badge": "Subjektform (vi)",
+                                "prompt": "Vælg det rigtige pronomen: »___ spiser aftensmad klokken seks i dag.«",
+                                "options": [
+                                    "Os",
+                                    "Vores",
+                                    "Vi",
+                                    "Dem"
+                                ],
+                                "correct": 2,
+                                "explanation": "Her handler det om hvem der udfører handlingen (subjektet) — derfor bruger vi **Vi** (ikke *Os*)."
+                            },
+                            {
+                                "id": "s1_pro6",
+                                "badge": "Objektform (dig)",
+                                "prompt": "Vælg det rigtige pronomen: »Jeg har købt en lille gave til ___.«",
+                                "options": [
+                                    "du",
+                                    "din",
+                                    "dig",
+                                    "jer"
+                                ],
+                                "correct": 2,
+                                "explanation": "Efter *til* (modtageren / objektet) bruger dansk objektformen **dig** — ikke *du*."
                             }
                         ]
                     }

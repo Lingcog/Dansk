@@ -1,7 +1,7 @@
 import { getTranslation, getLang } from '../utils/i18n.js';
 import { hcAndersenStories } from '../data/hc_andersen_stories.js';
 import { renderKlodsHansFinaleActivities } from '../components/KlodsHansFinaleActivities.js';
-import { createSentence1VisualLab, findVisualNodeForBrotherToken, findSentence2NodeByToken } from '../components/KlodsHansVisualSentence1Lab.js';
+import { createSentence1VisualLab, findVisualNodeForBrotherToken, findSentence2NodeByToken, findDel1VisualNodeByToken } from '../components/KlodsHansVisualSentence1Lab.js';
 import { createSentencePartsLab } from '../components/KlodsHansSentencePartsLab.js';
 import { allNounsRegistry, wordToNounKey, openNounQuickPeekModal } from '../utils/nounQuickPeekModal.js';
 import { byrumVerbsRegistry, openVerbQuickPeekModal } from '../utils/verbQuickPeekModal.js';
@@ -12,6 +12,65 @@ import { adjektiverWordTranslations } from '../utils/top100_adjektiver_translati
 import { adverbierWordTranslations } from '../utils/top100_adverbier_translations.js';
 import { konjunktionerWordTranslations } from '../utils/top100_konjunktioner_translations.js';
 import { isHCDevMode, setHCDevMode } from '../utils/devMode.js';
+
+const IRREGULAR_DATID_DA = new Set([
+    'var', 'havde', 'sagde', 'fortalte', 'kom', 'lo', 'red', 'sprang', 'gik', 'fandt',
+    'tog', 'blev', 'så', 'fik', 'gav', 'stod', 'sad', 'lå', 'skrev', 'drog', 'hang',
+    'trådte', 'grinede', 'svarede', 'råbte', 'smilede', 'rystede', 'regnede', 'kaldte',
+    'tænkte', 'ville', 'skulle', 'kunne', 'måtte', 'sang', 'løb', 'holdt', 'lagde'
+]);
+
+function classifyVerbTense(rawText) {
+    const t = (rawText || '').toLowerCase().trim();
+    if (!t) return 'nutid';
+    if (/ende$/.test(t)) return '';
+    if (/^(har|er)\s+\S+/.test(t)) return 'foernutid';
+    if (/^(skal|vil)\b/.test(t)) return 'fremtid';
+    if (IRREGULAR_DATID_DA.has(t) || /(ede|te)$/.test(t)) return 'datid';
+    return 'nutid';
+}
+
+function classifyNounForm(rawText) {
+    const t = (rawText || '').toLowerCase().trim();
+    if (!t || t === 'klods-hans') return '';
+    if (/(ene|erne|ne|en|et)$/.test(t)) return 'bestemt';
+    return 'ubestemt';
+}
+
+const SUBJEKT_PRO_DA = new Set(['jeg', 'du', 'han', 'hun', 'vi', 'i', 'de']);
+const OBJEKT_PRO_DA = new Set(['mig', 'dig', 'ham', 'hende', 'os', 'jer', 'dem']);
+
+function classifyPronounCase(rawText) {
+    const t = (rawText || '').toLowerCase().trim();
+    if (!t) return '';
+    if (SUBJEKT_PRO_DA.has(t)) return 'subjekt';
+    if (OBJEKT_PRO_DA.has(t)) return 'objekt';
+    return '';
+}
+
+const ADJ_SKIP_DA = new Set(['en', 'et', 'to', 'tre', 'fire', 'fem', 'første', 'anden', 'tredje', 'mange', 'flere', 'alle', 'ingen']);
+const ADJ_GRAD_DA = new Set(['bedre', 'bedst', 'bedste', 'større', 'størst', 'største', 'mindre', 'mindst', 'ældre', 'ældst', 'ældste', 'yngre', 'yngst', 'yngste', 'klogere', 'klogest', 'klogeste', 'finere', 'finest', 'fineste', 'flotteste']);
+
+function classifyAdjForm(rawText) {
+    const t = (rawText || '').toLowerCase().trim();
+    if (!t || ADJ_SKIP_DA.has(t)) return '';
+    if (ADJ_GRAD_DA.has(t) || /(ere|est|este)$/.test(t)) return 'grad';
+    if (/e$/.test(t)) return 'e_form';
+    return 'grundform';
+}
+
+const ADV_STED_DA = new Set(['ude', 'inde', 'oppe', 'nede', 'der', 'her', 'frem', 'tilbage', 'af sted', 'væk', 'hjem', 'hjemme', 'ud', 'ind', 'op', 'ned', 'hen', 'foran', 'bagved', 'bort', 'forbi']);
+const ADV_TID_DA = new Set(['da', 'nu', 'altid', 'aldrig', 'ofte', 'straks', 'snart', 'først', 'bagefter', 'igen', 'stadig', 'endelig', 'pludselig', 'senere', 'tidligere', 'længe']);
+const ADV_SMAAORD_DA = new Set(['ikke', 'også', 'alligevel', 'bare', 'jo', 'vel', 'dog', 'gerne', 'kun', 'måske', 'endnu', 'altså', 'slet']);
+
+function classifyAdvType(rawText) {
+    const t = (rawText || '').toLowerCase().trim();
+    if (!t) return '';
+    if (ADV_STED_DA.has(t)) return 'sted';
+    if (ADV_TID_DA.has(t)) return 'tid';
+    if (ADV_SMAAORD_DA.has(t)) return 'smaaord';
+    return 'grad_maade';
+}
 
 /**
  * HCAndersenView - H.C. Andersens Eventyr
@@ -540,10 +599,16 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
 
         const categories = [
             { key: 'detektiv', label: isEn ? 'Visual Detective' : 'Visuel detektiv', iconSvg: SVG_SEARCH, color: '#38bdf8' },
-            { key: 'substantiver', label: isEn ? 'Nouns' : 'Substantiver', subLabel: 'Over- & underbegreber', dotColor: '#22c55e' },
-            { key: 'verber', label: isEn ? 'Verbs' : 'Verber', subLabel: 'Modsætninger & synonymer', dotColor: '#ef4444' },
+            {
+                key: 'substantiver',
+                label: isEn ? 'Nouns' : 'Substantiver',
+                subLabel: section.tasks.substantiver?.badge || 'Ubestemt & bestemt',
+                dotColor: '#22c55e'
+            },
+            { key: 'verber', label: isEn ? 'Verbs' : 'Verber', subLabel: 'Tider & modsætninger', dotColor: '#ef4444' },
             { key: 'adjektiver', label: isEn ? 'Adjectives' : 'Adjektiver', subLabel: 'Modsætninger & grader', dotColor: '#f97316' },
-            { key: 'adverbier', label: isEn ? 'Adverbs' : 'Adverbier', subLabel: 'Grader & synonymer', dotColor: '#38bdf8' }
+            { key: 'adverbier', label: isEn ? 'Adverbs' : 'Adverbier', subLabel: 'Grader & synonymer', dotColor: '#38bdf8' },
+            { key: 'pronominer', label: isEn ? 'Pronouns' : 'Pronominer', subLabel: 'Subjekt & objekt', dotColor: '#ec4899' }
         ].filter(cat => section.tasks[cat.key] && section.tasks[cat.key].questions && section.tasks[cat.key].questions.length > 0);
 
         if (categories.length === 0) return null;
@@ -552,6 +617,11 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         tasksWrap.className = 'hc-section-tasks';
 
         let activeCatKey = categories[0].key;
+        let activeVerbTense = null; // null | 'datid' | 'foernutid' | 'nutid' | 'fremtid'
+        let activeNounForm = null; // null | 'ubestemt' | 'bestemt'
+        let activePronounCase = null; // null | 'subjekt' | 'objekt'
+        let activeAdjForm = null; // null | 'grundform' | 'e_form' | 'grad'
+        let activeAdvType = null; // null | 'sted' | 'tid' | 'grad_maade' | 'smaaord'
         const currentQuestionIdx = {};
         const catScores = {};
         const userAnswers = {};
@@ -673,6 +743,27 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             `;
             btn.onclick = () => {
                 activeCatKey = cat.key;
+                const parentCard = tasksWrap.closest('.hc-section-card');
+                if (activeCatKey !== 'verber') {
+                    activeVerbTense = null;
+                    if (parentCard) delete parentCard.dataset.verbTenseFilter;
+                }
+                if (activeCatKey !== 'substantiver') {
+                    activeNounForm = null;
+                    if (parentCard) delete parentCard.dataset.nounFormFilter;
+                }
+                if (activeCatKey !== 'pronominer') {
+                    activePronounCase = null;
+                    if (parentCard) delete parentCard.dataset.pronounCaseFilter;
+                }
+                if (activeCatKey !== 'adjektiver') {
+                    activeAdjForm = null;
+                    if (parentCard) delete parentCard.dataset.adjFormFilter;
+                }
+                if (activeCatKey !== 'adverbier') {
+                    activeAdvType = null;
+                    if (parentCard) delete parentCard.dataset.advTypeFilter;
+                }
                 Object.keys(tabButtons).forEach(k => {
                     tabButtons[k].classList.toggle('active', k === activeCatKey);
                 });
@@ -701,10 +792,636 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             tasksWrap.appendChild(layer2Wrap);
         }
 
+        function renderVerbTenseDiagram() {
+            const parentCard = tasksWrap.closest('.hc-section-card');
+            const tenses = [
+                {
+                    id: 'datid',
+                    label: isEn ? 'Past (Datid)' : 'Datid',
+                    desc: isEn ? 'Finished in the past — the main storytelling tense.' : 'Afsluttet i fortiden — eventyrets fortælletid (var, havde, fortalte, sagde, red).'
+                },
+                {
+                    id: 'foernutid',
+                    label: isEn ? 'Present perfect (Førnutid)' : 'Førnutid',
+                    desc: isEn ? 'Happened before, still relevant NOW (har sagt).' : 'Sket før, men gælder stadig NU (har sagt).'
+                },
+                {
+                    id: 'nutid',
+                    label: isEn ? 'Present (Nutid)' : 'Nutid',
+                    desc: isEn ? 'Happening right now or inside direct speech (tager, taler, vinder, er).' : 'Sker lige nu — bruges i replikkerne (tager, taler, vinder, er, får).'
+                },
+                {
+                    id: 'fremtid',
+                    label: isEn ? '(Future)' : '(Fremtid)',
+                    desc: isEn ? 'Plan or intention ahead — Danish uses "skal" / "vil" (skal finde, vil gå).' : 'Plan eller vilje fremad — dansk bruger "skal" eller "vil" (skal finde, vil).'
+                }
+            ];
+
+            const activeInfo = tenses.find(t => t.id === activeVerbTense);
+            const matchedInText = [];
+            if (parentCard && activeVerbTense) {
+                parentCard.querySelectorAll(`.hc-word-token[data-verb-tense="${activeVerbTense}"]`).forEach(el => {
+                    const txt = el.textContent.trim();
+                    if (txt && !matchedInText.includes(txt)) matchedInText.push(txt);
+                });
+            }
+
+            const box = document.createElement('div');
+            box.className = 'hc-tense-diagram';
+            box.innerHTML = `
+                <div class="hc-tense-diagram-head">
+                    <div class="hc-tense-diagram-title">${isEn ? 'Verb Tenses in This Scene' : 'Verbernes tider i scenen'}</div>
+                    <span class="hc-tense-diagram-hint">${isEn ? 'Click a tense to highlight it in the text above' : 'Klik på en tid for at se den i teksten ovenfor'}</span>
+                </div>
+                <svg class="hc-tense-svg" viewBox="0 0 560 96" role="img" aria-label="Tidslinje for datid, førnutid, nutid og fremtid">
+                    <!-- Grund-tidslinje -->
+                    <line x1="28" y1="54" x2="522" y2="54" stroke="#334155" stroke-width="3" stroke-linecap="round"/>
+                    <polygon points="520,48 534,54 520,60" fill="#475569"/>
+                    <!-- NU-linje -->
+                    <line x1="360" y1="22" x2="360" y2="76" stroke="#64748b" stroke-width="2" stroke-dasharray="3,3"/>
+                    <text x="360" y="15" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="700">NU</text>
+
+                    <!-- 1. Datid -->
+                    <circle cx="96" cy="54" r="${activeVerbTense === 'datid' ? 11 : 8}" fill="${activeVerbTense === 'datid' ? '#ef4444' : '#334155'}" stroke="${activeVerbTense === 'datid' ? '#fca5a5' : '#64748b'}" stroke-width="2.5"/>
+                    <text x="96" y="84" text-anchor="middle" fill="${activeVerbTense === 'datid' ? '#fca5a5' : '#94a3b8'}" font-size="11" font-weight="700">Datid</text>
+
+                    <!-- 2. Førnutid (bro fra før til NU) -->
+                    <path d="M 192 54 Q 274 20 352 48" fill="none" stroke="${activeVerbTense === 'foernutid' ? '#ef4444' : '#475569'}" stroke-width="${activeVerbTense === 'foernutid' ? 3.5 : 2.5}" stroke-linecap="round"/>
+                    <polygon points="347,42 358,50 345,52" fill="${activeVerbTense === 'foernutid' ? '#ef4444' : '#475569'}"/>
+                    <circle cx="192" cy="54" r="${activeVerbTense === 'foernutid' ? 9 : 6.5}" fill="${activeVerbTense === 'foernutid' ? '#ef4444' : '#334155'}" stroke="${activeVerbTense === 'foernutid' ? '#fca5a5' : '#64748b'}" stroke-width="2"/>
+                    <text x="242" y="84" text-anchor="middle" fill="${activeVerbTense === 'foernutid' ? '#fca5a5' : '#94a3b8'}" font-size="11" font-weight="700">Førnutid</text>
+
+                    <!-- 3. Nutid (NU) -->
+                    <circle cx="360" cy="54" r="${activeVerbTense === 'nutid' ? 11 : 8}" fill="${activeVerbTense === 'nutid' ? '#ef4444' : '#2b6e78'}" stroke="${activeVerbTense === 'nutid' ? '#fca5a5' : '#7ec4ce'}" stroke-width="2.5"/>
+                    <text x="360" y="84" text-anchor="middle" fill="${activeVerbTense === 'nutid' ? '#fca5a5' : '#cbd5e1'}" font-size="11" font-weight="700">Nutid</text>
+
+                    <!-- 4. (Fremtid) -->
+                    <line x1="374" y1="54" x2="478" y2="54" stroke="${activeVerbTense === 'fremtid' ? '#ef4444' : '#475569'}" stroke-width="${activeVerbTense === 'fremtid' ? 3.5 : 2.5}" stroke-dasharray="6,4"/>
+                    <circle cx="486" cy="54" r="${activeVerbTense === 'fremtid' ? 10 : 7.5}" fill="${activeVerbTense === 'fremtid' ? '#ef4444' : 'none'}" stroke="${activeVerbTense === 'fremtid' ? '#fca5a5' : '#64748b'}" stroke-width="2.5"/>
+                    <text x="480" y="84" text-anchor="middle" fill="${activeVerbTense === 'fremtid' ? '#fca5a5' : '#94a3b8'}" font-size="11" font-weight="700">(Fremtid)</text>
+                </svg>
+                <div class="hc-tense-btns">
+                    ${tenses.map(t => `
+                        <button type="button" class="hc-tense-btn ${activeVerbTense === t.id ? 'active' : ''}" data-tense-pick="${t.id}">${t.label}</button>
+                    `).join('')}
+                    ${activeVerbTense ? `<button type="button" class="hc-tense-btn hc-tense-clear" data-tense-pick="">${isEn ? 'Show all' : 'Vis alle'}</button>` : ''}
+                </div>
+                ${activeInfo ? `
+                    <div class="hc-tense-explain">
+                        <span>${activeInfo.desc}</span>
+                        ${matchedInText.length > 0 ? `<div class="hc-tense-found"><strong>${isEn ? 'In text above:' : 'I teksten ovenfor:'}</strong> ${matchedInText.join(', ')}</div>` : ''}
+                    </div>
+                ` : ''}
+            `;
+
+            box.querySelectorAll('[data-tense-pick]').forEach(btn => {
+                btn.onclick = () => {
+                    const picked = btn.dataset.tensePick || null;
+                    activeVerbTense = (activeVerbTense === picked) ? null : picked;
+                    const cardEl = tasksWrap.closest('.hc-section-card');
+                    if (cardEl) {
+                        if (activeVerbTense) {
+                            cardEl.dataset.activeHighlight = 'verber';
+                            cardEl.dataset.verbTenseFilter = activeVerbTense;
+                        } else {
+                            delete cardEl.dataset.verbTenseFilter;
+                        }
+                    }
+                    renderActivePanel();
+                };
+            });
+
+            return box;
+        }
+
+        function renderNounDefinitenessDiagram() {
+            const parentCard = tasksWrap.closest('.hc-section-card');
+            const forms = [
+                {
+                    id: 'ubestemt',
+                    label: isEn ? 'Indefinite (en / et)' : 'Ubestemt (en / et)',
+                    desc: isEn
+                        ? 'Used when something is NEW in the story or one of many (en gård, en hest, en ged, et slot).'
+                        : 'Bruges når noget er NYT i historien eller én blandt flere — kendeordet står FORAN (en gård, en hest, en ged, et slot).'
+                },
+                {
+                    id: 'bestemt',
+                    label: isEn ? 'Definite (-en / -et / -ne)' : 'Bestemt (-en / -et / -ne)',
+                    desc: isEn
+                        ? 'Used when we KNOW exactly which one — the article moves to the END (gården, geden, slottet, Kongen, Faren).'
+                        : 'Bruges når vi KENDER tingen/personen — kendeordet flytter OM BAG ordet (gården, geden, slottet, Kongen, Faren, vejen).'
+                }
+            ];
+
+            const activeInfo = forms.find(f => f.id === activeNounForm);
+            const matchedInText = [];
+            if (parentCard && activeNounForm) {
+                parentCard.querySelectorAll(`.hc-word-token[data-noun-form="${activeNounForm}"]`).forEach(el => {
+                    const txt = el.textContent.trim();
+                    if (txt && !matchedInText.includes(txt)) matchedInText.push(txt);
+                });
+            }
+
+            const isUbestemt = activeNounForm === 'ubestemt';
+            const isBestemt = activeNounForm === 'bestemt';
+
+            const box = document.createElement('div');
+            box.className = 'hc-tense-diagram hc-noun-diagram';
+            box.innerHTML = `
+                <div class="hc-tense-diagram-head">
+                    <div class="hc-tense-diagram-title">${isEn ? 'Nouns: Indefinite vs. Definite' : 'Substantiver: Ubestemt vs. bestemt'}</div>
+                    <span class="hc-tense-diagram-hint">${isEn ? 'Click a form to highlight it in the text above' : 'Klik på en form for at se den i teksten ovenfor'}</span>
+                </div>
+                <svg class="hc-tense-svg" viewBox="0 0 560 128" role="img" aria-label="Visuel forskel på ubestemt (en gård) og bestemt (gården)">
+                    <!-- VENSTRE: UBESTEMT (én blandt flere) -->
+                    <rect x="10" y="8" width="234" height="112" rx="10"
+                        fill="${isUbestemt ? 'rgba(34, 197, 94, 0.14)' : '#151a21'}"
+                        stroke="${isUbestemt ? '#22c55e' : 'rgba(203, 213, 225, 0.16)'}"
+                        stroke-width="${isUbestemt ? '2' : '1.2'}"/>
+                    <text x="127" y="26" text-anchor="middle" fill="${isUbestemt ? '#86efac' : '#cbd5e1'}" font-size="11.5" font-weight="800">UBESTEMT</text>
+                    <text x="127" y="40" text-anchor="middle" fill="#94a3b8" font-size="9.5">${isEn ? 'One of several / new' : 'Én blandt flere / ny'}</text>
+
+                    <!-- 3 små huse (én løst markeret med stiplet cirkel) -->
+                    <g transform="translate(46, 52)">
+                        <path d="M 12 4 L 24 14 L 24 26 L 0 26 L 0 14 Z" fill="none" stroke="#475569" stroke-width="1.6" stroke-linejoin="round"/>
+                        <path d="M 52 4 L 64 14 L 64 26 L 40 26 L 40 14 Z" fill="${isUbestemt ? 'rgba(34,197,94,0.22)' : 'rgba(148,163,184,0.14)'}" stroke="${isUbestemt ? '#4ade80' : '#94a3b8'}" stroke-width="1.8" stroke-linejoin="round"/>
+                        <circle cx="52" cy="16" r="17" fill="none" stroke="${isUbestemt ? '#4ade80' : '#64748b'}" stroke-width="1.5" stroke-dasharray="3,3"/>
+                        <path d="M 92 4 L 104 14 L 104 26 L 80 26 L 80 14 Z" fill="none" stroke="#475569" stroke-width="1.6" stroke-linejoin="round"/>
+                    </g>
+
+                    <!-- Struktur-pille venstre: [en] + gård -->
+                    <rect x="34" y="92" width="32" height="20" rx="5" fill="${isUbestemt ? '#22c55e' : '#1e293b'}" stroke="${isUbestemt ? '#86efac' : '#475569'}" stroke-width="1.2"/>
+                    <text x="50" y="106" text-anchor="middle" fill="${isUbestemt ? '#052e16' : '#86efac'}" font-size="11" font-weight="800">en</text>
+                    <text x="74" y="106" text-anchor="middle" fill="#64748b" font-size="11" font-weight="700">+</text>
+                    <text x="100" y="106" text-anchor="middle" fill="#f1f5f9" font-size="11.5" font-weight="700">gård</text>
+                    <text x="131" y="106" text-anchor="middle" fill="#475569" font-size="11">|</text>
+                    <rect x="142" y="92" width="28" height="20" rx="5" fill="${isUbestemt ? '#22c55e' : '#1e293b'}" stroke="${isUbestemt ? '#86efac' : '#475569'}" stroke-width="1.2"/>
+                    <text x="156" y="106" text-anchor="middle" fill="${isUbestemt ? '#052e16' : '#86efac'}" font-size="11" font-weight="800">et</text>
+                    <text x="178" y="106" text-anchor="middle" fill="#64748b" font-size="11" font-weight="700">+</text>
+                    <text x="202" y="106" text-anchor="middle" fill="#f1f5f9" font-size="11.5" font-weight="700">slot</text>
+
+                    <!-- MIDTE: Pil der viser at en/et flytter om bagved -->
+                    <line x1="252" y1="64" x2="296" y2="64" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+                    <polygon points="294,58 308,64 294,70" fill="#22c55e"/>
+                    <text x="280" y="52" text-anchor="middle" fill="#86efac" font-size="9.5" font-weight="700">-en / -et</text>
+                    <text x="280" y="82" text-anchor="middle" fill="#64748b" font-size="9">${isEn ? 'moves back' : 'bag på'}</text>
+
+                    <!-- HØJRE: BESTEMT (præcis den vi kender) -->
+                    <rect x="316" y="8" width="234" height="112" rx="10"
+                        fill="${isBestemt ? 'rgba(34, 197, 94, 0.14)' : '#151a21'}"
+                        stroke="${isBestemt ? '#22c55e' : 'rgba(203, 213, 225, 0.16)'}"
+                        stroke-width="${isBestemt ? '2' : '1.2'}"/>
+                    <text x="433" y="26" text-anchor="middle" fill="${isBestemt ? '#86efac' : '#cbd5e1'}" font-size="11.5" font-weight="800">BESTEMT</text>
+                    <text x="433" y="40" text-anchor="middle" fill="#94a3b8" font-size="9.5">${isEn ? 'The specific one we know' : 'Den bestemte, vi kender'}</text>
+
+                    <!-- 1 tydeligt fokuseret hus med pil ned på det -->
+                    <g transform="translate(415, 48)">
+                        <polygon points="18,0 13,6 23,6" fill="#22c55e"/>
+                        <rect x="-4" y="8" width="44" height="28" rx="6" fill="rgba(34,197,94,0.16)" stroke="#22c55e" stroke-width="1.6"/>
+                        <path d="M 18 11 L 31 21 L 31 33 L 5 33 L 5 21 Z" fill="rgba(34,197,94,0.35)" stroke="#86efac" stroke-width="1.8" stroke-linejoin="round"/>
+                    </g>
+
+                    <!-- Struktur-pille højre: gård + [en] -->
+                    <text x="358" y="106" text-anchor="middle" fill="#f1f5f9" font-size="11.5" font-weight="700">gård</text>
+                    <rect x="378" y="92" width="32" height="20" rx="5" fill="${isBestemt ? '#22c55e' : '#1e293b'}" stroke="${isBestemt ? '#86efac' : '#22c55e'}" stroke-width="1.2"/>
+                    <text x="394" y="106" text-anchor="middle" fill="${isBestemt ? '#052e16' : '#86efac'}" font-size="11" font-weight="800">-en</text>
+                    <text x="424" y="106" text-anchor="middle" fill="#475569" font-size="11">|</text>
+                    <text x="454" y="106" text-anchor="middle" fill="#f1f5f9" font-size="11.5" font-weight="700">slott</text>
+                    <rect x="476" y="92" width="32" height="20" rx="5" fill="${isBestemt ? '#22c55e' : '#1e293b'}" stroke="${isBestemt ? '#86efac' : '#22c55e'}" stroke-width="1.2"/>
+                    <text x="492" y="106" text-anchor="middle" fill="${isBestemt ? '#052e16' : '#86efac'}" font-size="11" font-weight="800">-et</text>
+                </svg>
+                <div class="hc-tense-btns">
+                    ${forms.map(f => `
+                        <button type="button" class="hc-tense-btn hc-noun-btn ${activeNounForm === f.id ? 'active' : ''}" data-noun-pick="${f.id}">${f.label}</button>
+                    `).join('')}
+                    ${activeNounForm ? `<button type="button" class="hc-tense-btn hc-tense-clear" data-noun-pick="">${isEn ? 'Show all' : 'Vis alle'}</button>` : ''}
+                </div>
+                ${activeInfo ? `
+                    <div class="hc-tense-explain hc-noun-explain">
+                        <span>${activeInfo.desc}</span>
+                        ${matchedInText.length > 0 ? `<div class="hc-tense-found hc-noun-found"><strong>${isEn ? 'In text above:' : 'I teksten ovenfor:'}</strong> ${matchedInText.join(', ')}</div>` : ''}
+                    </div>
+                ` : ''}
+            `;
+
+            box.querySelectorAll('[data-noun-pick]').forEach(btn => {
+                btn.onclick = () => {
+                    const picked = btn.dataset.nounPick || null;
+                    activeNounForm = (activeNounForm === picked) ? null : picked;
+                    const cardEl = tasksWrap.closest('.hc-section-card');
+                    if (cardEl) {
+                        if (activeNounForm) {
+                            cardEl.dataset.activeHighlight = 'substantiver';
+                            cardEl.dataset.nounFormFilter = activeNounForm;
+                        } else {
+                            delete cardEl.dataset.nounFormFilter;
+                        }
+                    }
+                    renderActivePanel();
+                };
+            });
+
+            return box;
+        }
+
+        function renderPronounCaseDiagram() {
+            const parentCard = tasksWrap.closest('.hc-section-card');
+            const cases = [
+                {
+                    id: 'subjekt',
+                    label: isEn ? 'Subject (jeg, du, han, hun, vi, I, de)' : 'Subjekt (jeg, du, han, hun, vi, I, de)',
+                    desc: isEn
+                        ? 'The DOER of the action — usually stands before or right next to the verb (Jeg taler, Han red, Hun ser).'
+                        : 'Den, der GØR handlingen i sætningen — f.eks. Jeg taler, Han red, Hun vil, Du får, De lo.'
+                },
+                {
+                    id: 'objekt',
+                    label: isEn ? 'Object (mig, dig, ham, hende, os, jer, dem)' : 'Objekt (mig, dig, ham, hende, os, jer, dem)',
+                    desc: isEn
+                        ? 'The RECEIVER of the action — stands after the verb or a preposition (giv mig, lo af ham, vinder hende, fortalte dem).'
+                        : 'Den, handlingen RAMMER (eller efter et forholdsord) — f.eks. giv mig, lo af ham, vinder hende, fortalte dem.'
+                }
+            ];
+
+            const activeInfo = cases.find(c => c.id === activePronounCase);
+            const matchedInText = [];
+            if (parentCard && activePronounCase) {
+                parentCard.querySelectorAll(`.hc-word-token[data-pronoun-case="${activePronounCase}"]`).forEach(el => {
+                    const txt = el.textContent.trim();
+                    if (txt && !matchedInText.includes(txt)) matchedInText.push(txt);
+                });
+            }
+
+            const isSubj = activePronounCase === 'subjekt';
+            const isObj = activePronounCase === 'objekt';
+
+            const box = document.createElement('div');
+            box.className = 'hc-tense-diagram hc-pro-diagram';
+            box.innerHTML = `
+                <div class="hc-tense-diagram-head">
+                    <div class="hc-tense-diagram-title">${isEn ? 'Pronouns: Subject vs. Object' : 'Pronominer: Subjekt vs. objekt'}</div>
+                    <span class="hc-tense-diagram-hint">${isEn ? 'Click a form to highlight it in the text above' : 'Klik på en form for at se den i teksten ovenfor'}</span>
+                </div>
+                <svg class="hc-tense-svg" viewBox="0 0 560 132" role="img" aria-label="Visuel forskel på subjektform og objektform af pronominer">
+                    <!-- VENSTRE: SUBJEKT (Den der gør noget) -->
+                    <rect x="8" y="8" width="218" height="116" rx="10"
+                        fill="${isSubj ? 'rgba(236, 72, 153, 0.16)' : '#151a21'}"
+                        stroke="${isSubj ? '#ec4899' : 'rgba(203, 213, 225, 0.16)'}"
+                        stroke-width="${isSubj ? '2' : '1.2'}"/>
+                    <text x="117" y="26" text-anchor="middle" fill="${isSubj ? '#f9a8d4' : '#cbd5e1'}" font-size="11.5" font-weight="800">SUBJEKT</text>
+                    <text x="117" y="40" text-anchor="middle" fill="#94a3b8" font-size="9.5">${isEn ? 'The doer (WHO acts)' : 'Den, der GØR noget'}</text>
+
+                    <!-- Person-ikon (udfører handling) -->
+                    <g transform="translate(99, 46)">
+                        <circle cx="18" cy="9" r="6" fill="${isSubj ? '#ec4899' : '#334155'}" stroke="${isSubj ? '#f9a8d4' : '#94a3b8'}" stroke-width="1.6"/>
+                        <path d="M 7 26 C 7 18, 29 18, 29 26" fill="none" stroke="${isSubj ? '#f9a8d4' : '#94a3b8'}" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M 30 14 L 38 14" stroke="#ec4899" stroke-width="2" stroke-linecap="round"/>
+                        <polygon points="36,11 42,14 36,17" fill="#ec4899"/>
+                    </g>
+
+                    <!-- Former + eksempel -->
+                    <text x="117" y="90" text-anchor="middle" fill="${isSubj ? '#fbcfe8' : '#e2e8f0'}" font-size="10.5" font-weight="700">jeg · du · han · hun · vi · I · de</text>
+                    <rect x="38" y="98" width="44" height="19" rx="5" fill="${isSubj ? '#ec4899' : '#1e293b'}" stroke="${isSubj ? '#fbcfe8' : '#ec4899'}" stroke-width="1.2"/>
+                    <text x="60" y="111" text-anchor="middle" fill="${isSubj ? '#ffffff' : '#f9a8d4'}" font-size="10.5" font-weight="800">Han</text>
+                    <text x="134" y="111" text-anchor="middle" fill="#94a3b8" font-size="10.5">ser / hjælper ...</text>
+
+                    <!-- MIDTE: HANDLING (VERBUM-PIL) -->
+                    <line x1="232" y1="64" x2="316" y2="64" stroke="#ec4899" stroke-width="2.5" stroke-linecap="round"/>
+                    <polygon points="314,58 328,64 314,70" fill="#ec4899"/>
+                    <rect x="242" y="42" width="76" height="18" rx="9" fill="#1e293b" stroke="rgba(236, 72, 153, 0.45)" stroke-width="1"/>
+                    <text x="280" y="54" text-anchor="middle" fill="#f9a8d4" font-size="9.5" font-weight="700">VERBUM</text>
+                    <text x="280" y="81" text-anchor="middle" fill="#64748b" font-size="9">${isEn ? 'action →' : 'handling →'}</text>
+
+                    <!-- HØJRE: OBJEKT (Den handlingen rammer) -->
+                    <rect x="334" y="8" width="218" height="116" rx="10"
+                        fill="${isObj ? 'rgba(236, 72, 153, 0.16)' : '#151a21'}"
+                        stroke="${isObj ? '#ec4899' : 'rgba(203, 213, 225, 0.16)'}"
+                        stroke-width="${isObj ? '2' : '1.2'}"/>
+                    <text x="443" y="26" text-anchor="middle" fill="${isObj ? '#f9a8d4' : '#cbd5e1'}" font-size="11.5" font-weight="800">OBJEKT</text>
+                    <text x="443" y="40" text-anchor="middle" fill="#94a3b8" font-size="9.5">${isEn ? 'The receiver (WHOM it hits)' : 'Den, handlingen RAMMER'}</text>
+
+                    <!-- Person-ikon (modtager handling med mål-ring) -->
+                    <g transform="translate(425, 46)">
+                        <circle cx="18" cy="15" r="15" fill="none" stroke="${isObj ? '#f472b6' : '#475569'}" stroke-width="1.4" stroke-dasharray="3,2"/>
+                        <circle cx="18" cy="9" r="6" fill="${isObj ? '#ec4899' : '#334155'}" stroke="${isObj ? '#f9a8d4' : '#94a3b8'}" stroke-width="1.6"/>
+                        <path d="M 7 26 C 7 18, 29 18, 29 26" fill="none" stroke="${isObj ? '#f9a8d4' : '#94a3b8'}" stroke-width="2" stroke-linecap="round"/>
+                    </g>
+
+                    <!-- Former + eksempel -->
+                    <text x="443" y="90" text-anchor="middle" fill="${isObj ? '#fbcfe8' : '#e2e8f0'}" font-size="10" font-weight="700">mig · dig · ham · hende · os · jer · dem</text>
+                    <text x="394" y="111" text-anchor="middle" fill="#94a3b8" font-size="10.5">... ser / lo af</text>
+                    <rect x="446" y="98" width="52" height="19" rx="5" fill="${isObj ? '#ec4899' : '#1e293b'}" stroke="${isObj ? '#fbcfe8' : '#ec4899'}" stroke-width="1.2"/>
+                    <text x="472" y="111" text-anchor="middle" fill="${isObj ? '#ffffff' : '#f9a8d4'}" font-size="10.5" font-weight="800">ham</text>
+                </svg>
+                <div class="hc-tense-btns">
+                    ${cases.map(c => `
+                        <button type="button" class="hc-tense-btn hc-pro-btn ${activePronounCase === c.id ? 'active' : ''}" data-pro-pick="${c.id}">${c.label}</button>
+                    `).join('')}
+                    ${activePronounCase ? `<button type="button" class="hc-tense-btn hc-tense-clear" data-pro-pick="">${isEn ? 'Show all' : 'Vis alle'}</button>` : ''}
+                </div>
+                ${activeInfo ? `
+                    <div class="hc-tense-explain hc-pro-explain">
+                        <span>${activeInfo.desc}</span>
+                        ${matchedInText.length > 0 ? `<div class="hc-tense-found hc-pro-found"><strong>${isEn ? 'In text above:' : 'I teksten ovenfor:'}</strong> ${matchedInText.join(', ')}</div>` : ''}
+                    </div>
+                ` : ''}
+            `;
+
+            box.querySelectorAll('[data-pro-pick]').forEach(btn => {
+                btn.onclick = () => {
+                    const picked = btn.dataset.proPick || null;
+                    activePronounCase = (activePronounCase === picked) ? null : picked;
+                    const cardEl = tasksWrap.closest('.hc-section-card');
+                    if (cardEl) {
+                        if (activePronounCase) {
+                            cardEl.dataset.activeHighlight = 'pronominer';
+                            cardEl.dataset.pronounCaseFilter = activePronounCase;
+                        } else {
+                            delete cardEl.dataset.pronounCaseFilter;
+                        }
+                    }
+                    renderActivePanel();
+                };
+            });
+
+            return box;
+        }
+
+        function renderAdjectiveDiagram() {
+            const parentCard = tasksWrap.closest('.hc-section-card');
+            const forms = [
+                {
+                    id: 'grundform',
+                    label: isEn ? 'Base form (gammel, klog, glad)' : 'Grundform (gammel, klog, glad)',
+                    desc: isEn
+                        ? 'Describes 1 person or thing in indefinite singular (en gammel gård, jeg er klog, altid glad).'
+                        : 'Beskriver 1 ting eller person i ubestemt ental (en gammel gård, jeg er klog, altid glad, god).'
+                },
+                {
+                    id: 'e_form',
+                    label: isEn ? 'Plural / Definite (-e)' : 'Flertal / bestemt (-e)',
+                    desc: isEn
+                        ? 'Adjectives add -e in plural (tre kloge sønner, fine heste) or definite form (den gamle far).'
+                        : 'Adjektiver får -e i flertal (tre kloge sønner, store ting, fine heste) eller bestemt form (den gamle far).'
+                },
+                {
+                    id: 'grad',
+                    label: isEn ? 'Comparison (god → bedre → bedst)' : 'Gradbøjning (bedst)',
+                    desc: isEn
+                        ? 'Compares degree: 1st step (god), 2nd step (bedre), highest step (bedst — "Den, som taler bedst").'
+                        : 'Sammenligner grader: 1. trin (god), 2. trin (bedre), højeste trin (bedst — "Den, som taler bedst").'
+                }
+            ];
+
+            const activeInfo = forms.find(f => f.id === activeAdjForm);
+            const matchedInText = [];
+            if (parentCard && activeAdjForm) {
+                parentCard.querySelectorAll(`.hc-word-token[data-adj-form="${activeAdjForm}"]`).forEach(el => {
+                    const txt = el.textContent.trim();
+                    if (txt && !matchedInText.includes(txt)) matchedInText.push(txt);
+                });
+            }
+
+            const isGrund = activeAdjForm === 'grundform';
+            const isE = activeAdjForm === 'e_form';
+            const isGrad = activeAdjForm === 'grad';
+
+            const box = document.createElement('div');
+            box.className = 'hc-tense-diagram hc-adj-diagram';
+            box.innerHTML = `
+                <div class="hc-tense-diagram-head">
+                    <div class="hc-tense-diagram-title">${isEn ? 'Adjectives: Forms & Comparison' : 'Adjektiver: Bøjning & gradbøjning'}</div>
+                    <span class="hc-tense-diagram-hint">${isEn ? 'Click a form to highlight it in the text above' : 'Klik på en form for at se den i teksten ovenfor'}</span>
+                </div>
+                <svg class="hc-tense-svg" viewBox="0 0 560 124" role="img" aria-label="Visuel oversigt over adjektivers grundform, flertal/bestemt med -e og gradbøjning">
+                    <!-- 1. GRUNDFORM (1 ting/person) -->
+                    <rect x="8" y="8" width="170" height="108" rx="10"
+                        fill="${isGrund ? 'rgba(249, 115, 22, 0.16)' : '#151a21'}"
+                        stroke="${isGrund ? '#f97316' : 'rgba(203, 213, 225, 0.16)'}"
+                        stroke-width="${isGrund ? '2' : '1.2'}"/>
+                    <text x="93" y="25" text-anchor="middle" fill="${isGrund ? '#fdba74' : '#cbd5e1'}" font-size="11" font-weight="800">GRUNDFORM</text>
+                    <text x="93" y="38" text-anchor="middle" fill="#94a3b8" font-size="9">${isEn ? '1 person / thing' : '1 person / ting'}</text>
+                    <circle cx="93" cy="60" r="11" fill="${isGrund ? 'rgba(249,115,22,0.3)' : '#1e293b'}" stroke="${isGrund ? '#fb923c' : '#64748b'}" stroke-width="1.8"/>
+                    <text x="93" y="64" text-anchor="middle" fill="${isGrund ? '#ffedd5' : '#cbd5e1'}" font-size="11" font-weight="800">1</text>
+                    <text x="93" y="92" text-anchor="middle" fill="#f1f5f9" font-size="10.5" font-weight="700">en gammel far</text>
+                    <text x="93" y="106" text-anchor="middle" fill="#94a3b8" font-size="9.5">klog · glad · god</text>
+
+                    <!-- 2. FLERTAL / BESTEMT (+e) -->
+                    <rect x="195" y="8" width="170" height="108" rx="10"
+                        fill="${isE ? 'rgba(249, 115, 22, 0.16)' : '#151a21'}"
+                        stroke="${isE ? '#f97316' : 'rgba(203, 213, 225, 0.16)'}"
+                        stroke-width="${isE ? '2' : '1.2'}"/>
+                    <text x="280" y="25" text-anchor="middle" fill="${isE ? '#fdba74' : '#cbd5e1'}" font-size="11" font-weight="800">FLERTAL / BESTEMT</text>
+                    <text x="280" y="38" text-anchor="middle" fill="#94a3b8" font-size="9">${isEn ? 'Adds -e' : 'Får endelsen -e'}</text>
+                    <g transform="translate(242, 49)">
+                        <circle cx="14" cy="11" r="8" fill="${isE ? 'rgba(249,115,22,0.28)' : '#1e293b'}" stroke="${isE ? '#fb923c' : '#64748b'}" stroke-width="1.5"/>
+                        <circle cx="38" cy="11" r="8" fill="${isE ? 'rgba(249,115,22,0.28)' : '#1e293b'}" stroke="${isE ? '#fb923c' : '#64748b'}" stroke-width="1.5"/>
+                        <circle cx="62" cy="11" r="8" fill="${isE ? 'rgba(249,115,22,0.28)' : '#1e293b'}" stroke="${isE ? '#fb923c' : '#64748b'}" stroke-width="1.5"/>
+                    </g>
+                    <text x="266" y="92" text-anchor="middle" fill="#f1f5f9" font-size="10.5" font-weight="700">tre klog</text>
+                    <rect x="291" y="80" width="22" height="16" rx="4" fill="${isE ? '#f97316' : '#1e293b'}" stroke="${isE ? '#fed7aa' : '#f97316'}" stroke-width="1.2"/>
+                    <text x="302" y="92" text-anchor="middle" fill="${isE ? '#ffffff' : '#fdba74'}" font-size="10.5" font-weight="800">-e</text>
+                    <text x="280" y="106" text-anchor="middle" fill="#94a3b8" font-size="9.5">den gamle · fine</text>
+
+                    <!-- 3. GRADBØJNING (3 trappetrin) -->
+                    <rect x="382" y="8" width="170" height="108" rx="10"
+                        fill="${isGrad ? 'rgba(249, 115, 22, 0.16)' : '#151a21'}"
+                        stroke="${isGrad ? '#f97316' : 'rgba(203, 213, 225, 0.16)'}"
+                        stroke-width="${isGrad ? '2' : '1.2'}"/>
+                    <text x="467" y="25" text-anchor="middle" fill="${isGrad ? '#fdba74' : '#cbd5e1'}" font-size="11" font-weight="800">GRADBØJNING</text>
+                    <text x="467" y="38" text-anchor="middle" fill="#94a3b8" font-size="9">${isEn ? '3 steps up' : '3 trin op'}</text>
+                    <rect x="404" y="70" width="34" height="16" rx="3" fill="#1e293b" stroke="#64748b" stroke-width="1.2"/>
+                    <rect x="448" y="58" width="38" height="28" rx="3" fill="#273244" stroke="#94a3b8" stroke-width="1.2"/>
+                    <rect x="496" y="45" width="38" height="41" rx="3" fill="${isGrad ? '#f97316' : 'rgba(249,115,22,0.28)'}" stroke="${isGrad ? '#fed7aa' : '#fb923c'}" stroke-width="1.6"/>
+                    <text x="421" y="101" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-weight="700">god</text>
+                    <text x="467" y="101" text-anchor="middle" fill="#cbd5e1" font-size="9.5" font-weight="700">bedre</text>
+                    <text x="515" y="101" text-anchor="middle" fill="${isGrad ? '#fed7aa' : '#fb923c'}" font-size="10" font-weight="800">bedst</text>
+                </svg>
+                <div class="hc-tense-btns">
+                    ${forms.map(f => `
+                        <button type="button" class="hc-tense-btn hc-adj-btn ${activeAdjForm === f.id ? 'active' : ''}" data-adj-pick="${f.id}">${f.label}</button>
+                    `).join('')}
+                    ${activeAdjForm ? `<button type="button" class="hc-tense-btn hc-tense-clear" data-adj-pick="">${isEn ? 'Show all' : 'Vis alle'}</button>` : ''}
+                </div>
+                ${activeInfo ? `
+                    <div class="hc-tense-explain hc-adj-explain">
+                        <span>${activeInfo.desc}</span>
+                        ${matchedInText.length > 0 ? `<div class="hc-tense-found hc-adj-found"><strong>${isEn ? 'In text above:' : 'I teksten ovenfor:'}</strong> ${matchedInText.join(', ')}</div>` : ''}
+                    </div>
+                ` : ''}
+            `;
+
+            box.querySelectorAll('[data-adj-pick]').forEach(btn => {
+                btn.onclick = () => {
+                    const picked = btn.dataset.adjPick || null;
+                    activeAdjForm = (activeAdjForm === picked) ? null : picked;
+                    const cardEl = tasksWrap.closest('.hc-section-card');
+                    if (cardEl) {
+                        if (activeAdjForm) {
+                            cardEl.dataset.activeHighlight = 'adjektiver';
+                            cardEl.dataset.adjFormFilter = activeAdjForm;
+                        } else {
+                            delete cardEl.dataset.adjFormFilter;
+                        }
+                    }
+                    renderActivePanel();
+                };
+            });
+
+            return box;
+        }
+
+        function renderAdverbDiagram() {
+            const parentCard = tasksWrap.closest('.hc-section-card');
+            const types = [
+                {
+                    id: 'sted',
+                    label: isEn ? 'Place (ude, frem, af sted)' : 'Sted (ude, frem, af sted)',
+                    desc: isEn
+                        ? 'Answers WHERE or WHERE TO (Ude på landet, trådte frem, red af sted).'
+                        : 'Svarer på HVOR eller HVORHEN (Ude på landet, der, trådte frem, red af sted).'
+                },
+                {
+                    id: 'tid',
+                    label: isEn ? 'Time (da, altid)' : 'Tid (da, altid)',
+                    desc: isEn
+                        ? 'Answers WHEN or HOW OFTEN (Da trådte mellembror frem, altid glad).'
+                        : 'Svarer på HVORNÅR eller HVOR OFTE (Da trådte mellembror frem, altid glad).'
+                },
+                {
+                    id: 'grad_maade',
+                    label: isEn ? 'Degree & Manner (meget, stolt, højt)' : 'Grad & måde (meget, stolt, højt)',
+                    desc: isEn
+                        ? 'Answers HOW MUCH or HOW (så kloge, meget klog, sagde stolt, lo højt).'
+                        : 'Svarer på HVOR MEGET eller HVORDAN — f.eks. "meget klog" (grad foran adjektiv), "sagde stolt", "lo højt".'
+                },
+                {
+                    id: 'smaaord',
+                    label: isEn ? 'Small words (ikke, også, alligevel)' : 'Småord (ikke, også, alligevel)',
+                    desc: isEn
+                        ? 'Small adverbs that negate or add nuance/attitude (ikke, også, alligevel).'
+                        : 'Små biord der nægter eller giver nuancer til sætningen (ikke, også, alligevel).'
+                }
+            ];
+
+            const activeInfo = types.find(t => t.id === activeAdvType);
+            const matchedInText = [];
+            if (parentCard && activeAdvType) {
+                parentCard.querySelectorAll(`.hc-word-token[data-adv-type="${activeAdvType}"]`).forEach(el => {
+                    const txt = el.textContent.trim();
+                    if (txt && !matchedInText.includes(txt)) matchedInText.push(txt);
+                });
+            }
+
+            const isSted = activeAdvType === 'sted';
+            const isTid = activeAdvType === 'tid';
+            const isGrad = activeAdvType === 'grad_maade';
+            const isSmaa = activeAdvType === 'smaaord';
+
+            const box = document.createElement('div');
+            box.className = 'hc-tense-diagram hc-adv-diagram';
+            box.innerHTML = `
+                <div class="hc-tense-diagram-head">
+                    <div class="hc-tense-diagram-title">${isEn ? 'Adverbs: 4 Jobs in the Sentence' : 'Adverbier: 4 roller i sætningen'}</div>
+                    <span class="hc-tense-diagram-hint">${isEn ? 'Click a type to highlight it in the text above' : 'Klik på en type for at se den i teksten ovenfor'}</span>
+                </div>
+                <svg class="hc-tense-svg" viewBox="0 0 560 112" role="img" aria-label="Visuel oversigt over adverbier: sted, tid, grad og måde, og småord">
+                    <!-- 1. STED -->
+                    <rect x="6" y="8" width="128" height="96" rx="10"
+                        fill="${isSted ? 'rgba(56, 189, 248, 0.16)' : '#151a21'}"
+                        stroke="${isSted ? '#38bdf8' : 'rgba(203, 213, 225, 0.16)'}"
+                        stroke-width="${isSted ? '2' : '1.2'}"/>
+                    <path d="M 70 22 C 64 22, 60 26, 60 32 C 60 40, 70 48, 70 48 C 70 48, 80 40, 80 32 C 80 26, 76 22, 70 22 Z" fill="none" stroke="${isSted ? '#7dd3fc' : '#64748b'}" stroke-width="1.8"/>
+                    <circle cx="70" cy="32" r="3" fill="${isSted ? '#38bdf8' : '#64748b'}"/>
+                    <text x="70" y="66" text-anchor="middle" fill="${isSted ? '#bae6fd' : '#cbd5e1'}" font-size="11" font-weight="800">STED</text>
+                    <text x="70" y="80" text-anchor="middle" fill="#94a3b8" font-size="9">Hvor / hvorhen?</text>
+                    <text x="70" y="95" text-anchor="middle" fill="#7dd3fc" font-size="9.5" font-weight="700">ude · frem · af sted</text>
+
+                    <!-- 2. TID -->
+                    <rect x="146" y="8" width="128" height="96" rx="10"
+                        fill="${isTid ? 'rgba(56, 189, 248, 0.16)' : '#151a21'}"
+                        stroke="${isTid ? '#38bdf8' : 'rgba(203, 213, 225, 0.16)'}"
+                        stroke-width="${isTid ? '2' : '1.2'}"/>
+                    <circle cx="210" cy="34" r="12" fill="none" stroke="${isTid ? '#7dd3fc' : '#64748b'}" stroke-width="1.8"/>
+                    <path d="M 210 27 L 210 34 L 216 37" fill="none" stroke="${isTid ? '#38bdf8' : '#94a3b8'}" stroke-width="1.8" stroke-linecap="round"/>
+                    <text x="210" y="66" text-anchor="middle" fill="${isTid ? '#bae6fd' : '#cbd5e1'}" font-size="11" font-weight="800">TID</text>
+                    <text x="210" y="80" text-anchor="middle" fill="#94a3b8" font-size="9">Hvornår / hvor ofte?</text>
+                    <text x="210" y="95" text-anchor="middle" fill="#7dd3fc" font-size="9.5" font-weight="700">da · altid</text>
+
+                    <!-- 3. GRAD & MÅDE -->
+                    <rect x="286" y="8" width="128" height="96" rx="10"
+                        fill="${isGrad ? 'rgba(56, 189, 248, 0.16)' : '#151a21'}"
+                        stroke="${isGrad ? '#38bdf8' : 'rgba(203, 213, 225, 0.16)'}"
+                        stroke-width="${isGrad ? '2' : '1.2'}"/>
+                    <line x1="330" y1="27" x2="370" y2="27" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="362" cy="27" r="4" fill="${isGrad ? '#38bdf8' : '#7dd3fc'}"/>
+                    <line x1="330" y1="40" x2="370" y2="40" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="344" cy="40" r="4" fill="${isGrad ? '#7dd3fc' : '#64748b'}"/>
+                    <text x="350" y="66" text-anchor="middle" fill="${isGrad ? '#bae6fd' : '#cbd5e1'}" font-size="11" font-weight="800">GRAD &amp; MÅDE</text>
+                    <text x="350" y="80" text-anchor="middle" fill="#94a3b8" font-size="9">Hvor meget / hvordan?</text>
+                    <text x="350" y="95" text-anchor="middle" fill="#7dd3fc" font-size="9.5" font-weight="700">meget · stolt · højt</text>
+
+                    <!-- 4. SMÅORD -->
+                    <rect x="426" y="8" width="128" height="96" rx="10"
+                        fill="${isSmaa ? 'rgba(56, 189, 248, 0.16)' : '#151a21'}"
+                        stroke="${isSmaa ? '#38bdf8' : 'rgba(203, 213, 225, 0.16)'}"
+                        stroke-width="${isSmaa ? '2' : '1.2'}"/>
+                    <rect x="472" y="23" width="36" height="20" rx="10" fill="none" stroke="${isSmaa ? '#7dd3fc' : '#64748b'}" stroke-width="1.8"/>
+                    <circle cx="497" cy="33" r="6" fill="${isSmaa ? '#38bdf8' : '#64748b'}"/>
+                    <text x="490" y="66" text-anchor="middle" fill="${isSmaa ? '#bae6fd' : '#cbd5e1'}" font-size="11" font-weight="800">SMÅORD</text>
+                    <text x="490" y="80" text-anchor="middle" fill="#94a3b8" font-size="9">Nægtelse / nuance</text>
+                    <text x="490" y="95" text-anchor="middle" fill="#7dd3fc" font-size="9.5" font-weight="700">ikke · også · alligevel</text>
+                </svg>
+                <div class="hc-tense-btns">
+                    ${types.map(t => `
+                        <button type="button" class="hc-tense-btn hc-adv-btn ${activeAdvType === t.id ? 'active' : ''}" data-adv-pick="${t.id}">${t.label}</button>
+                    `).join('')}
+                    ${activeAdvType ? `<button type="button" class="hc-tense-btn hc-tense-clear" data-adv-pick="">${isEn ? 'Show all' : 'Vis alle'}</button>` : ''}
+                </div>
+                ${activeInfo ? `
+                    <div class="hc-tense-explain hc-adv-explain">
+                        <span>${activeInfo.desc}</span>
+                        ${matchedInText.length > 0 ? `<div class="hc-tense-found hc-adv-found"><strong>${isEn ? 'In text above:' : 'I teksten ovenfor:'}</strong> ${matchedInText.join(', ')}</div>` : ''}
+                    </div>
+                ` : ''}
+            `;
+
+            box.querySelectorAll('[data-adv-pick]').forEach(btn => {
+                btn.onclick = () => {
+                    const picked = btn.dataset.advPick || null;
+                    activeAdvType = (activeAdvType === picked) ? null : picked;
+                    const cardEl = tasksWrap.closest('.hc-section-card');
+                    if (cardEl) {
+                        if (activeAdvType) {
+                            cardEl.dataset.activeHighlight = 'adverbier';
+                            cardEl.dataset.advTypeFilter = activeAdvType;
+                        } else {
+                            delete cardEl.dataset.advTypeFilter;
+                        }
+                    }
+                    renderActivePanel();
+                };
+            });
+
+            return box;
+        }
+
         function renderActivePanel() {
             panelHolder.innerHTML = '';
             const catData = section.tasks[activeCatKey];
             if (!catData || !catData.questions || catData.questions.length === 0) return;
+
+            if (activeCatKey === 'substantiver') {
+                panelHolder.appendChild(renderNounDefinitenessDiagram());
+            } else if (activeCatKey === 'verber') {
+                panelHolder.appendChild(renderVerbTenseDiagram());
+            } else if (activeCatKey === 'adjektiver') {
+                panelHolder.appendChild(renderAdjectiveDiagram());
+            } else if (activeCatKey === 'adverbier') {
+                panelHolder.appendChild(renderAdverbDiagram());
+            } else if (activeCatKey === 'pronominer') {
+                panelHolder.appendChild(renderPronounCaseDiagram());
+            }
 
             const unlocked = getUnlockedQuestions(activeCatKey);
             const totalQ = catData.questions.length;
@@ -1282,10 +1999,25 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                             const tokenBtn = document.createElement('span');
                             tokenBtn.className = `hc-word-token token-${token.type} token-class-${normalizedType}`;
                             tokenBtn.dataset.wordType = normalizedType;
+                            if (normalizedType === 'vrb') {
+                                tokenBtn.dataset.verbTense = classifyVerbTense(token.text);
+                            } else if (normalizedType === 'sub') {
+                                const nf = classifyNounForm(token.text);
+                                if (nf) tokenBtn.dataset.nounForm = nf;
+                            } else if (normalizedType === 'pro') {
+                                const pc = classifyPronounCase(token.text);
+                                if (pc) tokenBtn.dataset.pronounCase = pc;
+                            } else if (normalizedType === 'adj') {
+                                const af = classifyAdjForm(token.text);
+                                if (af) tokenBtn.dataset.adjForm = af;
+                            } else if (normalizedType === 'adv') {
+                                const at = classifyAdvType(token.text);
+                                if (at) tokenBtn.dataset.advType = at;
+                            }
                             tokenBtn.textContent = token.text;
                             const brotherNode = findVisualNodeForBrotherToken(token);
-                            const s2Node = (sectionIndex === 0 && i === 1) ? findSentence2NodeByToken(token) : null;
-                            tokenBtn.title = (sectionIndex === 0 && (i === 0 || i === 1)) || brotherNode
+                            const del1Node = (sectionIndex === 0 && i >= 1 && i <= 8) ? findDel1VisualNodeByToken(i, token) : null;
+                            tokenBtn.title = (sectionIndex === 0 && (i === 0 || del1Node)) || brotherNode
                                 ? 'Klik for visuel forklaring'
                                 : `${token.type.toUpperCase()}: Klik for detaljer`;
                             tokenBtn.onclick = (e) => {
@@ -1296,10 +2028,10 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                                     sentence1VisualLab.selectNodeById(brotherNode.id);
                                     return;
                                 }
-                                if (s2Node && sentence1VisualLab) {
-                                    activeLabLineIndex = 1;
+                                if (del1Node && sentence1VisualLab) {
+                                    activeLabLineIndex = i;
                                     lineEl.appendChild(sentence1VisualLab);
-                                    sentence1VisualLab.selectNodeById(s2Node.id);
+                                    sentence1VisualLab.selectNodeById(del1Node.id);
                                     return;
                                 }
                                 if (sectionIndex === 0 && i === 0 && sentence1VisualLab) {
@@ -1515,8 +2247,24 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             else if (catKey === 'vrb' || catKey === 'verbum') mapped = 'verber';
             else if (catKey === 'adj' || catKey === 'adjektiv') mapped = 'adjektiver';
             else if (catKey === 'adv' || catKey === 'adverbium') mapped = 'adverbier';
+            else if (catKey === 'pro' || catKey === 'pronomen') mapped = 'pronominer';
 
             card.dataset.activeHighlight = mapped;
+            if (mapped !== 'verber') {
+                delete card.dataset.verbTenseFilter;
+            }
+            if (mapped !== 'substantiver') {
+                delete card.dataset.nounFormFilter;
+            }
+            if (mapped !== 'pronominer') {
+                delete card.dataset.pronounCaseFilter;
+            }
+            if (mapped !== 'adjektiver') {
+                delete card.dataset.adjFormFilter;
+            }
+            if (mapped !== 'adverbier') {
+                delete card.dataset.advTypeFilter;
+            }
             if (legendBar) {
                 legendBar.querySelectorAll('.hc-legend-item').forEach(it => {
                     it.classList.toggle('active-legend', it.dataset.cat === mapped);
@@ -1607,6 +2355,7 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
         let tasksEl = null;
         let drawerToggleBtn = null;
         let tasksDrawerEl = null;
+        let finaleDrawerEl = null;
         let lastUnlockedState = false;
 
         if (section.tasks) {
@@ -1634,6 +2383,9 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
                 }
                 if (tasksDrawerEl) {
                     tasksDrawerEl.hidden = !isUnlocked;
+                }
+                if (finaleDrawerEl) {
+                    finaleDrawerEl.hidden = !isUnlocked;
                 }
                 if (drawerToggleBtn) {
                     drawerToggleBtn.classList.toggle('is-ready', isUnlocked);
@@ -1736,6 +2488,62 @@ export function renderHCAndersenView(container, navigateFn, extraData = {}) {
             drawer.appendChild(drawerToggleBtn);
             drawer.appendChild(drawerBody);
             card.appendChild(drawer);
+        }
+
+        // Sammenfoldet nordisk boks til afslutningsaktiviteterne (Det indre liv & Speeddating) i 3. del af Klods-Hans
+        if (story?.id === 'klods_hans' && index === 2) {
+            const finaleDrawer = document.createElement('div');
+            finaleDrawer.className = 'hc-tasks-drawer hc-finale-drawer';
+            const initiallyUnlockedFinale = !hasDialogue || lastUnlockedState || !!completedScenes[sceneKey];
+            finaleDrawer.hidden = !initiallyUnlockedFinale;
+            finaleDrawerEl = finaleDrawer;
+
+            const finaleToggleBtn = document.createElement('button');
+            finaleToggleBtn.type = 'button';
+            finaleToggleBtn.className = 'hc-tasks-drawer-toggle';
+            finaleToggleBtn.setAttribute('aria-expanded', 'false');
+            if (completedScenes[sceneKey]) finaleToggleBtn.classList.add('is-ready');
+            finaleToggleBtn.innerHTML = `
+                <span class="hc-drawer-left">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    <span>${isEn ? 'Finale · Character Traits & Speed Dating (2 activities)' : 'Afslutning · Det indre liv & Speeddating (2 aktiviteter)'}</span>
+                </span>
+                <span class="hc-drawer-right">
+                    <span class="hc-drawer-status">${completedScenes[sceneKey] ? (isEn ? 'Ready' : 'Klar') : ''}</span>
+                    <svg class="hc-drawer-chevron" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </span>
+            `;
+
+            const finaleBody = document.createElement('div');
+            finaleBody.className = 'hc-tasks-drawer-body';
+            finaleBody.hidden = true;
+            let finaleMounted = false;
+
+            finaleToggleBtn.onclick = () => {
+                const willOpen = finaleBody.hidden;
+                finaleBody.hidden = !willOpen;
+                finaleToggleBtn.classList.toggle('is-open', willOpen);
+                finaleToggleBtn.setAttribute('aria-expanded', String(willOpen));
+                if (willOpen && !finaleMounted) {
+                    finaleMounted = true;
+                    renderKlodsHansFinaleActivities(finaleBody, {
+                        isEn,
+                        speakDanish,
+                        onJumpToQuiz: () => {
+                            const quizEl = card.parentElement?.parentElement?.querySelector('.hc-quiz-card');
+                            if (quizEl) quizEl.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                }
+            };
+
+            finaleDrawer.appendChild(finaleToggleBtn);
+            finaleDrawer.appendChild(finaleBody);
+            card.appendChild(finaleDrawer);
         }
 
         // Diskret download-knap til den oprindelige skuespiltekst med replikker i 3. del af Klods-Hans
@@ -3299,6 +4107,228 @@ function injectStyles() {
             border-bottom: 2px solid #ec4899 !important;
             border-radius: 6px;
             box-shadow: 0 0 14px rgba(236, 72, 153, 0.45);
+        }
+        /* Verbe-tidsfilter oppe i eventyrteksten når man klikker Datid / Førnutid / Nutid / Fremtid */
+        .hc-section-card[data-verb-tense-filter="datid"] .hc-word-token.token-class-vrb:not([data-verb-tense="datid"]),
+        .hc-section-card[data-verb-tense-filter="foernutid"] .hc-word-token.token-class-vrb:not([data-verb-tense="foernutid"]),
+        .hc-section-card[data-verb-tense-filter="nutid"] .hc-word-token.token-class-vrb:not([data-verb-tense="nutid"]),
+        .hc-section-card[data-verb-tense-filter="fremtid"] .hc-word-token.token-class-vrb:not([data-verb-tense="fremtid"]) {
+            opacity: 0.32 !important;
+            background: transparent !important;
+            border-bottom-color: transparent !important;
+            box-shadow: none !important;
+        }
+        .hc-section-card[data-verb-tense-filter="datid"] .hc-word-token[data-verb-tense="datid"],
+        .hc-section-card[data-verb-tense-filter="foernutid"] .hc-word-token[data-verb-tense="foernutid"],
+        .hc-section-card[data-verb-tense-filter="nutid"] .hc-word-token[data-verb-tense="nutid"],
+        .hc-section-card[data-verb-tense-filter="fremtid"] .hc-word-token[data-verb-tense="fremtid"] {
+            color: #ffffff !important;
+            background: rgba(239, 68, 68, 0.34) !important;
+            border-bottom: 2.5px solid #fca5a5 !important;
+            box-shadow: 0 0 16px rgba(239, 68, 68, 0.55) !important;
+        }
+        /* Substantiv-formfilter oppe i eventyrteksten når man klikker Ubestemt / Bestemt */
+        .hc-section-card[data-noun-form-filter="ubestemt"] .hc-word-token.token-class-sub:not([data-noun-form="ubestemt"]),
+        .hc-section-card[data-noun-form-filter="bestemt"] .hc-word-token.token-class-sub:not([data-noun-form="bestemt"]) {
+            opacity: 0.30 !important;
+            background: transparent !important;
+            border-bottom-color: transparent !important;
+            box-shadow: none !important;
+        }
+        .hc-section-card[data-noun-form-filter="ubestemt"] .hc-word-token[data-noun-form="ubestemt"],
+        .hc-section-card[data-noun-form-filter="bestemt"] .hc-word-token[data-noun-form="bestemt"] {
+            color: #ffffff !important;
+            background: rgba(34, 197, 94, 0.32) !important;
+            border-bottom: 2.5px solid #86efac !important;
+            box-shadow: 0 0 16px rgba(34, 197, 94, 0.52) !important;
+        }
+        .hc-tense-btn.hc-noun-btn:hover {
+            border-color: rgba(74, 222, 128, 0.55);
+            color: #ffffff;
+        }
+        .hc-tense-btn.hc-noun-btn.active {
+            background: rgba(34, 197, 94, 0.22);
+            border-color: #4ade80;
+            color: #bbf7d0;
+        }
+        .hc-tense-explain.hc-noun-explain {
+            border-left-color: #22c55e;
+        }
+        .hc-tense-found.hc-noun-found {
+            color: #86efac;
+        }
+        /* Pronomen-filter oppe i eventyrteksten når man klikker Subjekt / Objekt */
+        .hc-section-card[data-pronoun-case-filter="subjekt"] .hc-word-token.token-class-pro:not([data-pronoun-case="subjekt"]),
+        .hc-section-card[data-pronoun-case-filter="objekt"] .hc-word-token.token-class-pro:not([data-pronoun-case="objekt"]) {
+            opacity: 0.28 !important;
+            background: transparent !important;
+            border-bottom-color: transparent !important;
+            box-shadow: none !important;
+        }
+        .hc-section-card[data-pronoun-case-filter="subjekt"] .hc-word-token[data-pronoun-case="subjekt"],
+        .hc-section-card[data-pronoun-case-filter="objekt"] .hc-word-token[data-pronoun-case="objekt"] {
+            color: #ffffff !important;
+            background: rgba(236, 72, 153, 0.34) !important;
+            border-bottom: 2.5px solid #f9a8d4 !important;
+            box-shadow: 0 0 16px rgba(236, 72, 153, 0.55) !important;
+        }
+        .hc-tense-btn.hc-pro-btn:hover {
+            border-color: rgba(244, 114, 182, 0.55);
+            color: #ffffff;
+        }
+        .hc-tense-btn.hc-pro-btn.active {
+            background: rgba(236, 72, 153, 0.22);
+            border-color: #f472b6;
+            color: #fbcfe8;
+        }
+        .hc-tense-explain.hc-pro-explain {
+            border-left-color: #ec4899;
+        }
+        .hc-tense-found.hc-pro-found {
+            color: #f9a8d4;
+        }
+        /* Adjektiv-formfilter oppe i eventyrteksten når man klikker Grundform / -e / Gradbøjning */
+        .hc-section-card[data-adj-form-filter="grundform"] .hc-word-token.token-class-adj:not([data-adj-form="grundform"]),
+        .hc-section-card[data-adj-form-filter="e_form"] .hc-word-token.token-class-adj:not([data-adj-form="e_form"]),
+        .hc-section-card[data-adj-form-filter="grad"] .hc-word-token.token-class-adj:not([data-adj-form="grad"]) {
+            opacity: 0.28 !important;
+            background: transparent !important;
+            border-bottom-color: transparent !important;
+            box-shadow: none !important;
+        }
+        .hc-section-card[data-adj-form-filter="grundform"] .hc-word-token[data-adj-form="grundform"],
+        .hc-section-card[data-adj-form-filter="e_form"] .hc-word-token[data-adj-form="e_form"],
+        .hc-section-card[data-adj-form-filter="grad"] .hc-word-token[data-adj-form="grad"] {
+            color: #ffffff !important;
+            background: rgba(249, 115, 22, 0.34) !important;
+            border-bottom: 2.5px solid #fdba74 !important;
+            box-shadow: 0 0 16px rgba(249, 115, 22, 0.55) !important;
+        }
+        .hc-tense-btn.hc-adj-btn:hover {
+            border-color: rgba(251, 146, 60, 0.55);
+            color: #ffffff;
+        }
+        .hc-tense-btn.hc-adj-btn.active {
+            background: rgba(249, 115, 22, 0.22);
+            border-color: #fb923c;
+            color: #fed7aa;
+        }
+        .hc-tense-explain.hc-adj-explain {
+            border-left-color: #f97316;
+        }
+        .hc-tense-found.hc-adj-found {
+            color: #fdba74;
+        }
+        /* Adverbie-typefilter oppe i eventyrteksten når man klikker Sted / Tid / Grad & måde / Småord */
+        .hc-section-card[data-adv-type-filter="sted"] .hc-word-token.token-class-adv:not([data-adv-type="sted"]),
+        .hc-section-card[data-adv-type-filter="tid"] .hc-word-token.token-class-adv:not([data-adv-type="tid"]),
+        .hc-section-card[data-adv-type-filter="grad_maade"] .hc-word-token.token-class-adv:not([data-adv-type="grad_maade"]),
+        .hc-section-card[data-adv-type-filter="smaaord"] .hc-word-token.token-class-adv:not([data-adv-type="smaaord"]) {
+            opacity: 0.28 !important;
+            background: transparent !important;
+            border-bottom-color: transparent !important;
+            box-shadow: none !important;
+        }
+        .hc-section-card[data-adv-type-filter="sted"] .hc-word-token[data-adv-type="sted"],
+        .hc-section-card[data-adv-type-filter="tid"] .hc-word-token[data-adv-type="tid"],
+        .hc-section-card[data-adv-type-filter="grad_maade"] .hc-word-token[data-adv-type="grad_maade"],
+        .hc-section-card[data-adv-type-filter="smaaord"] .hc-word-token[data-adv-type="smaaord"] {
+            color: #ffffff !important;
+            background: rgba(56, 189, 248, 0.32) !important;
+            border-bottom: 2.5px solid #7dd3fc !important;
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.52) !important;
+        }
+        .hc-tense-btn.hc-adv-btn:hover {
+            border-color: rgba(125, 211, 252, 0.55);
+            color: #ffffff;
+        }
+        .hc-tense-btn.hc-adv-btn.active {
+            background: rgba(56, 189, 248, 0.22);
+            border-color: #38bdf8;
+            color: #bae6fd;
+        }
+        .hc-tense-explain.hc-adv-explain {
+            border-left-color: #38bdf8;
+        }
+        .hc-tense-found.hc-adv-found {
+            color: #7dd3fc;
+        }
+        .hc-tense-diagram {
+            background: #101419;
+            border: 1px solid rgba(203, 213, 225, 0.14);
+            border-radius: 12px;
+            padding: 0.9rem 1rem;
+            margin-bottom: 0.95rem;
+        }
+        .hc-tense-diagram-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0.4rem;
+            margin-bottom: 0.5rem;
+        }
+        .hc-tense-diagram-title {
+            font-size: 0.86rem;
+            font-weight: 800;
+            color: #f1f5f9;
+        }
+        .hc-tense-diagram-hint {
+            font-size: 0.76rem;
+            color: #94a3b8;
+        }
+        .hc-tense-svg {
+            width: 100%;
+            max-width: 560px;
+            height: auto;
+            display: block;
+            margin: 0.25rem auto 0.65rem;
+        }
+        .hc-tense-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            justify-content: center;
+        }
+        .hc-tense-btn {
+            background: #1a212b;
+            border: 1px solid rgba(203, 213, 225, 0.18);
+            color: #cbd5e1;
+            padding: 0.38rem 0.78rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .hc-tense-btn:hover {
+            border-color: rgba(248, 113, 113, 0.55);
+            color: #ffffff;
+        }
+        .hc-tense-btn.active {
+            background: rgba(239, 68, 68, 0.22);
+            border-color: #f87171;
+            color: #fecaca;
+        }
+        .hc-tense-btn.hc-tense-clear {
+            background: transparent;
+            color: #94a3b8;
+        }
+        .hc-tense-explain {
+            margin-top: 0.65rem;
+            padding: 0.6rem 0.8rem;
+            background: #151a21;
+            border-left: 3px solid #ef4444;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            color: #cbd5e1;
+            line-height: 1.45;
+        }
+        .hc-tense-found {
+            margin-top: 0.35rem;
+            color: #fca5a5;
+            font-size: 0.8rem;
+        }
             animation: grammarToneFrem 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
 

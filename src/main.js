@@ -163,6 +163,7 @@ import { renderVanskeligeLydeUrduView } from './views/VanskeligeLydeUrduView.js'
 import { renderVanskeligeLydeFarsiView } from './views/VanskeligeLydeFarsiView.js';
 import { renderVanskeligeLydePortugisiskView } from './views/VanskeligeLydePortugisiskView.js';
 import { renderVanskeligeLydeSpanskView } from './views/VanskeligeLydeSpanskView.js';
+import { renderVanskeligeLydeEngelskView } from './views/VanskeligeLydeEngelskView.js';
 import { renderSamtaleSmaaordView } from './views/SamtaleSmaaordView.js';
 import { renderSamtaleSmaalydeView } from './views/SamtaleSmaalydeView.js';
 import { renderSamtaleHoeflighedView } from './views/SamtaleHoeflighedView.js';
@@ -1104,6 +1105,9 @@ export function navigate(viewTarget, extraData = {}, skipHashUpdate = false) {
   } else if (viewTarget === 'vanskelige_lyde_spansk' || viewTarget === 'spanske_lyde') {
     appState.currentView = 'vanskelige_lyde_spansk';
     renderVanskeligeLydeSpanskView(appDiv, navigate, extraData);
+  } else if (viewTarget === 'vanskelige_lyde_engelsk' || viewTarget === 'engelske_lyde') {
+    appState.currentView = 'vanskelige_lyde_engelsk';
+    renderVanskeligeLydeEngelskView(appDiv, navigate, extraData);
   } else if (viewTarget === 'grounding') {
     appState.currentView = 'grounding';
     renderGroundingView(appDiv, navigate);

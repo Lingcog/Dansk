@@ -1,7 +1,7 @@
 export const SAMTALEHJAELP_G4 = {
     zh: {
-        card_title: '对话助手（PD2 口语）',
-        page_title: '对话助手（PD2 口语）',
+        card_title: '对话助手',
+        page_title: '对话助手',
         page_subtitle: '按正确语序一步步构建口语句子和言语行为——适用于图片描述、阐述观点与理由以及个人经历。',
 
         // Top document card ("Dit mundtlige svar")
@@ -127,8 +127,8 @@ export const SAMTALEHJAELP_G4 = {
     },
 
     vi: {
-        card_title: 'Trợ giúp hội thoại (PD2 nói)',
-        page_title: 'Trợ giúp hội thoại (PD2 nói)',
+        card_title: 'Trợ giúp hội thoại',
+        page_title: 'Trợ giúp hội thoại',
         page_subtitle: 'Xây dựng từng bước các câu nói và hành động ngôn ngữ đúng trật tự từ — cho phần mô tả tranh, nêu quan điểm có lý do và kinh nghiệm bản thân.',
 
         // Top document card ("Dit mundtlige svar")
@@ -254,8 +254,8 @@ export const SAMTALEHJAELP_G4 = {
     },
 
     sq: {
-        card_title: 'Ndihmë për bisedën (PD2 me gojë)',
-        page_title: 'Ndihmë për bisedën (PD2 me gojë)',
+        card_title: 'Ndihmë për bisedën',
+        page_title: 'Ndihmë për bisedën',
         page_subtitle: 'Ndërtoni fjali dhe akte të folura hap pas hapi me rendin e duhur të fjalëve — për përshkrimin e figurës, mendimet e argumentuara dhe përvojat personale.',
 
         // Top document card ("Dit mundtlige svar")
@@ -381,8 +381,8 @@ export const SAMTALEHJAELP_G4 = {
     },
 
     th: {
-        card_title: 'ตัวช่วยการสนทนา (PD2 ภาคพูด)',
-        page_title: 'ตัวช่วยการสนทนา (PD2 ภาคพูด)',
+        card_title: 'ตัวช่วยการสนทนา',
+        page_title: 'ตัวช่วยการสนทนา',
         page_subtitle: 'สร้างประโยคพูดและวัจนกรรมทีละขั้นตามลำดับคำที่ถูกต้อง — สำหรับการบรรยายภาพ การแสดงความเห็นพร้อมเหตุผล และประสบการณ์ส่วนตัว',
 
         // Top document card ("Dit mundtlige svar")
@@ -508,8 +508,8 @@ export const SAMTALEHJAELP_G4 = {
     },
 
     ne: {
-        card_title: 'वार्तालाप सहायता (PD2 मौखिक)',
-        page_title: 'वार्तालाप सहायता (PD2 मौखिक)',
+        card_title: 'वार्तालाप सहायता',
+        page_title: 'वार्तालाप सहायता',
         page_subtitle: 'सही शब्द-क्रममा चरणबद्ध रूपमा मौखिक वाक्य र वाक्-क्रियाहरू बनाउनुहोस् — चित्र वर्णन, तर्कसहितको धारणा र व्यक्तिगत अनुभवका लागि।',
 
         // Top document card ("Dit mundtlige svar")

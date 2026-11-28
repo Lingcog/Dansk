@@ -1,6 +1,6 @@
 export const SAMTALEHJAELP_DA = {
-    card_title: 'Samtalehjælp (PD2 mundtlig)',
-    page_title: 'Samtalehjælp (PD2 mundtlig)',
+    card_title: 'Samtalehjælp',
+    page_title: 'Samtalehjælp',
     page_subtitle: 'Opbyg mundtlige sætninger og sproghandlinger trin for trin i den rigtige rækkefølge — til billedbeskrivelse, begrundede holdninger og egne erfaringer.',
 
     // Top document card ("Dit mundtlige svar")

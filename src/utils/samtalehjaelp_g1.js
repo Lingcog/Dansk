@@ -1,7 +1,7 @@
 export const SAMTALEHJAELP_G1 = {
     en: {
-        card_title: 'Conversation Aid (PD2 Oral)',
-        page_title: 'Conversation Aid (PD2 Oral)',
+        card_title: 'Conversation Aid',
+        page_title: 'Conversation Aid',
         page_subtitle: 'Build spoken sentences and speech acts step by step in the right order — for picture description, reasoned opinions, and personal experiences.',
 
         // Top document card ("Your spoken answer")
@@ -126,8 +126,8 @@ export const SAMTALEHJAELP_G1 = {
         btn_add: 'Insert at top'
     },
     de: {
-        card_title: 'Gesprächshilfe (PD2 mündlich)',
-        page_title: 'Gesprächshilfe (PD2 mündlich)',
+        card_title: 'Gesprächshilfe',
+        page_title: 'Gesprächshilfe',
         page_subtitle: 'Baue mündliche Sätze und Sprechakte Schritt für Schritt in der richtigen Reihenfolge — für Bildbeschreibung, begründete Meinungen und eigene Erfahrungen.',
 
         // Top document card ("Deine mündliche Antwort")
@@ -252,8 +252,8 @@ export const SAMTALEHJAELP_G1 = {
         btn_add: 'Oben einfügen'
     },
     es: {
-        card_title: 'Ayuda para conversar (PD2 oral)',
-        page_title: 'Ayuda para conversar (PD2 oral)',
+        card_title: 'Ayuda para conversar',
+        page_title: 'Ayuda para conversar',
         page_subtitle: 'Construye frases orales y actos de habla paso a paso en el orden correcto — para describir imágenes, expresar opiniones fundamentadas y contar experiencias propias.',
 
         // Top document card ("Tu respuesta oral")
@@ -378,8 +378,8 @@ export const SAMTALEHJAELP_G1 = {
         btn_add: 'Insertar arriba'
     },
     pt: {
-        card_title: 'Ajuda para conversação (PD2 oral)',
-        page_title: 'Ajuda para conversação (PD2 oral)',
+        card_title: 'Ajuda para conversação',
+        page_title: 'Ajuda para conversação',
         page_subtitle: 'Construa frases orais e atos de fala passo a passo na ordem certa — para descrição de imagens, opiniões fundamentadas e experiências próprias.',
 
         // Top document card ("A sua resposta oral")

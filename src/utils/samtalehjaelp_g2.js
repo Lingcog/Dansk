@@ -8,8 +8,8 @@ export const SAMTALEHJAELP_G2 = {
     // Turkish (Türkçe)
     // ==========================================
     tr: {
-        card_title: 'Konuşma Yardımı (PD2 sözlü)',
-        page_title: 'Konuşma Yardımı (PD2 sözlü)',
+        card_title: 'Konuşma Yardımı',
+        page_title: 'Konuşma Yardımı',
         page_subtitle: 'Resim betimlemesi, gerekçeli görüşler ve kişisel deneyimler için sözlü cümleleri ve konuşma eylemlerini doğru sırayla adım adım kur.',
 
         // Top document card ("Dit mundtlige svar")
@@ -138,8 +138,8 @@ export const SAMTALEHJAELP_G2 = {
     // Arabic (العربية)
     // ==========================================
     ar: {
-        card_title: 'مساعدة المحادثة (PD2 الشفهي)',
-        page_title: 'مساعدة المحادثة (PD2 الشفهي)',
+        card_title: 'مساعدة المحادثة',
+        page_title: 'مساعدة المحادثة',
         page_subtitle: 'ابنِ جُمَلًا شفهية وأفعالًا كلامية خطوةً بخطوة بالترتيب الصحيح — لوصف الصورة، والآراء المُعلَّلة، والتجارب الشخصية.',
 
         // Top document card ("Dit mundtlige svar")
@@ -268,8 +268,8 @@ export const SAMTALEHJAELP_G2 = {
     // Persian / Farsi (فارسی)
     // ==========================================
     fa: {
-        card_title: 'کمک به مکالمه (PD2 شفاهی)',
-        page_title: 'کمک به مکالمه (PD2 شفاهی)',
+        card_title: 'کمک به مکالمه',
+        page_title: 'کمک به مکالمه',
         page_subtitle: 'جمله‌ها و کنش‌های گفتاری شفاهی را گام‌به‌گام با ترتیب درست بساز — برای توصیف تصویر، بیان نظر همراه با دلیل و تجربه‌های شخصی.',
 
         // Top document card ("Dit mundtlige svar")
@@ -398,8 +398,8 @@ export const SAMTALEHJAELP_G2 = {
     // Kurdish Kurmanji (Kurdî — Kurmancî)
     // ==========================================
     ku: {
-        card_title: 'Alîkariya axaftinê (PD2 devkî)',
-        page_title: 'Alîkariya axaftinê (PD2 devkî)',
+        card_title: 'Alîkariya axaftinê',
+        page_title: 'Alîkariya axaftinê',
         page_subtitle: 'Hevokên devkî û kiryarên axaftinê gav bi gav bi rêza rast ava bike — ji bo şîrovekirina wêneyan, nêrînên bi sedem û serpêhatiyên xwe.',
 
         // Top document card ("Dit mundtlige svar")

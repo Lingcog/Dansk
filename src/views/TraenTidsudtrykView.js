@@ -43,10 +43,19 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
     const style = document.createElement('style');
     style.textContent = `
         .tidsudtryk-view {
-            max-width: 1040px;
+            width: 100%;
+            max-width: min(1040px, 100%);
+            min-width: 0;
             margin: 0 auto;
             padding: 0.5rem 1.25rem 4rem;
             color: #f8fafc;
+            box-sizing: border-box;
+            overflow-x: clip;
+        }
+        .tidsudtryk-view *,
+        .tidsudtryk-view *::before,
+        .tidsudtryk-view *::after {
+            box-sizing: border-box;
         }
 
         /* Hero */
@@ -1127,9 +1136,118 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
             color: #f87171 !important;
         }
 
+        /* TAB 5: i eller på? (Ugedage & Tidsudtryk-illustration) */
+        .ip-guide-card {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 1.4rem;
+            margin-bottom: 1.5rem;
+        }
+        .ip-guide-img {
+            width: 100%;
+            max-width: 520px;
+            height: auto;
+            display: block;
+            margin: 0 auto 1.2rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+        }
+        .ip-rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 0.85rem;
+        }
+        .ip-rule-box {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 0.95rem 1.05rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .ip-rule-box.datid { border-left: 3px solid #f59e0b; }
+        .ip-rule-box.fremtid { border-left: 3px solid #38bdf8; }
+        .ip-rule-title {
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.4rem;
+        }
+        .ip-rule-box.datid .ip-rule-title { color: #fbbf24; }
+        .ip-rule-box.fremtid .ip-rule-title { color: #38bdf8; }
+        .ip-rule-list {
+            margin: 0;
+            padding-left: 1.1rem;
+            color: #cbd5e1;
+            font-size: 0.88rem;
+            line-height: 1.55;
+        }
+        .ip-quiz-card {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 1.4rem;
+        }
+        .ip-quiz-sentence {
+            background: #0f172a;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 12px;
+            padding: 1rem 1.1rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #f8fafc;
+            text-align: center;
+            margin: 0.8rem 0 1rem;
+            line-height: 1.5;
+        }
+        .ip-blank {
+            display: inline-block;
+            min-width: 96px;
+            padding: 0.05rem 0.55rem;
+            border-bottom: 2.5px dashed #38bdf8;
+            color: #38bdf8;
+            margin: 0 0.15rem;
+        }
+        .ip-blank.filled-ok { border-bottom-style: solid; border-bottom-color: #4ade80; color: #4ade80; }
+        .ip-blank.filled-err { border-bottom-style: solid; border-bottom-color: #f87171; color: #f87171; }
+        .ip-opts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.65rem;
+            margin-bottom: 0.9rem;
+        }
+        .ip-opt-btn {
+            background: #0f172a;
+            border: 1.5px solid rgba(255, 255, 255, 0.16);
+            color: #f1f5f9;
+            padding: 0.75rem 0.85rem;
+            border-radius: 11px;
+            font-size: 0.96rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.16s ease;
+        }
+        .ip-opt-btn:hover:not(:disabled) {
+            border-color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+        }
+        .ip-opt-btn.ok {
+            background: rgba(34, 197, 94, 0.18) !important;
+            border-color: #22c55e !important;
+            color: #86efac !important;
+        }
+        .ip-opt-btn.err {
+            background: rgba(239, 68, 68, 0.18) !important;
+            border-color: #ef4444 !important;
+            color: #fca5a5 !important;
+        }
+
         @media (max-width: 768px) {
             .tidsudtryk-view {
-                padding: 0.25rem 0.5rem 2.5rem;
+                width: 100%;
+                max-width: 100vw;
+                padding: 0.25rem 0.55rem 2.5rem;
             }
             .tids-hero {
                 margin-bottom: 0.8rem;
@@ -1143,8 +1261,9 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 line-height: 1.4;
             }
             .byggeplads-pills {
+                max-width: 100%;
                 font-size: 0.72rem;
-                padding: 0.2rem 0.55rem;
+                padding: 0.28rem 0.6rem;
                 gap: 0.3rem;
                 flex-wrap: wrap;
                 justify-content: center;
@@ -1157,9 +1276,13 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 padding: 0.65rem 0.85rem;
                 margin-bottom: 0.85rem;
                 border-radius: 12px;
+                max-width: 100%;
             }
             .golden-rule-icon {
                 font-size: 1.3rem;
+            }
+            .golden-rule-content {
+                min-width: 0;
             }
             .golden-rule-content h3 {
                 font-size: 0.88rem;
@@ -1171,17 +1294,25 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
             }
             .tids-tabs-nav {
                 margin-bottom: 0.85rem;
-                gap: 0.2rem;
-                padding: 0.2rem;
+                gap: 0.3rem;
+                padding: 0.3rem;
+                flex-wrap: wrap;
+                overflow-x: visible;
+                max-width: 100%;
             }
             .tids-tab-btn {
-                padding: 0.45rem 0.65rem;
+                flex: 1 1 calc(50% - 0.3rem);
+                min-width: 0;
+                padding: 0.5rem 0.55rem;
                 font-size: 0.78rem;
-                white-space: nowrap;
+                white-space: normal;
+                text-align: center;
+                line-height: 1.25;
             }
             .vrimmel-stage-card {
                 border-radius: 14px;
                 margin-bottom: 0.9rem;
+                max-width: 100%;
             }
             .vrimmel-stage-header {
                 padding: 0.65rem 0.85rem;
@@ -1193,12 +1324,15 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
                 font-size: 0.75rem;
             }
             .vrimmel-time-filter-bar {
-                padding: 0.4rem 0.6rem;
-                gap: 0.3rem;
+                padding: 0.5rem 0.65rem;
+                gap: 0.35rem;
+                flex-wrap: wrap;
+                overflow-x: visible;
+                max-width: 100%;
             }
             .time-filter-btn {
-                padding: 0.3rem 0.55rem;
-                font-size: 0.75rem;
+                padding: 0.32rem 0.58rem;
+                font-size: 0.74rem;
             }
             .tids-pin {
                 width: 28px;
@@ -1532,6 +1666,7 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
 
     const tabsData = [
         { id: 'vrimmel', label: getTranslation('tids_tab_vrimmel', 'Vrimlebillede: tid og handling') },
+        { id: 'i_eller_paa', label: getTranslation('tids_tab_i_eller_paa', 'i eller på? (Ugedage)') },
         { id: 'nutid_fremtid', label: getTranslation('tids_tab_nutid_fremtid', 'Nutid som fremtid') },
         { id: 'vaerksted', label: getTranslation('tids_tab_vaerksted', 'Træn tidsudtryk (15 opgaver)') },
         { id: 'tidslinje', label: getTranslation('tids_tab_tidslinje', 'Tidslinje og frekvens') }
@@ -1779,6 +1914,8 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
 
         if (currentTab === 'vrimmel') {
             renderVrimmelTab(contentArea);
+        } else if (currentTab === 'i_eller_paa') {
+            renderIEllerPaaTab(contentArea);
         } else if (currentTab === 'nutid_fremtid') {
             renderNutidFremtidTab(contentArea);
         } else if (currentTab === 'vaerksted') {
@@ -3269,6 +3406,226 @@ export function renderTraenTidsudtrykView(container, navigateFn, extraData = {})
 
         renderFrekvensQuiz();
         parent.appendChild(frekvensSection);
+    }
+
+    // --- TAB 5: i ELLER på? (UGEDAGE & TIDSUDTRYK-ILLUSTRATION + MINI-ØVELSE) ---
+    function renderIEllerPaaTab(parent) {
+        const isEn = (appState.lang || getLang()) === 'en';
+
+        const guideCard = document.createElement('div');
+        guideCard.className = 'ip-guide-card';
+        guideCard.innerHTML = `
+            <div style="margin-bottom: 1rem;">
+                <h2 style="margin: 0 0 0.3rem; font-size: 1.2rem; color: #ffffff;">
+                    ${isEn ? 'i or på? Past & Future Time Expressions' : 'i eller på? Datid og fremtid med ugedage'}
+                </h2>
+                <p style="margin: 0; font-size: 0.88rem; color: #94a3b8; line-height: 1.5;">
+                    ${isEn
+                        ? 'Use the illustration to see the difference between past ("i + weekday + -s", "i morges", "i sidste uge") and future ("på + weekday", "i morgen", "i næste uge").'
+                        : 'Brug illustrationen til at huske forskellen på datid (<strong>i + ugedag + -s</strong>) og fremtid (<strong>på + ugedag</strong>) samt faste udtryk med <strong>i</strong>.'}
+                </p>
+            </div>
+            <img class="ip-guide-img" src="${baseUrl}tider_guide.png" alt="Illustration af tidsudtryk: i og på i datid og fremtid (i tirsdags, på tirsdag, i morges, i morgen)" />
+            <div class="ip-rules-grid">
+                <div class="ip-rule-box datid">
+                    <div class="ip-rule-title">${isEn ? 'Past (Datid — happened)' : 'Datid (sket)'}</div>
+                    <ul class="ip-rule-list">
+                        <li><strong>i + ugedag + -s</strong>: i tirsdags, i mandags, i lørdags</li>
+                        <li><strong>i morges</strong> · <strong>i sidste uge</strong></li>
+                        <li>${isEn ? 'Verb in past tense (datid):' : 'Verbum i datid:'} <em>Jeg <strong>gik</strong> til lægen i tirsdags.</em></li>
+                    </ul>
+                </div>
+                <div class="ip-rule-box fremtid">
+                    <div class="ip-rule-title">${isEn ? 'Future (Fremtid — coming)' : 'Fremtid (kommer)'}</div>
+                    <ul class="ip-rule-list">
+                        <li><strong>på + ugedag</strong> (uden -s): på tirsdag, på lørdag</li>
+                        <li><strong>i morgen</strong> · <strong>i næste uge</strong></li>
+                        <li>${isEn ? 'Verb in present tense (nutid):' : 'Verbum i nutid:'} <em>Vi <strong>mødes</strong> på tirsdag.</em></li>
+                    </ul>
+                </div>
+            </div>
+        `;
+        parent.appendChild(guideCard);
+
+        const IP_QUESTIONS = [
+            {
+                before: 'Jeg gik til lægen',
+                after: '.',
+                answer: 'i tirsdags',
+                options: ['i tirsdags', 'på tirsdag', 'på tirsdags'],
+                full: 'Jeg gik til lægen i tirsdags.',
+                expl: isEn
+                    ? '"gik" is past tense → use <strong>i + weekday + -s</strong>: <em>i tirsdags</em>.'
+                    : 'Verbet <strong>gik</strong> står i datid → brug <strong>i + ugedag + -s</strong>: <em>i tirsdags</em>.'
+            },
+            {
+                before: 'Vi går i biografen',
+                after: '.',
+                answer: 'på lørdag',
+                options: ['på lørdag', 'i lørdags', 'i sidste uge'],
+                full: 'Vi går i biografen på lørdag.',
+                expl: isEn
+                    ? '"går" is present tense pointing to the future → use <strong>på + weekday</strong> (no -s): <em>på lørdag</em>.'
+                    : 'Verbet <strong>går</strong> er nutid om fremtid → brug <strong>på + ugedag</strong> uden -s: <em>på lørdag</em>.'
+            },
+            {
+                before: 'Jeg drak kaffe',
+                after: 'klokken syv.',
+                answer: 'i morges',
+                options: ['i morges', 'i morgen', 'på morgen'],
+                full: 'Jeg drak kaffe i morges klokken syv.',
+                expl: isEn
+                    ? '"drak" is past tense (earlier today) → <strong>i morges</strong>.'
+                    : 'Verbet <strong>drak</strong> er datid (tidligere i dag) → <strong>i morges</strong>.'
+            },
+            {
+                before: 'Hun starter på nyt arbejde',
+                after: '.',
+                answer: 'i næste uge',
+                options: ['i næste uge', 'i sidste uge', 'på næste uge'],
+                full: 'Hun starter på nyt arbejde i næste uge.',
+                expl: isEn
+                    ? '"starter" points to next week → <strong>i næste uge</strong> (always "i", not "på").'
+                    : 'Verbet <strong>starter</strong> peger fremad → <strong>i næste uge</strong> (altid med <em>i</em>).'
+            },
+            {
+                before: 'Vi spillede fodbold',
+                after: 'efter arbejde.',
+                answer: 'i mandags',
+                options: ['i mandags', 'på mandag', 'i morgen'],
+                full: 'Vi spillede fodbold i mandags efter arbejde.',
+                expl: isEn
+                    ? '"spillede" is past tense → <strong>i + mandag + -s</strong> = <em>i mandags</em>.'
+                    : 'Verbet <strong>spillede</strong> står i datid → <strong>i + mandag + -s</strong> = <em>i mandags</em>.'
+            },
+            {
+                before: 'Jeg ringer til dig',
+                after: 'klokken ti.',
+                answer: 'i morgen',
+                options: ['i morgen', 'i morges', 'i sidste uge'],
+                full: 'Jeg ringer til dig i morgen klokken ti.',
+                expl: isEn
+                    ? '"ringer" points to tomorrow → <strong>i morgen</strong>.'
+                    : 'Verbet <strong>ringer</strong> peger frem til næste dag → <strong>i morgen</strong>.'
+            }
+        ];
+
+        const quizCard = document.createElement('div');
+        quizCard.className = 'ip-quiz-card';
+        parent.appendChild(quizCard);
+
+        let qIdx = 0;
+        let qScore = 0;
+        let answered = false;
+        let picked = null;
+        const shuffledMap = {};
+
+        function getOpts(idx, opts) {
+            if (!shuffledMap[idx]) {
+                const copy = [...opts];
+                for (let i = copy.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [copy[i], copy[j]] = [copy[j], copy[i]];
+                }
+                shuffledMap[idx] = copy;
+            }
+            return shuffledMap[idx];
+        }
+
+        function renderIpQuiz() {
+            if (qIdx >= IP_QUESTIONS.length) {
+                quizCard.innerHTML = `
+                    <div style="text-align: center; padding: 1.2rem 0.5rem;">
+                        <h3 style="margin: 0 0 0.4rem; font-size: 1.35rem; color: #ffffff;">
+                            ${isEn ? 'Exercise completed!' : 'Øvelsen er gennemført!'}
+                        </h3>
+                        <p style="color: #94a3b8; font-size: 1rem; margin: 0 0 1.2rem;">
+                            ${isEn
+                                ? `You got <strong style="color:#4ade80;">${qScore} of ${IP_QUESTIONS.length}</strong> right.`
+                                : `Du fik <strong style="color:#4ade80;">${qScore} af ${IP_QUESTIONS.length}</strong> rigtige.`}
+                        </p>
+                        <button type="button" class="task-next-btn" id="ip-restart-btn">
+                            ${isEn ? 'Try again' : 'Prøv igen'}
+                        </button>
+                    </div>
+                `;
+                quizCard.querySelector('#ip-restart-btn').onclick = () => {
+                    qIdx = 0;
+                    qScore = 0;
+                    answered = false;
+                    picked = null;
+                    Object.keys(shuffledMap).forEach(k => delete shuffledMap[k]);
+                    renderIpQuiz();
+                };
+                return;
+            }
+
+            const q = IP_QUESTIONS[qIdx];
+            const opts = getOpts(qIdx, q.options);
+            const pct = Math.round(((qIdx + (answered ? 1 : 0)) / IP_QUESTIONS.length) * 100);
+            const isOk = picked === q.answer;
+
+            quizCard.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.5rem;">
+                    <strong style="font-size:0.95rem; color:#f8fafc;">${isEn ? 'Mini-exercise: Choose i or på' : 'Lille øvelse: Vælg det rigtige tidsudtryk'}</strong>
+                    <span style="font-size:0.82rem; color:#94a3b8; font-weight:700;">${qIdx + 1} / ${IP_QUESTIONS.length} · Score: ${qScore}</span>
+                </div>
+                <div class="vaerksted-progress-bar" style="margin-bottom:0.8rem;">
+                    <div class="vaerksted-progress-fill" style="width:${pct}%;"></div>
+                </div>
+                <div class="ip-quiz-sentence">
+                    ${q.before}
+                    <span class="ip-blank ${answered ? (isOk ? 'filled-ok' : 'filled-err') : ''}">${answered ? q.answer : '______'}</span>
+                    ${q.after}
+                </div>
+                <div class="ip-opts-grid">
+                    ${opts.map(opt => {
+                        let cls = 'ip-opt-btn';
+                        if (answered) {
+                            if (opt === q.answer) cls += ' ok';
+                            else if (opt === picked) cls += ' err';
+                        }
+                        return `<button type="button" class="${cls}" data-ip-opt="${opt}" ${answered ? 'disabled' : ''}>${opt}</button>`;
+                    }).join('')}
+                </div>
+                ${answered ? `
+                    <div style="background:#0f172a; border-left:3px solid ${isOk ? '#22c55e' : '#f59e0b'}; border-radius:10px; padding:0.75rem 0.95rem; font-size:0.88rem; color:#e2e8f0; margin-bottom:0.9rem; line-height:1.5;">
+                        <strong>${isOk ? (isEn ? 'Correct!' : 'Rigtigt!') : (isEn ? 'Look at the rule:' : 'Se reglen:')}</strong> ${q.expl}
+                    </div>
+                    <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+                        <button type="button" class="btn-action-listen" id="ip-listen-btn" style="padding:0.55rem 1rem; font-size:0.85rem;">
+                            🔊 ${isEn ? 'Listen' : 'Lyt til sætningen'}
+                        </button>
+                        <button type="button" class="task-next-btn" id="ip-next-btn" style="margin-top:0;">
+                            ${qIdx < IP_QUESTIONS.length - 1 ? (isEn ? 'Next →' : 'Næste →') : (isEn ? 'See result →' : 'Se resultat →')}
+                        </button>
+                    </div>
+                ` : ''}
+            `;
+
+            quizCard.querySelectorAll('[data-ip-opt]').forEach(btn => {
+                btn.onclick = () => {
+                    if (answered) return;
+                    picked = btn.dataset.ipOpt;
+                    answered = true;
+                    if (picked === q.answer) qScore++;
+                    renderIpQuiz();
+                };
+            });
+            const listenBtn = quizCard.querySelector('#ip-listen-btn');
+            if (listenBtn) listenBtn.onclick = () => speakDanish(q.full);
+            const nextBtn = quizCard.querySelector('#ip-next-btn');
+            if (nextBtn) {
+                nextBtn.onclick = () => {
+                    qIdx++;
+                    answered = false;
+                    picked = null;
+                    renderIpQuiz();
+                };
+            }
+        }
+
+        renderIpQuiz();
     }
 
     // Initial render
